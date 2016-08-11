@@ -7,13 +7,13 @@ namespace MaaAahwanam.Repository.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class migrations_date_08082016 : IMigrationMetadata
+    public sealed partial class migrations_date_08102016 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(migrations_date_08082016));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(migrations_date_08102016));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608080923045_migrations_date_08082016"; }
+            get { return "201608100803141_migrations_date_08102016"; }
         }
         
         string IMigrationMetadata.Source

@@ -8,6 +8,7 @@ using MaaAahwanam.Utility;
 using MaaAahwanam.Service;
 using System.Configuration;
 using System.Web.Security;
+using Newtonsoft.Json;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -19,7 +20,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index([Bind(Prefix = "Item1")] UserLogin userLogin,[Bind(Prefix = "Item2")] UserDetail userDetails, string command)
+        public ActionResult Index([Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetails, string command)
         {
             if (command == "Register")
             {
@@ -38,12 +39,13 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             if (command == "Authenticate")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                var response = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (response != null)
+                var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
+                if (userResponse != null)
                 {
-                    ValidUserUtility.SetAuthCookie(response.UserLoginId.ToString(),response.UserType);
-                    return RedirectToAction("dashboard", "dashboard", new { id = response.UserLoginId });
-                        //("DashBoard/Dashboard", null,new { id = response.UserLoginId });
+                    userResponse.UserType = "Admin";
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    return RedirectToAction("dashboard", "dashboard", new { id = userResponse.UserLoginId });                    
                 }
                 else
                 {
