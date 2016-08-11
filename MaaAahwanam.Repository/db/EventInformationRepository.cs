@@ -21,11 +21,5 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return eventInformation;
         }
-        public EventDate PostEventDatesDetails(EventDate eventDate)
-        {
-            _dbContext.EventDate.Add(eventDate);
-            _dbContext.SaveChanges();
-            return eventDate;
-        }
     }
 }

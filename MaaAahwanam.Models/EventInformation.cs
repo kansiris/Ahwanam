@@ -10,7 +10,7 @@ namespace MaaAahwanam.Models
     public  class EventInformation
     {
         [Key]
-        public string EventId { get; set; }
+        public long EventId { get; set; }
         public long OrderId { get; set; }
         public string EventName { get; set; }
         public string Address { get; set; }

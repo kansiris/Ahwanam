@@ -47,17 +47,40 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [Authorize]
-        public JsonResult Addtocart(string VID, string servicetype, string amount)
+        public JsonResult Addtocart(OrderRequest orderRequest)
         {
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;           
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             CartItem cartItem = new CartItem();
-            cartItem.VendorId = Int32.Parse(VID);
-            cartItem.ServiceType = servicetype;
-            cartItem.TotalPrice = decimal.Parse(amount);
-            cartItem.Orderedby = ValidUserUtility.ValidUser();
+            cartItem.VendorId = orderRequest.VendorId;
+            cartItem.ServiceType = orderRequest.ServiceType;
+            cartItem.TotalPrice = orderRequest.TotalPrice;
+            cartItem.Orderedby = user.UserId;
             cartItem.UpdatedDate = DateTime.Now;
+
+            EventInformation eventInformation = new EventInformation();
+            eventInformation.EventName = orderRequest.EventName;
+            eventInformation.Email = orderRequest.Email;
+            eventInformation.Address = orderRequest.Address;
+            eventInformation.Location = orderRequest.Location;
+            eventInformation.Phone = orderRequest.Phone;
+            eventInformation.PostalCode = orderRequest.PostalCode;
+            eventInformation.State = orderRequest.State;
+            eventInformation.City = orderRequest.City;
+
+            EventDate eventDate = new EventDate();
+            foreach (var item in orderRequest.EventDates)
+            {
+                eventDate.StartDate = item.StartDate;
+                eventDate.StartTime = item.StartTime;
+                eventDate.EndDate = item.EndDate;
+                eventDate.EndTime = item.EndTime;
+            }
             CartService cartService = new CartService();
             string mesaage = cartService.AddCartItem(cartItem);
+            EventsService eventsService = new EventsService();
+            string mesaage1 = eventsService.SaveEventinformation(eventInformation);
+            EventDatesServices eventDatesServices = new EventDatesServices();
+            string message3 = eventDatesServices.SaveEventDates(eventDate);
             return Json(mesaage);
         }
 

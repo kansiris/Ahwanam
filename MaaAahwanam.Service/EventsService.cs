@@ -16,6 +16,23 @@ namespace MaaAahwanam.Service
             int l1 = eventInformationRepository.EventInformationList().Count();
             return l1;
         }        
-      
+        public string SaveEventinformation(EventInformation eventInformation)
+        {
+            string message = "";
+            EventInformationRepository eventInformationRepository = new EventInformationRepository();
+            eventInformation=eventInformationRepository.PostEventDetails(eventInformation);
+            if (eventInformation  != null)
+            {
+                if (eventInformation.EventId != null)
+                    message = "Success";
+                else
+                    message = "Failed";
+            }
+            else
+            {
+                message = "Failed";
+            }
+            return message;
+        }
     }
 }
