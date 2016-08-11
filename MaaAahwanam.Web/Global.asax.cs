@@ -39,7 +39,7 @@ namespace MaaAahwanam.Web
                         LastName = serializeModel.LastName,
                         UserType = serializeModel.UserType
                     };
-                    HttpContext.Current.User = (IPrincipal)newUser;
+                    HttpContext.Current.User = newUser;
 
                 }
             }

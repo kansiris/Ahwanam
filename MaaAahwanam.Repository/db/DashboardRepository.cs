@@ -37,5 +37,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.sp_LeastBidRecord(id).ToList();
         }
+
+        public List<ServiceRequest> GetParticularService(long id)
+        {
+            return _dbContext.ServiceRequest.Where(m => m.RequestId == id).ToList();
+        }
     }
 }

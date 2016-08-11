@@ -36,5 +36,10 @@ namespace MaaAahwanam.Service
         {
             return dashBoardRepository.GetLeastBid(id);
         }
-    }
+        public List<ServiceRequest> GetParticularService(long id)
+        {
+            return dashBoardRepository.GetParticularService(id);
+        }
+
+        }
 }

@@ -35,7 +35,7 @@
         </div>
         <!-- /order-details -->
         <div class="dashboardList dashboardList-whitebg dashboardList-nospace">
-            <table class="responsive">
+            <table class="responsive" id="mytable">
                 <thead>
                     <tr>
                         <th style="width:35%">Quatation ID</th>
@@ -45,33 +45,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><h4>WEQ89564</h4></td>
-                        <td>
-                            <h4>Photographer</h4>
-                            <p>
-                                #311/A, Road No.12,<br>
-                                MLA Colony, Banjara Hills,<br>
-                                (+91) 40 64640441
-                            </p>
-                        </td>
-                        <td>
-                            <div class="event-date-time">
-                                <div class="event-dates">
-                                    <p>11/12/2015  9:30 AM</p>
+                   @if (ViewBag.OrderDetail != null)
+                   {
+                       foreach (var item in ViewBag.OrderDetail)
+                       {
+                        <tr>
+                            <td>
+                                
+                                <div class="item-details">
+                                    <h4>@item.RequestId</h4>
                                 </div>
                                 <div class="clear"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="item-price">
-                                <p>Rs. 1200.00</p>
-                            </div>
-                        </td>
-                    </tr>
-
-
-
+                                @*<div class="item-btns"> <a href="#" class="btn-small btn-green"><i class="ti-rocket"></i>Deliver More</a> <a href="#" class="btn-small btn-delete"><i class="ti-trash"></i>Delete</a> </div>*@
+                            </td>
+                            <td>
+                                <h4>@item.EventName</h4>
+                                <p>
+                                    @item.EventAddress,<br>
+                                    @item.EventLocation,<br>
+                                    @item.PhoneNo
+                                </p>
+                                @*<a href="#edit_event" class="orange-link upload_address popup-with-move-anim"><i class="ti-pencil"></i> Edit Event</a>*@
+                            </td>
+                            <td>
+                                <div class="event-date-time">
+                                    <div class="event-dates">
+                                        <p>@item.EventStartDate.ToShortDateString()</p>  <p> @item.EventStartTime.ToShortTimeString()</p>
+                                    </div>
+                                    @*<div class="event-date-edit"><a href="#" title="Edit Date & Time"><i class="ti-pencil-alt active"></i></a><a href="#" title="Delete Date & Time"><i class="ti-trash close"></i></a></div>
+                                        <div class="clear"></div>*@
+                                </div>
+                                @*<a href="#add_new_date" class="orange-link upload_address popup-with-move-anim"><i class="ti-plus"></i> Add Date / Time</a>*@
+                            </td>
+                            <td>
+                                <div class="item-price">
+                                    <p>Rs. @item.Budget</p>
+                                </div>
+                            </td>
+                        </tr>
+                       }
+                   }
                 </tbody>
             </table>
             <div class="clear"></div>
@@ -88,12 +101,12 @@
                         <tr>
                             <td style="width:55%;">Sub Total</td>
                             <td style="width:15%;" align="center">:</td>
-                            <td style="width:30%;">1200.00</td>
+                            <td style="width:30%;"><p id="price"></p></td>
                         </tr>
                         <tr>
                             <td>Tax</td>
                             <td align="center">:</td>
-                            <td>99.00</td>
+                            <td><p id="tax"></p></td>
                         </tr>
                         <tr>
                             <td><h5>Payble Total</h5></td>
@@ -154,3 +167,19 @@
         <!-- /dashboardList -->
     </div>
     <!-- /dashInner -->
+<script>
+    window.onload = function () {
+        
+        $('#mytable tbody tr').each(function () {
+            var budget = $(this).find("td:last").html();
+            var amount = $("#price");
+            var taxamount = $("#tax");
+            //tax calculation
+            var taxpercent = 10;
+            var taxcalc = ((budget.substring(budget.indexOf(".") + 1)) * taxpercent) / 100;
+            alert( (budget.substring(budget.indexOf(".") + 1)) );
+            taxamount.html(taxcalc);
+            amount.html(budget);
+        });
+    };
+</script>
