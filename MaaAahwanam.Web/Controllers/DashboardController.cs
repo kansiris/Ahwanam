@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-//using MaaAahwanam.Repository;
+using MaaAahwanam.Repository;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.Configuration;
 using System.Web.Security;
+using MaaAahwanam.Service;
 
 
 namespace MaaAahwanam.Web.Controllers
 {
     public class DashboardController : Controller
     {
-        //
-        // GET: /Dashboard/
-        public ActionResult Index()
+        DashBoardService dashBoardService = new DashBoardService();
+        public ActionResult Index(string id)
         {
             if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
             {
@@ -24,8 +24,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Type = ValidUserUtility.UserType();
 
             }
+            ViewBag.AllOrders = dashBoardService.GetOrdersService();
+            ViewBag.Services = dashBoardService.GetServicesService();
             return View();
-
         }
     }
 }

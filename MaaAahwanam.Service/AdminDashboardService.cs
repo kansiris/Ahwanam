@@ -10,31 +10,31 @@ namespace MaaAahwanam.Service
 {
     public class AdminDashboardService
     {
-        AdminDashboardRepository dashboardRepository = new AdminDashboardRepository();
+        AdminDashboardRepository AdmindashboardRepository = new AdminDashboardRepository();
 
         public int VendorsCountService()
         {
-            return dashboardRepository.VendorsCount();
+            return AdmindashboardRepository.VendorsCount();
         }
 
         public int CommentsCountService()
         {
-            return dashboardRepository.CommentsCount();
+            return AdmindashboardRepository.CommentsCount();
         }
 
         public int TicketsCountService()
         {
-            return dashboardRepository.TicketsCount();
+            return AdmindashboardRepository.TicketsCount();
         }
 
         public int OrdersCountService()
         {
-            return dashboardRepository.OrdersCount();
+            return AdmindashboardRepository.OrdersCount();
         }
 
         public UserDetail AdminNameService(long id)
         {
-            return dashboardRepository.AdminName(id);
+            return AdmindashboardRepository.AdminName(id);
         }
     }
 }
