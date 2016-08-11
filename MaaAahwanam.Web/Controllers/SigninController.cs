@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Web.Security;
 using Newtonsoft.Json.Linq;
 using MaaAahwanam.Service;
+using Newtonsoft.Json;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -48,10 +49,12 @@ namespace MaaAahwanam.Web.Controllers
             if (command == "Authenticate")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                var response = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (response != null)
+                var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
+                if (userResponse != null)
                 {
-                    ValidUserUtility.SetAuthCookie(response.UserLoginId.ToString(), response.UserType);
+                    userResponse.UserType = "User";
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     Response.Redirect("DashBoard/Index");
                 }
                 else
@@ -75,7 +78,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                 var response = userLoginDetailsService.GetUser(ValidUserUtility.ValidUser());
-                return PartialView("SigninPartial",response);
+                return PartialView("SigninPartial", response);
             }
             else
             {

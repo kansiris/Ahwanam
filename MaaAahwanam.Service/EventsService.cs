@@ -15,6 +15,7 @@ namespace MaaAahwanam.Service
             EventInformationRepository eventInformationRepository = new EventInformationRepository();
             int l1 = eventInformationRepository.EventInformationList().Count();
             return l1;
-        }
+        }        
+      
     }
 }

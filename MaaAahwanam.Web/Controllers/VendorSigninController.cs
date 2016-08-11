@@ -1,6 +1,7 @@
 ﻿using MaaAahwanam.Models;
 using MaaAahwanam.Service;
 using MaaAahwanam.Utility;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +16,22 @@ namespace MaaAahwanam.Web.Controllers
         // GET: /VendorSignin/
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(string command,UserLogin userLogin)
+        public ActionResult Index(string command, UserLogin userLogin)
         {
             if (command == "Authenticate")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                var response = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (response != null)
+                var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
+                if (userResponse != null)
                 {
-                    ValidUserUtility.SetAuthCookie(response.UserLoginId.ToString(), response.UserType);
+                    userResponse.UserType = "Vendor";
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     Response.Redirect("VendorDashBoard/Index");
                 }
                 else
@@ -38,5 +41,5 @@ namespace MaaAahwanam.Web.Controllers
             }
             return View();
         }
-	}
+    }
 }

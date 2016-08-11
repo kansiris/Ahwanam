@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -45,21 +46,24 @@ namespace MaaAahwanam.Web.Controllers
             return RedirectToAction("Index", "Signin");
         }
 
+        [Authorize]
         public JsonResult Addtocart(string VID, string servicetype, string amount)
         {
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
-            {
-                CartItem cartItem = new CartItem();
-                cartItem.VendorId = Int32.Parse(VID);
-                cartItem.ServiceType = servicetype;
-                cartItem.TotalPrice = decimal.Parse(amount);
-                cartItem.Orderedby = ValidUserUtility.ValidUser();
-                cartItem.UpdatedDate = DateTime.Now;
-                CartService cartService = new CartService();
-                string mesaage = cartService.AddCartItem(cartItem);
-                return Json(mesaage);
-            }
-            return Json("NotLogin");
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;           
+            CartItem cartItem = new CartItem();
+            cartItem.VendorId = Int32.Parse(VID);
+            cartItem.ServiceType = servicetype;
+            cartItem.TotalPrice = decimal.Parse(amount);
+            cartItem.Orderedby = ValidUserUtility.ValidUser();
+            cartItem.UpdatedDate = DateTime.Now;
+            CartService cartService = new CartService();
+            string mesaage = cartService.AddCartItem(cartItem);
+            return Json(mesaage);
         }
+
+        //public JsonResult Addtocart(OrderRequest orderRequest)
+        //{
+
+        //}
     }
 }

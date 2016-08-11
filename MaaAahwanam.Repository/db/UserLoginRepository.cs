@@ -20,14 +20,19 @@ namespace MaaAahwanam.Repository.db
             return userLogin;
         }
 
-        public UserLogin GetLoginDetailsByUsername(UserLogin userLogin)
+        public UserDetail GetLoginDetailsByUsername(UserLogin userLogin)
         {
             UserLogin list = null;
             if (userLogin.Password != null)
+            {
                 list = _dbContext.UserLogin.FirstOrDefault(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password);
+            }
             if (userLogin.Password == null)
+            {
                 list = _dbContext.UserLogin.FirstOrDefault(p => p.UserName == userLogin.UserName);
-            return list;
+            }
+            UserDetail userDetail = _dbContext.UserDetail.FirstOrDefault(p=>p.UserLoginId==list.UserLoginId);
+            return userDetail;
         }
         public UserLogin UpdatePassword(UserLogin userLogin,int UserloginID)
         {

@@ -21,5 +21,12 @@ namespace MaaAahwanam.Repository.db
        {
            return maaAahwanamEntities.MaaAahwanam_Orders_OrderDetails(id).ToList();
        }
+
+        public Order PostOrderDetails(Order order)
+        {
+            _dbContext.Order.Add(order);
+            _dbContext.SaveChanges();
+            return order;
+        }
     }
 }

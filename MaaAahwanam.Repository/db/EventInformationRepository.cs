@@ -14,5 +14,18 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.EventInformation.ToList();
         }
+
+        public EventInformation PostEventDetails(EventInformation eventInformation)
+        {
+            _dbContext.EventInformation.Add(eventInformation);
+            _dbContext.SaveChanges();
+            return eventInformation;
+        }
+        public EventDate PostEventDatesDetails(EventDate eventDate)
+        {
+            _dbContext.EventDate.Add(eventDate);
+            _dbContext.SaveChanges();
+            return eventDate;
+        }
     }
 }

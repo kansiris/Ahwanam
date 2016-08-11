@@ -1,6 +1,7 @@
 ﻿using System;
 using MaaAahwanam.Models;
 using MaaAahwanam.Repository.db;
+using MaaAahwanam.Service.Mapper;
 
 namespace MaaAahwanam.Service
 {
@@ -27,11 +28,12 @@ namespace MaaAahwanam.Service
             }
             return response;
         }
-        public UserLogin AuthenticateUser(UserLogin UserLogin)
+        public UserResponse AuthenticateUser(UserLogin UserLogin)
         {
-            string response = string.Empty;
-            UserLogin = userLoginRepository.GetLoginDetailsByUsername(UserLogin);
-            return UserLogin;
+            UserMapper userMapper = new UserMapper();
+            var userDetail = userLoginRepository.GetLoginDetailsByUsername(UserLogin);
+            var userResponse = userMapper.MapUserDetailToUserResponse(userDetail);
+            return userResponse;
         }
         public UserDetail GetUser(int userid)
         {
@@ -44,12 +46,12 @@ namespace MaaAahwanam.Service
             var userdetail = userDetailsRepository.UpdateUserdetails(userDetail, UserloginID);
             return userdetail;
         }
-        public UserLogin changepassword(UserLogin userLogin,int UserLoginId)
+        public UserLogin changepassword(UserLogin userLogin, int UserLoginId)
         {
-            var changes = userLoginRepository.UpdatePassword(userLogin,UserLoginId);
+            var changes = userLoginRepository.UpdatePassword(userLogin, UserLoginId);
             return changes;
         }
 
-       
+
     }
 }
