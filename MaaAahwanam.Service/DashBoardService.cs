@@ -41,5 +41,22 @@ namespace MaaAahwanam.Service
             return dashBoardRepository.GetParticularService(id);
         }
 
+        public List<sp_ServiceComments_Result> GetServiceComments(long id)
+        {
+            return dashBoardRepository.GetServiceComments(id);
         }
+
+        public long GetCommentId(string id)
+        {
+            return dashBoardRepository.GetCommentDetail(id);
+        }
+
+        public CommentDetail InsertCommentService(CommentDetail commentDetail)
+        {
+            commentDetail.CommentDate = DateTime.Now;
+            commentDetail.UpdatedDate = DateTime.Now;
+            commentDetail.Status = "Active";
+            return dashBoardRepository.InsertComment(commentDetail);
+        }
+    }
 }

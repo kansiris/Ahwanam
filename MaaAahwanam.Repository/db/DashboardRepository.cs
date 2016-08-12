@@ -42,5 +42,22 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ServiceRequest.Where(m => m.RequestId == id).ToList();
         }
+
+        public List<sp_ServiceComments_Result> GetServiceComments(long id)
+        {
+            return maaAahwanamEntities.sp_ServiceComments(id).ToList();
+        }
+
+        public long GetCommentDetail(string id)
+        {
+            return _dbContext.Comment.Where(m => m.ServiceId == id).Select(r => r.CommentId).FirstOrDefault();
+        }
+
+        public CommentDetail InsertComment(CommentDetail commentDetail)
+        {
+            _dbContext.CommentDetail.Add(commentDetail);
+            _dbContext.SaveChanges();
+            return commentDetail;
+        }
     }
 }

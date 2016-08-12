@@ -14,7 +14,9 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (id != null)
             {
-                ViewBag.OrderDetail = dashBoardService.GetOrderDetailService(long.Parse(id));
+                var data  = dashBoardService.GetOrderDetailService(long.Parse(id));
+                ViewBag.OrderDetail = data;
+                ViewBag.subtotal = data.Sum(m=>m.TotalPrice);
             }
             return View();
         }

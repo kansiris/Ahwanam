@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/SharedWeb/DashboardMaster.cshtml";
+    var i = 0;var j = 0;
 }
 @section Navigation
 {
@@ -119,109 +120,129 @@
     <!-- /dashDetails -->
     @*@if (ViewBag.Type == "User")
         {*@
-    <div class="dashboardList dashboardList-nospace">
-        <table class=" responsive">
-            <thead>
-                <tr>
-                    <th style="width:10%">S.No</th>
-                    <th style="width:15%">Bill No</th>
-                    <th style="width:25%">Service Type</th>
-                    <th style="width:18%">Requested Date</th>
-                    <th style="width:15%">Advanced Amount</th>
-                    <th style="width:15%">Status</th>
-                </tr>
-            </thead>
+    <form>
+        <div class="dashboardList dashboardList-nospace">
+            <h2>Products & Services</h2>
+            <table class="responsive">
 
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#quatation" class="green-link ml-center popup-with-move-anim">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 6003</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#" class="green-link">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 600</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><a href="#" class="green-link">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 600</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><a href="#" class="green-link">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 600</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td><a href="#" class="green-link">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 600</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td><a href="#" class="green-link">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 600</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td><a href="#" class="green-link">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 600</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td><a href="#" class="green-link">SDA15678</a></td>
-                    <td>17-12-2015</td>
-                    <td>Rs. 600</td>
-                    <td>Birthday function</td>
-                    <td>02-12-2015</td>
-                </tr>
-            </tbody>
+                <thead>
+                    <tr>
+                        <th style="width:10%">S.No</th>
+                        <th style="width:15%">Bill No</th>
+                        <th style="width:25%">Service Type</th>
+                        <th style="width:18%">Requested Date</th>
+                        <th style="width:15%">Amount</th>
+                        <th style="width:15%">Status</th>
+                    </tr>
+                </thead>
+                @if (ViewBag.AllOrders != null)
+            {
+                    <tbody>
+                        @foreach (var item in ViewBag.AllOrders)
+                    {
+                            <tr>
+                                <td>@(++i)</td>
+                                <td><a href="~/BooknowViewCart/Index?id=@item.OrderId" class="green-link ml-center">@item.OrderId</a></td>
+                                <td>@item.ServicType</td>
+                                <td>@item.OrderDate.ToShortDateString()</td>
+                                <td>@item.TotalPrice</td>
+                                @if (item.Status == "Active")
+                                {
+                                    <td class="active">@item.Status</td>
+                                }
+                                
 
+                            </tr>
+                    }
+                    </tbody>
+            }
+                @if (ViewBag.AllOrders == null)
+            {
+                    <tbody>
+                        <tr>
+                            <td colspan="6">No Records Found</td>
+                        </tr>
+                    </tbody>
+            }
+            </table>
+            <br />
+            <br />
+            <h2>Quotation,Bidding,Reverse Bidding</h2>
 
-            <tbody>
-                <tr>
-                    <td colspan="6">No Records Found</td>
-                </tr>
-            </tbody>
+            <table class="responsive">
+                <thead>
+                    <tr>
+                        <th style="width:10%">S.No</th>
+                        <th style="width:15%">Bill No</th>
+                        <th style="width:25%">Service Type</th>
+                        <th style="width:18%">Requested Date</th>
+                        <th style="width:15%">Amount</th>
+                        <th style="width:15%">Status</th>
+                    </tr>
+                </thead>
+                @if (ViewBag.Services!=null)
+                {
+                    <tbody>
+                        @foreach (var item in ViewBag.Services)
+                    {
+                            <tr>
+                                <td>@(++j)</td>
+                                <td><a href="javascript:redirect('@item.Status','@item.RequestId')" class="green-link ml-center">@item.RequestId</a></td> @*~/Views/BooknowViewCart/id=@item.RequestId*@
+                                <td>@item.Type</td>
+                                <td>@item.UpdatedTime.ToShortDateString()</td>
+                                <td>@item.Budget</td>
+                                @if (item.Status == "Active")
+                                {
+                                    <td class="active">@item.Status</td>
+                                }
+                                @if (item.Status == "Due")
+                                {
+                                    <td class="close">@item.Status</td>
+                                }
+                            </tr>
+                    }
+                    </tbody>
+                }
+                @if (ViewBag.Services == null)
+            {
+                    <tbody>
+                        <tr>
+                            <td colspan="6">No Records Found</td>
+                        </tr>
+                    </tbody>
+            }
+            </table>
 
-        </table>
+            <div class="pagination" style="display:none">
+                <ul>
+                    <li><a href="javascript:void(0)">Prev</a></li>
+                    <li><a href="javascript:void(0)" class="active">1</a></li>
+                    <li><a href="javascript:void(0)">2</a></li>
+                    <li><a class="pagination-gap">...</a></li>
+                    <li><a href="javascript:void(0)">24</a></li>
+                    <li><a href="javascript:void(0)">25</a></li>
+                    <li><a href="javascript:void(0)">Next</a></li>
+                </ul>
+            </div>
 
-        <div class="pagination">
-            <ul>
-                <li><a href="javascript:void(0)">Prev</a></li>
-                <li><a href="javascript:void(0)" class="active">1</a></li>
-                <li><a href="javascript:void(0)">2</a></li>
-                <li><a class="pagination-gap">...</a></li>
-                <li><a href="javascript:void(0)">24</a></li>
-                <li><a href="javascript:void(0)">25</a></li>
-                <li><a href="javascript:void(0)">Next</a></li>
-            </ul>
+            <div class="clear"></div>
         </div>
+    </form>
 
-        <div class="clear"></div>
-    </div>
+    <script>
+        function redirect(obj,id,type) {
+            var abc = obj.trim();
+            
+            if (abc == "Active" ) {
+                window.location.href = '/QuatationViewCart/index?id='+id+'';
+            }
+            else if (abc == "Due") {
+                window.location.href = '/QuatationViewCartDue/index?id='+id+'';
+            }
+            
+        }
+    </script>
+
     @*}*@
     @*@if (ViewBag.Type == "Vendor")
         {

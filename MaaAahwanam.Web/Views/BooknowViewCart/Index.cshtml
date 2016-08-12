@@ -28,8 +28,8 @@
 
     <div class="dashInner">
         <div class="order-details">
-            <h2>Order ID : SAD12465</h2>
-            <p>Order Date : 12-12-2015</p>
+            <h2>Order ID : <span id="orderid" style="font-size:larger"></span></h2>
+            <p>Order Date : <span id="orderdate"></span></p>
             <div class="clear"></div>
         </div>
         <!-- /order-details -->
@@ -245,9 +245,9 @@
                         <tr>
                             <td style="width:55%;">Sub Total</td>
                             <td style="width:15%;" align="center">:</td>
-                            <td style="width:30%;">1200.00</td>
+                            <td style="width:30%;">@ViewBag.subtotal</td>
                         </tr>
-                        <tr>
+                        @*<tr>
                             <td>Tax</td>
                             <td align="center">:</td>
                             <td>99.00</td>
@@ -256,13 +256,13 @@
                             <td><h5>Payble Total</h5></td>
                             <td align="center"><h5>:</h5></td>
                             <td><h5>1299.00</h5></td>
-                        </tr>
+                        </tr>*@
                     </table>
                 </div>
                 <div class="clear"></div>
             </div>
             <!-- /total-price -->
-            <div class="paid-amount">
+            @*<div class="paid-amount">
                 <h5>Amount Paid&nbsp;&nbsp;:&nbsp;&nbsp;Rs. 650.00</h5>
                 <h4>Balance Amount to be Paid&nbsp;&nbsp;:&nbsp;&nbsp;Rs. 1650.00</h4>
             </div>
@@ -270,7 +270,7 @@
                 <button class="btn btn-big btn-red"><i class="ti-close"></i> Cancel</button>
                 <button class="btn btn-big btn-green" onclick="window.location.href='/Payment/Index';"><i class="ti-money"></i> Pay Now</button>
                 <div class="clear"></div>
-            </div>
+            </div>*@
             <div class="clear"></div>
         </div>
         <!-- /price-information -->
@@ -312,7 +312,33 @@
     </div>
     <!-- /dashInner -->
 
-
+<script>
+    window.onload = function () {
+        var orderdate = $("#orderdate");
+        var url = window.location.href;
+        var date = url.substring(url.lastIndexOf('=') + 1);
+        orderdate.html(date);
+        var sPageURL = window.location.search.substring(1);
+        //alert(sPageURL);
+        var sURLVariables = sPageURL.split('&');
+        
+        for (var i = 0; i < sURLVariables.length; i++)
+            
+        {
+            
+            var sParameterName = sURLVariables[i].split('=');
+            alert(sp);
+            if (sParameterName[0] == sParam)
+              
+            {
+                alert(sParameterName[1]);
+                return sParameterName[1];
+           
+            }
+          
+        }
+    }
+</script>
 
 
 

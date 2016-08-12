@@ -48,6 +48,9 @@
         <Function Name="sp_OrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OrderNo" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="sp_ServiceComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ServiceId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="sp_Servicedetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RequestId" Type="bigint" Mode="In" />
         </Function>
@@ -108,6 +111,9 @@
           </FunctionImport>
           <FunctionImport Name="sp_LeastBidRecord" ReturnType="Collection(MaaAahwanamModel.sp_LeastBidRecord_Result)">
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ServiceComments" ReturnType="Collection(MaaAahwanamModel.sp_ServiceComments_Result)">
+            <Parameter Name="ServiceId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -317,6 +323,11 @@
           <Property Type="DateTime" Name="EventStartTime" Nullable="true" Precision="23" />
           <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="Budget" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="sp_ServiceComments_Result">
+          <Property Type="String" Name="CommentDetails" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -605,6 +616,15 @@
                 <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Budget" ColumnName="Budget" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ServiceComments" FunctionName="MaaAahwanamModel.Store.sp_ServiceComments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_ServiceComments_Result">
+                <ScalarProperty Name="CommentDetails" ColumnName="CommentDetails" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -142,7 +142,7 @@
                     {
                             <tr>
                                 <td>@(++i)</td>
-                                <td><a href="~/BooknowViewCart/Index?id=@item.OrderId" class="green-link ml-center">@item.OrderId</a></td>
+                                <td><a href="~/BooknowViewCart/Index?id=@item.OrderId&date=@item.OrderDate.ToShortDateString()" class="green-link ml-center">@item.OrderId</a></td>
                                 <td>@item.ServicType</td>
                                 <td>@item.OrderDate.ToShortDateString()</td>
                                 <td>@item.TotalPrice</td>
@@ -191,7 +191,7 @@
                                 <td>@item.Type</td>
                                 <td>@item.UpdatedTime.ToShortDateString()</td>
                                 <td>@item.Budget</td>
-                                @if (item.Status == "Active")
+                                @if (item.Status == "Paid")
                                 {
                                     <td class="active">@item.Status</td>
                                 }
@@ -233,11 +233,11 @@
         function redirect(obj,id,type) {
             var abc = obj.trim();
             
-            if (abc == "Active" ) {
-                window.location.href = '/QuatationViewCart/index?id='+id+'';
+            if (abc == "Paid") {
+                window.location.href = '/QuatationViewCartDue/index?id=' + id + '';
             }
             else if (abc == "Due") {
-                window.location.href = '/QuatationViewCartDue/index?id='+id+'';
+                window.location.href = '/QuatationViewCart/index?id=' + id + '';
             }
             
         }
