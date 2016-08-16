@@ -11,10 +11,11 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class sp_ServiceComments_Result
+    public partial class orderconfirmation_Result
     {
-        public string CommentDetails { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string BusinessName { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
+        public string Landmark { get; set; }
+        public decimal ServicePrice { get; set; }
     }
 }

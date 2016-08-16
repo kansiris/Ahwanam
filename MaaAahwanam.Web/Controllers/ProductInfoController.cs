@@ -46,7 +46,6 @@ namespace MaaAahwanam.Web.Controllers
             return RedirectToAction("Index", "Signin");
         }
 
-        [Authorize]
         public JsonResult Addtocart(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -84,9 +83,68 @@ namespace MaaAahwanam.Web.Controllers
             return Json(mesaage);
         }
 
-        //public JsonResult Addtocart(OrderRequest orderRequest)
-        //{
+        public JsonResult Buynow(OrderRequest orderRequest)
+        {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            //CartItem cartItem = new CartItem();
+            //cartItem.VendorId = orderRequest.VendorId;
+            //cartItem.ServiceType = orderRequest.ServiceType;
+            //cartItem.TotalPrice = orderRequest.TotalPrice;
+            //cartItem.Orderedby = user.UserId;
+            //cartItem.UpdatedDate = DateTime.Now;
 
-        //}
+            EventInformation eventInformation = new EventInformation();
+            eventInformation.EventName = orderRequest.EventName;
+            eventInformation.Email = orderRequest.Email;
+            eventInformation.Address = orderRequest.Address;
+            eventInformation.Location = orderRequest.Location;
+            eventInformation.Phone = orderRequest.Phone;
+            eventInformation.PostalCode = orderRequest.PostalCode;
+            eventInformation.State = orderRequest.State;
+            eventInformation.City = orderRequest.City;
+
+            EventDate eventDate = new EventDate();
+            foreach (var item in orderRequest.EventDates)
+            {
+                eventDate.StartDate = item.StartDate;
+                eventDate.StartTime = item.StartTime;
+                eventDate.EndDate = item.EndDate;
+                eventDate.EndTime = item.EndTime;
+            }
+            //CartService cartService = new CartService();
+            //string mesaage = cartService.AddCartItem(cartItem);
+            EventsService eventsService = new EventsService();
+            string mesaage1 = eventsService.SaveEventinformation(eventInformation);
+            EventDatesServices eventDatesServices = new EventDatesServices();
+            string message3 = eventDatesServices.SaveEventDates(eventDate);
+
+            OrderService orderService = new OrderService();
+            Order order = new Order();
+            order.TotalPrice = orderRequest.TotalPrice;
+            order.OrderDate = DateTime.Now;
+            order.UpdatedBy = user.UserId;
+            order = orderService.SaveOrder(order);
+
+            Payment_orderServices payment_orderServices = new Payment_orderServices();
+            Payment_Orders payment_Orders = new Payment_Orders();
+            payment_Orders.cardnumber = orderRequest.cardnumber;
+            payment_Orders.CVV = orderRequest.CVV;
+            payment_Orders.PaymentID = orderRequest.PaymentId;
+            payment_Orders.Paiddate = orderRequest.Paiddate;
+            payment_Orders.OrderID = order.OrderId;
+            payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
+
+            OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.OrderBy = user.UserId;
+            orderDetail.PaymentId = payment_Orders.PaymentID;
+            orderDetail.ServiceType = orderRequest.ServiceType;
+            orderDetail.ServicePrice = orderRequest.TotalPrice;
+            orderDetail.OrderId = order.OrderId;
+            orderDetail.VendorId = orderRequest.VendorId;
+            orderdetailsServices.SaveOrderDetail(orderDetail);
+
+            return Json("success");
+        }
     }
 }

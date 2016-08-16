@@ -23,6 +23,7 @@ namespace MaaAahwanam.Models
         public string Status { get; set; }
         public List<EventDate> EventDates { get; set; }
 
+        //public List<OrderDetail> OrderDetail { get; set; }
         public long OrderedBy { get; set; }
         public long OrderNumber { get; set; }
         public long PaymentId { get; set; }
@@ -37,5 +38,12 @@ namespace MaaAahwanam.Models
         public decimal Discount { get; set; }
         public decimal DiscountPrice { get; set; }
 
+        //public long PaymentID { get; set; }
+        //public long OrderID { get; set; }
+        public decimal paidamount { get; set; }
+        public string cardnumber { get; set; }
+        public string CVV { get; set; }
+        public DateTime Paiddate { get; set; }
+        public long RequestID { get; set; }
     }
 }
