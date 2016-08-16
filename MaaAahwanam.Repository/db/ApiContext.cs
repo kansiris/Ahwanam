@@ -52,8 +52,5 @@ namespace MaaAahwanam.Repository.db
         public DbSet<VendorVenue> VendorVenue { get; set; }
         public DbSet<TempVenueDetail> TempVenueDetail { get; set; }
         public DbSet<Availabledates> Availabledates { get; set; }
-        public DbSet<Payments_Requests> Payments_Requests { get; set; }
-        public DbSet<Payment_Orders> Payment_Orders { get; set; }
-
-    }
+     }
 }

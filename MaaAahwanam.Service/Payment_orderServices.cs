@@ -10,11 +10,16 @@ namespace MaaAahwanam.Service
 {
     public class Payment_orderServices
     {
+        PaymentOrdersRepository paymentOrdersRepository = new PaymentOrdersRepository();
         public Payment_Orders SavePayment_Orders(Payment_Orders payment_Orders)
         {
-            PaymentOrdersRepository paymentOrdersRepository = new PaymentOrdersRepository();
             payment_Orders = paymentOrdersRepository.SavePayment_Orders(payment_Orders);
             return payment_Orders;
+        }
+
+        public List<Payment_Orders> GetPaymentOrderService(long id)
+        {
+            return paymentOrdersRepository.GetPaymentOrder(id);
         }
     }
 }

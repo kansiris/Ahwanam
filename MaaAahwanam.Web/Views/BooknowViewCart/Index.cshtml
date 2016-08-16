@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
+    var i = 0;
 }
 @section Navigation
 {
@@ -285,26 +286,17 @@
                         <th style="width:20%">Amount</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>17-12-2015</td>
-                        <td>Paid with Visa card -  card XXXXXXXX3002</td>
-                        <td>Rs. 600</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>17-12-2015</td>
-                        <td>Paid with Visa card -  card XXXXXXXX3002</td>
-                        <td>Rs. 600</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>17-12-2015</td>
-                        <td>Paid with Visa card -  card XXXXXXXX3002</td>
-                        <td>Rs. 600</td>
-                    </tr>
-                </tbody>
+                @foreach (var item in ViewBag.payment)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@(++i)</td>
+                            <td>@item.Paiddate.ToShortDateString()</td>
+                            <td>Paid with Visa card -  card @item.cardnumber</td>
+                            <td>Rs. @item.paidamount</td>
+                        </tr>
+                    </tbody>
+                }
             </table>
             <div class="clear"></div>
         </div>
