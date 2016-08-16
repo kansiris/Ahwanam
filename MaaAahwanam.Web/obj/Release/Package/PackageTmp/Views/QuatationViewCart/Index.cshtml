@@ -1,4 +1,4 @@
-﻿
+﻿@model MaaAahwanam.Models.CommentDetail
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
@@ -52,10 +52,6 @@
                                 <tr>
                                     <td>
                                         <p id="desc"></p>
-                                        @*<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                                        <p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                                        <p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>*@
                                     </td>
                                 </tr>
                             </tbody>
@@ -70,8 +66,6 @@
                                 <tr>
                                     <td>
                                         <p id="pref"></p>
-                                        @*<p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                                        <p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>*@
                                     </td>
                                 </tr>
                             </tbody>
@@ -98,24 +92,28 @@
                 </thead>
                 
                 <tbody>
-                    @foreach (var item in ViewBag.service)
+                    @if (ViewBag.service != null)
                     {
-                        <tr>
-                            <td><input type="radio" name="quatation" /></td>
-                            <td>@(++i)</td>
-                            <td><a href="#quatation" onclick="displaypopup('@item.Description','@item.Preferences')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
-                            <td>@item.UpdatedDate.ToShortDateString()</td>
-                            <td>@item.Description</td>
-                            <td>Rs.@item.Budget</td>
-                            <td>Rs.@item.Amount</td>
-                        </tr>
+                        foreach (var item in ViewBag.service)
+                        {
+                            <tr>
+                                <td><input type="radio" name="quatation" /></td>
+                                <td>@(++i)</td>
+                                <td><a href="#quatation" onclick="displaypopup('@item.Description','@item.Preferences')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
+                                <td>@item.UpdatedDate.ToShortDateString()</td>
+                                <td>@item.Description</td>
+                                <td>Rs.@item.Budget</td>
+                                <td>Rs.@item.Amount</td>
+                            </tr>
+                        }
                     }
+                    
                 </tbody>
             </table>
             <div class="clear"></div>
         </div>
         <!-- /dashboardList -->
-        <div class="price-information">
+        <div class="price-information" style="display:none">
             <div class="total-price">
                 <div class="price-desc">
                     <h6>Payment Terms & Conditions</h6>
@@ -146,23 +144,29 @@
             <div class="paid-amount">
                 <h5>Advance Amount to be paid&nbsp;&nbsp;:&nbsp;&nbsp;Rs. 650.00</h5>
             </div>
-            <div class="pay-btn btn-right">
-                <button class="btn btn-big btn-green" onclick="window.location.href='/Payment/Index';"><i class="ti-money"></i> Pay Now</button>
-                <div class="clear"></div>
-            </div>
+            
             <div class="clear"></div>
         </div>
+     <br/>
+     <div class="pay-btn btn-right">
+         <button class="btn btn-big btn-green" onclick="window.location.href='/Payment/Index';"><i class="ti-money"></i> Pay Now</button>
+         <div class="clear"></div>
+     </div>
         <!-- /price-information -->
-
+     <br/><br/>
         <div class="comments-box">
             <form id="contact_form" class="form">
                 <ul>
                     <li class="full">
                         <label>Comments</label>
-                        <textarea id="comments" name="comments" placeholder="Enter your comments here ..."></textarea>
+                        @Html.TextAreaFor(Model => Model.CommentDetails, new { @class = "form-control", placeholder = "Enter your comments here ...", @rows = "3" })
+                        @*<textarea id="comments" name="comments" placeholder="Enter your comments here ..."></textarea>*@
                     </li>
                 </ul>
-                <button class="btn btn btn-orange m-l-0 btn-right"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
+                <button class="btn btn btn-orange m-l-0 btn-right" type="submit" name="command"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
+                @using (Html.BeginForm())
+                {
+                <input type="submit" value="Submit" class="btn btn btn-orange m-l-0 btn-right" name="command" />}
                 <div class="clear"></div>
             </form>
 
@@ -170,44 +174,32 @@
         </div>
         <!-- /comments-box -->
         <div class="replyStyle comments m-t-30">
-            <h2>Comments <span>(04)</span></h2>
-            <dl class="first-child">
-                <dt><img class="person" alt="img-profile1" src="../CSSWeb/images/dashboard/img-profile1.jpg"></dt>
-                <dd>
-                    <h5>Satyam Ganta</h5>
-                    <p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <div class="cmntsPublish">
-                        <ul>
-                            <li><i class="ti-time"></i><span>23 May 2014</span></li>
-                        </ul>
-                    </div>
-                </dd>
-            </dl>
-            <dl>
-                <dt><img class="person" alt="img-profile" src="../CSSWeb/images/dashboard/img-profile.jpg"></dt>
-                <dd>
-                    <h5>Lorem ipsum dolor</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="cmntsPublish">
-                        <ul>
-                            <li><i class="icon-time"></i><span>23 May 2014</span></li>
-                        </ul>
-                    </div>
-                </dd>
-            </dl>
-            <dl>
-                <dt><img class="person" alt="item-img2" src="../CSSWeb/images/dashboard/item-img2.jpg"></dt>
-                <dd>
-                    <h5>minim veniam</h5>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <div class="cmntsPublish">
-                        <ul>
-                            <li><i class="icon-time"></i><span>23 May 2014</span></li>
-                        </ul>
-                    </div>
-                </dd>
-            </dl>
-        </div>
+            <h2>Comments <span>(@ViewBag.commentscount)</span></h2>
+            @if (ViewBag.comments != null)
+            {
+                foreach (var item in ViewBag.comments)
+                {
+                    <dl class="first-child">
+                        <dt><img class="person" alt="img-profile1" src="../CSSWeb/images/dashboard/img-profile1.jpg"></dt>
+                        <dd>
+                            <h5>@item.BusinessName</h5>
+                            <p>@item.CommentDetails.</p>
+                            <div class="cmntsPublish">
+                                <ul>
+                                    <li><i class="ti-time"></i><span>@item.UpdatedDate.ToShortDateString()</span></li>
+                                </ul>
+                            </div>
+                        </dd>
+                    </dl>
+                }
+            }
+            @if (ViewBag.comments == null)
+            {
+                <dl>
+                    <p>No Comments</p>
+                </dl>
+            }
+            </div>
         <div class="clear"></div>
 
     </div>
