@@ -12,14 +12,21 @@ namespace MaaAahwanam.Web.Controllers
     public class QuatationViewCartController : Controller
     {
         DashBoardService dashBoardService = new DashBoardService();
-        public ActionResult Index(string id,string command,CommentDetail commentDetail)
+        public ActionResult Index(string id)
         {
             if (id!=null)
             {
                 ViewBag.service = dashBoardService.GetServiceDetailService(long.Parse(id));
                 ViewBag.comments = dashBoardService.GetServiceComments(long.Parse(id));
                 ViewBag.commentscount = dashBoardService.GetServiceComments(long.Parse(id)).Count;
+                ViewBag.id = id;
             }
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult Index(string id, string command, CommentDetail commentDetail)
+        {
             if (command == "Submit")
             {
                 commentDetail.CommentId = dashBoardService.GetCommentId(id);
@@ -28,11 +35,11 @@ namespace MaaAahwanam.Web.Controllers
                 commentDetail = dashBoardService.InsertCommentService(commentDetail);
                 if (commentDetail.CommentDetId != 0)
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("QuatationViewCart", "index") + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
                 }
-                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("QuatationViewCart", "index") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
             }
             return View();
         }
-	}
+    }
 }

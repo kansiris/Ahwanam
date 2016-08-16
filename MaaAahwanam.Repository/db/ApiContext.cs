@@ -24,6 +24,8 @@ namespace MaaAahwanam.Repository.db
         public DbSet<EventsandTip> EventsandTip { get; set; }
         public DbSet<IssueDetail> IssueDetail { get; set; }
         public DbSet<IssueTicket> IssueTicket { get; set; }
+        public DbSet<Payments_Requests> Payments_Requests { get; set; }
+        public DbSet<Payment_Orders> Payment_Orders { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetail> OrderDetail { get; set; }
         public DbSet<OrdersServiceRequest> OrdersServiceRequest { get; set; }

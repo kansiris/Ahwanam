@@ -155,20 +155,23 @@
         <!-- /price-information -->
      <br/><br/>
         <div class="comments-box">
-            <form id="contact_form" class="form">
-                <ul>
+            @*<form id="contact_form" class="form">*@
+                @using (Html.BeginForm("Index", "QuatationViewCart", routeValues: new { id = @ViewBag.id }, method: FormMethod.Post)) //"index", "QuatationViewCart",new { @id="contact_from",@class="form"}
+                {
+                <ul id="contact_form" class="form">
                     <li class="full">
                         <label>Comments</label>
                         @Html.TextAreaFor(Model => Model.CommentDetails, new { @class = "form-control", placeholder = "Enter your comments here ...", @rows = "3" })
                         @*<textarea id="comments" name="comments" placeholder="Enter your comments here ..."></textarea>*@
                     </li>
                 </ul>
-                <button class="btn btn btn-orange m-l-0 btn-right" type="submit" name="command"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
-                @using (Html.BeginForm())
-                {
-                <input type="submit" value="Submit" class="btn btn btn-orange m-l-0 btn-right" name="command" />}
+                
+                
+                    <button class="btn btn btn-orange m-l-0 btn-right" type="submit" name="command" value="Submit"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
+                    <input type="submit" value="Submit" class="btn btn btn-orange m-l-0 btn-right" name="command" />
+                }
                 <div class="clear"></div>
-            </form>
+            @*</form>*@
 
             <div class="clear"></div>
         </div>
@@ -180,7 +183,7 @@
                 foreach (var item in ViewBag.comments)
                 {
                     <dl class="first-child">
-                        <dt><img class="person" alt="img-profile1" src="../CSSWeb/images/dashboard/img-profile1.jpg"></dt>
+                        <dt><img class="person" alt="img-profile1" src="~/CSSWeb/images/dashboard/img-profile1.jpg"></dt>
                         <dd>
                             <h5>@item.BusinessName</h5>
                             <p>@item.CommentDetails.</p>
@@ -206,26 +209,28 @@
     <!-- /dashInner -->
 
 <script>
+    //displays order id on page load
     window.onload = function () {
         var label = $("#label");
         var url = window.location.href;
         var id = url.substring(url.lastIndexOf('=') + 1);
         label.html(id);
 
-        $('#mytable tbody tr').each(function () {
-            var budget = $(this).find("td").eq(5).html();
-            var amount = $("#price");
-            var taxamount = $("#tax");
-            //tax calculation
-            var taxpercent = 0;
-            var taxcalc = ((budget.substring(budget.indexOf(".") + 1))* taxpercent)/100;
-            taxamount.html(taxcalc);
-            amount.html(budget);
-        });
+    //    $('#mytable tbody tr').each(function () {
+    //        var budget = $(this).find("td").eq(5).html();
+    //        var amount = $("#price");
+    //        var taxamount = $("#tax");
+    //        //tax calculation
+    //        var taxpercent = 0;
+    //        var taxcalc = ((budget.substring(budget.indexOf(".") + 1))* taxpercent)/100;
+    //        taxamount.html(taxcalc);
+    //        amount.html(budget);
+    //    });
     };
 </script>
 
 <script>
+    //displays description and preference in modal popup
     function displaypopup(description, preference) {
         var desc = $("#desc");
         var pref = $("#pref");
