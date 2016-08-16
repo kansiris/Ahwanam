@@ -849,38 +849,69 @@
             orderRequest.PostalCode = EPostalCode;
             orderRequest.State = EState;
             orderRequest.EventDates = EventDates;
-            //alert(orderRequest.Email);
-
-            $.ajax({
-                type: "POST",
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Addtocart',
-                data: {},
-                data: JSON.stringify(orderRequest),
-                //data: sendInfo,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (data == "Success") {
-                        if (document.getElementById("btnname").value == "addtocartbtn") {
-                            location.reload();
+            
+            //alert(document.getElementById("btnname").value);
+            if (document.getElementById("btnname").value == "addtocartbtn") {
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Addtocart',
+                    data: {},
+                    data: JSON.stringify(orderRequest),
+                    //data: sendInfo,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Success") {
+                            //if (document.getElementById("btnname").value == "addtocartbtn") {
+                                location.reload();
+                            //}
+                            //else if (document.getElementById("btnname").value == "buynow") {
+                            //    //window.location.href = '/CartView';
+                            //    alert('buyout_thank you page');
+                            //}
                         }
-                        else if (document.getElementById("btnname").value == "buynow") {
-                            window.location.href = '/CartView';
+                        else if (data == "NotLogin") {
+                            //window.location.href = '/Signin';
                         }
+                    },
+                    error: function (data) {
+                        alert('error')
                     }
-                    else if (data == "NotLogin") {
-                        //window.location.href = '/Signin';
+                });
+            }
+            else if (document.getElementById("btnname").value == "buynow") {
+                orderRequest.paidamount = "100.50";
+                orderRequest.cardnumber = "4222222222222";
+                orderRequest.CVV = "214";
+                orderRequest.Paiddate = "11/12/2016";
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Buynow',
+                    data: {},
+                    data: JSON.stringify(orderRequest),
+                    //data: sendInfo,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Success") {
+                            //if (document.getElementById("btnname").value == "addtocartbtn") {
+                                location.reload();
+                            //}
+                            //else if (document.getElementById("btnname").value == "buynow") {
+                            //    //window.location.href = '/CartView';
+                            //    alert('buyout_thank you page');
+                            //}
+                        }
+                        //else if (data == "NotLogin") {
+                            //window.location.href = '/Signin';
+                        //}
+                    },
+                    error: function (data) {
+                        alert('error')
                     }
-                },
-                error: function (data) {
-
-                    alert('error')
-                }
-            });
-            return false;
+                });
+            }
         });
-
-
     </script>
     <script>
         //Operations to be done after binding from cart

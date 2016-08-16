@@ -21,5 +21,11 @@ namespace MaaAahwanam.Service
             OrderRepository orderRepository = new OrderRepository();
             return orderRepository.GetOrderDetailsList(id);
         }
+        public Order SaveOrder(Order order)
+        {
+            OrderRepository orderRepository = new OrderRepository();
+            order = orderRepository.PostOrderDetails(order);
+            return order;
+        }
     }
 }
