@@ -16,5 +16,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return payment_Orders;
         }
+
+        public List<Payment_Orders> GetPaymentOrder(long id)
+        {
+           return _dbContext.Payment_Orders.Where(m => m.OrderID == id).ToList();
+        }
     }
 }
