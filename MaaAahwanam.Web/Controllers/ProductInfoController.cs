@@ -24,8 +24,11 @@ namespace MaaAahwanam.Web.Controllers
             string Servicetype = Request.QueryString["par"];
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype);
+            if(Productinfo.image!=null)
+            { 
             string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
             ViewBag.Imagelist = imagenameslist;
+            }
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);
 
@@ -86,12 +89,6 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult Buynow(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            //CartItem cartItem = new CartItem();
-            //cartItem.VendorId = orderRequest.VendorId;
-            //cartItem.ServiceType = orderRequest.ServiceType;
-            //cartItem.TotalPrice = orderRequest.TotalPrice;
-            //cartItem.Orderedby = user.UserId;
-            //cartItem.UpdatedDate = DateTime.Now;
 
             EventInformation eventInformation = new EventInformation();
             eventInformation.EventName = orderRequest.EventName;
@@ -103,6 +100,7 @@ namespace MaaAahwanam.Web.Controllers
             eventInformation.State = orderRequest.State;
             eventInformation.City = orderRequest.City;
 
+            EventDatesServices eventDatesServices = new EventDatesServices();
             EventDate eventDate = new EventDate();
             foreach (var item in orderRequest.EventDates)
             {
@@ -110,13 +108,10 @@ namespace MaaAahwanam.Web.Controllers
                 eventDate.StartTime = item.StartTime;
                 eventDate.EndDate = item.EndDate;
                 eventDate.EndTime = item.EndTime;
+                string message3 = eventDatesServices.SaveEventDates(eventDate);
             }
-            //CartService cartService = new CartService();
-            //string mesaage = cartService.AddCartItem(cartItem);
             EventsService eventsService = new EventsService();
             string mesaage1 = eventsService.SaveEventinformation(eventInformation);
-            EventDatesServices eventDatesServices = new EventDatesServices();
-            string message3 = eventDatesServices.SaveEventDates(eventDate);
 
             OrderService orderService = new OrderService();
             Order order = new Order();
@@ -136,6 +131,7 @@ namespace MaaAahwanam.Web.Controllers
 
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
+            orderDetail.OrderId = order.OrderId;
             orderDetail.OrderBy = user.UserId;
             orderDetail.PaymentId = payment_Orders.PaymentID;
             orderDetail.ServiceType = orderRequest.ServiceType;
@@ -144,7 +140,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.VendorId = orderRequest.VendorId;
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
-            return Json("success");
+            return Json(orderDetail.OrderId);
         }
     }
 }

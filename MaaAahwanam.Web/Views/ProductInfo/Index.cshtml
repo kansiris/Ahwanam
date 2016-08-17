@@ -86,9 +86,18 @@
                         </div>
                         @*<div class="zoomDiv">*@
                         <div class="sp-wrap">
-                            @foreach (var item in ViewBag.Imagelist)
+                            @if (ViewBag.Imagelist != null)
                             {
-                                <a href="~/vendorimages/@item"> <img src="~/vendorimages/@item" alt="thumb"></a>
+                                foreach (var item in ViewBag.Imagelist)
+                                {
+                                    <a href="~/vendorimages/@item"> <img src="~/vendorimages/@item" alt="thumb"></a>
+                                }
+                            }
+                            else if (ViewBag.Imagelist == null)
+                            {
+                                <a href="#" onclick="return false">
+                                    <img src="~/noimages.png" />
+                                </a>
                             }
                         </div>
                         @*</div>*@
@@ -445,7 +454,8 @@
                     <div class="ad_250" style="background-color:white;">
                         <div style="border: groove; width: 75%; height:230px;">
                             <br />
-                            <label style="font-size:14px; line-height:20px; display:block; color:#f38e07; position:relative; z-index:1; text-align:center; font-family:'aileronbold';align-content:center">CHECK AVAILABILITY</label>
+                            @*<label style="font-size:14px; line-height:20px; display:block; color:#f38e07; position:relative; z-index:1; text-align:center; font-family:'aileronbold';align-content:center">CHECK AVAILABILITY</label>*@
+                            <label style="font-size:14px;margin-left:40px;margin-bottom:10px; line-height:20px;color:#f38e07; font-family:'aileronbold'">CHECK AVAILABILITY</label>
                             <br />
                             <center><input type="text" name="Email" placeholder="Start Date" id="datetimepicker1"></center>
                             <br />
@@ -849,7 +859,7 @@
             orderRequest.PostalCode = EPostalCode;
             orderRequest.State = EState;
             orderRequest.EventDates = EventDates;
-            
+
             //alert(document.getElementById("btnname").value);
             if (document.getElementById("btnname").value == "addtocartbtn") {
                 $.ajax({
@@ -863,7 +873,7 @@
                     success: function (data) {
                         if (data == "Success") {
                             //if (document.getElementById("btnname").value == "addtocartbtn") {
-                                location.reload();
+                            location.reload();
                             //}
                             //else if (document.getElementById("btnname").value == "buynow") {
                             //    //window.location.href = '/CartView';
@@ -893,17 +903,17 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
-                        if (data == "success") {
+                        if (data != null) {
                             //if (document.getElementById("btnname").value == "addtocartbtn") {
-                                //location.reload();
+                            //location.reload();
                             //}
                             //else if (document.getElementById("btnname").value == "buynow") {
                             //alert('buyout_thank you page');
-                            window.location.href = '/orderconfirmation';
+                            window.location.href = '/orderconfirmation?oid=' + data;
                             //}
                         }
                         //else if (data == "NotLogin") {
-                            //window.location.href = '/Signin';
+                        //window.location.href = '/Signin';
                         //}
                     },
                     error: function (data) {

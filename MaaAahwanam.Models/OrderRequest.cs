@@ -23,7 +23,7 @@ namespace MaaAahwanam.Models
         public string Status { get; set; }
         public List<EventDate> EventDates { get; set; }
 
-        //public List<OrderDetail> OrderDetail { get; set; }
+        public List<OrderDetail> OrderDetail { get; set; }
         public long OrderedBy { get; set; }
         public long OrderNumber { get; set; }
         public long PaymentId { get; set; }

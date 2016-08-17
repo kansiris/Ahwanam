@@ -11,6 +11,7 @@ namespace MaaAahwanam.Models
     public class OrderDetail
     {
         [Key]
+        public long OrderMasterId { get; set; }
         public long OrderId { get; set; }
         public long VendorId { get; set; }
         public string ServiceType { get; set; }

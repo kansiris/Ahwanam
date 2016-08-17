@@ -131,14 +131,22 @@
                                 {
                                     foreach (var item in this.Model)
                                     {
-                                         <div id="PhotographersDiv" class="step2">
+                                        <div id="PhotographersDiv" class="step2">
                                             <div class="deals-main" id="main">
                                                 <div class="deal">
                                                     <div class="deal-thumb">
                                                         <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id">
                                                             <div class="zoomDiv">
                                                                 @* <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id">*@
-                                                                <img src="~/vendorimages/@item.image" alt="thumb">
+                                                                @if (item.image != null)
+                                                                {
+                                                                    <img src="~/vendorimages/@item.image" alt="thumb">
+                                                                }
+                                                                else if (item.image == null)
+                                                                {
+                                                                    @*<img src="~/vendorimages/@item.image" alt="thumb">*@
+                                                                    <img src="~/noimages.png" alt="No Image"/>
+                                                                }
                                                                 @*</a>*@
                                                                 <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
 
@@ -170,7 +178,7 @@
                                 }
                                 @*}*@
                             </div>
-                            
+
                             <div id="sss"></div>
 
 

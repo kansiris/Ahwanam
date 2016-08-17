@@ -14,8 +14,10 @@ namespace MaaAahwanam.Web.Controllers
         // GET: OrderConfirmation
         public ActionResult Index()
         {
+            int OID = int.Parse(Request.QueryString["oid"]);
             OrderConfirmationService orderConfirmationService = new OrderConfirmationService();
-            List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation();
+            List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
+            @ViewBag.Total =list.Sum(i=>i.ServicePrice);
             ViewBag.Orderconfirmation = list;
             return View();
         }

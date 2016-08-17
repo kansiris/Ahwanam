@@ -11,10 +11,10 @@ namespace MaaAahwanam.Service
 {
     public class OrderConfirmationService
     {
-        public List<orderconfirmation_Result> GetOrderConfirmation()
+        public List<orderconfirmation_Result> GetOrderConfirmation( int OID)
         {
             OrderConfirmationRepository orderConfirmationRepository = new OrderConfirmationRepository();
-            var list = orderConfirmationRepository.GetOrderConfirmation().ToList<orderconfirmation_Result>();
+            var list = orderConfirmationRepository.GetOrderConfirmation(OID).ToList<orderconfirmation_Result>();
             return list;
         }
     }
