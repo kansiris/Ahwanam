@@ -10,9 +10,9 @@ namespace MaaAahwanam.Repository.db
     public class OrderConfirmationRepository
     {
         MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
-        public List<orderconfirmation_Result> GetOrderConfirmation()
+        public List<orderconfirmation_Result> GetOrderConfirmation(int OID)
         {
-            var list= maaAahwanamEntities.orderconfirmation().ToList();
+            var list= maaAahwanamEntities.orderconfirmation(OID).ToList();
             return list;
         }
     }

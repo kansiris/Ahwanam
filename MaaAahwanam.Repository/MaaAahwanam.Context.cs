@@ -141,9 +141,13 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Services_Bidding_Result>("MaaAahwanam_Services_Bidding", requestIdParameter);
         }
     
-        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation()
+        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation");
+            var oIDParameter = oID.HasValue ?
+                new ObjectParameter("OID", oID) :
+                new ObjectParameter("OID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
         }
     
         public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders()

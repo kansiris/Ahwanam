@@ -40,6 +40,9 @@
         <Function Name="MaaAahwanam_Services_Bidding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RequestId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="orderconfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OID" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_AllOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_GetTestimonials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_LeastBidRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -98,23 +101,25 @@
           <FunctionImport Name="MaaAahwanam_Services_Bidding" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Services_Bidding_Result)">
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="orderconfirmation" ReturnType="Collection(MaaAahwanamModel.orderconfirmation_Result)" />
+          <FunctionImport Name="orderconfirmation" ReturnType="Collection(MaaAahwanamModel.orderconfirmation_Result)" >
+          <Parameter Name="OID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_AllOrders" ReturnType="Collection(MaaAahwanamModel.sp_AllOrders_Result)" />
           <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
           <FunctionImport Name="SP_vendordatesbooked" ReturnType="Collection(MaaAahwanamModel.SP_vendordatesbooked_Result)">
           <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_LeastBidRecord" ReturnType="Collection(MaaAahwanamModel.sp_LeastBidRecord_Result)">
-            <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_OrderDetails" ReturnType="Collection(MaaAahwanamModel.sp_OrderDetails_Result)">
-            <Parameter Name="OrderNo" Mode="In" Type="Int64" />
+          <Parameter Name="OrderNo" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_ServiceComments" ReturnType="Collection(MaaAahwanamModel.sp_ServiceComments_Result)">
-            <Parameter Name="ServiceId" Mode="In" Type="Int64" />
+          <Parameter Name="ServiceId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_Servicedetails" ReturnType="Collection(MaaAahwanamModel.sp_Servicedetails_Result)">
-            <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -546,6 +551,16 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="orderconfirmation" FunctionName="MaaAahwanamModel.Store.orderconfirmation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.orderconfirmation_Result">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
