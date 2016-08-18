@@ -17,10 +17,10 @@
                         <li><a href="~/Index/Index">Home</a></li>
                         <li><i class="breads_arrow"></i></li>
                         @*<li><a href="index.html">Categories</a></li>
-                        <li><i class="breads_arrow"></i></li>
-                        <li><a href="index.html">Photographers</a></li>
-                        <li><i class="breads_arrow"></i></li>
-                        <li><a href="deal-info.html">Suspendisse vel urna sit amet</a></li>*@
+                            <li><i class="breads_arrow"></i></li>
+                            <li><a href="index.html">Photographers</a></li>
+                            <li><i class="breads_arrow"></i></li>
+                            <li><a href="deal-info.html">Suspendisse vel urna sit amet</a></li>*@
                         <li>@*<i class="breads_arrow"></i>*@</li>
                         <li>Cart view</li>
                     </ul>
@@ -39,7 +39,7 @@
                     <div class="dashboardList dashboardList-whitebg dashboardList-nospace">
                         @if (ViewBag.Cartlist.Count != 0)
                         {
-                            <table class="responsive">
+                            <table class="responsive" id="myTableId">
                                 <thead>
                                     <tr>
                                         <th style="width:35%">Item Details</th>
@@ -51,9 +51,18 @@
                                 <tbody>
                                     @foreach (var item in ViewBag.Cartlist)
                                     {
-                                        <tr>
+                                        <tr class="item">
                                             <td>
-                                                <div class="item-img"><img src="../vendorimages/@item.image" alt="item-img" /></div>
+                                                @if (item.image != null)
+                                                {
+                                                    <div class="item-img"><img src="../vendorimages/@item.image" alt="item-img" /></div>
+                                                }
+                                                else if (item.image == null)
+                                                {
+                                                    <div class="item-img">
+                                                        <img src="~/noimages.png" />
+                                                    </div>
+                                                }
                                                 <div class="item-details">
                                                     <h4>@item.Description</h4>
                                                 </div>
@@ -78,9 +87,9 @@
                                                 </div>
                                                 <a href="#add_new_date" class="orange-link upload_address popup-with-move-anim"><i class="ti-plus"></i> Add Date / Time</a>
                                             </td>
-                                            <td>
+                                            <td class="tdprice">
                                                 <div class="item-price">
-                                                    <p>Rs.@item.TotalPrice</p>
+                                                    Rs.<span class="value">@item.TotalPrice</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -244,15 +253,15 @@
                                 <div class="price-info">
                                     <table>
                                         @*<tr>
-                                            <td style="width:55%;">Sub Total</td>
-                                            <td style="width:15%;" align="center">:</td>
-                                            @*<td style="width:30%;">1200.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tax</td>
-                                            <td align="center">:</td>
-                                            <td>99.00</td>
-                                        </tr>*@
+                                                <td style="width:55%;">Sub Total</td>
+                                                <td style="width:15%;" align="center">:</td>
+                                                @*<td style="width:30%;">1200.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tax</td>
+                                                <td align="center">:</td>
+                                                <td>99.00</td>
+                                            </tr>*@
                                         <tr>
                                             <td><h5>Payble Total</h5></td>
                                             <td align="center"><h5>:</h5></td>
@@ -269,7 +278,9 @@
                             </div>
                             <div class="pay-btn btn-right">
                                 <button class="btn btn-big btn-orange" onclick="window.location.href='/Deals/Index';"> Add New Deal</button>
-                                <button class="btn btn-big btn-green" onclick="window.location.href='/Payment/Index';"> Pay Advance</button>
+                                <button type="button" name="submit" class="btn btn-big btn-green" value="submit" onclick="s()"> Pay Advance</button>
+                                @*<button type="button" name="submit" class="btn btn-big btn-green float-right" value="submit" id="lnkproceedtonext">Submit <i class="ti-angle-double-right"></i></button>*@
+                                @*<button class="btn btn-big btn-green" onclick="window.location.href='/Payment/Index';"> Pay Advance</button>*@
                                 <div class="clear"></div>
                             </div>
                             <div class="clear"></div>
@@ -285,3 +296,58 @@
     </div>
 </section>
 <div class="clear"></div>
+
+<script type="text/javascript">
+    function s() {
+        var j=0;
+        $('#myTableId > tbody > tr').each(function (i, tr) {
+            //$this = $(this)
+            //alert(this[0]);
+            OrderDetails = [];
+            item = { }
+            item["PerunitPrice"] = $("span.value").html();
+            OrderDetails.push(item);
+            j++;
+            alert(item["PerunitPrice"]);
+        });
+        //alert(OrderDetails[1]);
+
+        //$('#myTableId tr').each(function () {
+        //    var customerId = $(this).find(".item span.value").html();
+        //    alert(customerId);
+        //});
+        //$('#myTableId .tdprice').each(function () {
+        //    //alert($(this).html());
+        //    OrderDetails = [];
+        //    item = {}
+        //    item["PerunitPrice"] = $("span.value").html();
+        //    OrderDetails.push(item);
+        //});
+
+        var orderRequest = {};
+        orderRequest.OrderDetail = OrderDetails;
+
+        orderRequest.paidamount = "100.50";
+        orderRequest.cardnumber = "4222222222222";
+        orderRequest.CVV = "214";
+        orderRequest.Paiddate = "11/12/2016";
+        //$.ajax({
+        //    type: "POST",
+        //    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/CartView/payamount',
+        //    data: {},
+        //    data: JSON.stringify(orderRequest),
+        //    //data: sendInfo,
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+        //    success: function (data) {
+        //        if (data != null) {
+        //            window.location.href = '/orderconfirmation?oid=' + data;
+        //        }
+        //    },
+        //    error: function (data) {
+        //        alert('error')
+        //    }
+        //});
+    }
+    //});
+</script>

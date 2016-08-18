@@ -34,7 +34,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult QuotRequests(ServiceRequest serviceRequest, string BidReqId, string name, ServiceResponse serviceResponse)
         {
-            serviceRequest.Type = "Quotation";
+            serviceRequest.Type = "Quoatation";
             ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest);
             if (name=="View")
             {

@@ -53,11 +53,23 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.Comment.Where(m => m.ServiceId == id).Select(r => r.CommentId).FirstOrDefault();
         }
 
-        public CommentDetail InsertComment(CommentDetail commentDetail)
+        public Comment InsertComment(Comment comment)
+        {
+            _dbContext.Comment.Add(comment);
+            _dbContext.SaveChanges();
+            return comment;
+        }
+
+        public CommentDetail InsertCommentDetail(CommentDetail commentDetail)
         {
             _dbContext.CommentDetail.Add(commentDetail);
             _dbContext.SaveChanges();
             return commentDetail;
+        }
+
+        public string GetServiceType(long id)
+        {
+            return _dbContext.ServiceRequest.Where(m => m.RequestId == id).Select(r => r.Type).FirstOrDefault();
         }
     }
 }
