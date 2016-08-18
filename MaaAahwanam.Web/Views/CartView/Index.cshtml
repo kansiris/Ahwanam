@@ -49,59 +49,67 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in ViewBag.Cartlist)
-                                    {
-                                        <tr class="item">
-                                            <td>
-                                                @if (item.image != null)
-                                                {
-                                                    <div class="item-img"><img src="../vendorimages/@item.image" alt="item-img" /></div>
-                                                }
-                                                else if (item.image == null)
-                                                {
-                                                    <div class="item-img">
-                                                        <img src="~/noimages.png" />
+                                    @{
+                                        int j = 0;
+                                        foreach (var item in ViewBag.Cartlist)
+                                        {
+                                            j++;
+                                            <tr class="item">
+                                                <td style="display:none">
+                                                    <span id="tid @j">@item.Id</span>
+                                                </td>
+                                                <td>
+                                                    @if (item.image != null)
+                                                    {
+                                                        <div class="item-img"><img src="../vendorimages/@item.image" alt="item-img" /></div>
+                                                    }
+                                                    else if (item.image == null)
+                                                    {
+                                                        <div class="item-img">
+                                                            <img src="~/noimages.png" />
+                                                        </div>
+                                                    }
+                                                    <div class="item-details">
+                                                        <h4>@item.Description</h4>
                                                     </div>
-                                                }
-                                                <div class="item-details">
-                                                    <h4>@item.Description</h4>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </td>
-                                            <td>
-                                                <h4>Wedding Cermony</h4>
-                                                <p>
-                                                    @item.Landmark<br>
-                                                    @item.Address, @item.City,<br>
-                                                    (+91) @item.ContactNumber
-                                                </p>
-                                                @*<a href="#edit_event" class="orange-link upload_address popup-with-move-anim"><i class="ti-pencil"></i> Edit Event</a>*@
-                                            </td>
-                                            <td>
-                                                <div class="event-date-time">
-                                                    <div class="event-dates">
-                                                        <p>11/12/2015  9:30 AM</p>
-                                                    </div>
-                                                    <div class="event-date-edit"><a href="#" title="Edit Date & Time"><i class="ti-pencil-alt active"></i></a><a href="#" title="Delete Date & Time"><i class="ti-trash close"></i></a></div>
                                                     <div class="clear"></div>
-                                                </div>
-                                                <a href="#add_new_date" class="orange-link upload_address popup-with-move-anim"><i class="ti-plus"></i> Add Date / Time</a>
-                                            </td>
-                                            <td class="tdprice">
-                                                <div class="item-price">
-                                                    Rs.<span class="value">@item.TotalPrice</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                                <td>
+                                                    <h4>Wedding Cermony</h4>
+                                                    <p>
+                                                        @item.Landmark<br>
+                                                        @item.Address, @item.City,<br>
+                                                        (+91) @item.ContactNumber
+                                                    </p>
+                                                    @*<a href="#edit_event" class="orange-link upload_address popup-with-move-anim"><i class="ti-pencil"></i> Edit Event</a>*@
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            <p>11/12/2015  9:30 AM</p>
+                                                        </div>
+                                                        <div class="event-date-edit"><a href="#" title="Edit Date & Time"><i class="ti-pencil-alt active"></i></a><a href="#" title="Delete Date & Time"><i class="ti-trash close"></i></a></div>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <a href="#add_new_date" class="orange-link upload_address popup-with-move-anim"><i class="ti-plus"></i> Add Date / Time</a>
+                                                </td>
+                                                <td class="tdprice">
+                                                    <div class="item-price">
+                                                        Rs.<span id="tprice @j" class="value">@item.TotalPrice</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
                                     }
                                 </tbody>
                             </table>
-                        }
-                        else
-                        {
-                            <p>No Products added to cart yet</p>
-                            <div style="height:80px"></div>
-                        }
+                                        }
+                                        else
+                                        {
+                                            <p>No Products added to cart yet</p>
+                                            <div style="height:80px"></div>
+                                        }
                         <!-- popup -->
                         <div id="edit_event" class="zoom-anim-dialog mfp-hide large-dialog">
                             <div class="popup-box pop-content">
@@ -299,18 +307,19 @@
 
 <script type="text/javascript">
     function s() {
-        var j=0;
-        $('#myTableId > tbody > tr').each(function (i, tr) {
-            //$this = $(this)
-            //alert(this[0]);
-            OrderDetails = [];
-            item = { }
-            item["PerunitPrice"] = $("span.value").html();
+
+        var t = document.getElementById('myTableId');
+        var tlength = t.rows.length - 1;
+        OrderDetails = [];
+        for (i = 1; i <= tlength; i++) {
+            var trp = document.getElementById('tprice ' + i).innerHTML;
+            var tid = document.getElementById('tid ' + i).innerHTML;
+            item = {}
+            item["PerunitPrice"] = trp;
+            item["VendorId"] = tid;
             OrderDetails.push(item);
-            j++;
-            alert(item["PerunitPrice"]);
-        });
-        //alert(OrderDetails[1]);
+        }
+        //alert(trp);
 
         //$('#myTableId tr').each(function () {
         //    var customerId = $(this).find(".item span.value").html();
@@ -331,23 +340,23 @@
         orderRequest.cardnumber = "4222222222222";
         orderRequest.CVV = "214";
         orderRequest.Paiddate = "11/12/2016";
-        //$.ajax({
-        //    type: "POST",
-        //    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/CartView/payamount',
-        //    data: {},
-        //    data: JSON.stringify(orderRequest),
-        //    //data: sendInfo,
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: function (data) {
-        //        if (data != null) {
-        //            window.location.href = '/orderconfirmation?oid=' + data;
-        //        }
-        //    },
-        //    error: function (data) {
-        //        alert('error')
-        //    }
-        //});
+        $.ajax({
+            type: "POST",
+            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/CartView/payamount',
+            data: {},
+            data: JSON.stringify(orderRequest),
+            //data: sendInfo,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    window.location.href = '/orderconfirmation?oid=' + data;
+                }
+            },
+            error: function (data) {
+                alert('error')
+            }
+        });
     }
     //});
 </script>

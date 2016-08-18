@@ -18,17 +18,10 @@
     </style>
     <title></title>
     <script type='text/javascript'>
-        //<![CDATA[
-        //$(window).load(function(){
         $(function () {
-            /**
-             * we declare a variable here so that we can use it within both our datepicker onChangeDateTime functions
-             * this var will hold the time of delivery + 1hour and will be used in the collection picker when both delivery and collection dates are the same
-             */
             var setMinTime = "";
             var today = new Date();
             var lastDate = new Date(today.getFullYear(), today.getMonth(0) + 1, 31);
-            //Delivery - DatePicker1
             $('#products_delivery').datetimepicker({
                 inline: true,
                 lang: 'en',
@@ -37,37 +30,38 @@
                 timepicker: false,
                 format: 'd/m/Y',
                 formatDate: 'Y/m/d',
-                //onChangeDateTime: function (deliveryDateSelected) {
-
-                //    //when we change Date in delivery picker, we set the collection picker to have this date as minimum
-                //    $("#products_collection").datetimepicker({
-                //        minDate: deliveryDateSelected
-                //    });
-
-                //    // get the time from delivery picker and add 1 hour, so we can set minTime in collection picker if needed
-                //    var curTimePlusOneHour = deliveryDateSelected.getHours() + 1;
-                //    setMinTime = curTimePlusOneHour.toString() + ":00";
-                //}
-            }); //End of delivery datepicker
+            }); 
         });
-
-
-    </script>
-
-    <script>
-        function aa() {
-            alert(document.getElementById("products_delivery").value);
-        }
     </script>
 </head>
 
+@section Navigation
+{
+    <div class="breads">
+        <div class="breads_inner">
+            <div class="pageWidth">
+                <div class="title">
+                    <h3>Invitation</h3>
+                </div>
+                <div class="breadcrumbs">
+                    <ul>
+                        <li><a href="../Index/index">Home</a></li>
+                        <li><i class="breads_arrow"></i></li>
+                        <li><a href="index.html">Services</a></li>
+                        <li><i class="breads_arrow"></i></li>
+                        <li>Invitation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <body>
+
     @using (Html.BeginForm("Index", "AvailableDates", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off", @enctype = "multipart/form-data" }))
     {
         @Html.TextAreaFor(m => m.availabledate, new { @id = "products_delivery", @name = "products_delivery", @class = "some_class", required = "required" })
         <br /><br />
-        @*<input id="products_delivery" class="some_class" name="products_delivery" size="32" type="text"><br/><br />*@
-        @*<input id="sss" type="button" onclick="aa()" value="Save Date">*@
         <button type="submit" class="btn btn-big btn-green">Save Date<i class="ti-angle-double-right"></i></button>
     }
 </body>

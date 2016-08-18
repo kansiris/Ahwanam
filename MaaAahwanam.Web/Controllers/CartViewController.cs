@@ -53,11 +53,12 @@ namespace MaaAahwanam.Web.Controllers
             {
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.OrderBy = user.UserId;
+                orderDetail.PerunitPrice = item.PerunitPrice;
                 orderDetail.PaymentId = payment_Orders.PaymentID;
                 orderDetail.ServiceType = orderRequest.ServiceType;
                 orderDetail.ServicePrice = orderRequest.TotalPrice;
                 orderDetail.OrderId = order.OrderId;
-                orderDetail.VendorId = orderRequest.VendorId;
+                orderDetail.VendorId = item.VendorId;
                 orderdetailsServices.SaveOrderDetail(orderDetail);
             }
 

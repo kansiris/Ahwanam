@@ -5,6 +5,7 @@
 
 @section Navigation
 {
+    <script type="text/javascript" src="~/CSSWeb/js/jquery-1.9.1.js"></script>
     <div class="breads">
         <div class="breads_inner">
             <div class="pageWidth">
@@ -25,44 +26,49 @@
 }
 
 <div class="dashboardList dashboardList-nospace">
-    <table class=" responsive">
-        <thead>
-            <tr>
-                <th style="width:11%">S.No</th>
-                <th style="width:12%">Preferences</th>
-                <th style="width:11%">EventLocation</th>
-                <th style="width:11%">EventStartDate</th>
-                <th style="width:11%">EventStartTime</th>
-                <th style="width:11%">EventEnddate</th>
-                <th style="width:11%">EventEndtime</th>
-                <th style="width:11%"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (ViewBag.bidlist.Count != 0)
+    @if (ViewBag.bidlist.Count != 0)
             {
-                foreach (var item in ViewBag.bidlist)
-                {
-                    <tr>
-                        <td><a href="#quatation" class="green-link ml-center popup-with-move-anim">@item.RequestId</a></td>
-                        <td>@item.Preferences</td>
-                        <td>@item.EventLocation</td>
-                        <td>@item.EventStartDate</td>
-                        <td>@item.EventStartTime</td>
-                        <td>@item.EventEnddate</td>
-                        <td>@item.EventEndtime</td>
-                        <td><a href="../VendorRBResponse?Rid=@item.RequestId" class="btn btn-default btn-xs">Respond</a></td>
-                    </tr>
-                }
-            }
-        </tbody>
-        @*<tbody>
+        <table class=" responsive">
+            <thead>
                 <tr>
-                    <td colspan="6">No Records Found</td>
+                    <th style="width:11%">S.No</th>
+                    <th style="width:12%">Preferences</th>
+                    <th style="width:11%">EventLocation</th>
+                    <th style="width:11%">EventStartDate</th>
+                    <th style="width:11%">EventStartTime</th>
+                    <th style="width:11%">EventEnddate</th>
+                    <th style="width:11%">EventEndtime</th>
+                    <th style="width:11%"></th>
                 </tr>
-            </tbody>*@
-    </table>
+            </thead>
+            <tbody>
 
+                @foreach (var item in ViewBag.bidlist)
+                {
+                <tr>
+                    <td><a href="#quatation" class="green-link ml-center popup-with-move-anim">@item.RequestId</a></td>
+                    <td>@item.Preferences</td>
+                    <td>@item.EventLocation</td>
+                    <td>@item.EventStartDate</td>
+                    <td>@item.EventStartTime</td>
+                    <td>@item.EventEnddate</td>
+                    <td>@item.EventEndtime</td>
+                    <td><a href="../VendorRBResponse?Rid=@item.RequestId" class="btn btn-default btn-xs">Respond</a></td>
+                </tr>
+                }
+
+            </tbody>
+            @*<tbody>
+                    <tr>
+                        <td colspan="6">No Records Found</td>
+                    </tr>
+                </tbody>*@
+        </table>
+    }
+    else
+    {
+        <p style="font-size:20px">No reverse bidding received yet</p>
+    }
     @*<div class="pagination">
             <ul>
                 <li><a href="javascript:void(0)">Prev</a></li>
@@ -77,4 +83,3 @@
 
     <div class="clear"></div>
 </div>
-

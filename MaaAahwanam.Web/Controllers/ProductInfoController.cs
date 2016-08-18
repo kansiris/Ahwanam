@@ -135,7 +135,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.OrderBy = user.UserId;
             orderDetail.PaymentId = payment_Orders.PaymentID;
             orderDetail.ServiceType = orderRequest.ServiceType;
-            orderDetail.ServicePrice = orderRequest.TotalPrice;
+            orderDetail.PerunitPrice = orderRequest.TotalPrice;
             orderDetail.OrderId = order.OrderId;
             orderDetail.VendorId = orderRequest.VendorId;
             orderdetailsServices.SaveOrderDetail(orderDetail);
