@@ -1,6 +1,7 @@
 ﻿using MaaAahwanam.Repository;
 using MaaAahwanam.Service;
 using MaaAahwanam.Utility;
+using MaaAahwanam.Web.Custom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
             // GET: VendorsDatesbooked
-
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "Vendor"))
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            if (user.UserId != 0 && (user.UserType == "Vendor"))
             {
                 int a = ValidUserUtility.ValidUser();
                 ViewBag.Vdatesbooked = serviceResponseService.GetVendordatesbooked(a);

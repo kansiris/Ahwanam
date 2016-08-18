@@ -46,7 +46,7 @@ namespace MaaAahwanam.Web.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
                 }
             }
-            if (command == "Authenticate")
+            if (command == "AuthenticationUser")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
@@ -56,6 +56,22 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     Response.Redirect("DashBoard/Index");
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                }
+            }
+            if (command == "AuthenticationVendor")
+            {
+                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
+                if (userResponse != null)
+                {
+                    userResponse.UserType = "Vendor";
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    Response.Redirect("VendorDashBoard/Index");
                 }
                 else
                 {

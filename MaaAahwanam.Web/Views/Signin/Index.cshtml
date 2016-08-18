@@ -32,20 +32,20 @@
                     @*<form novalidate id="register_form">*@
                     @using (Html.BeginForm("Index", "Signin", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
                     {
-                         <ul>
+                        <ul>
                             <li>
-                                <label>First Name<span>*</span></label>                             
-                                @Html.TextBoxFor(Model => Model.Item2.FirstName, new {  @id="firstname", @name="firstname",placeholder = "First Name", required = "required" })
+                                <label>First Name<span>*</span></label>
+                                @Html.TextBoxFor(Model => Model.Item2.FirstName, new { @id = "firstname", @name = "firstname", placeholder = "First Name", required = "required" })
                             </li>
                             <li>
-                                <label>Last Name<span>*</span></label>                                
-                                @Html.TextBoxFor(Model => Model.Item2.LastName, new { @id="lastname", @name="lastname", placeholder = "Last Name", required = "required" })
+                                <label>Last Name<span>*</span></label>
+                                @Html.TextBoxFor(Model => Model.Item2.LastName, new { @id = "lastname", @name = "lastname", placeholder = "Last Name", required = "required" })
                             </li>
                         </ul>
                         <ul>
                             <li>
-                                <label>Email<span>*</span></label>                            
-                                @Html.TextBoxFor(Model => Model.Item1.UserName, new {@id="email", @name="email", placeholder = "Username", required = "required", @type = "email" })
+                                <label>Email<span>*</span></label>
+                                @Html.TextBoxFor(Model => Model.Item1.UserName, new { @id = "email", @name = "email", placeholder = "Username", required = "required", @type = "email" })
                             </li>
                             <li>
                                 <label>Phone Number<span>*</span></label>
@@ -55,7 +55,7 @@
                         <ul>
                             <li>
                                 <label>Password<span>*</span></label>
-                                @Html.PasswordFor(Model => Model.Item1.Password, new {  @name="password", placeholder = "Password", required = "required", @id = "PasswordValue_Reg" })
+                                @Html.PasswordFor(Model => Model.Item1.Password, new { @name = "password", placeholder = "Password", required = "required", @id = "PasswordValue_Reg" })
                             </li>
                             <li>
                                 <label>Confirm Password<span>*</span></label>
@@ -64,17 +64,24 @@
                         </ul>
                         <div class="clear"></div>
                         <div class="submit-btn">
-                            <button class="btn btn-green" name="Command" value="Register" type="submit" onclick="check();"><i class="ti-user"></i> Register</button>                           
+                            <button class="btn btn-green" name="Command" value="Register" type="submit" onclick="check();"><i class="ti-user"></i> Register</button>
                         </div>
                         <div class="clear"></div>
                     }
                 </div>
+
                 <div class="form login wow fadeInRight animated animated" style="visibility: visible; animation-name: fadeInRight;">
                     <h4><b>Existing User</b> Login Here<span></span></h4>
 
                     @using (Html.BeginForm("Index", "signin", FormMethod.Post, new { @id = "login_form" }))
                     {
                         <ul>
+                            <li class="small">
+                                <span><input type="radio" checked onclick="Setvalue('User');" id="rbUser" value="User" name="a" style="width:20px"/> User</span>
+                            </li>
+                            <li class="small">
+                                <p><input type="radio" onclick="Setvalue('Vendor');" id="rbVendor" value="Vendor" name="a" style="width:20px" /> Vendor</p>
+                            </li>
                             <li class="full">
                                 <label>User Name<span>*</span></label>
                                 @Html.TextBoxFor(Model => Model.Item1.UserName, new { placeholder = "User Name", required = "required", @type = "email" })
@@ -86,7 +93,7 @@
                         </ul>
                         <div class="clear"></div>
                         <div class="submit-btn">
-                            <button class="btn btn-green" name="Command" value="Authenticate" type="submit"><i class="ti-lock"></i> Log in</button>
+                            <button class="btn btn-green" name="Command" id="btnauth" value="AuthenticationUser" type="submit"><i class="ti-lock"></i> Log in</button>
                         </div>
                         <div class="forgot-password"><a class="popup-with-move-anim" href="#fpw">Forgot Passoword?</a></div>
                         <div class="clear"></div>
@@ -127,3 +134,8 @@
             BootstrapDialog.alert('Welcom to MaaAahwanam Signin');
         });
     </script>*@
+<script>
+    function Setvalue(value) {
+        document.getElementById("btnauth").value = 'Authentication' + value;
+    }
+</script>

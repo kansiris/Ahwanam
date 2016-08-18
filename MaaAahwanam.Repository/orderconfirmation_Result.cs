@@ -16,6 +16,6 @@ namespace MaaAahwanam.Repository
         public string Description { get; set; }
         public string Address { get; set; }
         public string Landmark { get; set; }
-        public decimal ServicePrice { get; set; }
+        public decimal PerunitPrice { get; set; }
     }
 }

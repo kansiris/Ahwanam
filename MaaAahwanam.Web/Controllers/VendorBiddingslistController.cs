@@ -19,5 +19,9 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.bidlist = bidlist;
             return View();
         }
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }
