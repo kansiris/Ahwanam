@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
+    var i = 0;
 }
 
 @section Navigation
@@ -29,8 +30,8 @@
 
     <div class="dashInner">
         <div class="order-details">
-            <h2>Order ID : SAD12465</h2>
-            <p>Order Date : 12-12-2015</p>
+            <h2>Order ID : @Request.QueryString["id"]</h2>
+            <p>Order Date : @Request.QueryString["date"]</p>
             <div class="clear"></div>
         </div>
         <!-- /order-details -->
@@ -141,7 +142,18 @@
                         <th style="width:20%">Amount</th>
                     </tr>
                 </thead>
-                <tbody>
+                @foreach (var item in ViewBag.payment)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@(++i)</td>
+                            <td>@item.Paiddate.ToShortDateString()</td>
+                            <td>Paid with Visa card -  card @item.cardnumber</td>
+                            <td>Rs. @item.paidamount</td>
+                        </tr>
+                    </tbody>
+                }
+                @*<tbody>
                     <tr>
                         <td>1</td>
                         <td>17-12-2015</td>
@@ -160,7 +172,7 @@
                         <td>Paid with Visa card -  card XXXXXXXX3002</td>
                         <td>Rs. 600</td>
                     </tr>
-                </tbody>
+                </tbody>*@
             </table>
             <div class="clear"></div>
         </div>

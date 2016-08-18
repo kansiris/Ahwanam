@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/SharedWeb/DashboardMaster.cshtml";
-    var i = 0;var j = 0;
+    var i = 0; var j = 0;
 }
 @section Navigation
 {
@@ -139,7 +139,7 @@
             {
                     <tbody>
                         @foreach (var item in ViewBag.AllOrders)
-                    {
+                        {
                             <tr>
                                 <td>@(++i)</td>
                                 <td><a href="~/BooknowViewCart/Index?id=@item.OrderId&date=@item.OrderDate.ToShortDateString()" class="green-link ml-center">@item.OrderId</a></td>
@@ -150,12 +150,12 @@
                                 {
                                     <td class="active">@item.Status</td>
                                 }
-                                
+
 
                             </tr>
-                    }
+                        }
                     </tbody>
-            }
+                }
                 @if (ViewBag.AllOrders == null)
             {
                     <tbody>
@@ -163,7 +163,7 @@
                             <td colspan="6">No Records Found</td>
                         </tr>
                     </tbody>
-            }
+                }
             </table>
             <br />
             <br />
@@ -180,27 +180,27 @@
                         <th style="width:15%">Status</th>
                     </tr>
                 </thead>
-                @if (ViewBag.Services!=null)
+                @if (ViewBag.Services != null)
                 {
                     <tbody>
                         @foreach (var item in ViewBag.Services)
-                    {
-                            <tr>
-                                <td>@(++j)</td>
-                                <td><a href="javascript:redirect('@item.Status','@item.RequestId')" class="green-link ml-center">@item.RequestId</a></td> @*~/Views/BooknowViewCart/id=@item.RequestId*@
-                                <td>@item.Type</td>
-                                <td>@item.UpdatedTime.ToShortDateString()</td>
-                                <td>@item.Budget</td>
-                                @if (item.Status == "Paid")
-                                {
-                                    <td class="active">@item.Status</td>
-                                }
-                                @if (item.Status == "Due")
-                                {
-                                    <td class="close">@item.Status</td>
-                                }
-                            </tr>
-                    }
+                        {
+                        <tr>
+                            <td>@(++j)</td>
+                            <td><a href="javascript:redirect('@item.Status','@item.RequestId','@item.UpdatedTime.ToShortDateString()')" class="green-link ml-center">@item.RequestId</a></td> @*~/Views/BooknowViewCart/id=@item.RequestId*@
+                            <td>@item.Type</td>
+                            <td>@item.UpdatedTime.ToShortDateString()</td>
+                            <td>@item.Budget</td>
+                            @if (item.Status == "Paid")
+                            {
+                                <td class="active">@item.Status</td>
+                            }
+                            @if (item.Status == "Due")
+                            {
+                                <td class="close">@item.Status</td>
+                            }
+                        </tr>
+                        }
                     </tbody>
                 }
                 @if (ViewBag.Services == null)
@@ -210,7 +210,7 @@
                             <td colspan="6">No Records Found</td>
                         </tr>
                     </tbody>
-            }
+                }
             </table>
 
             <div class="pagination" style="display:none">
@@ -230,16 +230,16 @@
     </form>
 
     <script>
-        function redirect(obj,id,type) {
+        function redirect(obj, id, date) {
             var abc = obj.trim();
-            
+
             if (abc == "Paid") {
-                window.location.href = '/QuatationViewCartDue/index?id=' + id + '';
+                window.location.href = '/QuatationViewCartDue/index?id=' + id + '&&date= '+date+ ' ';
             }
             else if (abc == "Due") {
                 window.location.href = '/QuatationViewCart/index?id=' + id + '';
             }
-            
+
         }
     </script>
 

@@ -187,7 +187,7 @@
                         {
                         <tr>
                             <td>@(++j)</td>
-                            <td><a href="javascript:redirect('@item.Status','@item.RequestId')" class="green-link ml-center">@item.RequestId</a></td> @*~/Views/BooknowViewCart/id=@item.RequestId*@
+                            <td><a href="javascript:redirect('@item.Status','@item.RequestId','@item.UpdatedTime.ToShortDateString()')" class="green-link ml-center">@item.RequestId</a></td> @*~/Views/BooknowViewCart/id=@item.RequestId*@
                             <td>@item.Type</td>
                             <td>@item.UpdatedTime.ToShortDateString()</td>
                             <td>@item.Budget</td>
@@ -230,11 +230,11 @@
     </form>
 
     <script>
-        function redirect(obj, id, type) {
+        function redirect(obj, id, date) {
             var abc = obj.trim();
 
             if (abc == "Paid") {
-                window.location.href = '/QuatationViewCartDue/index?id=' + id + '';
+                window.location.href = '/QuatationViewCartDue/index?id=' + id + '&&date= '+date+ ' ';
             }
             else if (abc == "Due") {
                 window.location.href = '/QuatationViewCart/index?id=' + id + '';
