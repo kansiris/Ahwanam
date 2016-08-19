@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MaaAahwanamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MaaAahwanamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="AllVendorList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ServicType" Type="nvarchar" Mode="In" />
         </Function>
@@ -19,11 +19,11 @@
           <Parameter Name="vid" Type="int" Mode="In" />
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="MaaAahwanam_Orders_OrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="Maa_Aahwanam_Orders_OrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Maa-Aahwanam_Orders_OrderDetails">
           <Parameter Name="OrderNo" Type="bigint" Mode="In" />
         </Function>
         <Function Name="MaaAahwanam_Others_AllRegisteredUsersDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="MaaAahwanam_Others_Comments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="Maa_Aahwanam_Others_Comments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Maa-Aahwanam_Others_Comments">
           <Parameter Name="CommentId" Type="bigint" Mode="In" />
         </Function>
         <Function Name="MaaAahwanam_Others_RegisteredUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -34,10 +34,7 @@
           <Parameter Name="Id" Type="bigint" Mode="In" />
         </Function>
         <Function Name="MaaAahwanam_Others_Testimonials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="MaaAahwanam_Others_Tickets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="TicketId" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="MaaAahwanam_Services_Bidding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="Maa_Aahwanam_Services_Bidding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Maa-Aahwanam_Services_Bidding">
           <Parameter Name="RequestId" Type="bigint" Mode="In" />
         </Function>
         <Function Name="orderconfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -61,17 +58,16 @@
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="MaaAahwanamModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MaaAahwanamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MaaAahwanamEntities" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="AllVendorList" ReturnType="Collection(MaaAahwanamModel.AllVendorList_Result)">
-            <Parameter Name="ServicType" Mode="In" Type="String" />
+          <Parameter Name="ServicType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
-            <Parameter Name="VID" Mode="In" Type="Int32" />
+          <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
             <Parameter Name="nType" Mode="In" Type="String" />
@@ -90,10 +86,10 @@
           </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsers" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsers_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsersDetails_Result)">
-            <Parameter Name="UserLoginId" Mode="In" Type="Int64" />
+          <Parameter Name="UserLoginId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_TestimonialDetail" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_TestimonialDetail_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int64" />
+          <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_Testimonials" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Testimonials_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_Tickets" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Tickets_Result)">
@@ -108,19 +104,28 @@
           <FunctionImport Name="sp_AllOrders" ReturnType="Collection(MaaAahwanamModel.sp_AllOrders_Result)" />
           <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
           <FunctionImport Name="sp_LeastBidRecord" ReturnType="Collection(MaaAahwanamModel.sp_LeastBidRecord_Result)">
-            <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_OrderDetails" ReturnType="Collection(MaaAahwanamModel.sp_OrderDetails_Result)">
-            <Parameter Name="OrderNo" Mode="In" Type="Int64" />
+          <Parameter Name="OrderNo" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_ServiceComments" ReturnType="Collection(MaaAahwanamModel.sp_ServiceComments_Result)">
-            <Parameter Name="ServiceId" Mode="In" Type="Int64" />
+          <Parameter Name="ServiceId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_Servicedetails" ReturnType="Collection(MaaAahwanamModel.sp_Servicedetails_Result)">
-            <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SP_vendordatesbooked" ReturnType="Collection(MaaAahwanamModel.SP_vendordatesbooked_Result)">
-            <Parameter Name="VID" Mode="In" Type="Int32" />
+          <Parameter Name="VID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Maa_Aahwanam_Orders_OrderDetails" ReturnType="Collection(MaaAahwanamModel.Maa_Aahwanam_Orders_OrderDetails_Result)">
+          <Parameter Name="OrderNo" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Maa_Aahwanam_Others_Comments" ReturnType="Collection(MaaAahwanamModel.Maa_Aahwanam_Others_Comments_Result)">
+          <Parameter Name="CommentId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="Maa_Aahwanam_Services_Bidding" ReturnType="Collection(MaaAahwanamModel.Maa_Aahwanam_Services_Bidding_Result)">
+          <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -342,6 +347,33 @@
           <Property Type="DateTime" Name="EventEnddate" Nullable="true" Precision="23" />
           <Property Type="String" Name="EventName" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="Maa_Aahwanam_Orders_OrderDetails_Result">
+          <Property Type="Int64" Name="OrderId" Nullable="false" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="Maa_Aahwanam_Others_Comments_Result">
+          <Property Type="Int64" Name="CommentId" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="Maa_Aahwanam_Services_Bidding_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="RequestId" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -429,21 +461,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MaaAahwanam_Orders_OrderDetails" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Orders_OrderDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Orders_OrderDetails_Result">
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_AllRegisteredUsersDetails" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_AllRegisteredUsersDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -458,16 +475,6 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
                 <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_Comments" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_Comments">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_Comments_Result">
-                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -527,31 +534,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_Tickets" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_Tickets">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_Tickets_Result">
-                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MaaAahwanam_Services_Bidding" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Services_Bidding">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Services_Bidding_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -648,6 +630,45 @@
                 <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
                 <ScalarProperty Name="EventEnddate" ColumnName="EventEnddate" />
                 <ScalarProperty Name="EventName" ColumnName="EventName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Maa_Aahwanam_Orders_OrderDetails" FunctionName="MaaAahwanamModel.Store.Maa_Aahwanam_Orders_OrderDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Maa_Aahwanam_Orders_OrderDetails_Result">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Maa_Aahwanam_Others_Comments" FunctionName="MaaAahwanamModel.Store.Maa_Aahwanam_Others_Comments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Maa_Aahwanam_Others_Comments_Result">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Maa_Aahwanam_Services_Bidding" FunctionName="MaaAahwanamModel.Store.Maa_Aahwanam_Services_Bidding">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Maa_Aahwanam_Services_Bidding_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
