@@ -22,9 +22,9 @@ namespace MaaAahwanam.Repository.db
             return vendorImage;
         }
 
-        public List<string> GetVendorImages(long id)
+        public List<string> GetVendorImages(long id, long vid)
         {
-            return _dbContext.VendorImage.Where(m => m.VendorMasterId == id).Select(p => p.ImageName).ToList();
+            return _dbContext.VendorImage.Where(m =>  m.VendorMasterId == id && m.VendorId == vid).Select(p => p.ImageName).ToList();
         }
         public string DeleteImage(VendorImage vendorImage)
         {

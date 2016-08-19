@@ -25,12 +25,12 @@ namespace MaaAahwanam.Service
            return vendorVenue;
        }
 
-        public VendorVenue GetVendorVenue(long id)
+        public VendorVenue GetVendorVenue(long id,long vid)
         {
-            return vendorVenueRepository.GetVendorVenue(id);
+            return vendorVenueRepository.GetVendorVenue(id,vid);
         }
 
-        public VendorVenue UpdateVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid)
+        public VendorVenue UpdateVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid,long vid)
         {
             vendorVenue.Status = "Active";
             vendorVenue.UpdatedDate = DateTime.Now;
@@ -38,7 +38,7 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Venue";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster,masterid);
-            vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue,masterid);
+            vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue,masterid,vid);
             return vendorVenue;
         }
 
