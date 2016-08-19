@@ -4,6 +4,10 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/MainMaster.cshtml";
 }
+@*@using MaaAahwanam.Web.Custom
+    @{
+        var user = (CustomPrincipal)HttpContext.Current.User;
+    }*@
 @section Navigation
 {
     <div class="breads">
@@ -165,6 +169,7 @@
 
                         </div>
                         <div class="product_review">
+                            <h3>@user.FirstName</h3>
                             <h4>Location</h4>
                             <p>@Model.Item1.Landmark,@Model.Item1.Address,@Model.Item1.City,@Model.Item1.State</p>
                         </div>
@@ -195,7 +200,7 @@
                                     <input type="hidden" id="hmin" name="Minvalue" value="10">
                                     <input type="hidden" id="hmax" name="Maxvalue" value="50">
                                     <input type="text" id="txtquantityother" value="10" placeholder="Enter Quantity" onchange="Onchangequantityother()" /><br>
-                                    <input type="radio" id="vlother" name="platetypeother" value="500" checked> item cost 500/-<br>
+                                    <input type="radio" id="vlother" name="platetypeother" value="500" checked> item cost @Model.Item1.cost/-<br>
                                 </form>
                             </div>
                             <div class="deal_save">
@@ -353,7 +358,7 @@
                                     <input type="hidden" id="hmin" name="Minvalue" value="10">
                                     <input type="hidden" id="hmax" name="Maxvalue" value="50">
                                     <input type="text" id="txtquantityGeneral" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGeneral()" /><br>
-                                    <input type="radio" id="vlGeneral" name="platetypeGeneral" value="500" checked> item cost 500/-<br>
+                                    <input type="radio" id="vlGeneral" name="platetypeGeneral" value="@Model.Item1.cost" checked> item cost @Model.Item1.cost/-<br>
                                 </form>
                             </div>
                             <div class="deal_save">
