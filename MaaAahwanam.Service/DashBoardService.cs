@@ -51,12 +51,24 @@ namespace MaaAahwanam.Service
             return dashBoardRepository.GetCommentDetail(id);
         }
 
-        public CommentDetail InsertCommentService(CommentDetail commentDetail)
+        public string GetServiceType(long id)
+        {
+            return dashBoardRepository.GetServiceType(id);
+        }
+
+        public Comment InsertCommentService(Comment comment)
+        {
+            comment.UpdatedDate = DateTime.Now;
+            comment.Status = "Active";
+            return dashBoardRepository.InsertComment(comment);
+        }
+
+        public CommentDetail InsertCommentDetailService(CommentDetail commentDetail)
         {
             commentDetail.CommentDate = DateTime.Now;
             commentDetail.UpdatedDate = DateTime.Now;
             commentDetail.Status = "Active";
-            return dashBoardRepository.InsertComment(commentDetail);
+            return dashBoardRepository.InsertCommentDetail(commentDetail);
         }
     }
 }

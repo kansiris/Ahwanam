@@ -25,19 +25,26 @@ namespace MaaAahwanam.Web.Controllers
         }
         
         [HttpPost]
-        public ActionResult Index(string id, string command, CommentDetail commentDetail)
+        public ActionResult Index(string id, string command, CommentDetail commentDetail,Comment comment)
         {
             if (command == "Submit")
             {
-                commentDetail.CommentId = dashBoardService.GetCommentId(id);
-                commentDetail.UserLoginId = ValidUserUtility.ValidUser();
-                commentDetail.UpdatedBy = ValidUserUtility.ValidUser();
-                commentDetail = dashBoardService.InsertCommentService(commentDetail);
-                if (commentDetail.CommentDetId != 0)
+                comment.ServiceId = id;
+                comment.ServiceType = dashBoardService.GetServiceType(long.Parse(id));
+                comment.UpdatedBy = ValidUserUtility.ValidUser();
+                comment = dashBoardService.InsertCommentService(comment);
+                if (comment.CommentId != 0)
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
+                    commentDetail.CommentId =  comment.CommentId;//dashBoardService.GetCommentId(id);
+                    commentDetail.UserLoginId = ValidUserUtility.ValidUser();
+                    commentDetail.UpdatedBy = ValidUserUtility.ValidUser();
+                    commentDetail = dashBoardService.InsertCommentDetailService(commentDetail);
+                    if (commentDetail.CommentDetId != 0)
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
+                    }
+                    return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
                 }
-                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
             }
             return View();
         }
