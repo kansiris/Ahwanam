@@ -11,15 +11,23 @@ namespace MaaAahwanam.Service.Mapper
         }
         public UserLogin MapUserRequestToUserLogin(UserRequest userRequest)
         {
-            AutoMapper.Mapper.CreateMap<UserRequest, UserLogin>();
-            var userLogin = AutoMapper.Mapper.Map<UserRequest, UserLogin>(userRequest);
-            return userLogin;
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<UserRequest, UserLogin>();
+            });
+            IMapper mapper = config.CreateMapper();
+            var source = userRequest;
+            var dest = mapper.Map<UserRequest, UserLogin>(source);
+            return dest;
         }
         public UserResponse MapUserDetailToUserResponse(UserDetail userDetail)
         {
-            AutoMapper.Mapper.CreateMap<UserDetail, UserResponse>();
-            var userResponse = AutoMapper.Mapper.Map<UserDetail, UserResponse>(userDetail);
-            return userResponse;
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<UserDetail, UserResponse>();
+            });
+            IMapper mapper = config.CreateMapper();
+            var source = userDetail;
+            var dest = mapper.Map<UserDetail, UserResponse>(source);
+            return dest;
         }
     }
 }
