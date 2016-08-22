@@ -20,9 +20,9 @@ namespace MaaAahwanam.Service
            return vendorImage;
        }
 
-        public List<string> GetVendorImagesService(long id)
+        public List<string> GetVendorImagesService(long id,long vid)
         {
-            return vendorImageRepository.GetVendorImages(id);
+            return vendorImageRepository.GetVendorImages(id,vid);
         }
         public string DeleteImage(VendorImage vendorImage)
         {

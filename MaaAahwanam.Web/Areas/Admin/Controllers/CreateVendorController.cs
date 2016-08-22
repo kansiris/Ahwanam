@@ -22,7 +22,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult BeautyServices(string id, [Bind(Prefix = "Item2")] VendorsBeautyService vendorsBeautyService, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult BeautyServices(string id, [Bind(Prefix = "Item2")] VendorsBeautyService vendorsBeautyService, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorBeautyServicesService vendorBeautyServicesService = new VendorBeautyServicesService();
             if (src != null)
@@ -42,12 +42,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsBeautyService = vendorBeautyServicesService.GetVendorBeautyService(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsBeautyService>(vendorMaster, vendorsBeautyService);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -63,7 +63,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult BeautyServices([Bind(Prefix = "Item2")] VendorsBeautyService vendorsBeautyService, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult BeautyServices([Bind(Prefix = "Item2")] VendorsBeautyService vendorsBeautyService, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id,string vid)
         {
             string fileName = string.Empty;
             VendorBeautyServicesService vendorBeautyServicesService = new VendorBeautyServicesService();
@@ -112,7 +112,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsBeautyService.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -149,14 +149,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult Catering(string id, [Bind(Prefix = "Item2")] VendorsCatering vendorsCatering, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult Catering(string id, [Bind(Prefix = "Item2")] VendorsCatering vendorsCatering, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorCateringService vendorCateringService = new VendorCateringService();
             if (src != null)
@@ -176,12 +176,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsCatering = vendorCateringService.GetVendorCatering(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsCatering>(vendorMaster, vendorsCatering);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -197,7 +197,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Catering([Bind(Prefix = "Item2")] VendorsCatering vendorsCatering, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file,string Command, string id)
+        public ActionResult Catering([Bind(Prefix = "Item2")] VendorsCatering vendorsCatering, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file,string Command, string id,string vid)
         {
             string fileName = string.Empty;
             VendorCateringService vendorCateringService = new VendorCateringService();
@@ -246,7 +246,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsCatering.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -283,14 +283,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult Decorator(string id, [Bind(Prefix = "Item2")] VendorsDecorator vendorsDecorator, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult Decorator(string id, [Bind(Prefix = "Item2")] VendorsDecorator vendorsDecorator, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
             if (src != null)
@@ -310,12 +310,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsDecorator = vendorDecoratorService.GetVendorDecorator(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsDecorator>(vendorMaster, vendorsDecorator);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -331,7 +331,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Decorator([Bind(Prefix = "Item2")] VendorsDecorator vendorsDecorator, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult Decorator([Bind(Prefix = "Item2")] VendorsDecorator vendorsDecorator, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id,string vid)
         {
             string fileName = string.Empty;
             VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
@@ -380,7 +380,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsDecorator.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -417,7 +417,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
@@ -426,7 +426,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             return View();
         }
-        public ActionResult Entertainment(string id, [Bind(Prefix = "Item2")] VendorsEntertainment vendorsEntertainment, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult Entertainment(string id, [Bind(Prefix = "Item2")] VendorsEntertainment vendorsEntertainment, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorEntertainmentService vendorEntertainmentService = new VendorEntertainmentService();
             if (src != null)
@@ -446,12 +446,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsEntertainment = vendorEntertainmentService.GetVendorEntertainment(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsEntertainment>(vendorMaster, vendorsEntertainment);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -467,7 +467,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Entertainment([Bind(Prefix = "Item2")] VendorsEntertainment vendorsEntertainment, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult Entertainment([Bind(Prefix = "Item2")] VendorsEntertainment vendorsEntertainment, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id,string vid)
         {
             string fileName = string.Empty;
             VendorEntertainmentService vendorEntertainmentService = new VendorEntertainmentService();
@@ -516,7 +516,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsEntertainment.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -553,14 +553,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult EventOrganisers(string id, [Bind(Prefix = "Item2")] VendorsEventOrganiser vendorsEventOrganiser, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult EventOrganisers(string id, [Bind(Prefix = "Item2")] VendorsEventOrganiser vendorsEventOrganiser, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorEventOrganiserService vendorEventOrganiserService = new VendorEventOrganiserService();
             if (src != null)
@@ -580,12 +580,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsEventOrganiser = vendorEventOrganiserService.GetVendorEventOrganiser(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsEventOrganiser>(vendorMaster, vendorsEventOrganiser);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -601,7 +601,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult EventOrganisers([Bind(Prefix = "Item2")] VendorsEventOrganiser vendorsEventOrganisers, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult EventOrganisers([Bind(Prefix = "Item2")] VendorsEventOrganiser vendorsEventOrganisers, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid)
         {
             string fileName = string.Empty;
             VendorEventOrganiserService vendorEventOrganiserService = new VendorEventOrganiserService();
@@ -650,7 +650,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsEventOrganisers.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -687,14 +687,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult Gifts(string id, [Bind(Prefix = "Item2")] VendorsGift vendorsGift, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult Gifts(string id, [Bind(Prefix = "Item2")] VendorsGift vendorsGift, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorGiftService vendorGiftService = new VendorGiftService();
             if (src != null)
@@ -714,12 +714,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsGift = vendorGiftService.GetVendorGift(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsGift>(vendorMaster, vendorsGift);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -735,7 +735,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Gifts([Bind(Prefix = "Item2")] VendorsGift vendorsGift, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult Gifts([Bind(Prefix = "Item2")] VendorsGift vendorsGift, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid)
         {
             string fileName = string.Empty;
             VendorGiftService vendorGiftService = new VendorGiftService();
@@ -784,7 +784,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsGift.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -821,14 +821,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult InvitationCards(string id, [Bind(Prefix = "Item2")] VendorsInvitationCard vendorsInvitationCard, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult InvitationCards(string id, [Bind(Prefix = "Item2")] VendorsInvitationCard vendorsInvitationCard, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorInvitationCardsService vendorInvitationCardsService = new VendorInvitationCardsService();
             if (src != null)
@@ -848,12 +848,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsInvitationCard = vendorInvitationCardsService.GetVendorInvitationCard(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsInvitationCard>(vendorMaster, vendorsInvitationCard);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -869,7 +869,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult InvitationCards([Bind(Prefix = "Item2")] VendorsInvitationCard vendorsInvitationCard, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult InvitationCards([Bind(Prefix = "Item2")] VendorsInvitationCard vendorsInvitationCard, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid)
         {
             string fileName = string.Empty;
             VendorInvitationCardsService vendorInvitationCardsService = new VendorInvitationCardsService();
@@ -918,7 +918,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsInvitationCard.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -955,14 +955,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult Photography(string id, [Bind(Prefix = "Item2")] VendorsPhotography vendorsPhotography, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult Photography(string id, [Bind(Prefix = "Item2")] VendorsPhotography vendorsPhotography, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorPhotographyService vendorPhotographyService = new VendorPhotographyService();
             if (src != null)
@@ -982,12 +982,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsPhotography = vendorPhotographyService.GetVendorPhotography(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsPhotography>(vendorMaster, vendorsPhotography);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -1003,7 +1003,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Photography([Bind(Prefix = "Item2")] VendorsPhotography vendorsPhotography, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult Photography([Bind(Prefix = "Item2")] VendorsPhotography vendorsPhotography, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid)
         {
             string fileName = string.Empty;
             VendorPhotographyService vendorPhotographyService = new VendorPhotographyService();
@@ -1052,7 +1052,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsPhotography.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -1089,14 +1089,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult TravelAccomodation(string id, [Bind(Prefix = "Item2")] VendorsTravelandAccomodation vendorsTravelandAccomodation, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult TravelAccomodation(string id, [Bind(Prefix = "Item2")] VendorsTravelandAccomodation vendorsTravelandAccomodation, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorTravelAndAccomadationService vendorTravelandAccomodationsService = new VendorTravelAndAccomadationService();
             if (src != null)
@@ -1116,12 +1116,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsTravelandAccomodation = vendorTravelandAccomodationsService.GetVendorTravelandAccomodation(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsTravelandAccomodation>(vendorMaster, vendorsTravelandAccomodation);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -1137,7 +1137,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult TravelAccomodation([Bind(Prefix = "Item2")] VendorsTravelandAccomodation vendorsTravelandAccomodation, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult TravelAccomodation([Bind(Prefix = "Item2")] VendorsTravelandAccomodation vendorsTravelandAccomodation, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid)
         {
             string fileName = string.Empty;
             VendorTravelAndAccomadationService vendorTravelAndAccomadationService = new VendorTravelAndAccomadationService();
@@ -1189,7 +1189,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsTravelandAccomodation.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -1226,14 +1226,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult WeddingCollection(string id, [Bind(Prefix = "Item2")] VendorsWeddingCollection vendorsWeddingCollection, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult WeddingCollection(string id, [Bind(Prefix = "Item2")] VendorsWeddingCollection vendorsWeddingCollection, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorWeddingCollectionService vendorWeddingCollectionsService = new VendorWeddingCollectionService();
             if (src != null)
@@ -1253,12 +1253,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsWeddingCollection = vendorWeddingCollectionsService.GetVendorWeddingCollection(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsWeddingCollection>(vendorMaster, vendorsWeddingCollection);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -1274,7 +1274,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult WeddingCollection([Bind(Prefix = "Item2")] VendorsWeddingCollection vendorsWeddingCollection, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult WeddingCollection([Bind(Prefix = "Item2")] VendorsWeddingCollection vendorsWeddingCollection, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid)
         {
             string fileName = string.Empty;
             VendorWeddingCollectionService vendorWeddingCollectionService = new VendorWeddingCollectionService();
@@ -1323,7 +1323,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsWeddingCollection.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -1360,14 +1360,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
             }
             return View();
         }
-        public ActionResult Venue(string id, [Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster,string src,string op)
+        public ActionResult Venue(string id, [Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster,string src,string op,string vid)
         {
             VendorVenueService vendorVenueService = new VendorVenueService();
             if (src != null)
@@ -1387,12 +1387,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id!=null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id),long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
-                vendorVenue = vendorVenueService.GetVendorVenue(long.Parse(id)); 
+                vendorVenue = vendorVenueService.GetVendorVenue(long.Parse(id),long.Parse(vid)); 
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id)); 
                 var a = new Tuple<Vendormaster, VendorVenue>(vendorMaster, vendorVenue);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -1408,7 +1408,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Venue([Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file,string Command,string id)
+        public ActionResult Venue([Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file,string Command,string id, string vid)
         {
             string fileName = string.Empty;
             VendorVenueService vendorVenueService = new VendorVenueService();
@@ -1442,7 +1442,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 if (vendorVenue.Id != 0 && vendorImage.ImageId != 0)
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Venue", "CreateVendor") + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Venue", "CreateVendor",new { id=vendorVenue.Id}) + "'</script>");
                 }
                 else
                 {
@@ -1453,11 +1453,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             {
                 long masterid = vendorVenue.VendorMasterId  = vendorMaster.Id = long.Parse(id);
                 vendorMaster.UpdatedBy = vendorVenue.UpdatedBy = ValidUserUtility.ValidUser();
-                vendorVenue = vendorVenueService.UpdateVenue(vendorVenue, vendorMaster, masterid);
+                vendorVenue = vendorVenueService.UpdateVenue(vendorVenue, vendorMaster, masterid,long.Parse(vid));
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorVenue.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -1494,7 +1494,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }
@@ -1537,7 +1537,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult Others(string id, [Bind(Prefix = "Item2")] VendorsOther vendorsOther, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op)
+        public ActionResult Others(string id, [Bind(Prefix = "Item2")] VendorsOther vendorsOther, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op,string vid)
         {
             VendorOthersService vendorOthersService = new VendorOthersService();
             if (src != null)
@@ -1557,12 +1557,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != null)
             {
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorsOther = vendorOthersService.GetVendorOther(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 var a = new Tuple<Vendormaster, VendorsOther>(vendorMaster, vendorsOther);
-                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
                 {
@@ -1578,7 +1578,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Others([Bind(Prefix = "Item2")] VendorsOther vendorsOther, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id)
+        public ActionResult Others([Bind(Prefix = "Item2")] VendorsOther vendorsOther, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid)
         {
             string fileName = string.Empty;
             string ImagesURL = string.Empty;
@@ -1628,7 +1628,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsOther.Id;
                 int imagecount = 10;
-                var list = vendorImageService.GetVendorImagesService(long.Parse(id));
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -1665,7 +1665,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id));
+                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                     ViewBag.imagescount = imagecount - list.Count;
                     ViewData["error"] = "You Have Crossed Images Limit";
                 }

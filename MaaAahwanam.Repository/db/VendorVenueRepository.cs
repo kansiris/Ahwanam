@@ -23,14 +23,14 @@ namespace MaaAahwanam.Repository.db
             return vendorsVenue;
         }
 
-        public VendorVenue GetVendorVenue(long id)
+        public VendorVenue GetVendorVenue(long id,long vid)
         {
-            return _dbContext.VendorVenue.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorVenue.Where(m => m.VendorMasterId == id && m.Id == vid).FirstOrDefault();
         }
 
-        public VendorVenue UpdateVenue(VendorVenue vendorsVenue,long id)
+        public VendorVenue UpdateVenue(VendorVenue vendorsVenue,long id,long vid)
         {
-            var GetVendor = _dbContext.VendorVenue.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorVenue.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsVenue.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsVenue);
             _dbContext.SaveChanges();
