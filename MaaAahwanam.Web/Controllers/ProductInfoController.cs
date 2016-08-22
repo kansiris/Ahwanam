@@ -57,6 +57,7 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.ServiceType = orderRequest.ServiceType;
             cartItem.TotalPrice = orderRequest.TotalPrice;
             cartItem.Orderedby = user.UserId;
+            cartItem.Quantity = orderRequest.Quantity;
             cartItem.UpdatedDate = DateTime.Now;
 
             EventInformation eventInformation = new EventInformation();
@@ -124,6 +125,7 @@ namespace MaaAahwanam.Web.Controllers
             Payment_Orders payment_Orders = new Payment_Orders();
             payment_Orders.cardnumber = orderRequest.cardnumber;
             payment_Orders.CVV = orderRequest.CVV;
+            payment_Orders.paidamount = orderRequest.paidamount;
             payment_Orders.PaymentID = orderRequest.PaymentId;
             payment_Orders.Paiddate = orderRequest.Paiddate;
             payment_Orders.OrderID = order.OrderId;
@@ -141,6 +143,12 @@ namespace MaaAahwanam.Web.Controllers
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
             return Json(orderDetail.OrderId);
+        }
+
+        public JsonResult getproductfromcart()
+        {
+
+            return Json("data");
         }
     }
 }

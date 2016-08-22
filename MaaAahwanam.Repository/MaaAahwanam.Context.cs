@@ -204,5 +204,32 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
         }
+    
+        public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails1_Result> MaaAahwanam_Orders_OrderDetails1(Nullable<long> orderNo)
+        {
+            var orderNoParameter = orderNo.HasValue ?
+                new ObjectParameter("OrderNo", orderNo) :
+                new ObjectParameter("OrderNo", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails1_Result>("MaaAahwanam_Orders_OrderDetails1", orderNoParameter);
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Others_Comments1_Result> MaaAahwanam_Others_Comments1(Nullable<long> commentId)
+        {
+            var commentIdParameter = commentId.HasValue ?
+                new ObjectParameter("CommentId", commentId) :
+                new ObjectParameter("CommentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Comments1_Result>("MaaAahwanam_Others_Comments1", commentIdParameter);
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Services_Bidding1_Result> MaaAahwanam_Services_Bidding1(Nullable<long> requestId)
+        {
+            var requestIdParameter = requestId.HasValue ?
+                new ObjectParameter("RequestId", requestId) :
+                new ObjectParameter("RequestId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Services_Bidding1_Result>("MaaAahwanam_Services_Bidding1", requestIdParameter);
+        }
     }
 }
