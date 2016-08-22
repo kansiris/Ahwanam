@@ -19,10 +19,16 @@
           <Parameter Name="vid" Type="int" Mode="In" />
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="MaaAahwanam_Orders_OrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderNo" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="Maa_Aahwanam_Orders_OrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Maa-Aahwanam_Orders_OrderDetails">
           <Parameter Name="OrderNo" Type="bigint" Mode="In" />
         </Function>
         <Function Name="MaaAahwanam_Others_AllRegisteredUsersDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="MaaAahwanam_Others_Comments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CommentId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="Maa_Aahwanam_Others_Comments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Maa-Aahwanam_Others_Comments">
           <Parameter Name="CommentId" Type="bigint" Mode="In" />
         </Function>
@@ -34,6 +40,9 @@
           <Parameter Name="Id" Type="bigint" Mode="In" />
         </Function>
         <Function Name="MaaAahwanam_Others_Testimonials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="MaaAahwanam_Services_Bidding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RequestId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="Maa_Aahwanam_Services_Bidding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="Maa-Aahwanam_Services_Bidding">
           <Parameter Name="RequestId" Type="bigint" Mode="In" />
         </Function>
@@ -99,7 +108,7 @@
             <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="orderconfirmation" ReturnType="Collection(MaaAahwanamModel.orderconfirmation_Result)">
-            <Parameter Name="OID" Mode="In" Type="Int32" />
+          <Parameter Name="OID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_AllOrders" ReturnType="Collection(MaaAahwanamModel.sp_AllOrders_Result)" />
           <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
@@ -126,6 +135,15 @@
           </FunctionImport>
           <FunctionImport Name="Maa_Aahwanam_Services_Bidding" ReturnType="Collection(MaaAahwanamModel.Maa_Aahwanam_Services_Bidding_Result)">
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="MaaAahwanam_Orders_OrderDetails1" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Orders_OrderDetails1_Result)">
+            <Parameter Name="OrderNo" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="MaaAahwanam_Others_Comments1" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Comments1_Result)">
+            <Parameter Name="CommentId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="MaaAahwanam_Services_Bidding1" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Services_Bidding1_Result)">
+            <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -365,6 +383,33 @@
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="Maa_Aahwanam_Services_Bidding_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="RequestId" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="MaaAahwanam_Orders_OrderDetails1_Result">
+          <Property Type="Int64" Name="OrderId" Nullable="false" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="MaaAahwanam_Others_Comments1_Result">
+          <Property Type="Int64" Name="CommentId" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="MaaAahwanam_Services_Bidding1_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="BusinessName" Nullable="true" />
           <Property Type="String" Name="VendorType" Nullable="true" />
@@ -661,6 +706,45 @@
           <FunctionImportMapping FunctionImportName="Maa_Aahwanam_Services_Bidding" FunctionName="MaaAahwanamModel.Store.Maa_Aahwanam_Services_Bidding">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.Maa_Aahwanam_Services_Bidding_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MaaAahwanam_Orders_OrderDetails1" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Orders_OrderDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Orders_OrderDetails1_Result">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_Comments1" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_Comments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_Comments1_Result">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MaaAahwanam_Services_Bidding1" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Services_Bidding">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Services_Bidding1_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
                 <ScalarProperty Name="VendorType" ColumnName="VendorType" />
