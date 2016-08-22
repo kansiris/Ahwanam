@@ -133,9 +133,9 @@
 
                     $($respTabs.find('.resp-tab-content.' + options.tabidentify)[tabNum]).addClass('resp-tab-content-active').addClass(options.tabidentify).attr('style', 'display:block');
                 }
-                //assign proper classes for when tabs mode is activated before making a selection in accordion mode
+                    //assign proper classes for when tabs mode is activated before making a selection in accordion mode
                 else {
-                   // $($respTabs.find('.resp-tab-content.' + options.tabidentify)[tabNum]).addClass('resp-accordion-closed'); //removed resp-tab-content-active
+                    // $($respTabs.find('.resp-tab-content.' + options.tabidentify)[tabNum]).addClass('resp-accordion-closed'); //removed resp-tab-content-active
                 }
 
                 //Tab Click action function

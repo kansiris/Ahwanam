@@ -5,25 +5,45 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Models;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Service
 {
    public class VendorPhotographyService
     {
+        RandomPassword randomPassword = new RandomPassword();
+        UserLoginRepository userLoginRepository = new UserLoginRepository();
+        UserLogin userLogin = new UserLogin();
         VendormasterRepository vendorMasterRepository = new VendormasterRepository();
         VendorsPhotographyRepository vendorsPhotographyRepository = new VendorsPhotographyRepository();
         public VendorsPhotography AddPhotography(VendorsPhotography vendorPhotography, Vendormaster vendorMaster)
        {
            vendorPhotography.Status = "Active";
-           vendorPhotography.UpdatedDate = DateTime.Now;
+           vendorPhotography.UpdatedDate =  DateTime.Now;
            vendorMaster.Status = "Active";
            vendorMaster.UpdatedDate = DateTime.Now;
            vendorMaster.ServicType = "Photography";
            vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
            vendorPhotography.VendorMasterId = vendorMaster.Id;
            vendorPhotography = vendorsPhotographyRepository.AddPhotography(vendorPhotography);
-           return vendorPhotography;
-       }
+            userLogin.UserName = vendorMaster.EmailId;
+            userLogin.Password = randomPassword.GenerateString();
+            userLogin.UserType = "Vendor";
+            userLogin.UpdatedBy = 2;
+            userLogin.Status = "Active";
+            userLogin.RegDate = DateTime.Now;
+            userLogin.UpdatedDate = DateTime.Now;
+            userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
+            if (vendorMaster.Id != 0 && vendorPhotography.Id != 0 && userLogin.UserLoginId != 0)
+            {
+                return vendorPhotography;
+            }
+            else
+            {
+                vendorPhotography.Id = 0;
+                return vendorPhotography;
+            }
+        }
         public VendorsPhotography GetVendorPhotography(long id)
         {
             return vendorsPhotographyRepository.GetVendorsPhotography(id);

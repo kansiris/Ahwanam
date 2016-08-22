@@ -20,8 +20,9 @@ namespace MaaAahwanam.Repository
         public string ContactNumber { get; set; }
         public string address { get; set; }
         public string Landmark { get; set; }
-        public long VendorVenueId { get; set; }
-        public long ServiceCost { get; set; }
+        public long VendorServiceId { get; set; }
+        public string UnitPrice { get; set; }
         public string status { get; set; }
+        public string VenueType { get; set; }
     }
 }

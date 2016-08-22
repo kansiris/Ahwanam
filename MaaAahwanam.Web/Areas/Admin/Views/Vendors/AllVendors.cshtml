@@ -84,17 +84,17 @@
                             {
                            new SelectListItem() {Text="Select Service Type" },
                            new SelectListItem() {Text="Venue",Value="Venue" },
-                           //new SelectListItem() {Text="Caterers",Value="Catering" },
-                           //new SelectListItem() {Text="Decorators",Value="Decorator" },
-                           //new SelectListItem() {Text="Photographers",Value="Photography" },
-                           //new SelectListItem() {Text="Invitation Cards",Value="InvitationCards" },
-                           //new SelectListItem() {Text="Entertainment",Value="Entertainment" },
-                           //new SelectListItem() {Text="Event Organisers",Value="EventOrganisers" },
-                           //new SelectListItem() {Text="Beauty Services",Value="BeautyServices" },
-                           //new SelectListItem() {Text="Wedding Collection",Value="WeddingCollection" },
-                           //new SelectListItem() {Text="Travel & Accomodation",Value="TravelAccomodation" },
-                           //new SelectListItem() {Text="Gifts",Value="Gifts" },
-                           //new SelectListItem() {Text="Others",Value="Others" }
+                           new SelectListItem() {Text="Caterers",Value="Catering" },
+                           new SelectListItem() {Text="Decorators",Value="Decorator" },
+                           new SelectListItem() {Text="Photographers",Value="Photography" },
+                           new SelectListItem() {Text="Invitation Cards",Value="InvitationCards" },
+                           new SelectListItem() {Text="Entertainment",Value="Entertainment" },
+                           new SelectListItem() {Text="Event Organisers",Value="EventOrganisers" },
+                           new SelectListItem() {Text="Beauty Services",Value="BeautyServices" },
+                           new SelectListItem() {Text="Wedding Collection",Value="WeddingCollection" },
+                           new SelectListItem() {Text="Travel & Accomodation",Value="TravelAccomodation" },
+                           new SelectListItem() {Text="Gifts",Value="Gifts" },
+                           new SelectListItem() {Text="Others",Value="Others" }
                        },
                        new { onchange="this.form.submit();",@class="form-control"})
                         </div>
@@ -114,6 +114,7 @@
                                             <th>Service Type</th>
                                             <th>Mobile</th>
                                             <th>Location</th>
+                                            <th>Service Cost</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -122,7 +123,7 @@
                                         @foreach (var item in ViewBag.VendorList)
                                         {
                                             <tr class="even gradeX">
-                                                <td style="display:none">@item.VendorVenueId</td>
+                                                <td style="display:none">@item.VendorServiceId</td>
                                                 <td>
                                                     @item.VendorMasterId
                                                 </td>
@@ -143,15 +144,18 @@
                                                     @item.address,@item.Landmark
                                                 </td>
                                                 <td>
+	                                                @item.VenueType<br />@item.UnitPrice
+                                                </td>
+                                                <td>
                                                     <a href="#" class="btn btn-primary btn-xs btn-rect"> @item.status</a>
                                                 </td>
                                                 <td>
-                                                    <input type="submit" class="btn btn-default btn-xs" value="View" name="command" formaction="/Admin/Vendors/AllVendors?id=@item.VendorMasterId&&vid=@item.VendorVenueId" />
-                                                    <input type="submit" class="btn btn-default btn-xs" value="Edit" name="command" formaction="/Admin/Vendors/AllVendors?id=@item.VendorMasterId&&vid=@item.VendorVenueId" />
+                                                    <input type="submit" class="btn btn-default btn-xs" value="View" name="command" formaction="/Admin/Vendors/AllVendors?id=@item.VendorMasterId&&vid=@item.VendorServiceId" />
+                                                    <input type="submit" class="btn btn-default btn-xs" value="Edit" name="command" formaction="/Admin/Vendors/AllVendors?id=@item.VendorMasterId&&vid=@item.VendorServiceId" />
                                                     <input type="submit" class="btn btn-default btn-xs" value="Delete" name="command" />
                                                     <br/>
                                                     <br/>
-                                                    <input type="submit" class="btn btn-default btn-xs" value="Add New" name="command" formaction="/Admin/Vendors/AllVendors?id=@item.VendorMasterId&&vid=@item.VendorVenueId" style="width:128px;"/>
+                                                    <input type="submit" class="btn btn-default btn-xs" value="Add New" name="command" formaction="/Admin/Vendors/AllVendors?id=@item.VendorMasterId&&vid=@item.VendorServiceId" style="width:128px;"/>
                                                     @*<a href="/Admin/Vendors/AllVendors" class="btn btn-default btn-xs">Edit</a>
                                                     <a href="#" class="btn btn-default btn-xs">Delete</a>*@
                                                 </td>
