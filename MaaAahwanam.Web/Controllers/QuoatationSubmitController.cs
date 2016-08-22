@@ -21,7 +21,9 @@ namespace MaaAahwanam.Web.Controllers
         {
             ServiceRequestService serviceRequestService = new ServiceRequestService();
             serviceRequest.Type = "Quoatation";
-            serviceRequest=serviceRequestService.SaveService(serviceRequest);
+            serviceRequest.UpdatedTime = DateTime.Now;
+            serviceRequest.Status = "Due";
+            serviceRequest =serviceRequestService.SaveService(serviceRequest);
             return RedirectToAction("Index","QuoatationConfirm", serviceRequest);
         }
 	}
