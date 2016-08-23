@@ -15,11 +15,19 @@ namespace MaaAahwanam.Repository.db
         GetCartItems_ResultModel getCartItems_ResultModel = new GetCartItems_ResultModel();
         public List<GetCartItems_Result> CartItemList(int vid)
         {
-            //var cartitems1= maaAahwanamEntities.GetCartItems(vid);
-            //Mapper.CreateMap<cartitems1, getCartItems_ResultModel>();
-            //getCartItems_ResultModel = Mapper.Map<cartitems1, getCartItems_ResultModel>(cartitems1);
-            //return getCartItems_ResultModel;
             return maaAahwanamEntities.GetCartItems(vid).ToList();
+        }
+        public int Updatecartitem(CartItem cartitemjson)
+        {
+            int updatestatus;
+            CartItem cartItem = new CartItem();
+            cartItem = _dbContext.CartItem.SingleOrDefault(i => i.CartId == cartitemjson.CartId);
+            cartItem.attribute = cartitemjson.attribute;
+            cartItem.Perunitprice = cartitemjson.Perunitprice;
+            cartItem.Quantity = cartitemjson.Quantity;
+            cartItem.TotalPrice = cartitemjson.TotalPrice;
+            updatestatus = _dbContext.SaveChanges();
+            return updatestatus;
         }
         public CartItem AddCartItem(CartItem cartItem)
         {

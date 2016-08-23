@@ -17,6 +17,7 @@ namespace MaaAahwanam.Models
         public decimal ServicePrice { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal Perunitprice { get; set; }
+        public string attribute { get; set; }
         public int Quantity { get; set; }
         public decimal Discount { get; set; }
         public decimal DiscountPrice { get; set; }
