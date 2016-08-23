@@ -10,6 +10,11 @@
     }
 @*<link href="assets/plugins/jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" />*@
 <link href="~/Assets/plugins/jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" />
+
+<link href="~/CSSWeb/css/masterslider.css" rel="stylesheet" />
+<script src="~/CSSWeb/js/jquery-ui.js"></script>
+<script src="~/CSSWeb/js/masterslider.min.js"></script>
+<script src="~/CSSWeb/js/owl.carousel.min.js"></script>
 <style>
     #imgbox {
             vertical-align: middle;
@@ -37,6 +42,7 @@
     function imagepopup(obj) {       
        $('body').on('click', 'img', function () {
            var imgsrc = $(this).attr('src');
+
            $('#myModal img').attr('src', $(this).attr('src'));
        })
     }
@@ -474,18 +480,20 @@
                                                     <br />
                                                     <br />
                                                     <br />
-                                                            @if (@ViewBag.images != null)
-                                                                    {
-                                                                        foreach (var item in ViewBag.images)
-                                                                        {
-                                                                        <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)"/> //onmouseover='Large(this)'
-                                                                        @Html.ActionLink("X", "venue", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
-                                                                    }
-                                                                    if (@ViewBag.images.Count == 0)
-                                                                    {
-                                                                        <img src="~/noimages.png" />
-                                                                    }
-                                                                }
+                                                    <div align="center">
+                                                        @if (@ViewBag.images != null)
+                                                        {
+                                                            foreach (var item in ViewBag.images)
+                                                            {
+                                                                <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
+                                                                                                                                                                                                                                                    @Html.ActionLink("X", "venue", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
+                                                            }
+                                                            if (@ViewBag.images.Count == 0)
+                                                            {
+                                                                <img src="~/noimages.png" />
+                                                            }
+                                                        }
+                                                    </div>
 
                                                             </div>
                                                             <div id="editimage" style="min-height: 10px;min-width: 10px; "></div>
@@ -493,25 +501,22 @@
                                                             <div id="dvPreview" align="center" style="padding:20px">
                                                             </div>
                                                         
-                                                        <div style="text-align:center" class="form-actions no-margin-bottom">
+                                                <div style="text-align:center" class="form-actions no-margin-bottom">
+                                                    @if (ViewBag.operation != null)
+                                                    {
+                                                        <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
+                                                    }
+                                                    <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
 
-                                                            @if (ViewBag.operation != null)
-                                                            {
-                                                                <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
-                                                            }
-                                                            else
-                                                            {
-                                                                <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
-                                                            }
-                                                            <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
+                                                    <input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">
 
-                                                            <input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">
-
-                                                            <button formaction="~/Admin/Vendors/AllVendors" type="submit" class="btn btn-success" id="btnback"> Back To List </button>
-
-
-                                                        </div>
-                                                        <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
+                                                    <button formaction="~/Admin/Vendors/AllVendors" type="submit" class="btn btn-success" id="btnback"> Back To List </button>
+                                                </div>
+                                                <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
                                                     </form>
                                         </div>
                                     </div>
@@ -528,19 +533,19 @@
         <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <div class="modal-body">
-                <img src="#" id="imagepreview" style="width: 100%;">
-            </div>
-
-        </div>
+                        <img class="ms-nav-next ms-ctrl-hide" src="#" id="imagepreview" style="width: 100%;" alt="slider-1">
+                
+                    </div>
+                    </div>
+                </div>
     </div>
-</div>
 
-<script>
-    function check() {
-        var emailId = $("#Item1_EmailId").val();
-        var label = $("#label");
-        $.ajax({
-            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/' + window.location.href.split("/")[3] + '/CreateVendor/checkemail',
+    <script>
+        function check() {
+            var emailId = $("#Item1_EmailId").val();
+            var label = $("#label");
+            $.ajax({
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/' + window.location.href.split("/")[3] + '/CreateVendor/checkemail',
                 type: 'POST',
                 data: JSON.stringify({ emailid: emailId }),
                 dataType: 'json',
@@ -558,11 +563,13 @@
                         label.html("Valid");
                     }
                 },
-                error :function(data)
-            { alert("Failed!!!");}
+                error: function (data)
+                { alert("Failed!!!"); }
             });
-    }
-</script>
+        }
+    </script>
+
+
 
     @section Bottom{
         <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
@@ -577,7 +584,7 @@
                 $('#dataTables-example').dataTable();
             });
         </script>
-        
+
     }
 
 

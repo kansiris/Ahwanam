@@ -144,7 +144,14 @@
                                                     @item.address,@item.Landmark
                                                 </td>
                                                 <td>
-	                                                @item.VenueType<br />@item.UnitPrice
+                                                    @if (item.VenueType != null || item.UnitPrice != null)
+                                                    {
+                                                        @item.VenueType<br />@Html.Raw(Html.Encode(item.UnitPrice).Replace(",", "<br />"))<br />
+                                                    }
+                                                    @if (item.VenueType == null && item.UnitPrice == null)
+                                                    {
+                                                        <p>Not Available</p>
+                                                    }
                                                 </td>
                                                 <td>
                                                     <a href="#" class="btn btn-primary btn-xs btn-rect"> @item.status</a>
