@@ -1681,24 +1681,6 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return Json("valid", JsonRequestBehavior.AllowGet);
         }
-
-        //public ActionResult images(string ids)
-        //{
-        //    var images = vendorImageService.GetVendorImagesService(long.Parse(ids));
-        //    return Json(images);
-        //}
-
-        //public JsonResult DeleteImage(string imgsrc, string ids)
-        //{
-            //var images = entities.TempVenueDetails.Where(s => s.ID == id).SingleOrDefault();
-            //string path = images.Images.ToString().TrimEnd(',') + ",";
-            //images.Images = path.Replace(imgsrc + ",", "");
-            //System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Server.MapPath(@"~/CSSWeb/Uploadedimages"));
-            //FileInfo oFileInfo = new FileInfo(Server.MapPath(@"~/CSSWeb/Uploadedimages/" + imgsrc));
-            //oFileInfo.Delete();
-            //oFileInfo.Refresh();
-            //entities.SaveChanges();
-        //    return Json("success");
-        //}
+        
     }
 }

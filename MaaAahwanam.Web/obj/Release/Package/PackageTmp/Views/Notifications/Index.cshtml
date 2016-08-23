@@ -55,17 +55,36 @@
         {
             foreach (var item in ViewBag.AllNotifications)
             {
-                <ul class="mail-list">
+                @*<ul class="mail-list">
                     <li>
                         <span class="ml-left">
-                            @*<input type="checkbox" class="case" name="case" />*@
-                        </span><span class="ml-reply"><a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;"/></a></span> <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <span class="mail-sender" >@item.description</span>&nbsp; <span class="mail-subject">@item.Subject</span> </a> <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
+                            @*<input type="checkbox" class="case" name="case" />
+                        </span><span class="ml-reply"><a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;"/></a></span> <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <span class="mail-sender">@item.description</span></a> <a> <span class="mail-subject">@item.Subject</span></a>  <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
                     </li>
-                </ul>
+                </ul>*@
+                <div class="dashboardList dashboardList-nospace">
+
+                    <table class="mail-list" style="width:100%">
+                        <tr>
+                            <td class="ml-left">
+                                <a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;" /></a>
+                            </td>
+                            <td style="max-width:100px">
+                                <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <p class="mail-sender">@item.description</p></a>
+                            </td>
+                            <td>
+                                <a><span class="mail-subject">@item.Subject</span> </a>
+                            </td>
+                            <td>
+                                <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             }
         }
-        
-</div>
+
+                </div>
 </div>
 
 <script type="text/javascript">

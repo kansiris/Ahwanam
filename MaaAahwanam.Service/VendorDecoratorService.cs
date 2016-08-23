@@ -5,24 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Models;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Service
 {
     public class VendorDecoratorService
     {
+        RandomPassword randomPassword = new RandomPassword();
+        UserLoginRepository userLoginRepository = new UserLoginRepository();
         VendormasterRepository vendorMasterRepository = new VendormasterRepository();
         VendorsDecoratorRepository vendorsDecoratorRepository = new VendorsDecoratorRepository();
+        UserLogin userLogin = new UserLogin();
         public VendorsDecorator AddDecorator(VendorsDecorator vendorsdecorator,Vendormaster vendorMaster)
         {
             vendorMaster.ServicType = "Decorators";
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate =  DateTime.Now;
             vendorsdecorator.Status = "Active";
             vendorsdecorator.UpdatedDate = DateTime.Now;
             vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
             vendorsdecorator.VendorMasterId = vendorMaster.Id;
             vendorsdecorator = vendorsDecoratorRepository.AddDecorator(vendorsdecorator);
-            return vendorsdecorator;
+            userLogin.UserName = vendorMaster.EmailId;
+            userLogin.Password = randomPassword.GenerateString();
+            userLogin.UserType = "Vendor";
+            userLogin.UpdatedBy = 2;
+            userLogin.RegDate = DateTime.Now;
+            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.Status = "Active";
+            userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
+            if (vendorMaster.Id != 0 && vendorsdecorator.Id != 0 && userLogin.UserLoginId != 0)
+            {
+                return vendorsdecorator;
+            }
+            else
+            {
+                vendorsdecorator.Id = 0;
+                return vendorsdecorator;
+            }
         }
 
         public VendorsDecorator GetVendorDecorator(long id)
