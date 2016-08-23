@@ -222,14 +222,14 @@
                                     <dd>
                                         <p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost*@</p>
                                     </dd>
-                                    <dt>Selling Price: </dt>
-                                    <dd>
-                                        <h2>Rs. 1,800</h2>
-                                    </dd>
-                                    <dt>Total Price: </dt>
-                                    <dd>
-                                        <h2>Rs. 2,200</h2>
-                                    </dd>
+                                    @*<dt>Selling Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 1,800</h2>
+                                        </dd>
+                                        <dt>Total Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 2,200</h2>
+                                        </dd>*@
                                 </dl>
                                 <form name="myFormother">
                                     <label>Number of items<span>*</span></label>
@@ -256,37 +256,44 @@
                                     <dd>
                                         <p id="demovenue" style="color:#8ca436;font-size:20px"></p>
                                     </dd>
-                                    <dt>Selling Price: </dt>
-                                    <dd>
-                                        <h2>Rs. 1,800</h2>
-                                    </dd>
-                                    <dt>Total Price: </dt>
-                                    <dd>
-                                        <h2>Rs. 2,200</h2>
-                                    </dd>
+                                    @*<dt>Selling Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 1,800</h2>
+                                        </dd>
+                                        <dt>Total Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 2,200</h2>
+                                        </dd>*@
                                 </dl>
+                                <label>Quantity<span>*</span></label>
+                                <input type="text" style="height:32px;" id="txtquantityvenue" value="10" onchange="Onchangequantityvenue()" /><br><br>
                                 <form name="myFormvenue">
-                                    <label>Quantity<span>*</span></label>
-                                    <input type="text" style="height:32px;" id="txtquantityvenue" value="10" onchange="Onchangequantityvenue()" /><br><br>
                                     <fieldset>
-                                        <input style="width: 19px;height: 25px;padding: 0 5px 0 0;background: url(checkbox.png) no-repeat;display: block;clear: left;float: left;" type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked><br>
-                                        <label for="vlvenue" style="">Veg lunch Per plate cost @Model.Item1.cost/-</label>
-                                        <input style="width: 19px;height: 25px;padding: 0 5px 0 0;background: url(checkbox.png) no-repeat;display: block;clear: left;float: left;" type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1> <br>
-                                        <label for="nvlvenue">Non veg lunch Per plate cost @Model.Item1.cost1/-</label>
-                                        <input style="width: 19px;height: 25px;padding: 0 5px 0 0;background: url(checkbox.png) no-repeat;display: block;clear: left;float: left;" type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2> <br>
-                                        <label for="vdvenue">Veg DinnerVeg Per plate cost @Model.Item1.cost2/-</label>
-                                        <input style="width: 19px;height: 25px;padding: 0 5px 0 0;background: url(checkbox.png) no-repeat;display: block;clear: left;float: left;" type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
-                                        <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>
+                                        <div class="radioButtons" id="radio-demo">
+                                            <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
+                                            <label for="vlvenue">Veg lunch Per plate cost @Model.Item1.cost/-</label><br />
+
+                                            <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
+                                            <label for="nvlvenue">Non veg lunch Per plate cost @Model.Item1.cost1/-</label><br />
+
+                                            <input type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2>
+                                            <label for="vdvenue">Veg DinnerVeg Per plate cost @Model.Item1.cost2/-</label><br />
+
+                                            <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
+                                            <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>
+                                        </div>
                                     </fieldset>
+                                    <input type="hidden" id="rbselectedvalue" value="vlvenue" />
+                                    <input type="hidden" id="rbselectedamount" value=@Model.Item1.cost />
                                 </form>
                             </div>
-                            <div class="deal_save">
-                                <p>
-                                    You Save:
-                                    <span class="text-red">Rs. 1,800</span>
-                                </p>
-                                <h3>30% OFF</h3>
-                            </div>
+                            @*<div class="deal_save">
+                                    <p>
+                                        You Save:
+                                        <span class="text-red">Rs. 1,800</span>
+                                    </p>
+                                    <h3>30% OFF</h3>
+                                </div>*@
                         </div>
 
                         @*Calculation Caterer Div*@
@@ -373,9 +380,16 @@
                                 </dl>
                                 <form name="myForminvitation">
                                     <label>Number of cards<span>*</span></label>
-                                    <input type="text" id="txtquantityinvitation" value="10" placeholder="Enter Quantity" onchange="Onchangequantityinvitation()" /><br>
-                                    <input type="radio" id="vlinvitation" name="platetypeinvitation" value="500" checked> Card cost 500/-<br>
-                                    <input type="radio" id="nvlinvitation" name="platetypeinvitation" value="1000"> Carrd cost with print 1000/-<br>
+                                    <input style="padding:9px 2%;background: #fdfcfc;border: 1px solid #ddd;border-radius: 3px;float: left;min-height: 30px;height: auto;color: #333;font-size: 13px;outline: medium none;" type="text" id="txtquantityinvitation" value="10" placeholder="Enter Quantity" onchange="Onchangequantityinvitation()" /><br>
+                                    <br /><br />
+                                    <div class="radioButtons" id="radio-demo">
+                                        <input type="radio" id="vlinvitation" name="platetypeinvitation" value="500" checked />
+                                        <label for="vlinvitation"> Card cost @Model.Item1.cost/-</label><br /><br />
+                                        <input type="radio" id="nvlinvitation" name="platetypeinvitation" value="1000" />
+                                        <label for="nvlinvitation"> Carrd cost with print @Model.Item1.cost/-</label><br />
+                                        <br />
+                                    </div>
+
                                 </form>
                             </div>
                             <div class="deal_save">
@@ -408,8 +422,8 @@
                                     <label>Number of items<span>*</span></label>
                                     <input type="hidden" id="hmin" name="Minvalue" value="10">
                                     <input type="hidden" id="hmax" name="Maxvalue" value="50">
-                                    <input type="text" id="txtquantityGeneral" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGeneral()" /><br>
-                                    <input type="radio" id="vlGeneral" name="platetypeGeneral" value="@Model.Item1.cost" checked> item cost @Model.Item1.cost/-<br>
+                                    <input type="text" id="txtquantityGeneral" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGeneral()" /><br />
+                                    <input type="radio" id="vlGeneral" name="platetypeGeneral" value="@Model.Item1.cost" checked> item cost @Model.Item1.cost/-
                                 </form>
                             </div>
                             <div class="deal_save">
@@ -423,10 +437,11 @@
 
                         <input type="hidden" id="stype" name="Minvalue" value=@ViewBag.servicetype>
                         <div class="deal_buttons">
-                            <a href="#quatation" class="btn btn-big btn-orange popup-with-move-anim" onclick="Sethdnvalue('addtocartbtn')">Add To Cart </a>
+                            <a href="#quatation" id="btn1" class="btn btn-big btn-orange popup-with-move-anim" onclick="Sethdnvalue('addtocartbtn')">Add To Cart </a>
                             @*<a href="#quatation" class="btn btn-big btn-red popup-with-move-anim"><i class="ti-money"></i> Book Now</a>*@
-                            <a href="#quatation" class="btn btn-big btn-green popup-with-move-anim" onclick="Sethdnvalue('buynow')"><i class="ti-money"></i> Buy Now </a>
+                            <a href="#quatation" id="btn2" class="btn btn-big btn-green popup-with-move-anim" onclick="Sethdnvalue('buynow')"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
                             @*<a href="~/CartView/Index" class="btn btn-big btn-green" id="lnkproceedtonext">Buy Now </a>*@
+                            <a id="btn3" class="btn btn-big btn-orange" style="display:none">Update</a>
                             <input type="hidden" id="btnname" />
                         </div>
                     </div>
@@ -686,6 +701,7 @@
     </style>
     <script type="text/javascript">
         window.onload = function () {
+            //alert($('input[name=platetypevenue]:checked', '#myFormvenue').val());
             var b;
             var a = document.getElementById("txtquantityvenue").value;
             if (document.getElementById("vlvenue").checked) {
@@ -735,24 +751,34 @@
                 $('#Calcdiv_General').css({ "display": "block" });
             }
 
-            var url = '@Request.QueryString["p"]';
-            if (url == 'c') {
-                //    $.ajax({
-                //        type: "POST",
-                //        url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Addtocart',
-                //        data: {},
-                //        //data: JSON.stringify(orderRequest),
-                //        //data: sendInfo,
-                //        contentType: "application/json; charset=utf-8",
-                //        dataType: "json",
-                //        success: function (data) {
-                //            if (data == "Success") {
-                //            }
-                //        },
-                //        error: function (data) {
-                //            alert('error')
-                //        }
-                //    });
+            var fromcart = '@Request.QueryString["p"]';
+            var cid = '@Request.QueryString["cid"]';
+            //alert(cid);
+            if (fromcart == 'c') {
+                var itemdetails = {};
+                itemdetails.cid = cid;
+                //alert(itemdetails.cid);
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/getproductfromcart',
+                    data: {},
+                    data: JSON.stringify(itemdetails),
+                    //data: sendInfo,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        //alert(data.attribute);
+                        document.getElementById("txtquantityvenue").value = data.Quantity;
+                        document.getElementById("demovenue").innerHTML = data.TotalPrice;
+                        document.getElementById(data.attribute).checked = true;
+                        document.getElementById("btn3").style.display = "block";
+                        document.getElementById("btn1").style.display = "None";
+                        document.getElementById("btn2").style.display = "None";
+                    },
+                    error: function (data) {
+                        alert('error')
+                    }
+                });
             }
         };
 
@@ -763,11 +789,16 @@
 
         //for venues
         var radvenue = document.myFormvenue.platetypevenue;
+        //var id = $(myFormvenue).find('option:selected').attr('id');
         var prevvenue = null;
         var rrvenue = null;
         for (var i = 0; i < radvenue.length; i++) {
             radvenue[i].onclick = function () {
                 if (this !== prevvenue) {
+                    var idd = this.id;
+                    //alert(idd);
+                    document.getElementById("rbselectedvalue").value = idd;
+                    document.getElementById("rbselectedamount").value = this.value;
                     prevvenue = this;
                     var a = document.getElementById("txtquantityvenue").value;
                     document.getElementById("demovenue").innerHTML = a * parseInt(this.value);
@@ -777,17 +808,18 @@
         function Onchangequantityvenue() {
             var b;
             var a = document.getElementById("txtquantityvenue").value;
+
             if (document.getElementById("vlvenue").checked) {
-                document.getElementById("demovenue").innerHTML = document.getElementById("vl").value * a;
+                document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value * a;
             }
             else if (document.getElementById("nvlvenue").checked) {
-                document.getElementById("demovenue").innerHTML = document.getElementById("nvl").value * a;
+                document.getElementById("demovenue").innerHTML = document.getElementById("nvlvenue").value * a;
             }
             else if (document.getElementById("vdvenue").checked) {
-                document.getElementById("demovenue").innerHTML = document.getElementById("vd").value * a;
+                document.getElementById("demovenue").innerHTML = document.getElementById("vdvenue").value * a;
             }
             else if (document.getElementById("nvdvenue").checked) {
-                document.getElementById("demovenue").innerHTML = document.getElementById("nvd").value * a;
+                document.getElementById("demovenue").innerHTML = document.getElementById("nvdvenue").value * a;
             }
         }
 
@@ -913,7 +945,9 @@
             var b = document.getElementById("Review").value;
             var c = document.getElementById("demovenue").innerHTML;
             var d = document.getElementById("txtquantityvenue").value;
-            var e = document.getElementById("").value;
+
+            var e = document.getElementById("rbselectedvalue").value;
+            var f = document.getElementById("rbselectedamount").value;
             //Pop-up Values
             var Ename = document.getElementById("Ename").value;
             var Eemail = document.getElementById("Eemail").value;
@@ -941,7 +975,8 @@
             orderRequest.ServiceType = a;
             orderRequest.TotalPrice = c;
             orderRequest.Quantity = d;
-            alert(d);
+            orderRequest.attribute = e;
+            orderRequest.Perunitprice = f;
             orderRequest.EventName = Ename;
             orderRequest.Email = Eemail;
             orderRequest.Phone = Emobile;
@@ -951,6 +986,7 @@
             orderRequest.PostalCode = EPostalCode;
             orderRequest.State = EState;
             orderRequest.EventDates = EventDates;
+            //alert(document.getElementById("txtquantityvenue").value);
 
             //alert(document.getElementById("btnname").value);
             if (document.getElementById("btnname").value == "addtocartbtn") {
@@ -959,7 +995,7 @@
                     url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Addtocart',
                     data: {},
                     data: JSON.stringify(orderRequest),
-                    //data: sendInfo,
+                    // data: sendInfo,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
@@ -968,13 +1004,13 @@
                             location.reload();
                             //}
                             //else if (document.getElementById("btnname").value == "buynow") {
-                            //    //window.location.href = '/CartView';
-                            //    alert('buyout_thank you page');
-                            //}
+                            //window.location.href = '/CartView';
+                            //  alert('buyout_thank you page');
                         }
-                        else if (data == "NotLogin") {
-                            //window.location.href = '/Signin';
-                        }
+                        //}
+                        //else if (data == "NotLogin") {
+                        //    window.location.href = '/Signin';
+                        //}
                     },
                     error: function (data) {
                         alert('error')
@@ -991,28 +1027,66 @@
                     url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Buynow',
                     data: {},
                     data: JSON.stringify(orderRequest),
-                    //data: sendInfo,
+                    data: sendInfo,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
                         if (data != null) {
-                            //if (document.getElementById("btnname").value == "addtocartbtn") {
-                            //location.reload();
-                            //}
-                            //else if (document.getElementById("btnname").value == "buynow") {
-                            //alert('buyout_thank you page');
-                            window.location.href = '/orderconfirmation?oid=' + data;
-                            //}
+                            if (document.getElementById("btnname").value == "addtocartbtn") {
+                                location.reload();
+                            }
+                            else if (document.getElementById("btnname").value == "buynow") {
+                                alert('buyout_thank you page');
+                                window.location.href = '/orderconfirmation?oid=' + data;
+                            }
                         }
-                        //else if (data == "NotLogin") {
-                        //window.location.href = '/Signin';
-                        //}
+                        else if (data == "NotLogin") {
+                            window.location.href = '/Signin';
+                        }
                     },
                     error: function (data) {
                         alert('error')
                     }
                 });
             }
+        });
+    </script>
+    <script type="text/javascript">
+        $('#btn3').on('click', function (e) {
+            var a = document.getElementById("Service").value;
+            var b = document.getElementById("Review").value;
+            var c = document.getElementById("demovenue").innerHTML;
+            var d = document.getElementById("txtquantityvenue").value;
+
+            var e = document.getElementById("rbselectedvalue").value;
+            var f = document.getElementById("rbselectedamount").value;
+            var cids = '@Request.QueryString["cid"]';
+
+            var orderRequest = {};
+            orderRequest.VendorId = b;
+            orderRequest.ServiceType = a;
+            orderRequest.TotalPrice = c;
+            orderRequest.Quantity = d;
+            orderRequest.attribute = e;
+            orderRequest.Perunitprice = f;
+            orderRequest.cid = cids;
+            $.ajax({
+                type: "POST",
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Updatecartitem',
+                data: {},
+                data: JSON.stringify(orderRequest),
+                // data: sendInfo,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data == "Success") {
+                        window.location.href = '/CartView';
+                    }
+                },
+                error: function (data) {
+                    alert('error')
+                }
+            });
         });
     </script>
     <script>

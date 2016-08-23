@@ -55,10 +55,12 @@ namespace MaaAahwanam.Web.Controllers
             CartItem cartItem = new CartItem();
             cartItem.VendorId = orderRequest.VendorId;
             cartItem.ServiceType = orderRequest.ServiceType;
+            cartItem.Perunitprice = orderRequest.Perunitprice;
             cartItem.TotalPrice = orderRequest.TotalPrice;
             cartItem.Orderedby = user.UserId;
             cartItem.Quantity = orderRequest.Quantity;
             cartItem.UpdatedDate = DateTime.Now;
+            cartItem.attribute = orderRequest.attribute;
 
             EventInformation eventInformation = new EventInformation();
             eventInformation.EventName = orderRequest.EventName;
@@ -145,10 +147,33 @@ namespace MaaAahwanam.Web.Controllers
             return Json(orderDetail.OrderId);
         }
 
-        public JsonResult getproductfromcart()
+        public JsonResult getproductfromcart(string cid)
         {
 
-            return Json("data");
+            CartService cartService = new CartService();
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            GetCartItems_Result cartlist = cartService.editcartitem(int.Parse(user.UserId.ToString()), int.Parse(cid));
+            return Json(cartlist);
+        }
+        public JsonResult Updatecartitem(OrderRequest orderRequest)
+        {
+
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            CartItem cartItem = new CartItem();
+            cartItem.VendorId = orderRequest.VendorId;
+            cartItem.ServiceType = orderRequest.ServiceType;
+            cartItem.Perunitprice = orderRequest.Perunitprice;
+            cartItem.TotalPrice = orderRequest.TotalPrice;
+            cartItem.Orderedby = user.UserId;
+            cartItem.Quantity = orderRequest.Quantity;
+            cartItem.UpdatedDate = DateTime.Now;
+            cartItem.attribute = orderRequest.attribute;
+            cartItem.CartId = orderRequest.cid;
+
+            CartService cartService = new CartService();
+            string mesaage = cartService.Updatecartitem(cartItem);
+
+            return Json(mesaage);
         }
     }
 }

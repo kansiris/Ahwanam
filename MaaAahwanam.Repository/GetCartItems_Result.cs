@@ -21,7 +21,11 @@ namespace MaaAahwanam.Repository
         public string Landmark { get; set; }
         public string ContactNumber { get; set; }
         public string ServicType { get; set; }
+        public long CartId { get; set; }
         public string image { get; set; }
         public decimal TotalPrice { get; set; }
+        public string attribute { get; set; }
+        public int Quantity { get; set; }
+        public decimal Perunitprice { get; set; }
     }
 }

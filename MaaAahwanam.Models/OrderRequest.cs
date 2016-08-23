@@ -37,6 +37,8 @@ namespace MaaAahwanam.Models
         public int Quantity { get; set; }
         public decimal Discount { get; set; }
         public decimal DiscountPrice { get; set; }
+        public string attribute { get; set; }
+        public long cid { get; set; }
 
         //public long PaymentID { get; set; }
         //public long OrderID { get; set; }

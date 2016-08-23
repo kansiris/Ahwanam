@@ -18,6 +18,20 @@ namespace MaaAahwanam.Service
             List<GetCartItems_Result> l1 = cartItemRepoitory.CartItemList(vid);
             return l1;
         }
+        public GetCartItems_Result editcartitem(int vid, int cartID)
+        {
+            GetCartItems_Result l1 = cartItemRepoitory.CartItemList(vid).Where(i => i.CartId == cartID).FirstOrDefault();
+            return l1;
+        }
+        public string Updatecartitem(CartItem CartItemjson)
+        {
+            int l1 = cartItemRepoitory.Updatecartitem(CartItemjson);
+            if (l1 != 0)
+            {
+                return "Success";
+            }
+            return "Failure";
+        }
         public int CartItemsCount(int UserId)
         {
             var l1 = 0;
@@ -29,9 +43,9 @@ namespace MaaAahwanam.Service
         {
             string message = "";
             cartItem = cartItemRepoitory.AddCartItem(cartItem);
-            if(cartItem!=null)
+            if (cartItem != null)
             {
-                message="Success";
+                message = "Success";
             }
             else
             {
