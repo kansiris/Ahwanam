@@ -12,14 +12,14 @@ namespace MaaAahwanam.Service
     public class DashBoardService
     {
         DashBoardRepository dashBoardRepository = new DashBoardRepository();
-        public List<sp_AllOrders_Result> GetOrdersService()
+        public List<sp_AllOrders_Result> GetOrdersService(int id)
         {
-            return dashBoardRepository.GetOrders();
+            return dashBoardRepository.GetOrders(id);
         }
 
-        public List<ServiceRequest> GetServicesService()
+        public List<ServiceRequest> GetServicesService(int id)
         {
-            return dashBoardRepository.GetServices();
+            return dashBoardRepository.GetServices(id);
         }
 
         public List<sp_OrderDetails_Result> GetOrderDetailService(long id)

@@ -13,14 +13,14 @@ namespace MaaAahwanam.Repository.db
     {
         readonly ApiContext _dbContext = new ApiContext();
         MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
-        public List<sp_AllOrders_Result> GetOrders()
+        public List<sp_AllOrders_Result> GetOrders(int id)
         {
-            return maaAahwanamEntities.sp_AllOrders().ToList();
+            return maaAahwanamEntities.sp_AllOrders(id).ToList();
         }
 
-        public List<ServiceRequest> GetServices()
+        public List<ServiceRequest> GetServices(int id)
         {
-            return _dbContext.ServiceRequest.ToList();
+            return _dbContext.ServiceRequest.Where(m=>m.UpdatedBy == id).ToList();
         }
 
         public List<sp_OrderDetails_Result> GetOrderDetail(long id)

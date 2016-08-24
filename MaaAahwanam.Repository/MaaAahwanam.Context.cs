@@ -28,15 +28,6 @@ namespace MaaAahwanam.Repository
         }
     
     
-        public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
-        {
-            var servicTypeParameter = servicType != null ?
-                new ObjectParameter("ServicType", servicType) :
-                new ObjectParameter("ServicType", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
-        }
-    
         public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
         {
             var vIDParameter = vID.HasValue ?
@@ -177,9 +168,13 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
         }
     
-        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders()
+        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders");
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     
         public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()
@@ -230,6 +225,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_vendordatesbooked_Result>("SP_vendordatesbooked", vIDParameter);
+        }
+    
+        public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
+        {
+            var servicTypeParameter = servicType != null ?
+                new ObjectParameter("ServicType", servicType) :
+                new ObjectParameter("ServicType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
         }
     }
 }

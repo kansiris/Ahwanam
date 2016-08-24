@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
     public class DashboardController : Controller
     {
         DashBoardService dashBoardService = new DashBoardService();
-        public ActionResult Index(string id)
+        public ActionResult Index()
         {
             if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
             {
@@ -24,8 +24,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Type = ValidUserUtility.UserType();
 
             }
-            ViewBag.AllOrders = dashBoardService.GetOrdersService();
-            ViewBag.Services = dashBoardService.GetServicesService();
+            int id = ValidUserUtility.ValidUser();
+            ViewBag.AllOrders = dashBoardService.GetOrdersService(id);
+            ViewBag.Services = dashBoardService.GetServicesService(id);
             return View();
         }
     }
