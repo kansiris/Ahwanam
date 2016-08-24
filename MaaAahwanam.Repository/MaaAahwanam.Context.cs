@@ -72,6 +72,15 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
         }
     
+        public virtual ObjectResult<Maa_Aahwanam_Orders_OrderDetails_Result> Maa_Aahwanam_Orders_OrderDetails(Nullable<long> orderNo)
+        {
+            var orderNoParameter = orderNo.HasValue ?
+                new ObjectParameter("OrderNo", orderNo) :
+                new ObjectParameter("OrderNo", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Maa_Aahwanam_Orders_OrderDetails_Result>("Maa_Aahwanam_Orders_OrderDetails", orderNoParameter);
+        }
+    
         public virtual ObjectResult<MaaAahwanam_Others_AllRegisteredUsersDetails_Result> MaaAahwanam_Others_AllRegisteredUsersDetails()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_AllRegisteredUsersDetails_Result>("MaaAahwanam_Others_AllRegisteredUsersDetails");
@@ -84,6 +93,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("CommentId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Comments_Result>("MaaAahwanam_Others_Comments", commentIdParameter);
+        }
+    
+        public virtual ObjectResult<Maa_Aahwanam_Others_Comments_Result> Maa_Aahwanam_Others_Comments(Nullable<long> commentId)
+        {
+            var commentIdParameter = commentId.HasValue ?
+                new ObjectParameter("CommentId", commentId) :
+                new ObjectParameter("CommentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Maa_Aahwanam_Others_Comments_Result>("Maa_Aahwanam_Others_Comments", commentIdParameter);
         }
     
         public virtual ObjectResult<MaaAahwanam_Others_RegisteredUsers_Result> MaaAahwanam_Others_RegisteredUsers()
@@ -132,6 +150,15 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Services_Bidding_Result>("MaaAahwanam_Services_Bidding", requestIdParameter);
         }
     
+        public virtual ObjectResult<Maa_Aahwanam_Services_Bidding_Result> Maa_Aahwanam_Services_Bidding(Nullable<long> requestId)
+        {
+            var requestIdParameter = requestId.HasValue ?
+                new ObjectParameter("RequestId", requestId) :
+                new ObjectParameter("RequestId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Maa_Aahwanam_Services_Bidding_Result>("Maa_Aahwanam_Services_Bidding", requestIdParameter);
+        }
+    
         public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
         {
             var oIDParameter = oID.HasValue ?
@@ -141,9 +168,13 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
         }
     
-        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders()
+        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders");
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     
         public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()

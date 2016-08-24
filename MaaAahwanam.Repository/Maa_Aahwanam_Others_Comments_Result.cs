@@ -11,18 +11,11 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class AllVendorList_Result
+    public partial class Maa_Aahwanam_Others_Comments_Result
     {
-        public long VendorMasterId { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public long CommentId { get; set; }
+        public string Status { get; set; }
         public string BusinessName { get; set; }
-        public string ServicType { get; set; }
-        public string ContactNumber { get; set; }
-        public string address { get; set; }
-        public string Landmark { get; set; }
-        public long VendorServiceId { get; set; }
-        public string UnitPrice { get; set; }
-        public string status { get; set; }
-        public string VenueType { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
 }
