@@ -21,14 +21,14 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorsdecorator;
         }
-        public VendorsDecorator GetVendorDecorator(long id)
+        public VendorsDecorator GetVendorDecorator(long id,long vid)
         {
-            return _dbContext.VendorsDecorator.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsDecorator.Where(m => m.VendorMasterId == id && m.Id==vid).FirstOrDefault();
         }
 
-        public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, long id)
+        public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, long id,long vid)
         {
-            var GetVendor = _dbContext.VendorsDecorator.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorsDecorator.SingleOrDefault(m => m.VendorMasterId == id&&m.Id==vid);
             vendorsDecorator.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsDecorator);
             _dbContext.SaveChanges();

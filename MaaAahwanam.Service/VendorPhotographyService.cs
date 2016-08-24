@@ -44,12 +44,12 @@ namespace MaaAahwanam.Service
                 return vendorPhotography;
             }
         }
-        public VendorsPhotography GetVendorPhotography(long id)
+        public VendorsPhotography GetVendorPhotography(long id,long vid)
         {
-            return vendorsPhotographyRepository.GetVendorsPhotography(id);
+            return vendorsPhotographyRepository.GetVendorsPhotography(id,vid);
         }
 
-        public VendorsPhotography UpdatesPhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid)
+        public VendorsPhotography UpdatesPhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid,long vid)
         {
             vendorsPhotography.Status = "Active";
             vendorsPhotography.UpdatedDate = DateTime.Now;
@@ -57,7 +57,16 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Photography";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsPhotography =  vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid);
+            vendorsPhotography =  vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid,vid);
+            return vendorsPhotography;
+        }
+
+        public VendorsPhotography AddNewPhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster)
+        {
+            vendorsPhotography.Status = "Active";
+            vendorsPhotography.UpdatedDate = DateTime.Now;
+            vendorsPhotography.VendorMasterId = vendorMaster.Id;
+            vendorsPhotography = vendorsPhotographyRepository.AddPhotography(vendorsPhotography);
             return vendorsPhotography;
         }
     }

@@ -45,12 +45,12 @@ namespace MaaAahwanam.Service
             }
         }
 
-        public VendorsDecorator GetVendorDecorator(long id)
+        public VendorsDecorator GetVendorDecorator(long id,long vid)
         {
-            return vendorsDecoratorRepository.GetVendorDecorator(id);
+            return vendorsDecoratorRepository.GetVendorDecorator(id,vid);
         }
 
-        public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster, long masterid)
+        public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster, long masterid,long vid)
         {
             vendorsDecorator.Status = "Active";
             vendorsDecorator.UpdatedDate = DateTime.Now;
@@ -58,7 +58,16 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Decorators";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, masterid);
+            vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, masterid,vid);
+            return vendorsDecorator;
+        }
+
+        public VendorsDecorator AddNewDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster)
+        {
+            vendorsDecorator.Status = "Active";
+            vendorsDecorator.UpdatedDate = DateTime.Now;
+            vendorsDecorator.VendorMasterId = vendorMaster.Id;
+            vendorsDecorator = vendorsDecoratorRepository.AddDecorator(vendorsDecorator);
             return vendorsDecorator;
         }
     }

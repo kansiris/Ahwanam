@@ -23,14 +23,14 @@ namespace MaaAahwanam.Repository.db
             return vendorsCatering;
         }
 
-        public VendorsCatering GetVendorsCatering(long id)
+        public VendorsCatering GetVendorsCatering(long id,long vid)
         {
-            return _dbContext.VendorsCatering.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsCatering.Where(m => m.VendorMasterId == id&&m.Id==vid).FirstOrDefault();
         }
 
-        public VendorsCatering UpdatesCatering(VendorsCatering vendorsCatering, long id)
+        public VendorsCatering UpdatesCatering(VendorsCatering vendorsCatering, long id,long vid)
         {
-            var GetVendor = _dbContext.VendorsCatering.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorsCatering.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsCatering.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsCatering);
             _dbContext.SaveChanges();

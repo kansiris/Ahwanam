@@ -44,12 +44,12 @@ namespace MaaAahwanam.Service
                 return vendorGift;
             }
         }
-        public VendorsGift GetVendorGift(long id)
+        public VendorsGift GetVendorGift(long id,long vid)
         {
-            return vendorGiftsRepository.GetVendorsGift(id);
+            return vendorGiftsRepository.GetVendorsGift(id,vid);
         }
 
-        public VendorsGift UpdatesGift(VendorsGift vendorsGift, Vendormaster vendorMaster, long masterid)
+        public VendorsGift UpdatesGift(VendorsGift vendorsGift, Vendormaster vendorMaster, long masterid, long vid)
         {
             vendorsGift.Status = "Active";
             vendorsGift.UpdatedDate = DateTime.Now;
@@ -57,8 +57,17 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Gifts";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsGift = vendorGiftsRepository.UpdatesGift(vendorsGift, masterid);
+            vendorsGift = vendorGiftsRepository.UpdatesGift(vendorsGift, masterid,vid);
             return vendorsGift;
         }
+        public VendorsGift AddNewGift(VendorsGift vendorsGift, Vendormaster vendorMaster)
+        {
+            vendorsGift.Status = "Active";
+            vendorsGift.UpdatedDate = DateTime.Now;
+            vendorsGift.VendorMasterId = vendorMaster.Id;
+            vendorsGift = vendorGiftsRepository.AddGifts(vendorsGift);
+            return vendorsGift;
+        }
+
     }
 }

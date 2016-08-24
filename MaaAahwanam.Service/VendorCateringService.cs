@@ -45,12 +45,12 @@ namespace MaaAahwanam.Service
             }
             
         }
-        public VendorsCatering GetVendorCatering(long id)
+        public VendorsCatering GetVendorCatering(long id,long vid)
         {
-            return vendorCateringRespository.GetVendorsCatering(id);
+            return vendorCateringRespository.GetVendorsCatering(id,vid);
         }
 
-        public VendorsCatering UpdatesCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid)
+        public VendorsCatering UpdatesCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid,long vid)
         {
             vendorsCatering.Status = "Active";
             vendorsCatering.UpdatedDate = DateTime.Now;
@@ -58,7 +58,16 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Catering";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsCatering = vendorCateringRespository.UpdatesCatering(vendorsCatering, masterid);
+            vendorsCatering = vendorCateringRespository.UpdatesCatering(vendorsCatering, masterid,vid);
+            return vendorsCatering;
+        }
+
+        public VendorsCatering AddNewCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster)
+        {
+            vendorsCatering.Status = "Active";
+            vendorsCatering.UpdatedDate = DateTime.Now;
+            vendorsCatering.VendorMasterId = vendorMaster.Id;
+            vendorsCatering = vendorCateringRespository.AddCatering(vendorsCatering);
             return vendorsCatering;
         }
     }
