@@ -122,9 +122,9 @@
         {*@
     <form>
         <div class="dashboardList dashboardList-nospace">
-            @if (ViewBag.AllOrders.Count != 0)
-            {
+           
                 <h3>Products & Services</h3>
+            <br/>
                 <table class="responsive">
 
                     <thead>
@@ -138,7 +138,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ViewBag.AllOrders)
+                    @if (ViewBag.AllOrders.Count != 0)
+                    {
+                        foreach (var item in ViewBag.AllOrders)
                         {
                         <tr>
                             <td>@(++i)</td>
@@ -147,14 +149,23 @@
                             <td>@item.OrderDate.ToShortDateString()</td>
                             <td>@item.TotalPrice</td>
                             @if (item.Status == "Active")
-                                {
+                            {
                                 <td class="active">@item.Status</td>
-                                }
-
+                            }
+                            
 
                         </tr>
                         }
+                    }
+                    @if (ViewBag.AllOrders.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="6"><h6>No Orders Yet</h6></td>
+                        </tr>
+                        
+                    }
                     </tbody>
+                        
                     @*@if (ViewBag.AllOrders == null)
                         {
                             <tbody>
@@ -164,12 +175,12 @@
                             </tbody>
                         }*@
                 </table>
-            }
-            @if (ViewBag.AllOrders.Count != 0)
-            {
+            <br/><br/>
+            <h3>Quotation,Bidding,Reverse Bidding</h3>
+            
                 <br />
-                <br />
-                <h3>Quotation,Bidding,Reverse Bidding</h3>
+               
+                
                 <table class="responsive">
                     <thead>
                         <tr>
@@ -181,11 +192,13 @@
                             <th style="width:15%">Status</th>
                         </tr>
                     </thead>
-                    @if (ViewBag.Services != null)
-                {
+                    @if (ViewBag.Services.Count != 0)
+                        {
+                        if (ViewBag.Services != null)
+                        {
                     <tbody>
                         @foreach (var item in ViewBag.Services)
-                            {
+                        {
                             <tr>
                                 <td>@(++j)</td>
                                 <td><a href="javascript:redirect('@item.Status','@item.RequestId','@item.UpdatedTime.ToShortDateString()')" class="green-link ml-center">@item.RequestId</a></td> @*~/Views/BooknowViewCart/id=@item.RequestId*@
@@ -193,22 +206,23 @@
                                 <td>@item.UpdatedTime.ToShortDateString()</td>
                                 <td>@item.Budget</td>
                                 @if (item.Status == "Paid")
-                                    {
+                                {
                                     <td class="active">@item.Status</td>
-                                    }
+                                }
                                 @if (item.Status == "Due")
-                                    {
+                                {
                                     <td class="close">@item.Status</td>
-                                    }
+                                }
                             </tr>
-                            }
+                        }
                     </tbody>
+                        }
                     }
-                    @if (ViewBag.Services == null)
+                    @if (ViewBag.Services.Count == 0)
                     {
                     <tbody>
                         <tr>
-                            <td colspan="6">No Records Found</td>
+                            <td colspan="6"><h6>No Records Found</h6></td>
                         </tr>
                     </tbody>
                     }
@@ -225,7 +239,8 @@
                         <li><a href="javascript:void(0)">Next</a></li>
                     </ul>
                 </div>
-            }
+            
+            
             <div class="clear"></div>
         </div>
     </form>
