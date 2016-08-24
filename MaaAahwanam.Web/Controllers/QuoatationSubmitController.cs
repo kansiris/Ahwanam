@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(ServiceRequest serviceRequest)
         {
             ServiceRequestService serviceRequestService = new ServiceRequestService();
-            serviceRequest.Type = "Quoatation";
+            serviceRequest.Type = "Quotation";
             serviceRequest.UpdatedTime = DateTime.Now;
             serviceRequest.Status = "Due";
             serviceRequest =serviceRequestService.SaveService(serviceRequest);
