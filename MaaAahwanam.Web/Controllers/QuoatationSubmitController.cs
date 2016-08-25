@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Service;
-
+using MaaAahwanam.Utility;
 namespace MaaAahwanam.Web.Controllers
 {
     public class QuoatationSubmitController : Controller
@@ -23,6 +23,7 @@ namespace MaaAahwanam.Web.Controllers
             serviceRequest.Type = "Quotation";
             serviceRequest.UpdatedTime = DateTime.Now;
             serviceRequest.Status = "Due";
+            serviceRequest.UpdatedBy = ValidUserUtility.ValidUser();
             serviceRequest =serviceRequestService.SaveService(serviceRequest);
             return RedirectToAction("Index","QuoatationConfirm", serviceRequest);
         }
