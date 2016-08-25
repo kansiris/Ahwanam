@@ -15,6 +15,7 @@ namespace MaaAahwanam.Repository
     {
         public string CommentDetails { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string BusinessName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
