@@ -17,7 +17,8 @@ namespace MaaAahwanam.Utility
             HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] == null) Userid = 0;
             //else if (authCookie.Name == ".ASPXAUTH") Userid = 0;
-            else Userid = int.Parse(FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name);
+            //else Userid = int.Parse(FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name);
+            else Userid = 0;
             return Userid;
         }
         public static string UserType()
