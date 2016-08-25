@@ -25,7 +25,14 @@ namespace MaaAahwanam.Web.Controllers
         {
             EnquiryService enquiryService = new EnquiryService();
             string respnonse = enquiryService.SaveEnquiries(enquiry);
-            return View();
+            if (respnonse == "Success")
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Submitted Successfully');location.href='" + @Url.Action("Index", "ContactUs") + "'</script>");
+            }
+            else
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Submission failed');location.href='" + @Url.Action("Index", "ContactUs") + "'</script>");
+            }
         }
     }
 }
