@@ -8,26 +8,26 @@ using MaaAahwanam.Utility;
 using System.Configuration;
 using System.Web.Security;
 using MaaAahwanam.Service;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
+    [Authorize]
     public class NotificationsController : Controller
     {
         NotificationService notificationService = new NotificationService();
-        public ActionResult Index(string id,string type)
+        public ActionResult Index(string id, string type)
         {
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
-            {
-                ViewBag.Type = ValidUserUtility.UserType();
-            }
-            long userid = ValidUserUtility.ValidUser();
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            ViewBag.Type = user.UserType;
+            long userid = user.UserId;
             ViewBag.AllNotifications = notificationService.GetNotificationService(userid);
-            if (type!=null)
+            if (type != null)
             {
                 Notification notification = notificationService.RemoveNotificationService(long.Parse(id));
-                
+
             }
             return View();
         }
-	}
+    }
 }

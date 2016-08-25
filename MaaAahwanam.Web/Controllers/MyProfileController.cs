@@ -8,23 +8,22 @@ using MaaAahwanam.Utility;
 using System.Configuration;
 using System.Web.Security;
 using MaaAahwanam.Service;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
+    [Authorize]
     public class MyProfileController : Controller
     {
         //
         // GET: /MyProfile/
         public ActionResult Index()
         {
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
-            {
-                ViewBag.Type = ValidUserUtility.UserType();
-                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                UserDetail userDetail = userLoginDetailsService.GetUser(ValidUserUtility.ValidUser());
-                return View(userDetail);
-            }
-            return View();
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            ViewBag.Type = user.UserType;
+            UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+            UserDetail userDetail = userLoginDetailsService.GetUser((int)user.UserId);
+            return View(userDetail);
         }
-	}
+    }
 }

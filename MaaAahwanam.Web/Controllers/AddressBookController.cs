@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
-using System.Configuration;
-using System.Web.Security;
 using MaaAahwanam.Service;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
+    [Authorize]
     public class AddressBookController : Controller
     {
         UserAddBookService userAddBookService = new UserAddBookService();
@@ -19,20 +15,18 @@ namespace MaaAahwanam.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (ValidUserUtility.ValidUser() != 0 &&
-                (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
-            {
-                ViewBag.Type = ValidUserUtility.UserType();
-                ViewBag.Addressbooklist = userAddBookService.GetUserAddBook(ValidUserUtility.ValidUser());
-            }
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            ViewBag.Type = ValidUserUtility.UserType();
+            ViewBag.Addressbooklist = userAddBookService.GetUserAddBook((int)user.UserId);
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(UserAddBook userAddBook)
         {
-            userAddBook.UserLoginId = ValidUserUtility.ValidUser();
-            userAddBook.UpdatedBy = ValidUserUtility.ValidUser();
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            userAddBook.UserLoginId = (int)user.UserId;
+            userAddBook.UpdatedBy = (int)user.UserId;
             string message = userAddBookService.InsertUserAddBook(userAddBook);
             if (message == "Success")
             {

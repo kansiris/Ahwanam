@@ -8,9 +8,11 @@ using MaaAahwanam.Utility;
 using System.Configuration;
 using System.Web.Security;
 using MaaAahwanam.Service;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
+    [Authorize]
     public class EditProfileController : Controller
     {
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
@@ -18,19 +20,17 @@ namespace MaaAahwanam.Web.Controllers
         // GET: /EditProfile/
         public ActionResult Index()
         {
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
-            {
-                UserDetail userDetail = userLoginDetailsService.GetUser(ValidUserUtility.ValidUser());
-                ViewBag.Type = ValidUserUtility.UserType();
-                return View(userDetail);
-            }
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            UserDetail userDetail = userLoginDetailsService.GetUser(ValidUserUtility.ValidUser());
+            ViewBag.Type = user.UserType;      
             return View();
         }
         [HttpPost]
         public ActionResult Index(UserDetail userDetail)
         {
-            userLoginDetailsService.UpdateUserdetails(userDetail, ValidUserUtility.ValidUser());
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            userLoginDetailsService.UpdateUserdetails(userDetail, (int)user.UserId);
             return View();
         }
-	}
+    }
 }

@@ -25,16 +25,20 @@ namespace MaaAahwanam.Repository.db
             UserLogin list = null;
             if (userLogin.Password != null)
             {
-                list = _dbContext.UserLogin.FirstOrDefault(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password);
+                list = _dbContext.UserLogin.FirstOrDefault(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password && p.UserType == userLogin.UserType);
             }
             if (userLogin.Password == null)
             {
                 list = _dbContext.UserLogin.FirstOrDefault(p => p.UserName == userLogin.UserName);
             }
-            UserDetail userDetail = _dbContext.UserDetail.FirstOrDefault(p=>p.UserLoginId==list.UserLoginId);
+            UserDetail userDetail = new UserDetail();
+            if (list != null)
+            {
+                userDetail = _dbContext.UserDetail.FirstOrDefault(m=>m.UserLoginId==list.UserLoginId);
+            }
             return userDetail;
         }
-        public UserLogin UpdatePassword(UserLogin userLogin,int UserloginID)
+        public UserLogin UpdatePassword(UserLogin userLogin, int UserloginID)
         {
             // Query the database for the row to be updated.
             var query =
@@ -46,7 +50,7 @@ namespace MaaAahwanam.Repository.db
             // you want to change.
             foreach (UserLogin ord in query)
             {
-                ord.Password= userLogin.Password;
+                ord.Password = userLogin.Password;
                 // Insert any additional changes to column values.
             }
 

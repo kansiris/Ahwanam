@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -20,7 +21,8 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(Availabledates availabledates)
         {
-            availabledates.vendorId = ValidUserUtility.ValidUser();
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            availabledates.vendorId = (int)user.UserId;
             string a=availabledatesService.saveavailabledates(availabledates);
             if(a== "Success")
             {

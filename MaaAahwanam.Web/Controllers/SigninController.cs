@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Web.Security;
 using Newtonsoft.Json.Linq;
 using MaaAahwanam.Service;
+using MaaAahwanam.Web.Custom;
 using Newtonsoft.Json;
 
 namespace MaaAahwanam.Web.Controllers
@@ -19,15 +20,16 @@ namespace MaaAahwanam.Web.Controllers
     {
         public ActionResult Index()
         {
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
-            {
-                return RedirectToAction("Index", "DashBoard");
-            }
-            else
-            {
-                TempData["Alert"] = TempData["AlertContent"];
-                return View();
-            }
+            //if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            //{                
+            //    return RedirectToAction("Index", "DashBoard");
+            //}
+            //else
+            //{
+            //    TempData["Alert"] = TempData["AlertContent"];
+            //    return View();
+            //}
+            return View();
         }
         [HttpPost]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail)
@@ -49,8 +51,9 @@ namespace MaaAahwanam.Web.Controllers
             if (command == "AuthenticationUser")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                userLogin.UserType = "User";
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (userResponse != null)
+                if (userResponse.UserLoginId != 0)
                 {
                     userResponse.UserType = "User";
                     string userData = JsonConvert.SerializeObject(userResponse);
@@ -59,14 +62,16 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                    //return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                    TempData["Alert"] = "<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password')</script>";
                 }
             }
             if (command == "AuthenticationVendor")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                userLogin.UserType = "Vendor";
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (userResponse != null)
+                if (userResponse.UserLoginId != 0)
                 {
                     userResponse.UserType = "Vendor";
                     string userData = JsonConvert.SerializeObject(userResponse);
@@ -87,13 +92,15 @@ namespace MaaAahwanam.Web.Controllers
             return RedirectToAction("Index", "Signin");
         }
 
+
         [ChildActionOnly]
         public PartialViewResult SigninPartial()
         {
-            if (ValidUserUtility.ValidUser() != 0)
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                var response = userLoginDetailsService.GetUser(ValidUserUtility.ValidUser());
+                var response = userLoginDetailsService.GetUser((int)user.UserId);
                 return PartialView("SigninPartial", response);
             }
             else

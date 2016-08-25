@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = "DashboardMaster";
     Layout = "~/Views/SharedWeb/MainMaster.cshtml";
 }
@@ -6,7 +6,7 @@
 {
     <link rel="stylesheet" href="~/CSSWeb/bootstrap/css/Datatable_css.css" />
 }
-
+@using MaaAahwanam.Web.Custom
 <header>
     <div class="sticky-navigation">
     </div>
@@ -21,15 +21,19 @@
                     <ul class="userInfo">
                         <li>
                             <div class="userPic">
-                                <img src="~/CSSWeb/images/dashboard/img-profile.jpg" alt="img-profile">
-                                <div class="file_up">
-                                    <input type="text" class="inputBtn">
-                                    <input type="file" class="hide">
-                                </div>
+                                <img src="~/CSSWeb/images/user1.jpg" alt="img-profile">
+                                @*<div class="file_up">
+                                        <input type="text" class="inputBtn">
+                                        <input type="file" class="hide">
+                                    </div>*@
                             </div>
                             <div class="userDetails">
-                                <p><strong>Satyam Ganta</strong></p>
-                                <p>Lorem ipsum dolor</p>
+                                @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                {
+                                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                                    <p><strong>@user.FirstName  @user.LastName</strong></p>
+                                }
+
                             </div>
                         </li>
                     </ul>
@@ -47,7 +51,7 @@
                         @if (ViewBag.Type == "Vendor")
                         {
                             <li><a href="../Orders"><i class="ti-book"></i>Orders</a></li>
-                            <li><a href="../DatesBooked"><i class="ti-pencil-alt"></i>DatesBooked</a></li>
+                                <li><a href="../DatesBooked"><i class="ti-pencil-alt"></i>DatesBooked</a></li>
                         }
                         <li><a href="../ChangePassword"><i class="ti-key"></i>Change Password</a></li>
                         <li><a href="../Signin/SignOut"><i class="ti-power-off"></i>Logout</a></li>
@@ -70,6 +74,6 @@
 </div>
 @section scripts
 {
-<script type="text/javascript" src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-<script type="text/javascript" src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 }
