@@ -43,6 +43,17 @@ namespace MaaAahwanam.Web
 
                 }
             }
+            //else
+            //{
+            //    var newUser = new CustomPrincipal("0")
+            //    {
+            //        UserId = 0,
+            //        FirstName = null,
+            //        LastName = null,
+            //        UserType = "",
+            //    };
+            //    HttpContext.Current.User = newUser;
+            //}
 
         }
     }

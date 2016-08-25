@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="~/CSSWeb/css/responsive.css" />
     <link rel="stylesheet" href="~/CSSWeb/css/AutocompleteStyle.css" />
 </head>
-
+@using MaaAahwanam.Web.Custom
 <body class="homepage">
     @*<div class="overlay" style="display: block;">
         <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
@@ -78,15 +78,19 @@
                         <ul class="userInfo">
                             <li>
                                 <div class="userPic">
-                                    <img src="../CSSWeb/images/dashboard/img-profile.jpg" alt="img-profile">
-                                    <div class="file_up">
-                                        <input type="text" class="inputBtn">
-                                        <input type="file" class="hide">
-                                    </div>
+                                    <img src="~/CSSWeb/images/user1.jpg" alt="img-profile">
+                                    @*<div class="file_up">
+                        <input type="text" class="inputBtn">
+                        <input type="file" class="hide">
+                    </div>*@
                                 </div>
                                 <div class="userDetails">
-                                    <p><strong>Satyam Ganta</strong></p>
-                                    <p>Lorem ipsum dolor</p>
+                                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                                    {
+                                        var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                                        <p><strong>@user.FirstName  @user.LastName</strong></p>
+                                    }
+
                                 </div>
                             </li>
                         </ul>

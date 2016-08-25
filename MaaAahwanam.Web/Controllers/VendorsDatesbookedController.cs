@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace MaaAahwanam.Web.Controllers
 {
+    [Authorize]
     public class VendorsDatesbookedController : Controller
     {
 
@@ -22,7 +23,7 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             if (user.UserId != 0 && (user.UserType == "Vendor"))
             {
-                int a = ValidUserUtility.ValidUser();
+                int a = (int)user.UserId;
                 ViewBag.Vdatesbooked = serviceResponseService.GetVendordatesbooked(a);
             }
             return View();

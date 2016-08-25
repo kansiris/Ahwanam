@@ -7,6 +7,7 @@ using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.Configuration;
 using System.Web.Security;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -16,10 +17,8 @@ namespace MaaAahwanam.Web.Controllers
         // GET: /Orders/
         public ActionResult Index()
         {
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User" || ValidUserUtility.UserType() == "Vendor"))
-            {
-                ViewBag.Type = ValidUserUtility.UserType();
-            }   
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            ViewBag.Type = user.UserType;
             return View();
         }
 	}
