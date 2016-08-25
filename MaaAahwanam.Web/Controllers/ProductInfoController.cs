@@ -142,6 +142,8 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.PerunitPrice = orderRequest.TotalPrice;
             orderDetail.OrderId = order.OrderId;
             orderDetail.VendorId = orderRequest.VendorId;
+            orderDetail.Status = "Active";
+            orderDetail.UpdatedDate = DateTime.Now;
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
             return Json(orderDetail.OrderId);
