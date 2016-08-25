@@ -51,5 +51,20 @@ namespace MaaAahwanam.Service
         {
             return serviceResponseRepository.GetVendordatesbooked(VID).ToList();
         }
+        public string UpdateServiceResponse(ServiceResponse serviceResponse)
+        {
+            var a = serviceResponseRepository.UpdateServiceResponse(serviceResponse);
+            string message = "";
+            if (a.ResponseId != 0)
+            {
+                message = "Success";
+            }
+            else
+            {
+                message = "Failed to save";
+            }
+            return message;
+        }
+
     }
 }

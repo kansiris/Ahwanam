@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Models;
+using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Utility;
 using System.IO;
 
@@ -36,7 +37,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             serviceRequest.Type = "Quoatation";
             ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest);
-            if (name=="View")
+            if (name == "View")
             {
                 serviceRequest.RequestId = long.Parse(BidReqId);
                 serviceResponse.RequestId = long.Parse(BidReqId);
@@ -92,7 +93,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult Biddings(string id)
         {
-            if (id!=null)
+            if (id != null)
             {
                 ViewBag.ServiceResponseRecordsList = serviceResponseService.GetServiceResponseList(long.Parse(id));
                 ViewBag.bidid = id;
@@ -100,9 +101,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult Quotations(string id, ServiceResponse serviceResponse,string date)
+        public ActionResult Quotations(string id, ServiceResponse serviceResponse, string date)
         {
-            if (id!=null)
+            if (id != null)
             {
                 serviceResponse.RequestId = long.Parse(id);
                 ViewBag.QuotationRecordsList = serviceResponseService.GetQuotationList(serviceResponse);
@@ -116,5 +117,39 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             return View();
         }
-	}
+        public ActionResult Quotations(string command, string id, ServiceResponse serviceResponse, string rid)
+        {
+            if (command == "Submit")
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                serviceResponse.RequestId = long.Parse(id);
+                serviceResponse.Status = "Active";
+                serviceResponse.UpdatedBy = user.UserId;
+                serviceResponse.UpdatedDate = DateTime.Now;
+                serviceResponse.ResponseBy = user.UserId;
+                string message = serviceResponseService.SaveServiceResponse(serviceResponse);
+                if (message == "Success")
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Quotation Replied successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId, date = serviceResponse.UpdatedDate }) + "'</script>");
+                }
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("Quotations", "Services") + "'</script>");
+            }
+            if (command == "Update")
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                serviceResponse.RequestId = long.Parse(id);
+                serviceResponse.Status = "Active";
+                serviceResponse.UpdatedBy = user.UserId;
+                serviceResponse.UpdatedDate = DateTime.Now;
+                serviceResponse.ResponseBy = user.UserId;
+                string message = serviceResponseService.UpdateServiceResponse(serviceResponse);
+                if (message == "Success")
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Quotation Updated successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId, date = serviceResponse.UpdatedDate }) + "'</script>");
+                }
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("Quotations", "Services") + "'</script>");
+            }
+            return View();
+        }
+    }
 }

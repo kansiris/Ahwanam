@@ -38,5 +38,13 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.SP_vendordatesbooked(VID).ToList();
         }
+        public ServiceResponse UpdateServiceResponse(ServiceResponse serviceResponse)
+        {
+            var GetRecord = _dbContext.ServiceResponse.Where(m => m.ResponseId == serviceResponse.ResponseId).FirstOrDefault();
+            _dbContext.Entry(GetRecord).CurrentValues.SetValues(serviceResponse);
+            _dbContext.SaveChanges();
+            return serviceResponse;
+        }
+
     }
 }
