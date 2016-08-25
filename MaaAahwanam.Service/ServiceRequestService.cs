@@ -31,5 +31,11 @@ namespace MaaAahwanam.Service
             return l1;
         }
 
+        public List<Vendormaster> getvendorslistRB(string stype)
+        {
+            ServiceRequestRepository serviceRequestRepository = new ServiceRequestRepository();
+            List<Vendormaster> l1 = serviceRequestRepository.getvendorsluistRB(stype);
+            return l1;
+        }
     }
 }

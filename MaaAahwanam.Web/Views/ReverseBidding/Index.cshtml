@@ -48,23 +48,14 @@
         {
             <div class="displayDiv">
                 <div class="bidding_form">
-                    <li style="list-style-type:none">
-                        <label style="color:#666;font-size:13px;">Name<span>*</span></label>
-                        @Html.TextBoxFor(model => model.Name, new { @id = "name", @name = "name", placeholder = "Name", required = "required" })
-                    </li>
-                    <li style="list-style-type:none">
-                        <label style="color:#666;font-size:13px;">Vendor Id<span>*</span></label>
-                        @Html.TextBoxFor(model => model.VendorId, new { @id = "VendorId", @name = "VendorId", placeholder = "VendorId", required = "required" })
 
-                    </li>
-                    <ul>
-
-                        <li>
-                            <label>Budget</label>
-                            @Html.TextBoxFor(model => model.Budget, new { @id = "Budget", @name = "Budget", placeholder = "Enter your budget in rupees", required = "required" })
+                        <li style="list-style-type:none">
+                            <label style="color:#666;font-size:13px;">Name<span>*</span></label>
+                            @Html.TextBoxFor(model => model.Name, new { @id = "name", @name = "name", placeholder = "Name", required = "required" })
                         </li>
-                        <li>
-                            <label>Service Type <span>*</span></label>
+
+                        <li style="list-style-type:none">
+                            <label style="color:#666;font-size:13px;">Service Type <span>*</span></label>
                             @Html.DropDownListFor(Model => Model.ServiceType, new SelectList(
                                           new List<Object>{
                                               new {Text ="Select Service Type", Value = ""},
@@ -81,8 +72,24 @@
                                                new { Text ="WeddingCollection", Value = "WeddingCollection" },
                                                new { Text ="Other", Value = "Other" },
                                             },
-                                          "value", "text"), new { @class = "validate[required] form-control" })
+                                          "value", "text"), new { @class = "validate[required] form-control", @id = "ddlstype", @onchange = "GetSelectedTextValue(this)" })
                         </li>
+                  
+                    <ul>
+                        <li style="list-style-type:none">
+                            <label style="color:#666;font-size:13px;">Vendor Id<span>*</span></label>
+                            @*@Html.TextBoxFor(model => model.VendorId, new { @id = "VendorId", @name = "VendorId", placeholder = "VendorId", required = "required" })*@
+                            @Html.DropDownListFor(Model => Model.VendorId, new SelectList(
+                           new List<Object> { new { Text = "Select Vendor Type", Value = "" } }, "value", "text"),
+                           new { @class = "validate[required] form-control", @id = "ddlvnames" })
+                            @*@Html.HiddenFor(Model=>Model.VendorId,new { @id= "hdnVendorId" })*@
+                        </li>
+                        <li>
+                            <label>Budget</label>
+                            @Html.TextBoxFor(model => model.Budget, new { @id = "Budget", @name = "Budget", placeholder = "Enter your budget in rupees", required = "required" })
+                        </li>
+
+
                     </ul>
                     <ul>
                         <li>
@@ -201,6 +208,42 @@
         </div>
     </div>
 }
+<script>
+    function GetSelectedTextValue(value)
+    {
+       //alert(value.value);
+        var service = {};
+        service.selectedservice = value.value;
+        $.ajax({
+            type: "POST",
+            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ReverseBidding/Vendorlist',
+            data: {},
+            data: JSON.stringify(service),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data!= null) {
+                  //  alert(data.BusinessName);
+                    //document.getElementById("ddlstype").value = data.BusinessName;
+                    $('#ddlvnames').empty();
+                    $('#ddlvnames').append($('<option></option>').val("Select Vendor Type").html("Select Vendor Type"));
+                    $(data).each(function (index, item) { // GETTING ERROR HERE
+                        $('#ddlvnames').append($('<option></option>').val(item.Id).html(item.BusinessName));
+                    });
+                }
+            },
+            error: function (data) {
+                alert('error')
+            }
+        });
+    };
+
+    //function setthehdnvalue(selectedvid)
+    //{
+    //    alert(selectedvid.value);
+    //    document.getElementById("hdnVendorId").value = selectedvid;
+    //}
+</script>
 
 
 

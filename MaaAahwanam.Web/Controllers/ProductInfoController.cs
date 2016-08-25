@@ -71,7 +71,7 @@ namespace MaaAahwanam.Web.Controllers
             eventInformation.PostalCode = orderRequest.PostalCode;
             eventInformation.State = orderRequest.State;
             eventInformation.City = orderRequest.City;
-
+            eventInformation.vendorid = orderRequest.VendorId;
             EventDate eventDate = new EventDate();
             foreach (var item in orderRequest.EventDates)
             {
@@ -79,6 +79,7 @@ namespace MaaAahwanam.Web.Controllers
                 eventDate.StartTime = item.StartTime;
                 eventDate.EndDate = item.EndDate;
                 eventDate.EndTime = item.EndTime;
+                eventDate.vendorid = orderRequest.VendorId;
             }
             CartService cartService = new CartService();
             string mesaage = cartService.AddCartItem(cartItem);

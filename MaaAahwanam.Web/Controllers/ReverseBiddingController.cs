@@ -26,5 +26,12 @@ namespace MaaAahwanam.Web.Controllers
             serviceRequest =serviceRequestService.SaveService(serviceRequest);
             return RedirectToAction("Index", "BiddingConformation",serviceRequest);
         }
+
+        public JsonResult Vendorlist(string selectedservice)
+        {
+            ServiceRequestService serviceRequestService = new ServiceRequestService();
+            List<Vendormaster> vlist = serviceRequestService.getvendorslistRB(selectedservice);
+            return Json(vlist);
+        }
 	}
 }
