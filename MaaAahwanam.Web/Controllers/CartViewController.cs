@@ -16,10 +16,10 @@ namespace MaaAahwanam.Web.Controllers
         CartService cartService = new CartService();
         //
         // GET: /CartView/
-        [Authorize]
+        //[Authorize]
         public ActionResult Index()
         {
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+           var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
             decimal total = cartlist.Sum(s => s.TotalPrice);
             ViewBag.Cartlist = cartlist;
@@ -63,6 +63,11 @@ namespace MaaAahwanam.Web.Controllers
             }
 
             return Json(orderDetail.OrderId);
+        }
+        public JsonResult DeletecartItem(long cartId)
+        {
+            var message = cartService.Deletecartitem(cartId);
+            return Json(message);
         }
     }
 }

@@ -17,7 +17,11 @@
     <link rel="stylesheet" href="~/CSSWeb/css/responsive.css" />
     <link rel="stylesheet" href="~/CSSWeb/css/AutocompleteStyle.css" />
 
-    @RenderSection("css", required: false)   
+    @RenderSection("css", required: false)
+    @using MaaAahwanam.Web.Custom
+    @{
+        //var user = (CustomPrincipal)HttpContext.Current.User;
+    }
 </head>
 <body class="homepage">
     <div class="overlay" style="display: bl
@@ -35,10 +39,10 @@
                         <p class="wow fadeInLeft animated"><i class="ti-mobile"></i> 1800 180 180</p>
                         ​<p class="selectcity" style="margin-top:-73px;margin-left:130px">
                             @*<select onchange="citychange()" id="selectcity" style="width: 120px; height:28px; border-radius: 4px; overflow: hidden; background: #fafafa;padding:5px;line-height:0px;">
-                                    <option selected="selected">
-                                        Hyderabad
-                                    </option>
-                                </select>*@
+                                <option selected="selected">
+                                    Hyderabad
+                                </option>
+                            </select>*@
                         </p>
                         <div class="searchDiv" style="display:none;">
                             <a class="dropdown-toggle2" href="javascript:void(0)"><i class="ti-search"></i><span>Search</span></a>
@@ -62,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    @{Html.RenderAction("SigninPartial", "signin");}
+                    @{Html.RenderAction("SigninPartial", "signin"); }
                 </div>
             </div>
             <div class="menu">
@@ -90,7 +94,7 @@
                             </nav>
                             @{Html.RenderAction("ItemsCartViewBindingLayout", "Index");}
                         </div>
-                                }
+                    }
                 </div>
             </div>
 
@@ -292,30 +296,26 @@
         /* ---------------------- After clicking on search button ------------------ */
         function GetSearchValue_Top() {
             var selectedText = e1.options[e1.selectedIndex].innerHTML;
-            var Searchlocation = document.getElementById('txt_Location_Top').value;
-            if (selectedText == 'Select Event') {
-                alert('Please enter Event');
-            }
-            else if (Searchlocation == '') {
-                alert('Please enter location');
+            var Searchlocation = document.getElementById('txt_Location_Top');
+            if (selectedText != 'Select Event' && Searchlocation == '') {
+                alert('Please enter Event and location');
             }
             else {
-                window.location.href = "../AllServices/Index";
+                window.location.href="../AllServices/Index";
             }
         }
         function GetSearchValue_Bottom() {
             var selectedText = e2.options[e2.selectedIndex].innerHTML;
-            var Searchlocation = document.getElementById('txt_Location_Bottom').value;
-            if (selectedText == 'Select Event') {
-                alert('Please enter Event');
+            var Searchlocation = document.getElementById('txt_Location_Bottom');
+            if(selectedText!='Select Event' && Searchlocation=='')
+            {
+                alert('Please enter Event and location');
             }
-            else if (Searchlocation == '') {
-                alert('Please enter location');
-            }
-            else {
+            else
+            {
                 window.location.href = "../AllServices/Index";
             }
-            // alert(Searchlocation.value + "," + selectedText);
+           // alert(Searchlocation.value + "," + selectedText);
         }
     </script>
 
@@ -746,5 +746,5 @@
     </script>
     @RenderSection("scriptfunctions", required: false)
 </body>
+</html>  
 @Html.Raw(TempData["Alert"])
-</html>

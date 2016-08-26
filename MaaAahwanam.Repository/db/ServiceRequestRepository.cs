@@ -32,5 +32,9 @@ namespace MaaAahwanam.Repository.db
             
             return serviceRequest;
         }
+        public List<Vendormaster> getvendorsluistRB(String stype)
+        {
+            return _dbContext.Vendormaster.Where(m => m.ServicType == stype && m.ReverseBidding==true).ToList();
+        }
     }
 }

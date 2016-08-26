@@ -32,6 +32,10 @@ namespace MaaAahwanam.Service
             }
             return "Failure";
         }
+        public string Deletecartitem(long cartId)
+        {
+            return cartItemRepoitory.DeletecartItem(cartId);
+        }
         public int CartItemsCount(int UserId)
         {
             var l1 = 0;
@@ -39,19 +43,19 @@ namespace MaaAahwanam.Service
                 l1 = cartItemRepoitory.CartItemList(UserId).Count();
             return l1;
         }
-        public string AddCartItem(CartItem cartItem)
+        public CartItem AddCartItem(CartItem cartItem)
         {
             string message = "";
             cartItem = cartItemRepoitory.AddCartItem(cartItem);
-            if (cartItem != null)
-            {
-                message = "Success";
-            }
-            else
-            {
-                message = "Failed";
-            }
-            return message;
+            //if (cartItem != null)
+            //{
+            //    message = "Success";
+            //}
+            //else
+            //{
+            //    message = "Failed";
+            //}
+            return cartItem;
         }
     }
 }

@@ -15,18 +15,23 @@ namespace MaaAahwanam.Web.Controllers
         // GET: /CardSelect/
         public ActionResult Index()
         {
-            ProductService productService=new ProductService();
+            ProductService productService = new ProductService();
             string servicetypeQuerystring = Request.QueryString["par"];
-            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring,0);
+            string servicetypesType = Request.QueryString["sType"];
+            string servicetypeloc = Request.QueryString["loc"];
+            string servicetypeorder = Request.QueryString["a"];
+            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, 0,servicetypesType, servicetypeloc,servicetypeorder);
+            List<getservicetype_Result> servicetypelist = productService.Getservicetype_Result(servicetypeQuerystring);
             ViewBag.ServiceType = servicetypeQuerystring;
+            ViewBag.subservicetype = servicetypelist;
             return View(Productlist);
         }
-        public JsonResult Loadmore(string VID, string servicetypeQuerystring)
-        {
-            ProductService productService = new ProductService();
-            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, int.Parse(VID));
-            ViewBag.ServiceType = servicetypeQuerystring;
-            return Json(Productlist);
-        }
+        //public JsonResult Loadmore(string VID, string servicetypeQuerystring)
+        //{
+        //    ProductService productService = new ProductService();
+        //    List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, int.Parse(VID));
+        //    ViewBag.ServiceType = servicetypeQuerystring;
+        //    return Json(Productlist);
+        //}
     }
 }

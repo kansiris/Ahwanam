@@ -31,11 +31,25 @@ namespace MaaAahwanam.Repository.db
         }
         public CartItem AddCartItem(CartItem cartItem)
         {
-            cartItem=_dbContext.CartItem.Add(cartItem);
+            cartItem = _dbContext.CartItem.Add(cartItem);
             _dbContext.SaveChanges();
             return cartItem;
         }
 
+        public string DeletecartItem(long cartId)
+        {
+            try
+            {
+                var list = _dbContext.CartItem.FirstOrDefault(m => m.CartId == cartId);
+                _dbContext.CartItem.Remove(list);
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            catch
+            {
+                return "Failed";
+            }
+        }
 
     }
 }
