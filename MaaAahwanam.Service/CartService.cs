@@ -32,6 +32,10 @@ namespace MaaAahwanam.Service
             }
             return "Failure";
         }
+        public string Deletecartitem(long cartId)
+        {
+            return cartItemRepoitory.DeletecartItem(cartId);
+        }
         public int CartItemsCount(int UserId)
         {
             var l1 = 0;

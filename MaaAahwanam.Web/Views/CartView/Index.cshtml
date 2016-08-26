@@ -103,7 +103,7 @@
                                                     <div class="event-date-edit">
                                                         <a href="../ProductInfo?par=@item.ServicType&VID=@item.Id&p=c&cid=@item.CartId" title="Edit Date & Time"><i class="ti-pencil-alt active"></i></a>
                                                         <br /><br />
-                                                        <a href="#" title="Delete Date & Time"><i class="ti-trash close"></i></a>
+                                                        <a href="#" title="Delete Date & Time" onclick="DeletecartItem(@item.CartId);"><i class="ti-trash close"></i></a>
                                                     </div>
                                                     @*<div class="clear"></div>*@
                                                     @*</div>*@
@@ -368,4 +368,29 @@
         });
     }
     //});
+</script>
+<script>
+    //Deleteing cart item
+    function DeletecartItem(cartId)
+    {
+        var obj = {}
+        obj.cartId = cartId;
+        $.ajax({
+            type: "POST",
+            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/CartView/DeletecartItem',
+            data: {},
+            data: JSON.stringify(obj),
+            //data: sendInfo,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    window.location.reload();
+                }
+            },
+            error: function (data) {
+                alert('error')
+            }
+        });
+    }
 </script>
