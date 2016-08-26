@@ -22,14 +22,14 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorsWeddingCollections;
         }
-        public VendorsWeddingCollection GetVendorWeddingCollection(long id)
+        public VendorsWeddingCollection GetVendorWeddingCollection(long id, long vid)
         {
-            return _dbContext.VendorsWeddingCollection.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsWeddingCollection.Where(m => m.VendorMasterId == id && m.Id == vid).FirstOrDefault();
         }
 
-        public VendorsWeddingCollection UpdateWeddingCollection(VendorsWeddingCollection vendorsWeddingCollection, long id)
+        public VendorsWeddingCollection UpdateWeddingCollection(VendorsWeddingCollection vendorsWeddingCollection, long id, long vid)
         {
-            var GetVendor = _dbContext.VendorsWeddingCollection.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorsWeddingCollection.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsWeddingCollection.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsWeddingCollection);
             _dbContext.SaveChanges();

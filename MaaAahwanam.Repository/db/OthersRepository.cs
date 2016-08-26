@@ -31,7 +31,7 @@ namespace MaaAahwanam.Repository.db
 
         public List<CommentDetail> CommentDetail(long id)
         {
-            return _dbContext.CommentDetail.Where(m => m.UserLoginId == id).ToList();
+            return _dbContext.CommentDetail.Where(m => m.CommentId == id).ToList();
         }
 
         //Tickets Module
@@ -77,6 +77,34 @@ namespace MaaAahwanam.Repository.db
         public List<MaaAahwanam_Others_AllRegisteredUsersDetails_Result> AllRegisteredUsersList()
         {
             return maaAahwanamEntities.MaaAahwanam_Others_AllRegisteredUsersDetails().ToList();
+        }
+        public AdminTestimonialPath AdminTestimonialPathStatus(long id,AdminTestimonialPath adminTestimonialPath)
+        {
+            var Getadmintestionalpath = _dbContext.AdminTestimonialPath.Where(m=>m.Id == id).FirstOrDefault();
+            adminTestimonialPath.Id = Getadmintestionalpath.Id;
+            adminTestimonialPath.PathId = Getadmintestionalpath.PathId;
+            adminTestimonialPath.ImagePath = Getadmintestionalpath.ImagePath;
+            adminTestimonialPath.UpdatedBy = Getadmintestionalpath.UpdatedBy;
+            adminTestimonialPath.UpdatedDate = DateTime.Now;
+            _dbContext.Entry(Getadmintestionalpath).CurrentValues.SetValues(adminTestimonialPath);
+            _dbContext.SaveChanges();
+            return adminTestimonialPath;
+            
+        }
+
+        public AdminTestimonial AdminTestimonialStatus(long id, AdminTestimonial adminTestimonial)
+        {
+            var Getadmintestional = _dbContext.AdminTesimonial.Where(m => m.Id == id).FirstOrDefault();
+            adminTestimonial.Id = Getadmintestional.Id;
+            adminTestimonial.Name = Getadmintestional.Name;
+            adminTestimonial.Description = Getadmintestional.Description;
+            adminTestimonial.Email = Getadmintestional.Email;
+            adminTestimonial.UpdatedBy = Getadmintestional.UpdatedBy;
+            adminTestimonial.UpdatedDate = DateTime.Now;
+            _dbContext.Entry(Getadmintestional).CurrentValues.SetValues(adminTestimonial);
+            _dbContext.SaveChanges();
+            return adminTestimonial;
+
         }
     }
 }

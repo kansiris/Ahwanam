@@ -22,14 +22,14 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorsTravelandAccomodation;
         }
-        public VendorsTravelandAccomodation GetVendorTravelandAccomodation(long id)
+        public VendorsTravelandAccomodation GetVendorTravelandAccomodation(long id, long vid)
         {
-            return _dbContext.VendorsTravelandAccomodation.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsTravelandAccomodation.Where(m => m.VendorMasterId == id && m.Id == vid).FirstOrDefault();
         }
 
-        public VendorsTravelandAccomodation UpdateTravelandAccomodation(VendorsTravelandAccomodation vendorsTravelandAccomodation, long id)
+        public VendorsTravelandAccomodation UpdateTravelandAccomodation(VendorsTravelandAccomodation vendorsTravelandAccomodation, long id, long vid)
         {
-            var GetVendor = _dbContext.VendorsTravelandAccomodation.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorsTravelandAccomodation.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsTravelandAccomodation.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsTravelandAccomodation);
             _dbContext.SaveChanges();

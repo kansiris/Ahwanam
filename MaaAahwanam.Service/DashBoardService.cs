@@ -70,5 +70,10 @@ namespace MaaAahwanam.Service
             commentDetail.Status = "Active";
             return dashBoardRepository.InsertCommentDetail(commentDetail);
         }
+
+        public long GetCommentService(string id, string type)
+        {
+            return dashBoardRepository.GetComment(id, type);
+        }
     }
 }

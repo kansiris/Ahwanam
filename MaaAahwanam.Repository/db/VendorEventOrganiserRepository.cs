@@ -22,14 +22,14 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorsEventOrganiser;
         }
-        public VendorsEventOrganiser GetVendorEventOrganiser(long id)
+        public VendorsEventOrganiser GetVendorEventOrganiser(long id, long vid)
         {
-            return _dbContext.VendorsEventOrganiser.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsEventOrganiser.Where(m => m.VendorMasterId == id && m.Id == vid).FirstOrDefault();
         }
 
-        public VendorsEventOrganiser UpdateEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, long id)
+        public VendorsEventOrganiser UpdateEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, long id, long vid)
         {
-            var GetVendor = _dbContext.VendorsEventOrganiser.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorsEventOrganiser.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsEventOrganiser.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsEventOrganiser);
             _dbContext.SaveChanges();

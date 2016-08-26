@@ -22,19 +22,18 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorsOthers;
         }
-        public VendorsOther GetVendorOthers(long id)
+        public VendorsOther GetVendorOthers(long id, long vid)
         {
-            return _dbContext.VendorsOther.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsOther.Where(m => m.VendorMasterId == id && m.Id == vid).FirstOrDefault();
         }
 
-        public VendorsOther UpdateOthers(VendorsOther vendorsOther, long id)
+        public VendorsOther UpdateOthers(VendorsOther vendorsOther, long id, long vid)
         {
-            var GetVendor = _dbContext.VendorsOther.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorsOther.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsOther.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsOther);
             _dbContext.SaveChanges();
             return vendorsOther;
         }
-
     }
 }

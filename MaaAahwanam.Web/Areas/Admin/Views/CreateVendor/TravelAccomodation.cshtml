@@ -8,6 +8,7 @@
                     <link href="~/Assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
                     <!-- END PAGE LEVEL  STYLES -->
                 }
+<link href="~/Assets/plugins/jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" />
 <style>
     #imgbox {
         vertical-align: middle;
@@ -31,26 +32,58 @@
     </script>
 }
 <script>
+    function imagepopup(obj) {
+       $('body').on('click', 'img', function () {
+           var imgsrc = $(this).attr('src');
+
+           $('#myModal img').attr('src', $(this).attr('src'));
+       })
+    }
+
+</script>
+
+<script>
         window.onload = function () {
             var url = window.location.href;
             var op = url.substring(url.lastIndexOf('=') + 1);
+            var up = window.location.search.substring(1);
+            //var stat = up.contains("vid");
+            //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
             if (op == 'display') {
+                //alert("view purpose");
+                $("#btnadd").hide();
                 $('#btn').hide();
                 $("#btncancel").hide();
                 $('#btnback').show();
                 $('.deletelink').hide();
                 $('#fileUpload').hide();
                 $('#msg').hide();
-                $('.form-control').prop("disabled", true);
+                $('.form-control').attr("disabled", "disabled");
             }
-            else {
+            if (op == 'add') {
+                //alert("Add NEw");
+                $("[id^=Item1]").prop("disabled", true);
+                $("[id^=Item2]").val("");
+                $('#btn').hide();
+                $("#btncancel").show();
+                $('#btnback').hide();
+                $('.deletelink').hide();
+                $('#fileUpload').show();
+                $('#msg').show();
+                $("#btnadd").show();
+                $("#imagesdisplay").hide();
+            }
+            //op == url
+            if (up == 'vid=' + op || op == url) {
+                //alert("other");
                 $('#btn').show();
                 $("#btncancel").show();
                 $('#btnback').hide();
                 $('.deletelink').show();
                 $('#fileUpload').show();
                 $('#msg').show();
-                $('.form-control').prop("disabled", false);
+                $('.form-control').removeAttr("disabled");
+                $("#btnadd").hide();
             }
         }
 </script>
@@ -258,23 +291,18 @@
                                                     <br />
 
                                                     <div align="center">
-
                                                         @if (@ViewBag.images != null)
                                                         {
-
                                                             foreach (var item in ViewBag.images)
                                                             {
-
-                                                                <img id="img" src="~/vendorimages/@item" alt="student" style="height:100px;width:150px;border:double" onmouseover='Large(this)' />
-                                                                    @Html.ActionLink("X", "venue", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
-
+                                                                <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
+                                                                @Html.ActionLink("X", "TravelAccomodation", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
                                                             }
                                                             if (@ViewBag.images.Count == 0)
                                                             {
                                                                 <img src="~/noimages.png" />
                                                             }
                                                         }
-                                                        
                                                     </div>
 
                                                     <div id="editimage" style="min-height: 10px;min-width: 10px; "></div>
@@ -284,7 +312,6 @@
 
                                                 </div>
                                                 <div style="text-align:center" class="form-actions no-margin-bottom">
-
                                                     @if (ViewBag.operation != null)
                                                     {
                                                         <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
@@ -293,10 +320,11 @@
                                                     {
                                                         <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
                                                     }
+                                                    <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
+
                                                     <input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">
 
                                                     <button formaction="~/Admin/Vendors/AllVendors" type="submit" class="btn btn-success" id="btnback"> Back To List </button>
-
                                                 </div>
                                                 <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
                                             </form>
@@ -310,6 +338,17 @@
             </div>
         </div>
     </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="modal-body">
+                <img class="ms-nav-next ms-ctrl-hide" src="#" id="imagepreview" style="width: 100%;" alt="slider-1">
+
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     function check() {
         var emailId = $("#Item1_EmailId").val();

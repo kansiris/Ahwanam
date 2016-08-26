@@ -117,16 +117,17 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpPost]
         public ActionResult Quotations(string command, string id, ServiceResponse serviceResponse, string rid)
         {
             if (command == "Submit")
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                //var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 serviceResponse.RequestId = long.Parse(id);
                 serviceResponse.Status = "Active";
-                serviceResponse.UpdatedBy = user.UserId;
+                serviceResponse.UpdatedBy = ValidUserUtility.ValidUser();//user.UserId;
                 serviceResponse.UpdatedDate = DateTime.Now;
-                serviceResponse.ResponseBy = user.UserId;
+                serviceResponse.ResponseBy = ValidUserUtility.ValidUser();//user.UserId;
                 string message = serviceResponseService.SaveServiceResponse(serviceResponse);
                 if (message == "Success")
                 {
@@ -136,12 +137,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (command == "Update")
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+               // var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 serviceResponse.RequestId = long.Parse(id);
                 serviceResponse.Status = "Active";
-                serviceResponse.UpdatedBy = user.UserId;
+                serviceResponse.UpdatedBy = ValidUserUtility.ValidUser();//user.UserId;
                 serviceResponse.UpdatedDate = DateTime.Now;
-                serviceResponse.ResponseBy = user.UserId;
+                serviceResponse.ResponseBy = ValidUserUtility.ValidUser();//user.UserId;
                 string message = serviceResponseService.UpdateServiceResponse(serviceResponse);
                 if (message == "Success")
                 {
@@ -149,6 +150,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("Quotations", "Services") + "'</script>");
             }
+            
             return View();
         }
     }

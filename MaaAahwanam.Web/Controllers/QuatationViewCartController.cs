@@ -34,10 +34,14 @@ namespace MaaAahwanam.Web.Controllers
                 comment.ServiceId = id;
                 comment.ServiceType = dashBoardService.GetServiceType(long.Parse(id));
                 comment.UpdatedBy = (int)user.UserId;
-                comment = dashBoardService.InsertCommentService(comment);
-                if (comment.CommentId != 0)
+                long count = dashBoardService.GetCommentService(id, comment.ServiceType);
+                if (count==0)
                 {
-                    commentDetail.CommentId = comment.CommentId;//dashBoardService.GetCommentId(id);
+                    comment = dashBoardService.InsertCommentService(comment);
+                }
+                //if (comment.CommentId != 0)
+                //{
+                    commentDetail.CommentId = dashBoardService.GetCommentId(id); //comment.CommentId;
                     commentDetail.UserLoginId = (int)user.UserId;
                     commentDetail.UpdatedBy = (int)user.UserId;
                     commentDetail = dashBoardService.InsertCommentDetailService(commentDetail);
@@ -46,7 +50,7 @@ namespace MaaAahwanam.Web.Controllers
                         return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
                     }
                     return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
-                }
+                //}
             }
             return View();
         }

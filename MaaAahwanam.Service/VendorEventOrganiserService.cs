@@ -13,7 +13,9 @@ namespace MaaAahwanam.Service
     {
         RandomPassword randomPassword = new RandomPassword();
         UserLoginRepository userLoginRepository = new UserLoginRepository();
+        UserDetailsRepository userDetailsRepository = new UserDetailsRepository();
         UserLogin userLogin = new UserLogin();
+        UserDetail userDetail = new UserDetail();
         VendormasterRepository vendorMasterRepository = new VendormasterRepository();
         VendorEventOrganiserRepository vendorEventOrganiserRepository = new VendorEventOrganiserRepository();
         public VendorsEventOrganiser AddEventOrganiser(VendorsEventOrganiser vendorEventOrganiser, Vendormaster vendorMaster)
@@ -34,7 +36,21 @@ namespace MaaAahwanam.Service
             userLogin.UpdatedDate = DateTime.Now;
             userLogin.Status = "Active";
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
-            if (vendorMaster.Id != 0 && vendorEventOrganiser.Id != 0 && userLogin.UserLoginId != 0)
+            userDetail.UserLoginId = userLogin.UserLoginId;
+            userDetail.FirstName = vendorMaster.BusinessName;
+            userDetail.UserPhone = vendorMaster.ContactNumber;
+            userDetail.Url = vendorMaster.Url;
+            userDetail.Address = vendorMaster.Address;
+            userDetail.City = vendorMaster.City;
+            userDetail.State = vendorMaster.State;
+            userDetail.ZipCode = vendorMaster.ZipCode;
+            userDetail.Status = "Active";
+            userDetail.UpdatedBy = ValidUserUtility.ValidUser();
+            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.AlternativeEmailID = vendorMaster.EmailId;
+            userDetail.Landmark = vendorMaster.Landmark;
+            userDetail = userDetailsRepository.AddUserDetails(userDetail);
+            if (vendorMaster.Id != 0 && vendorEventOrganiser.Id != 0 && userLogin.UserLoginId != 0 && userDetail.UserDetailId != 0)
             {
                 return vendorEventOrganiser;
             }
@@ -44,12 +60,12 @@ namespace MaaAahwanam.Service
                 return vendorEventOrganiser;
             }
         }
-        public VendorsEventOrganiser GetVendorEventOrganiser(long id)
+        public VendorsEventOrganiser GetVendorEventOrganiser(long id, long vid)
         {
-            return vendorEventOrganiserRepository.GetVendorEventOrganiser(id);
+            return vendorEventOrganiserRepository.GetVendorEventOrganiser(id,vid);
         }
 
-        public VendorsEventOrganiser UpdateEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster, long masterid)
+        public VendorsEventOrganiser UpdateEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster, long masterid, long vid)
         {
             vendorsEventOrganiser.Status = "Active";
             vendorsEventOrganiser.UpdatedDate = DateTime.Now;
@@ -57,7 +73,16 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "EventOrganiser";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, masterid);
+            vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, masterid,vid);
+            return vendorsEventOrganiser;
+        }
+
+        public VendorsEventOrganiser AddNewEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster)
+        {
+            vendorsEventOrganiser.Status = "Active";
+            vendorsEventOrganiser.UpdatedDate = DateTime.Now;
+            vendorsEventOrganiser.VendorMasterId = vendorMaster.Id;
+            vendorsEventOrganiser = vendorEventOrganiserRepository.AddEventOrganiser(vendorsEventOrganiser);
             return vendorsEventOrganiser;
         }
     }

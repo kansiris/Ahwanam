@@ -5,21 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
     public class EventsandtipsService
     {
-        public List<EventsandTip> EventsandTipsList()
+        EventsandTipRepository eventsandTipRepository = new EventsandTipRepository();
+        public List<geteventsandtipsimages_Result> EventsandTipsList()
         {
-            EventsandTipRepository eventsandTipRepository = new EventsandTipRepository();
-            List<EventsandTip> l1 = eventsandTipRepository.EventsandTipList();
-            return l1;
+            return eventsandTipRepository.EventsandTipList();
+            
         }
 
         public EventsandTip AddEventandTip(EventsandTip eventAndTip)
         {
-            EventsandTipRepository eventsandTipRepository = new EventsandTipRepository();
             eventAndTip.UpdatedDate = DateTime.Now;
             eventAndTip.Status = "Active";
             eventsandTipRepository.AddEventsAndTip(eventAndTip);
@@ -28,8 +28,20 @@ namespace MaaAahwanam.Service
 
         public long EventIDCount()
         {
-            EventsandTipRepository eventsandTipRepository = new EventsandTipRepository();
             return eventsandTipRepository.EventIdCount();
+        }
+
+        public EventsandTip GetEventandTip(long id)
+        {
+            return eventsandTipRepository.GetEventsAndTip(id);
+        }
+
+        public EventsandTip UpdateEventandTip(EventsandTip eventAndTip,long id)
+        {
+            eventAndTip.UpdatedDate = DateTime.Now;
+            eventAndTip.Status = "Active";
+            eventsandTipRepository.UpdateEventsAndTip(eventAndTip,id);
+            return eventAndTip;
         }
     }
 }
