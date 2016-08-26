@@ -10,62 +10,60 @@
         <div class="breads_inner">
             <div class="pageWidth">
                 <div class="title">
-                    <h3>Invitation</h3>
+                    <h3>@ViewBag.ServiceType</h3>
                 </div>
                 <div class="breadcrumbs">
                     <ul>
                         <li><a href="~/Index/Index">Home</a></li>
-                        @*<li><i class="breads_arrow"></i></li>
-                            <li><a href="index.html">Services</a></li>*@
                         <li><i class="breads_arrow"></i></li>
-                        @if (ViewBag.ServiceType == "InvitationCard")
-                        {
-                            <li><a href="../product?par=InvitationCard"> InvitationCard</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Venue")
-                        {
-                            <li><a href="../product?par=Venue"> Venue</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Catering")
-                        {
-                            <li><a href="../product?par=Catering"> Catering</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Photography")
-                        {
-                            <li><a href="../product?par=Photography"> Photography</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Decorator")
-                        {
-                            <li><a href="../product?par=Decorator"> Decorator</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Entertainment")
-                        {
-                            <li><a href="../product?par=Entertainment"> Entertainment</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Eventorganiser")
-                        {
-                            <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "BeautyService")
-                        {
-                            <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Travel")
-                        {
-                            <li><a href="../product?par=Travel"> Travel</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Gift")
-                        {
-                            <li><a href="../product?par=Gift"> Gift</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "WeddingCollection")
-                        {
-                            <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
-                        }
-                        @if (ViewBag.ServiceType == "Other")
-                        {
-                            <li><a href="../product?par=Other"> Other</a></li>
-                        }
+                        @*@if (ViewBag.ServiceType == "InvitationCard")
+                            {*@
+                        <li><a href="../product?par=@ViewBag.ServiceType" id="lnkservicetype"> @ViewBag.ServiceType</a></li>
+                        @*}*@
+                        @*@if (ViewBag.ServiceType == "Venue")
+                            {
+                                <li><a href="../product?par=Venue"> Venue</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Catering")
+                            {
+                                <li><a href="../product?par=Catering"> Catering</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Photography")
+                            {
+                                <li><a href="../product?par=Photography"> Photography</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Decorator")
+                            {
+                                <li><a href="../product?par=Decorator"> Decorator</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Entertainment")
+                            {
+                                <li><a href="../product?par=Entertainment"> Entertainment</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Eventorganiser")
+                            {
+                                <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "BeautyService")
+                            {
+                                <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Travel")
+                            {
+                                <li><a href="../product?par=Travel"> Travel</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Gift")
+                            {
+                                <li><a href="../product?par=Gift"> Gift</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "WeddingCollection")
+                            {
+                                <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Other")
+                            {
+                                <li><a href="../product?par=Other"> Other</a></li>
+                            }*@
                     </ul>
                 </div>
             </div>
@@ -80,33 +78,40 @@
                 <h4>Services</h4>
                 <span>&nbsp;</span>
                 <ul>
-                    <li><a href="../product?par=Venue"> Venue</a></li>
-                    <li><a href="../product?par=Catering"> Catering</a></li>
-                    <li><a href="../product?par=Photography"> Photography</a></li>
-                    <li><a href="../product?par=InvitationCard"> InvitationCard</a></li>
-                    <li><a href="../product?par=Decorator"> Decorator</a></li>
-                    <li><a href="../product?par=Entertainment"> Entertainment</a></li>
-                    <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
-                    <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
-                    <li><a href="../product?par=Travel"> Travel</a></li>
-                    <li><a href="../product?par=Gift"> Gift</a></li>
-                    <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
-                    <li><a href="../product?par=Other"> Other</a></li>
+                    @foreach (var item in @ViewBag.subservicetype)
+                    {
+                        if (item.vendortype != null)
+                        {
+                            <li><a href="#" id="lnksubservicetype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                        }
+                    }
+                    @*<li><a href="../product?par=Venue"> Venue</a></li>
+                        <li><a href="../product?par=Catering"> Catering</a></li>
+                        <li><a href="../product?par=Photography"> Photography</a></li>
+                        <li><a href="../product?par=InvitationCard"> InvitationCard</a></li>
+                        <li><a href="../product?par=Decorator"> Decorator</a></li>
+                        <li><a href="../product?par=Entertainment"> Entertainment</a></li>
+                        <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
+                        <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
+                        <li><a href="../product?par=Travel"> Travel</a></li>
+                        <li><a href="../product?par=Gift"> Gift</a></li>
+                        <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
+                        <li><a href="../product?par=Other"> Other</a></li>*@
                 </ul>
                 <div class="line">&nbsp;</div>
                 <h4>Filter By</h4>
                 <span>&nbsp;</span>
                 <div class="clear"></div>
-                <form class="form">
+                <form name="myForm">
                     <label>Location</label>
-                    <input type="text" name="location" placeholder="Enter your Location">
+                    <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onchange="locationchange(this)">
                     <label>Price Range</label>
                     <div class="radioButtons" id="radio-demo">
-                        <input type="radio" name="radio-group" id="lowto_high" checked value="Low to High" />
-                        <label for="first-choice">Low to High</label>
+                        <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
+                        <label for="rblASC">Low to High</label>
                         <br />
-                        <input type="radio" name="radio-group" id="highto_low" value="High to Low" />
-                        <label for="second-choice">High to Low</label>
+                        <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
+                        <label for="rblDESC">High to Low</label>
                     </div>
                 </form>
             </aside>
@@ -145,7 +150,7 @@
                                                                 else if (item.image == null)
                                                                 {
                                                                     @*<img src="~/vendorimages/@item.image" alt="thumb">*@
-                                                                    <img src="~/noimages.png" alt="No Image"/>
+                                                                    <img src="~/noimages.png" alt="No Image" />
                                                                 }
                                                                 @*</a>*@
                                                                 <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
@@ -175,6 +180,10 @@
                                     }
                                     <input type="hidden" id="hiddenlastrecord" value="@Model.Last().Id" />
                                     <input type="hidden" id="hiddenlastrecord2" value="@Model.Last().ServicType" />
+                                }
+                                else if(Model.Count == 0)
+                                {
+                                    <h3>No Vendors found</h3>
                                 }
                                 @*}*@
                             </div>
@@ -217,6 +226,17 @@
             if(@Model.Count==0)
             {
                 $("#LoadMore1").hide();
+            }
+            document.getElementById("txtlocation").value= window.location.search.split("=")[3].split("&")[0];
+            if(window.location.search.split("=")[4].split("&")[0]=='DESC')
+            {
+               // alert('DESC');
+                document.getElementById("rblDESC").checked = true;
+            }
+            else if(window.location.search.split("=")[4].split("&")[0]=='ASC')
+            {
+                //alert('ASC');
+                document.getElementById("rblASC").checked = true;
             }
             //alert(document.getElementById("hiddenlastrecord").value)
         };
@@ -261,5 +281,48 @@
             $("#imgloadergifdiv").hide();
             $("#LoadMore1").show();
         });
+    </script>
+    <script>
+        function subservicechnage(s)
+        {
+            var subservicetype=s.text.trim();
+            var servicetype = window.location.search.split("=")[1].split("&")[0];
+            var location = window.location.search.split("=")[3].split("&")[0];
+            var order = window.location.search.split("=")[4].split("&")[0];
+            window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+            //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
+        }
+        function locationchange(s)
+        {
+            //alert(document.getElementById("txtlocation").value);
+            var subservicetype= window.location.search.split("=")[2].split("&")[0];
+            var servicetype = window.location.search.split("=")[1].split("&")[0];
+            var location = document.getElementById("txtlocation").value;
+
+            var order = window.location.search.split("=")[4].split("&")[0];
+            window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+            //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
+        }
+
+        var radother = document.myForm.radiogroup;
+        var prevother = null;
+        var rrother = null;
+        //alert(radother.length);
+        for (var i = 0; i < radother.length; i++) {
+            radother[i].onclick = function () {
+                if (this !== prevother) {
+                    prevother = this;
+                    var a = this.value;
+
+                    var subservicetype= window.location.search.split("=")[2].split("&")[0];
+                    var servicetype = window.location.search.split("=")[1].split("&")[0];
+                    var location = window.location.search.split("=")[3].split("&")[0];
+
+                    var order = a;
+                    window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+                    //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
+                }
+            };
+        }
     </script>
 }

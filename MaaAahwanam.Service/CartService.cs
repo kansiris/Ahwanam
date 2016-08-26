@@ -39,19 +39,19 @@ namespace MaaAahwanam.Service
                 l1 = cartItemRepoitory.CartItemList(UserId).Count();
             return l1;
         }
-        public string AddCartItem(CartItem cartItem)
+        public CartItem AddCartItem(CartItem cartItem)
         {
             string message = "";
             cartItem = cartItemRepoitory.AddCartItem(cartItem);
-            if (cartItem != null)
-            {
-                message = "Success";
-            }
-            else
-            {
-                message = "Failed";
-            }
-            return message;
+            //if (cartItem != null)
+            //{
+            //    message = "Success";
+            //}
+            //else
+            //{
+            //    message = "Failed";
+            //}
+            return cartItem;
         }
     }
 }

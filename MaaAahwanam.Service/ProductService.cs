@@ -12,9 +12,14 @@ namespace MaaAahwanam.Service
     public class ProductService
     {
         VendorsOthersRepository vendorsOthersRepository = new VendorsOthersRepository();
-        public List<GetProducts_Result> GetProducts_Results(string Param, int VID)
+        public List<GetProducts_Result> GetProducts_Results(string Param, int VID,string servicetypesType, string servicetypeloc, string servicetypeorder)
         {
-            return vendorsOthersRepository.GetProducts_Results(Param,VID);
+            return vendorsOthersRepository.GetProducts_Results(Param,VID,servicetypesType,servicetypeloc,servicetypeorder);
+        }
+
+        public List<getservicetype_Result> Getservicetype_Result(string Param)
+        {
+            return vendorsOthersRepository.Getservicetype_Result(Param);
         }
     }
 }

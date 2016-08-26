@@ -24,10 +24,10 @@ namespace MaaAahwanam.Web.Controllers
             string Servicetype = Request.QueryString["par"];
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype);
-            if(Productinfo.image!=null)
-            { 
-            string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
-            ViewBag.Imagelist = imagenameslist;
+            if (Productinfo.image != null)
+            {
+                string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
+                ViewBag.Imagelist = imagenameslist;
             }
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);
@@ -61,7 +61,8 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.Quantity = orderRequest.Quantity;
             cartItem.UpdatedDate = DateTime.Now;
             cartItem.attribute = orderRequest.attribute;
-
+            CartService cartService = new CartService();
+            cartItem = cartService.AddCartItem(cartItem);
             EventInformation eventInformation = new EventInformation();
             eventInformation.EventName = orderRequest.EventName;
             eventInformation.Email = orderRequest.Email;
@@ -72,6 +73,7 @@ namespace MaaAahwanam.Web.Controllers
             eventInformation.State = orderRequest.State;
             eventInformation.City = orderRequest.City;
             eventInformation.vendorid = orderRequest.VendorId;
+            eventInformation.CartId = cartItem.CartId;
             EventDate eventDate = new EventDate();
             foreach (var item in orderRequest.EventDates)
             {
@@ -80,14 +82,14 @@ namespace MaaAahwanam.Web.Controllers
                 eventDate.EndDate = item.EndDate;
                 eventDate.EndTime = item.EndTime;
                 eventDate.vendorid = orderRequest.VendorId;
+                eventDate.EventId = eventInformation.EventId;
             }
-            CartService cartService = new CartService();
-            string mesaage = cartService.AddCartItem(cartItem);
+           
             EventsService eventsService = new EventsService();
             string mesaage1 = eventsService.SaveEventinformation(eventInformation);
             EventDatesServices eventDatesServices = new EventDatesServices();
             string message3 = eventDatesServices.SaveEventDates(eventDate);
-            return Json(mesaage);
+            return Json(mesaage1);
         }
 
         public JsonResult Buynow(OrderRequest orderRequest)

@@ -31,12 +31,12 @@ namespace MaaAahwanam.Web.Controllers
                 var file1 = Request.Files[i];
                 string path = System.IO.Path.GetExtension(file.FileName);
                 var filename = "Testimonial_" + adminTestimonial.Id + "_" + j + path;
-                fileName1 = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath+filename));
+                fileName1 = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
                 file1.SaveAs(fileName1);
                 adminTestimonialPath.ImagePath = filename;
                 testmonialService.Savetestimonialpath(adminTestimonialPath);
             }
-            return RedirectToAction("Index");
+            return Content("<script language='javascript' type='text/javascript'>alert('Submitted successfully!');location.href='" + @Url.Action("Index","Testimonialform") + "'</script>");
         }
     }
 }

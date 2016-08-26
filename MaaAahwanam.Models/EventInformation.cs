@@ -24,5 +24,6 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedDate { get; set; }
         public string Status { get; set; }
         public long vendorid { get; set; }
+        public long CartId { get; set; }
     }
 }

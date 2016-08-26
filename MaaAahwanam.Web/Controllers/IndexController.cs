@@ -23,10 +23,10 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Testimonials = testmonialService.TestmonialServiceList();//Testimonials List
             //Products List Index(4 Services Photography,Beautition,Decorators,Travels)
             ProductService productService = new ProductService();
-            List<GetProducts_Result> Productlist_Photography = productService.GetProducts_Results("Photography", 0);
-            List<GetProducts_Result> Productlist_BeautyService = productService.GetProducts_Results("BeautyService", 0);
-            List<GetProducts_Result> Productlist_Decorator = productService.GetProducts_Results("Decorator", 0);
-            List<GetProducts_Result> Productlist_Travel = productService.GetProducts_Results("Travel", 0);
+            List<GetProducts_Result> Productlist_Photography = productService.GetProducts_Results("Photography", 0, "%", "Hyderabad", "ASC");
+            List<GetProducts_Result> Productlist_BeautyService = productService.GetProducts_Results("BeautyService", 0, "%", "Hyderabad", "ASC");
+            List<GetProducts_Result> Productlist_Decorator = productService.GetProducts_Results("Decorator", 0, "%", "Hyderabad", "ASC");
+            List<GetProducts_Result> Productlist_Travel = productService.GetProducts_Results("Travel", 0, "%", "Hyderabad", "ASC");
             ViewBag.PhotographersDetails = Productlist_Photography;
             ViewBag.Beautician = Productlist_BeautyService;
             ViewBag.Decorators = Productlist_Decorator;

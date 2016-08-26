@@ -1,0 +1,80 @@
+﻿@model MaaAahwanam.Models.IssueDetail
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/SharedWeb/DashboardMaster.cshtml";
+}
+
+
+@section Navigation
+{
+    <div class="breads">
+        <div class="breads_inner">
+            <div class="pageWidth">
+                <div class="title">
+                    <h3>Ticket Details # @ViewBag.TicketID</h3>
+                </div>
+                <div class="breadcrumbs">
+                    <ul>
+                        <li><a href="~/index/Index">Home</a></li>
+                        <li><i class="breads_arrow"></i></li>
+                        <li>Tickets</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- /dashDetails -->
+<div class="dashboardList dashboardList-nospace">
+    @using (Html.BeginForm("Index", "TicketDetails", FormMethod.Post, new { @class = "form", @id = "contact_form" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    @*Details*@
+                    @Html.TextAreaFor(m => m.Msg, new { @id = "Msg", @name = "Msg", placeholder = "Details" })
+                    @*@Html.HiddenFor(m=>m.TicketId,new { @id = "ticketid", @name = "ticketid", @value= ViewBag.TicketID })*@
+                   @Html.Hidden("TicketId", (string)ViewBag.TicketID, new { @id = "hdnTicketID" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" name="submit" class="btn btn-big btn-green float-right" value="submit">Submit <i class="ti-angle-double-right"></i></button>
+                </td>
+            </tr>
+        </table>
+    }
+    <div class="clear"></div>
+</div>
+<!-- /dashboardList -->
+
+        <!-- /comments-box -->
+<div class="replyStyle comments m-t-30">
+    <h2>Comments @*<span>(@ViewBag.commentscount)</span>*@</h2>
+    @if (ViewBag.CommentDetails != null)
+            {
+                foreach (var item in ViewBag.CommentDetails)
+                {
+            <dl class="first-child">
+                <dt><img class="person" alt="img-profile1" src="~/CSSWeb/images/dashboard/img-profile1.jpg"></dt>
+                <dd>
+                    <h5>@item.FirstName @item.LastName</h5>
+                    <p>@item.Msg</p>
+                    <div class="cmntsPublish">
+                        <ul>
+                            <li><i class="ti-time"></i><span>@item.UpdatedDate.ToShortDateString()</span></li>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        }
+    }
+    @if (ViewBag.CommentDetails == null)
+            {
+        <dl>
+            <p>No Comments</p>
+        </dl>
+    }
+</div>
+<div class="clear"></div>
