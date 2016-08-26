@@ -46,7 +46,7 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     
-        public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID)
+        public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
         {
             var nTypeParameter = nType != null ?
                 new ObjectParameter("nType", nType) :
@@ -56,7 +56,19 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", vID) :
                 new ObjectParameter("VID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter);
+            var stypeParameter = stype != null ?
+                new ObjectParameter("stype", stype) :
+                new ObjectParameter("stype", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("city", city) :
+                new ObjectParameter("city", typeof(string));
+    
+            var orderParameter = order != null ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
         }
     
         public virtual ObjectResult<GetProductsInfo_Result> GetProductsInfo(Nullable<int> vid, string nType)
@@ -72,6 +84,15 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter);
         }
     
+        public virtual ObjectResult<getservicetype_Result> getservicetype(string ntype)
+        {
+            var ntypeParameter = ntype != null ?
+                new ObjectParameter("ntype", ntype) :
+                new ObjectParameter("ntype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
+        }
+    
         public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails_Result> MaaAahwanam_Orders_OrderDetails(Nullable<long> orderNo)
         {
             var orderNoParameter = orderNo.HasValue ?
@@ -79,15 +100,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("OrderNo", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
-        }
-    
-        public virtual ObjectResult<Maa_Aahwanam_Orders_OrderDetails_Result> Maa_Aahwanam_Orders_OrderDetails(Nullable<long> orderNo)
-        {
-            var orderNoParameter = orderNo.HasValue ?
-                new ObjectParameter("OrderNo", orderNo) :
-                new ObjectParameter("OrderNo", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Maa_Aahwanam_Orders_OrderDetails_Result>("Maa_Aahwanam_Orders_OrderDetails", orderNoParameter);
         }
     
         public virtual ObjectResult<MaaAahwanam_Others_AllRegisteredUsersDetails_Result> MaaAahwanam_Others_AllRegisteredUsersDetails()
@@ -102,15 +114,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("CommentId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Comments_Result>("MaaAahwanam_Others_Comments", commentIdParameter);
-        }
-    
-        public virtual ObjectResult<Maa_Aahwanam_Others_Comments_Result> Maa_Aahwanam_Others_Comments(Nullable<long> commentId)
-        {
-            var commentIdParameter = commentId.HasValue ?
-                new ObjectParameter("CommentId", commentId) :
-                new ObjectParameter("CommentId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Maa_Aahwanam_Others_Comments_Result>("Maa_Aahwanam_Others_Comments", commentIdParameter);
         }
     
         public virtual ObjectResult<MaaAahwanam_Others_RegisteredUsers_Result> MaaAahwanam_Others_RegisteredUsers()
@@ -157,15 +160,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("RequestId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Services_Bidding_Result>("MaaAahwanam_Services_Bidding", requestIdParameter);
-        }
-    
-        public virtual ObjectResult<Maa_Aahwanam_Services_Bidding_Result> Maa_Aahwanam_Services_Bidding(Nullable<long> requestId)
-        {
-            var requestIdParameter = requestId.HasValue ?
-                new ObjectParameter("RequestId", requestId) :
-                new ObjectParameter("RequestId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Maa_Aahwanam_Services_Bidding_Result>("Maa_Aahwanam_Services_Bidding", requestIdParameter);
         }
     
         public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
@@ -234,6 +228,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_vendordatesbooked_Result>("SP_vendordatesbooked", vIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_Tickets_Result> sp_Tickets(Nullable<long> ticketId)
+        {
+            var ticketIdParameter = ticketId.HasValue ?
+                new ObjectParameter("TicketId", ticketId) :
+                new ObjectParameter("TicketId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tickets_Result>("sp_Tickets", ticketIdParameter);
         }
     }
 }
