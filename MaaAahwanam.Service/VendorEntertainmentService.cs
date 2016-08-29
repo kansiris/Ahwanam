@@ -13,7 +13,9 @@ namespace MaaAahwanam.Service
     {
         RandomPassword randomPassword = new RandomPassword();
         UserLoginRepository userLoginRepository = new UserLoginRepository();
+        UserDetailsRepository userDetailsRepository = new UserDetailsRepository();
         UserLogin userLogin = new UserLogin();
+        UserDetail userDetail = new UserDetail();
         VendormasterRepository vendorMasterRepository = new VendormasterRepository();
         VendorEntertainmentRepository vendorEntertainmentRespository = new VendorEntertainmentRepository();
 
@@ -35,7 +37,21 @@ namespace MaaAahwanam.Service
             userLogin.UpdatedDate = DateTime.Now;
             userLogin.Status = "Active";
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
-            if (vendorMaster.Id != 0 && vendorEntertainment.Id != 0 && userLogin.UserLoginId != 0)
+            userDetail.UserLoginId = userLogin.UserLoginId;
+            userDetail.FirstName = vendorMaster.BusinessName;
+            userDetail.UserPhone = vendorMaster.ContactNumber;
+            userDetail.Url = vendorMaster.Url;
+            userDetail.Address = vendorMaster.Address;
+            userDetail.City = vendorMaster.City;
+            userDetail.State = vendorMaster.State;
+            userDetail.ZipCode = vendorMaster.ZipCode;
+            userDetail.Status = "Active";
+            userDetail.UpdatedBy = ValidUserUtility.ValidUser();
+            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.AlternativeEmailID = vendorMaster.EmailId;
+            userDetail.Landmark = vendorMaster.Landmark;
+            userDetail = userDetailsRepository.AddUserDetails(userDetail);
+            if (vendorMaster.Id != 0 && vendorEntertainment.Id != 0 && userLogin.UserLoginId != 0 && userDetail.UserDetailId != 0)
             {
                 return vendorEntertainment;
             }
@@ -46,12 +62,12 @@ namespace MaaAahwanam.Service
             }
         }
 
-        public VendorsEntertainment GetVendorEntertainment(long id)
+        public VendorsEntertainment GetVendorEntertainment(long id, long vid)
         {
-            return vendorEntertainmentRespository.GetVendorEntertainment(id);
+            return vendorEntertainmentRespository.GetVendorEntertainment(id,vid);
         }
 
-        public VendorsEntertainment UpdateEntertainment(VendorsEntertainment vendorsEntertainment, Vendormaster vendorMaster, long masterid)
+        public VendorsEntertainment UpdateEntertainment(VendorsEntertainment vendorsEntertainment, Vendormaster vendorMaster, long masterid, long vid)
         {
             vendorsEntertainment.Status = "Active";
             vendorsEntertainment.UpdatedDate = DateTime.Now;
@@ -59,7 +75,16 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Entertainment";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsEntertainment = vendorEntertainmentRespository.UpdateEntertainment(vendorsEntertainment, masterid);
+            vendorsEntertainment = vendorEntertainmentRespository.UpdateEntertainment(vendorsEntertainment, masterid,vid);
+            return vendorsEntertainment;
+        }
+
+        public VendorsEntertainment AddNewEntertainment(VendorsEntertainment vendorsEntertainment, Vendormaster vendorMaster)
+        {
+            vendorsEntertainment.Status = "Active";
+            vendorsEntertainment.UpdatedDate = DateTime.Now;
+            vendorsEntertainment.VendorMasterId = vendorMaster.Id;
+            vendorsEntertainment = vendorEntertainmentRespository.AddEntertainment(vendorsEntertainment);
             return vendorsEntertainment;
         }
     }

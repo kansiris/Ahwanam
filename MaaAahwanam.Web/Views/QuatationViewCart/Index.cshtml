@@ -100,7 +100,16 @@
                                 <td><input type="radio" name="quatation" /></td>
                                 <td>@(++i)</td>
                                 <td><a href="#quatation" onclick="displaypopup('@item.Description','@item.Preferences')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
-                                <td>@item.UpdatedDate.ToShortDateString()</td>
+                                <td>
+                                    @if (item.UpdatedDate!=null)
+                                    {
+                                        @item.UpdatedDate.ToShortDateString()
+                                    }
+                                    @if (item.UpdatedDate == null)
+                                    {
+                                        <p>NA</p>
+                                    }
+                                </td>
                                 <td>@item.Description</td>
                                 <td>Rs.@item.Budget</td>
                                 <td>Rs.@item.Amount</td>
@@ -185,7 +194,7 @@
                     <dl class="first-child">
                         <dt><img class="person" alt="img-profile1" src="~/CSSWeb/images/dashboard/img-profile1.jpg"></dt>
                         <dd>
-                            <h5>@item.BusinessName</h5>
+                            <h5>@item.FirstName @item.LastName</h5>
                             <p>@item.CommentDetails.</p>
                             <div class="cmntsPublish">
                                 <ul>

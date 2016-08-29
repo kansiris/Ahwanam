@@ -37,16 +37,14 @@ namespace MaaAahwanam.Web.Controllers
         }
         public ActionResult WriteaRiview([Bind(Prefix = "Item2")] Review review)
         {
-            int a = ValidUserUtility.ValidUser();
-            if (ValidUserUtility.ValidUser() != 0 && (ValidUserUtility.UserType() == "User"))
-            {
-                review.UpdatedBy = ValidUserUtility.ValidUser();
-                review.Status = "Active";
-                review.UpdatedDate = DateTime.Now;
-                reviewService.InsertReview(review);
-                return RedirectToAction("Index", new { par = review.Service, VID = review.ServiceId });
-            }
-            return RedirectToAction("Index", "Signin");
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            review.UpdatedBy = (int)user.UserId;
+            review.Status = "Active";
+            review.UpdatedDate = DateTime.Now;
+            reviewService.InsertReview(review);
+            return RedirectToAction("Index", new { par = review.Service, VID = review.ServiceId });
+
+            //return RedirectToAction("Index", "Signin");
         }
 
         public JsonResult Addtocart(OrderRequest orderRequest)
@@ -84,7 +82,7 @@ namespace MaaAahwanam.Web.Controllers
                 eventDate.vendorid = orderRequest.VendorId;
                 eventDate.EventId = eventInformation.EventId;
             }
-           
+
             EventsService eventsService = new EventsService();
             string mesaage1 = eventsService.SaveEventinformation(eventInformation);
             EventDatesServices eventDatesServices = new EventDatesServices();
@@ -124,6 +122,9 @@ namespace MaaAahwanam.Web.Controllers
             order.TotalPrice = orderRequest.TotalPrice;
             order.OrderDate = DateTime.Now;
             order.UpdatedBy = user.UserId;
+            order.OrderedBy = user.UserId;
+            order.UpdatedDate = DateTime.Now;
+            order.Status = "Active";
             order = orderService.SaveOrder(order);
 
             Payment_orderServices payment_orderServices = new Payment_orderServices();
@@ -147,6 +148,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.VendorId = orderRequest.VendorId;
             orderDetail.Status = "Active";
             orderDetail.UpdatedDate = DateTime.Now;
+            orderDetail.UpdatedBy = user.UserId;
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
             return Json(orderDetail.OrderId);

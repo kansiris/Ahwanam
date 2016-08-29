@@ -11,6 +11,7 @@ namespace MaaAahwanam.Service
 {
     public class OthersService
     {
+        readonly ApiContext _dbContext = new ApiContext();
         OthersRepository othersRepository = new OthersRepository();
         //Comments Module
         public List<Comment> CommentList()
@@ -80,6 +81,16 @@ namespace MaaAahwanam.Service
             return othersRepository.TestimonalDetail(id);
         }
 
-        
+        public AdminTestimonialPath AdminTestimonialPathStatus(long id, AdminTestimonialPath adminTestimonialPath)
+        {
+            return othersRepository.AdminTestimonialPathStatus(id,adminTestimonialPath);
+
+        }
+
+        public AdminTestimonial AdminTestimonialStatus(long id, AdminTestimonial adminTestimonial)
+        {
+            return othersRepository.AdminTestimonialStatus(id, adminTestimonial);
+
+        }
     }
 }

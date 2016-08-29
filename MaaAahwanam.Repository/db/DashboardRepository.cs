@@ -71,5 +71,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ServiceRequest.Where(m => m.RequestId == id).Select(r => r.Type).FirstOrDefault();
         }
+
+        public long GetComment(string id, string type)
+        {
+            return _dbContext.Comment.Where(m => m.ServiceId == id && m.ServiceType == type).Count();
+        }
     }
 }

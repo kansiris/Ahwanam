@@ -23,14 +23,14 @@ namespace MaaAahwanam.Repository.db
             return vendorsBeautyService;
         }
 
-        public VendorsBeautyService GetVendorsBeautyService(long id)
+        public VendorsBeautyService GetVendorsBeautyService(long id,long vid)
         {
-            return _dbContext.VendorsBeautyService.Where(m => m.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsBeautyService.Where(m => m.VendorMasterId == id && m.Id == vid).FirstOrDefault();
         }
 
-        public VendorsBeautyService UpdatesBeautyService(VendorsBeautyService vendorsBeautyService, long id)
+        public VendorsBeautyService UpdatesBeautyService(VendorsBeautyService vendorsBeautyService, long id,long vid)
         {
-            var GetVendor = _dbContext.VendorsBeautyService.SingleOrDefault(m => m.VendorMasterId == id);
+            var GetVendor = _dbContext.VendorsBeautyService.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsBeautyService.Id = GetVendor.Id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsBeautyService);
             _dbContext.SaveChanges();

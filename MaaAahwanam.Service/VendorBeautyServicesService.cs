@@ -15,7 +15,9 @@ namespace MaaAahwanam.Service
         UserLoginRepository userLoginRepository = new UserLoginRepository();
         VendormasterRepository vendorMasterRepository = new VendormasterRepository();
         VendorsBeautyServiceRepository vendorBeautyServiceRespository = new VendorsBeautyServiceRepository();
+        UserDetailsRepository userDetailsRepository = new UserDetailsRepository();
         UserLogin userLogin = new UserLogin();
+        UserDetail userDetail = new UserDetail();
         public VendorsBeautyService AddBeautyService(VendorsBeautyService vendorBeautyService,Vendormaster vendorMaster)
         {
             vendorBeautyService.UpdatedDate = DateTime.Now;
@@ -31,7 +33,21 @@ namespace MaaAahwanam.Service
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
-            if (vendorMaster.Id != 0 && vendorBeautyService.Id != 0 && userLogin.UserLoginId != 0)
+            userDetail.UserLoginId = userLogin.UserLoginId;
+            userDetail.FirstName = vendorMaster.BusinessName;
+            userDetail.UserPhone = vendorMaster.ContactNumber;
+            userDetail.Url = vendorMaster.Url;
+            userDetail.Address = vendorMaster.Address;
+            userDetail.City = vendorMaster.City;
+            userDetail.State = vendorMaster.State;
+            userDetail.ZipCode = vendorMaster.ZipCode;
+            userDetail.Status = "Active";
+            userDetail.UpdatedBy = ValidUserUtility.ValidUser();
+            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.AlternativeEmailID = vendorMaster.EmailId;
+            userDetail.Landmark = vendorMaster.Landmark;
+            userDetail = userDetailsRepository.AddUserDetails(userDetail);
+            if (vendorMaster.Id != 0 && vendorBeautyService.Id != 0 && userLogin.UserLoginId != 0 && userDetail.UserDetailId != 0)
             {
                 return vendorBeautyService;
             }
@@ -41,12 +57,12 @@ namespace MaaAahwanam.Service
                 return vendorBeautyService;
             }
         }
-        public VendorsBeautyService GetVendorBeautyService(long id)
+        public VendorsBeautyService GetVendorBeautyService(long id,long vid)
         {
-            return vendorBeautyServiceRespository.GetVendorsBeautyService(id);
+            return vendorBeautyServiceRespository.GetVendorsBeautyService(id,vid);
         }
 
-        public VendorsBeautyService UpdatesBeautyService(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster, long masterid)
+        public VendorsBeautyService UpdatesBeautyService(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster, long masterid,long vid)
         {
             vendorsBeautyService.Status = "Active";
             vendorsBeautyService.UpdatedDate = DateTime.Now;
@@ -54,7 +70,15 @@ namespace MaaAahwanam.Service
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "BeautyServices";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsBeautyService = vendorBeautyServiceRespository.UpdatesBeautyService(vendorsBeautyService, masterid);
+            vendorsBeautyService = vendorBeautyServiceRespository.UpdatesBeautyService(vendorsBeautyService, masterid,vid);
+            return vendorsBeautyService;
+        }
+        public VendorsBeautyService AddNewVenue(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster)
+        {
+            vendorsBeautyService.Status = "Active";
+            vendorsBeautyService.UpdatedDate = DateTime.Now;
+            vendorsBeautyService.VendorMasterId = vendorMaster.Id;
+            vendorsBeautyService = vendorBeautyServiceRespository.AddBeautyService(vendorsBeautyService);
             return vendorsBeautyService;
         }
     }

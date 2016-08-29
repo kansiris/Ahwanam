@@ -21,6 +21,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ServiceRequest.Where(m => m.Type == serviceRequest.Type).ToList();
         }
+        public List<ServiceRequest> ServiceRequestListcount(string Servicecount)
+        {
+            return _dbContext.ServiceRequest.Where(m => m.Type == Servicecount).ToList();
+        }
 
         public List<ServiceRequest> ServiceRequestRecord(ServiceRequest serviceRequest)
         {

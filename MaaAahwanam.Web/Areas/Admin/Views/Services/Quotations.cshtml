@@ -1,4 +1,5 @@
-﻿@{
+﻿@model MaaAahwanam.Models.ServiceResponse
+@{
     ViewBag.Title = "QuotView";
     Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
 }
@@ -42,17 +43,17 @@
                     {
                         foreach (var item in ViewBag.QuotationRecordsList)
                         {
-                            <li class="col-lg-4">
-                                <h3>@item.RequestId-Quot1</h3>
+                            <li class="col-lg-4" style="border:groove">
+                                <h3>@item.RequestId-@item.ResponseId</h3>
                                 <!--<div class="price-body">-->
-                                <div class="price"><sup>&#x20B9;</sup>@item.Amount</div>
+                                <div class="price" style="display:block"><sup>&#x20B9;</sup>@item.Amount</div>
                                 <!--</div>-->
                                 <div class="features">
                                     <ul>
                                         <li>@item.Description</li>
                                     </ul>
                                 </div>
-                                <div class="footer"> <a href="#" class="btn btn-info btn-rect"> Edit </a> <a href="#" class="btn btn-danger btn-rect"> Delete </a></div>
+                                <div class="footer"> <input id="btnedit" type="button" value="Edit" onclick="return edit('@item.Amount','@item.Description','@item.ResponseId')" class="btn btn-info btn-rect" /> <a href="#" class="btn btn-danger btn-rect"> Delete </a></div>
                             </li>
                         }
                     }
@@ -141,13 +142,17 @@
                         </ul>
                     </header>
                     <div id="div-1" class="body collapse in">
-                        <form>
-                            
-                            <textarea id="wysihtml5" class="form-control" rows="10"></textarea>
-
+                        <form method="post">
+                            @Html.TextBoxFor(model => this.Model.ResponseId, new { @class = "form-control", @style = "display:none" })
+                            <label>Amount</label>
+                            @Html.TextBoxFor(model => this.Model.Amount, new { @class = "form-control", placeholder = "Enter Amount" })
+                            <br />
+                            <label>Description</label>
+                            @*<textarea id="wysihtml5" class="form-control" rows="10"></textarea>*@
+                            @Html.TextAreaFor(model => this.Model.Description, new { @class = "form-control", placeholder = "Enter Description", @rows = "4" })
                             <div class="form-actions">
                                 <br />
-                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                <input id="btnsave" type="submit" value="Submit" name="command" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
@@ -185,5 +190,18 @@
     <script>
         $(function () { formWysiwyg(); });
     </script>
+<script>
+        function edit(amount,desc,id) {
+            var responseid = id;
+            $("#Amount").val(amount);
+            $("#Description").val(desc);
+            $("#btnsave").val("Update");
+            $("#ResponseId").val(responseid);
+            //var url = window.location.href;
+            //alert(url.search('?rid='));
+            //window.location.href = url +'?rid='+id+'';
+        }
+
+</script>
     <!-- END PAGE LEVEL SCRIPTS -->
 }

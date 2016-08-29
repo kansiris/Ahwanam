@@ -33,9 +33,9 @@ namespace MaaAahwanam.Repository.db
             return "success";
         }
 
-        public VendorImage GetImageId(string name)
+        public VendorImage GetImageId(string name,long vid)
         {
-            return _dbContext.VendorImage.Where(m => m.ImageName == name).SingleOrDefault();
+            return _dbContext.VendorImage.Where(m => m.ImageName == name && m.VendorId == vid).SingleOrDefault();
         }
 
         public string UpdateVendorVenue(VendorImage vendorImage)
