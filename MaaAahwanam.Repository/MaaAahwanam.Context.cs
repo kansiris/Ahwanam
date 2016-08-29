@@ -46,6 +46,11 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     
+        public virtual ObjectResult<geteventsandtipsimages_Result> geteventsandtipsimages()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages");
+        }
+    
         public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
         {
             var nTypeParameter = nType != null ?
@@ -221,15 +226,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Servicedetails_Result>("sp_Servicedetails", requestIdParameter);
         }
     
-        public virtual ObjectResult<SP_vendordatesbooked_Result> SP_vendordatesbooked(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_vendordatesbooked_Result>("SP_vendordatesbooked", vIDParameter);
-        }
-    
         public virtual ObjectResult<sp_Tickets_Result> sp_Tickets(Nullable<long> ticketId)
         {
             var ticketIdParameter = ticketId.HasValue ?
@@ -237,6 +233,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("TicketId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tickets_Result>("sp_Tickets", ticketIdParameter);
+        }
+    
+        public virtual ObjectResult<SP_vendordatesbooked_Result> SP_vendordatesbooked(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_vendordatesbooked_Result>("SP_vendordatesbooked", vIDParameter);
         }
     }
 }

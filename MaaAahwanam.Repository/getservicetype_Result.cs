@@ -14,6 +14,6 @@ namespace MaaAahwanam.Repository
     public partial class getservicetype_Result
     {
         public string vendortype { get; set; }
-        public long Id { get; set; }
+        public string temp { get; set; }
     }
 }
