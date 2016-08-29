@@ -11,7 +11,7 @@ namespace MaaAahwanam.Service
 {
    public class OrderService
     {
-        public List<Order> OrderList()
+        public List<sp_ordersdisplay_Result> OrderList()
         {
             OrderRepository orderRepository = new OrderRepository();
             return orderRepository.OrderList();

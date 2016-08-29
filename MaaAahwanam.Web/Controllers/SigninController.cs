@@ -57,7 +57,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     userResponse.UserType = "User";
                     string userData = JsonConvert.SerializeObject(userResponse);
-                    //ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     Response.Redirect("DashBoard/Index");
                 }
                 else
@@ -75,7 +75,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     userResponse.UserType = "Vendor";
                     string userData = JsonConvert.SerializeObject(userResponse);
-                    //ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     Response.Redirect("VendorDashBoard/Index");
                 }
                 else

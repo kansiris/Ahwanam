@@ -39,8 +39,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             if (command == "Authenticate")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                userLogin.UserType = "Admin";
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (userResponse != null)
+                if (userResponse.UserLoginId != 0)
                 {
                     userResponse.UserType = "Admin";
                     string userData = JsonConvert.SerializeObject(userResponse);

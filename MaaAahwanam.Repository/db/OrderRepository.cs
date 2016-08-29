@@ -12,9 +12,9 @@ namespace MaaAahwanam.Repository.db
     {
        readonly ApiContext _dbContext = new ApiContext();
        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
-       public List<Order> OrderList()
+       public List<sp_ordersdisplay_Result> OrderList()
        {
-           return _dbContext.Order.ToList();
+            return maaAahwanamEntities.sp_ordersdisplay().ToList();
        }
        
        public List<MaaAahwanam_Orders_OrderDetails_Result> GetOrderDetailsList(long id)

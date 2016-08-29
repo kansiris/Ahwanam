@@ -11,18 +11,15 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class MaaAahwanam_Others_TestimonialDetail_Result
+    public partial class sp_ordersdisplay_Result
     {
-        public long Id { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public long UpdatedBy { get; set; }
+        public long OrderId { get; set; }
+        public Nullable<System.DateTime> OrderDate { get; set; }
+        public string Status { get; set; }
+        public decimal TotalPrice { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public string UserPhone { get; set; }
-        public string Address { get; set; }
-        public string Description { get; set; }
-        public string ImagePath { get; set; }
-        public string Status { get; set; }
+        public string AlternativeEmailID { get; set; }
+        public string Landmark { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace MaaAahwanam.Web.Controllers
     public class QuatationViewCartController : Controller
     {
         DashBoardService dashBoardService = new DashBoardService();
+        static long pid;
         public ActionResult Index(string id)
         {
             if (id != null)
@@ -52,7 +53,42 @@ namespace MaaAahwanam.Web.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart") + "'</script>");
                 //}
             }
-            return View();
+            if (command == "Pay")
+            {
+                OrdersServiceRequest ordersServiceRequest = new OrdersServiceRequest();
+                Payments_Requests payments_Requests = new Payments_Requests();
+                ServiceResponse serviceResponse = dashBoardService.GetService(long.Parse(id));
+                //OrdersServiceRequest record insertion
+                ordersServiceRequest.ResponseId = serviceResponse.ResponseId;
+                ordersServiceRequest.TotalPrice = serviceResponse.Amount;
+                ordersServiceRequest.UpdatedBy = ValidUserUtility.ValidUser();
+                ordersServiceRequest.UpdatedDate = DateTime.Now;
+                ordersServiceRequest.Status = "Active";
+                ordersServiceRequest = dashBoardService.InsertNewOrderService(ordersServiceRequest);
+                pid = ordersServiceRequest.ResponseId;
+                //Payments_Requests record insertion
+                payments_Requests.RequestID = ordersServiceRequest.OrderId;
+                payments_Requests.paidamount = ordersServiceRequest.TotalPrice;
+                payments_Requests.cardnumber = "2222 2222 2222 2222";
+                payments_Requests.CVV = "234";
+                payments_Requests.Paiddate = DateTime.Now;
+                payments_Requests = dashBoardService.AddNewPaymentRequest(payments_Requests);
+                //Updating Payment ID in OrdersServiceRequest table               
+                ordersServiceRequest = dashBoardService.UpdateOrdersServiceRequest(pid, ordersServiceRequest);
+                //if (ordersServiceRequest.ResponseId != 0 && payments_Requests.PaymentID != 0)
+                //{
+                //    return View("confirmation");
+                //}
+                
+                
+            }
+            return View("confirmation");
+        }
+
+        public ActionResult confirmation(string id)
+        {
+            ServiceRequest serviceRequest = dashBoardService.UpdateService(long.Parse(id));
+            return View("confirmation");
         }
     }
 }

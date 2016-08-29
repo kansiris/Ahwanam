@@ -76,5 +76,51 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Comment.Where(m => m.ServiceId == id && m.ServiceType == type).Count();
         }
+
+        public OrdersServiceRequest InsertNewOrderService(OrdersServiceRequest ordersServiceRequest)
+        {
+            _dbContext.OrdersServiceRequest.Add(ordersServiceRequest);
+            _dbContext.SaveChanges();
+            return ordersServiceRequest;
+        }
+
+        public Payments_Requests AddNewPaymentRequest(Payments_Requests payments_Requests)
+        {
+            _dbContext.Payments_Requests.Add(payments_Requests);
+            _dbContext.SaveChanges();
+            return payments_Requests;
+        }
+
+        public OrdersServiceRequest GetPaymentID(long id)
+        {
+            return _dbContext.OrdersServiceRequest.Where(m => m.ResponseId == id).FirstOrDefault();
+        }
+
+        public ServiceResponse GetQuotationList(long id)
+        {
+            return _dbContext.ServiceResponse.Where(m => m.RequestId == id).FirstOrDefault();
+        }
+
+        public OrdersServiceRequest UpdateOrdersServiceRequest(long id,OrdersServiceRequest ordersServiceRequest)
+        {
+            var GetRecord = _dbContext.Payments_Requests.Where(m => m.RequestID == id).FirstOrDefault();
+            //ordersServiceRequest
+            ordersServiceRequest.PaymentId = GetRecord.PaymentID;
+            
+            _dbContext.Entry(GetRecord).CurrentValues.SetValues(ordersServiceRequest);
+            _dbContext.SaveChanges();
+            return ordersServiceRequest;
+        }
+
+        public ServiceRequest UpdateService(long id)
+        {
+            ServiceRequest serviceRequest;
+            var GetRecord=_dbContext.ServiceRequest.Where(m => m.RequestId == id).FirstOrDefault();
+            serviceRequest = _dbContext.ServiceRequest.Where(m => m.RequestId == id).FirstOrDefault();
+            serviceRequest.Status = "Paid";
+            _dbContext.Entry(GetRecord).CurrentValues.SetValues(serviceRequest);
+            _dbContext.SaveChanges();
+            return serviceRequest;
+        }
     }
 }

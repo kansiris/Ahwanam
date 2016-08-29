@@ -75,5 +75,35 @@ namespace MaaAahwanam.Service
         {
             return dashBoardRepository.GetComment(id, type);
         }
+
+        public OrdersServiceRequest InsertNewOrderService(OrdersServiceRequest ordersServiceRequest)
+        {
+            return dashBoardRepository.InsertNewOrderService(ordersServiceRequest);
+        }
+
+        public Payments_Requests AddNewPaymentRequest(Payments_Requests payments_Requests)
+        {
+            return dashBoardRepository.AddNewPaymentRequest(payments_Requests);
+        }
+
+        public OrdersServiceRequest GetPaymentID(long id)
+        {
+            return dashBoardRepository.GetPaymentID(id);
+        }
+
+        public ServiceResponse GetService(long id)
+        {
+            return dashBoardRepository.GetQuotationList(id);
+        }
+
+        public OrdersServiceRequest UpdateOrdersServiceRequest(long id,OrdersServiceRequest ordersServiceRequest)
+        {
+            return dashBoardRepository.UpdateOrdersServiceRequest(id, ordersServiceRequest);
+        }
+
+        public ServiceRequest UpdateService(long id)
+        {
+            return dashBoardRepository.UpdateService(id);
+        }
     }
 }
