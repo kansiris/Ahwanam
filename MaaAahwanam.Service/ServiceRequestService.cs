@@ -23,6 +23,12 @@ namespace MaaAahwanam.Service
             List<ServiceRequest> l1 = serviceRequestRepository.ServiceRequestList(serviceRequest);
             return l1;
         }
+        public int GetServiceRequestListcount(string servicetype)
+        {
+            ServiceRequestRepository serviceRequestRepository = new ServiceRequestRepository();
+            List<ServiceRequest> l1 = serviceRequestRepository.ServiceRequestListcount(servicetype);
+            return l1.Count;
+        }
 
         public List<ServiceRequest> GetServiceRequestRecord(ServiceRequest serviceRequest)
         {

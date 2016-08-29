@@ -57,7 +57,7 @@
                                             j++;
                                             <tr class="item">
                                                 <td style="display:none">
-                                                    <span id="tid @j">@item.Id</span>
+                                                    <span id="tid @j">@item.CartId</span>
                                                 </td>
                                                 <td>
                                                     @if (item.image != null)
@@ -91,7 +91,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <a href="#add_new_date" class="orange-link upload_address popup-with-move-anim"><i class="ti-plus"></i> Add Date / Time</a>
+                                                    @*<a href="#add_new_date" class="orange-link upload_address popup-with-move-anim"><i class="ti-plus"></i> Add Date / Time</a>*@
                                                 </td>
                                                 <td class="tdprice">
                                                     <div class="item-price">
@@ -328,6 +328,19 @@
             item["VendorId"] = tid;
             OrderDetails.push(item);
         }
+
+        cartlist = [];
+        for (i = 1; i <= tlength; i++)
+        {
+            var tid1 = document.getElementById('tid ' + i).innerHTML;
+            //alert(tidlist);
+            item1 = {}
+            item1["CartId"] = tid1;
+            cartlist.push(item1);
+        }
+
+
+
         //alert(trp);
 
         //$('#myTableId tr').each(function () {
@@ -344,7 +357,7 @@
 
         var orderRequest = {};
         orderRequest.OrderDetail = OrderDetails;
-
+        orderRequest.Cartitems = cartlist;
         orderRequest.paidamount = "100.50";
         orderRequest.cardnumber = "4222222222222";
         orderRequest.CVV = "214";

@@ -30,12 +30,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
 
-            OrderService orderService = new OrderService();
-            Order order = new Order();
-            order.TotalPrice = orderRequest.TotalPrice;
-            order.OrderDate = DateTime.Now;
-            order.UpdatedBy = user.UserId;
-            order = orderService.SaveOrder(order);
+           
 
             Payment_orderServices payment_orderServices = new Payment_orderServices();
             Payment_Orders payment_Orders = new Payment_Orders();
@@ -43,8 +38,18 @@ namespace MaaAahwanam.Web.Controllers
             payment_Orders.CVV = orderRequest.CVV;
             payment_Orders.PaymentID = orderRequest.PaymentId;
             payment_Orders.Paiddate = orderRequest.Paiddate;
-            payment_Orders.OrderID = order.OrderId;
+            //payment_Orders.OrderID = order.OrderId;
             payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
+
+            OrderService orderService = new OrderService();
+            Order order = new Order();
+            order.TotalPrice = orderRequest.TotalPrice;
+            order.OrderDate = DateTime.Now;
+            order.UpdatedBy = user.UserId;
+            order.OrderedBy = user.UserId;
+            order.UpdatedDate = DateTime.Now;
+            order.PaymentId = payment_Orders.OrderID;
+            order = orderService.SaveOrder(order);
 
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
@@ -61,7 +66,10 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.VendorId = item.VendorId;
                 orderdetailsServices.SaveOrderDetail(orderDetail);
             }
-
+            foreach(var item1 in orderRequest.Cartitems)
+            { 
+            cartService.Deletecartitem(item1.CartId);
+            }
             return Json(orderDetail.OrderId);
         }
         public JsonResult DeletecartItem(long cartId)

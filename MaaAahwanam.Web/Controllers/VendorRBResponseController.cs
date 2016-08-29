@@ -1,5 +1,6 @@
 ﻿using MaaAahwanam.Models;
 using MaaAahwanam.Service;
+using MaaAahwanam.Web.Custom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,12 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(ServiceResponse serviceResponse)
         {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string message = serviceResponseService.SaveServiceResponse(serviceResponse);
+            serviceResponse.ResponseBy = user.UserId;
+            serviceResponse.Status ="Active";
+            serviceResponse.UpdatedBy = user.UserId;
+            serviceResponse.UpdatedDate = DateTime.Now;
             if (message == "Success")
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('Submitted Response');location.href='" + @Url.Action("Index", "VendorRBResponse", new { Rid = serviceResponse.RequestId }) + "'</script>");
