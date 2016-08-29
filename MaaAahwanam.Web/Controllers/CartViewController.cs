@@ -66,7 +66,10 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.VendorId = item.VendorId;
                 orderdetailsServices.SaveOrderDetail(orderDetail);
             }
-
+            foreach(var item1 in orderRequest.Cartitems)
+            { 
+            cartService.Deletecartitem(item1.CartId);
+            }
             return Json(orderDetail.OrderId);
         }
         public JsonResult DeletecartItem(long cartId)
