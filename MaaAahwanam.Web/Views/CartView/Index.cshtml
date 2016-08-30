@@ -319,9 +319,12 @@
     function s() {
         var t = document.getElementById('myTableId');
         var tlength = t.rows.length - 1;
+        
         OrderDetails = [];
+        var ttotal=0;
         for (i = 1; i <= tlength; i++) {
             var trp = document.getElementById('tprice ' + i).innerHTML;
+            ttotal  =   ttotal +parseInt(trp);
             var tid = document.getElementById('tid ' + i).innerHTML;
             item = {}
             item["PerunitPrice"] = trp;
@@ -357,6 +360,7 @@
 
         var orderRequest = {};
         orderRequest.OrderDetail = OrderDetails;
+        orderRequest.TotalPrice = ttotal;
         orderRequest.Cartitems = cartlist;
         orderRequest.paidamount = "100.50";
         orderRequest.cardnumber = "4222222222222";
