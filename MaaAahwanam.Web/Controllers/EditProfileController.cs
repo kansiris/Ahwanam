@@ -21,7 +21,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            UserDetail userDetail = userLoginDetailsService.GetUser(ValidUserUtility.ValidUser());
+            UserDetail userDetail = userLoginDetailsService.GetUser((int)user.UserId);
             ViewBag.Type = user.UserType;      
             return View();
         }

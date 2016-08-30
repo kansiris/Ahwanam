@@ -247,9 +247,18 @@
             var VID = document.getElementById("hiddenlastrecord").value;
             var servicetypeQuerystring = document.getElementById("hiddenlastrecord2").value;
 
+            var servicetype = window.location.search.split("=")[1].split("&")[0];
+            var subservicetype= window.location.search.split("=")[2].split("&")[0];
+            var location = window.location.search.split("=")[3].split("&")[0];
+            var order = window.location.search.split("=")[4].split("&")[0];
+
             var obj = {};
             obj.VID = VID;
             obj.servicetypeQuerystring = servicetypeQuerystring;
+            obj.servicetype=servicetype;
+            obj.subservicetype=subservicetype;
+            obj.location=location;
+            obj.order=order;
             $.ajax({
                 type: "POST",
                 url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Product/Loadmore',
@@ -260,14 +269,14 @@
                 success: function (data) {
                     if (data.length >= 2) {
                         $.each(data, function (key, value) {
-                            $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. 570</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                            $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                             document.getElementById("hiddenlastrecord").value = value.Id;
                         });
                     }
                     else
                     {
                         $.each(data, function (key, value) {
-                            $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="~/DealInfo"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. 570</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                            $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                             document.getElementById("hiddenlastrecord").value = value.Id;
                         });
                         $("#LoadMore1").hide();

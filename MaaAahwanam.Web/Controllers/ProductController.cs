@@ -26,12 +26,12 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.subservicetype = servicetypelist;
             return View(Productlist);
         }
-        //public JsonResult Loadmore(string VID, string servicetypeQuerystring)
-        //{
-        //    ProductService productService = new ProductService();
-        //    List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, int.Parse(VID));
-        //    ViewBag.ServiceType = servicetypeQuerystring;
-        //    return Json(Productlist);
-        //}
+        public JsonResult Loadmore(string servicetypeQuerystring,string VID,string servicetype,string subservicetype,string location,string order)
+        {
+            ProductService productService = new ProductService();
+            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetype, int.Parse(VID), subservicetype, location, order);
+            ViewBag.ServiceType = servicetypeQuerystring;
+            return Json(Productlist);
+        }
     }
 }

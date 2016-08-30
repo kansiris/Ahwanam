@@ -48,6 +48,7 @@ namespace MaaAahwanam.Web.Controllers
             order.UpdatedBy = user.UserId;
             order.OrderedBy = user.UserId;
             order.UpdatedDate = DateTime.Now;
+            order.Status = "Active";
             order.PaymentId = payment_Orders.OrderID;
             order = orderService.SaveOrder(order);
 
@@ -64,6 +65,9 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.ServicePrice = orderRequest.TotalPrice;
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.VendorId = item.VendorId;
+                orderDetail.Status = "Active";
+                orderDetail.UpdatedDate = DateTime.Now;
+                orderDetail.UpdatedBy = user.UserId;
                 orderdetailsServices.SaveOrderDetail(orderDetail);
             }
             foreach(var item1 in orderRequest.Cartitems)
