@@ -13,8 +13,8 @@ namespace MaaAahwanam.Repository
     
     public partial class MaaAahwanam_Services_Bidding_Result
     {
-        public long Id { get; set; }
-        public string BusinessName { get; set; }
+        public long UserLoginId { get; set; }
+        public string FirstName { get; set; }
         public string VendorType { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
