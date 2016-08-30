@@ -23,11 +23,12 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(ServiceResponse serviceResponse)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            string message = serviceResponseService.SaveServiceResponse(serviceResponse);
             serviceResponse.ResponseBy = user.UserId;
-            serviceResponse.Status ="Active";
+            serviceResponse.Status = "Active";
             serviceResponse.UpdatedBy = user.UserId;
             serviceResponse.UpdatedDate = DateTime.Now;
+            string message = serviceResponseService.SaveServiceResponse(serviceResponse);
+            
             if (message == "Success")
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('Submitted Response');location.href='" + @Url.Action("Index", "VendorRBResponse", new { Rid = serviceResponse.RequestId }) + "'</script>");
