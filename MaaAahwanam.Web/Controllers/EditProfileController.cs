@@ -23,7 +23,7 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             UserDetail userDetail = userLoginDetailsService.GetUser((int)user.UserId);
             ViewBag.Type = user.UserType;      
-            return View();
+            return View(userDetail);
         }
         [HttpPost]
         public ActionResult Index(UserDetail userDetail)
