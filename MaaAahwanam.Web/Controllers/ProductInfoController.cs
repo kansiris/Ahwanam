@@ -131,7 +131,7 @@ namespace MaaAahwanam.Web.Controllers
             Payment_Orders payment_Orders = new Payment_Orders();
             payment_Orders.cardnumber = orderRequest.cardnumber;
             payment_Orders.CVV = orderRequest.CVV;
-            payment_Orders.paidamount = orderRequest.paidamount;
+            payment_Orders.paidamount = orderRequest.TotalPrice;
             payment_Orders.PaymentID = orderRequest.PaymentId;
             payment_Orders.Paiddate = orderRequest.Paiddate;
             payment_Orders.OrderID = order.OrderId;

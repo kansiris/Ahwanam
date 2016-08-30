@@ -32,14 +32,7 @@ namespace MaaAahwanam.Web.Controllers
 
            
 
-            Payment_orderServices payment_orderServices = new Payment_orderServices();
-            Payment_Orders payment_Orders = new Payment_Orders();
-            payment_Orders.cardnumber = orderRequest.cardnumber;
-            payment_Orders.CVV = orderRequest.CVV;
-            payment_Orders.PaymentID = orderRequest.PaymentId;
-            payment_Orders.Paiddate = orderRequest.Paiddate;
-            //payment_Orders.OrderID = order.OrderId;
-            payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
+            
 
             OrderService orderService = new OrderService();
             Order order = new Order();
@@ -49,8 +42,20 @@ namespace MaaAahwanam.Web.Controllers
             order.OrderedBy = user.UserId;
             order.UpdatedDate = DateTime.Now;
             order.Status = "Active";
-            order.PaymentId = payment_Orders.OrderID;
+            //order.PaymentId = payment_Orders.OrderID;
             order = orderService.SaveOrder(order);
+
+            Payment_orderServices payment_orderServices = new Payment_orderServices();
+            Payment_Orders payment_Orders = new Payment_Orders();
+            payment_Orders.cardnumber = orderRequest.cardnumber;
+            payment_Orders.CVV = orderRequest.CVV;
+            payment_Orders.PaymentID = orderRequest.PaymentId;
+            payment_Orders.Paiddate = orderRequest.Paiddate;
+            payment_Orders.paidamount = orderRequest.TotalPrice;
+            payment_Orders.OrderID = order.OrderId;
+            //payment_Orders.OrderID = order.OrderId;
+            payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
+
 
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
