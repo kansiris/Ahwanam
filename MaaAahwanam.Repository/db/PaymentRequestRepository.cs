@@ -21,5 +21,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Payments_Requests.Where(m => m.RequestID == id).ToList();
         }
+
+        public List<ServiceResponse> GetServiceResponse(long id)
+        {
+            return _dbContext.ServiceResponse.Where(m => m.RequestId == id).ToList();
+        }
     }
 }

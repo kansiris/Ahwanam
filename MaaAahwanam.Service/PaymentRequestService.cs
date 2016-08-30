@@ -16,5 +16,10 @@ namespace MaaAahwanam.Service
         {
             return paymentRequestRepository.GetPayments_Requests(id);
         }
-    }
+
+        public List<ServiceResponse> GetServiceResponse(long id)
+        {
+            return paymentRequestRepository.GetServiceResponse(id);
+        }
+     }
 }

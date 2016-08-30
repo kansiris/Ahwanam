@@ -92,8 +92,9 @@
                 </thead>
                 
                 <tbody>
-                    @if (ViewBag.service != null)
+                    @if (ViewBag.service.Count != 0)
                     {
+                        
                         foreach (var item in ViewBag.service)
                         {
                             <tr>
@@ -115,7 +116,12 @@
                             </tr>
                         }
                     }
-                    
+                    @if (ViewBag.service.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="7"><h4>No Data Available</h4></td>
+                        </tr>
+                    }
                 </tbody>
             </table>
             <div class="clear"></div>
@@ -291,3 +297,17 @@
             }
     }
 </script>
+
+@if (ViewBag.service.Count == 0)
+{
+    <script>
+        document.getElementById("btnpay").disabled=true;
+    </script>
+}
+@if (ViewBag.service.Count != 0)
+{
+    <script>
+        document.getElementById("btnpay").disabled=false;
+    </script>
+}
+
