@@ -22,7 +22,7 @@ namespace MaaAahwanam.Repository
         public string ContactNumber { get; set; }
         public string ServicType { get; set; }
         public string image { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal PerunitPrice { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
 }
