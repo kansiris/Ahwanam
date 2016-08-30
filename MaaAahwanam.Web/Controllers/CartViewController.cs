@@ -62,7 +62,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.PerunitPrice = item.PerunitPrice;
                 orderDetail.PaymentId = payment_Orders.PaymentID;
                 orderDetail.ServiceType = orderRequest.ServiceType;
-                orderDetail.ServicePrice = orderRequest.TotalPrice;
+                orderDetail.TotalPrice = orderRequest.TotalPrice;
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.VendorId = item.VendorId;
                 orderDetail.Status = "Active";
