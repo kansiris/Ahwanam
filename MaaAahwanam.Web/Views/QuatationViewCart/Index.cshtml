@@ -101,10 +101,9 @@
                                 <td>@(++i)</td>
                                 <td><a href="#quatation" onclick="displaypopup('@item.Description','@item.Preferences')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
                                 <td>
-                                    @if (item.UpdatedDate!=null)
+                                    @if (item.UpdatedDate != null)
                                     {
-                                        @item.UpdatedDate.ToShortDateString()
-                                    }
+                                        @item.UpdatedDate.ToShortDateString() }                                    }
                                     @if (item.UpdatedDate == null)
                                     {
                                         <p>NA</p>
@@ -277,14 +276,14 @@
             var url = window.location.href;
             
             var value = url.substring(url.lastIndexOf('=') + 1);
-            alert(value);
+
             var check = $('input[name=quatation]:checked').length;
 
             if (check == 0) {
                 alert("Select Quotation and Click On Pay")
             }
             if (check == 1) {
-                var jqxhr = $.post(url, function () {
+                var jqxhr = $.post(url, { command: "Pay" },function () {
                     window.location.href = "/QuatationViewCart/confirmation?id="+value;
                 })
                 

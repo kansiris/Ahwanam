@@ -25,7 +25,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             return View();
         }
-
+        
         [HttpPost]
         public ActionResult Index(string id, string command, CommentDetail commentDetail, Comment comment)
         {
@@ -67,7 +67,7 @@ namespace MaaAahwanam.Web.Controllers
                 ordersServiceRequest = dashBoardService.InsertNewOrderService(ordersServiceRequest);
                 pid = ordersServiceRequest.ResponseId;
                 //Payments_Requests record insertion
-                payments_Requests.RequestID = ordersServiceRequest.OrderId;
+                payments_Requests.RequestID = ordersServiceRequest.ResponseId;
                 payments_Requests.paidamount = ordersServiceRequest.TotalPrice;
                 payments_Requests.cardnumber = "2222 2222 2222 2222";
                 payments_Requests.CVV = "234";
