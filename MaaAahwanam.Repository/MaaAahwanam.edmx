@@ -112,9 +112,6 @@
           <FunctionImport Name="orderconfirmation" ReturnType="Collection(MaaAahwanamModel.orderconfirmation_Result)">
           <Parameter Name="OID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_AllOrders" ReturnType="Collection(MaaAahwanamModel.sp_AllOrders_Result)">
-          <Parameter Name="id" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
           <FunctionImport Name="sp_LeastBidRecord" ReturnType="Collection(MaaAahwanamModel.sp_LeastBidRecord_Result)">
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
@@ -142,10 +139,13 @@
           <Parameter Name="CommentId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
-            <Parameter Name="VID" Mode="In" Type="Int32" />
+          <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_Tickets" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Tickets_Result)">
-            <Parameter Name="TicketId" Mode="In" Type="Int64" />
+          <Parameter Name="TicketId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AllOrders" ReturnType="Collection(MaaAahwanamModel.sp_AllOrders_Result)">
+            <Parameter Name="id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -286,13 +286,6 @@
           <Property Type="String" Name="Landmark" Nullable="true" />
           <Property Type="Decimal" Name="PerunitPrice" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
-        <ComplexType Name="sp_AllOrders_Result">
-          <Property Type="Int64" Name="OrderId" Nullable="false" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="DateTime" Name="OrderDate" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="Status" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="SP_GetTestimonials_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" />
@@ -402,6 +395,13 @@
           <Property Type="String" Name="FirstName" Nullable="true" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="IssueType" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_AllOrders_Result">
+          <Property Type="Int64" Name="OrderId" Nullable="false" />
+          <Property Type="String" Name="servictype" Nullable="true" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Status" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -595,17 +595,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_AllOrders" FunctionName="MaaAahwanamModel.Store.sp_AllOrders">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_AllOrders_Result">
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GetTestimonials" FunctionName="MaaAahwanamModel.Store.SP_GetTestimonials">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.SP_GetTestimonials_Result">
@@ -761,6 +750,17 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_AllOrders" FunctionName="MaaAahwanamModel.Store.sp_AllOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_AllOrders_Result">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="servictype" ColumnName="servictype" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
