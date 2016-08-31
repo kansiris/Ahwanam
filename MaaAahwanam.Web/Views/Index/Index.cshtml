@@ -19,7 +19,7 @@
 <section>
     <div class="slider">
         @*@using (Html.BeginForm("Index", "AllServices", FormMethod.Post))
-        {*@
+            {*@
         <div class="ms-layer search-box" style="left:0; right:0; top:215px;">
             <div class="select-cats">
                 <select id="e2" style="width:100%">
@@ -36,9 +36,9 @@
             </div>
             <div class="searh-footer">
                 @*<div class="left">
-                    <input id="checkbox1" type="checkbox" name="checkbox" value="1" checked="checked">
-                    <label for="checkbox1">Show Deals Only</label>
-                </div>*@
+                        <input id="checkbox1" type="checkbox" name="checkbox" value="1" checked="checked">
+                        <label for="checkbox1">Show Deals Only</label>
+                    </div>*@
                 <!--<div class="right"> <a href="deals.html">View All <i class="ti-angle-double-right"></i></a> </div>-->
             </div>
         </div>
@@ -152,7 +152,7 @@
                                 <li><a href="~/product?par=Eventorganiser&sType=%&loc=Hyderabad&a=ASC"><i class="ti-angle-right"></i> Event organisers</a></li>
                                 <li><a href="~/product?par=BeautyService&sType=%&loc=Hyderabad&a=ASC"><i class="ti-angle-right"></i> Beauty Services</a></li>
                                 @*
-                                <li><a href="~/product?par=WeddingFavor"><i class="ti-angle-right"></i> Wedding Favors</a></li>*@
+                                    <li><a href="~/product?par=WeddingFavor"><i class="ti-angle-right"></i> Wedding Favors</a></li>*@
                                 <li><a href="~/product?par=Travel&sType=%&loc=Hyderabad&a=ASC"><i class="ti-angle-right"></i> Travel&Accomodation</a></li>
                                 <li><a href="~/product?par=Gift&sType=%&loc=Hyderabad&a=ASC"><i class="ti-angle-right"></i> Gifts</a></li>
                                 <li><a href="~/product?par=WeddingCollection&sType=%&loc=Hyderabad&a=ASC"><i class="ti-angle-right"></i> Wedding Collection </a></li>
@@ -168,173 +168,201 @@
                         @*Photographer Details*@
                         @if (ViewBag.PhotographersDetails.Count != 0)
                         {
-                        foreach (var PhDet in ViewBag.PhotographersDetails)
-                        {
-                        <div class="step2">
-                            <div class="deals-main">
-                                <div class="deal">
-                                    <div class="deal-thumb">
-                                        <a href="../ProductInfo?par=@PhDet.ServicType.Trim()&VID=@PhDet.Id">
-                                            <div class="zoomDiv">
-                                                @*<img src="~/vendorimages/Catering_13_1.jpg" />*@
-                                                <img data-src="../vendorimages/@PhDet.image" alt="thumb" src="blank.gif" class="lazy">
-                                                <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                            foreach (var PhDet in ViewBag.PhotographersDetails)
+                            {
+                                <div class="step2">
+                                    <div class="deals-main">
+                                        <div class="deal">
+                                            <div class="deal-thumb">
+                                                <a href="../ProductInfo?par=@PhDet.ServicType.Trim()&VID=@PhDet.Id">
+                                                    <div class="zoomDiv">
+                                                        @if (PhDet.image != null)
+                                                        {
+                                                            @*<img src="~/vendorimages/Catering_13_1.jpg" />*@
+                                                            <img data-src="../vendorimages/@PhDet.image" alt="thumb" src="blank.gif" class="lazy">
+                                                        }
+                                                        else if (PhDet.image == null)
+                                                        {
+                                                            <img src="~/noimages.png" alt="No Image" />
+                                                        }
+                                                        <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <div class="deal-details">
-                                        <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@PhDet.BusinessName</h4>
-                                        <div class="amount">
-                                            <span class="price">Rs. @PhDet.Cost</span> <span class="buy">
-                                                <a href="../ProductInfo?par=@PhDet.ServicType.Trim()&VID=@PhDet.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
-                                            </span>
-                                        </div>
-                                        <span style="color:#838383">@PhDet.Description</span>
-                                        <div class="deal-footer">
-                                            <ul>
-                                                <li><div class="rate" data-rate-value=5></div></li>
-                                                <li><i class="ti-comment-alt"></i> 1362</li>
-                                                <li><i class="ti-eye"></i> 1500</li>
-                                            </ul>
+                                            <div class="deal-details">
+                                                <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@PhDet.BusinessName</h4>
+                                                <div class="amount">
+                                                    <span class="price">Rs. @PhDet.Cost</span> <span class="buy">
+                                                        <a href="../ProductInfo?par=@PhDet.ServicType.Trim()&VID=@PhDet.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
+                                                    </span>
+                                                </div>
+                                                <span style="color:#838383">@PhDet.Description</span>
+                                                <div class="deal-footer">
+                                                    <ul>
+                                                        <li><div class="rate" data-rate-value=5></div></li>
+                                                        <li><i class="ti-comment-alt"></i> 1362</li>
+                                                        <li><i class="ti-eye"></i> 1500</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        }
+                            }
                         }
                         else
                         {
-                        <p>No photographers Yet</p>
+                            <p>No photographers Yet</p>
                         }
                     </div>
                     <div>
                         @*Tours and Travells*@
                         @if (ViewBag.ToursandTravels.Count != 0)
                         {
-                        foreach (var tnt in ViewBag.ToursandTravels)
-                        {
-                        <div class="step2">
-                            <div class="deals-main">
-                                <div class="deal">
-                                    <div class="deal-thumb">
-                                        <a href="../ProductInfo?par=@tnt.ServicType.Trim()&VID=@tnt.Id">
-                                            <div class="zoomDiv">
-                                                <img src="blank.gif" class="lazy" data-src="../vendorimages/@tnt.image" alt="thumb">
-                                                <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                            foreach (var tnt in ViewBag.ToursandTravels)
+                            {
+                                <div class="step2">
+                                    <div class="deals-main">
+                                        <div class="deal">
+                                            <div class="deal-thumb">
+                                                <a href="../ProductInfo?par=@tnt.ServicType.Trim()&VID=@tnt.Id">
+                                                    <div class="zoomDiv">
+                                                        @if (tnt.image != null)
+                                                        {
+                                                            <img src="blank.gif" class="lazy" data-src="../vendorimages/@tnt.image" alt="thumb">
+                                                        }
+                                                        else if (tnt.image == null)
+                                                        {
+                                                            <img src="~/noimages.png" alt="No Image" />
+                                                        }
+                                                        <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <div class="deal-details">
-                                        <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">Wedding Favors</h4>
-                                        <div class="amount">
-                                            <span class="price">Rs. @tnt.Cost</span> <span class="buy">
-                                                <a href="../ProductInfo?par=@tnt.ServicType.Trim()&VID=@tnt.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
-                                            </span>
-                                        </div>
-                                        <span style="color:#838383">@tnt.Description</span>
-                                        <div class="deal-footer">
-                                            <ul>
-                                                <li><div class="rate" data-rate-value=5></div></li>
-                                                <li><i class="ti-comment-alt"></i> 1362</li>
-                                                <li><i class="ti-eye"></i> 1500</li>
-                                            </ul>
+                                            <div class="deal-details">
+                                                <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@tnt.BusinessName</h4>
+                                                <div class="amount">
+                                                    <span class="price">Rs. @tnt.Cost</span> <span class="buy">
+                                                        <a href="../ProductInfo?par=@tnt.ServicType.Trim()&VID=@tnt.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
+                                                    </span>
+                                                </div>
+                                                <span style="color:#838383">@tnt.Description</span>
+                                                <div class="deal-footer">
+                                                    <ul>
+                                                        <li><div class="rate" data-rate-value=5></div></li>
+                                                        <li><i class="ti-comment-alt"></i> 1362</li>
+                                                        <li><i class="ti-eye"></i> 1500</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        }
+                            }
                         }
                         else
                         {
-                        <p>No Travels Yet</p>
+                            <p>No Travels Yet</p>
                         }
                     </div>
                     <div>
                         @*Decorators*@
                         @if (ViewBag.Decorators.Count != 0)
                         {
-                        foreach (var dec in ViewBag.Decorators)
-                        {
-                        <div class="step2">
-                            <div class="deals-main">
-                                <div class="deal">
-                                    <div class="deal-thumb">
-                                        <a href="../ProductInfo?par=@dec.ServicType.Trim()&VID=@dec.Id">
-                                            <div class="zoomDiv">
-                                                <img src="blank.gif" class="lazy" data-src="../vendorimages/@dec.image" alt="thumb">
-                                                <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                            foreach (var dec in ViewBag.Decorators)
+                            {
+                                <div class="step2">
+                                    <div class="deals-main">
+                                        <div class="deal">
+                                            <div class="deal-thumb">
+                                                <a href="../ProductInfo?par=@dec.ServicType.Trim()&VID=@dec.Id">
+                                                    <div class="zoomDiv">
+                                                        @if (dec.image != null)
+                                                        {
+                                                        <img src="blank.gif" class="lazy" data-src="../vendorimages/@dec.image" alt="thumb">
+                                                        }
+                                                        else if (dec.image == null)
+                                                        {
+                                                            <img src="~/noimages.png" alt="No Image" />
+                                                        }
+                                                            <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <div class="deal-details">
-                                        <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@dec.BusinessName</h4>
-                                        <div class="amount">
-                                            <span class="price">Rs. @dec.Cost</span> <span class="buy">
-                                                <a href="../ProductInfo?par=@dec.ServicType.Trim()&VID=@dec.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
-                                            </span>
-                                        </div>
-                                        <span style="color:#838383">@dec.Description</span>
-                                        <div class="deal-footer">
-                                            <ul>
-                                                <li><div class="rate" data-rate-value=5></div></li>
-                                                <li><i class="ti-comment-alt"></i> 1362</li>
-                                                <li><i class="ti-eye"></i> 1500</li>
-                                            </ul>
+                                            <div class="deal-details">
+                                                <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@dec.BusinessName</h4>
+                                                <div class="amount">
+                                                    <span class="price">Rs. @dec.Cost</span> <span class="buy">
+                                                        <a href="../ProductInfo?par=@dec.ServicType.Trim()&VID=@dec.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
+                                                    </span>
+                                                </div>
+                                                <span style="color:#838383">@dec.Description</span>
+                                                <div class="deal-footer">
+                                                    <ul>
+                                                        <li><div class="rate" data-rate-value=5></div></li>
+                                                        <li><i class="ti-comment-alt"></i> 1362</li>
+                                                        <li><i class="ti-eye"></i> 1500</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        }
+                            }
                         }
                         else
                         {
-                        <p>No Decorators Yet</p>
+                            <p>No Decorators Yet</p>
                         }
                     </div>
 
                     <div>
                         @if (ViewBag.Beautician.Count != 0)
                         {
-                        foreach (var dec1 in ViewBag.Beautician)
-                        {
-                        <div class="step2">
-                            <div class="deals-main">
-                                <div class="deal">
-                                    <div class="deal-thumb">
-                                        <a href="../ProductInfo?par=@dec1.ServicType.Trim()&VID=@dec1.Id">
-                                            <div class="zoomDiv">
-                                                <img src="blank.gif" class="lazy" data-src="../vendorimages/@dec1.image" alt="thumb">
-                                                <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                            foreach (var dec1 in ViewBag.Beautician)
+                            {
+                                <div class="step2">
+                                    <div class="deals-main">
+                                        <div class="deal">
+                                            <div class="deal-thumb">
+                                                <a href="../ProductInfo?par=@dec1.ServicType.Trim()&VID=@dec1.Id">
+                                                    <div class="zoomDiv">
+                                                        @if (dec1.image != null)
+                                                        {
+                                                        <img src="blank.gif" class="lazy" data-src="../vendorimages/@dec1.image" alt="thumb">
+                                                        }
+                                                        else if (dec1.image == null)
+                                                        {
+                                                            <img src="~/noimages.png" alt="No Image" />
+                                                        }
+                                                            <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <div class="deal-details">
-                                        <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@dec1.BusinessName</h4>
-                                        <div class="amount">
-                                            <span class="price">@dec1.Cost</span> <span class="buy">
-                                                <a href="../ProductInfo?par=@dec1.ServicType.Trim()&VID=@dec1.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
-                                            </span>
-                                        </div>
-                                        <span style="color:#838383">@dec1.Description</span>
-                                        <div class="deal-footer">
-                                            <ul>
-                                                <li><div class="rate" data-rate-value=5></div></li>
-                                                <li><i class="ti-comment-alt"></i> 1362</li>
-                                                <li><i class="ti-eye"></i> 1500</li>
-                                            </ul>
+                                            <div class="deal-details">
+                                                <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@dec1.BusinessName</h4>
+                                                <div class="amount">
+                                                    <span class="price">@dec1.Cost</span> <span class="buy">
+                                                        <a href="../ProductInfo?par=@dec1.ServicType.Trim()&VID=@dec1.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
+                                                    </span>
+                                                </div>
+                                                <span style="color:#838383">@dec1.Description</span>
+                                                <div class="deal-footer">
+                                                    <ul>
+                                                        <li><div class="rate" data-rate-value=5></div></li>
+                                                        <li><i class="ti-comment-alt"></i> 1362</li>
+                                                        <li><i class="ti-eye"></i> 1500</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        }
+                            }
                         }
                         else
                         {
-                        <p>No Beauticians Yet</p>
+                            <p>No Beauticians Yet</p>
                         }
                     </div>
                 </div>
@@ -387,7 +415,7 @@
             }
         </div>
     </div>
-        
+
 </section>
 <!-- // testimonials -->
 
@@ -414,10 +442,10 @@
     </div>
 </section>
 @*<div class="ad">
-    <div class="pageWidth">
-        <div class="ad_728"><img src="../CSSWeb/images/ad_728_2.jpg" alt="advertise"></div>
-    </div>
-</div>*@
+        <div class="pageWidth">
+            <div class="ad_728"><img src="../CSSWeb/images/ad_728_2.jpg" alt="advertise"></div>
+        </div>
+    </div>*@
 
 <!-- Events -->
 <section>
@@ -435,93 +463,93 @@
                     <div>
                         @if (ViewBag.UpcomingEvents != null)
                         {
-                        foreach (var Upcomingevents in ViewBag.UpcomingEvents)
-                        {
-                        <a href="#">
-                            <div class="home_events_main no-margin">
-                                <div class="event-thumb"><img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
-                                <div class="event-details">
-                                    <h2>@Upcomingevents.Title</h2>
-                                    <p class="event-desc">@Upcomingevents.Description.ToString().Substring(0, 5)</p>
-                                    <p><i class="ti-location-pin"></i>@Upcomingevents.location</p>
-                                    <p><i class="ti-user"></i>@Upcomingevents.person</p>
-                                    <p><i class="ti-mobile"></i>@Upcomingevents.phone</p>
-                                    <p><i class="ti-calendar"></i>@Upcomingevents.Eventstartdate am</p>
-                                    <p>Rs.@Html.Encode(string.Format("{0:2}", Upcomingevents.price))</p>
-                                </div>
-                            </div>
-                        </a>
-                        }
+                            foreach (var Upcomingevents in ViewBag.UpcomingEvents)
+                            {
+                                <a href="#">
+                                    <div class="home_events_main no-margin">
+                                        <div class="event-thumb"><img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
+                                        <div class="event-details">
+                                            <h2>@Upcomingevents.Title</h2>
+                                            <p class="event-desc">@Upcomingevents.Description.ToString().Substring(0, 5)</p>
+                                            <p><i class="ti-location-pin"></i>@Upcomingevents.location</p>
+                                            <p><i class="ti-user"></i>@Upcomingevents.person</p>
+                                            <p><i class="ti-mobile"></i>@Upcomingevents.phone</p>
+                                            <p><i class="ti-calendar"></i>@Upcomingevents.Eventstartdate am</p>
+                                            <p>Rs.@Html.Encode(string.Format("{0:2}", Upcomingevents.price))</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
                         }
                         else
                         {
-                        <div class="home_events_main no-margin">
-                            <div class="event-details">
-                                <h2>No UpcomingEvents found</h2>
+                            <div class="home_events_main no-margin">
+                                <div class="event-details">
+                                    <h2>No UpcomingEvents found</h2>
+                                </div>
                             </div>
-                        </div>
                         }
                     </div>
                     <!-- HealthTips -->
                     <div>
                         @if (ViewBag.HealthTips != null)
                         {
-                        foreach (var HealthTips in ViewBag.HealthTips)
-                        {
-                        <a href="#">
-                            <div class="home_events_main no-margin">
-                                <div class="event-thumb"><img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
-                                <div class="event-details">
-                                    <h2>@HealthTips.Title</h2>
-                                    <p class="event-desc">@HealthTips.Description.ToString().Substring(0, 5)</p>
-                                    <p><i class="ti-location-pin"></i>@HealthTips.location</p>
-                                    <p><i class="ti-user"></i>@HealthTips.person</p>
-                                    <p><i class="ti-mobile"></i>@HealthTips.phone</p>
-                                    <p><i class="ti-calendar"></i>@HealthTips.Eventstartdate am</p>
-                                    <p>Rs.@Html.Encode(string.Format("{0:2}", HealthTips.price))</p>
-                                </div>
-                            </div>
-                        </a>
-                        }
+                            foreach (var HealthTips in ViewBag.HealthTips)
+                            {
+                                <a href="#">
+                                    <div class="home_events_main no-margin">
+                                        <div class="event-thumb"><img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
+                                        <div class="event-details">
+                                            <h2>@HealthTips.Title</h2>
+                                            <p class="event-desc">@HealthTips.Description.ToString().Substring(0, 5)</p>
+                                            <p><i class="ti-location-pin"></i>@HealthTips.location</p>
+                                            <p><i class="ti-user"></i>@HealthTips.person</p>
+                                            <p><i class="ti-mobile"></i>@HealthTips.phone</p>
+                                            <p><i class="ti-calendar"></i>@HealthTips.Eventstartdate am</p>
+                                            <p>Rs.@Html.Encode(string.Format("{0:2}", HealthTips.price))</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
                         }
                         else
                         {
-                        <div class="home_events_main no-margin">
-                            <div class="event-details">
-                                <h2>No HealthTips Found</h2>
+                            <div class="home_events_main no-margin">
+                                <div class="event-details">
+                                    <h2>No HealthTips Found</h2>
+                                </div>
                             </div>
-                        </div>
                         }
                     </div>
                     <!-- BeautyTips -->
                     <div>
                         @if (ViewBag.BeautyTips != null)
                         {
-                        foreach (var BeautyTips in ViewBag.BeautyTips)
-                        {
-                        <a href="#">
-                            <div class="home_events_main no-margin">
-                                <div class="event-thumb"><img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
-                                <div class="event-details">
-                                    <h2>@BeautyTips.Title</h2>
-                                    <p class="event-desc">@BeautyTips.Description.ToString().Substring(0, 5)</p>
-                                    <p><i class="ti-location-pin"></i>@BeautyTips.location</p>
-                                    <p><i class="ti-user"></i>@BeautyTips.person</p>
-                                    <p><i class="ti-mobile"></i>@BeautyTips.phone</p>
-                                    <p><i class="ti-calendar"></i>@BeautyTips.Eventstartdate am</p>
-                                    <p>Rs.@Html.Encode(string.Format("{0:2}", BeautyTips.price))</p>
-                                </div>
-                            </div>
-                        </a>
-                        }
+                            foreach (var BeautyTips in ViewBag.BeautyTips)
+                            {
+                                <a href="#">
+                                    <div class="home_events_main no-margin">
+                                        <div class="event-thumb"><img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
+                                        <div class="event-details">
+                                            <h2>@BeautyTips.Title</h2>
+                                            <p class="event-desc">@BeautyTips.Description.ToString().Substring(0, 5)</p>
+                                            <p><i class="ti-location-pin"></i>@BeautyTips.location</p>
+                                            <p><i class="ti-user"></i>@BeautyTips.person</p>
+                                            <p><i class="ti-mobile"></i>@BeautyTips.phone</p>
+                                            <p><i class="ti-calendar"></i>@BeautyTips.Eventstartdate am</p>
+                                            <p>Rs.@Html.Encode(string.Format("{0:2}", BeautyTips.price))</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
                         }
                         else
                         {
-                        <div class="home_events_main no-margin">
-                            <div class="event-details">
-                                <h2>No BeautyTips found</h2>
+                            <div class="home_events_main no-margin">
+                                <div class="event-details">
+                                    <h2>No BeautyTips found</h2>
+                                </div>
                             </div>
-                        </div>
                         }
                     </div>
                 </div>
