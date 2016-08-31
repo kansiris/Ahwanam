@@ -140,15 +140,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
         }
     
-        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
-        }
-    
         public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetTestimonials_Result>("SP_GetTestimonials");
@@ -247,6 +238,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("TicketId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Tickets_Result>("MaaAahwanam_Others_Tickets", ticketIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     }
 }
