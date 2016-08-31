@@ -289,8 +289,17 @@
                 alert("Select Quotation and Click On Pay")
             }
             if (check == 1) {
-                var jqxhr = $.post(url, { command: "Pay" },function () {
-                    window.location.href = "/QuatationViewCart/confirmation?id="+value;
+                var jqxhr = $.post(url, { command: "Pay" }, function () {
+                    if (value != url) {
+                        alert(value);
+                        window.location.href = "/QuatationViewCart/confirmation?id=" + value;
+                    }
+                    if (value == url) {
+                        var value1 = url.substring(url.lastIndexOf('/') + 1);
+                        alert(value1);
+                        window.location.href = "/QuatationViewCart/confirmation?id=" + value1;
+                    }
+
                 })
                 
 

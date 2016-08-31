@@ -1,7 +1,9 @@
 ﻿@model MaaAahwanam.Models.CommentDetail
+@using MaaAahwanam.Web.Custom
 @{
     ViewBag.Title = "Comment Details";
     Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
+    var user = (CustomPrincipal)HttpContext.Current.User;
 }
 @section header{
     <!-- PAGE LEVEL STYLES -->
@@ -34,7 +36,7 @@
                 <b>Status:</b> @item.Status
             </div>
             <div class="col-lg-6">
-                <b>Created By :</b> @item.BusinessName
+                <b>User Name :</b> @item.FirstName
             </div>
             <div class="col-lg-6">
                 <p>
@@ -81,10 +83,20 @@
                 <div class="panel panel-primary">
                     @if (ViewBag.comment.Count != 0)
                     {
+                       
                         foreach (var item in ViewBag.comment)
                         {
                             <div class="panel-heading" style="height:35px">
-                                <div id="div-left" style="float:left">Msg By:Admin</div>
+                                
+                                @if (item.UserLoginId == user.UserId)
+                                {
+                                    <div id="div-left" style="float:left">Msg By: Admin </div >
+                                }
+                                else
+                                {
+                                    <div id="div-left" style="float:left">Msg By: User </div>
+                                }
+
                                 <div id="div-right" style="float:right">Date:@item.UpdatedDate</div>
                             </div>
                             <div class="panel-body">
@@ -95,7 +107,7 @@
                     else
                     {
                         <div class="panel-heading" style="height:35px">
-                            <p align="left"><b>Not Replied Yet </b></p>
+                            <p align="left"><b>Not Replied Yet!!! </b></p>
                         </div>
                     }
                 </div>

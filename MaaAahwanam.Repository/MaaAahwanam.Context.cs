@@ -37,15 +37,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
         }
     
-        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
-        }
-    
         public virtual ObjectResult<geteventsandtipsimages_Result> geteventsandtipsimages()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages");
@@ -112,15 +103,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_AllRegisteredUsersDetails_Result>("MaaAahwanam_Others_AllRegisteredUsersDetails");
         }
     
-        public virtual ObjectResult<MaaAahwanam_Others_Comments_Result> MaaAahwanam_Others_Comments(Nullable<long> commentId)
-        {
-            var commentIdParameter = commentId.HasValue ?
-                new ObjectParameter("CommentId", commentId) :
-                new ObjectParameter("CommentId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Comments_Result>("MaaAahwanam_Others_Comments", commentIdParameter);
-        }
-    
         public virtual ObjectResult<MaaAahwanam_Others_RegisteredUsers_Result> MaaAahwanam_Others_RegisteredUsers()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_RegisteredUsers_Result>("MaaAahwanam_Others_RegisteredUsers");
@@ -147,24 +129,6 @@ namespace MaaAahwanam.Repository
         public virtual ObjectResult<MaaAahwanam_Others_Testimonials_Result> MaaAahwanam_Others_Testimonials()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Testimonials_Result>("MaaAahwanam_Others_Testimonials");
-        }
-    
-        public virtual ObjectResult<MaaAahwanam_Others_Tickets_Result> MaaAahwanam_Others_Tickets(Nullable<long> ticketId)
-        {
-            var ticketIdParameter = ticketId.HasValue ?
-                new ObjectParameter("TicketId", ticketId) :
-                new ObjectParameter("TicketId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Tickets_Result>("MaaAahwanam_Others_Tickets", ticketIdParameter);
-        }
-    
-        public virtual ObjectResult<MaaAahwanam_Services_Bidding_Result> MaaAahwanam_Services_Bidding(Nullable<long> requestId)
-        {
-            var requestIdParameter = requestId.HasValue ?
-                new ObjectParameter("RequestId", requestId) :
-                new ObjectParameter("RequestId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Services_Bidding_Result>("MaaAahwanam_Services_Bidding", requestIdParameter);
         }
     
         public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
@@ -197,15 +161,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("RequestId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LeastBidRecord_Result>("sp_LeastBidRecord", requestIdParameter);
-        }
-    
-        public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
-        {
-            var orderByParameter = orderBy.HasValue ?
-                new ObjectParameter("OrderBy", orderBy) :
-                new ObjectParameter("OrderBy", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
         }
     
         public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
@@ -247,6 +202,51 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_vendordatesbooked_Result>("SP_vendordatesbooked", vIDParameter);
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Services_Bidding_Result> MaaAahwanam_Services_Bidding(Nullable<long> requestId)
+        {
+            var requestIdParameter = requestId.HasValue ?
+                new ObjectParameter("RequestId", requestId) :
+                new ObjectParameter("RequestId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Services_Bidding_Result>("MaaAahwanam_Services_Bidding", requestIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
+        {
+            var orderByParameter = orderBy.HasValue ?
+                new ObjectParameter("OrderBy", orderBy) :
+                new ObjectParameter("OrderBy", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Others_Comments_Result> MaaAahwanam_Others_Comments(Nullable<long> commentId)
+        {
+            var commentIdParameter = commentId.HasValue ?
+                new ObjectParameter("CommentId", commentId) :
+                new ObjectParameter("CommentId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Comments_Result>("MaaAahwanam_Others_Comments", commentIdParameter);
+        }
+    
+        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Others_Tickets_Result> MaaAahwanam_Others_Tickets(Nullable<long> ticketId)
+        {
+            var ticketIdParameter = ticketId.HasValue ?
+                new ObjectParameter("TicketId", ticketId) :
+                new ObjectParameter("TicketId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Tickets_Result>("MaaAahwanam_Others_Tickets", ticketIdParameter);
         }
     }
 }
