@@ -15,7 +15,7 @@ namespace MaaAahwanam.Repository
     {
         public long CommentId { get; set; }
         public string Status { get; set; }
-        public string BusinessName { get; set; }
+        public string FirstName { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
 }
