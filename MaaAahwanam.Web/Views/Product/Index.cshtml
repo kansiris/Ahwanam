@@ -161,7 +161,10 @@
                                                     <div class="deal-details">
                                                         <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@item.BusinessName</h4>
                                                         <div class="amount">
-                                                            <span class="price">Rs. @item.Cost</span> <span class="buy">
+                                                            @if (@item.ServicType.Trim() != "Venue" && @item.ServicType.Trim() != "Catering" && @item.ServicType.Trim() != "InvitationCard")
+                                                            {
+                                                                <span class="price">Rs. @item.Cost</span>
+                                                            } <span class="buy">
                                                                 <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
                                                             </span>
                                                         </div>
@@ -181,7 +184,7 @@
                                     <input type="hidden" id="hiddenlastrecord" value="@Model.Last().Id" />
                                     <input type="hidden" id="hiddenlastrecord2" value="@Model.Last().ServicType" />
                                 }
-                                else if(Model.Count == 0)
+                                else if (Model.Count == 0)
                                 {
                                     <h3>No Vendors found</h3>
                                 }
@@ -230,7 +233,7 @@
             document.getElementById("txtlocation").value= window.location.search.split("=")[3].split("&")[0];
             if(window.location.search.split("=")[4].split("&")[0]=='DESC')
             {
-               // alert('DESC');
+                // alert('DESC');
                 document.getElementById("rblDESC").checked = true;
             }
             else if(window.location.search.split("=")[4].split("&")[0]=='ASC')
