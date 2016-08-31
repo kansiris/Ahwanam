@@ -11,10 +11,9 @@ namespace MaaAahwanam.Web.Controllers
     {
         //
         // GET: /QuoatationConfirm/
-        [HttpGet]
         public ActionResult Index(ServiceRequest serviceRequest)
         {
             return View(serviceRequest);
         }
-	}
+    }
 }

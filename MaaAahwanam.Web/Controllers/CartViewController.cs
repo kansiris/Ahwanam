@@ -30,10 +30,6 @@ namespace MaaAahwanam.Web.Controllers
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
 
-           
-
-            
-
             OrderService orderService = new OrderService();
             Order order = new Order();
             order.TotalPrice = orderRequest.TotalPrice;
@@ -44,7 +40,11 @@ namespace MaaAahwanam.Web.Controllers
             order.Status = "Active";
             //order.PaymentId = payment_Orders.OrderID;
             order = orderService.SaveOrder(order);
-
+            EventsService eventsService = new EventsService();
+            foreach (var item2 in orderRequest.Cartitems)
+            {
+                eventsService.updateeventid(item2.CartId, order.OrderId);
+            }
             Payment_orderServices payment_orderServices = new Payment_orderServices();
             Payment_Orders payment_Orders = new Payment_Orders();
             payment_Orders.cardnumber = orderRequest.cardnumber;
@@ -55,7 +55,6 @@ namespace MaaAahwanam.Web.Controllers
             payment_Orders.OrderID = order.OrderId;
             //payment_Orders.OrderID = order.OrderId;
             payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
-
 
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();

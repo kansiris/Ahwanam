@@ -10,29 +10,21 @@ namespace MaaAahwanam.Service
 {
     public class EventsService
     {
+        EventInformationRepository eventInformationRepository = new EventInformationRepository();
+
         public int EventInformationCount()
         {
-            EventInformationRepository eventInformationRepository = new EventInformationRepository();
             int l1 = eventInformationRepository.EventInformationList().Count();
             return l1;
         }        
-        public string SaveEventinformation(EventInformation eventInformation)
+        public EventInformation SaveEventinformation(EventInformation eventInformation)
         {
-            string message = "";
-            EventInformationRepository eventInformationRepository = new EventInformationRepository();
             eventInformation=eventInformationRepository.PostEventDetails(eventInformation);
-            if (eventInformation  != null)
-            {
-                if (eventInformation.EventId != null)
-                    message = "Success";
-                else
-                    message = "Failed";
-            }
-            else
-            {
-                message = "Failed";
-            }
-            return message;
+            return eventInformation;
+        }
+        public void updateeventid(long CartId, long OrderID)
+        {
+            eventInformationRepository.updateeventid(CartId, OrderID);
         }
     }
 }

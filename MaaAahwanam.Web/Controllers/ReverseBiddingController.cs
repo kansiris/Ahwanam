@@ -27,7 +27,7 @@ namespace MaaAahwanam.Web.Controllers
             serviceRequest.Status = "Due";
             serviceRequest.UpdatedBy = user.UserId;
             serviceRequest =serviceRequestService.SaveService(serviceRequest);
-            return RedirectToAction("Index", "BiddingConformation",serviceRequest);
+            return RedirectToAction("Index", "ReverseBiddingConfirmation", serviceRequest);
         }
 
         public JsonResult Vendorlist(string selectedservice)

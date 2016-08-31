@@ -72,6 +72,10 @@ namespace MaaAahwanam.Web.Controllers
             eventInformation.City = orderRequest.City;
             eventInformation.vendorid = orderRequest.VendorId;
             eventInformation.CartId = cartItem.CartId;
+
+            EventsService eventsService = new EventsService();
+            eventInformation = eventsService.SaveEventinformation(eventInformation);
+
             EventDate eventDate = new EventDate();
             foreach (var item in orderRequest.EventDates)
             {
@@ -83,39 +87,15 @@ namespace MaaAahwanam.Web.Controllers
                 eventDate.EventId = eventInformation.EventId;
             }
 
-            EventsService eventsService = new EventsService();
-            string mesaage1 = eventsService.SaveEventinformation(eventInformation);
+            
             EventDatesServices eventDatesServices = new EventDatesServices();
             string message3 = eventDatesServices.SaveEventDates(eventDate);
-            return Json(mesaage1);
+            return Json(message3);
         }
 
         public JsonResult Buynow(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
-            EventInformation eventInformation = new EventInformation();
-            eventInformation.EventName = orderRequest.EventName;
-            eventInformation.Email = orderRequest.Email;
-            eventInformation.Address = orderRequest.Address;
-            eventInformation.Location = orderRequest.Location;
-            eventInformation.Phone = orderRequest.Phone;
-            eventInformation.PostalCode = orderRequest.PostalCode;
-            eventInformation.State = orderRequest.State;
-            eventInformation.City = orderRequest.City;
-
-            EventDatesServices eventDatesServices = new EventDatesServices();
-            EventDate eventDate = new EventDate();
-            foreach (var item in orderRequest.EventDates)
-            {
-                eventDate.StartDate = item.StartDate;
-                eventDate.StartTime = item.StartTime;
-                eventDate.EndDate = item.EndDate;
-                eventDate.EndTime = item.EndTime;
-                string message3 = eventDatesServices.SaveEventDates(eventDate);
-            }
-            EventsService eventsService = new EventsService();
-            string mesaage1 = eventsService.SaveEventinformation(eventInformation);
 
             OrderService orderService = new OrderService();
             Order order = new Order();
@@ -150,6 +130,33 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.UpdatedDate = DateTime.Now;
             orderDetail.UpdatedBy = user.UserId;
             orderdetailsServices.SaveOrderDetail(orderDetail);
+
+
+            EventInformation eventInformation = new EventInformation();
+            eventInformation.EventName = orderRequest.EventName;
+            eventInformation.Email = orderRequest.Email;
+            eventInformation.Address = orderRequest.Address;
+            eventInformation.Location = orderRequest.Location;
+            eventInformation.Phone = orderRequest.Phone;
+            eventInformation.PostalCode = orderRequest.PostalCode;
+            eventInformation.State = orderRequest.State;
+            eventInformation.City = orderRequest.City;
+            eventInformation.OrderId = order.OrderId;
+
+            EventsService eventsService = new EventsService();
+            eventInformation = eventsService.SaveEventinformation(eventInformation);
+
+            EventDatesServices eventDatesServices = new EventDatesServices();
+            EventDate eventDate = new EventDate();
+            foreach (var item in orderRequest.EventDates)
+            {
+                eventDate.StartDate = item.StartDate;
+                eventDate.StartTime = item.StartTime;
+                eventDate.EndDate = item.EndDate;
+                eventDate.EndTime = item.EndTime;
+                eventDate.EventId = eventInformation.EventId;
+                string message3 = eventDatesServices.SaveEventDates(eventDate);
+            }
 
             return Json(orderDetail.OrderId);
         }
