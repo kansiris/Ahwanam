@@ -15,8 +15,8 @@ namespace MaaAahwanam.Repository
     {
         public long TicketId { get; set; }
         public string Status { get; set; }
-        public string BusinessName { get; set; }
+        public string FirstName { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string ServicType { get; set; }
+        public string IssueType { get; set; }
     }
 }

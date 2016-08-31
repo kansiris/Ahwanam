@@ -82,9 +82,6 @@
           <FunctionImport Name="AllVendorList" ReturnType="Collection(MaaAahwanamModel.AllVendorList_Result)">
           <Parameter Name="ServicType" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
-          <Parameter Name="VID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="geteventsandtipsimages" ReturnType="Collection(MaaAahwanamModel.geteventsandtipsimages_Result)" />
           <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
             <Parameter Name="nType" Mode="In" Type="String" />
@@ -104,9 +101,6 @@
           <Parameter Name="OrderNo" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_AllRegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_AllRegisteredUsersDetails_Result)" />
-          <FunctionImport Name="MaaAahwanam_Others_Comments" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Comments_Result)">
-          <Parameter Name="CommentId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsers" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsers_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsersDetails_Result)">
           <Parameter Name="UserLoginId" Mode="In" Type="Int64" />
@@ -115,9 +109,6 @@
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_Testimonials" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Testimonials_Result)" />
-          <FunctionImport Name="MaaAahwanam_Others_Tickets" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Tickets_Result)">
-          <Parameter Name="TicketId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="orderconfirmation" ReturnType="Collection(MaaAahwanamModel.orderconfirmation_Result)">
           <Parameter Name="OID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -145,7 +136,16 @@
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_OrderDetails" ReturnType="Collection(MaaAahwanamModel.sp_OrderDetails_Result)">
-            <Parameter Name="OrderBy" Mode="In" Type="Int64" />
+          <Parameter Name="OrderBy" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="MaaAahwanam_Others_Comments" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Comments_Result)">
+          <Parameter Name="CommentId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
+            <Parameter Name="VID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MaaAahwanam_Others_Tickets" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Tickets_Result)">
+            <Parameter Name="TicketId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -160,22 +160,6 @@
           <Property Type="String" Name="UnitPrice" Nullable="true" />
           <Property Type="String" Name="status" Nullable="true" />
           <Property Type="String" Name="VenueType" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetCartItems_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="Landmark" Nullable="true" />
-          <Property Type="String" Name="ContactNumber" Nullable="true" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="Int64" Name="CartId" Nullable="false" />
-          <Property Type="String" Name="image" Nullable="true" />
-          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="attribute" Nullable="true" />
-          <Property Type="Int32" Name="Quantity" Nullable="false" />
-          <Property Type="Decimal" Name="Perunitprice" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="geteventsandtipsimages_Result">
           <Property Type="Int64" Name="EventId" Nullable="false" />
@@ -252,12 +236,6 @@
           <Property Type="Int64" Name="UserDetailId" Nullable="false" />
           <Property Type="String" Name="UserPhone" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="MaaAahwanam_Others_Comments_Result">
-          <Property Type="Int64" Name="CommentId" Nullable="false" />
-          <Property Type="String" Name="Status" Nullable="true" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-        </ComplexType>
         <ComplexType Name="MaaAahwanam_Others_RegisteredUsers_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
           <Property Type="String" Name="FirstName" Nullable="true" />
@@ -301,13 +279,6 @@
           <Property Type="String" Name="Description" Nullable="true" />
           <Property Type="String" Name="Email" Nullable="true" />
           <Property Type="String" Name="Status" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="MaaAahwanam_Others_Tickets_Result">
-          <Property Type="Int64" Name="TicketId" Nullable="false" />
-          <Property Type="String" Name="Status" Nullable="true" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
         </ComplexType>
         <ComplexType Name="orderconfirmation_Result">
           <Property Type="String" Name="Description" Nullable="true" />
@@ -400,6 +371,38 @@
           <Property Type="Decimal" Name="PerunitPrice" Nullable="false" Precision="18" Scale="2" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
         </ComplexType>
+        <ComplexType Name="MaaAahwanam_Others_Comments_Result">
+          <Property Type="Int64" Name="CommentId" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetCartItems_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="Int64" Name="CartId" Nullable="false" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="attribute" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Decimal" Name="Perunitprice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="eventstartdate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="eventid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="MaaAahwanam_Others_Tickets_Result">
+          <Property Type="Int64" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IssueType" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -420,26 +423,6 @@
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="VenueType" ColumnName="VenueType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCartItems" FunctionName="MaaAahwanamModel.Store.GetCartItems">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetCartItems_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="CartId" ColumnName="CartId" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="attribute" ColumnName="attribute" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Perunitprice" ColumnName="Perunitprice" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -542,16 +525,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_Comments" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_Comments">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_Comments_Result">
-                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_RegisteredUsers" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_RegisteredUsers">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsers_Result">
@@ -609,17 +582,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_Tickets" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_Tickets">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_Tickets_Result">
-                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -755,6 +717,50 @@
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="PerunitPrice" ColumnName="PerunitPrice" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_Comments" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_Comments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_Comments_Result">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCartItems" FunctionName="MaaAahwanamModel.Store.GetCartItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetCartItems_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="attribute" ColumnName="attribute" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Perunitprice" ColumnName="Perunitprice" />
+                <ScalarProperty Name="eventstartdate" ColumnName="eventstartdate" />
+                <ScalarProperty Name="eventenddate" ColumnName="eventenddate" />
+                <ScalarProperty Name="eventid" ColumnName="eventid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_Tickets" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_Tickets">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_Tickets_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
