@@ -99,10 +99,10 @@ namespace MaaAahwanam.Web.Controllers
 
             OrderService orderService = new OrderService();
             Order order = new Order();
-            order.TotalPrice = orderRequest.TotalPrice;
+            order.TotalPrice = Convert.ToDecimal(orderRequest.TotalPrice);
             order.OrderDate = DateTime.Now;
-            order.UpdatedBy = user.UserId;
-            order.OrderedBy = user.UserId;
+            order.UpdatedBy = (Int64)user.UserId;
+            order.OrderedBy = (Int64)user.UserId;
             order.UpdatedDate = DateTime.Now;
             order.Status = "Active";
             order = orderService.SaveOrder(order);
