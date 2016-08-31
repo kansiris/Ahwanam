@@ -44,7 +44,7 @@
                                     <tr>
                                         <th style="width:25%">Item Details</th>
                                         <th style="width:24%">Vendor Details</th>
-                                        <th style="width:26%">Event Date/Time</th>
+                                        <th style="width:26%">Event start & End Date</th>
                                         <th style="width:15%">Price</th>
                                         <th style="width:10%"></th>
                                     </tr>
@@ -58,6 +58,9 @@
                                             <tr class="item">
                                                 <td style="display:none">
                                                     <span id="cid @j">@item.CartId</span>
+                                                </td>
+                                                <td style="display:none">
+                                                    <span id="eid @j">@item.eventid</span>
                                                 </td>
                                                 <td style="display:none">
                                                     <span id="tid @j">@item.Id</span>
@@ -90,7 +93,8 @@
                                                 <td>
                                                     <div class="event-date-time">
                                                         <div class="event-dates">
-                                                            <p>11/12/2015  9:30 AM</p>
+                                                            <p>Event Start Date : @item.eventstartdate.ToString("dd MMM yyyy")<br/> Event End Date&nbsp;&nbsp;:&nbsp;@item.eventenddate.ToString("dd MMM yyyy")
+                                                            </p>
                                                         </div>
 
                                                     </div>
@@ -298,7 +302,7 @@
                                 @*<h5>Advance Amount &nbsp;&nbsp;:&nbsp;&nbsp;Rs. 650.00</h5>*@
                             </div>
                             <div class="pay-btn btn-right">
-                                <button class="btn btn-big btn-orange" onclick="window.location.href='/Deals/Index';"> Add New Deal</button>
+                                <button class="btn btn-big btn-orange" onclick="window.location.href = '../AllServices';"> Add New Deal</button>
                                 <button type="button" name="submit" class="btn btn-big btn-green" value="submit" onclick="s()"> Pay Advance</button>
                                 @*<button type="button" name="submit" class="btn btn-big btn-green float-right" value="submit" id="lnkproceedtonext">Submit <i class="ti-angle-double-right"></i></button>*@
                                 @*<button class="btn btn-big btn-green" onclick="window.location.href='/Payment/Index';"> Pay Advance</button>*@
@@ -334,6 +338,14 @@
             item["VendorId"] = tid;
             OrderDetails.push(item);
         }
+        eventids = [];
+        for (i = 1; i <= tlength; i++)
+        {
+            var eids = document.getElementById('eid ' + i).innerHTML;
+            items2 = {};
+            items2["EventId"] = eids;
+            eventids.push(items2);
+        }
 
         cartlist = [];
         for (i = 1; i <= tlength; i++)
@@ -363,6 +375,7 @@
 
         var orderRequest = {};
         orderRequest.OrderDetail = OrderDetails;
+        orderRequest.Eventinformation = eventids;
         orderRequest.TotalPrice = ttotal;
         orderRequest.Cartitems = cartlist;
         orderRequest.paidamount = "100.50";

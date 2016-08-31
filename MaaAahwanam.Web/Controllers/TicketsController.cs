@@ -33,6 +33,7 @@ namespace MaaAahwanam.Web.Controllers
             issueTicket.Status = "Active";
             issueTicket.UpdatedBy =user.UserId;
             issueTicket.UpdatedDate =DateTime.Now;
+            issueTicket.UserLoginId = user.UserId;
             string status = ticketsServices.Insertissueticket(issueTicket);
             if (status == "Success")
             {

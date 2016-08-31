@@ -22,6 +22,7 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedDate { get; set; }
         public string Status { get; set; }
         public List<EventDate> EventDates { get; set; }
+        public List<EventInformation> Eventinformation { get; set; }
 
         public List<OrderDetail> OrderDetail { get; set; }
         public long OrderedBy { get; set; }

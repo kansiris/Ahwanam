@@ -21,5 +21,11 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return eventInformation;
         }
+        public void updateeventid(long CartId, long OrderID)
+        {
+            var list = _dbContext.EventInformation.Where(m => m.CartId == CartId).FirstOrDefault();
+            list.OrderId = OrderID;
+            _dbContext.SaveChanges();
+        }
     }
 }
