@@ -788,11 +788,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 {
                     string fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + src));
                     System.IO.File.Delete(fileName);
-                    return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='" + @Url.Action("Entertainment", "createvendor", new { id = id, vid = vendorid }) + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='" + @Url.Action("EventOrganisers", "createvendor", new { id = id, vid = vendorid }) + "'</script>");
                 }
                 else
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='" + @Url.Action("Entertainment", "createvendor", new { id = id, vid = vendorid }) + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='" + @Url.Action("EventOrganisers", "createvendor", new { id = id, vid = vendorid }) + "'</script>");
                 }
             }
             if (id != null && vid != null)
