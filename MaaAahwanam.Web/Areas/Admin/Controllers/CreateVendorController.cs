@@ -132,7 +132,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -311,7 +318,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -492,7 +506,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -672,7 +693,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -852,7 +880,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -1031,7 +1066,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -1205,7 +1247,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -1384,7 +1433,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -1567,7 +1623,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -1746,7 +1809,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -1926,7 +1996,15 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_','.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
+                        
                     }
                     
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -2106,7 +2184,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         string x = list[i].ToString();
                         string[] y = x.Split('_', '.');
-                        imageno = int.Parse(y[3]);
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
                     }
 
                     for (int i = 0; i < Request.Files.Count; i++)
