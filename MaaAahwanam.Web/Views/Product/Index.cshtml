@@ -22,47 +22,47 @@
                         @*}*@
                         @*@if (ViewBag.ServiceType == "Venue")
                             {
-                                <li><a href="../product?par=Venue"> Venue</a></li>
+                            <li><a href="../product?par=Venue"> Venue</a></li>
                             }
                             @if (ViewBag.ServiceType == "Catering")
                             {
-                                <li><a href="../product?par=Catering"> Catering</a></li>
+                            <li><a href="../product?par=Catering"> Catering</a></li>
                             }
                             @if (ViewBag.ServiceType == "Photography")
                             {
-                                <li><a href="../product?par=Photography"> Photography</a></li>
+                            <li><a href="../product?par=Photography"> Photography</a></li>
                             }
                             @if (ViewBag.ServiceType == "Decorator")
                             {
-                                <li><a href="../product?par=Decorator"> Decorator</a></li>
+                            <li><a href="../product?par=Decorator"> Decorator</a></li>
                             }
                             @if (ViewBag.ServiceType == "Entertainment")
                             {
-                                <li><a href="../product?par=Entertainment"> Entertainment</a></li>
+                            <li><a href="../product?par=Entertainment"> Entertainment</a></li>
                             }
                             @if (ViewBag.ServiceType == "Eventorganiser")
                             {
-                                <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
+                            <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
                             }
                             @if (ViewBag.ServiceType == "BeautyService")
                             {
-                                <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
+                            <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
                             }
                             @if (ViewBag.ServiceType == "Travel")
                             {
-                                <li><a href="../product?par=Travel"> Travel</a></li>
+                            <li><a href="../product?par=Travel"> Travel</a></li>
                             }
                             @if (ViewBag.ServiceType == "Gift")
                             {
-                                <li><a href="../product?par=Gift"> Gift</a></li>
+                            <li><a href="../product?par=Gift"> Gift</a></li>
                             }
                             @if (ViewBag.ServiceType == "WeddingCollection")
                             {
-                                <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
+                            <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
                             }
                             @if (ViewBag.ServiceType == "Other")
                             {
-                                <li><a href="../product?par=Other"> Other</a></li>
+                            <li><a href="../product?par=Other"> Other</a></li>
                             }*@
                     </ul>
                 </div>
@@ -77,12 +77,23 @@
             <aside>
                 <h4>Services</h4>
                 <span>&nbsp;</span>
-                <ul>
-                    @foreach (var item in @ViewBag.subservicetype)
-                    {
-                        if (item.vendortype != null)
+                <ul id="stpyesul">
+                    @{
+                        int i = 0;
+                        foreach (var item in @ViewBag.subservicetype)
                         {
-                            <li><a href="#" id="lnksubservicetype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                            if (item.vendortype != null)
+                            {
+                                if (i == 0)
+                                {
+                                    <li><a href="#" class="Test" id="@item.vendortype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="#" id="@item.vendortype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                                }
+                            }
+                            i++;
                         }
                     }
                     @*<li><a href="../product?par=Venue"> Venue</a></li>
@@ -220,6 +231,11 @@
     </div>
 </section>
 <div class="clear"></div>
+@*<style>
+        li:first-child {
+            background-color: yellow;
+        }
+    </style>*@
 @section scriptfunctions
 {
     <script type="text/javascript">
@@ -242,6 +258,16 @@
                 document.getElementById("rblASC").checked = true;
             }
             //alert(document.getElementById("hiddenlastrecord").value)
+            var subservicetype= window.location.search.split("=")[2].split("&")[0].replace("%20"," ");
+            if(subservicetype!='%')
+            {
+                document.getElementById(subservicetype).className = "active";
+            }
+            else
+            {
+                var a= $(".Test").attr('id');
+                document.getElementById(a).className = "active";
+            }
         };
         /* -------------------------------  Loadmore functionality ------------------------ */
         $('#LoadMore1').on('click', function (e) {

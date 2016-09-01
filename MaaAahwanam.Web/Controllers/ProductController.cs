@@ -20,13 +20,13 @@ namespace MaaAahwanam.Web.Controllers
             string servicetypesType = Request.QueryString["sType"];
             string servicetypeloc = Request.QueryString["loc"];
             string servicetypeorder = Request.QueryString["a"];
-            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, 0,servicetypesType, servicetypeloc,servicetypeorder);
+            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, 0, servicetypesType, servicetypeloc, servicetypeorder);
             List<getservicetype_Result> servicetypelist = productService.Getservicetype_Result(servicetypeQuerystring);
             ViewBag.ServiceType = servicetypeQuerystring;
             ViewBag.subservicetype = servicetypelist;
             return View(Productlist);
         }
-        public JsonResult Loadmore(string servicetypeQuerystring,string VID,string servicetype,string subservicetype,string location,string order)
+        public JsonResult Loadmore(string servicetypeQuerystring, string VID, string servicetype, string subservicetype, string location, string order)
         {
             ProductService productService = new ProductService();
             List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetype, int.Parse(VID), subservicetype, location, order);
