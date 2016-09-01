@@ -18,15 +18,15 @@ namespace MaaAahwanam.Web.Controllers
         NotificationService notificationService = new NotificationService();
         public ActionResult Index(string id, string type)
         {
+            if (type != null)
+            {
+                Notification notification = notificationService.RemoveNotificationService(long.Parse(id));
+            }
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             ViewBag.Type = user.UserType;
             long userid = user.UserId;
             ViewBag.AllNotifications = notificationService.GetNotificationService(userid);
-            if (type != null)
-            {
-                Notification notification = notificationService.RemoveNotificationService(long.Parse(id));
-
-            }
+            
             return View();
         }
     }
