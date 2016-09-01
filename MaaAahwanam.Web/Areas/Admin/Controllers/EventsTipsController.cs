@@ -94,6 +94,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
-
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 	}
