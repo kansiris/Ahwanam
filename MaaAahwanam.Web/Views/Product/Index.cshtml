@@ -77,12 +77,12 @@
             <aside>
                 <h4>Services</h4>
                 <span>&nbsp;</span>
-                <ul>
+                <ul id="stpyesul">
                     @foreach (var item in @ViewBag.subservicetype)
                     {
                         if (item.vendortype != null)
                         {
-                            <li><a href="#" id="lnksubservicetype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                            <li><a href="#" id="@item.vendortype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
                         }
                     }
                     @*<li><a href="../product?par=Venue"> Venue</a></li>
@@ -242,6 +242,10 @@
                 document.getElementById("rblASC").checked = true;
             }
             //alert(document.getElementById("hiddenlastrecord").value)
+            var subservicetype= window.location.search.split("=")[2].split("&")[0].replace("%20"," ");
+            document.getElementById(subservicetype).className = "active";
+            //alert(subservicetype);
+            //s.className = "active";
         };
         /* -------------------------------  Loadmore functionality ------------------------ */
         $('#LoadMore1').on('click', function (e) {
