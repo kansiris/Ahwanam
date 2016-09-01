@@ -207,7 +207,17 @@
                                                 foreach (var item in ViewBag.EventsandTipsList)
                                                 {
                                                     <tr>
-                                                        <td><a id="example7" title="Lorem ipsum dolor sit amet"><img width="100" height="100" src="~/EventsAndTipsimages/@item.cropedimage" alt="" /></a></td>
+                                                        <td><a id="example7" title="Lorem ipsum dolor sit amet">
+                                                            @if (item.cropedimage !=null && item.cropedimage != "")
+                                                            {
+                                                                <img width="100" height="100" src="~/EventsAndTipsimages/@item.cropedimage" alt="" />
+                                                            }
+                                                            @if (item.cropedimage == null || item.cropedimage == "")
+                                                            {
+                                                                <img width="100" height="100" src="~/EventsAndTipsimages/@item.Image" alt="" />
+                                                            }
+                                                            
+                                                            </a></td>
                                                         <td><label class="control-label col-lg-4">@item.Type</label></td>
                                                         <td><label class="control-label col-lg-4">@item.Title</label></td>
                                                         <td><label class="control-label col-lg-4">@item.Person</label></td>
