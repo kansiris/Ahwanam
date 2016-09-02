@@ -30,7 +30,8 @@ namespace MaaAahwanam.Web.Controllers
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             userLoginDetailsService.UpdateUserdetails(userDetail, (int)user.UserId);
-            return View();
+            return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("Index", "EditProfile") + "'</script>");
+
         }
     }
 }
