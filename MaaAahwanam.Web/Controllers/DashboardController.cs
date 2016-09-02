@@ -22,7 +22,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            ViewBag.Type = user.UserType;            
+            ViewBag.Type = user.UserType;
             int id = (int)user.UserId;
             ViewBag.AllOrders = dashBoardService.GetOrdersService(id);
             ViewBag.Services = dashBoardService.GetServicesService(id);
