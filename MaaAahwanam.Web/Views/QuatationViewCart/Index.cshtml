@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
-    var i = 0;
+    var i = 0; var j = 0;
 }
 @section Navigation
 {
@@ -100,20 +100,21 @@
                             <tr>
                                 <td><input type="radio" name="quatation" id="chkselection"/></td>
                                 <td>@(++i)</td>
-                                <td><a href="#quatation" onclick="displaypopup('@item.Description','@item.Preferences')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
+                                <td><a href="#quatation" onclick="displaypopup('id @i','id @j')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
                                 <td>
                                     @if (item.UpdatedDate != null)
                                     {
-                                        @item.UpdatedDate.ToShortDateString() }                                    }
+                                        @item.UpdatedDate.ToShortDateString() }                                    
                                     @if (item.UpdatedDate == null)
                                     {
                                         <p>NA</p>
                                     }
                                 </td>
-                                <td>@item.Description</td>
+                                <td id="id @i">@item.Description</td> <td id="id @j" style="display:none">@item.Preferences</td>
                                 <td>Rs.@item.Budget</td>
                                 <td>Rs.@item.Amount</td>
                             </tr>
+                            i++;
                         }
                     }
                     @if (ViewBag.service.Count == 0)
@@ -254,11 +255,14 @@
 
 <script>
     //displays description and preference in modal popup
-    function displaypopup(description, preference) {
+    function displaypopup(i, j) {
+        var desc1 = document.getElementById(i).innerHTML;
+        var pref1 = document.getElementById(j).innerHTML;
         var desc = $("#desc");
         var pref = $("#pref");
-        desc.html(description);
-        pref.html(preference);
+        
+        desc.html(desc1);
+        pref.html(pref1);
     }
 </script>
 

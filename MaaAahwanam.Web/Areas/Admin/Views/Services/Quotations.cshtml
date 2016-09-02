@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "QuotView";
     Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
+    var i = 0;
 }
 
 @section header{
@@ -30,10 +31,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="body collapse in" id="div1"> <a href="~/Admin/DashBoard/dashboard" class="btn btn-primary btn-xs">Home</a>&nbsp;&nbsp;&nbsp;<a href="~/Admin/Services/QuotRequests" class="btn btn-primary btn-xs">Quatation Requests</a>&nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-xs">Quatation Request Details</a> </div>
-                <br/>
+                <br />
                 <h4><i class="icon-th-list"></i> Request #@ViewBag.quotid | @ViewBag.quotdate</h4>
             </div>
-            <br/>
+            <br />
         </div>
         <!-- Quot Starts here -->
         <div class="row">
@@ -41,87 +42,35 @@
                 <ul class="pricing-table">
                     @if (@ViewBag.QuotationRecordsList != null)
                     {
+                        
                         foreach (var item in ViewBag.QuotationRecordsList)
                         {
+
                             <li class="col-lg-4" style="border:groove">
                                 <h4>RequestId:@item.RequestId</h4><br />
-                                <h4>ResponseId:@item.ResponseId</h4>
+                                <h4 id="rid">ResponseId:@item.ResponseId</h4>
                                 <!--<div class="price-body">-->
                                 <div class="price" style="display:block"><sup>&#x20B9;</sup>@item.Amount</div>
                                 <!--</div>-->
                                 <div class="features">
                                     <ul>
-                                        <li>@item.Description</li>
+                                        <li id="id @i">@item.Description</li>
                                     </ul>
                                 </div>
-                                <div class="footer"> <input id="btnedit" type="button" value="Edit" onclick="return edit('@item.Amount','@item.Description','@item.ResponseId')" class="btn btn-info btn-rect" /> <a href="#" class="btn btn-danger btn-rect"> Delete </a></div>
+                                <div class="footer">
+                                    <input id="btnedit" type="button" value="Edit" onclick="return edit('@item.Amount','id @i','@item.ResponseId')" class="btn btn-info btn-rect" />
+                                    @*<input id="btnedit1" type="button" value="edit" onclick="return test('id @i');" />*@
+                                    <a href="#" class="btn btn-danger btn-rect"> Delete </a>
+                                </div>
                             </li>
+                            i++;
                         }
                     }
-
-
-                    @*<li class="active danger col-lg-4">
-                        <h3>12313232-Quot2</h3>
-                        <!--<div class="price-body">-->
-                        <div class="price"><span class="price-figure"><sup>&#x20B9;</sup>1,00,000</div>
-                        <!--</div>-->
-                        <div class="features">
-                            <ul>
-                                <li>Hotel NKM Grand</li>
-                                <li>Unlimited File Access</li>
-                                <li>Free Appointments</li>
-                                <li><strong>20 Bonus Points</strong> every month</li>
-                                <li>Customizable Profile Page</li>
-                                <li><strong>6 months</strong> support</li>
-                            </ul>
-                        </div>
-                        <div class="footer"> <a href="#" class="btn btn-info btn-rect"> Edit </a> <a href="#" class="btn btn-danger btn-rect"> Delete </a></div>
-                        <!--<div class="footer"> <a href="#" class="btn btn-metis-1 btn-lg btn-rect">Get Started</a> </div>-->
-                    </li>
-                    <li class="col-lg-4">
-                        <h3>12313232-Quot3</h3>
-                        <!--<div class="price-body">-->
-                        <div class="price"><span class="price-figure"><sup>&#x20B9;</sup>60,000</div>
-                        <!--</div>-->
-                        <div class="features">
-                            <ul>
-                                <li>Maharaja Classic Inn</li>
-                                <li>Unlimited File Access</li>
-                                <li>Free Appointments</li>
-                                <li><strong>50 Bonus Points</strong> every month</li>
-                                <li>Customizable Profile Page</li>
-                                <li><strong>Lifetime</strong> support</li>
-                            </ul>
-                        </div>
-                        <div class="footer"> <a href="#" class="btn btn-info btn-rect"> Edit </a> <a href="#" class="btn btn-danger btn-rect"> Delete </a></div>
-                        <!--<div class="footer"> <a href="#" class="btn btn-info btn-rect">Get Started</a> </div>-->
-                    </li>*@
                 </ul>
                 <div class="clearfix"></div>
             </div>
         </div>
-        <!-- Quot Ends here -->
-        <br/><br/>
-        @*<div class="row">
-            <div class="col-lg-12">
-                <div class="box">
-                    <header>
-                        <div class="icons"><i class="icon-th-large"></i></div>
-                        <h5>Create New Quotation</h5>
-
-                    </header>
-                    <div id="div-1" class="body collapse in">
-                        <form>
-                            <textarea id="wysihtml5" class="form-control" rows="10"></textarea>
-                            <div class="form-actions">
-                                <br />
-                                <input type="submit" value="Create Quotation" class="btn btn-primary" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>*@
+<br/><br/>
         <div class="row">
             <div class="col-lg-12">
                 <div class="box">
@@ -192,17 +141,98 @@
         $(function () { formWysiwyg(); });
     </script>
 <script>
-        function edit(amount,desc,id) {
-            var responseid = id;
+        function edit(amount,i,id) {
+            var desc = document.getElementById(i).innerHTML;
             $("#Amount").val(amount);
             $("#Description").val(desc);
             $("#btnsave").val("Update");
-            $("#ResponseId").val(responseid);
+            $("#ResponseId").val(id);
             //var url = window.location.href;
             //alert(url.search('?rid='));
             //window.location.href = url +'?rid='+id+'';
         }
 
 </script>
+
+<script>
+    function test(i) {
+        //$('#id').each(function () {
+        //alert(i);
+        var value = i;
+        //alert(i);
+        var customerId = document.getElementById(i).innerHTML;
+        
+        alert(customerId);
+
+        //alert(tableHeadings);
+        //});
+    }
+</script>
+
+
     <!-- END PAGE LEVEL SCRIPTS -->
 }
+
+
+
+
+
+@*<li class="active danger col-lg-4">
+        <h3>12313232-Quot2</h3>
+        <!--<div class="price-body">-->
+        <div class="price"><span class="price-figure"><sup>&#x20B9;</sup>1,00,000</div>
+        <!--</div>-->
+        <div class="features">
+            <ul>
+                <li>Hotel NKM Grand</li>
+                <li>Unlimited File Access</li>
+                <li>Free Appointments</li>
+                <li><strong>20 Bonus Points</strong> every month</li>
+                <li>Customizable Profile Page</li>
+                <li><strong>6 months</strong> support</li>
+            </ul>
+        </div>
+        <div class="footer"> <a href="#" class="btn btn-info btn-rect"> Edit </a> <a href="#" class="btn btn-danger btn-rect"> Delete </a></div>
+        <!--<div class="footer"> <a href="#" class="btn btn-metis-1 btn-lg btn-rect">Get Started</a> </div>-->
+    </li>
+    <li class="col-lg-4">
+        <h3>12313232-Quot3</h3>
+        <!--<div class="price-body">-->
+        <div class="price"><span class="price-figure"><sup>&#x20B9;</sup>60,000</div>
+        <!--</div>-->
+        <div class="features">
+            <ul>
+                <li>Maharaja Classic Inn</li>
+                <li>Unlimited File Access</li>
+                <li>Free Appointments</li>
+                <li><strong>50 Bonus Points</strong> every month</li>
+                <li>Customizable Profile Page</li>
+                <li><strong>Lifetime</strong> support</li>
+            </ul>
+        </div>
+        <div class="footer"> <a href="#" class="btn btn-info btn-rect"> Edit </a> <a href="#" class="btn btn-danger btn-rect"> Delete </a></div>
+        <!--<div class="footer"> <a href="#" class="btn btn-info btn-rect">Get Started</a> </div>-->
+    </li>*@
+
+<!-- Quot Ends here -->
+
+@*<div class="row">
+        <div class="col-lg-12">
+            <div class="box">
+                <header>
+                    <div class="icons"><i class="icon-th-large"></i></div>
+                    <h5>Create New Quotation</h5>
+
+                </header>
+                <div id="div-1" class="body collapse in">
+                    <form>
+                        <textarea id="wysihtml5" class="form-control" rows="10"></textarea>
+                        <div class="form-actions">
+                            <br />
+                            <input type="submit" value="Create Quotation" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>*@
