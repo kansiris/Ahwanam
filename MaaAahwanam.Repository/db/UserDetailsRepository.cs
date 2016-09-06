@@ -67,5 +67,18 @@ namespace MaaAahwanam.Repository.db
             }
             return userDetail;
         }
+
+        public void UpdateDP(int UserloginsID,string imagename)
+        {
+            var list = _dbContext.UserDetail.SingleOrDefault(o=>o.UserLoginId==UserloginsID);
+            list.UserImgName = imagename;
+            _dbContext.SaveChanges();
+        }
+        public string GetUserDP(int UserloginsID)
+        {
+            var list = _dbContext.UserDetail.SingleOrDefault(o => o.UserLoginId == UserloginsID);
+            string imagename = list.UserImgName;
+            return imagename;
+        }
     }
 }
