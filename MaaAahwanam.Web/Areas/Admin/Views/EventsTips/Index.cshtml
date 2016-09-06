@@ -107,7 +107,7 @@
 
                                                 <div class="col-lg-4">
                                                     @*<input type="text" name="invitationCost" value="" class="validate[required] form-control">*@
-                                                    @Html.TextBoxFor(model => model.Eventstartdate, new { @class = "form-control", placeholder = "Enter Event Start Date", @id = "datetimepicker5" })
+                                                    @Html.TextBoxFor(model => model.Eventstartdate, new { @class = "form-control", placeholder = "Enter Event Start Date", @id = "Eventstartdate" }) <p>Format:dd/mm/yyyy</p>
                                                     
                                                 </div>
                                             </div>
@@ -117,7 +117,7 @@
 
                                                 <div class="col-lg-4">
                                                     @*<input type="text" name="invitationCost" value="" class="validate[required] form-control">*@
-                                                    @Html.TextBoxFor(model => model.Eventenddate, new { @class = "form-control", placeholder = "Enter Event End Date", @id = "datetimepicker6" })
+                                                    @Html.TextBoxFor(model => model.Eventenddate, new { @class = "form-control", placeholder = "Enter Event End Date", @id = "datetimepicker6" }) <p>Format:dd/mm/yyyy</p>
                                                 </div>
                                             </div>
                                             @*<div class="form-group">
@@ -270,20 +270,35 @@
     window.onload = function () {
         var url = window.location.href;
         var op = url.substring(url.lastIndexOf('=') + 1);
-        
-        if(op != url) {
+        var op1 = url.substring(url.lastIndexOf('/') + 1);
+        if (op != url || op1 != 'Index') {
             $("#btnsave").val("Update");
         }
         }
     </script>
 
-<script>
-        /*
-        window.onerror = function(errorMsg) {
-            $('#console').html($('#console').html()+'<br>'+errorMsg)
-        }*/
-        //$.datetimepicker.setLocale('en');
+<script type="text/javascript" src="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.css">
 
+
+<script type='text/javascript'>
+        $(function () {
+            var setMinTime = "";
+            var today = new Date();
+            var lastDate = new Date(today.getFullYear(), today.getMonth(0) + 1, 31);
+            $('#Eventstartdate').datetimepicker({
+                inline: false,
+                lang: 'en',
+                startDate: '-1m',
+                endDate: lastDate,
+                timepicker: false,
+                format: 'd/m/Y',
+                formatDate: 'Y/m/d',
+            });
+        });
+</script>
+
+@*<script>
         $('#datetimepicker_format').datetimepicker({ value: '2015/12/12 05:03', format: $("#datetimepicker_format_value").val() });
         $("#datetimepicker_format_change").on("click", function (e) {
             $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
@@ -305,7 +320,7 @@
             format: 'd/m/Y',
             formatDate: 'Y/m/d',
         });
-</script>
+</script>*@
 
 @section Bottom{
     <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>

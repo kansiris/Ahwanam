@@ -22,7 +22,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             if (id!=null)
             {
-                ViewBag.OrderDetailsList = orderservice.OrderDetailServivce(long.Parse(id));
+                ViewBag.OrderDetailsList = orderservice.OrderDetailServivce(long.Parse(id)).OrderByDescending(m => m.UpdatedDate);
                 ViewBag.orderid = id;
                 return View();
             }
