@@ -15,7 +15,6 @@ namespace MaaAahwanam.Service
         public List<geteventsandtipsimages_Result> EventsandTipsList()
         {
             return eventsandTipRepository.EventsandTipList();
-            
         }
 
         public EventsandTip AddEventandTip(EventsandTip eventAndTip)
@@ -42,6 +41,10 @@ namespace MaaAahwanam.Service
             eventAndTip.Status = "Active";
             eventsandTipRepository.UpdateEventsAndTip(eventAndTip,id);
             return eventAndTip;
+        }
+        public List<geteventsandtipsimages_Result> EventsandTipsListUser(string type)
+        {
+            return eventsandTipRepository.EventsandTipList().Where(o=>o.Type== type).ToList<geteventsandtipsimages_Result>();
         }
     }
 }

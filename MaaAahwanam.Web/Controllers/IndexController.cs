@@ -22,6 +22,13 @@ namespace MaaAahwanam.Web.Controllers
             TestmonialService testmonialService = new TestmonialService();
             ViewBag.Testimonials = testmonialService.TestmonialServiceList();//Testimonials List
             //Products List Index(4 Services Photography,Beautition,Decorators,Travels)
+            EventsandtipsService eventsandtipsService = new EventsandtipsService();
+            var Events = eventsandtipsService.EventsandTipsListUser("Event");
+            var Beautytips = eventsandtipsService.EventsandTipsListUser("Beauty Tips");
+            var Healthtips = eventsandtipsService.EventsandTipsListUser("Health Tips");
+            ViewBag.UpcomingEvents = Events;
+            ViewBag.HealthTips = Healthtips;
+            ViewBag.BeautyTips = Beautytips;
             ProductService productService = new ProductService();
             List<GetProducts_Result> Productlist_Photography = productService.GetProducts_Results("Photography", 0, "%", "Hyderabad", "ASC");
             List<GetProducts_Result> Productlist_BeautyService = productService.GetProducts_Results("BeautyService", 0, "%", "Hyderabad", "ASC");

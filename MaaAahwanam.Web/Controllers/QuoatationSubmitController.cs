@@ -26,6 +26,7 @@ namespace MaaAahwanam.Web.Controllers
             serviceRequest.UpdatedTime = DateTime.Now;
             serviceRequest.UpdatedBy = (int)user.UserId;
             serviceRequest.Status = "Due";
+            serviceRequest.ServiceType.TrimStart(',');
             serviceRequest = serviceRequestService.SaveService(serviceRequest);
             return RedirectToAction("Index","QuoatationConfirm", serviceRequest);
         }

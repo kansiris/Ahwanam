@@ -51,7 +51,13 @@ namespace MaaAahwanam.Service
             var changes = userLoginRepository.UpdatePassword(userLogin, UserLoginId);
             return changes;
         }
-
-
+        public string SetUserDP(int userloginid)
+        {
+            return userDetailsRepository.GetUserDP(userloginid);
+        }
+        public void ChangeDP(int userloginID, string imagename)
+        {
+            userDetailsRepository.UpdateDP(userloginID, imagename);
+        }
     }
 }

@@ -22,11 +22,12 @@
                     <ul class="userInfo">
                         <li>
                             <div class="userPic">
-                                <img src="~/CSSWeb/images/user1.jpg" alt="img-profile">
-                                @*<div class="file_up">
-                                        <input type="text" class="inputBtn">
-                                        <input type="file" class="hide">
-                                    </div>*@
+                                @*<img id="imgPreview" src="../CSSWeb/images/dashboard/img-profile.jpg" alt="img-profile">*@
+                                <img id="imgPreview" alt="img-profile">
+                                <div class="file_up">
+                                    <input type="text" class="inputBtn">
+                                    <input type="file" id="FU_imgdp" class="hide" accept="image/gif, image/jpeg, image/png">
+                                </div>
                             </div>
                             <div class="userDetails">
                                 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -78,4 +79,61 @@
     <script type="text/javascript" src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
     @*<script type="text/javascript" src="~/CSSWeb/js/alert.js" async></script>*@
+    <script>
+        window.onload = function () {
+            $.ajax({
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Dashboard/SetUserDP',
+                //url: "/Dashboard/UpdateDP",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: {},
+                success: function (response) {
+                    //code after success
+                    //$("#txtImg").val(response);
+                    //alert(response);
+                    $("#imgPreview").attr('src', '/Content/UserDPs/' + response);
+                    $("#imgPreviewsmall").attr('src', '/Content/UserDPs/' + response);
+                },
+                error: function (er) {
+                    alert(er);
+                }
+
+            });
+        };
+    </script>
+    <script>
+        $("#FU_imgdp").change(function (e) {
+            //alert('image changed');
+            var data = new FormData();
+            var files = $("#FU_imgdp").get(0).files;
+            if (files.length > 0) {
+                data.append("MyImages", files[0]);
+            }
+
+            //alert(data);
+
+            $.ajax({
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Dashboard/UpdateDP',
+                //url: "/Dashboard/UpdateDP",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    //code after success
+                    //$("#txtImg").val(response);
+                    //$("#imgPreview").attr('src','../Content/UserDPs/' +response);
+                    $("#imgPreview").attr('src', '/Content/UserDPs/' + response);
+                    $("#imgPreviewsmall").attr('src', '/Content/UserDPs/' + response);
+                },
+                error: function (er) {
+                    alert(er);
+                }
+
+            });
+        });
+
+
+    </script>
 }
