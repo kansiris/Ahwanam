@@ -73,7 +73,7 @@ namespace MaaAahwanam.Service
             vendorsBeautyService = vendorBeautyServiceRespository.UpdatesBeautyService(vendorsBeautyService, masterid,vid);
             return vendorsBeautyService;
         }
-        public VendorsBeautyService AddNewVenue(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster)
+        public VendorsBeautyService AddNewBeautyService(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster)
         {
             vendorsBeautyService.Status = "Active";
             vendorsBeautyService.UpdatedDate = DateTime.Now;
