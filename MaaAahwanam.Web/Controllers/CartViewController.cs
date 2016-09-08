@@ -16,10 +16,10 @@ namespace MaaAahwanam.Web.Controllers
         CartService cartService = new CartService();
         //
         // GET: /CartView/
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
-           var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
             decimal total = cartlist.Sum(s => s.TotalPrice);
             ViewBag.Cartlist = cartlist;
@@ -74,9 +74,9 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.UpdatedBy = user.UserId;
                 orderdetailsServices.SaveOrderDetail(orderDetail);
             }
-            foreach(var item1 in orderRequest.Cartitems)
-            { 
-            cartService.Deletecartitem(item1.CartId);
+            foreach (var item1 in orderRequest.Cartitems)
+            {
+                cartService.Deletecartitem(item1.CartId);
             }
             return Json(orderDetail.OrderId);
         }
