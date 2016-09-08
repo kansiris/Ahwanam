@@ -35,6 +35,7 @@ namespace MaaAahwanam.Web.Controllers
             var tupleModel = new Tuple<GetProductsInfo_Result, Review>(Productinfo, review);
             return View(tupleModel);
         }
+        [Authorize]
         public ActionResult WriteaRiview([Bind(Prefix = "Item2")] Review review)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Web.Controllers
 
             //return RedirectToAction("Index", "Signin");
         }
-
+        [Authorize]
         public JsonResult Addtocart(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -92,7 +93,7 @@ namespace MaaAahwanam.Web.Controllers
             string message3 = eventDatesServices.SaveEventDates(eventDate);
             return Json(message3);
         }
-
+        [Authorize]
         public JsonResult Buynow(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -124,6 +125,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.PaymentId = payment_Orders.PaymentID;
             orderDetail.ServiceType = orderRequest.ServiceType;
             orderDetail.PerunitPrice = orderRequest.TotalPrice;
+            orderDetail.Quantity = orderRequest.Quantity;
             orderDetail.OrderId = order.OrderId;
             orderDetail.VendorId = orderRequest.VendorId;
             orderDetail.Status = "Active";
@@ -160,7 +162,7 @@ namespace MaaAahwanam.Web.Controllers
 
             return Json(orderDetail.OrderId);
         }
-
+        [Authorize]
         public JsonResult getproductfromcart(string cid)
         {
 
@@ -169,6 +171,7 @@ namespace MaaAahwanam.Web.Controllers
             GetCartItems_Result cartlist = cartService.editcartitem(int.Parse(user.UserId.ToString()), int.Parse(cid));
             return Json(cartlist);
         }
+        [Authorize]
         public JsonResult Updatecartitem(OrderRequest orderRequest)
         {
 
@@ -186,7 +189,6 @@ namespace MaaAahwanam.Web.Controllers
 
             CartService cartService = new CartService();
             string mesaage = cartService.Updatecartitem(cartItem);
-
             return Json(mesaage);
         }
     }

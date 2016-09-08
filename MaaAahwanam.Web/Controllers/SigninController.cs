@@ -32,7 +32,7 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail)
+        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail,string ReturnUrl)
         {
             if (command == "Register")
             {
@@ -58,7 +58,19 @@ namespace MaaAahwanam.Web.Controllers
                     userResponse.UserType = "User";
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    Response.Redirect("DashBoard/Index");
+                    //string ReturnTo = Request.QueryString["ReturnUrl"];
+                    //string ReturnTo = Request.Params.Get("ReturnUrl");
+                    string ReturnTo = ReturnUrl;
+
+                    if (ReturnTo == null)
+                    {
+                        Response.Redirect("Index");
+                    }
+                    else
+                    {
+                        Response.Redirect(ReturnTo);
+                    }
+
                 }
                 else
                 {
