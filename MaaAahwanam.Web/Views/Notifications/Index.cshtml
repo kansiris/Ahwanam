@@ -27,63 +27,64 @@
 </div>
 }
 
-<div class="notifications">
-    <div class="mail-content">
-        <ul class="mail-toolbar">
-            <li>
-                <input type="checkbox" id="selectall">
-            </li>
-            <li class="refresh"><a href="#"><i class="ti-reload"></i>Refresh</a></li>
-            <li class="delete"><a href="#"><i class="ti-trash"></i>Delete</a></li>
-            <li class="mail-pagination"> <span>1-15 from 169</span> <a href="#" class="btn btn-green"><i class="ti-angle-left"></i></a> <a href="#" class="btn btn-green"><i class="ti-angle-right"></i></a> </li>
-        </ul>
-        <!-- popup -->
-        <div id="notify" class="zoom-anim-dialog mfp-hide small-dialog">
-            <div class="popup-box pop-content">
-                <div class="popup-head">
-                    <h3 id="sub" style="font-size:large"></h3>
-                </div>
-                <!-- /popup-head -->
-                <div class="popup-space popup-desc-space">
-                    <p id="desc"></p>
+<form>
+    <div class="notifications">
+        <div class="mail-content">
+            <ul class="mail-toolbar">
+                @*<li>
+                        <input type="checkbox" id="selectall">
+                    </li>*@
+                <li class="refresh"><a href="javascript:$('form').submit();"><i class="ti-reload"></i>Refresh</a></li>
+               @*<li class="delete"><a href="#"><i class="ti-trash"></i>Delete</a></li>*@
+                <li class="mail-pagination"> <span>1-15 from 169</span> <a href="#" class="btn btn-green"><i class="ti-angle-left"></i></a> <a href="#" class="btn btn-green"><i class="ti-angle-right"></i></a> </li>
+            </ul>
+            <!-- popup -->
+            <div id="notify" class="zoom-anim-dialog mfp-hide small-dialog">
+                <div class="popup-box pop-content">
+                    <div class="popup-head">
+                        <h3 id="sub" style="font-size:large"></h3>
+                    </div>
+                    <!-- /popup-head -->
+                    <div class="popup-space popup-desc-space">
+                        <p id="desc"></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- /popup -->
-        <br/>
-        @if (ViewBag.AllNotifications.Count!=0)
+            <!-- /popup -->
+            <br />
+            @if (ViewBag.AllNotifications.Count!=0)
         {
             foreach (var item in ViewBag.AllNotifications)
             {
-                <div class="dashboardList dashboardList-nospace" style="border:none">
+                    <div class="dashboardList dashboardList-nospace" style="border:none">
 
-                    <table class="responsive" style="width:100%">
-                        <tr>
-                            <td style="width: 10%; cursor: pointer;">
-                                <a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;" /></a>
-                            </td>
-                            <td style="width: 28%; cursor: pointer;">
-                                <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <p class="mail-sender">@item.description</p></a>
-                            </td>
-                            <td style="width: 35%; cursor: pointer;">
-                                <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"><p class="mail-subject">@item.Subject</p> </a>
-                            </td>
-                            <td style="width: 18%; cursor: pointer;">
-                                <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                        <table class="responsive" style="width:100%">
+                            <tr>
+                                <td style="width: 10%; cursor: pointer;">
+                                    <a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;" /></a>
+                                </td>
+                                <td style="width: 28%; cursor: pointer;">
+                                    <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <p class="mail-sender">@item.description</p></a>
+                                </td>
+                                <td style="width: 35%; cursor: pointer;">
+                                    <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"><p class="mail-subject">@item.Subject</p> </a>
+                                </td>
+                                <td style="width: 18%; cursor: pointer;">
+                                    <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
             }
         }
-@if (ViewBag.AllNotifications.Count == 0)
+            @if (ViewBag.AllNotifications.Count == 0)
 {
-    <h2>No Notifications Yet!!!!</h2>
+                <h2>No Notifications Yet!!!!</h2>
 }
 
-                </div>
-</div>
-
+        </div>
+    </div>
+</form>
 <script type="text/javascript">
     function displaypopup(description, preference) {
         var desc = $("#desc");

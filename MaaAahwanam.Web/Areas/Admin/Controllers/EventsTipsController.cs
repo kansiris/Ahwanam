@@ -23,6 +23,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             
             if (id!=null)
             {
+                
                 var particularevent = eventsandtipsService.GetEventandTip(long.Parse(id));
                 string x = particularevent.Image.ToString();
                 ViewBag.images = x.Split(',');
@@ -84,6 +85,51 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             if (Command == "Update")
             {
+                var particularevent = eventsandtipsService.GetEventandTip(long.Parse(id));
+                string x = particularevent.Image.ToString();
+                ViewBag.images = x.Split(',');
+                int count = Enumerable.Count(ViewBag.images);
+                int imageno = 0;
+                for (int i = 0; i < count; i++)
+                {
+                    string x1 = ViewBag.images[i].ToString();
+                    string[] y = x1.Split('_', '.');
+                    imageno = int.Parse(y[1]);
+                }
+
+                if (Request.Files.Count <= 10 - count)
+                {
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        int j = count + 1+i;
+                        var file1 = Request.Files[i];
+                        if (file1 != null && file1.ContentLength > 0)
+                        {
+                            var filename = string.Empty;
+                            string path = System.IO.Path.GetExtension(file.FileName);
+                            if (eventAndTip.Type == "Event")
+                            {
+                                filename = eventAndTip.Type + "_" + imageno + "_" + j + path;
+                            }
+                            else if (eventAndTip.Type == "Beauty Tips")
+                            {
+                                filename = "Beauty_" + imageno + "_" + j + path;
+                            }
+                            else if (eventAndTip.Type == "Health Tips")
+                            {
+                                filename = "Health_" + imageno + "_" + j + path;
+                            }
+                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                            file1.SaveAs(fileName);
+                            ImagesURL += filename + ",";
+                        }
+                    }
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('You have Crossed Images Limit');location.href='" + @Url.Action("Index", "EventsTips", new { id = id }) + "'</script>");
+                }
+                eventAndTip.Image = particularevent.Image+","+ ImagesURL.TrimEnd(',');
                 eventAndTip = eventsAndTipsService.UpdateEventandTip(eventAndTip, long.Parse(id));
                 if (eventAndTip.EventId != 0)
                 {

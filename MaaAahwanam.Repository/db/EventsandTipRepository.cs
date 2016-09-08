@@ -44,7 +44,7 @@ namespace MaaAahwanam.Repository.db
             var GetRecord = _dbContext.EventsandTip.Where(m => m.EventId == id).FirstOrDefault();
             eventAndTip.EventId = GetRecord.EventId;
             eventAndTip.UpdatedBy = GetRecord.UpdatedBy;
-            eventAndTip.Image = GetRecord.Image;
+            //eventAndTip.Image = GetRecord.Image;
             _dbContext.Entry(GetRecord).CurrentValues.SetValues(eventAndTip);
             _dbContext.SaveChanges();
             return eventAndTip;
