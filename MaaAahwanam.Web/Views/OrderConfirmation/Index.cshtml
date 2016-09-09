@@ -19,7 +19,7 @@
 <section>
     <div class="about_main">
         <div class="pageWidth">
-            <div class="dashboard margin_top_40 margin_bottom_20">
+            <div class="dashboard margin_top_40 margin_bottom_20" id="div_Detdiv">
                 <div class="dashInner">
                     <!-- /order-details -->
                     <div class="dashboardList dashboardList-whitebg dashboardList-nospace">
@@ -38,6 +38,7 @@
                                     <tr>
                                         <td>
                                             <div class="item-details">
+                                                <div class="item-img"><img src="../vendorimages/@item.image" alt="item-img" /></div>
                                                 <h4>@item.Description</h4>
                                                 @*<p>Jubileehills, Hyderabad</p>*@
                                             </div>
@@ -83,15 +84,15 @@
                             <div class="price-info">
                                 <table>
                                     @*<tr>
-                                        <td style="width:55%;">Sub Total</td>
-                                        <td style="width:15%;" align="center">:</td>
-                                        <td style="width:30%;">1200.00</td>
-                                    </tr>*@
+                                            <td style="width:55%;">Sub Total</td>
+                                            <td style="width:15%;" align="center">:</td>
+                                            <td style="width:30%;">1200.00</td>
+                                        </tr>*@
                                     @*<tr>
-                                        <td>Tax</td>
-                                        <td align="center">:</td>
-                                        <td>99.00</td>
-                                    </tr>*@
+                                            <td>Tax</td>
+                                            <td align="center">:</td>
+                                            <td>99.00</td>
+                                        </tr>*@
                                     <tr>
                                         <td><h5>Payble Total</h5></td>
                                         <td align="center"><h5>:</h5></td>
@@ -108,8 +109,8 @@
                 </div>
             </div>
             @*<div class="paid-amount">
-                <h5>Total Paid Amount &nbsp;&nbsp;:&nbsp;&nbsp;Rs. 650.00</h5>
-            </div>*@
+                    <h5>Total Paid Amount &nbsp;&nbsp;:&nbsp;&nbsp;Rs. 650.00</h5>
+                </div>*@
             <div class="pay-btn btn-right">
                 <button class="btn btn-small btn-orange" onClick="window.location='payment-print.html';"> Print</button>
                 <button class="btn btn-small btn-green"> Email</button>
@@ -182,4 +183,28 @@
 
 
 <div class="clear"></div>
+<script type="text/javascript">
+    window.onload = function () {
+        var Detdiv = document.getElementById("div_Detdiv").outerHTML;
+        //var Detdiv = $('#div_Detdiv').html();
+        var Detdivobj = {};
+        Detdivobj.Detdiv = Detdiv;
+        $.ajax({
+            type: "POST",
+            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/OrderConfirmation/EmailOrderConfirmation',
+            data: {},
+            data: JSON.stringify(Detdivobj),
+            //data: { content: $('#div_Detdiv').html() },
+            // data: sendInfo,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+               alert("it's sent")
+            },
+            error: function (data) {
+                alert('error')
+            }
+        });
+    };
+</script>
 

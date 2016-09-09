@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Service;
 using MaaAahwanam.Repository;
+using MaaAahwanam.Utility;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -20,6 +22,19 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Total =list.Sum(i=>i.PerunitPrice);
             ViewBag.Orderconfirmation = list;
             return View();
+        }
+
+        public JsonResult EmailOrderConfirmation(string Detdiv)
+        {
+            StreamReader reader = new StreamReader(Server.MapPath("../Content/EmailTemplates/TempOrderconfirmation.html"));
+            string readFile = reader.ReadToEnd();
+            string StrContent = "";
+            StrContent = readFile;
+            StrContent = StrContent.Replace("@@MessageDiv@@", Detdiv);
+            string Mailmessage = "<Table>" + Detdiv + "</Table>";
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam("saikrishna@xsilica.com", StrContent.ToString(), "Test Order Confirmation");
+            return Json("Success");
         }
     }
 }
