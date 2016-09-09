@@ -54,6 +54,11 @@
             var url = window.location.href;
             var op = url.substring(url.lastIndexOf('=') + 1);
             var up = window.location.search.substring(1);
+            $("#veglunch").hide(); 
+            $("#nonveglunch").hide();
+            $("#vegdinner").hide();
+            $("#nonvegdinner").hide(); 
+            $("#menuitem").hide();
             //var stat = up.contains("vid");
             //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
             if (op == 'display') {
@@ -120,7 +125,33 @@
     }
 </script>
 
+<script>
+    function itemsdisable() {
+        var type = $("#Item2_VenueType").val();
+        if (type == 'Banquet Hall') {
+            $("#veglunch").show();
+            $("#nonveglunch").show();
+            $("#vegdinner").show();
+            $("#nonvegdinner").show();
+            $("#menuitem").show();
+        }
+        else {
+            $("#veglunch").hide();
+            $("#nonveglunch").hide();
+            $("#vegdinner").hide();
+            $("#nonvegdinner").hide();
+            $("#menuitem").hide();
+            $("#Item2_VegLunchCost").val("");
+            $("#Item2_NonVegLunchCost").val("");
+            $("#Item2_VegDinnerCost").val("");
+            $("#Item2_NonVegDinnerCost").val("");
+            $("#Item2_Menuwiththenoofitems").val("");
+        }
+    }
+</script>
 
+@*@using (Html.BeginForm("AllVendors", "Vendors", FormMethod.Post, new { enctype = "multipart/form-data",@class="form-horizontal" }))
+{*@
 <div id="content">
         <div class="inner">
             <div class="row">
@@ -243,7 +274,7 @@
                                                     <label class="control-label col-lg-4">E-mail</label>
                                                     <div class="col-lg-4">
                                                         @*<input type="text" id="email" name="name" placeholder="Email" class="form-control">*@
-                                                        @Html.TextBoxFor(model => this.Model.Item1.EmailId, new { @class = "form-control", placeholder = "Enter Email ID" , @onchange = "check()" })   <strong><span id="label" style="font-size:medium"></span></strong>
+                                                        @Html.TextBoxFor(model => this.Model.Item1.EmailId, new { @class = "form-control", placeholder = "Enter Email ID", @onchange = "check()" })   <strong><span id="label" style="font-size:medium"></span></strong>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -279,7 +310,7 @@
                                                     <div class="col-lg-4">
                                                         @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Eg:Banquet Hall,Function Hall,..">*@
                                                         @*@Html.TextBoxFor(model => this.Model.Item2.VenueType, new { @class = "form-control", placeholder = "Eg:Banquet Hall,Function Hall,.." })*@
-                                                        @Html.DropDownListFor(model => this.Model.Item2.VenueType, new SelectList(new[] { "Select Venue Type", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control" })
+                                                        @Html.DropDownListFor(model => this.Model.Item2.VenueType, new SelectList(new[] { "Select Venue Type", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control" ,@onchange="return itemsdisable();" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -348,7 +379,7 @@
                                                         @Html.TextBoxFor(model => this.Model.Item2.Maximumcapacity, new { @class = "form-control", placeholder = "Enter Maximum capacity" })
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="veglunch">
                                                     <label class="control-label col-lg-4">Veg Lunch Price Per Plate</label>
 
                                                     <div class="col-lg-4">
@@ -357,7 +388,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" id="nonveglunch">
                                                     <label class="control-label col-lg-4">Non-Veg Lunch Price Per Plate</label>
                                                     <div class="col-lg-4">
                                                         @*<input type="text" id="exp" name="name" class="form-control" placeholder="Enter Price">*@
@@ -365,7 +396,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" id="vegdinner">
                                                     <label class="control-label col-lg-4">Veg Dinner Price Per Plate</label>
 
                                                     <div class="col-lg-4">
@@ -374,7 +405,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group" id="nonvegdinner">
                                                     <label class="control-label col-lg-4">Non-Veg Dinner Price Per Plate</label>
                                                     <div class="col-lg-4">
                                                         @*<input type="text" id="exp" name="name" class="form-control" placeholder="Enter Price">*@
@@ -430,7 +461,7 @@
                                                         @Html.DropDownListFor(model => this.Model.Item2.Wifi, new SelectList(new[] { "Select Availability", "Yes", "No" }), new { @class = "form-control" })
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" id="menuitem">
                                                     <label class="control-label col-lg-4">Menu with the no. of items</label>
 
                                                     <div class="col-lg-4">
@@ -514,8 +545,9 @@
                                                     <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
 
                                                     <input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">
-
-                                                    <button formaction="~/Admin/Vendors/AllVendors" type="submit" class="btn btn-success" id="btnback"> Back To List </button>
+                                                    @*<button type="submit" formaction="~/Admin/Vendors/AllVendors">Back</button>
+                                                    <input  type="submit" formaction="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback" value="Back To List"/>*@ 
+                                                    <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
                                                 </div>
                                                 <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
                                                     </form>
@@ -529,6 +561,7 @@
             </div>
         </div>
     </div>
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

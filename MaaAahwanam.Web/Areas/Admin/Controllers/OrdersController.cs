@@ -7,6 +7,7 @@ using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.IO;
+using MaaAahwanam.Repository.db;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -15,14 +16,15 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         OrderService orderservice = new OrderService();
         public ActionResult AllOrders()
         {
-            ViewBag.OrdersList = orderservice.OrderList();
+            
+            ViewBag.OrdersList = orderservice.OrderList().OrderByDescending(m => m.OrderId);
             return View();
         }
         public ActionResult OrderDetails(string id)
         {
             if (id!=null)
             {
-                ViewBag.OrderDetailsList = orderservice.OrderDetailServivce(long.Parse(id)).OrderByDescending(m => m.UpdatedDate);
+                ViewBag.OrderDetailsList = orderservice.OrderDetailServivce(long.Parse(id));
                 ViewBag.orderid = id;
                 return View();
             }
@@ -30,3 +32,5 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
 	}
 }
+
+

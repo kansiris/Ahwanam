@@ -50,7 +50,9 @@ namespace MaaAahwanam.Repository.db
 
         public long GetCommentDetail(string id)
         {
+            
             return _dbContext.Comment.Where(m => m.ServiceId == id).Select(r => r.CommentId).FirstOrDefault();
+           
         }
 
         public Comment InsertComment(Comment comment)

@@ -176,7 +176,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             if (Command == "add")
             {
                 vendorMaster.Id = long.Parse(id);
-                vendorsBeautyService = vendorBeautyServicesService.AddNewVenue(vendorsBeautyService, vendorMaster);
+                vendorsBeautyService = vendorBeautyServicesService.AddNewBeautyService(vendorsBeautyService, vendorMaster);
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorsBeautyService.Id;
                 vendorImage.UpdatedBy = ValidUserUtility.ValidUser();
