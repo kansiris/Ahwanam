@@ -46,9 +46,19 @@ namespace MaaAahwanam.Service
             return dashBoardRepository.GetServiceComments(id);
         }
 
+        public List<sp_QuotationComments_Result> GetQuotationComments(long id)
+        {
+            return dashBoardRepository.GetQuotationComments(id);
+        }
+
         public long GetCommentId(string id)
         {
             return dashBoardRepository.GetCommentDetail(id);
+        }
+
+        public long GetQuotationCommentId(string id)
+        {
+            return dashBoardRepository.GetQuotationCommentDetail(id);
         }
 
         public string GetServiceType(long id)

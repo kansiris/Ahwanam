@@ -61,6 +61,9 @@
           <Parameter Name="OrderBy" Type="bigint" Mode="In" />
         </Function>
         <Function Name="sp_ordersdisplay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_QuotationComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="sp_ServiceComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ServiceId" Type="bigint" Mode="In" />
         </Function>
@@ -120,9 +123,6 @@
           <FunctionImport Name="sp_ServiceComments" ReturnType="Collection(MaaAahwanamModel.sp_ServiceComments_Result)">
           <Parameter Name="ServiceId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="sp_Servicedetails" ReturnType="Collection(MaaAahwanamModel.sp_Servicedetails_Result)">
-          <Parameter Name="RequestId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="sp_Tickets" ReturnType="Collection(MaaAahwanamModel.sp_Tickets_Result)">
           <Parameter Name="TicketId" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -145,7 +145,13 @@
           <Parameter Name="TicketId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_AllOrders" ReturnType="Collection(MaaAahwanamModel.sp_AllOrders_Result)">
-            <Parameter Name="id" Mode="In" Type="Int64" />
+          <Parameter Name="id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Servicedetails" ReturnType="Collection(MaaAahwanamModel.sp_Servicedetails_Result)">
+          <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_QuotationComments" ReturnType="Collection(MaaAahwanamModel.sp_QuotationComments_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -320,14 +326,6 @@
           <Property Type="String" Name="FirstName" Nullable="true" />
           <Property Type="String" Name="LastName" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_Servicedetails_Result">
-          <Property Type="Int64" Name="ResponseId" Nullable="false" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="Preferences" Nullable="true" />
-          <Property Type="Decimal" Name="Budget" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
-        </ComplexType>
         <ComplexType Name="sp_Tickets_Result">
           <Property Type="String" Name="Msg" Nullable="true" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
@@ -402,6 +400,24 @@
           <Property Type="DateTime" Name="OrderDate" Nullable="true" Precision="23" />
           <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_Servicedetails_Result">
+          <Property Type="Int64" Name="ResponseId" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Preferences" Nullable="true" />
+          <Property Type="Decimal" Name="Budget" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Type" Nullable="true" />
+          <Property Type="Int64" Name="RequestId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_QuotationComments_Result">
+          <Property Type="String" Name="CommentDetails" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="Int64" Name="CommentId" Nullable="false" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -645,18 +661,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_Servicedetails" FunctionName="MaaAahwanamModel.Store.sp_Servicedetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_Servicedetails_Result">
-                <ScalarProperty Name="ResponseId" ColumnName="ResponseId" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Preferences" ColumnName="Preferences" />
-                <ScalarProperty Name="Budget" ColumnName="Budget" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_Tickets" FunctionName="MaaAahwanamModel.Store.sp_Tickets">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_Tickets_Result">
@@ -761,6 +765,32 @@
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Servicedetails" FunctionName="MaaAahwanamModel.Store.sp_Servicedetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_Servicedetails_Result">
+                <ScalarProperty Name="ResponseId" ColumnName="ResponseId" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Preferences" ColumnName="Preferences" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_QuotationComments" FunctionName="MaaAahwanamModel.Store.sp_QuotationComments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_QuotationComments_Result">
+                <ScalarProperty Name="CommentDetails" ColumnName="CommentDetails" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
