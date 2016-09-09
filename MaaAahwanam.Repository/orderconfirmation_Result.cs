@@ -17,5 +17,6 @@ namespace MaaAahwanam.Repository
         public string Address { get; set; }
         public string Landmark { get; set; }
         public decimal PerunitPrice { get; set; }
+        public string image { get; set; }
     }
 }
