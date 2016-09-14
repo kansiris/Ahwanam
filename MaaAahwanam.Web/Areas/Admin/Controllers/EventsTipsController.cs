@@ -140,6 +140,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
-        
+
+        public ActionResult AllRecords()
+        {
+            var list = eventsandtipsService.EventsandTipsList();
+            ViewBag.EventsandTipsList = list;
+            return View();
+        }
     }
 	}

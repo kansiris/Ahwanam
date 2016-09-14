@@ -19,7 +19,12 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (id != null)
             {
-                ViewBag.service = dashBoardService.GetServiceDetailService(long.Parse(id));
+                var record = dashBoardService.GetServiceDetailService(long.Parse(id));
+                ViewBag.service = record;
+                foreach (var item in record)
+                {
+                    ViewBag.type = item.Type;
+                }
                 ViewBag.comments = dashBoardService.GetServiceComments(long.Parse(id));
                 ViewBag.commentscount = dashBoardService.GetServiceComments(long.Parse(id)).Count;
                 ViewBag.id = id;
@@ -111,13 +116,13 @@ namespace MaaAahwanam.Web.Controllers
                 
                 
             }
-            return View("confirmation",serviceid);
+            return View("confirmation");
         }
 
         public ActionResult confirmation(string id)
         {
             ServiceRequest serviceRequest = dashBoardService.UpdateService(long.Parse(id));
-            return View("confirmation");
+            return View();
         }
     }
 }

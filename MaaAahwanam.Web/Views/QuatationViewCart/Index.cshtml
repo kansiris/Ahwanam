@@ -99,7 +99,7 @@
                         foreach (var item in ViewBag.service)
                         {
                             <tr>
-                                <td><input type="radio" name="quatation" id="chkselection"/></td>
+                                <td><input type="radio" name="quatation" id="chkselection" value="@item.ResponseId"/></td>
                                 <td>@i</td>
                                 <td><a href="#quatation" onclick="displaypopup('id @i','id @j')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
                                 <td>
@@ -293,22 +293,27 @@
     //}
 
     function valid() {
-            //var url = window.location.href;
+            var url = window.location.href;
             var abc = $("#serviceid").html();
-           // alert(abc);
+            var check1 = $('input[name=quatation]:checked').val();
 
-            //var value = url.substring(url.lastIndexOf('=') + 1);
-
+            var value = url.substring(url.lastIndexOf('=') + 1);
+            //alert(value);
             var check = $('input[name=quatation]:checked').length;
-
             if (check == 0) {
                 alert("Select Quotation and Click On Pay")
             }
             if (check == 1) {
-                if (abc != 0) {
-                    alert(abc);
-                    window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
-                }
+                //if (abc != 0) {
+                //    alert(abc);
+                //    window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
+                //}
+                var jqxhr = $.post(url, { command: "Pay" }, function () {
+                    //if (abc != 0) {
+                            //alert(abc);
+                            window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
+                        //}
+                })
             }
     }
     //var jqxhr = $.post(url, { command: "Pay" }, function () {
@@ -344,7 +349,7 @@
 
 <script>
     function enable() {
-        alert("hi");
+        //alert("hi");
         $("#heading").css({ "display": "block" });
     }
 </script>

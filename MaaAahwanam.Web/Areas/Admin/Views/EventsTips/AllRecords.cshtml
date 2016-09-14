@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
+}
+@section header{
+    <!-- PAGE LEVEL STYLES -->
+    <link href="~/Assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <!-- END PAGE LEVEL  STYLES -->
+}
+<form class="form-horizontal">
+    <div id="content">
+        <div class="inner">
+            <div class="row">
+                <div class="col-lg-12" align="center">
+                    <h2> Events & Tips </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="tab-content" id="images">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id="collapse2" class="body collapse in">
+
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover"  id="dataTables-example">
+                                                    @*<h5><b><u> Available Designs </u></b></h5>*@
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Image</th>
+                                                            <th>Type</th>
+                                                            <th>Title</th>
+                                                            <th>Person</th>
+                                                            <th>Location,Phone</th>
+                                                            <th>Price</th>
+                                                            <th>Event StartDate - Event EndDate</th>
+                                                            <th>Operations</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewBag.EventsandTipsList != null)
+                            {
+                                foreach (var item in ViewBag.EventsandTipsList)
+                                {
+                                                <tr>
+                                                    <td>
+                                                        <a id="example7" title="Lorem ipsum dolor sit amet">
+                                                            @if (item.cropedimage != null && item.cropedimage != "")
+                                                {
+                                        <img width="100" height="100" src="~/EventsAndTipsimages/@item.cropedimage" alt="" />
+                                                }
+                                                            @if (item.cropedimage == null || item.cropedimage == "")
+                                                {
+                                        <img width="100" height="100" src="~/EventsAndTipsimages/@item.Image" alt="" />
+                                                }
+
+                                                        </a>
+                                                    </td>
+                                                    <td><label class="control-label col-lg-4">@item.Type</label></td>
+                                                    <td><label class="control-label col-lg-4">@item.Title</label></td>
+                                                    <td><label class="control-label col-lg-4">@item.Person</label></td>
+                                                    <td><label class="control-label col-lg-4">@item.Location,<br />@item.Phone</label></td>
+                                                    <td><label class="control-label col-lg-4">@item.Price</label></td>
+
+                                                    <td><label class="control-label col-lg-4">@item.Eventstartdate.ToShortDateString() - @item.Eventenddate.ToShortDateString()</label></td>
+                                                    <td>
+                                                        <a href="~/Admin/EventsTips/Index?id=@item.EventId" class="btn btn-default btn-xs" onclick="return edit()">Edit</a>  || @*<input type="submit" class="btn btn-default btn-xs" value="Edit" name="Command" formaction="~/Admin/EventsTips/Index?id=@item.EventId"*@
+                                                        <a href="#" class="btn btn-default btn-xs">Delete</a>
+                                                    </td>
+                                                    
+                                                </tr>
+                                }
+                            }
+                                                        @if (ViewBag.EventsandTipsList == null)
+                            {
+                                                <tr>
+                                                    <td colspan="7">NO Records</td>
+                                                </tr>
+                            }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+</form>
+
+@section Bottom{
+    <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+    <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+}

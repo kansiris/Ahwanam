@@ -150,6 +150,38 @@
     }
 </script>
 
+
+<script>
+    function itemsdisable1() {
+        var type1 = $("#Item2_VenueType").val();
+        var type2 = $("#Item2_Food").val();
+        if (type1 == 'Banquet Hall') {
+            if (type2 == 'Veg') {
+                $("#veglunch").show();
+                $("#nonveglunch").hide();
+                $("#vegdinner").show();
+                $("#nonvegdinner").hide();
+            }
+            else {
+                $("#veglunch").hide();
+                $("#nonveglunch").show();
+                $("#vegdinner").hide();
+                $("#nonvegdinner").show();
+            }
+        }
+        
+        else {
+            
+            $("#menuitem").hide();
+            $("#Item2_VegLunchCost").val("");
+            $("#Item2_NonVegLunchCost").val("");
+            $("#Item2_VegDinnerCost").val("");
+            $("#Item2_NonVegDinnerCost").val("");
+            $("#Item2_Menuwiththenoofitems").val("");
+        }
+    }
+</script>
+
 @*@using (Html.BeginForm("AllVendors", "Vendors", FormMethod.Post, new { enctype = "multipart/form-data",@class="form-horizontal" }))
 {*@
 <div id="content">
@@ -306,11 +338,24 @@
 
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-4">Venue Type</label>
-
                                                     <div class="col-lg-4">
                                                         @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Eg:Banquet Hall,Function Hall,..">*@
                                                         @*@Html.TextBoxFor(model => this.Model.Item2.VenueType, new { @class = "form-control", placeholder = "Eg:Banquet Hall,Function Hall,.." })*@
-                                                        @Html.DropDownListFor(model => this.Model.Item2.VenueType, new SelectList(new[] { "Select Venue Type", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control" ,@onchange="return itemsdisable();" })
+                                                        @*@Html.DropDownListFor(model => this.Model.Item2.VenueType, new SelectList(new[] { "Select Venue Type", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control" ,@onchange="return itemsdisable();" })*@
+                                                        @Html.DropDownList("s", new SelectList(
+                                                            new List<Object>{
+                                                            new {Text ="Select Venue Type", Value = ""},
+                                                            new { Text ="Banquet Hall", Value = "Banquet Hall"  },
+                                                            new { Text ="Function Hall", Value = "Function Hall" },
+                                                            new { Text ="Convention Hall", Value = "Convention Hall" },
+                                                            new { Text ="Meeting Room", Value = "Meeting Room"  },
+                                                            new { Text ="Open Lawn", Value = "Open Lawn" },
+                                                            new { Text ="Roof Top", Value = "Roof Top" },
+                                                            new { Text ="Others", Value = "Others" },
+                                                        },
+                                                    "value", "text"), new { @class = "validate[required] form-control", @multiple = "multiple", @style = "height:100px", @id = "ddlservice", @onchange = "GetSelectedTextValue(this)" })
+                                                        @Html.HiddenFor(model => this.Model.Item2.VenueType, new { @id = "hdnservices" })
+                                                        <p>Use Ctlr + for mutliple selection</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -321,7 +366,7 @@
                                                                 <option>Veg</option>
                                                                 <option>Non-Veg</option>
                                                             </select>*@
-                                                        @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control" })
+                                                        @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control",@onchange= "itemsdisable1()" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -603,7 +648,24 @@
         }
     </script>
 
-
+<script>
+    ddlservice
+    function GetSelectedTextValue(value) {
+        var message = "";
+        var slength = $('#ddlservice :selected').length;
+        var selecteditems = $('#ddlservice :selected')
+        var sv = "";
+        for (var i = 0; i < slength; i++) {
+            if (sv != "" ) {
+                sv = sv + ',' + selecteditems[i].value;
+            }
+            else {
+                sv = selecteditems[i].value;
+            }
+        }
+        document.getElementById('hdnservices').value = sv;
+    }
+</script>
 
     @section Bottom{
         <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
