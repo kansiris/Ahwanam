@@ -25,7 +25,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     ViewBag.type = item.Type;
                 }
-                ViewBag.comments = dashBoardService.GetServiceComments(long.Parse(id));
+                ViewBag.comments = dashBoardService.GetServiceComments(long.Parse(id)).OrderByDescending(m => m.UpdatedDate);
                 ViewBag.commentscount = dashBoardService.GetServiceComments(long.Parse(id)).Count;
                 ViewBag.id = id;
                 serviceid = id;
@@ -35,7 +35,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.id = serviceid;
                 ViewBag.rid = rid;
                 ViewBag.service = dashBoardService.GetServiceDetailService(long.Parse(serviceid));
-                ViewBag.comments = dashBoardService.GetQuotationComments(long.Parse(rid));
+                ViewBag.comments = dashBoardService.GetQuotationComments(long.Parse(rid)).OrderByDescending(m => m.UpdatedDate);
                 ViewBag.commentscount = dashBoardService.GetQuotationComments(long.Parse(rid)).Count;
             }
             return View();
@@ -52,12 +52,14 @@ namespace MaaAahwanam.Web.Controllers
                 comment.UpdatedBy = (int)user.UserId;
                 long count = dashBoardService.GetCommentService(rid, comment.ServiceType);
                 
-                if (count==0)
-                {
+                
                     if (comment.ServiceType == "Quotation")
+                    {
+                    if (count == 0)
                     {
                         comment.ServiceId = rid;
                         comment = dashBoardService.InsertCommentService(comment);
+                    }
                         commentDetail.CommentId = dashBoardService.GetQuotationCommentId(rid); //comment.CommentId;
                         commentDetail.UserLoginId = (int)user.UserId;
                         commentDetail.UpdatedBy = (int)user.UserId;
@@ -70,7 +72,10 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     else
                     {
+                    if (count == 0)
+                    {
                         comment = dashBoardService.InsertCommentService(comment);
+                    }
                         commentDetail.CommentId = dashBoardService.GetCommentId(id); //comment.CommentId;
                         commentDetail.UserLoginId = (int)user.UserId;
                         commentDetail.UpdatedBy = (int)user.UserId;
@@ -81,7 +86,7 @@ namespace MaaAahwanam.Web.Controllers
                         }
                         return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart", new { id = id, rid = "" }) + "'</script>");
                     }
-                }
+                
                 //if (comment.CommentId != 0)
                 //{
                     
@@ -116,7 +121,7 @@ namespace MaaAahwanam.Web.Controllers
                 
                 
             }
-            return View("confirmation");
+            return View();
         }
 
         public ActionResult confirmation(string id)

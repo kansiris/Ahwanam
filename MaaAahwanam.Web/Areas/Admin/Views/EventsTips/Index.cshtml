@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/css/bootstrap-fileupload.min.css" />
 <link href="~/CSSWeb/css/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="~/CSSWeb/js/jquery.datetimepicker.js"></script>
+<script src="~/CSSWeb/js/jquery-1.9.1.js"></script>
     <!-- END PAGE LEVEL  STYLES -->
 }
 
@@ -136,6 +137,12 @@
                                                     @Html.TextBoxFor(model => model.Eventenddate, new { @class = "form-control", placeholder = "Enter Event End Date", @id = "datetimepicker6" }) <p>Format:dd/mm/yyyy</p>
                                                 </div>
                                             </div>
+
+                                            <div class="event-date">
+                                                <label>Event Start Date <span>*</span></label>
+                                                <input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker1">
+                                            </div>
+
                                             @*<div class="form-group">
                                                     <label class="control-label col-lg-4">Upload Design</label>
                                                     <div class="col-lg-8">
@@ -152,6 +159,7 @@
                                                         </div>
                                                     </div>
                                                 </div>*@
+                                            
                                             <div class="form-group">
                                                 <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
                                                 <div class="col-lg-4">
@@ -160,7 +168,7 @@
                                                 </div>
                                             </div>
 
-
+                                           
                                             <div class="form-group">
                                                 <label for="tags" class="control-label col-lg-4">Preview</label>
                                                 <div class="col-lg-4">
@@ -206,7 +214,17 @@
                                 </div>
                                 <br />
                                 <br />
+                                
                                 <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <a href="#" class="btn btn-default" id="dp4" data-date-format="yyyy-mm-dd" onclick="dates()">Start date</a>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
 
                                   @*  <table class="table table-striped">
                                         @*<h5><b><u> Available Designs </u></b></h5>
@@ -282,6 +300,8 @@
     }
 </script>*@
 
+
+
 <script>
     window.onload = function () {
         $("#eventstart").hide();
@@ -298,56 +318,55 @@
         }
     </script>
 
-<script type="text/javascript" src="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.css">
+<script>
+        /*
+        window.onerror = function(errorMsg) {
+            $('#console').html($('#console').html()+'<br>'+errorMsg)
+        }*/
+        //$.datetimepicker.setLocale('en');
 
+        //$('#datetimepicker_format').datetimepicker({ value: '2015/12/12 05:03', format: $("#datetimepicker_format_value").val() });
+        //$("#datetimepicker_format_change").on("click", function (e) {
+        //    $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
+        //});
+        //$("#datetimepicker_format_locale").on("change", function (e) {
+        //    $.datetimepicker.setLocale($(e.currentTarget).val());
+        //});
 
-<script type='text/javascript'>
-        $(function () {
-            var setMinTime = "";
-            var today = new Date();
-            var lastDate = new Date(today.getFullYear(), today.getMonth(0) + 1, 31);
-            $('#Eventstartdate').datetimepicker({
-                inline: false,
-                lang: 'en',
-                startDate: '-1m',
-                endDate: lastDate,
-                timepicker: false,
-                format: 'd/m/Y',
-                formatDate: 'Y/m/d',
-            });
+        // event start date
+        $('#datetimepicker1').datetimepicker({
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            formatDate: 'Y/m/d',
         });
+        // event end date
+        //$('#datetimepicker2').datetimepicker({
+        //    lang: 'en',
+        //    timepicker: false,
+        //    format: 'd/m/Y',
+        //    formatDate: 'Y/m/d',
+        //});
+        //// event start time
+        //$('#datetimepicker3').datetimepicker({
+        //    datepicker: false,
+        //    format: 'H:i',
+        //    step: 5
+        //});
+        //// event end time
+        //$('#datetimepicker4').datetimepicker({
+        //    datepicker: false,
+        //    format: 'H:i',
+        //    step: 5
+        //});
 </script>
 
-@*<script>
-        $('#datetimepicker_format').datetimepicker({ value: '2015/12/12 05:03', format: $("#datetimepicker_format_value").val() });
-        $("#datetimepicker_format_change").on("click", function (e) {
-            $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
-        });
-        $("#datetimepicker_format_locale").on("change", function (e) {
-            $.datetimepicker.setLocale($(e.currentTarget).val());
-        });
-
-        
-        $('#datetimepicker5').datetimepicker({
-            lang: 'en',
-            timepicker: false,
-            format: 'd/m/Y',
-            formatDate: 'Y/m/d',
-        });
-        $('#datetimepicker6').datetimepicker({
-            lang: 'en',
-            timepicker: false,
-            format: 'd/m/Y',
-            formatDate: 'Y/m/d',
-        });
-</script>*@
 
 @section Bottom{
     <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
     <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
+    <script src="~/Assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
     <!-- PAGE LEVEL SCRIPTS -->
