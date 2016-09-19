@@ -112,7 +112,7 @@ namespace MaaAahwanam.Repository.db
 
         public ServiceResponse GetQuotationList(long id)
         {
-            return _dbContext.ServiceResponse.Where(m => m.RequestId == id).FirstOrDefault();
+            return _dbContext.ServiceResponse.Where(m => m.ResponseId == id).FirstOrDefault();
         }
 
         public OrdersServiceRequest UpdateOrdersServiceRequest(long id,OrdersServiceRequest ordersServiceRequest)

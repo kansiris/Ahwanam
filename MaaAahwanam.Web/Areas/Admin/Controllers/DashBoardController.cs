@@ -28,6 +28,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             ViewBag.orderscount = dashboardService.OrdersCountService();
             ViewBag.orders = orderService.OrderList().OrderByDescending(m=>m.OrderDate).Take(10);
             ViewBag.users = othersService.AllRegisteredUsersDetails().OrderByDescending(m=>m.RegDate).Take(4);
+            ViewBag.notificationcount = othersService.Notifications().Count();
             //UserDetail userdetail = dashboardService.AdminNameService(long.Parse(id));
             //ViewBag.admin = userdetail.FirstName + " " + userdetail.LastName;
             ViewBag.admin = "admin";

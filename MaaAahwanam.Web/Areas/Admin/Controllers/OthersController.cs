@@ -147,5 +147,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
+
+        public ActionResult Notification()
+        {
+            ViewBag.notification = othersService.Notifications().OrderByDescending(m=>m.DateandTime);
+            return View();
+        }
 	}
 }

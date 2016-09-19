@@ -21,10 +21,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var record = dashBoardService.GetServiceDetailService(long.Parse(id));
                 ViewBag.service = record;
-                foreach (var item in record)
-                {
-                    ViewBag.type = item.Type;
-                }
+               
                 ViewBag.comments = dashBoardService.GetServiceComments(long.Parse(id)).OrderByDescending(m => m.UpdatedDate);
                 ViewBag.commentscount = dashBoardService.GetServiceComments(long.Parse(id)).Count;
                 ViewBag.id = id;
@@ -42,7 +39,7 @@ namespace MaaAahwanam.Web.Controllers
         }
         
         [HttpPost]
-        public ActionResult Index(string id, string command, CommentDetail commentDetail, Comment comment,string rid)
+        public ActionResult Index(string id, string command, CommentDetail commentDetail, Comment comment,string rid,string selected)
         {
             if (command == "Submit")
             {
@@ -55,36 +52,36 @@ namespace MaaAahwanam.Web.Controllers
                 
                     if (comment.ServiceType == "Quotation")
                     {
-                    if (count == 0)
-                    {
-                        comment.ServiceId = rid;
-                        comment = dashBoardService.InsertCommentService(comment);
-                    }
-                        commentDetail.CommentId = dashBoardService.GetQuotationCommentId(rid); //comment.CommentId;
-                        commentDetail.UserLoginId = (int)user.UserId;
-                        commentDetail.UpdatedBy = (int)user.UserId;
-                        commentDetail = dashBoardService.InsertCommentDetailService(commentDetail);
-                        if (commentDetail.CommentDetId != 0)
+                        if (count == 0)
                         {
-                            return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart",new { id = "", rid=rid}) + "'</script>");
+                            comment.ServiceId = rid;
+                            comment = dashBoardService.InsertCommentService(comment);
                         }
-                        return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart", new { id = "", rid = rid }) + "'</script>");
+                            commentDetail.CommentId = dashBoardService.GetQuotationCommentId(rid); //comment.CommentId;
+                            commentDetail.UserLoginId = (int)user.UserId;
+                            commentDetail.UpdatedBy = (int)user.UserId;
+                            commentDetail = dashBoardService.InsertCommentDetailService(commentDetail);
+                            if (commentDetail.CommentDetId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart",new { id = "", rid=rid}) + "'</script>");
+                            }
+                                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart", new { id = "", rid = rid }) + "'</script>");
                     }
                     else
                     {
-                    if (count == 0)
-                    {
-                        comment = dashBoardService.InsertCommentService(comment);
-                    }
-                        commentDetail.CommentId = dashBoardService.GetCommentId(id); //comment.CommentId;
-                        commentDetail.UserLoginId = (int)user.UserId;
-                        commentDetail.UpdatedBy = (int)user.UserId;
-                        commentDetail = dashBoardService.InsertCommentDetailService(commentDetail);
-                        if (commentDetail.CommentDetId != 0)
+                        if (count == 0)
                         {
-                            return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart", new { id = id, rid = "" }) + "'</script>");
+                            comment = dashBoardService.InsertCommentService(comment);
                         }
-                        return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart", new { id = id, rid = "" }) + "'</script>");
+                            commentDetail.CommentId = dashBoardService.GetCommentId(id); //comment.CommentId;
+                            commentDetail.UserLoginId = (int)user.UserId;
+                            commentDetail.UpdatedBy = (int)user.UserId;
+                            commentDetail = dashBoardService.InsertCommentDetailService(commentDetail);
+                            if (commentDetail.CommentDetId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Comment Uploaded');location.href='" + @Url.Action("index", "QuatationViewCart", new { id = id, rid = "" }) + "'</script>");
+                            }
+                                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("index", "QuatationViewCart", new { id = id, rid = "" }) + "'</script>");
                     }
                 
                 //if (comment.CommentId != 0)
@@ -96,9 +93,9 @@ namespace MaaAahwanam.Web.Controllers
             {
                 OrdersServiceRequest ordersServiceRequest = new OrdersServiceRequest();
                 Payments_Requests payments_Requests = new Payments_Requests();
-                ServiceResponse serviceResponse = dashBoardService.GetService(long.Parse(serviceid));
+                ServiceResponse serviceResponse = dashBoardService.GetService(long.Parse(selected));
                 //OrdersServiceRequest record insertion
-                ordersServiceRequest.ResponseId = serviceResponse.ResponseId;
+                ordersServiceRequest.ResponseId = long.Parse(id);
                 ordersServiceRequest.TotalPrice = serviceResponse.Amount;
                 ordersServiceRequest.UpdatedBy = ValidUserUtility.ValidUser();
                 ordersServiceRequest.UpdatedDate = DateTime.Now;
@@ -114,12 +111,12 @@ namespace MaaAahwanam.Web.Controllers
                 payments_Requests = dashBoardService.AddNewPaymentRequest(payments_Requests);
                 //Updating Payment ID in OrdersServiceRequest table               
                 ordersServiceRequest = dashBoardService.UpdateOrdersServiceRequest(pid, ordersServiceRequest);
-                //if (ordersServiceRequest.ResponseId != 0 && payments_Requests.PaymentID != 0)
-                //{
-                //    return View("confirmation");
-                //}
-                
-                
+                if (ordersServiceRequest.PaymentId != 0 && payments_Requests.PaymentID != 0)
+                {
+                    return View("confirmation");
+                }
+
+
             }
             return View();
         }

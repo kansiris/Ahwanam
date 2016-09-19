@@ -36,23 +36,19 @@
                             <div class="panel-body">
                                 <p><b>Request #:</b> @item.RequestId </p>
                                 <p><b>Event Name #:</b> @item.EventName </p>
-                                <p><b>Event Date #:</b> @item.EventStartDate.ToShortDateString() -- @item.EventEnddate.ToShortDateString()</p>
-                                <p><b>Request Date:</b> @item.UpdatedTime.ToShortDateString()</p>
                                 <p>
-                                    <b>Request Status:</b> @*<a href="#" class="btn btn-primary btn-sm">@this.Model.Item2.Status</a>*@
-
-                                    <select class="selectBox" > @*id="dropstatus" onchange="this.form.submit();"*@
-                                        <option>Choose a Status</option>
-                                        <option>New</option>
-                                        <option>Picked</option>
-                                        <option>Under Processing</option>
-                                        <option>Waiting For Adv Payment</option>
-                                        <option>Waiting For Final Payment</option>
-                                        <option>Finished</option>
-                                        <option>Rejected</option>
-                                    </select>
-
+                                    <b>Event Start Date #:</b> @if (@item.EventStartDate != null)
+                                    { @item.EventStartDate.ToShortDateString() }
+                                    @if (@item.EventStartDate == null)
+                                    { <h4>Not Available</h4> }
                                 </p>
+                                <p>
+                                    <b>Event End Date #:</b> @if (@item.EventEnddate != null)
+                                    { @item.EventEnddate.ToShortDateString() }
+                                    @if (@item.EventEnddate == null)
+                                    { <h4>Not Available</h4> }
+                                </p>
+                                <p><b>Request Date:</b> @item.UpdatedTime.ToShortDateString()</p>
                                 @*<script>
                                         function StatusUpdate(ddid)
                                         {

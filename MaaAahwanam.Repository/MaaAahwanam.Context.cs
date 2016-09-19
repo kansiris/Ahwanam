@@ -131,15 +131,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Testimonials_Result>("MaaAahwanam_Others_Testimonials");
         }
     
-        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
-        {
-            var oIDParameter = oID.HasValue ?
-                new ObjectParameter("OID", oID) :
-                new ObjectParameter("OID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
-        }
-    
         public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetTestimonials_Result>("SP_GetTestimonials");
@@ -256,6 +247,20 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("Id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_QuotationComments_Result>("sp_QuotationComments", idParameter);
+        }
+    
+        public virtual ObjectResult<allnotifications_Result> allnotifications()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<allnotifications_Result>("allnotifications");
+        }
+    
+        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
+        {
+            var oIDParameter = oID.HasValue ?
+                new ObjectParameter("OID", oID) :
+                new ObjectParameter("OID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
         }
     }
 }
