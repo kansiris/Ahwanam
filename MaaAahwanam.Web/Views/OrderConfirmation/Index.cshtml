@@ -66,6 +66,7 @@
                                                 <p>Rs. @item.PerunitPrice</p>
                                                 @*<p>Rs. 1200.00</p>*@
                                             </div>
+
                                         </td>
                                     </tr>
                                 }
@@ -97,6 +98,9 @@
                                         <td><h5>Payble Total</h5></td>
                                         <td align="center"><h5>:</h5></td>
                                         <td><h5>@ViewBag.Total</h5></td>
+                                        <td>
+                                            <input type="hidden" id="hdnoid" value=@ViewBag.Oid />
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -189,6 +193,7 @@
         //var Detdiv = $('#div_Detdiv').html();
         var Detdivobj = {};
         Detdivobj.Detdiv = Detdiv;
+        Detdivobj.oid = document.getElementById("hdnoid").value;
         $.ajax({
             type: "POST",
             url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/OrderConfirmation/EmailOrderConfirmation',
@@ -199,7 +204,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-               alert("it's sent")
+                alert("Order details and feedback form sent to your email id")
             },
             error: function (data) {
                 alert('error')

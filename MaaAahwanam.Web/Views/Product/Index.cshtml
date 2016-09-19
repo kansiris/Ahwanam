@@ -18,7 +18,7 @@
                         <li><i class="breads_arrow"></i></li>
                         @*@if (ViewBag.ServiceType == "InvitationCard")
                             {*@
-                        <li><a href="../product?par=@ViewBag.ServiceType" id="lnkservicetype"> @ViewBag.ServiceType</a></li>
+                        <li><a href="../product?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> @ViewBag.ServiceType</a></li>
                         @*}*@
                         @*@if (ViewBag.ServiceType == "Venue")
                             {
@@ -73,6 +73,13 @@
 
 <section>
     <div class="about_main">
+        <div class="overlay2" style="display: none;">
+            <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+                <img src="/CSSWeb/images/Loader.gif" /><br>
+                <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+            </div>
+        </div>
+
         <div class="pageWidth">
             <aside>
                 <h4>Services</h4>
@@ -172,10 +179,14 @@
                                                     <div class="deal-details">
                                                         <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@item.BusinessName</h4>
                                                         <div class="amount">
-                                                            @if (@item.ServicType.Trim() != "Venue" && @item.ServicType.Trim() != "Catering" && @item.ServicType.Trim() != "InvitationCard")
+                                                            <input type="hidden" id="hdncost" value=@item.ServicType.Trim() />
+                                                            @if(item.ServicType!="Catering"&& item.ServicType != "Venues" && item.ServicType != "InvitationCard")
                                                             {
+                                                            <p id="P_cost">
                                                                 <span class="price">Rs. @item.Cost</span>
-                                                            } <span class="buy">
+                                                            </p>
+                                                            }
+                                                            <span class="buy">
                                                                 <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
                                                             </span>
                                                         </div>
@@ -219,7 +230,7 @@
                     <div class="loadMore">
                         <button name="loadmore" id="LoadMore1" class="btn btn-green more-button"><i class="ti-reload"></i> Load More</button>
                         <div id="abc"><h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1></div>
-                        <div id="imgloadergifdiv"> <img src="~/CSSWeb/ajax-loader.gif" id="imgloadergif" /></div>
+                        @*<div id="imgloadergifdiv"> <img src="~/CSSWeb/ajax-loader.gif" id="imgloadergif" /></div>*@
                     </div>
                 </div>
             </article>
@@ -240,6 +251,11 @@
 {
     <script type="text/javascript">
         window.onload = function () {
+            //if(document.getElementById("hdncost").value=='Catering')
+            //{
+            //    //alert('hi');
+            //    $("#P_cost").css("display", "none");
+            //}
             $("#abc").hide();
             $("#imgloadergifdiv").hide();
             if(@Model.Count==0)
@@ -268,12 +284,16 @@
                 var a= $(".Test").attr('id');
                 document.getElementById(a).className = "active";
             }
+
         };
         /* -------------------------------  Loadmore functionality ------------------------ */
         $('#LoadMore1').on('click', function (e) {
-            $("#imgloadergifdiv").show();
+            //$("#imgloadergifdiv").show();
+            $(".overlay").show();
             $("#LoadMore1").hide();
             var VID = document.getElementById("hiddenlastrecord").value;
+
+            //alert(hdncosttype);
             var servicetypeQuerystring = document.getElementById("hiddenlastrecord2").value;
 
             var servicetype = window.location.search.split("=")[1].split("&")[0];
@@ -296,19 +316,44 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    if (data.length >= 2) {
-                        $.each(data, function (key, value) {
-                            $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
-                            document.getElementById("hiddenlastrecord").value = value.Id;
-                        });
+                    if (data.length == 4) {
+                        var hdncosttype = document.getElementById("hdncost").value;
+                        alert(hdncosttype);
+                        if(hdncosttype!='Catering'||hdncosttype!='Venue'||hdncosttype!='InvitationCard')
+                        {
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                        }
+                        else
+                        {
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                        }
                     }
                     else
                     {
-                        $.each(data, function (key, value) {
-                            $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
-                            document.getElementById("hiddenlastrecord").value = value.Id;
-                        });
-                        $("#LoadMore1").hide();
+                        var hdncosttype = document.getElementById("hdncost").value;
+                        //alert(hdncosttype);
+                        if(hdncosttype!='Catering'||hdncosttype!='Venue'||hdncosttype!='InvitationCard')
+                        {
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                            $("#LoadMore1").hide();
+                        }
+                        else
+                        {
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                            $("#LoadMore1").hide();
+                        }
                     }
                     $(".rate").rate();
                 },
@@ -316,8 +361,9 @@
                     alert('error')
                 }
             });
-            $("#imgloadergifdiv").hide();
+            //$("#imgloadergifdiv").hide();
             $("#LoadMore1").show();
+            $(".overlay").hide();
         });
     </script>
     <script>

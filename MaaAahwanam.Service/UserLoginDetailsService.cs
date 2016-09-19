@@ -59,5 +59,9 @@ namespace MaaAahwanam.Service
         {
             userDetailsRepository.UpdateDP(userloginID, imagename);
         }
+        public string Getusername(long UserId)
+        {
+            return userLoginRepository.username(UserId);
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             ViewBag.Type = user.UserType;
-            var a = ticketsServices.GetIssueTicket();
+            var a = ticketsServices.GetIssueTicket((int)user.UserId);
             ViewBag.Issueticketslist = a;
             return View();
         }

@@ -13,14 +13,19 @@ namespace MaaAahwanam.Service
     {
         IssueTicketRepository issueTicketRepository = new IssueTicketRepository();
 
-        public int TicketsCount()
+        public int TicketsCount(int UserId)
         {
-            int l1 = issueTicketRepository.IssueTicketsList().Count;
+            int l1 = issueTicketRepository.IssueTicketsList(UserId).Count;
             return l1;
         }
-        public List<IssueTicket> GetIssueTicket()
+        public int TicketsCount()
         {
-            return issueTicketRepository.IssueTicketsList();
+            int l1 = issueTicketRepository.IssueTicketsListCounts();
+            return l1;
+        }
+        public List<IssueTicket> GetIssueTicket(int UserId)
+        {
+            return issueTicketRepository.IssueTicketsList(UserId);
         }
 
         public string Insertissueticket(IssueTicket issueTicket)

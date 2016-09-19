@@ -16,6 +16,7 @@ namespace MaaAahwanam.Models
         public string Email { get; set; }
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public long Orderid { get; set; }
         public string Status { get; set; }
     }
 }

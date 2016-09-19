@@ -18,7 +18,15 @@ namespace MaaAahwanam.Web.Controllers
         // GET: /CardInfo/
         public ActionResult Index()
         {
-
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                ViewBag.Userloginstatus = user.UserId;
+            }
+            else
+            {
+                ViewBag.Userloginstatus = 0;
+            }
             ProductInfoService productInfoService = new ProductInfoService();
             Review review = new Review();
             string Servicetype = Request.QueryString["par"];
@@ -35,7 +43,6 @@ namespace MaaAahwanam.Web.Controllers
             var tupleModel = new Tuple<GetProductsInfo_Result, Review>(Productinfo, review);
             return View(tupleModel);
         }
-        [Authorize]
         public ActionResult WriteaRiview([Bind(Prefix = "Item2")] Review review)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -47,7 +54,6 @@ namespace MaaAahwanam.Web.Controllers
 
             //return RedirectToAction("Index", "Signin");
         }
-        [Authorize]
         public JsonResult Addtocart(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -88,7 +94,7 @@ namespace MaaAahwanam.Web.Controllers
                 eventDate.EventId = eventInformation.EventId;
             }
 
-            
+
             EventDatesServices eventDatesServices = new EventDatesServices();
             string message3 = eventDatesServices.SaveEventDates(eventDate);
             return Json(message3);
