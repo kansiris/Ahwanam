@@ -8,6 +8,7 @@ using MaaAahwanam.Service;
 using MaaAahwanam.Repository;
 using MaaAahwanam.Utility;
 using System.IO;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -17,6 +18,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
             int OID = int.Parse(Request.QueryString["oid"]);
+            ViewBag.Oid = OID;
             OrderConfirmationService orderConfirmationService = new OrderConfirmationService();
             List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
             ViewBag.Total =list.Sum(i=>i.PerunitPrice);
@@ -24,16 +26,21 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-        public JsonResult EmailOrderConfirmation(string Detdiv)
+        public JsonResult EmailOrderConfirmation(string Detdiv,string oid)
         {
+
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+            string Username = userLoginDetailsService.Getusername(user.UserId);
             StreamReader reader = new StreamReader(Server.MapPath("../Content/EmailTemplates/TempOrderconfirmation.html"));
             string readFile = reader.ReadToEnd();
             string StrContent = "";
-            StrContent = readFile;
+            StrContent = readFile+ "<h2>Feedback Form</h2>" + "http://localhost:8566/testimonialform?Uid="+ user.UserId+"&Oid="+ oid;
             StrContent = StrContent.Replace("@@MessageDiv@@", Detdiv);
             string Mailmessage = "<Table>" + Detdiv + "</Table>";
+            
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam("saikrishna@xsilica.com", StrContent.ToString(), "Test Order Confirmation");
+            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Test Order Confirmation");
             return Json("Success");
         }
     }

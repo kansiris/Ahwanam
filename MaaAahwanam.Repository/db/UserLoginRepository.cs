@@ -72,5 +72,9 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return userLogin;
         }
+        public string username(long UserId)
+        {
+            return _dbContext.UserLogin.Where(p => p.UserLoginId == UserId).Select(u => u.UserName).FirstOrDefault();
+        }
     }
 }

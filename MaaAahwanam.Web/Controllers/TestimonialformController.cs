@@ -14,13 +14,20 @@ namespace MaaAahwanam.Web.Controllers
         // GET: /Testimonialform/
         public ActionResult Index()
         {
+            int Uid = int.Parse(Request.QueryString["Uid"]);
+            int Oid = int.Parse(Request.QueryString["Oid"]);
+            TempData["Uid"] = Uid;
+            TempData["Oid"] = Oid;
             return View();
         }
 
         public ActionResult Saveform(HttpPostedFileBase file, AdminTestimonial adminTestimonial)
         {
+            
             AdminTestimonialPath adminTestimonialPath = new AdminTestimonialPath();
             TestmonialService testmonialService = new TestmonialService();
+            adminTestimonial.UpdatedBy = (int)TempData["Uid"];
+            adminTestimonial.Orderid = (int)TempData["Oid"];
             testmonialService.Savetestimonial(adminTestimonial);
             adminTestimonialPath.Id = adminTestimonial.Id;
             string fileName1 = "";
@@ -36,7 +43,7 @@ namespace MaaAahwanam.Web.Controllers
                 adminTestimonialPath.ImagePath = filename;
                 testmonialService.Savetestimonialpath(adminTestimonialPath);
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('Submitted successfully!');location.href='" + @Url.Action("Index","Testimonialform") + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('Submitted successfully!');location.href='" + @Url.Action("Index", "Index") + "'</script>");
         }
     }
 }

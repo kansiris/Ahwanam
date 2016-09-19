@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Controllers
     {
         public ActionResult Index()
         {
+            //var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             EventsService eventsService = new EventsService();
             ViewBag.EventsCount = eventsService.EventInformationCount();//Successful Events Count
             ticketsService ticketsService = new ticketsService();
