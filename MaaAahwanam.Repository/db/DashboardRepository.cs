@@ -48,11 +48,23 @@ namespace MaaAahwanam.Repository.db
             return maaAahwanamEntities.sp_ServiceComments(id).ToList();
         }
 
+        public List<sp_QuotationComments_Result> GetQuotationComments(long id)
+        {
+            return maaAahwanamEntities.sp_QuotationComments(id).ToList();
+        }
+
         public long GetCommentDetail(string id)
         {
             
             return _dbContext.Comment.Where(m => m.ServiceId == id).Select(r => r.CommentId).FirstOrDefault();
            
+        }
+
+        public long GetQuotationCommentDetail(string id)
+        {
+
+            return _dbContext.Comment.Where(m => m.ServiceId == id).Select(r => r.CommentId).FirstOrDefault();
+
         }
 
         public Comment InsertComment(Comment comment)

@@ -270,7 +270,22 @@
                                                     <div class="col-lg-4">
                                                         @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Eg:Wedding Favors, Birthday Gifts,..">*@
                                                         @*@Html.TextBoxFor(model => this.Model.Item2.GiftType, new { @class = "form-control", placeholder = "Eg:Wedding Favors, Birthday Gifts,.." })*@
-                                                        @Html.DropDownListFor(model => this.Model.Item2.GiftType, new SelectList(new[] { "Select Gift Type", "Wedding Favors", "Birthday Gifts", "Birthday ReturnGifts", "Engagement Favors", "Theme Gifts", "Special Gifts", "Others" }), new { @class = "form-control", multiple = "multiple" }) <p>Use Ctlr + for mutliple selection</p>
+                                                        @*@Html.DropDownListFor(model => this.Model.Item2.GiftType, new SelectList(new[] { "Select Gift Type", "Wedding Favors", "Birthday Gifts", "Birthday ReturnGifts", "Engagement Favors", "Theme Gifts", "Special Gifts", "Others" }), new { @class = "form-control", multiple = "multiple" }) <p>Use Ctlr + for mutliple selection</p>*@
+                                                        @Html.DropDownList("s", new SelectList(
+                                                            new List<Object>{
+                                                            new {Text ="Select Gift Type", Value = ""},
+                                                            new { Text ="Wedding Favors", Value = "Wedding Favors"  },
+                                                            new { Text ="Birthday Gifts", Value = "Birthday Gifts" },
+                                                            new { Text ="Birthday ReturnGifts", Value = "Birthday ReturnGifts" },
+                                                            new { Text ="Engagement Favors", Value = "Engagement Favors" },
+                                                            new { Text ="Theme Gifts", Value = "Theme Gifts" },
+                                                            new { Text ="Special Gifts", Value = "Special Gifts" },
+                                                            new { Text ="Others", Value = "Others" },
+                                                        },
+                                                    "value", "text"), new { @class = "validate[required] form-control", @multiple = "multiple", @style = "height:100px", @id = "ddlservice", @onchange = "GetSelectedTextValue(this)" })
+                                                        @Html.HiddenFor(model => this.Model.Item2.GiftType, new { @id = "hdnservices" })
+                                                        <p>Use Ctlr + for mutliple selection</p>
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -343,9 +358,8 @@
                                                         <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
                                                     }
                                                     <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
-
-                                                    <input type="submit" id="btncancel" value="Cancel" class="btn btn-danger"
-                                                           formaction="~/Admin/dashboard/dashboard">
+                                                    <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
+                                                    @*<input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
                                                     <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
                                                     @*<button formaction="~/Admin/Vendors/AllVendors" type="submit" class="btn btn-success" id="btnback">Back To List</button>*@
                                                 </div>
@@ -399,6 +413,26 @@
             { alert("Failed!!!");}
             });
         }
+</script>
+
+
+<script>
+    ddlservice
+    function GetSelectedTextValue(value) {
+        var message = "";
+        var slength = $('#ddlservice :selected').length;
+        var selecteditems = $('#ddlservice :selected')
+        var sv = "";
+        for (var i = 0; i < slength; i++) {
+            if (sv != "" ) {
+                sv = sv + ',' + selecteditems[i].value;
+            }
+            else {
+                sv = selecteditems[i].value;
+            }
+        }
+        document.getElementById('hdnservices').value = sv;
+    }
 </script>
 
                 @section Bottom{

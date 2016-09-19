@@ -27,6 +27,7 @@ namespace MaaAahwanam.Web.Controllers
             int id = (int)user.UserId;
             ViewBag.AllOrders = dashBoardService.GetOrdersService(id);
             ViewBag.Services = dashBoardService.GetServicesService(id);
+            
             ViewBag.orderscount = dashBoardService.GetOrdersService(id).Count();
             ViewBag.servicescount = dashBoardService.GetServicesService(id).Count();
             ViewBag.notificationcount = notificationService.GetNotificationService(id).Count();

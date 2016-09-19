@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
-    var i = 0; var j = 0;
+    var i = 1; var j = 0;
 }
 @section Navigation
 {
@@ -28,7 +28,7 @@
 
  <div class="dashInner">
         <div class="order-details">
-            <h2>Quatation ID : <strong><span style="font-size:x-large">@Request.QueryString["id"]</span></strong></h2>
+            <h2>Quatation ID : <strong><span style="font-size:x-large" id="serviceid">@ViewBag.id</span></strong></h2>
             <div class="clear"></div>
         </div>
         <!-- /order-details -->
@@ -88,6 +88,7 @@
                         <th style="width:40%">Description</th>
                         <th style="width:12%">Budget</th>
                         <th style="width:12%">Amount</th>
+                        @*<th style="width:12%" id="heading">Comments</th>*@
                     </tr>
                 </thead>
                 
@@ -98,8 +99,8 @@
                         foreach (var item in ViewBag.service)
                         {
                             <tr>
-                                <td><input type="radio" name="quatation" id="chkselection"/></td>
-                                <td>@(++i)</td>
+                                <td><input type="radio" name="quatation" id="chkselection" value="@item.ResponseId"/></td>
+                                <td>@i</td>
                                 <td><a href="#quatation" onclick="displaypopup('id @i','id @j')" class="green-link ml-center popup-with-move-anim">@item.ResponseId</a></td>
                                 <td>
                                     @if (item.UpdatedDate != null)
@@ -112,7 +113,15 @@
                                 </td>
                                 <td id="id @i">@item.Description</td> <td id="id @j" style="display:none">@item.Preferences</td>
                                 <td>Rs.@item.Budget</td>
-                                <td>Rs.@item.Amount</td>
+                                <td>
+                                    Rs.@item.Amount &nbsp;
+                                    @if (item.Type == "Quotation")
+                                    {
+
+                                        @*<td><a href="~/QuatationViewCart/Index?rid=@item.ResponseId" class="green-link" >Comment</a></td>*@
+                                            <a href="~/QuatationViewCart/Index?rid=@item.ResponseId" class="green-link">Comment</a>
+                                    }
+                                </td>
                             </tr>
                             i++;
                         }
@@ -173,7 +182,7 @@
      <br/><br/>
         <div class="comments-box">
             @*<form id="contact_form" class="form">*@
-                @using (Html.BeginForm("Index", "QuatationViewCart", routeValues: new { id = @ViewBag.id }, method: FormMethod.Post)) //"index", "QuatationViewCart",new { @id="contact_from",@class="form"}
+                @using (Html.BeginForm("Index", "QuatationViewCart", routeValues: new { id = @ViewBag.id,rid=@ViewBag.rid }, method: FormMethod.Post)) //"index", "QuatationViewCart",new { @id="contact_from",@class="form"}
                 {
                 <ul id="contact_form" class="form">
                     <li class="full">
@@ -194,9 +203,10 @@
         </div>
         <!-- /comments-box -->
         <div class="replyStyle comments m-t-30">
-            <h2>Comments <span>(@ViewBag.commentscount)</span></h2>
+           
             @if (ViewBag.comments != null)
             {
+                <h2>Comments <span>(@ViewBag.commentscount)</span></h2>
                 foreach (var item in ViewBag.comments)
                 {
                     <dl class="first-child">
@@ -284,31 +294,44 @@
 
     function valid() {
             var url = window.location.href;
-            
+            var abc = $("#serviceid").html();
+            var check1 = $('input[name=quatation]:checked').val();
+
             var value = url.substring(url.lastIndexOf('=') + 1);
-
+            //alert(value);
             var check = $('input[name=quatation]:checked').length;
-
             if (check == 0) {
                 alert("Select Quotation and Click On Pay")
             }
             if (check == 1) {
+                //if (abc != 0) {
+                //    alert(abc);
+                //    window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
+                //}
                 var jqxhr = $.post(url, { command: "Pay" }, function () {
-                    if (value != url) {
-                        alert(value);
-                        window.location.href = "/QuatationViewCart/confirmation?id=" + value;
-                    }
-                    if (value == url) {
-                        var value1 = url.substring(url.lastIndexOf('/') + 1);
-                        alert(value1);
-                        window.location.href = "/QuatationViewCart/confirmation?id=" + value1;
-                    }
-
+                    //if (abc != 0) {
+                            //alert(abc);
+                            window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
+                        //}
                 })
-                
-
             }
     }
+    //var jqxhr = $.post(url, { command: "Pay" }, function () {
+    //    if (value != url) {
+
+    //        alert(value);
+    //        //window.location.href = "/QuatationViewCart/confirmation";
+    //        window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
+    //    }
+    //    if (value == url) {
+    //        var value1 = url.substring(url.lastIndexOf('/') + 1);
+    //        alert(value1);
+    //        window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
+    //        //window.location.href = "/QuatationViewCart/confirmation?";
+    //    }
+
+
+    //})
 </script>
 
 @if (ViewBag.service.Count == 0)
@@ -324,3 +347,9 @@
     </script>
 }
 
+<script>
+    function enable() {
+        //alert("hi");
+        $("#heading").css({ "display": "block" });
+    }
+</script>

@@ -150,6 +150,38 @@
     }
 </script>
 
+
+<script>
+    function itemsdisable1() {
+        var type1 = $("#Item2_VenueType").val();
+        var type2 = $("#Item2_Food").val();
+        if (type1 == 'Banquet Hall') {
+            if (type2 == 'Veg') {
+                $("#veglunch").show();
+                $("#nonveglunch").hide();
+                $("#vegdinner").show();
+                $("#nonvegdinner").hide();
+            }
+            else {
+                $("#veglunch").hide();
+                $("#nonveglunch").show();
+                $("#vegdinner").hide();
+                $("#nonvegdinner").show();
+            }
+        }
+        
+        else {
+            
+            $("#menuitem").hide();
+            $("#Item2_VegLunchCost").val("");
+            $("#Item2_NonVegLunchCost").val("");
+            $("#Item2_VegDinnerCost").val("");
+            $("#Item2_NonVegDinnerCost").val("");
+            $("#Item2_Menuwiththenoofitems").val("");
+        }
+    }
+</script>
+
 @*@using (Html.BeginForm("AllVendors", "Vendors", FormMethod.Post, new { enctype = "multipart/form-data",@class="form-horizontal" }))
 {*@
 <div id="content">
@@ -306,11 +338,11 @@
 
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-4">Venue Type</label>
-
                                                     <div class="col-lg-4">
                                                         @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Eg:Banquet Hall,Function Hall,..">*@
                                                         @*@Html.TextBoxFor(model => this.Model.Item2.VenueType, new { @class = "form-control", placeholder = "Eg:Banquet Hall,Function Hall,.." })*@
                                                         @Html.DropDownListFor(model => this.Model.Item2.VenueType, new SelectList(new[] { "Select Venue Type", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control" ,@onchange="return itemsdisable();" })
+                                                        @*<p>Use Ctlr + for mutliple selection</p>*@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -321,7 +353,7 @@
                                                                 <option>Veg</option>
                                                                 <option>Non-Veg</option>
                                                             </select>*@
-                                                        @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control" })
+                                                        @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control",@onchange= "itemsdisable1()" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -543,8 +575,8 @@
                                                         <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
                                                     }
                                                     <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
-
-                                                    <input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">
+                                                    <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
+                                                    @*<input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
                                                     @*<button type="submit" formaction="~/Admin/Vendors/AllVendors">Back</button>
                                                     <input  type="submit" formaction="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback" value="Back To List"/>*@ 
                                                     <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>

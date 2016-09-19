@@ -11,15 +11,13 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class sp_Servicedetails_Result
+    public partial class sp_QuotationComments_Result
     {
-        public long ResponseId { get; set; }
+        public string CommentDetails { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string Description { get; set; }
-        public string Preferences { get; set; }
-        public decimal Budget { get; set; }
-        public decimal Amount { get; set; }
-        public string Type { get; set; }
-        public long RequestId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public long CommentId { get; set; }
+        public string ServiceType { get; set; }
     }
 }
