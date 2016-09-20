@@ -80,7 +80,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
                 }
                 
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed!!!');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
                 }
 
             if (Command == "Update")
@@ -133,10 +133,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 eventAndTip = eventsAndTipsService.UpdateEventandTip(eventAndTip, long.Parse(id));
                 if (eventAndTip.EventId != 0)
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
                 }
 
-                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed!!!');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
             }
             return View();
         }

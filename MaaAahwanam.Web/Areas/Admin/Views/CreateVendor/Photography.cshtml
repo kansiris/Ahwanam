@@ -47,6 +47,15 @@
             var url = window.location.href;
             var op = url.substring(url.lastIndexOf('=') + 1);
             var up = window.location.search.substring(1);
+            var hdn = $("#hdnservices").val();
+            if (hdn != '') {
+                var valArr = hdn.split(","), i = 0, size = valArr.length,
+                $options = $('#ddlservice option');
+
+                for (i; i < size; i++) {
+                    $options.filter('[value="' + valArr[i] + '"]').prop('selected', true);
+                }
+            }
             //var stat = up.contains("vid");
             //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
             if (op == 'display') {
@@ -191,21 +200,21 @@
                                                     <label class="control-label col-lg-4">Quotation</label>
                                                     <div class="col-lg-4">
                                                         @*<input type="checkbox" id="Quotation" name="name" value="Quotation" class="uniform" />*@
-                                                        @Html.CheckBoxFor(model => this.Model.Item1.Quotation, new { @style = "height : 25px ;width: 25px" })
+                                                        @Html.CheckBoxFor(model => this.Model.Item1.Quotation, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-4">Bidding</label>
                                                     <div class="col-lg-4">
                                                         @*<input type="checkbox" id="Bidding" name="name" value="Bidding" class="uniform" />*@
-                                                        @Html.CheckBoxFor(model => this.Model.Item1.Bidding, new { @style = "height : 25px ;width: 25px" })
+                                                        @Html.CheckBoxFor(model => this.Model.Item1.Bidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-4">Reverse Bidding</label>
                                                     <div class="col-lg-4">
                                                         @*<input type="checkbox" id="ReverseBidding" name="name" value="ReverseBidding" class="uniform" />*@
-                                                        @Html.CheckBoxFor(model => this.Model.Item1.ReverseBidding, new { @style = "height : 25px ;width: 25px" })
+                                                        @Html.CheckBoxFor(model => this.Model.Item1.ReverseBidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
