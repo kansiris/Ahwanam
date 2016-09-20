@@ -3,7 +3,7 @@ namespace MaaAahwanam.Repository.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class migrations_date_08272016 : DbMigration
+    public partial class migrations_date_09202016 : DbMigration
     {
         public override void Up()
         {
@@ -17,6 +17,7 @@ namespace MaaAahwanam.Repository.Migrations
                         Email = c.String(),
                         UpdatedBy = c.Long(nullable: false),
                         UpdatedDate = c.DateTime(),
+                        Orderid = c.Long(nullable: false),
                         Status = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
