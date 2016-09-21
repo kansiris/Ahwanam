@@ -43,58 +43,59 @@
 </script>
 
 <script>
-        window.onload = function () {
-            var url = window.location.href;
-            var op = url.substring(url.lastIndexOf('=') + 1);
-            var up = window.location.search.substring(1);
-            var hdn = $("#hdnservices").val();
-            if (hdn != '') {
-                var valArr = hdn.split(","), i = 0, size = valArr.length,
-                $options = $('#ddlservice option');
+    window.onload = function () {
+        var url = window.location.href;
+        alert(url);
+        var op = url.substring(url.lastIndexOf('=') + 1);
+        var up = window.location.search.substring(1);
+        var hdn = $("#hdnservices").val();
+        if (hdn != '') {
+            var valArr = hdn.split(","), i = 0, size = valArr.length,
+            $options = $('#ddlservice option');
 
-                for (i; i < size; i++) {
-                    $options.filter('[value="' + valArr[i] + '"]').prop('selected', true);
-                }
-            }
-            //var stat = up.contains("vid");
-            //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
-            if (op == 'display') {
-                //alert("view purpose");
-                $("#btnadd").hide();
-                $('#btn').hide();
-                $("#btncancel").hide();
-                $('#btnback').show();
-                $('.deletelink').hide();
-                $('#fileUpload').hide();
-                $('#msg').hide();
-                $('.form-control').attr("disabled", "disabled");
-            }
-            if (op == 'add') {
-                //alert("Add NEw");
-                $("[id^=Item1]").prop("disabled", true);
-                $("[id^=Item2]").val("");
-                $('#btn').hide();
-                $("#btncancel").show();
-                $('#btnback').hide();
-                $('.deletelink').hide();
-                $('#fileUpload').show();
-                $('#msg').show();
-                $("#btnadd").show();
-                $("#imagesdisplay").hide();
-            }
-            //op == url
-            if (up == 'vid=' + op || op == url) {
-                //alert("other");
-                $('#btn').show();
-                $("#btncancel").show();
-                $('#btnback').hide();
-                $('.deletelink').show();
-                $('#fileUpload').show();
-                $('#msg').show();
-                $('.form-control').removeAttr("disabled");
-                $("#btnadd").hide();
+            for (i; i < size; i++) {
+                $options.filter('[value="' + valArr[i] + '"]').prop('selected', true);
             }
         }
+        //var stat = up.contains("vid");
+        //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
+        if (op == 'display') {
+            //alert("view purpose");
+            $("#btnadd").hide();
+            $('#btn').hide();
+            $("#btncancel").hide();
+            $('#btnback').show();
+            $('.deletelink').hide();
+            $('#fileUpload').hide();
+            $('#msg').hide();
+            $('.form-control').attr("disabled", "disabled");
+        }
+        if (op == 'add') {
+            //alert("Add NEw");
+            $("[id^=Item1]").prop("disabled", true);
+            $("[id^=Item2]").val("");
+            $('#btn').hide();
+            $("#btncancel").show();
+            $('#btnback').hide();
+            $('.deletelink').hide();
+            $('#fileUpload').show();
+            $('#msg').show();
+            $("#btnadd").show();
+            $("#imagesdisplay").hide();
+        }
+        //op == url
+        if (up == 'vid=' + op || op == url) {
+            //alert("other");
+            $('#btn').show();
+            $("#btncancel").show();
+            $('#btnback').hide();
+            $('.deletelink').show();
+            $('#fileUpload').show();
+            $('#msg').show();
+            $('.form-control').removeAttr("disabled");
+            $("#btnadd").hide();
+        }
+    }
 </script>
 <script>
     function Large(obj) {
@@ -121,165 +122,166 @@
     }
 </script>
 
-<div id="content">
-    <div class="inner">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 style="text-align:center"> Beauty Services </h2>
+    <div id="content">
+        <div class="inner">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 style="text-align:center"> Beauty Services </h2>
+                </div>
             </div>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="tab-content" id="images">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div id="collapse2" class="body collapse in">
-                                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="tab-content" id="images">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id="collapse2" class="body collapse in">
 
-                                            @*----------common-----------*@
+                                            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+                                                @*----------common-----------*@
 
 
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Vendor Name</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="businame" name="name" placeholder="Business Name" class="form-control">*@
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Vendor Name</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="businame" name="name" placeholder="Business Name" class="form-control">*@
 
-                                                    @Html.TextBoxFor(model => this.Model.Item1.BusinessName, new { @class = "form-control", placeholder = "Enter Business Name" })
+                                                        @Html.TextBoxFor(model => this.Model.Item1.BusinessName, new { @class = "form-control", placeholder = "Enter Business Name" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Vendor Description</label>
-                                                <div class="col-lg-4">
-                                                    @*<textarea rows="4" id="busidesc" name="name" cols="30" class="form-control"></textarea>*@
-                                                    @*<input type="text" id="busidesc" name="name" placeholder="Description">*@
-                                                    @Html.TextAreaFor(model => this.Model.Item1.Description, new { @class = "form-control", placeholder = "Enter Description", @rows = "3" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Vendor Description</label>
+                                                    <div class="col-lg-4">
+                                                        @*<textarea rows="4" id="busidesc" name="name" cols="30" class="form-control"></textarea>*@
+                                                        @*<input type="text" id="busidesc" name="name" placeholder="Description">*@
+                                                        @Html.TextAreaFor(model => this.Model.Item1.Description, new { @class = "form-control", placeholder = "Enter Description", @rows = "3" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Address</label>
-                                                <div class="col-lg-4">
-                                                    @*<textarea rows="4" id="addr" name="name" cols="30" class="form-control"></textarea>*@
-                                                    @*<input type="text" id="addr" name="name"  placeholder="Address">*@
-                                                    @Html.TextAreaFor(model => this.Model.Item1.Address, new { @class = "form-control", placeholder = "Enter Address", @rows = "3" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Address</label>
+                                                    <div class="col-lg-4">
+                                                        @*<textarea rows="4" id="addr" name="name" cols="30" class="form-control"></textarea>*@
+                                                        @*<input type="text" id="addr" name="name"  placeholder="Address">*@
+                                                        @Html.TextAreaFor(model => this.Model.Item1.Address, new { @class = "form-control", placeholder = "Enter Address", @rows = "3" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Location</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="loc" name="name" placeholder="Location" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Enter Location" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Location</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="loc" name="name" placeholder="Location" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Enter Location" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">City</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="city" name="name" placeholder="City" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.City, new { @class = "form-control", placeholder = "Enter City" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">City</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="city" name="name" placeholder="City" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.City, new { @class = "form-control", placeholder = "Enter City" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">State</label>
-                                                <div class="col-lg-4">
-                                                    @*<select class="form-control" id="state" name="name">
-                                                            <option>Select State</option>
-                                                            <option>Telangana</option>
-                                                            <option>Andhra Pradesh</option>
-                                                        </select>*@
-                                                    @Html.DropDownListFor(model => this.Model.Item1.State, new SelectList(new[] { "Select State", "Telangana", "Andhra Pradesh" }), new { @class = "form-control" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">State</label>
+                                                    <div class="col-lg-4">
+                                                        @*<select class="form-control" id="state" name="name">
+                                                                <option>Select State</option>
+                                                                <option>Telangana</option>
+                                                                <option>Andhra Pradesh</option>
+                                                            </select>*@
+                                                        @Html.DropDownListFor(model => this.Model.Item1.State, new SelectList(new[] { "Select State", "Telangana", "Andhra Pradesh" }), new { @class = "form-control" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">ZIP Code</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="zipcode" name="name" placeholder="Zip Code" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.ZipCode, new { @class = "form-control", placeholder = "Enter Zip Code" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">ZIP Code</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="zipcode" name="name" placeholder="Zip Code" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.ZipCode, new { @class = "form-control", placeholder = "Enter Zip Code" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group" style="align-items:center">
-                                                <label class="control-label col-lg-4">Quotation</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="checkbox" id="Quotation" name="name" value="Quotation" class="uniform" />*@
-                                                    @Html.CheckBoxFor(model => this.Model.Item1.Quotation, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                <div class="form-group" style="align-items:center">
+                                                    <label class="control-label col-lg-4">Quotation</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="checkbox" id="Quotation" name="name" value="Quotation" class="uniform" />*@
+                                                        @Html.CheckBoxFor(model => this.Model.Item1.Quotation, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Bidding</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="checkbox" id="Bidding" name="name" value="Bidding" class="uniform" />*@
-                                                    @Html.CheckBoxFor(model => this.Model.Item1.Bidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Bidding</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="checkbox" id="Bidding" name="name" value="Bidding" class="uniform" />*@
+                                                        @Html.CheckBoxFor(model => this.Model.Item1.Bidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Reverse Bidding</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="checkbox" id="ReverseBidding" name="name" value="ReverseBidding" class="uniform" />*@
-                                                    @Html.CheckBoxFor(model => this.Model.Item1.ReverseBidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Reverse Bidding</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="checkbox" id="ReverseBidding" name="name" value="ReverseBidding" class="uniform" />*@
+                                                        @Html.CheckBoxFor(model => this.Model.Item1.ReverseBidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Contact Person</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="contperson" name="name" placeholder="Contact Person" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.ContactPerson, new { @class = "form-control", placeholder = "Enter Contact Person" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Contact Person</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="contperson" name="name" placeholder="Contact Person" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.ContactPerson, new { @class = "form-control", placeholder = "Enter Contact Person" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Contact Number</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="contno." name="name" placeholder="Contact Number" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.ContactNumber, new { @class = "form-control", placeholder = "Enter Contact Number" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Contact Number</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="contno." name="name" placeholder="Contact Number" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.ContactNumber, new { @class = "form-control", placeholder = "Enter Contact Number" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Landline Number</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="llno." name="name" placeholder="Landline Number" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.LandlineNumber, new { @class = "form-control", placeholder = "Enter Landline Number" })
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Landline Number</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="llno." name="name" placeholder="Landline Number" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.LandlineNumber, new { @class = "form-control", placeholder = "Enter Landline Number" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">E-mail</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="email" name="name" placeholder="Email" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.EmailId, new { @class = "form-control", placeholder = "Enter Email ID" ,@onchange="check()"})   <strong><span id="label" style="font-size:medium"></span></strong>
-                                                    
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Url</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="url" name="name" placeholder="Url" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.Url, new { @class = "form-control", placeholder = "Enter Url" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4" for="dp2">Date of Establishment</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="estdate" name="name" placeholder="Date of Establishment" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.EstablishedYear, new { @class = "form-control", placeholder = "Enter Date of Establishment" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Experience</label>
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" id="exp" name="name" placeholder="Experience" class="form-control">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item1.Experience, new { @class = "form-control", placeholder = "Enter Experience" })
-                                                </div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">E-mail</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="email" name="name" placeholder="Email" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.EmailId, new { @class = "form-control", placeholder = "Enter Email ID" ,@onchange="check()"})   <strong><span id="label" style="font-size:medium"></span></strong>
 
-                                            @*-----------common------------*@
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Url</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="url" name="name" placeholder="Url" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.Url, new { @class = "form-control", placeholder = "Enter Url" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4" for="dp2">Date of Establishment</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="estdate" name="name" placeholder="Date of Establishment" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.EstablishedYear, new { @class = "form-control", placeholder = "Enter Date of Establishment" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Experience</label>
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" id="exp" name="name" placeholder="Experience" class="form-control">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item1.Experience, new { @class = "form-control", placeholder = "Enter Experience" })
+                                                    </div>
+                                                </div>
 
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Category</label>
-                                                
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Eg:Saloons,Spas,BridalMakupArtists,..">*@
-                                                    @*@Html.TextBoxFor(model => this.Model.Item2.Category, new { @class = "form-control", placeholder = "Enter Saloons,Spas,BridalMakupArtists,.." })*@
-                                                    @*@Html.DropDownListFor(model => this.Model.Item2.Category, new SelectList(new[] { "Select Category", "Saloons", "Spas", "Bridal Makup Artists", "Nail Art Parlours", "Mehendi Artists","Others" }), new { @class = "form-control", multiple = "multiple" }) <p>Use Ctlr + for mutliple selection</p>*@ 
-                                                    @Html.DropDownList("s", new SelectList(
+                                                @*-----------common------------*@
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Category</label>
+
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Eg:Saloons,Spas,BridalMakupArtists,..">*@
+                                                        @*@Html.TextBoxFor(model => this.Model.Item2.Category, new { @class = "form-control", placeholder = "Enter Saloons,Spas,BridalMakupArtists,.." })*@
+                                                        @*@Html.DropDownListFor(model => this.Model.Item2.Category, new SelectList(new[] { "Select Category", "Saloons", "Spas", "Bridal Makup Artists", "Nail Art Parlours", "Mehendi Artists","Others" }), new { @class = "form-control", multiple = "multiple" }) <p>Use Ctlr + for mutliple selection</p>*@
+                                                        @Html.DropDownList("s", new SelectList(
                                                             new List<Object>{
                                                             new {Text ="Select Category", Value = ""},
                                                             new { Text ="Saloons", Value = "Saloons"  },
@@ -290,93 +292,95 @@
                                                             new { Text ="Others", Value = "Others" },
                                                         },
                                                     "value", "text"), new { @class = "validate[required] form-control", @multiple = "multiple", @style = "height:100px", @id = "ddlservice", @onchange = "GetSelectedTextValue(this)" })
-                                                    @Html.HiddenFor(model => this.Model.Item2.Category,new { @id= "hdnservices" })
-                                                    <p>Use Ctlr + for mutliple selection</p>
+                                                        @Html.HiddenFor(model => this.Model.Item2.Category,new { @id= "hdnservices" })
+                                                        <p>Use Ctlr + for mutliple selection</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Bridal Makeup Starts From</label>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Bridal Makeup Starts From</label>
 
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Starting Price">*@
-                                                    @Html.TextBoxFor(model => this.Model.Item2.BridalMakeupStartsFrom, new { @class = "form-control", placeholder = "Enter Starting Price" })
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Starting Price">*@
+                                                        @Html.TextBoxFor(model => this.Model.Item2.BridalMakeupStartsFrom, new { @class = "form-control", placeholder = "Enter Starting Price" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Party Makeup Starts From</label>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Party Makeup Starts From</label>
 
-                                                <div class="col-lg-4">
-                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Starting Price">.*@
-                                                    @Html.TextBoxFor(model => this.Model.Item2.PartyMakeupStartsFrom, new { @class = "form-control", placeholder = "Enter Starting Price" })
+                                                    <div class="col-lg-4">
+                                                        @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Starting Price">.*@
+                                                        @Html.TextBoxFor(model => this.Model.Item2.PartyMakeupStartsFrom, new { @class = "form-control", placeholder = "Enter Starting Price" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Home Services </label>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Home Services </label>
 
-                                                <div class="col-lg-4">
-                                                    @*<select class="form-control">
-                                                            <option>Select Choice</option>
-                                                            <option>Yes</option>
-                                                            <option>No</option>
-                                                        </select>*@
-                                                    @Html.DropDownListFor(model => this.Model.Item2.HomeServices, new SelectList(new[] { "Select Choice", "Yes", "No" }), new { @class = "form-control" })
+                                                    <div class="col-lg-4">
+                                                        @*<select class="form-control">
+                                                                <option>Select Choice</option>
+                                                                <option>Yes</option>
+                                                                <option>No</option>
+                                                            </select>*@
+                                                        @Html.DropDownListFor(model => this.Model.Item2.HomeServices, new SelectList(new[] { "Select Choice", "Yes", "No" }), new { @class = "form-control" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
-                                                <div class="col-lg-4">
-                                                    <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file"  required/> 
-                                                    @if (@ViewBag.imagescount != 0)
+                                                <div class="form-group">
+                                                    <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
+                                                    <div class="col-lg-4">
+                                                        <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" required />
+                                                        @if (@ViewBag.imagescount != 0)
                                                     { <p id="msg" style="color:green;font-size:large"><strong>You can Upload images upto @ViewBag.imagescount Only </strong></p> }
-                                                    @if (@ViewBag.imagescount == 0)
+                                                        @if (@ViewBag.imagescount == 0)
                                                     { <p id="msg" style="color:red;font-size:large"><strong>You Have Reached Image Limit </strong></p> }
-                                                </div>
-                                                <div id="imgbox"></div>
-                                                <br />
-                                                <br />
-                                                <br />
+                                                    </div>
+                                                    <div id="imgbox"></div>
+                                                    <br />
+                                                    <br />
+                                                    <br />
 
-                                                <div align="center">
-                                                    @if (@ViewBag.images != null)
+                                                    <div align="center">
+                                                        @if (@ViewBag.images != null)
                                                     {
                                                         foreach (var item in ViewBag.images)
                                                         {
-                                                            <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
-                                                            @Html.ActionLink("X", "BeautyServices", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
+                                                                <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
+                                                                                                                                                                                                                                            @Html.ActionLink("X", "BeautyServices", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
                                                         }
                                                         if (@ViewBag.images.Count == 0)
                                                         {
-                                                            <img src="~/noimages.png" />
+                                                                <img src="~/noimages.png" />
                                                         }
                                                     }
+                                                    </div>
+
+
+
+                                                    <div id="editimage" style="min-height: 10px;min-width: 10px; "></div>
+
+                                                    <div id="dvPreview" align="center" style="padding:20px">
+                                                    </div>
+
                                                 </div>
-
-
-
-                                                <div id="editimage" style="min-height: 10px;min-width: 10px; "></div>
-
-                                                <div id="dvPreview" align="center" style="padding:20px">
-                                                </div>
-
-                                            </div>
-                                            <div style="text-align:center" class="form-actions no-margin-bottom">
-                                                @if (ViewBag.operation != null)
-                                                {
-                                                    <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
-                                                }
-                                                else
-                                                {
-                                                    <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
-                                                }
-                                                <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
-                                                <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
-                                                @*<input type="button" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
-                                                <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
-                                                @*<button formaction="~/Admin/Vendors/AllVendors" type="submit" class="btn btn-success" id="btnback"> Back To List </button>*@
-                                            </div>
-
-                                            <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
-                                        </form>
+                                                
+                                                    <div style="text-align:center" class="form-actions no-margin-bottom">
+                                                        @if (ViewBag.operation != null)
+                                                        {
+                                                            <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
+                                                        }
+                                                        <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
+                                                        <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
+                                                        @*<input type="button" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
+                                                        <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
+                                                        @*<button formaction="~/Admin/Vendors/AllVendors" type="submit" class="btn btn-success" id="btnback"> Back To List </button>*@
+                                                    </div>
+                                                
+                                                    <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
+</form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -386,7 +390,7 @@
             </div>
         </div>
     </div>
-</div>
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -456,6 +460,7 @@
 
 
 
+
 @section Bottom{
     <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
     <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -464,9 +469,9 @@
     <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 
-    <script>
+    @*<script>
             $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
-    </script>
+    </script>*@
 }

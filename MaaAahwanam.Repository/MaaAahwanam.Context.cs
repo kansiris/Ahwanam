@@ -89,15 +89,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
         }
     
-        public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails_Result> MaaAahwanam_Orders_OrderDetails(Nullable<long> orderNo)
-        {
-            var orderNoParameter = orderNo.HasValue ?
-                new ObjectParameter("OrderNo", orderNo) :
-                new ObjectParameter("OrderNo", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
-        }
-    
         public virtual ObjectResult<MaaAahwanam_Others_AllRegisteredUsersDetails_Result> MaaAahwanam_Others_AllRegisteredUsersDetails()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_AllRegisteredUsersDetails_Result>("MaaAahwanam_Others_AllRegisteredUsersDetails");
@@ -261,6 +252,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("OID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails_Result> MaaAahwanam_Orders_OrderDetails(Nullable<long> orderNo)
+        {
+            var orderNoParameter = orderNo.HasValue ?
+                new ObjectParameter("OrderNo", orderNo) :
+                new ObjectParameter("OrderNo", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
         }
     }
 }

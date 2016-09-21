@@ -16,6 +16,8 @@ namespace MaaAahwanam.Repository.db
         public List<sp_AllOrders_Result> GetOrders(int id)
         {
             return maaAahwanamEntities.sp_AllOrders(id).ToList();
+            //var list = maaAahwanamEntities.sp_AllOrders(id);
+            //return list;
         }
 
         public List<ServiceRequest> GetServices(int id)

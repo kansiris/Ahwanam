@@ -150,7 +150,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
         public ActionResult Notification()
         {
-            ViewBag.notification = othersService.Notifications().OrderByDescending(m=>m.DateandTime);
+            ViewBag.notification = othersService.Notifications();
             return View();
         }
 	}
