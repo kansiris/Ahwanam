@@ -23,6 +23,17 @@
         overflow: hidden;
         text-align: center;
     }
+    .overlay {
+            background: no-repeat scroll center center #FFF;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999999;
+            background-color: rgba(0,0,0,0.8);
+            /* END EXTERNAL S */
+        }
 </style>
 
 @if (ViewData["error"] != null)
@@ -31,6 +42,8 @@
         alert("You have crossed images limit");
     </script>
 }
+
+@*Image Popup*@
 <script>
     function imagepopup(obj) {
        $('body').on('click', 'img', function () {
@@ -42,61 +55,64 @@
 
 </script>
 
+@*Enable/disable buttons*@
 <script>
     window.onload = function () {
-        var url = window.location.href;
-        alert(url);
-        var op = url.substring(url.lastIndexOf('=') + 1);
-        var up = window.location.search.substring(1);
-        var hdn = $("#hdnservices").val();
-        if (hdn != '') {
-            var valArr = hdn.split(","), i = 0, size = valArr.length,
-            $options = $('#ddlservice option');
+            var url = window.location.href;
+            var op = url.substring(url.lastIndexOf('=') + 1);
+            var up = window.location.search.substring(1);
+            var hdn = $("#hdnservices").val();
+            if (hdn != '') {
+                var valArr = hdn.split(","), i = 0, size = valArr.length,
+                $options = $('#ddlservice option');
 
-            for (i; i < size; i++) {
-                $options.filter('[value="' + valArr[i] + '"]').prop('selected', true);
+                for (i; i < size; i++) {
+                    $options.filter('[value="' + valArr[i] + '"]').prop('selected', true);
+                }
             }
+            //var stat = up.contains("vid");
+            //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
+            if (op == 'display') {
+                //alert("view purpose");
+                $("#btnadd").hide();
+                $('#btn').hide();
+                $("#btncancel").hide();
+                $('#btnback').show();
+                $('.deletelink').hide();
+                $('#fileUpload').hide();
+                $('#msg').hide();
+                $('.form-control').attr("disabled", "disabled");
+            }
+            if (op == 'add') {
+                //alert("Add NEw");
+                $("[id^=Item1]").prop("disabled", true);
+                $("[id^=Item2]").val("");
+                $('#btn').hide();
+                $("#btncancel").show();
+                $('#btnback').hide();
+                $('.deletelink').hide();
+                $('#fileUpload').show();
+                $('#msg').show();
+                $("#btnadd").show();
+                $("#imagesdisplay").hide();
+            }
+            //op == url
+            if (up == 'vid=' + op || op == url) {
+                //alert("other");
+                $('#btn').show();
+                $("#btncancel").show();
+                $('#btnback').hide();
+                $('.deletelink').show();
+                $('#fileUpload').show();
+                $('#msg').show();
+                $('.form-control').removeAttr("disabled");
+                $("#btnadd").hide();
+            }
+            $(".overlay").hide();
         }
-        //var stat = up.contains("vid");
-        //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
-        if (op == 'display') {
-            //alert("view purpose");
-            $("#btnadd").hide();
-            $('#btn').hide();
-            $("#btncancel").hide();
-            $('#btnback').show();
-            $('.deletelink').hide();
-            $('#fileUpload').hide();
-            $('#msg').hide();
-            $('.form-control').attr("disabled", "disabled");
-        }
-        if (op == 'add') {
-            //alert("Add NEw");
-            $("[id^=Item1]").prop("disabled", true);
-            $("[id^=Item2]").val("");
-            $('#btn').hide();
-            $("#btncancel").show();
-            $('#btnback').hide();
-            $('.deletelink').hide();
-            $('#fileUpload').show();
-            $('#msg').show();
-            $("#btnadd").show();
-            $("#imagesdisplay").hide();
-        }
-        //op == url
-        if (up == 'vid=' + op || op == url) {
-            //alert("other");
-            $('#btn').show();
-            $("#btncancel").show();
-            $('#btnback').hide();
-            $('.deletelink').show();
-            $('#fileUpload').show();
-            $('#msg').show();
-            $('.form-control').removeAttr("disabled");
-            $("#btnadd").hide();
-        }
-    }
 </script>
+
+@*image Zoom*@
 <script>
     function Large(obj) {
         var imgbox = document.getElementById("imgbox");
@@ -122,7 +138,16 @@
     }
 </script>
 
-    <div id="content">
+@*Loader*@
+<div class="overlay" style="display: block;">
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+        <img src="~/CSSWeb/images/Loader.gif" /><br>
+        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+    </div>
+</div>
+
+@*HTML Design*@
+<div id="content">
         <div class="inner">
             <div class="row">
                 <div class="col-lg-12">
@@ -362,7 +387,7 @@
 
                                                 </div>
                                                 
-                                                    <div style="text-align:center" class="form-actions no-margin-bottom">
+                                                    <div style="text-align:center" class="form-actions no-margin-bottom" id="condition">
                                                         @if (ViewBag.operation != null)
                                                         {
                                                             <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
@@ -391,6 +416,7 @@
         </div>
     </div>
 
+@*Modal POPUP*@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -402,13 +428,9 @@
         </div>
     </div>
 </div>
-@*<div class="overlay" style="display: block;">
-    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
-        <img src="~/CSSWeb/images/loading.gif" /><br>
-        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
-    </div>
-</div>*@
-    <script>
+
+@*E-Mail ID check*@
+<script>
     function check() {
         var emailId = $("#Item1_EmailId").val();
         var label = $("#label");
@@ -437,6 +459,7 @@
         }
     </script>
 
+@*Multi Select dropdown*@
 <script>
     ddlservice
     function GetSelectedTextValue(value) {
@@ -457,10 +480,6 @@
     }
 </script>
 
-
-
-
-
 @section Bottom{
     <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
     <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -469,9 +488,9 @@
     <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 
-    @*<script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-    </script>*@
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
 }

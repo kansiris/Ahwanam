@@ -213,15 +213,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Tickets_Result>("MaaAahwanam_Others_Tickets", ticketIdParameter);
         }
     
-        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
-        }
-    
         public virtual ObjectResult<sp_Servicedetails_Result> sp_Servicedetails(Nullable<long> requestId)
         {
             var requestIdParameter = requestId.HasValue ?
@@ -261,6 +252,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("OrderNo", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
+        }
+    
+        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     }
 }

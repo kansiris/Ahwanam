@@ -14,9 +14,9 @@ namespace MaaAahwanam.Repository
     public partial class sp_AllOrders_Result
     {
         public long OrderId { get; set; }
-        public string servictype { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
         public string Status { get; set; }
+        public string type { get; set; }
     }
 }

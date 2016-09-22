@@ -23,6 +23,17 @@
         overflow: hidden;
         text-align: center;
     }
+    .overlay {
+            background: no-repeat scroll center center #FFF;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999999;
+            background-color: rgba(0,0,0,0.8);
+        }
+
 </style>
 
 @if (ViewData["error"] != null)
@@ -32,6 +43,7 @@
     </script>
 }
 
+@*Image Popup*@
 <script>
     function imagepopup(obj) {
        $('body').on('click', 'img', function () {
@@ -43,6 +55,7 @@
 
 </script>   
 
+@*Enable/disable buttons*@
 <script>
         window.onload = function () {
             var url = window.location.href;
@@ -95,8 +108,11 @@
                 $('.form-control').removeAttr("disabled");
                 $("#btnadd").hide();
             }
+            $(".overlay").hide();
         }
 </script>
+
+@*image Zoom*@
 <script>
     function Large(obj) {
         var imgbox = document.getElementById("imgbox");
@@ -122,9 +138,17 @@
     }
 </script>
 
+@*Loader*@
+<div class="overlay" style="display: block;">
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+        <img src="~/CSSWeb/images/Loader.gif" /><br>
+        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+    </div>
+</div>
 
 
-    <div id="content">
+@*HTML Design*@
+<div id="content">
         <div class="inner">
             <div class="row">
                 <div class="col-lg-12">
@@ -449,6 +473,7 @@
     </div>
 </div>
 
+@*E-Mail ID check*@
 <script>
     function check() {
         var emailId = $("#Item1_EmailId").val();
@@ -478,6 +503,7 @@
         }
 </script>
 
+@*Multi Select dropdown*@
 <script>
     ddlservice
     function GetSelectedTextValue(value) {
