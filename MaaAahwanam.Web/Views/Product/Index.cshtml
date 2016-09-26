@@ -180,11 +180,11 @@
                                                         <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@item.BusinessName</h4>
                                                         <div class="amount">
                                                             <input type="hidden" id="hdncost" value=@item.ServicType.Trim() />
-                                                            @if(item.ServicType!="Catering"&& item.ServicType != "Venues" && item.ServicType != "InvitationCard")
+                                                            @if (item.ServicType != "Catering" && item.ServicType != "Venue" && item.ServicType != "InvitationCard")
                                                             {
-                                                            <p id="P_cost">
-                                                                <span class="price">Rs. @item.Cost</span>
-                                                            </p>
+                                                                <p id="P_cost">
+                                                                    <span class="price">Rs. @item.Cost</span>
+                                                                </p>
                                                             }
                                                             <span class="buy">
                                                                 <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id"><i class="ti-shopping-cart"></i> Add to Cart</a>
@@ -318,16 +318,18 @@
                 success: function (data) {
                     if (data.length == 4) {
                         var hdncosttype = document.getElementById("hdncost").value;
-                        alert(hdncosttype);
-                        if(hdncosttype!='Catering'||hdncosttype!='Venue'||hdncosttype!='InvitationCard')
+                        //alert(hdncosttype);
+                        if(hdncosttype!='Catering' && hdncosttype!='Venue' && hdncosttype!='InvitationCard')
                         {
+                            //alert('Yes3');
                             $.each(data, function (key, value) {
                                 $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                         }
-                        else
+                        else 
                         {
+                            //alert('no');
                             $.each(data, function (key, value) {
                                 $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
@@ -338,7 +340,7 @@
                     {
                         var hdncosttype = document.getElementById("hdncost").value;
                         //alert(hdncosttype);
-                        if(hdncosttype!='Catering'||hdncosttype!='Venue'||hdncosttype!='InvitationCard')
+                        if(hdncosttype=='Catering' || hdncosttype=='Venue' || hdncosttype=='InvitationCard')
                         {
                             $.each(data, function (key, value) {
                                 $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');

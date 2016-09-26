@@ -30,6 +30,7 @@ namespace MaaAahwanam.Web.Controllers
             adminTestimonial.Orderid = (int)TempData["Oid"];
             testmonialService.Savetestimonial(adminTestimonial);
             adminTestimonialPath.Id = adminTestimonial.Id;
+            adminTestimonial.Status = "Pending";
             string fileName1 = "";
             string imagepath = @"/Testimonial/";
             for (int i = 0; i < Request.Files.Count; i++)
