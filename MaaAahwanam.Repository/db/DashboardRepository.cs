@@ -16,6 +16,8 @@ namespace MaaAahwanam.Repository.db
         public List<sp_AllOrders_Result> GetOrders(int id)
         {
             return maaAahwanamEntities.sp_AllOrders(id).ToList();
+            //var list = maaAahwanamEntities.sp_AllOrders(id);
+            //return list;
         }
 
         public List<ServiceRequest> GetServices(int id)
@@ -112,7 +114,7 @@ namespace MaaAahwanam.Repository.db
 
         public ServiceResponse GetQuotationList(long id)
         {
-            return _dbContext.ServiceResponse.Where(m => m.RequestId == id).FirstOrDefault();
+            return _dbContext.ServiceResponse.Where(m => m.ResponseId == id).FirstOrDefault();
         }
 
         public OrdersServiceRequest UpdateOrdersServiceRequest(long id,OrdersServiceRequest ordersServiceRequest)

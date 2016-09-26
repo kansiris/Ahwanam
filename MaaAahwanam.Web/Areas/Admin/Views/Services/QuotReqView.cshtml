@@ -35,11 +35,19 @@
                             <p><b>Request #:</b> @item.RequestId </p>
                             @*<p><b>Event Name #:</b> @item.EventName </p>*@
                             <p>
-                                <b>Event Date #:</b> @if (@item.EventStartDate != null && @item.EventEnddate != null)
+                                <b>Event Start Date #:</b> @if (item.EventStartDate != null)
                                 {
-                                    @item.EventStartDate.ToShortDateString()  @item.EventEnddate.ToShortDateString()
+                                    @item.EventStartDate.ToShortDateString()
                                 }
-                                @if (@item.EventStartDate == null || @item.EventEnddate == null)
+                                @if (item.EventStartDate == null )
+                                { <h6>Not Available</h6> }
+                            </p>
+                            <p>
+                                <b>Event End Date #:</b> @if (item.EventEnddate != null)
+                                {
+                                   @item.EventEnddate.ToShortDateString()
+                                }
+                                @if (item.EventEnddate == null)
                                 { <h6>Not Available</h6> }
                             </p>
                             <p><b>Request Date:</b> @item.UpdatedTime.ToShortDateString()</p>

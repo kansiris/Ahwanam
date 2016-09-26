@@ -11,12 +11,13 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class sp_AllOrders_Result
+    public partial class allnotifications_Result
     {
-        public long OrderId { get; set; }
-        public Nullable<System.DateTime> OrderDate { get; set; }
-        public decimal TotalPrice { get; set; }
-        public string Status { get; set; }
-        public string type { get; set; }
+        public string FirstName { get; set; }
+        public long id { get; set; }
+        public string description { get; set; }
+        public Nullable<System.DateTime> DateandTime { get; set; }
+        public string Subject { get; set; }
+        public string EmailID { get; set; }
     }
 }

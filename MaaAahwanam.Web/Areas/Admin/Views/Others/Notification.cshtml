@@ -1,19 +1,21 @@
-﻿@{
-    ViewBag.Title = "Testimonials";
+﻿
+@{
+    ViewBag.Title = "Notification";
     Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
 }
+
 @section header{
     <!-- PAGE LEVEL STYLES -->
     <link href="~/Assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <!-- END PAGE LEVEL  STYLES -->
 }
 
-
+<!--PAGE CONTENT -->
 <div id="content">
     <div class="inner">
         <div class="row">
             <div class="col-lg-12" align="center">
-                <h2> User Testimonials </h2>
+                <h2>Notifications</h2>
             </div>
         </div>
         <hr />
@@ -31,52 +33,44 @@
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>Testimonial ID</th>
-                                        <th>CreatedDate</th>
-                                        <th>UserName</th>
-                                        <th>User Location</th>
+                                        <th style="display:none">Notificattion ID</th>
+                                        <th>User Name</th>
                                         <th>Description</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Subject</th>
+                                        <th>Email ID</th>
+                                        <th>Date(date/month/year)</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in ViewBag.TestimonalsList)
+                                    @foreach (var item in ViewBag.notification)
                                     {
                                         <tr class="even gradeX">
-                                            <td>
-                                                @item.Id
+                                            <td style="display:none">
+                                                <h5>@item.id</h5>
                                             </td>
                                             <td>
-                                                @item.UpdatedDate.ToShortDateString()
+                                                    <h5> @item.FirstName </h5>
+                                                </td>
+                                            <td>
+                                                <h5> @item.description </h5>
                                             </td>
                                             <td>
-                                                @item.FirstName @item.LastName
+                                                <h5> @item.Subject </h5>
                                             </td>
                                             <td>
-                                                @item.Address
+                                                <h5> @item.EmailID </h5>
                                             </td>
                                             <td>
-                                                @item.Description.ToString().Substring(0, 5).....
-                                            </td>
-                                            <td>
-                                                @item.Email
-                                            </td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary btn-xs btn-rect"> @item.Status</a>
-                                            </td>
-                                            <td>
-                                                <a href="/Admin/Others/TestimonialDetails?id=@item.Id" class="btn btn-default btn-xs"> View </a>
-                                           <br/><a href="#" class="btn btn-default btn-xs">Delete</a>
+                                                <h5> @item.DateandTime.ToString("dd/MM/yyyy hh:mm tt") </h5>
                                             </td>
                                         </tr>
                                     }
-                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -93,9 +87,11 @@
 
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
+            $('#dataTables-example').dataTable(
+                {
+                    "order": [[0, "desc"]]
+                });
         });
     </script>
 }
-
 

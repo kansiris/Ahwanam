@@ -16,76 +16,83 @@
             </div>
         </div>
         <hr />
-@foreach (var item in ViewBag.vendordetails)
-{
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="body collapse in" id="div1"> <a href="/Admin/Dashboard/dashboard" class="btn btn-primary btn-xs">Home</a>&nbsp;&nbsp;&nbsp;<a href="/Admin/Services/RevBidRequests" class="btn btn-primary btn-xs">ReverseBid Requests</a>&nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-xs">ReverserBid Request Details</a> </div>
-                <br/>
-                <h4><i class="icon-th-list"></i> Request # @item.RequestId | @item.UpdatedTime.ToShortDateString()</h4>
+        @foreach (var item in ViewBag.vendordetails)
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="body collapse in" id="div1"> <a href="/Admin/Dashboard/dashboard" class="btn btn-primary btn-xs">Home</a>&nbsp;&nbsp;&nbsp;<a href="/Admin/Services/RevBidRequests" class="btn btn-primary btn-xs">ReverseBid Requests</a>&nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-xs">ReverserBid Request Details</a> </div>
+                    <br />
+                    <h4><i class="icon-th-list"></i> Request # @item.RequestId | @item.UpdatedTime.ToShortDateString()</h4>
 
+                </div>
+                <br />
+                <!-- Tabls Starts here -->
+
+                <div class="col-lg-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"> Request Details </div>
+                        <div class="panel-body">
+                            <p><b>Request #:</b> @item.RequestId </p>
+                            @*<p><b>Event Name #:</b> @item.EventName </p>*@
+                            <p>
+                                <b>Event Start Date #:</b> @if (@item.EventStartDate != null)
+                                { @item.EventStartDate.ToShortDateString() }
+                                @if (@item.EventStartDate == null)
+                                { <h4>Not Available</h4> }
+                            </p>
+                            <p>
+                                <b>Event End Date #:</b> @if (@item.EventEnddate != null)
+                                { @item.EventEnddate.ToShortDateString() }
+                                @if (@item.EventEnddate == null)
+                                { <h4>Not Available</h4> }
+                            </p>
+
+                            <p><b>Request Date:</b> @item.UpdatedTime.ToShortDateString()</p>
+
+
+                            <p><b>Service Type:</b> Multiple </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"> Customer Information </div>
+                        <div class="panel-body">
+
+                            <p><b>Customer Id :</b> UserLoginId </p>
+                            <p><b>Customer Name :</b>@item.Name </p>
+                            <p><b>Email:</b> @item.EmailId  </p> @*<a href="#" class="btn btn-primary btn-sm">Verified</a>*@
+                            <p><b>Phone:</b> @item.PhoneNo </p> @*<a href="#" class="btn btn-primary btn-sm">Not Verified</a>*@
+                            <p><b>Address:</b> @item.EventAddress,@item.EventLocation</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tabs Ends here -->
             </div>
-            <br/>
-            <!-- Tabls Starts here -->
-
             <div class="col-lg-6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"> Request Details </div>
+                    <div class="panel-heading"> ReverseBid Details </div>
                     <div class="panel-body">
-                        <p><b>Request #:</b> @item.RequestId </p>
-                        @*<p><b>Event Name #:</b> @item.EventName </p>*@
-                        <p>
-                            <b>Event Date #:</b> @if (@item.EventStartDate != null && @item.EventEnddate != null)
-                            { @item.EventStartDate.ToShortDateString() @item.EventEnddate.ToShortDateString() }
-                            @if (@item.EventStartDate == null || @item.EventEnddate == null)
-                            { <h6>Not Available</h6> }
-                        
-                        <p><b>Request Date:</b> @item.UpdatedTime.ToShortDateString()</p>
-                        
-                       
-                        <p><b>Service Type:</b> Multiple </p>
+                        <p><b>Location:</b> @item.EventAddress,@item.EventLocation</p>
+                        <p><b>Services:</b> @item.ServiceType </p>
+                        <p><b>Vendor Name:</b>aaaaa</p>
+                        <p><b>Preferences:</b>@item.Preferences</p>
+                        <p><b>Budget:</b> @item.Budget (INR) </p>
+                        <p><b>ReverseBid Resp Due Date:</b> @item.UpdatedTime.ToShortDateString() </p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading"> Customer Information </div>
-                    <div class="panel-body">
-
-                        <p><b>Customer Id :</b> UserLoginId </p>
-                        <p><b>Customer Name :</b>@item.Name </p>
-                        <p><b>Email:</b> @item.EmailId  </p> @*<a href="#" class="btn btn-primary btn-sm">Verified</a>*@
-                        <p><b>Phone:</b> @item.PhoneNo </p> @*<a href="#" class="btn btn-primary btn-sm">Not Verified</a>*@
-                        <p><b>Address:</b> @item.EventAddress,@item.EventLocation</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Tabs Ends here -->
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading"> ReverseBid Details </div>
-                <div class="panel-body">                
-                    <p><b>Location:</b> @item.EventAddress,@item.EventLocation</p>
-                    <p><b>Services:</b> @item.ServiceType </p>
-                    <p><b>Vendor Name:</b>aaaaa</p>
-                    <p><b>Preferences:</b>@item.Preferences</p>
-                    <p><b>Budget:</b> @item.Budget (INR) </p>
-                    <p><b>ReverseBid Resp Due Date:</b> @item.UpdatedTime.ToShortDateString() </p>
-                </div>
-            </div>
-        </div>
-}
+        }
         @*<div class="col-lg-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading"> Actions - <a href="/Admin/Services/ReverseBiddings" class="btn btn-default btn-xs">View Biddings</a></div>
-                <div class="panel-body">
-                    <p><b>Biddings Received :</b> <a href="/Admin/Services/ReverseBiddings">4</a> </p>
-                    <p><b>Bid Raised Date:</b> Aug 27, 2015 7:16:25 PM </p>                  
-                    <p><b>Bid expiry date:</b> Aug 30, 2015 7:16:25 PM</p>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"> Actions - <a href="/Admin/Services/ReverseBiddings" class="btn btn-default btn-xs">View Biddings</a></div>
+                    <div class="panel-body">
+                        <p><b>Biddings Received :</b> <a href="/Admin/Services/ReverseBiddings">4</a> </p>
+                        <p><b>Bid Raised Date:</b> Aug 27, 2015 7:16:25 PM </p>
+                        <p><b>Bid expiry date:</b> Aug 30, 2015 7:16:25 PM</p>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
 
 
         <!-- Comments -->

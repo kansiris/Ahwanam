@@ -22,5 +22,6 @@ namespace MaaAahwanam.Repository
         public string City { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public decimal TotalPrice { get; set; }
+        public decimal PerunitPrice { get; set; }
     }
 }

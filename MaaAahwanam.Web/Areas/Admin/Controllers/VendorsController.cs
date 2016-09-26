@@ -24,7 +24,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AllVendors(string dropstatus,string vid,string command,string id,string type,[Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster)
         {
-            if (dropstatus != null)
+            if (dropstatus != null && dropstatus != "")
             {
                 ViewBag.VendorList = vendorSetupService.AllVendorList(dropstatus);
             }

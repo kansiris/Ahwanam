@@ -106,5 +106,15 @@ namespace MaaAahwanam.Repository.db
             return adminTestimonial;
 
         }
+
+        public List<Notification> AllNotifications()
+        {
+            return _dbContext.Notification.Where(m => m.type == "Admin").ToList();
+        }
+
+        public List<allnotifications_Result> Notifications()
+        {
+            return maaAahwanamEntities.allnotifications().ToList();
+        }
     }
 }

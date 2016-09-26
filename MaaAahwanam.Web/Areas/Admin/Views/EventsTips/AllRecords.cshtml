@@ -63,8 +63,12 @@
                                                     <td><label class="control-label col-lg-4">@item.Person</label></td>
                                                     <td><label class="control-label col-lg-4">@item.Location,<br />@item.Phone</label></td>
                                                     <td><label class="control-label col-lg-4">@item.Price</label></td>
-
-                                                    <td><label class="control-label col-lg-4">@item.Eventstartdate.ToShortDateString() - @item.Eventenddate.ToShortDateString()</label></td>
+                                                    <td>
+                                                        @if (item.Eventstartdate != null && item.Eventenddate != null)
+                                                        { <label class="control-label col-lg-4">@item.Eventstartdate.ToShortDateString() - @item.Eventenddate.ToShortDateString()</label> }
+                                                        else
+                                                        { <label>Not Available</label> }
+                                                    </td>
                                                     <td>
                                                         <a href="~/Admin/EventsTips/Index?id=@item.EventId" class="btn btn-default btn-xs" onclick="return edit()">Edit</a>  || @*<input type="submit" class="btn btn-default btn-xs" value="Edit" name="Command" formaction="~/Admin/EventsTips/Index?id=@item.EventId"*@
                                                         <a href="#" class="btn btn-default btn-xs">Delete</a>

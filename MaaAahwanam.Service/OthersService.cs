@@ -92,5 +92,15 @@ namespace MaaAahwanam.Service
             return othersRepository.AdminTestimonialStatus(id, adminTestimonial);
 
         }
+
+        public List<Notification> AllNotifications()
+        {
+            return othersRepository.AllNotifications();
+        }
+
+        public List<allnotifications_Result> Notifications()
+        {
+            return othersRepository.Notifications();
+        }
     }
 }

@@ -18,7 +18,7 @@
             </div>
             <hr />
             @foreach (var item in ViewBag.vendordetails)
-{
+            {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="body collapse in" id="div1"> <a href="/Admin/Dashboard/dashboard" class="btn btn-primary btn-xs">Home</a>&nbsp;&nbsp;&nbsp;<a href="/Admin/Services/BidRequests" class="btn btn-primary btn-xs">Bid Requests</a>&nbsp;&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-xs">Bid Request Details</a> </div>
@@ -36,23 +36,20 @@
                             <div class="panel-body">
                                 <p><b>Request #:</b> @item.RequestId </p>
                                 <p><b>Event Name #:</b> @item.EventName </p>
-                                <p><b>Event Date #:</b> @item.EventStartDate.ToShortDateString() -- @item.EventEnddate.ToShortDateString()</p>
-                                <p><b>Request Date:</b> @item.UpdatedTime.ToShortDateString()</p>
                                 <p>
-                                    <b>Request Status:</b> @*<a href="#" class="btn btn-primary btn-sm">@this.Model.Item2.Status</a>*@
-
-                                    <select class="selectBox" > @*id="dropstatus" onchange="this.form.submit();"*@
-                                        <option>Choose a Status</option>
-                                        <option>New</option>
-                                        <option>Picked</option>
-                                        <option>Under Processing</option>
-                                        <option>Waiting For Adv Payment</option>
-                                        <option>Waiting For Final Payment</option>
-                                        <option>Finished</option>
-                                        <option>Rejected</option>
-                                    </select>
-
+                                    <b>Event Start Date #:</b> @if (@item.EventStartDate != null)
+                                    { @item.EventStartDate.ToShortDateString() }
+                                    @if (@item.EventStartDate == null)
+                                    { <h4>Not Available</h4> }
                                 </p>
+                                <p>
+                                    <b>Event End Date #:</b> @if (@item.EventEnddate != null)
+                                    { @item.EventEnddate.ToShortDateString() }
+                                    @if (@item.EventEnddate == null)
+                                    { <h4>Not Available</h4> }
+                                </p>
+                                <p><b>Request Date:</b> @item.UpdatedTime.ToShortDateString()</p>
+
                                 @*<script>
                                         function StatusUpdate(ddid)
                                         {
@@ -82,8 +79,8 @@
 
                                 <p><b>Customer Id :</b> UserLoginId </p>
                                 <p><b>Customer Name :</b> @item.Name </p>
-                                <p><b>Email:</b> @item.EmailId  <a href="#" class="btn btn-primary btn-sm">Verified</a></p>
-                                <p><b>Phone:</b> @item.PhoneNo <a href="#" class="btn btn-primary btn-sm">Not Verified</a></p>
+                                <p><b>Email:</b> @item.EmailId  </p>
+                                <p><b>Phone:</b> @item.PhoneNo </p>
                                 <p><b>Address:</b> @item.EventAddress</p>
                             </div>
                         </div>
@@ -114,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-        }
+            }
 
 
 
