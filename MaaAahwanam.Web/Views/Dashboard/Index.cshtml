@@ -125,7 +125,7 @@
            
                 <h3>Products & Services</h3>
             <br/>
-                <table class="responsive">
+                <table class="responsive" id="table1">
 
                     <thead>
                         <tr>
@@ -181,7 +181,7 @@
                 <br />
                
                 
-                <table class="responsive">
+                <table class="responsive" id="table2">
                     <thead>
                         <tr>
                             <th style="width:10%">S.No</th>
@@ -196,7 +196,7 @@
                         {
                         if (ViewBag.Services != null)
                         {
-                    <tbody>
+                    <tbody id="tablebody2">
                         @foreach (var item in ViewBag.Services)
                         {
                             <tr>
@@ -228,7 +228,11 @@
                     }
                 </table>
 
-                <div class="pagination" style="display:none">
+            <div id="choose">
+            </div>
+
+
+                @*<div class="pagination" id="myPager">
                     <ul>
                         <li><a href="javascript:void(0)">Prev</a></li>
                         <li><a href="javascript:void(0)" class="active">1</a></li>
@@ -238,7 +242,7 @@
                         <li><a href="javascript:void(0)">25</a></li>
                         <li><a href="javascript:void(0)">Next</a></li>
                     </ul>
-                </div>
+                </div>*@
             
             
             <div class="clear"></div>
@@ -257,6 +261,24 @@
             }
 
         }
+    </script>
+
+    <script language="javascript">
+    $(function() {
+        $('#tablebody2').pagination({
+            items: 4,
+            itemsOnPage: 2,
+            cssStyle: 'light-theme',
+            onPageClick: function(pageNumber){test(pageNumber)}
+        });
+    });
+    function test(pageNumber) {
+
+        var page = "#page-id-" + pageNumber;
+        $('.select').hide()
+        $(page).show()
+
+    }
     </script>
 
     @*}*@
