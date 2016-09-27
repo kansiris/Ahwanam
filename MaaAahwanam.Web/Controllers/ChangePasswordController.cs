@@ -29,7 +29,7 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
             userLoginDetailsService.changepassword(userLogin, (int)user.UserId);
-            return View();
+            return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
         }
-	}
+    }
 }
