@@ -22,11 +22,11 @@ namespace MaaAahwanam.Web.Controllers
         [Authorize]
         public ActionResult Index(ServiceRequest serviceRequest)
         {
-            DateTime d = DateTime.Parse(serviceRequest.EventStartDate.ToString());
-            string Test = d.ToShortDateString();
+            //DateTime d = DateTime.Parse(serviceRequest.EventStartDate.ToString());
+            //string Test = d.ToShortDateString();
             //DateTime d2= DateTime.ParseExact(d.ToString("dd-MM-yyyy"), "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            DateTime dt = DateTime.ParseExact(Test.ToString(), "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
-            string s = dt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+            //DateTime dt = DateTime.ParseExact(Test.ToString(), "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
+            //string s = dt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             ServiceRequestService serviceRequestService = new ServiceRequestService();
             serviceRequest.Type = "Quotation";
