@@ -696,26 +696,52 @@
             $("#datetimepicker_format_locale").on("change", function (e) {
                 $.datetimepicker.setLocale($(e.currentTarget).val());
             });
-            //var startDate = $('#datetimepicker1').val();
-            //var endDate = $('#datetimepicker2').val();
+
             // event start date
-            $('#datetimepicker1').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                formatDate: 'Y/m/d',
-                //beforeshow: function () { $(this).datepicker('option', 'maxDate', $("#datetimepicker2").val()); }
-            });
+            //$('#datetimepicker1').datetimepicker({
+            //    lang: 'en',
+            //    timepicker: false,
+            //    format: 'd/m/Y',
+            //    formatDate: 'Y/m/d',
+            //});
 
 
-            // event end date
-            $('#datetimepicker2').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                formatDate: 'Y/m/d',
-                //beforeshow: function () { $(this).datepicker('option', 'maxDate', $("#datetimepicker1").val()); }
-            });
+            //// event end date
+            //$('#datetimepicker2').datetimepicker({
+            //    lang: 'en',
+            //    timepicker: false,
+            //    format: 'd/m/Y',
+            //    formatDate: 'Y/m/d',
+        //});
+
+
+            var startDate = new Date(2012, 1, 20);
+            var endDate = new Date(2012, 1, 25);
+        $('#datetimepicker1').datepicker()
+                    .on('changeDate', function (ev) {
+                        if (ev.date.valueOf() > endDate.valueOf()) {
+                            $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+                        } else {
+                            $('#alert').hide();
+                            startDate = new Date(ev.date);
+                            $('#startDate').text($('#datetimepicker1').data('date'));
+                        }
+                        $('#datetimepicker1').datepicker('hide');
+                    });
+        $('#datetimepicker2').datepicker()
+                    .on('changeDate', function (ev) {
+                        if (ev.date.valueOf() < startDate.valueOf()) {
+                            $('#alert').show().find('strong').text('The end date can not be less then the start date');
+                        } else {
+                            $('#alert').hide();
+                            endDate = new Date(ev.date);
+                            $('#endDate').text($('#datetimepicker2').data('date'));
+                        }
+                        $('#datetimepicker2').datepicker('hide');
+                    });
+
+
+
             // event start time
             $('#datetimepicker3').datetimepicker({
                 datepicker: false,
@@ -815,6 +841,9 @@
             //window.location.assign("../Index")
         }
     </script>
+
+    
+   
     @RenderSection("scriptfunctions", required: false)
     @*<script>
     alert('Please enter Event and location');
