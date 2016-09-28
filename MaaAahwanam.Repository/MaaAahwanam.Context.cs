@@ -42,31 +42,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages");
         }
     
-        public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
-        {
-            var nTypeParameter = nType != null ?
-                new ObjectParameter("nType", nType) :
-                new ObjectParameter("nType", typeof(string));
-    
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            var stypeParameter = stype != null ?
-                new ObjectParameter("stype", stype) :
-                new ObjectParameter("stype", typeof(string));
-    
-            var cityParameter = city != null ?
-                new ObjectParameter("city", city) :
-                new ObjectParameter("city", typeof(string));
-    
-            var orderParameter = order != null ?
-                new ObjectParameter("order", order) :
-                new ObjectParameter("order", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
-        }
-    
         public virtual ObjectResult<getservicetype_Result> getservicetype(string ntype)
         {
             var ntypeParameter = ntype != null ?
@@ -265,6 +240,31 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("Vid2", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter, vid2Parameter);
+        }
+    
+        public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
+        {
+            var nTypeParameter = nType != null ?
+                new ObjectParameter("nType", nType) :
+                new ObjectParameter("nType", typeof(string));
+    
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            var stypeParameter = stype != null ?
+                new ObjectParameter("stype", stype) :
+                new ObjectParameter("stype", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("city", city) :
+                new ObjectParameter("city", typeof(string));
+    
+            var orderParameter = order != null ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
         }
     }
 }

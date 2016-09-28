@@ -233,7 +233,7 @@
                         <div class="deal_price" id="Calcdiv_Other" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt>Package Price: Rs.</dt>
+                                    <dt>Package Price: </dt><dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         <p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost*@</p>
                                     </dd>
@@ -267,7 +267,7 @@
                         <div class="deal_price" id="Calcdiv_venue" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt><p id="lblprice"></p></dt>
+                                    <dt><p id="lblprice"></p></dt><dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         <p id="demovenue" style="color:#8ca436;font-size:20px"></p>
                                     </dd>
@@ -315,7 +315,7 @@
                         <div class="deal_price" id="Calcdiv_Caterer" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt><p id="lblcprice"></p></dt>
+                                    <dt><p id="lblcprice"></p></dt><dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         <p id="demoCatering" style="color:#8ca436;font-size:20px"></p>
                                         @*</dd>
@@ -387,7 +387,7 @@
                         <div class="deal_price" id="Calcdiv_invitation" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt>Deal Price: Rs.</dt>
+                                    <dt>Deal Price: </dt><dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         <p id="demoinvitation" style="color:#8ca436;font-size:20px"></p>
                                     </dd>
@@ -427,9 +427,9 @@
                         <div class="deal_price" id="Calcdiv_General" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt>Package Price: </dt> 
+                                    <dt>Package Price: </dt> <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
-                                        <p id="demoGeneral" style="color:#8ca436;font-size:20px">Rs. </p>
+                                        <p id="demoGeneral" style="color:#8ca436;font-size:20px"> </p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -665,7 +665,11 @@
                                 </select>
                             </li>
                         </ul>
-                        
+                        <div class="alert alert-error" id="alert" style="display:none;">
+                            <strong>Oh snap!</strong>
+
+                            <p></p>
+                        </div>
                         <ul class="subinputs2">
                             <li>
                                 <div class="event-date">
@@ -695,11 +699,7 @@
                                 <button type="button" name="submit" class="btn btn-big btn-green float-right" value="submit" id="lnkproceedtonext">Submit <i class="ti-angle-double-right"></i></button>
                             </li>
                         </ul>
-                        <div class="alert alert-error" id="alert" style="display: none;">
-                            <strong>Oh snap!</strong>
-
-                            <p></p>
-                        </div>
+                        
                     </form>
                     <div class="clear"></div>
                 </div>
@@ -741,23 +741,23 @@
             var a = document.getElementById("txtquantityvenue").value;
             var b = document.getElementById("txtquantityGeneral").value;
             if (document.getElementById("vlvenue").checked) {
-                document.getElementById("demovenue").innerHTML = 'Rs.' + document.getElementById("vlvenue").value * a + '/-';
+                document.getElementById("demovenue").innerHTML =  document.getElementById("vlvenue").value * a ;
             }
             if (document.getElementById("vlother").checked) {
-                document.getElementById("demoother").innerHTML = 'Rs.' + document.getElementById("vlother").value * a + '/-';
+                document.getElementById("demoother").innerHTML =  document.getElementById("vlother").value * a;
             }
             if (document.getElementById("vlCatering").checked) {
-                document.getElementById("demoCatering").innerHTML = 'Rs.' + document.getElementById("vlCatering").value * a + '/-';
+                document.getElementById("demoCatering").innerHTML =  document.getElementById("vlCatering").value * a ;
             }
             if (document.getElementById("vlGift").checked) {
-                document.getElementById("demoGift").innerHTML = 'Rs.' + document.getElementById("vlGift").value * a + '/-';
+                document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value * a ;
             }
             if (document.getElementById("vlinvitation").checked) {
-                document.getElementById("demoinvitation").innerHTML = 'Rs.' + document.getElementById("vlinvitation").value * a + '/-';
+                document.getElementById("demoinvitation").innerHTML =  document.getElementById("vlinvitation").value * a ;
             }
             if (document.getElementById("vlGeneral").checked) {
                 //alert('s');
-                document.getElementById("demoGeneral").innerHTML = 'Rs.' + document.getElementById("vlGeneral").value * b + '/-';
+                document.getElementById("demoGeneral").innerHTML =  document.getElementById("vlGeneral").value * b ;
             }
 
             var servicetype = document.getElementById("stype").value;
@@ -844,7 +844,7 @@
                     document.getElementById("rbselectedamount").value = this.value;
                     prevvenue = this;
                     var a = document.getElementById("txtquantityvenue").value;
-                    document.getElementById("demovenue").innerHTML = 'Rs.' + a * parseInt(this.value) + '/-';
+                    document.getElementById("demovenue").innerHTML =  a * parseInt(this.value) ;
                 }
             };
         }
@@ -853,16 +853,16 @@
             var a = document.getElementById("txtquantityvenue").value;
 
             if (document.getElementById("vlvenue").checked) {
-                document.getElementById("demovenue").innerHTML = 'Rs.' + document.getElementById("vlvenue").value * a + '/-';
+                document.getElementById("demovenue").innerHTML =  document.getElementById("vlvenue").value * a ;
             }
             else if (document.getElementById("nvlvenue").checked) {
-                document.getElementById("demovenue").innerHTML = 'Rs.' + document.getElementById("nvlvenue").value * a + '/-';
+                document.getElementById("demovenue").innerHTML =  document.getElementById("nvlvenue").value * a ;
             }
             else if (document.getElementById("vdvenue").checked) {
-                document.getElementById("demovenue").innerHTML = 'Rs.' + document.getElementById("vdvenue").value * a + '/-';
+                document.getElementById("demovenue").innerHTML =  document.getElementById("vdvenue").value * a ;
             }
             else if (document.getElementById("nvdvenue").checked) {
-                document.getElementById("demovenue").innerHTML = 'Rs.' + document.getElementById("nvdvenue").value * a + '/-';
+                document.getElementById("demovenue").innerHTML = document.getElementById("nvdvenue").value * a ;
             }
         }
 
@@ -883,7 +883,7 @@
                 if (this !== prevCatering) {
                     prevCatering = this;
                     var a = document.getElementById("txtquantityCatering").value;
-                    document.getElementById("demoCatering").innerHTML = 'Rs.' + a * parseInt(this.value) + '/-';
+                    document.getElementById("demoCatering").innerHTML =  a * parseInt(this.value) ;
                 }
             };
         }
@@ -891,10 +891,10 @@
             var b;
             var a = document.getElementById("txtquantityCatering").value;
             if (document.getElementById("vlCatering").checked) {
-                document.getElementById("demoCatering").innerHTML = 'Rs.'+document.getElementById("vlCatering").value * a + '/-';
+                document.getElementById("demoCatering").innerHTML = document.getElementById("vlCatering").value * a;
             }
             else if (document.getElementById("nvlvenue").checked) {
-                document.getElementById("demovenue").innerHTML = 'Rs.' + document.getElementById("nvlCatering").value * a + '/-';
+                document.getElementById("demovenue").innerHTML = document.getElementById("nvlCatering").value * a;
             }
         }
 
@@ -908,7 +908,7 @@
                 if (this !== prevCatering) {
                     prevGift = this;
                     var a = document.getElementById("txtquantityGift").value;
-                    document.getElementById("demoGift").innerHTML = 'Rs.' + a * parseInt(this.value) + '/-';
+                    document.getElementById("demoGift").innerHTML =  a * parseInt(this.value) ;
                 }
             };
         }
@@ -916,7 +916,7 @@
             var b;
             var a = document.getElementById("txtquantityGift").value;
             if (document.getElementById("vlGift").checked) {
-                document.getElementById("demoGift").innerHTML = 'Rs.'+document.getElementById("vlGift").value * a+'/-';
+                document.getElementById("demoGift").innerHTML = document.getElementById("vlGift").value * a;
             }
         }
 
@@ -930,7 +930,7 @@
                 if (this !== previnvitation) {
                     previnvitation = this;
                     var a = document.getElementById("txtquantityinvitation").value;
-                    document.getElementById("demoinvitation").innerHTML = 'Rs.' + a * parseInt(this.value) + '/-';
+                    document.getElementById("demoinvitation").innerHTML = a * parseInt(this.value) ;
                 }
             };
         }
@@ -938,10 +938,10 @@
             var b;
             var a = document.getElementById("txtquantityinvitation").value;
             if (document.getElementById("vlinvitation").checked) {
-                document.getElementById("demoinvitation").innerHTML = 'Rs.'+document.getElementById("vlinvitation").value * a + '/-';
+                document.getElementById("demoinvitation").innerHTML = document.getElementById("vlinvitation").value * a ;
             }
             else if (document.getElementById("nvlinvitation").checked) {
-                document.getElementById("demoinvitation").innerHTML = 'Rs.'+document.getElementById("nvlinvitation").value * a + '/-';
+                document.getElementById("demoinvitation").innerHTML = document.getElementById("nvlinvitation").value * a ;
             }
         }
 
@@ -954,7 +954,7 @@
                 if (this !== prevGeneral) {
                     prevGeneral = this;
                     var a = document.getElementById("txtquantityGeneral").value;
-                    document.getElementById("demoGeneral").innerHTML = 'Rs.'+a * parseInt(this.value)+'/-';
+                    document.getElementById("demoGeneral").innerHTML = a * parseInt(this.value);
                 }
             };
         }
@@ -962,7 +962,7 @@
             var b;
             var a = document.getElementById("txtquantityGeneral").value;
             if (document.getElementById("vlGeneral").checked) {
-                document.getElementById("demoGeneral").innerHTML = 'Rs.'+document.getElementById("vlGeneral").value * a+'/-';
+                document.getElementById("demoGeneral").innerHTML = document.getElementById("vlGeneral").value * a;
             }
         }
 
@@ -976,7 +976,7 @@
                 if (this !== prevother) {
                     prevother = this;
                     var a = document.getElementById("txtquantityother").value;
-                    document.getElementById("demoother").innerHTML = 'Rs.'+a * parseInt(this.value)+'/-';
+                    document.getElementById("demoother").innerHTML = a * parseInt(this.value);
                 }
             };
         }
@@ -984,7 +984,7 @@
             var b;
             var a = document.getElementById("txtquantityother").value;
             if (document.getElementById("vlother").checked) {
-                document.getElementById("demoother").innerHTML = 'Rs.'+document.getElementById("vlother").value * a+'/-';
+                document.getElementById("demoother").innerHTML = document.getElementById("vlother").value * a;
             }
         }
     </script>
