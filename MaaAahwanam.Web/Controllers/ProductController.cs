@@ -22,6 +22,8 @@ namespace MaaAahwanam.Web.Controllers
             string servicetypeorder = Request.QueryString["a"];
             List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, 0, servicetypesType, servicetypeloc, servicetypeorder);
             List<getservicetype_Result> servicetypelist = productService.Getservicetype_Result(servicetypeQuerystring);
+            var idlast = Productlist.Max(i=>i.Id);
+            ViewBag.Lastrecordid=idlast;
             ViewBag.ServiceType = servicetypeQuerystring;
             ViewBag.subservicetype = servicetypelist;
             return View(Productlist);
