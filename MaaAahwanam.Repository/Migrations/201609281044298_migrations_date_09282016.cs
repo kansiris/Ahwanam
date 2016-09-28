@@ -3,7 +3,7 @@ namespace MaaAahwanam.Repository.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class migrations_date_09272016 : DbMigration
+    public partial class migrations_date_09282016 : DbMigration
     {
         public override void Up()
         {
