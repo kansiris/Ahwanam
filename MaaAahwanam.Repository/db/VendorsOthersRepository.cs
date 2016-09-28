@@ -23,9 +23,9 @@ namespace MaaAahwanam.Repository.db
         }
 
         //Product info page
-        public GetProductsInfo_Result getProductsInfo(int vid,string servicetype)
+        public GetProductsInfo_Result getProductsInfo(int vid,string servicetype,int Subvid)
         {
-            var a= maaAahwanamEntities.GetProductsInfo(vid,servicetype).FirstOrDefault();
+            var a= maaAahwanamEntities.GetProductsInfo(vid,servicetype, Subvid).FirstOrDefault();
             return a;
         }
     }
