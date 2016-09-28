@@ -12,9 +12,9 @@ namespace MaaAahwanam.Service
     public class ProductInfoService
     {
         VendorsOthersRepository vendorsOthersRepository = new VendorsOthersRepository();
-        public GetProductsInfo_Result getProductsInfo_Result(int vid,string servicetype)
+        public GetProductsInfo_Result getProductsInfo_Result(int vid,string servicetype,int Subvid)
         {
-            return vendorsOthersRepository.getProductsInfo(vid,servicetype);
+            return vendorsOthersRepository.getProductsInfo(vid,servicetype, Subvid);
         }
     }
 }

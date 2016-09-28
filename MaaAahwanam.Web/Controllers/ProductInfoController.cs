@@ -31,7 +31,8 @@ namespace MaaAahwanam.Web.Controllers
             Review review = new Review();
             string Servicetype = Request.QueryString["par"];
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
-            GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype);
+            int Subvid = Convert.ToInt32(Request.QueryString["subvid"]);
+            GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Subvid);
             if (Productinfo.image != null)
             {
                 string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
