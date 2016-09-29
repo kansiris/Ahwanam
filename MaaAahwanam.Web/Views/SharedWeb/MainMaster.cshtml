@@ -704,8 +704,8 @@
                 format: 'd/m/Y',
                 formatDate: 'Y/m/d',
             }).on('change', function () {
-                var startDate = $('#datetimepicker1').val();
-                var endDate = $('#datetimepicker2').val();
+                var startDate = $('#datetimepicker1').valueOf();
+                var endDate = $('#datetimepicker2').valueOf();
                 
                 if (endDate != '') {
                     if (startDate > endDate) {
@@ -726,14 +726,19 @@
                 timepicker: false,
                 format: 'd/m/Y',
                 formatDate: 'Y/m/d',
-            }).on('change', function () {
+            }).on('change', function (ev) {
+                
                 var startDate = $('#datetimepicker1').val();
                 var endDate = $('#datetimepicker2').val();
-                if (endDate < startDate) {
+                var data = $.datetimepicker.formatDate('yy-mm-dd', startDate);
+                alert(data);
+                if (endDate.valueOf() < startDate.valueOf()) {
+                    
                     $('#alert').show().find('strong').text('The end date can not be less then the start date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 } else {
+                    
                     $('#alert').hide();
                     $("#lnkproceedtonext").show();
                     $("#btnsubmit").show();
