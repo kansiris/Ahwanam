@@ -22,22 +22,17 @@ namespace MaaAahwanam.Web.Controllers
         [Authorize]
         public ActionResult Index(ServiceRequest serviceRequest)
         {
-            //DateTime d = DateTime.Parse(serviceRequest.EventStartDate.ToString());
-            //string Test = d.ToShortDateString();
-            //DateTime d2= DateTime.ParseExact(d.ToString("dd-MM-yyyy"), "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            //DateTime dt = DateTime.ParseExact(Test.ToString(), "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
-            //string s = dt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+            string sdate = String.Format("{0:MM-dd-yyyy}", serviceRequest.EventEnddate);
+            serviceRequest.EventEnddate = DateTime.ParseExact(sdate, "MM-dd-yyyy", new CultureInfo("en-US"), DateTimeStyles.None);
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             ServiceRequestService serviceRequestService = new ServiceRequestService();
             serviceRequest.Type = "Quotation";
-            serviceRequest.UpdatedTime = DateTime.Now;
+            serviceRequest.UpdatedTime = DateTime.Parse(String.Format("{0:MM-dd-yyyy}", DateTime.Now));
             serviceRequest.UpdatedBy = (int)user.UserId;
-            //serviceRequest.EventStartDate.Value.ToString("MM/dd/yyyy HH:mm:ss.fff");
-            //serviceRequest.EventEnddate.Value.ToString("MM/dd/yyyy HH:mm:ss.fff");
             serviceRequest.Status = "Due";
             serviceRequest.ServiceType.TrimStart(',');
             serviceRequest = serviceRequestService.SaveService(serviceRequest);
-            return RedirectToAction("Index","QuoatationConfirm", serviceRequest);
+            return RedirectToAction("Index", "QuoatationConfirm", serviceRequest);
         }
-	}
+    }
 }
