@@ -18,6 +18,7 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize]
         public ActionResult Index(ServiceRequest serviceRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
