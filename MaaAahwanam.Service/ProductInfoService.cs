@@ -12,6 +12,7 @@ namespace MaaAahwanam.Service
     public class ProductInfoService
     {
         VendorsOthersRepository vendorsOthersRepository = new VendorsOthersRepository();
+        VendorVenueRepository vendorVenueRepository = new VendorVenueRepository();
         public GetProductsInfo_Result getProductsInfo_Result(int vid,string servicetype,int Subvid)
         {
             return vendorsOthersRepository.getProductsInfo(vid,servicetype, Subvid);

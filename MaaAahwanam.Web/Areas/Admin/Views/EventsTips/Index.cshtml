@@ -181,7 +181,7 @@
                                                 <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
                                                 <div class="col-lg-4">
 
-                                                    <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" />
+                                                    <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" required/>
                                                 </div>
                                             </div>
 
@@ -195,17 +195,17 @@
                                                             </div>-->
                                                         </div>*@
                                                     <div align="center">
-                                                        @if (@ViewBag.images != null)
+                                                        @if (ViewBag.images != null )
                                                         {
                                                             foreach (var item in ViewBag.images)
                                                             {
                                                                 <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/EventsAndTipsimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
                                                                 @*@Html.ActionLink("X", "Index", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })*@
                                                             }
-                                                            if (@ViewBag.images == null)
-                                                            {
-                                                                <img src="~/noimages.png" />
-                                                            }
+                                                        }
+                                                        @if (ViewBag.images == null)
+                                                        {
+                                                        <img src="~/noimages.png" />
                                                         }
                                                     </div>
 
@@ -222,7 +222,8 @@
                                             <div style="text-align:center" class="form-actions no-margin-bottom">
 
                                                 <input id="btnsave" type="submit" value="Save" class="btn text-muted text-center btn-success" name="Command" />
-                                                <input type="submit" formaction="~/Admin/Dashboard/Dashboard" class="btn btn-danger" value="Cancel"/>
+                                                @*<input type="submit" formaction="~/Admin/Dashboard/Dashboard" class="btn btn-danger" value="Cancel"/>*@
+                                                <a href="~/Admin/Dashboard/Dashboard" class="btn btn-danger">Cancel</a>
                                             </div>
 
 

@@ -27,7 +27,17 @@ namespace MaaAahwanam.Service
            vendorMaster.ServicType = "Venue";
            vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
            vendorVenue.VendorMasterId = vendorMaster.Id;
-           vendorVenue = vendorVenueRepository.AddVenue(vendorVenue);
+            if (vendorVenue.Food == "Veg")
+            {
+                vendorVenue.NonVegLunchCost = 0;
+                vendorVenue.NonVegDinnerCost = 0;
+            }
+            else if (vendorVenue.Food == "Non-Veg")
+            {
+                vendorVenue.VegLunchCost = 0;
+                vendorVenue.VegDinnerCost = 0;
+            }
+            vendorVenue = vendorVenueRepository.AddVenue(vendorVenue);
             userLogin.UserName = vendorMaster.EmailId;
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
@@ -73,6 +83,16 @@ namespace MaaAahwanam.Service
             vendorMaster.Status = "Active";
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Venue";
+            if (vendorVenue.Food == "Veg")
+            {
+                vendorVenue.NonVegLunchCost = 0;
+                vendorVenue.NonVegDinnerCost = 0;
+            }
+            else if (vendorVenue.Food == "Non-Veg")
+            {
+                vendorVenue.VegLunchCost = 0;
+                vendorVenue.VegDinnerCost = 0;
+            }
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster,masterid);
             vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue,masterid,vid);
             return vendorVenue;
