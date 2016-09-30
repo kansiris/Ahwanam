@@ -94,7 +94,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 {
                     string x1 = ViewBag.images[i].ToString();
                     string[] y = x1.Split('_', '.');
-                    imageno = int.Parse(y[1]);
+                    if (y[0]!= "" && y != null)
+                    {
+                        imageno = int.Parse(y[1]);
+                    }
+                    
                 }
 
                 if (Request.Files.Count <= 10 - count)

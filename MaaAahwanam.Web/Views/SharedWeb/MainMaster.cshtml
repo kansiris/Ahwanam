@@ -698,47 +698,83 @@
             });
 
             // event start date
-            //$('#datetimepicker1').datetimepicker({
-            //    lang: 'en',
-            //    timepicker: false,
-            //    format: 'd/m/Y',
-            //    formatDate: 'Y/m/d',
-            //});
+            $('#datetimepicker1').datetimepicker({
+                lang: 'en',
+                timepicker: false,
+                format: 'd/m/Y',
+                formatDate: 'Y/m/d',
+            }).on('change', function () {
+                var startDate = $('#datetimepicker1').valueOf();
+                var endDate = $('#datetimepicker2').valueOf();
+                
+                if (endDate != '') {
+                    if (startDate > endDate) {
+                        $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+                        
+                    } else {
+                        $('#alert').hide();
+                        startDate = new Date(ev.date);
+                        
+                    }
+                }
+            });
 
 
-            //// event end date
-            //$('#datetimepicker2').datetimepicker({
-            //    lang: 'en',
-            //    timepicker: false,
-            //    format: 'd/m/Y',
-            //    formatDate: 'Y/m/d',
-        //});
+            // event end date
+            $('#datetimepicker2').datetimepicker({
+                lang: 'en',
+                timepicker: false,
+                format: 'd/m/Y',
+                formatDate: 'Y/m/d',
+            }).on('change', function (ev) {
+                
+                var startDate = $('#datetimepicker1').val();
+                var endDate = $('#datetimepicker2').val();
+                var data = $.datetimepicker.formatDate('yy-mm-dd', startDate);
+                alert(data);
+                if (endDate.valueOf() < startDate.valueOf()) {
+                    
+                    $('#alert').show().find('strong').text('The end date can not be less then the start date');
+                    $("#lnkproceedtonext").hide();
+                    $("#btnsubmit").hide();
+                } else {
+                    
+                    $('#alert').hide();
+                    $("#lnkproceedtonext").show();
+                    $("#btnsubmit").show();
+                }
+            });
 
-
-            var startDate = new Date(2012, 1, 20);
-            var endDate = new Date(2012, 1, 25);
-        $('#datetimepicker1').datepicker()
-                    .on('changeDate', function (ev) {
-                        if (ev.date.valueOf() > endDate.valueOf()) {
-                            $('#alert').show().find('strong').text('The start date can not be greater then the end date');
-                        } else {
-                            $('#alert').hide();
-                            startDate = new Date(ev.date);
-                            $('#startDate').text($('#datetimepicker1').data('date'));
-                        }
-                        $('#datetimepicker1').datepicker('hide');
-                    });
-        $('#datetimepicker2').datepicker()
-                    .on('changeDate', function (ev) {
-                        if (ev.date.valueOf() < startDate.valueOf()) {
-                            $('#alert').show().find('strong').text('The end date can not be less then the start date');
-                        } else {
-                            $('#alert').hide();
-                            endDate = new Date(ev.date);
-                            $('#endDate').text($('#datetimepicker2').data('date'));
-                        }
-                        $('#datetimepicker2').datepicker('hide');
-                    });
+            
+            
+        //$('#datetimepicker1').datepicker()
+        //            .on('change', function () {
+        //                var startDate = $('#datetimepicker1').val();
+        //                var endDate = $('#datetimepicker2').val();
+        //                alert(startDate);
+        //                if (endDate != '') {
+        //                    if (startDate > endDate) {
+        //                        $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+        //                    } else {
+        //                        $('#alert').hide();
+        //                        startDate = new Date(ev.date);
+        //                        }
+        //                }
+        //                $('#datetimepicker1').datepicker('hide');
+        //            });
+        //$('#datetimepicker2').datepicker()
+        //            .on('change', function () {
+        //                var startDate = $('#datetimepicker1').val();
+        //                var endDate = $('#datetimepicker2').val();
+        //                if (endDate < startDate) {
+        //                    $('#alert').show().find('strong').text('The end date can not be less then the start date');
+        //                } else {
+        //                    $('#alert').hide();
+        //                    endDate = new Date(ev.date);
+        //                    $('#datetimepicker2').text($('#datetimepicker2').data('date'));
+        //                }
+        //                $('#datetimepicker2').datepicker('hide');
+        //            });
 
 
 
