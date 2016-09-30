@@ -24,10 +24,10 @@ namespace MaaAahwanam.Models
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string PhoneNo { get; set; }
-        public DateTime? EventStartDate { get; set; }
-        public DateTime? EventStartTime { get; set; }
-        public DateTime? EventEnddate { get; set; }
-        public DateTime? EventEndtime { get; set; }
+        public DateTime EventStartDate { get; set; }
+        public DateTime EventStartTime { get; set; }
+        public DateTime EventEnddate { get; set; }
+        public DateTime EventEndtime { get; set; }
         public long  VendorId { get; set; }
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedTime { get; set; }
