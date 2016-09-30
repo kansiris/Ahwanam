@@ -28,6 +28,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Userloginstatus = 0;
             }
             ProductInfoService productInfoService = new ProductInfoService();
+            VendorVenueService vendorVenueService = new VendorVenueService();
             Review review = new Review();
             string Servicetype = Request.QueryString["par"];
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
@@ -40,7 +41,12 @@ namespace MaaAahwanam.Web.Controllers
             }
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);
-
+            if (Productinfo.ServicType == "Venue")
+            {
+                var list = vendorVenueService.GetVendorVenue(vid, Subvid);
+                ViewBag.venuetype = list.VenueType;
+                ViewBag.servicecost = list.ServiceCost;
+            }
             var tupleModel = new Tuple<GetProductsInfo_Result, Review>(Productinfo, review);
             return View(tupleModel);
         }

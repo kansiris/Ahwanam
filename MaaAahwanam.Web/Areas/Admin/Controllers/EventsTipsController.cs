@@ -26,7 +26,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 
                 var particularevent = eventsandtipsService.GetEventandTip(long.Parse(id));
                 string x = particularevent.Image.ToString();
-                ViewBag.images = x.Split(',');
+                if (x != "" && x != null)
+                {
+                    ViewBag.images = x.Split(',');
+                }
                 return View(particularevent);
             }
             if (src!=null)

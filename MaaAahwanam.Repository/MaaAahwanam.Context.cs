@@ -225,23 +225,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     
-        public virtual ObjectResult<GetProductsInfo_Result> GetProductsInfo(Nullable<int> vid, string nType, Nullable<int> vid2)
-        {
-            var vidParameter = vid.HasValue ?
-                new ObjectParameter("vid", vid) :
-                new ObjectParameter("vid", typeof(int));
-    
-            var nTypeParameter = nType != null ?
-                new ObjectParameter("nType", nType) :
-                new ObjectParameter("nType", typeof(string));
-    
-            var vid2Parameter = vid2.HasValue ?
-                new ObjectParameter("Vid2", vid2) :
-                new ObjectParameter("Vid2", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter, vid2Parameter);
-        }
-    
         public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
         {
             var nTypeParameter = nType != null ?
@@ -265,6 +248,23 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("order", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsInfo_Result> GetProductsInfo(Nullable<int> vid, string nType, Nullable<int> vid2)
+        {
+            var vidParameter = vid.HasValue ?
+                new ObjectParameter("vid", vid) :
+                new ObjectParameter("vid", typeof(int));
+    
+            var nTypeParameter = nType != null ?
+                new ObjectParameter("nType", nType) :
+                new ObjectParameter("nType", typeof(string));
+    
+            var vid2Parameter = vid2.HasValue ?
+                new ObjectParameter("Vid2", vid2) :
+                new ObjectParameter("Vid2", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter, vid2Parameter);
         }
     }
 }

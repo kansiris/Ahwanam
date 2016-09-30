@@ -235,7 +235,8 @@
                                 <dl>
                                     <dt>Package Price: </dt><dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
-                                        <p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost*@</p>
+                                        @*<p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost</p>*@
+                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -254,13 +255,13 @@
                                     <input type="radio" id="vlother" name="platetypeother" value="500" checked style="display:none"> item cost @Model.Item1.cost/-<br>
                                 </form>
                             </div>
-                            <div class="deal_save">
+                            @*<div class="deal_save">
                                 <p>
                                     You Save:
                                     <span class="text-red">Rs. 1,800</span>
                                 </p>
                                 <h3>30% OFF</h3>
-                            </div>
+                            </div>*@
                         </div>
 
                         @*Calculation venue Div*@
@@ -280,10 +281,15 @@
                                             <h2>Rs. 2,200</h2>
                                         </dd>*@
                                 </dl>
-                                <label>Number of pax<span>*</span></label>
-                                <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; " id="txtquantityvenue" value="10" onchange="Onchangequantityvenue()" /><br><br>
-                                <form name="myFormvenue">
+                                <div id="pax">
+                                    <label>Number of pax<span>*</span></label>
+
+                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; " id="txtquantityvenue" value="10" onchange="Onchangequantityvenue()" /><br><br>
+                                </div>
+	                           <form name="myFormvenue">
                                     <fieldset>
+                                        @if (ViewBag.venuetype == "Banquet Hall")
+                                        {
                                         <div class="radioButtons" id="radio-demo">
                                             <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
                                             <label for="vlvenue">Veg lunch Per plate cost @Model.Item1.cost/-</label><br />
@@ -297,10 +303,25 @@
                                             <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
                                             <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>
                                         </div>
+                                        }
+                                        else
+                                        {
+                                            
+                                            <div class="price_details">
+                                                <dl>
+                                                    <dd>
+                                                        <input type="radio" id="vlvenue" name="platetypevenue" value=@ViewBag.servicecost checked style="display:none">
+                                                        @*<p name="platetypevenue" value=@Model.Item1.cost2 style="color:#8ca436;font-size:20px"> </p>*@
+                                                    </dd>
+                                                </dl>
+                                                </div>
+                                        }
                                     </fieldset>
                                     <input type="hidden" id="rbselectedvalue" value="vlvenue" />
                                     <input type="hidden" id="rbselectedamount" value=@Model.Item1.cost />
+                                   <input type="hidden" id="venuetype" value="@ViewBag.venuetype" />
                                 </form>
+                                
                             </div>
                             @*<div class="deal_save">
                                     <p>
@@ -357,16 +378,17 @@
                                 <dl>
                                     <dt>Deal Price: Rs.</dt>
                                     <dd>
-                                        <p id="demoGift" style="color:#8ca436;font-size:20px"></p>
+                                        @*<p id="demoGift" style="color:#8ca436;font-size:20px"></p>*@
+                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
-                                    <dt>Selling Price: </dt>
+                                    @*<dt>Selling Price: </dt>
                                     <dd>
                                         <h2>Rs. 1,800</h2>
                                     </dd>
                                     <dt>Total Price: </dt>
                                     <dd>
                                         <h2>Rs. 2,200</h2>
-                                    </dd>
+                                    </dd>*@
                                 </dl>
                                 <form name="myFormGift">
                                     <label>Number of gifts<span>*</span></label>
@@ -374,13 +396,13 @@
                                     <input type="radio" id="vlGift" name="platetypeGift" value="500" checked> Gift cost 500/-<br>
                                 </form>
                             </div>
-                            <div class="deal_save">
+                            @*<div class="deal_save">
                                 <p>
                                     You Save:
                                     <span class="text-red">Rs. 1,800</span>
                                 </p>
                                 <h3>30% OFF</h3>
-                            </div>
+                            </div>*@
                         </div>
 
                         @*Calculation invitation Div*@
@@ -391,7 +413,7 @@
                                     <dd>
                                         <p id="demoinvitation" style="color:#8ca436;font-size:20px"></p>
                                     </dd>
-                                    <dt>Selling Price: </dt>
+                                    @*<dt>Selling Price: </dt>
                                     <dd>
                                         <h2>Rs. 1,800</h2>
                                     </dd>
@@ -399,7 +421,7 @@
                                     <dd>
                                         <h2>Rs. 2,200</h2>
 
-                                    </dd>
+                                    </dd>*@
                                 </dl>
                                 <form name="myForminvitation">
                                     <label>Number of cards<span>*</span></label>
@@ -415,13 +437,13 @@
 
                                 </form>
                             </div>
-                            <div class="deal_save">
+                            @*<div class="deal_save">
                                 <p>
                                     You Save:
                                     <span class="text-red">Rs. 1,800</span>
                                 </p>
                                 <h3>30% OFF</h3>
-                            </div>
+                            </div>*@
                         </div>
 
                         @*Calculation General Div*@
@@ -430,7 +452,8 @@
                                 <dl>
                                     <dt>Package Price: </dt> <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
-                                        <p id="demoGeneral" style="color:#8ca436;font-size:20px"> </p>
+                                        @*<p id="demoGeneral" style="color:#8ca436;font-size:20px"> </p>*@
+                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -445,7 +468,7 @@
                                     <label style="display:none">Number of items<span>*</span></label>
                                     <input type="hidden" id="hmin" name="Minvalue" value="10">
                                     <input type="hidden" id="hmax" name="Maxvalue" value="50">
-                                    <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px; " type="text" id="txtquantityGeneral" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGeneral()" /><br />
+                                    <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px; " type="text" id="txtquantityGeneral" value="1" placeholder="Enter Quantity" onchange="OnchangequantityGeneral()" /><br />
                                     <p style="display:none"> <input type="radio" id="vlGeneral" name="platetypeGeneral" value="@Model.Item1.cost" checked> item cost @Model.Item1.cost/-</p>
                                     <br />
                                 </form>
@@ -737,33 +760,8 @@
     </style>
     <script type="text/javascript">
         window.onload = function () {
-            //alert($('input[name=platetypevenue]:checked', '#myFormvenue').val());
-            var b;
-            var a = document.getElementById("txtquantityvenue").value;
-            var b = document.getElementById("txtquantityGeneral").value;
-            if (document.getElementById("vlvenue").checked) {
-                document.getElementById("demovenue").innerHTML =  document.getElementById("vlvenue").value * a ;
-            }
-            if (document.getElementById("vlother").checked) {
-                document.getElementById("demoother").innerHTML =  document.getElementById("vlother").value * a;
-            }
-            if (document.getElementById("vlCatering").checked) {
-                document.getElementById("demoCatering").innerHTML =  document.getElementById("vlCatering").value * a ;
-            }
-            if (document.getElementById("vlGift").checked) {
-                document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value * a ;
-            }
-            if (document.getElementById("vlinvitation").checked) {
-                document.getElementById("demoinvitation").innerHTML =  document.getElementById("vlinvitation").value * a ;
-            }
-            if (document.getElementById("vlGeneral").checked) {
-                //alert('s');
-                document.getElementById("demoGeneral").innerHTML =  document.getElementById("vlGeneral").value * b ;
-            }
-
+            //particular div enabling based on condition
             var servicetype = document.getElementById("stype").value;
-            //alert(servicetype);
-
             if (servicetype == "Other") {
                 $('#Calcdiv_Other').removeAttr("style");
                 $('#Calcdiv_Other').css({ "display": "block" });
@@ -788,6 +786,47 @@
                 $('#Calcdiv_General').removeAttr("style");
                 $('#Calcdiv_General').css({ "display": "block" });
             }
+            //alert($('input[name=platetypevenue]:checked', '#myFormvenue').val());
+
+            //performing calculations
+            var b;
+            var a = document.getElementById("txtquantityvenue").value;
+            var b = document.getElementById("txtquantityGeneral").value;
+            var type = $("#venuetype").val();
+            if (type == 'Banquet Hall') {
+                if (document.getElementById("vlvenue").checked) {
+                    $("#pax").show();
+                    document.getElementById("demovenue").innerHTML =  document.getElementById("vlvenue").value * a ;
+                }
+            }
+            else {
+                if (document.getElementById("vlvenue").checked) {
+                    $("#pax").hide();
+                    document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value ;
+                }
+            }
+            //if (document.getElementById("vlother").checked) {
+            //    document.getElementById("demoother").innerHTML =  document.getElementById("vlother").value * a;
+            //}
+            if (document.getElementById("vlCatering").checked) {
+                document.getElementById("demoCatering").innerHTML =  document.getElementById("vlCatering").value * a ;
+            }
+            //if (document.getElementById("vlGift").checked) {
+            //    document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value * a ;
+            //}
+            if (document.getElementById("vlinvitation").checked) {
+                document.getElementById("demoinvitation").innerHTML =  document.getElementById("vlinvitation").value * a ;
+            }
+            //if (document.getElementById("vlGeneral").checked) {
+            //    //alert('s');
+            //    document.getElementById("demoGeneral").innerHTML =  document.getElementById("vlGeneral").value * b ;
+            //}
+
+            //var servicetype = document.getElementById("stype").value;
+            
+            
+
+            
 
             var fromcart = '@Request.QueryString["p"]';
             var cid = '@Request.QueryString["cid"]';
@@ -831,7 +870,7 @@
         var prevvenue = null;
         var rrvenue = null;
         if (radvenue.length > 1) {
-            document.getElementById("lblprice").innerHTML = "Total Price";
+            document.getElementById("lblprice").innerHTML = "Total Price"; 
         }
         else {
             document.getElementById("lblprice").innerHTML = "Package Price";
@@ -1012,7 +1051,7 @@
             var EendDate = document.getElementById("datetimepicker2").value;
             var Eendtime = document.getElementById("datetimepicker4").value;
             //End of pop-Up values
-            alert(c);
+            //alert(c);
             EventDates = [];
             item = {}
             item["StartDate"] = EstartDate;
