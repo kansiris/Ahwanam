@@ -22,12 +22,13 @@ namespace MaaAahwanam.Web.Controllers
         [Authorize]
         public ActionResult Index(ServiceRequest serviceRequest)
         {
-            string sdate = String.Format("{0:MM-dd-yyyy}", serviceRequest.EventEnddate);
-            serviceRequest.EventEnddate = DateTime.ParseExact(sdate, "MM-dd-yyyy", new CultureInfo("en-US"), DateTimeStyles.None);
+            //string sdate = String.Format("{0:MM-dd-yyyy}", serviceRequest.EventEnddate);
+            //serviceRequest.EventEnddate = DateTime.ParseExact(sdate, "MM-dd-yyyy", new CultureInfo("en-US"), DateTimeStyles.None);
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             ServiceRequestService serviceRequestService = new ServiceRequestService();
             serviceRequest.Type = "Quotation";
-            serviceRequest.UpdatedTime = DateTime.Parse(String.Format("{0:MM-dd-yyyy}", DateTime.Now));
+            //serviceRequest.UpdatedTime = DateTime.Parse(String.Format("{0:MM-dd-yyyy}", DateTime.Now));
+            serviceRequest.UpdatedTime = DateTime.Now;
             serviceRequest.UpdatedBy = (int)user.UserId;
             serviceRequest.Status = "Due";
             serviceRequest.ServiceType.TrimStart(',');
