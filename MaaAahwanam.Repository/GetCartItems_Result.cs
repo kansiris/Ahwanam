@@ -30,5 +30,6 @@ namespace MaaAahwanam.Repository
         public Nullable<System.DateTime> eventstartdate { get; set; }
         public Nullable<System.DateTime> eventenddate { get; set; }
         public Nullable<long> eventid { get; set; }
+        public Nullable<long> subid { get; set; }
     }
 }
