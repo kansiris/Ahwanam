@@ -33,6 +33,7 @@ namespace MaaAahwanam.Web.Controllers
             string Servicetype = Request.QueryString["par"];
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
             int Subvid = Convert.ToInt32(Request.QueryString["subvid"]);
+            ViewBag.Subvid = Subvid;
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Subvid);
             if (Productinfo.image != null)
             {
@@ -72,6 +73,7 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.Orderedby = user.UserId;
             cartItem.Quantity = orderRequest.Quantity;
             cartItem.UpdatedDate = DateTime.Now;
+            cartItem.subid = orderRequest.subid;
             cartItem.attribute = orderRequest.attribute;
             CartService cartService = new CartService();
             cartItem = cartService.AddCartItem(cartItem);

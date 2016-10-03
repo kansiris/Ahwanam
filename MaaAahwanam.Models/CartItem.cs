@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Models
 {
-    
+
     public class CartItem
     {
         [Key]
@@ -25,5 +25,6 @@ namespace MaaAahwanam.Models
         public string Status { get; set; }
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public long subid { get; set; }
     }
 }
