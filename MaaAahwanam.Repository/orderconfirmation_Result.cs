@@ -14,9 +14,12 @@ namespace MaaAahwanam.Repository
     public partial class orderconfirmation_Result
     {
         public string Description { get; set; }
+        public string ServicType { get; set; }
         public string Address { get; set; }
         public string Landmark { get; set; }
         public decimal PerunitPrice { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public string StartTime { get; set; }
         public string image { get; set; }
     }
 }

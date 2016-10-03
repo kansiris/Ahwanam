@@ -236,7 +236,7 @@
                                     <dt>Package Price: </dt><dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         @*<p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost</p>*@
-                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                        <p id="demoother" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -379,7 +379,7 @@
                                     <dt>Deal Price: Rs.</dt>
                                     <dd>
                                         @*<p id="demoGift" style="color:#8ca436;font-size:20px"></p>*@
-                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                        <p id="demoGift" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                     <dd>
@@ -393,7 +393,7 @@
                                 <form name="myFormGift">
                                     <label>Number of gifts<span>*</span></label>
                                     <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px; " id="txtquantityGift" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGift()" /><br>
-                                    <input type="radio" id="vlGift" name="platetypeGift" value="500" checked> Gift cost 500/-<br>
+                                    <input type="radio" id="vlGift" name="platetypeGift"  checked> <br>
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -453,7 +453,7 @@
                                     <dt>Package Price: </dt> <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         @*<p id="demoGeneral" style="color:#8ca436;font-size:20px"> </p>*@
-                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                        <p id="demoGeneral" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -805,22 +805,23 @@
                     document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value ;
                 }
             }
-            //if (document.getElementById("vlother").checked) {
-            //    document.getElementById("demoother").innerHTML =  document.getElementById("vlother").value * a;
-            //}
+            if (document.getElementById("vlother").checked) {
+                document.getElementById("demoother").innerHTML =  document.getElementById("vlother").value;
+            }
             if (document.getElementById("vlCatering").checked) {
                 document.getElementById("demoCatering").innerHTML =  document.getElementById("vlCatering").value * a ;
             }
-            //if (document.getElementById("vlGift").checked) {
-            //    document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value * a ;
-            //}
+            if (document.getElementById("vlGift").checked) {
+                document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value ;
+            }
             if (document.getElementById("vlinvitation").checked) {
                 document.getElementById("demoinvitation").innerHTML =  document.getElementById("vlinvitation").value * a ;
             }
-            //if (document.getElementById("vlGeneral").checked) {
-            //    //alert('s');
-            //    document.getElementById("demoGeneral").innerHTML =  document.getElementById("vlGeneral").value * b ;
-            //}
+            if (document.getElementById("vlGeneral").checked) {
+                //alert('s');
+                
+                document.getElementById("demoGeneral").innerHTML =  document.getElementById("vlGeneral").value  ;
+            }
 
             //var servicetype = document.getElementById("stype").value;
             
@@ -1030,13 +1031,34 @@
     </script>
     <script type="text/javascript">
         $('#lnkproceedtonext').on('click', function (e) {
+            
             var a = document.getElementById("Service").value;
             var b = document.getElementById("Review").value;
-            var c = document.getElementById("demovenue").innerHTML;
+            var type = $("#stype").val(); var c;
+            if (type == "Venue") {
+                c = document.getElementById("demovenue").innerHTML;
+            }
+            else if (type == "Other") {
+                c = document.getElementById("demoother").innerHTML;
+            }
+            else if (type == "InvitationCard") {
+                c = document.getElementById("demoinvitation").innerHTML;
+            }
+            else if (type == "Catering") {
+                c = document.getElementById("demoCatering").innerHTML;
+            }
+            else if (type == "Gift") {
+                c = document.getElementById("demoGift").innerHTML;
+            }
+            else {
+                c = document.getElementById("demoGeneral").innerHTML;
+            }
+            alert(c);
             var d = document.getElementById("txtquantityvenue").value;
 
             var e = document.getElementById("rbselectedvalue").value;
             var f = document.getElementById("rbselectedamount").value;
+            
             //Pop-up Values
             var Ename = document.getElementById("Ename").value;
             var Eemail = document.getElementById("Eemail").value;
