@@ -34,7 +34,7 @@
                                                             <th>Title</th>
                                                             <th>Person</th>
                                                             <th>Location,Phone</th>
-                                                            <th>Price</th>
+                                                            <th style="display:none;">Price</th>
                                                             <th>Event StartDate - Event EndDate</th>
                                                             <th>Operations</th>
                                                         </tr>
@@ -69,8 +69,13 @@
                                                     <td><label class="control-label col-lg-4">@item.Title</label></td>
                                                     <td><label class="control-label col-lg-4">@item.Person</label></td>
                                                     <td><label class="control-label col-lg-4">@item.Location,<br />@item.Phone</label></td>
-                                                    <td><label class="control-label col-lg-4">@item.Price</label></td>
-                                                    <td>
+                                                    <td style="display:none;"><label class="control-label col-lg-4">
+                                                        @if (item.Type == "Event")
+                                                        { @item.Price }
+                                                        else
+                                                        { <p>Not Applicable</p>}
+                                                        </label></td>
+                                                    <td align="center">
                                                         @if (item.Eventstartdate != null && item.Eventenddate != null)
                                                         { <label class="control-label col-lg-4">@item.Eventstartdate.ToShortDateString() - @item.Eventenddate.ToShortDateString()</label> }
                                                         else
