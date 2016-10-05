@@ -148,15 +148,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_Comments_Result>("MaaAahwanam_Others_Comments", commentIdParameter);
         }
     
-        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
-        }
-    
         public virtual ObjectResult<MaaAahwanam_Others_Tickets_Result> MaaAahwanam_Others_Tickets(Nullable<long> ticketId)
         {
             var ticketIdParameter = ticketId.HasValue ?
@@ -207,31 +198,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     
-        public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
-        {
-            var nTypeParameter = nType != null ?
-                new ObjectParameter("nType", nType) :
-                new ObjectParameter("nType", typeof(string));
-    
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            var stypeParameter = stype != null ?
-                new ObjectParameter("stype", stype) :
-                new ObjectParameter("stype", typeof(string));
-    
-            var cityParameter = city != null ?
-                new ObjectParameter("city", city) :
-                new ObjectParameter("city", typeof(string));
-    
-            var orderParameter = order != null ?
-                new ObjectParameter("order", order) :
-                new ObjectParameter("order", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
-        }
-    
         public virtual ObjectResult<GetProductsInfo_Result> GetProductsInfo(Nullable<int> vid, string nType, Nullable<int> vid2)
         {
             var vidParameter = vid.HasValue ?
@@ -265,6 +231,40 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("OID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
+        }
+    
+        public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
+        {
+            var nTypeParameter = nType != null ?
+                new ObjectParameter("nType", nType) :
+                new ObjectParameter("nType", typeof(string));
+    
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            var stypeParameter = stype != null ?
+                new ObjectParameter("stype", stype) :
+                new ObjectParameter("stype", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("city", city) :
+                new ObjectParameter("city", typeof(string));
+    
+            var orderParameter = order != null ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
+        }
+    
+        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     }
 }
