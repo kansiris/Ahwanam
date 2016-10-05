@@ -27,9 +27,9 @@ namespace MaaAahwanam.Repository
         public string attribute { get; set; }
         public int Quantity { get; set; }
         public decimal Perunitprice { get; set; }
+        public long subid { get; set; }
         public Nullable<System.DateTime> eventstartdate { get; set; }
         public Nullable<System.DateTime> eventenddate { get; set; }
         public Nullable<long> eventid { get; set; }
-        public Nullable<long> subid { get; set; }
     }
 }
