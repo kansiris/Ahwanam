@@ -147,15 +147,15 @@
           <FunctionImport Name="orderconfirmation" ReturnType="Collection(MaaAahwanamModel.orderconfirmation_Result)">
           <Parameter Name="OID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
+          <Parameter Name="VID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
             <Parameter Name="nType" Mode="In" Type="String" />
             <Parameter Name="VID" Mode="In" Type="Int32" />
             <Parameter Name="stype" Mode="In" Type="String" />
             <Parameter Name="city" Mode="In" Type="String" />
             <Parameter Name="order" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
-            <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -411,16 +411,6 @@
           <Property Type="String" Name="StartTime" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetProducts_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Int64" Name="subid" Nullable="false" />
-          <Property Type="String" Name="image" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetCartItems_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="BusinessName" Nullable="true" />
@@ -440,6 +430,17 @@
           <Property Type="DateTime" Name="eventstartdate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="eventid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetProducts_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -800,20 +801,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProducts" FunctionName="MaaAahwanamModel.Store.GetProducts">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProducts_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="subid" ColumnName="subid" />
-                <ScalarProperty Name="image" ColumnName="image" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetCartItems" FunctionName="MaaAahwanamModel.Store.GetCartItems">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.GetCartItems_Result">
@@ -835,6 +822,21 @@
                 <ScalarProperty Name="eventstartdate" ColumnName="eventstartdate" />
                 <ScalarProperty Name="eventenddate" ColumnName="eventenddate" />
                 <ScalarProperty Name="eventid" ColumnName="eventid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProducts" FunctionName="MaaAahwanamModel.Store.GetProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProducts_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

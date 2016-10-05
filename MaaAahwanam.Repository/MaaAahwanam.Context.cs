@@ -233,6 +233,15 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
         }
     
+        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
+        }
+    
         public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
         {
             var nTypeParameter = nType != null ?
@@ -256,15 +265,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("order", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProducts_Result>("GetProducts", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
-        }
-    
-        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     }
 }
