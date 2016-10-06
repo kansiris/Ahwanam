@@ -180,11 +180,16 @@
                                                         <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@item.BusinessName</h4>
                                                         <div class="amount">
                                                             <input type="hidden" id="hdncost" value=@item.ServicType.Trim() />
-                                                            @if (item.subtype != "Banquet Hall")
+
+                                                            @if (item.ServicType!="Venue")
                                                             {
                                                                 @*<p id="P_cost">*@
                                                                     <span class="price">Rs. @item.Cost</span>
                                                                 @*</p>*@
+                                                            }
+                                                            @if (item.subtype == "Convention Hall" || item.subtype == "Function Hall" || item.subtype == "Meeting Room" || item.subtype == "Roof Top")
+                                                            {
+                                                                <span class="price">Rs. @item.Servicecost</span>
                                                             }
                                                             <span class="buy">
                                                                 <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid"><i class="ti-shopping-cart"></i> Add to Cart</a>
