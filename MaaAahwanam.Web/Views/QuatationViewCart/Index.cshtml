@@ -211,7 +211,16 @@
                 foreach (var item in ViewBag.comments)
                 {
                     <dl class="first-child">
-                        <dt><img class="person" alt="img-profile1" src="~/CSSWeb/images/dashboard/img-profile1.jpg"></dt>
+                        <dt>
+                            @if (item.UserImgName != null && item.UserImgName != "")
+                            {
+                                <img class="person" alt="img-profile1" src="~/Content/UserDPs/@item.UserImgName">
+                            }
+                            else
+                            {
+                                <img class="person" alt="img-profile1" src="~/Content/UserDPs/user1.jpg">
+                            }
+                        </dt>
                         <dd>
                             <h5>@item.FirstName @item.LastName</h5>
                             <p>@item.CommentDetails.</p>

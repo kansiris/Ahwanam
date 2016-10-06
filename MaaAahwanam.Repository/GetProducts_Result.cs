@@ -21,6 +21,7 @@ namespace MaaAahwanam.Repository
         public decimal Cost { get; set; }
         public long subid { get; set; }
         public string subtype { get; set; }
+        public long Servicecost { get; set; }
         public string image { get; set; }
     }
 }

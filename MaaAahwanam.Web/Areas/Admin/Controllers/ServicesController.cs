@@ -86,7 +86,13 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             if (TempData["ServiceRequestRecords"] != null)
             {
                 //Reverse Bid Related
+                long id = 0;
                 ViewBag.vendordetails = TempData["ServiceRequestRecords"];
+                foreach (var item in ViewBag.vendordetails)
+                {
+                    id = item.VendorId;
+                }
+                ViewBag.vendorname = serviceRequestService.getvendorname(id);
                 return View();
             }
             return View();
