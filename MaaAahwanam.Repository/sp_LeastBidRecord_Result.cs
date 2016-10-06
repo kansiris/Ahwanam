@@ -18,8 +18,8 @@ namespace MaaAahwanam.Repository
         public string EventAddress { get; set; }
         public string EventLocation { get; set; }
         public string PhoneNo { get; set; }
-        public Nullable<System.DateTime> EventStartDate { get; set; }
-        public Nullable<System.DateTime> EventStartTime { get; set; }
+        public System.DateTime EventStartDate { get; set; }
+        public System.DateTime EventStartTime { get; set; }
         public decimal Amount { get; set; }
         public decimal Budget { get; set; }
     }

@@ -18,8 +18,8 @@ namespace MaaAahwanam.Repository
         public string Address { get; set; }
         public string Landmark { get; set; }
         public decimal PerunitPrice { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public string StartTime { get; set; }
+        public long Eventid { get; set; }
         public string image { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
     }
 }
