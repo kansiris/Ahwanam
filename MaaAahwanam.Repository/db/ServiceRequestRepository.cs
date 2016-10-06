@@ -40,5 +40,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Vendormaster.Where(m => m.ServicType == stype && m.ReverseBidding==true).ToList();
         }
+
+        public string vendorname(long id)
+        {
+            return _dbContext.Vendormaster.Where(m => m.Id == id).Select(m => m.BusinessName).FirstOrDefault() ;
+        }
     }
 }

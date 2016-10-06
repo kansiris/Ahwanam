@@ -103,15 +103,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
         }
     
-        public virtual ObjectResult<sp_ServiceComments_Result> sp_ServiceComments(Nullable<long> serviceId)
-        {
-            var serviceIdParameter = serviceId.HasValue ?
-                new ObjectParameter("ServiceId", serviceId) :
-                new ObjectParameter("ServiceId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ServiceComments_Result>("sp_ServiceComments", serviceIdParameter);
-        }
-    
         public virtual ObjectResult<sp_Tickets_Result> sp_Tickets(Nullable<long> ticketId)
         {
             var ticketIdParameter = ticketId.HasValue ?
@@ -164,15 +155,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("RequestId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Servicedetails_Result>("sp_Servicedetails", requestIdParameter);
-        }
-    
-        public virtual ObjectResult<sp_QuotationComments_Result> sp_QuotationComments(Nullable<long> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_QuotationComments_Result>("sp_QuotationComments", idParameter);
         }
     
         public virtual ObjectResult<allnotifications_Result> allnotifications()
@@ -240,6 +222,24 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_QuotationComments_Result> sp_QuotationComments(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_QuotationComments_Result>("sp_QuotationComments", idParameter);
+        }
+    
+        public virtual ObjectResult<sp_ServiceComments_Result> sp_ServiceComments(Nullable<long> serviceId)
+        {
+            var serviceIdParameter = serviceId.HasValue ?
+                new ObjectParameter("ServiceId", serviceId) :
+                new ObjectParameter("ServiceId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ServiceComments_Result>("sp_ServiceComments", serviceIdParameter);
         }
     
         public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string city, string order)
