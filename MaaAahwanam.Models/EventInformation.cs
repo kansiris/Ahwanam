@@ -25,5 +25,6 @@ namespace MaaAahwanam.Models
         public string Status { get; set; }
         public long vendorid { get; set; }
         public long CartId { get; set; }
+        public long OrderDetailsid { get; set; }
     }
 }

@@ -144,18 +144,18 @@
           <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
           <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_QuotationComments" ReturnType="Collection(MaaAahwanamModel.sp_QuotationComments_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="sp_ServiceComments" ReturnType="Collection(MaaAahwanamModel.sp_ServiceComments_Result)">
-          <Parameter Name="ServiceId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
             <Parameter Name="nType" Mode="In" Type="String" />
             <Parameter Name="VID" Mode="In" Type="Int32" />
             <Parameter Name="stype" Mode="In" Type="String" />
             <Parameter Name="city" Mode="In" Type="String" />
             <Parameter Name="order" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_QuotationComments" ReturnType="Collection(MaaAahwanamModel.sp_QuotationComments_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ServiceComments" ReturnType="Collection(MaaAahwanamModel.sp_ServiceComments_Result)">
+            <Parameter Name="ServiceId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -417,22 +417,6 @@
           <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="eventid" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_QuotationComments_Result">
-          <Property Type="String" Name="CommentDetails" Nullable="true" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="FirstName" Nullable="true" />
-          <Property Type="String" Name="LastName" Nullable="true" />
-          <Property Type="Int64" Name="CommentId" Nullable="false" />
-          <Property Type="String" Name="ServiceType" Nullable="true" />
-          <Property Type="String" Name="UserImgName" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_ServiceComments_Result">
-          <Property Type="String" Name="CommentDetails" Nullable="true" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="FirstName" Nullable="true" />
-          <Property Type="String" Name="LastName" Nullable="true" />
-          <Property Type="String" Name="UserImgName" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetProducts_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="BusinessName" Nullable="true" />
@@ -443,6 +427,22 @@
           <Property Type="Int64" Name="subid" Nullable="false" />
           <Property Type="String" Name="subtype" Nullable="true" />
           <Property Type="Int64" Name="Servicecost" Nullable="false" />
+          <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_QuotationComments_Result">
+          <Property Type="String" Name="CommentDetails" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="Int64" Name="CommentId" Nullable="false" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ServiceComments_Result">
+          <Property Type="String" Name="CommentDetails" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -806,30 +806,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_QuotationComments" FunctionName="MaaAahwanamModel.Store.sp_QuotationComments">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_QuotationComments_Result">
-                <ScalarProperty Name="CommentDetails" ColumnName="CommentDetails" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="UserImgName" ColumnName="UserImgName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_ServiceComments" FunctionName="MaaAahwanamModel.Store.sp_ServiceComments">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_ServiceComments_Result">
-                <ScalarProperty Name="CommentDetails" ColumnName="CommentDetails" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="UserImgName" ColumnName="UserImgName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetProducts" FunctionName="MaaAahwanamModel.Store.GetProducts">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProducts_Result">
@@ -842,6 +818,30 @@
                 <ScalarProperty Name="subid" ColumnName="subid" />
                 <ScalarProperty Name="subtype" ColumnName="subtype" />
                 <ScalarProperty Name="Servicecost" ColumnName="Servicecost" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_QuotationComments" FunctionName="MaaAahwanamModel.Store.sp_QuotationComments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_QuotationComments_Result">
+                <ScalarProperty Name="CommentDetails" ColumnName="CommentDetails" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ServiceComments" FunctionName="MaaAahwanamModel.Store.sp_ServiceComments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_ServiceComments_Result">
+                <ScalarProperty Name="CommentDetails" ColumnName="CommentDetails" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
