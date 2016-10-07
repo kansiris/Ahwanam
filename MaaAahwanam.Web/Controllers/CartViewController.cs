@@ -69,10 +69,12 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.TotalPrice = orderRequest.TotalPrice;
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.VendorId = item.VendorId;
+                orderDetail.subid = item.subid;
                 orderDetail.Status = "Active";
                 orderDetail.UpdatedDate = DateTime.Now;
                 orderDetail.UpdatedBy = user.UserId;
-                orderdetailsServices.SaveOrderDetail(orderDetail);
+                orderDetail = orderdetailsServices.SaveOrderDetail(orderDetail);
+                eventsService.updateeventodid(orderDetail.VendorId, orderDetail.subid, orderDetail.OrderDetailId);
             }
             foreach (var item1 in orderRequest.Cartitems)
             {

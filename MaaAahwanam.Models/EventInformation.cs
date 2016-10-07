@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Models
 {
-    public  class EventInformation
+    public class EventInformation
     {
         [Key]
         public long EventId { get; set; }
@@ -26,5 +26,6 @@ namespace MaaAahwanam.Models
         public long vendorid { get; set; }
         public long CartId { get; set; }
         public long OrderDetailsid { get; set; }
+        public long subid { get; set; }
     }
 }
