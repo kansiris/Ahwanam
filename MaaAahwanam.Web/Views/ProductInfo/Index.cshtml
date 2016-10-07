@@ -26,7 +26,7 @@
                             <i class="breads_arrow"></i>
                         </li>
                         <li>
-                            <a>Categories</a>
+                            <a href="~/AllServices/Index">Categories</a>
                         </li>
                         <li>
                             <i class="breads_arrow"></i>
@@ -55,7 +55,7 @@
                                 <a href="../product?par=Photography&sType=%&loc=Hyderabad&a=ASC"> Photography</a>
                             </li>
                         }
-                        @if (ViewBag.ServiceType == "Decorator")
+                        @if (ViewBag.ServiceType == "Decorators")
                         {
                             <li>
                                 <a href="../product?par=Decorator&sType=%&loc=Hyderabad&a=ASC"> Decorator</a>
@@ -67,7 +67,7 @@
                                 <a href="../product?par=Entertainment&sType=%&loc=Hyderabad&a=ASC"> Entertainment</a>
                             </li>
                         }
-                        @if (ViewBag.ServiceType == "Eventorganiser")
+                        @if (ViewBag.ServiceType == "EventOrganiser")
                         {
                             <li>
                                 <a href="../product?par=Eventorganiser&sType=%&loc=Hyderabad&a=ASC"> Eventorganiser</a>
@@ -85,7 +85,7 @@
                                 <a href="../product?par=Travel&sType=%&loc=Hyderabad&a=ASC"> Travel</a>
                             </li>
                         }
-                        @if (ViewBag.ServiceType == "Gift")
+                        @if (ViewBag.ServiceType == "Gifts")
                         {
                             <li>
                                 <a href="../product?par=Gift&sType=%&loc=Hyderabad&a=ASC"> Gift</a>
@@ -237,7 +237,7 @@
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         @*<p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost</p>*@
-                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                        <p id="demoother" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -340,7 +340,7 @@
                             <div class="price_details">
                                 <dl>
                                     <dt><p id="lblcprice"></p></dt>
-                                    <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
+                                    @*<dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>*@
                                     <dd>
                                         <p id="demoCatering" style="color:#8ca436;font-size:20px"></p>
                                         @*</dd>
@@ -383,7 +383,7 @@
                                     <dt>Deal Price: Rs.</dt>
                                     <dd>
                                         @*<p id="demoGift" style="color:#8ca436;font-size:20px"></p>*@
-                                        <p style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                        <p id="demoGift" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -1038,7 +1038,35 @@
         $('#lnkproceedtonext').on('click', function (e) {
             var a = document.getElementById("Service").value;
             var b = document.getElementById("Review").value;
-            var c = document.getElementById("demovenue").innerHTML;
+            var c;
+            var page = window.location.search.split("=")[1].split("&")[0];
+            //alert(page);
+            if(page=="Venue")
+            {
+                 c = document.getElementById("demovenue").innerHTML;
+            }
+            else if(page=="Catering")
+            {
+                 c = document.getElementById("demoCatering").innerHTML;
+            }
+            else if(page=="Gifts")
+            {
+                 c = document.getElementById("demoGift").innerHTML;
+            }
+            else if(page=="InvitationCard")
+            {
+                 c = document.getElementById("demoinvitation").innerHTML;
+            }
+            else if(page == "Other") {
+                 c = document.getElementById("demoother").innerHTML;
+            }
+            else  {
+                 c = document.getElementById("demoGeneral").innerHTML;
+                //alert(c);
+            }
+
+
+
             var d = document.getElementById("txtquantityvenue").value;
             var e = document.getElementById("rbselectedvalue").value;
             var f = document.getElementById("rbselectedamount").value;
@@ -1152,7 +1180,34 @@
         $('#btn3').on('click', function (e) {
             var a = document.getElementById("Service").value;
             var b = document.getElementById("Review").value;
-            var c = document.getElementById("demovenue").innerHTML;
+            
+            var c;
+            var page = window.location.search.split("=")[1].split("&")[0];
+            //alert(page);
+            if(page=="Venue")
+            {
+                c = document.getElementById("demovenue").innerHTML;
+            }
+            else if(page=="Catering")
+            {
+                c = document.getElementById("demoCatering").innerHTML;
+            }
+            else if(page=="Gifts")
+            {
+                c = document.getElementById("demoGift").innerHTML;
+            }
+            else if(page=="InvitationCard")
+            {
+                c = document.getElementById("demoinvitation").innerHTML;
+            }
+            else if(page == "Other") {
+                c = document.getElementById("demoother").innerHTML;
+            }
+            else  {
+                c = document.getElementById("demoGeneral").innerHTML;
+                //alert(c);
+            }
+
             var d = document.getElementById("txtquantityvenue").value;
 
             var e = document.getElementById("rbselectedvalue").value;

@@ -87,6 +87,7 @@ namespace MaaAahwanam.Web.Controllers
             eventInformation.State = orderRequest.State;
             eventInformation.City = orderRequest.City;
             eventInformation.vendorid = orderRequest.VendorId;
+            eventInformation.subid = orderRequest.subid;
             eventInformation.CartId = cartItem.CartId;
 
             EventsService eventsService = new EventsService();
@@ -159,6 +160,7 @@ namespace MaaAahwanam.Web.Controllers
             eventInformation.State = orderRequest.State;
             eventInformation.City = orderRequest.City;
             eventInformation.OrderId = order.OrderId;
+            eventInformation.OrderDetailsid = orderDetail.OrderDetailId;
 
             EventsService eventsService = new EventsService();
             eventInformation = eventsService.SaveEventinformation(eventInformation);
