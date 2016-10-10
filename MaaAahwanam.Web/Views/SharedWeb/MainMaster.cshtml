@@ -706,14 +706,15 @@
             }).on('change', function () {
                 var startDate = $('#datetimepicker1').valueOf();
                 var endDate = $('#datetimepicker2').valueOf();
-                
+                var start = startDate.split("/").reverse().join("/");
+                var end = endDate.split("/").reverse().join("/");
                 if (endDate != '') {
-                    if (startDate > endDate) {
+                    if (start > end) {
                         $('#alert').show().find('strong').text('The start date can not be greater then the end date');
                         
                     } else {
                         $('#alert').hide();
-                        startDate = new Date(ev.date.format("{0:dd/mm/yyyy}"));
+                        //startDate = new Date(ev.date.format("{0:dd/mm/yyyy}"));
                         
                     }
                 }
@@ -725,14 +726,14 @@
                 lang: 'en',
                 timepicker: false,
                 format: 'd/m/Y',
-                formatDate: 'Y/m/d',
+                //formatDate: 'Y/m/d',
             }).on('change', function (ev) {
                 
                 var startDate = $('#datetimepicker1').val();
                 var endDate = $('#datetimepicker2').val();
-                //var start = ev.Date;
-                //alert(start);
-                if (endDate.valueOf() < startDate.valueOf()) {
+                var start = startDate.split("/").reverse().join("/");
+                var end = endDate.split("/").reverse().join("/");
+                if (end < start) {
                     
                     $('#alert').show().find('strong').text('The end date can not be less then the start date');
                     $("#lnkproceedtonext").hide();
