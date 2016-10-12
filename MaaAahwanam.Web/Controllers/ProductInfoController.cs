@@ -32,9 +32,9 @@ namespace MaaAahwanam.Web.Controllers
             Review review = new Review();
             string Servicetype = Request.QueryString["par"];
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
-            int Subvid = Convert.ToInt32(Request.QueryString["subvid"]);
-            ViewBag.Subvid = Subvid;
-            GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Subvid);
+            int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
+            ViewBag.Subvid = Svid;
+            GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Svid);
             if (Productinfo.image != null)
             {
                 string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
@@ -44,7 +44,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Reviewlist = reviewService.GetReview(vid);
             if (Productinfo.ServicType == "Venue")
             {
-                var list = vendorVenueService.GetVendorVenue(vid, Subvid);
+                var list = vendorVenueService.GetVendorVenue(vid, Svid);
                 ViewBag.venuetype = list.VenueType;
                 ViewBag.servicecost = list.ServiceCost;
             }
@@ -58,7 +58,7 @@ namespace MaaAahwanam.Web.Controllers
             review.Status = "Active";
             review.UpdatedDate = DateTime.Now;
             reviewService.InsertReview(review);
-            return RedirectToAction("Index", new { par = review.Service, VID = review.ServiceId });
+            return RedirectToAction("Index", new { par = review.Service, VID = review.ServiceId , subvid =review.Sid});
 
             //return RedirectToAction("Index", "Signin");
         }

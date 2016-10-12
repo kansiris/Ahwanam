@@ -123,14 +123,21 @@
                 <form name="myForm">
                     <label>Location</label>
                     <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onchange="locationchange(this)">
-                    <label>Price Range</label>
-                    <div class="radioButtons" id="radio-demo">
-                        <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
-                        <label for="rblASC">Low to High</label>
-                        <br />
-                        <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
-                        <label for="rblDESC">High to Low</label>
-                    </div>
+                    @foreach (var item in this.Model)
+                    {
+                        if (item.subtype != "Banquet Hall")
+                        {
+                            <label>Price Range</label>
+                            <div class="radioButtons" id="radio-demo">
+                                <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
+                                <label for="rblASC">Low to High</label>
+                                <br />
+                                <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
+                                <label for="rblDESC">High to Low</label>
+                            </div>
+                            break;
+                        }
+                    }
                 </form>
             </aside>
             <article>
@@ -181,11 +188,11 @@
                                                         <div class="amount">
                                                             <input type="hidden" id="hdncost" value=@item.ServicType.Trim() />
 
-                                                            @if (item.ServicType!="Venue")
+                                                            @if (item.ServicType != "Venue")
                                                             {
                                                                 @*<p id="P_cost">*@
-                                                                    <span class="price">Rs. @item.Cost</span>
-                                                                @*</p>*@
+                                                                <span class="price">Rs. @item.Cost</span>
+                                                                    @*</p>*@
                                                             }
                                                             @if (item.subtype == "Convention Hall" || item.subtype == "Function Hall" || item.subtype == "Meeting Room" || item.subtype == "Roof Top")
                                                             {
@@ -197,7 +204,7 @@
                                                         </div>
                                                         <p style="color:#838383 ;width: 200px;  white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;">@item.Description</p>
                                                         @*<p><i class="ti-location-pin"></i> @item.City</p>*@
-                                                        
+
                                                         <div class="deal-footer">
                                                             <ul>
                                                                 <li><div class="rate" data-rate-value=5></div></li>
@@ -270,18 +277,22 @@
                 $("#LoadMore1").hide();
             }
             document.getElementById("txtlocation").value= window.location.search.split("=")[3].split("&")[0];
-            if(window.location.search.split("=")[4].split("&")[0]=='DESC')
+            if(window.location.search.split("=")[2].split("&")[0].replace("%20"," ")!="Banquet Hall" && window.location.search.split("=")[2].split("&")[0].replace("%20"," ")!="%")
             {
-                // alert('DESC');
-                document.getElementById("rblDESC").checked = true;
-            }
-            else if(window.location.search.split("=")[4].split("&")[0]=='ASC')
-            {
-                //alert('ASC');
-                document.getElementById("rblASC").checked = true;
+                if(window.location.search.split("=")[4].split("&")[0]=='DESC')
+                {
+                    // alert('DESC');
+                    document.getElementById("rblDESC").checked = true;
+                }
+                else if(window.location.search.split("=")[4].split("&")[0]=='ASC')
+                {
+                    //alert('ASC');
+                    document.getElementById("rblASC").checked = true;
+                }
             }
             //alert(document.getElementById("hiddenlastrecord").value)
             var subservicetype= window.location.search.split("=")[2].split("&")[0].replace("%20"," ");
+            //alert(subservicetype);
             if(subservicetype!='%')
             {
                 document.getElementById(subservicetype).className = "active";
@@ -334,7 +345,7 @@
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                         }
-                        else 
+                        else
                         {
                             //alert('no');
                             $.each(data, function (key, value) {

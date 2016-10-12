@@ -197,6 +197,7 @@
                                                             <input type="hidden" id="hmin" name="Minvalue" value="10">
                                                             @Html.HiddenFor(model => model.Item2.Service, new { @id = "Service", @name = "Service", required = "required", Value = @Model.Item1.ServicType })
                                                             @Html.HiddenFor(model => model.Item2.ServiceId, new { @id = "Review", @name = "Review", required = "required", Value = @Model.Item1.Id })
+                                                            @Html.HiddenFor(model => model.Item2.Sid, new { @id = "Subid", @name = "Review", required = "required", Value = @ViewBag.Subvid })
                                                             @Html.TextAreaFor(model => model.Item2.Comments, new { @id = "Review", @name = "Review", placeholder = "Review", required = "required" })
                                                         </li>
                                                     </ul>
@@ -365,6 +366,10 @@
                                             <label for="nvlCatering"> Non veg Per plate cost @Model.Item1.cost1/-</label>
                                         </div>
                                     </fieldset>
+
+                                    <input type="hidden" id="rbselectedvalueCatering" value="vlvenue" />
+                                    <input type="hidden" id="hdnsubidCatering" value=@ViewBag.Subvid />
+                                    <input type="hidden" id="rbselectedamountCatering" value=@Model.Item1.cost />
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -492,13 +497,13 @@
                         <div class="deal_buttons">
                             @if (ViewBag.Userloginstatus != 0)
                             {
-                                <a href="#quatation" id="btn1" class="btn btn-big btn-orange popup-with-move-anim" onclick="Sethdnvalue('addtocartbtn')">Add To Cart </a>
-                                <a href="#quatation" id="btn2" class="btn btn-big btn-green popup-with-move-anim" onclick="Sethdnvalue('buynow')"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
+                            <a href="#quatation" id="btn1" class="btn btn-big btn-orange popup-with-move-anim" onclick="Sethdnvalue('addtocartbtn')">Add To Cart </a>
+                            <a href="#quatation" id="btn2" class="btn btn-big btn-green popup-with-move-anim" onclick="Sethdnvalue('buynow')"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
                             }
                             else
                             {
-                                <a href="../Signin/Index" id="btn1" class="btn btn-big btn-orange">Add To Cart </a>
-                                <a href="../Signin/Index" id="btn2" class="btn btn-big btn-green"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
+                            <a href="../Signin/Index" id="btn1" class="btn btn-big btn-orange">Add To Cart </a>
+                            <a href="../Signin/Index" id="btn2" class="btn btn-big btn-green"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
                             }
                             <a id="btn3" class="btn btn-big btn-orange" style="display:none">Update</a>
                             <input type="hidden" id="btnname" />
@@ -558,7 +563,7 @@
                                         <tr>
                                             <th>
                                                 <h2>Most Popular Reviews</h2>
-                                                <a href="#">View All Reviews</a>
+                                                @*<a href="#">View All Reviews</a>*@
                                             </th>
                                         </tr>
                                     </thead>
@@ -851,8 +856,18 @@
                     dataType: "json",
                     success: function (data) {
                         //alert(data.attribute);
-                        document.getElementById("txtquantityvenue").value = data.Quantity;
-                        document.getElementById("demovenue").innerHTML = data.TotalPrice;
+                        var page = window.location.search.split("=")[1].split("&")[0];
+                        //alert(page);
+                        if(page=="Venue")
+                        {
+                            document.getElementById("txtquantityvenue").value = data.Quantity;
+                            document.getElementById("demovenue").innerHTML = data.TotalPrice;
+                        }
+                        else if(page=="Catering")
+                        {
+                            document.getElementById("txtquantityCatering").value = data.Quantity;
+                            document.getElementById("demoCatering").innerHTML = data.TotalPrice;
+                        }
                         document.getElementById(data.attribute).checked = true;
                         document.getElementById("btn3").style.display = "block";
                         document.getElementById("btn1").style.display = "None";
@@ -927,6 +942,8 @@
         for (var i = 0; i < radCatering.length; i++) {
             radCatering[i].onclick = function () {
                 if (this !== prevCatering) {
+                    document.getElementById("rbselectedvalueCatering").value = this.id;
+                    document.getElementById("rbselectedamountCatering").value = this.value;
                     prevCatering = this;
                     var a = document.getElementById("txtquantityCatering").value;
                     document.getElementById("demoCatering").innerHTML = a * parseInt(this.value);
@@ -1038,38 +1055,79 @@
         $('#lnkproceedtonext').on('click', function (e) {
             var a = document.getElementById("Service").value;
             var b = document.getElementById("Review").value;
-            var c;
+            var c;var d;var e;var f;
             var page = window.location.search.split("=")[1].split("&")[0];
             //alert(page);
             if(page=="Venue")
             {
-                 c = document.getElementById("demovenue").innerHTML;
+                c = document.getElementById("demovenue").innerHTML;
             }
             else if(page=="Catering")
             {
-                 c = document.getElementById("demoCatering").innerHTML;
+                c = document.getElementById("demoCatering").innerHTML;
             }
             else if(page=="Gifts")
             {
-                 c = document.getElementById("demoGift").innerHTML;
+                c = document.getElementById("demoGift").innerHTML;
             }
             else if(page=="InvitationCard")
             {
-                 c = document.getElementById("demoinvitation").innerHTML;
+                c = document.getElementById("demoinvitation").innerHTML;
             }
             else if(page == "Other") {
-                 c = document.getElementById("demoother").innerHTML;
+                c = document.getElementById("demoother").innerHTML;
             }
             else  {
-                 c = document.getElementById("demoGeneral").innerHTML;
+                c = document.getElementById("demoGeneral").innerHTML;
                 //alert(c);
             }
 
 
 
-            var d = document.getElementById("txtquantityvenue").value;
-            var e = document.getElementById("rbselectedvalue").value;
-            var f = document.getElementById("rbselectedamount").value;
+
+
+            if(page=="Venue")
+            {
+                d = document.getElementById("txtquantityvenue").value;
+            }
+            else if(page=="Catering")
+            {
+                d = document.getElementById("txtquantityCatering").value;
+            }
+            else if(page=="Gifts")
+            {
+                d = document.getElementById("txtquantityGift").value;
+            }
+            else if(page=="InvitationCard")
+            {
+                d = document.getElementById("txtquantityinvitation").value;
+            }
+            else if(page == "Other") {
+                d = document.getElementById("txtquantityother").value;
+            }
+            else  {
+                d = document.getElementById("txtquantityGeneral").value;
+            }
+            
+
+
+            if(page=="Venue")
+            {
+                e = document.getElementById("rbselectedvalue").value;
+            }
+            else if(page=="Catering")
+            {
+                e = document.getElementById("rbselectedvalueCatering").value;
+            }
+
+            if(page=="Venue")
+            {
+                f = document.getElementById("rbselectedamount").value;
+            }
+            else if(page=="Catering")
+            {
+                f = document.getElementById("rbselectedamountCatering").value;
+            }
             var g = document.getElementById("hdnsubid").value;
             //Pop-up Values
             var Ename = document.getElementById("Ename").value;
@@ -1181,7 +1239,7 @@
             var a = document.getElementById("Service").value;
             var b = document.getElementById("Review").value;
 
-            var c;
+            var c;var e ;var f;
             var page = window.location.search.split("=")[1].split("&")[0];
             //alert(page);
             if(page=="Venue")
@@ -1208,10 +1266,50 @@
                 //alert(c);
             }
 
-            var d = document.getElementById("txtquantityvenue").value;
+            if(page=="Venue")
+            {
+                d = document.getElementById("txtquantityvenue").value;
+            }
+            else if(page=="Catering")
+            {
+                d = document.getElementById("txtquantityCatering").value;
+            }
+            else if(page=="Gifts")
+            {
+                d = document.getElementById("txtquantityGift").value;
+            }
+            else if(page=="InvitationCard")
+            {
+                d = document.getElementById("txtquantityinvitation").value;
+            }
+            else if(page == "Other") {
+                d = document.getElementById("txtquantityother").value;
+            }
+            else  {
+                d = document.getElementById("txtquantityGeneral").value;
+            }
 
-            var e = document.getElementById("rbselectedvalue").value;
-            var f = document.getElementById("rbselectedamount").value;
+
+            if(page=="Venue")
+            {
+                e = document.getElementById("rbselectedvalue").value;
+            }
+            else if(page=="Catering")
+            {
+                e = document.getElementById("rbselectedvalueCatering").value;
+            }
+
+            if(page=="Venue")
+            {
+                f = document.getElementById("rbselectedamount").value;
+            }
+            else if(page=="Catering")
+            {
+                f = document.getElementById("rbselectedamountCatering").value;
+            }
+
+           
+            
             var cids = @Request.QueryString["cid"];
             var subid = @Request.QueryString["subvid"];
             var orderRequest = {};
