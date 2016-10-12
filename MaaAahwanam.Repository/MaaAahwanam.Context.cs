@@ -240,15 +240,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_QuotationComments_Result>("sp_QuotationComments", idParameter);
         }
     
-        public virtual ObjectResult<sp_ServiceComments_Result> sp_ServiceComments(Nullable<long> serviceId)
-        {
-            var serviceIdParameter = serviceId.HasValue ?
-                new ObjectParameter("ServiceId", serviceId) :
-                new ObjectParameter("ServiceId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ServiceComments_Result>("sp_ServiceComments", serviceIdParameter);
-        }
-    
         public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
         {
             var oIDParameter = oID.HasValue ?
@@ -274,6 +265,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("OrderBy", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
+        }
+    
+        public virtual ObjectResult<sp_ServiceComments_Result> sp_ServiceComments(Nullable<long> serviceId)
+        {
+            var serviceIdParameter = serviceId.HasValue ?
+                new ObjectParameter("ServiceId", serviceId) :
+                new ObjectParameter("ServiceId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ServiceComments_Result>("sp_ServiceComments", serviceIdParameter);
         }
     }
 }

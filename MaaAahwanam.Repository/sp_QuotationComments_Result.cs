@@ -19,5 +19,6 @@ namespace MaaAahwanam.Repository
         public string LastName { get; set; }
         public long CommentId { get; set; }
         public string ServiceType { get; set; }
+        public string image { get; set; }
     }
 }
