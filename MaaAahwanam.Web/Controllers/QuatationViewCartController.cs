@@ -124,6 +124,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult confirmation(string id)
         {
             ServiceRequest serviceRequest = dashBoardService.UpdateService(long.Parse(id));
+            ViewBag.OrderDetail = dashBoardService.GetParticularService(int.Parse(id));
             return View();
         }
     }

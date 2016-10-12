@@ -12,6 +12,7 @@ namespace MaaAahwanam.Service
     public class DashBoardService
     {
         DashBoardRepository dashBoardRepository = new DashBoardRepository();
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
         public List<sp_AllOrders_Result> GetOrdersService(int id)
         {
             return dashBoardRepository.GetOrders(id);
@@ -36,7 +37,7 @@ namespace MaaAahwanam.Service
         {
             return dashBoardRepository.GetLeastBid(id);
         }
-        public List<ServiceRequest> GetParticularService(long id)
+        public List<serviceconfirmation_Result> GetParticularService(int id)
         {
             return dashBoardRepository.GetParticularService(id);
         }

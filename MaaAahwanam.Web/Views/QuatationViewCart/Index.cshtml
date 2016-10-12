@@ -207,7 +207,14 @@
            
             @if (ViewBag.comments != null)
             {
-                <h2>Comments <span>(@ViewBag.commentscount)</span></h2>
+               if (ViewBag.rid != null)
+               { 
+                   <h2>  ID :   @ViewBag.rid   Comments <span>(@ViewBag.commentscount)</span> </h2>
+                }
+                else
+                {
+                    <h2> Comments <span>(@ViewBag.commentscount)</span> </h2>
+                }
                 foreach (var item in ViewBag.comments)
                 {
                     <dl class="first-child">
@@ -318,12 +325,15 @@
                 //    alert(abc);
                 //    window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
                 //}
-                var jqxhr = $.post(url, { command: "Pay",selected : check1 }, function () {
-                    //if (abc != 0) {
-                            //alert(abc);
-                            window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
+                if (abc != 0) {
+                    var jqxhr = $.post(url, { command: "Pay", selected: check1 , id: abc }, function () {
+                        //if (abc != 0) {
+                        //alert(abc);
+                        window.location.href = "/QuatationViewCart/confirmation?id=" + abc;
                         //}
-                })
+                    })
+                }
+                
             }
     }
     //var jqxhr = $.post(url, { command: "Pay" }, function () {

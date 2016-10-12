@@ -197,24 +197,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter, vid2Parameter);
         }
     
-        public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
-        {
-            var orderByParameter = orderBy.HasValue ?
-                new ObjectParameter("OrderBy", orderBy) :
-                new ObjectParameter("OrderBy", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
-        }
-    
-        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
-        {
-            var oIDParameter = oID.HasValue ?
-                new ObjectParameter("OID", oID) :
-                new ObjectParameter("OID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
-        }
-    
         public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
         {
             var vIDParameter = vID.HasValue ?
@@ -265,6 +247,33 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("ServiceId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ServiceComments_Result>("sp_ServiceComments", serviceIdParameter);
+        }
+    
+        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
+        {
+            var oIDParameter = oID.HasValue ?
+                new ObjectParameter("OID", oID) :
+                new ObjectParameter("OID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
+        }
+    
+        public virtual ObjectResult<serviceconfirmation_Result> serviceconfirmation(Nullable<int> requestID)
+        {
+            var requestIDParameter = requestID.HasValue ?
+                new ObjectParameter("RequestID", requestID) :
+                new ObjectParameter("RequestID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<serviceconfirmation_Result>("serviceconfirmation", requestIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
+        {
+            var orderByParameter = orderBy.HasValue ?
+                new ObjectParameter("OrderBy", orderBy) :
+                new ObjectParameter("OrderBy", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
         }
     }
 }

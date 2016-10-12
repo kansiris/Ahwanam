@@ -11,16 +11,15 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class sp_LeastBidRecord_Result
+    public partial class serviceconfirmation_Result
     {
-        public long ResponseId { get; set; }
+        public long RequestId { get; set; }
         public string EventName { get; set; }
         public string EventAddress { get; set; }
         public string EventLocation { get; set; }
         public string PhoneNo { get; set; }
-        public Nullable<System.DateTime> EventStartDate { get; set; }
-        public Nullable<System.DateTime> EventStartTime { get; set; }
-        public decimal Amount { get; set; }
-        public decimal Budget { get; set; }
+        public System.DateTime EventStartDate { get; set; }
+        public System.DateTime EventStartTime { get; set; }
+        public decimal paidamount { get; set; }
     }
 }
