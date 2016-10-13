@@ -15,8 +15,8 @@ namespace MaaAahwanam.Repository
     {
         public string City { get; set; }
         public string EventAddress { get; set; }
-        public System.DateTime EventStartDate { get; set; }
-        public System.DateTime EventEnddate { get; set; }
+        public Nullable<System.DateTime> EventStartDate { get; set; }
+        public Nullable<System.DateTime> EventEnddate { get; set; }
         public string EventName { get; set; }
     }
 }

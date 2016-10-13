@@ -15,7 +15,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (id!=null)
             {
-                ViewBag.OrderDetail = dashBoardService.GetParticularService(long.Parse(id));
+                ViewBag.OrderDetail = dashBoardService.GetParticularService(int.Parse(id));
                 var list = paymentRequestService.GetServiceResponse(long.Parse(id)).Select(m=>m.ResponseId);
                 ViewBag.payment = paymentRequestService.GetPaymentRequest(long.Parse(id));
             }

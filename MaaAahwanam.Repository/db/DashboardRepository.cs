@@ -40,9 +40,10 @@ namespace MaaAahwanam.Repository.db
             return maaAahwanamEntities.sp_LeastBidRecord(id).ToList();
         }
 
-        public List<ServiceRequest> GetParticularService(long id)
+        public List<serviceconfirmation_Result> GetParticularService(int id)
         {
-            return _dbContext.ServiceRequest.Where(m => m.RequestId == id).ToList();
+            // return _dbContext.ServiceRequest.Where(m => m.RequestId == id).ToList();
+            return maaAahwanamEntities.serviceconfirmation(id).ToList();
         }
 
         public List<sp_ServiceComments_Result> GetServiceComments(long id)

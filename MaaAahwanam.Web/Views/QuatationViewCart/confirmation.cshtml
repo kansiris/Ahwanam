@@ -10,16 +10,82 @@
             <div class="title">
                 <h3 class="greentext">Your order is successfull</h3>
             </div>
-            
         </div>
     </div>
 </div>
 
 <br />
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+<div class="dashInner" align="center">
+    <div class="dashboardList dashboardList-whitebg dashboardList-nospace" style="width:70%" >
+        <table class="responsive" id="mytable">
+            <thead>
+                <tr>
+                    <th style="width:35%">Quatation ID</th>
+                    <th style="width:24%">Event Details</th>
+                    <th style="width:26%">Event Date/Time</th>
+                    <th style="width:15%">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.OrderDetail != null)
+            {
+                foreach (var item in ViewBag.OrderDetail)
+                {
+                        <tr>
+                            <td>
+
+                                <div class="item-details">
+                                    <h4>@item.RequestId</h4>
+                                </div>
+                                <div class="clear"></div>
+                                @*<div class="item-btns"> <a href="#" class="btn-small btn-green"><i class="ti-rocket"></i>Deliver More</a> <a href="#" class="btn-small btn-delete"><i class="ti-trash"></i>Delete</a> </div>*@
+                            </td>
+                            <td>
+                                <h4>@item.EventName</h4>
+                                <p>
+                                    @item.EventAddress,<br>
+                                    @item.EventLocation,<br>
+                                    @item.PhoneNo
+                                </p>
+                                @*<a href="#edit_event" class="orange-link upload_address popup-with-move-anim"><i class="ti-pencil"></i> Edit Event</a>*@
+                            </td>
+                            <td>
+                                <div class="event-date-time">
+                                    <div class="event-dates">
+                                        @if (item.EventStartDate != null && item.EventStartTime != null)
+                                        {
+                                            <p>@item.EventStartDate.ToShortDateString()</p>  <p> @item.EventStartTime.ToShortTimeString()</p>
+                                        }
+                                        @if (item.EventStartDate == null || item.EventStartTime == null)
+                                        {
+                                            <p>No Data Available</p>
+                                        }
+                                    </div>
+                                    @*<div class="event-date-edit"><a href="#" title="Edit Date & Time"><i class="ti-pencil-alt active"></i></a><a href="#" title="Delete Date & Time"><i class="ti-trash close"></i></a></div>
+                                        <div class="clear"></div>*@
+                                </div>
+                                @*<a href="#add_new_date" class="orange-link upload_address popup-with-move-anim"><i class="ti-plus"></i> Add Date / Time</a>*@
+                            </td>
+                            <td>
+                                <div class="item-price">
+                                    <p>Rs. @item.paidamount</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="clear"></div>
+    </div>
+</div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
