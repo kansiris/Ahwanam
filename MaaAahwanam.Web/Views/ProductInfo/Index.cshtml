@@ -221,7 +221,7 @@
                             <!-- end popup -->
 
                         </div>
-                        <div class="product_review">
+                        <div class="product_review" id="dviAddressService">
                             <h4>Location</h4>
                             <p>@Model.Item1.Landmark,@Model.Item1.Address,@Model.Item1.City,@Model.Item1.State</p>
                         </div>
@@ -385,10 +385,10 @@
                         <div class="deal_price" id="Calcdiv_Gift" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt>Deal Price: Rs.</dt>
+                                    <dt>Number of gifts : Rs.</dt>
                                     <dd>
                                         @*<p id="demoGift" style="color:#8ca436;font-size:20px"></p>*@
-                                        <p id="demoGift" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                        <p id="demoGift" style="color:#8ca436;font-size:20px"></p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -401,8 +401,10 @@
                                 </dl>
                                 <form name="myFormGift">
                                     <label>Number of gifts<span>*</span></label>
-                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px; " id="txtquantityGift" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGift()" /><br>
-                                    <input type="radio" id="vlGift" name="platetypeGift" value="500" checked> Gift cost 500/-<br>
+                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:0px; " id="txtquantityGift" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGift()" /><br>
+                                    <br/>
+                                    <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.cost checked> Gift cost @Model.Item1.cost/-<br>
+                                    <br />
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -784,14 +786,16 @@
             else if (servicetype == "InvitationCard") {
                 $('#Calcdiv_invitation').removeAttr("style");
                 $('#Calcdiv_invitation').css({ "display": "block" });
+                $('#dviAddressService').css({ "display": "none" });
             }
             else if (servicetype == "Catering") {
                 $('#Calcdiv_Caterer').removeAttr("style");
                 $('#Calcdiv_Caterer').css({ "display": "block" });
             }
-            else if (servicetype == "Gift") {
+            else if (servicetype == "Gifts") {
                 $('#Calcdiv_Gift').removeAttr("style");
                 $('#Calcdiv_Gift').css({ "display": "block" });
+                $('#dviAddressService').css({ "display": "none" });
             }
             else {
                 $('#Calcdiv_General').removeAttr("style");
@@ -803,6 +807,8 @@
             var b;
             var a = document.getElementById("txtquantityvenue").value;
             var b = document.getElementById("txtquantityGeneral").value;
+            var c = document.getElementById("txtquantityGift").value;
+            //alert(document.getElementById("vlGift").value);
             var type = $("#venuetype").val();
             if (type == 'Banquet Hall') {
                 if (document.getElementById("vlvenue").checked) {
@@ -822,9 +828,9 @@
             if (document.getElementById("vlCatering").checked) {
                 document.getElementById("demoCatering").innerHTML = document.getElementById("vlCatering").value * a;
             }
-            //if (document.getElementById("vlGift").checked) {
-            //    document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value * a ;
-            //}
+            if (document.getElementById("vlGift").checked) {
+                document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value * c ;
+            }
             if (document.getElementById("vlinvitation").checked) {
                 document.getElementById("demoinvitation").innerHTML = document.getElementById("vlinvitation").value * a;
             }
@@ -1119,6 +1125,21 @@
             {
                 e = document.getElementById("rbselectedvalueCatering").value;
             }
+            else if(page=="Gifts")
+            {
+                e="";
+            }
+            else if(page=="InvitationCard")
+            {
+                e="";
+            }
+            else if(page == "Other") {
+                e="";
+            }
+            else  {
+                e="";
+            }
+
 
             if(page=="Venue")
             {
@@ -1128,7 +1149,23 @@
             {
                 f = document.getElementById("rbselectedamountCatering").value;
             }
+            else if(page=="Gifts")
+            {
+                f =0.00;
+            }
+            else if(page=="InvitationCard")
+            {
+                f =0.00;
+            }
+            else if(page == "Other") {
+                f =0.00;
+            }
+            else  {
+                f =0.00;
+            }
+
             var g = document.getElementById("hdnsubid").value;
+            //alert(a+' '+b+' '+c+' '+d+' '+e+' '+f);
             //Pop-up Values
             var Ename = document.getElementById("Ename").value;
             var Eemail = document.getElementById("Eemail").value;
