@@ -65,26 +65,27 @@
                         </li>
                         <li>
                             <label>Service Type <span>*</span></label>
-
+                            @*<br/>*@
                             @Html.DropDownList("s", new SelectList(
-                                new List<Object>{
-                                    new {Text ="Select your Service", Value = ""},
-                                     new { Text ="Venue", Value = "Venue"  },
-                                     new { Text ="Catering", Value = "Catering" },
-                                     new { Text ="Photography", Value = "Photography" },
-                                     new { Text ="InvitationCard", Value = "InvitationCard" },
-                                     new { Text ="Decorator", Value = "Decorator" },
-                                     new { Text ="Entertainment", Value = "Entertainment" },
-                                     new { Text ="Eventorganiser", Value = "Eventorganiser" },
-                                     new { Text ="BeautyService", Value = "BeautyService" },
-                                     new { Text ="Travel", Value = "Travel" },
-                                     new { Text ="Gift", Value = "Gift" },
-                                     new { Text ="WeddingCollection", Value = "WeddingCollection" },
-                                     new { Text ="Other", Value = "Other" },
-                                  },
-                                "value", "text"), new { @class = "validate[required] form-control", @multiple = "multiple", @style = "height:80px", @id = "ddlservice", @onchange = "GetSelectedTextValue(this)" })
+                                    new List<Object>{
+                                        //new {Text ="Select your Service", Value = ""},
+                                            new { Text ="Venue", Value = "Venue"  },
+                                            new { Text ="Catering", Value = "Catering" },
+                                            new { Text ="Photography", Value = "Photography" },
+                                            new { Text ="InvitationCard", Value = "InvitationCard" },
+                                            new { Text ="Decorator", Value = "Decorator" },
+                                            new { Text ="Entertainment", Value = "Entertainment" },
+                                            new { Text ="Eventorganiser", Value = "Eventorganiser" },
+                                            new { Text ="BeautyService", Value = "BeautyService" },
+                                            new { Text ="Travel", Value = "Travel" },
+                                            new { Text ="Gift", Value = "Gift" },
+                                            new { Text ="WeddingCollection", Value = "WeddingCollection" },
+                                            new { Text ="Other", Value = "Other" },
+                           },
+                            "value", "text"), new { @multiple = "multiple", @id = "ddlservice", @onchange = "GetSelectedTextValue(this)", placeholder = "Choose Your Services" })
                             @Html.HiddenFor(Model => Model.ServiceType, new { @id = "hdnservices" })
                         </li>
+                        @*@class = "validate[required] form-control"*@
                     </ul>
                     <ul>
                         <li>
@@ -156,7 +157,7 @@
                             <div class="event-date">
                                 <label>Event Start Date <span>*</span></label>
                                 @*<input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker1">*@
-                                @Html.TextBoxFor(model => model.EventStartDate,  new { @id = "datetimepicker1", @name = "EventStartDate", placeholder = "DD/MM/YYYY", required = "required" })
+                                @Html.TextBoxFor(model => model.EventStartDate, new { @id = "datetimepicker1", @name = "EventStartDate", placeholder = "DD/MM/YYYY", required = "required" })
                             </div>
                             <div class="event-date">
                                 <label>Event Start Time <span>*</span></label>
@@ -194,6 +195,11 @@
                 </div>
             </div>
         }
+        @*<select id="people" multiple="multiple">
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select>*@
         <!-- displayDiv -->
 
     </div>
@@ -202,13 +208,19 @@
 @section advertisement
 {
     @*<div class="ad">
-        <div class="pageWidth">
-            <div class="ad_728 margin_bottom_20"><img src="../CSSWeb/images/ad_728_2.jpg" alt="advertise"></div>
-        </div>
-    </div>*@
+            <div class="pageWidth">
+                <div class="ad_728 margin_bottom_20"><img src="../CSSWeb/images/ad_728_2.jpg" alt="advertise"></div>
+            </div>
+        </div>*@
 }
+<script src="~/CSSWeb/jquery.js"></script>
+<script src="~/CSSWeb/ui.core.js"></script>
+<script src="~/CSSWeb/ui.dropdownchecklist.js"></script>
+<link href="~/CSSWeb/ui.dropdownchecklist.css" rel="stylesheet" />
+
+
 <script>
-    ddlservice
+    //ddlservice
     function GetSelectedTextValue(value) {
         var message = "";
         //var slength = document.getElementById('ddlservice');
@@ -224,6 +236,7 @@
             }
         }
         document.getElementById('hdnservices').value = sv;
+
         //alert(document.getElementById('hdnservices').value);
         //    for(ListItem item in lstFruits.Items)
         //    {
@@ -233,7 +246,31 @@
         //}
         //}
     }
+    $("#ddlservice").dropdownchecklist({  maxDropHeight: 120,
+        customTextFn: function (opts) {
+            var count = 0;
+            var first = null;
+            for (var i = 0, len = opts.length; i < len; ++i) {
+                if (opts[i].selected) {
+                    if (!first) {
+                        first = opts[i].text;
+                    }
+                    ++count;
+                }
+            }
+            switch (count) {
+                case 0:
+                    return "No Services Selected";
+                case 1:
+                    return first;
+                case opts.length:
+                    return "All Services Selected";
+                default:
+                    return count + " Services"
+            }
+        }
+    });
+    //$('#people').dropdownchecklist();
+
 </script>
-
-
 
