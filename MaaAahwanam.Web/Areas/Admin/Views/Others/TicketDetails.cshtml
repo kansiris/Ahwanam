@@ -1,7 +1,9 @@
 ﻿@model MaaAahwanam.Models.IssueDetail
+@using MaaAahwanam.Web.Custom
 @{
     ViewBag.Title = "Ticket Details";
     Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
+    var user = (CustomPrincipal)HttpContext.Current.User;
 }
 @section header{
     <!-- PAGE LEVEL STYLES -->
@@ -78,7 +80,15 @@
                         foreach (var item in ViewBag.ticket)
                         {
                             <div class="panel-heading" style="height:35px">
-                                <div id="div-left" style="float:left">Msg By:Admin</div>
+                                @*<div id="div-left" style="float:left">Msg By:Admin</div>*@
+                                @if (item.UpdatedBy == user.UserId)
+                                {
+                                    <div id="div-left" style="float:left">Msg By: Admin </div>
+                                }
+                                else
+                                {
+                                    <div id="div-left" style="float:left">Msg By: User </div>
+                                }
                                 <div id="div-right" style="float:right">Date:@item.UpdatedDate</div>
                             </div>
                             <div class="panel-body">
