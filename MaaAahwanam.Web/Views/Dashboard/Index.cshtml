@@ -120,12 +120,12 @@
     <!-- /dashDetails -->
     @*@if (ViewBag.Type == "User")
         {*@
-    <form>
+    @*<form>*@
         <div class="dashboardList dashboardList-nospace">
            
                 <h3>Products & Services</h3>
             <br/>
-                <table class="responsive" id="table1">
+                <table class="responsive"  id="table1" onload="load()"> 
 
                     <thead>
                         <tr>
@@ -247,39 +247,9 @@
             
             <div class="clear"></div>
         </div>
-    </form>
+    @*</form>*@
 
-    <script>
-        function redirect(obj, id, date) {
-            var abc = obj.trim();
-
-            if (abc == "Paid") {
-                window.location.href = '/QuatationViewCartDue/index?id=' + id + '&&date= ' + date + ' ';
-            }
-            else if (abc == "Due") {
-                window.location.href = '/QuatationViewCart/index?id=' + id + '';
-            }
-
-        }
-    </script>
-
-    <script language="javascript">
-    $(function() {
-        $('#tablebody2').pagination({
-            items: 4,
-            itemsOnPage: 2,
-            cssStyle: 'light-theme',
-            onPageClick: function(pageNumber){test(pageNumber)}
-        });
-    });
-    function test(pageNumber) {
-
-        var page = "#page-id-" + pageNumber;
-        $('.select').hide()
-        $(page).show()
-
-    }
-    </script>
+    
 
     @*}*@
     @*@if (ViewBag.Type == "Vendor")
@@ -419,3 +389,42 @@
             BootstrapDialog.alert('Welcom to MaaAahwanam DashBoard');
         });
     </script>*@
+<script type="text/javascript">
+    //function load() {
+    //    alert("hi");
+    //}
+    $(function () { alert("hi"); });
+</script>
+
+@*<script>
+            function redirect(obj, id, date) {
+                var abc = obj.trim();
+
+                if (abc == "Paid") {
+                    window.location.href = '/QuatationViewCartDue/index?id=' + id + '&&date= ' + date + ' ';
+                }
+                else if (abc == "Due") {
+                    window.location.href = '/QuatationViewCart/index?id=' + id + '';
+                }
+
+            }
+    </script>
+
+    <script language="javascript">
+        $(function() {
+            $('#tablebody2').pagination({
+                items: 4,
+                itemsOnPage: 2,
+                cssStyle: 'light-theme',
+                onPageClick: function(pageNumber){test(pageNumber)}
+            });
+        });
+        function test(pageNumber) {
+
+            var page = "#page-id-" + pageNumber;
+            $('.select').hide()
+            $(page).show()
+
+        }
+    </script>
+*@
