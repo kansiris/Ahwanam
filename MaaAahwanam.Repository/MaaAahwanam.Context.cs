@@ -103,15 +103,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
         }
     
-        public virtual ObjectResult<sp_Tickets_Result> sp_Tickets(Nullable<long> ticketId)
-        {
-            var ticketIdParameter = ticketId.HasValue ?
-                new ObjectParameter("TicketId", ticketId) :
-                new ObjectParameter("TicketId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tickets_Result>("sp_Tickets", ticketIdParameter);
-        }
-    
         public virtual ObjectResult<SP_vendordatesbooked_Result> SP_vendordatesbooked(Nullable<int> vID)
         {
             var vIDParameter = vID.HasValue ?
@@ -274,6 +265,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("RequestID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<serviceconfirmation_Result>("serviceconfirmation", requestIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_Tickets_Result> sp_Tickets(Nullable<long> ticketId)
+        {
+            var ticketIdParameter = ticketId.HasValue ?
+                new ObjectParameter("TicketId", ticketId) :
+                new ObjectParameter("TicketId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tickets_Result>("sp_Tickets", ticketIdParameter);
         }
     }
 }

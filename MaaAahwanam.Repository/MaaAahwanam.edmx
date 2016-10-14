@@ -108,9 +108,6 @@
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_ordersdisplay" ReturnType="Collection(MaaAahwanamModel.sp_ordersdisplay_Result)" />
-          <FunctionImport Name="sp_Tickets" ReturnType="Collection(MaaAahwanamModel.sp_Tickets_Result)">
-          <Parameter Name="TicketId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="SP_vendordatesbooked" ReturnType="Collection(MaaAahwanamModel.SP_vendordatesbooked_Result)">
           <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -161,7 +158,10 @@
           <Parameter Name="ServiceId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="serviceconfirmation" ReturnType="Collection(MaaAahwanamModel.serviceconfirmation_Result)">
-            <Parameter Name="RequestID" Mode="In" Type="Int32" />
+          <Parameter Name="RequestID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Tickets" ReturnType="Collection(MaaAahwanamModel.sp_Tickets_Result)">
+            <Parameter Name="TicketId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -284,12 +284,6 @@
           <Property Type="String" Name="LastName" Nullable="true" />
           <Property Type="String" Name="AlternativeEmailID" Nullable="true" />
           <Property Type="String" Name="Landmark" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_Tickets_Result">
-          <Property Type="String" Name="Msg" Nullable="true" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="FirstName" Nullable="true" />
-          <Property Type="String" Name="LastName" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_vendordatesbooked_Result">
           <Property Type="String" Name="City" Nullable="true" />
@@ -461,6 +455,13 @@
           <Property Type="DateTime" Name="EventStartTime" Nullable="false" Precision="23" />
           <Property Type="Decimal" Name="paidamount" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
+        <ComplexType Name="sp_Tickets_Result">
+          <Property Type="String" Name="Msg" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="String" Name="UserImgName" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -629,16 +630,6 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="AlternativeEmailID" ColumnName="AlternativeEmailID" />
                 <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_Tickets" FunctionName="MaaAahwanamModel.Store.sp_Tickets">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_Tickets_Result">
-                <ScalarProperty Name="Msg" ColumnName="Msg" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -873,6 +864,17 @@
                 <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
                 <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
                 <ScalarProperty Name="paidamount" ColumnName="paidamount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Tickets" FunctionName="MaaAahwanamModel.Store.sp_Tickets">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_Tickets_Result">
+                <ScalarProperty Name="Msg" ColumnName="Msg" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserImgName" ColumnName="UserImgName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

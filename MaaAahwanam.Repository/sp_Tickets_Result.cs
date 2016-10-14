@@ -17,5 +17,6 @@ namespace MaaAahwanam.Repository
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string UserImgName { get; set; }
     }
 }
