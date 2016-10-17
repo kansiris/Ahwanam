@@ -98,11 +98,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LeastBidRecord_Result>("sp_LeastBidRecord", requestIdParameter);
         }
     
-        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
-        }
-    
         public virtual ObjectResult<SP_vendordatesbooked_Result> SP_vendordatesbooked(Nullable<int> vID)
         {
             var vIDParameter = vID.HasValue ?
@@ -274,6 +269,11 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("TicketId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tickets_Result>("sp_Tickets", ticketIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
         }
     }
 }
