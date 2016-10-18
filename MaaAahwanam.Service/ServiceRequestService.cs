@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
@@ -36,8 +37,13 @@ namespace MaaAahwanam.Service
 
         public List<Vendormaster> getvendorslistRB(string stype)
         {
-            List<Vendormaster> l1 = serviceRequestRepository.getvendorsluistRB(stype);
+            List<Vendormaster> l1 = serviceRequestRepository.getvendorsluistRB(stype,"Venue");
             return l1;
+        }
+        public List<getservicetype_Result> getSubvendorslistRB(string stype)
+        {
+            List<getservicetype_Result> l2 = serviceRequestRepository.getSubvendorslistRB(stype);
+            return l2;
         }
 
         public string getvendorname(long id)

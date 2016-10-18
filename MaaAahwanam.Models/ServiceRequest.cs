@@ -33,5 +33,6 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedTime { get; set; }
         public string Status { get; set; }
         public string Type { get; set; }
+        public string SubserviceType { get; set; }
     }
 }
