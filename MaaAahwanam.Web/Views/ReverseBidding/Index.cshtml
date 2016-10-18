@@ -74,7 +74,12 @@
                                             },
                                           "value", "text"), new { @class = "validate[required] form-control", @id = "ddlstype", @onchange = "GetSelectedTextValue(this)" })
                         </li>
-                  
+                    <li style="list-style-type:none">
+                        <label style="color:#666;font-size:13px;">Service Type<span>*</span></label>
+                        @Html.DropDownListFor(Model => Model.SubserviceType, new SelectList(
+                           new List<Object> { new { Text = "Select Vendor Category", Value = "" } }, "value", "text"),
+                           new { @class = "validate[required] form-control", @id = "ddlsubvnames", @onchange = "GetSelectedservice(this)" })
+                    </li>
                     <ul>
                         <li style="list-style-type:none">
                             <label style="color:#666;font-size:13px;">Vendor Id<span>*</span></label>
@@ -213,9 +218,40 @@
     </div>*@
 }
 <script>
-    function GetSelectedTextValue(value)
+
+    function GetSelectedTextValue(value) {
+        //alert(value.value);
+        var service = {};
+        service.selectedservice = value.value;
+        $.ajax({
+            type: "POST",
+            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ReverseBidding/SubVendorlist',
+            data: {},
+            data: JSON.stringify(service),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    //  alert(data.BusinessName);
+                    //document.getElementById("ddlstype").value = data.BusinessName;
+                    $('#ddlsubvnames').empty();
+                    $('#ddlsubvnames').append($('<option></option>').val("Select Category Type").html("Select Category Type"));
+                    $(data).each(function (index, item) {
+                        $('#ddlsubvnames').append($('<option></option>').val(item.vendortype).html(item.vendortype));
+                    });
+                }
+            },
+            error: function (data) {
+                alert('error')
+            }
+        });
+    };
+
+
+    function GetSelectedservice(value)
     {
-       //alert(value.value);
+        //$('#ddlstype').selectedservice.id;
+        //alert($('#ddlstype').selectedservice.id);
         var service = {};
         service.selectedservice = value.value;
         $.ajax({
@@ -231,7 +267,7 @@
                     //document.getElementById("ddlstype").value = data.BusinessName;
                     $('#ddlvnames').empty();
                     $('#ddlvnames').append($('<option></option>').val("Select Vendor Type").html("Select Vendor Type"));
-                    $(data).each(function (index, item) { // GETTING ERROR HERE
+                    $(data).each(function (index, item) { 
                         $('#ddlvnames').append($('<option></option>').val(item.Id).html(item.BusinessName));
                     });
                 }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Service;
 using MaaAahwanam.Web.Custom;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -30,12 +31,17 @@ namespace MaaAahwanam.Web.Controllers
             serviceRequest =serviceRequestService.SaveService(serviceRequest);
             return RedirectToAction("Index", "ReverseBiddingConfirmation", serviceRequest);
         }
-
         public JsonResult Vendorlist(string selectedservice)
         {
             ServiceRequestService serviceRequestService = new ServiceRequestService();
-            List<Vendormaster> vlist = serviceRequestService.getvendorslistRB(selectedservice);
+            var vlist = serviceRequestService.getvendorslistRB(selectedservice);
             return Json(vlist);
         }
-	}
+        public JsonResult SubVendorlist(string selectedservice)
+        {
+            ServiceRequestService serviceRequestService = new ServiceRequestService();
+            var subvlist = serviceRequestService.getSubvendorslistRB(selectedservice).GroupBy(s=>s.vendortype).Select(vendortype=> vendortype.First());
+            return Json(subvlist);
+        }
+    }
 }
