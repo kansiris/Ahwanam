@@ -42,15 +42,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages");
         }
     
-        public virtual ObjectResult<getservicetype_Result> getservicetype(string ntype)
-        {
-            var ntypeParameter = ntype != null ?
-                new ObjectParameter("ntype", ntype) :
-                new ObjectParameter("ntype", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
-        }
-    
         public virtual ObjectResult<MaaAahwanam_Others_AllRegisteredUsersDetails_Result> MaaAahwanam_Others_AllRegisteredUsersDetails()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_AllRegisteredUsersDetails_Result>("MaaAahwanam_Others_AllRegisteredUsersDetails");
@@ -274,6 +265,15 @@ namespace MaaAahwanam.Repository
         public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
+        }
+    
+        public virtual ObjectResult<getservicetype_Result> getservicetype(string ntype)
+        {
+            var ntypeParameter = ntype != null ?
+                new ObjectParameter("ntype", ntype) :
+                new ObjectParameter("ntype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Tuple<MaaAahwanam.Models.Vendormaster,MaaAahwanam.Models.VendorVenue>
+﻿@model Tuple<MaaAahwanam.Models.Vendormaster,MaaAahwanam.Models.VendorVenue,MaaAahwanam.Models.Deal>
     @{
         ViewBag.Title = "Venue";
         Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
@@ -558,55 +558,110 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
-                                                    <div class="col-lg-4">
-                                                        <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file"  required/>
-                                                        <br />
-                                                        @if (@ViewBag.imagescount != 0)
-                                                        { <p id="msg" style="color:green;font-size:large"><strong>You can Upload images upto @ViewBag.imagescount Only </strong></p> }
-                                                        @if (@ViewBag.imagescount == 0)
-                                                        { <p id="msg" style="color:red;font-size:large"><strong>You Have Reached Image Limit </strong></p> }
-                                                    </div>
-                                                   <br/>
-                                                    <div id="imgbox"></div><br /><br /><br />
-                                                    <div align="center">
-                                                        @if (@ViewBag.images != null)
-                                                        {
-                                                            foreach (var item in ViewBag.images)
-                                                            {
-                                                                <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
-                                                                                 @Html.ActionLink("X", "venue", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
-                                                            }
-                                                            if (@ViewBag.images.Count == 0)
-                                                            {
-                                                                <img src="~/noimages.png" />
-                                                            }
-                                                        }
-                                                    </div>
-                                                            </div>
-                                                            <div id="editimage" style="min-height: 10px;min-width: 10px; "></div>
+                                                    <label class="control-label col-lg-4">Deal</label>
 
-                                                            <div id="dvPreview" align="center" style="padding:10px">
-                                                            </div>
-                                                        
-                                                <div style="text-align:center" class="form-actions no-margin-bottom">
-                                                    @if (ViewBag.operation != null)
-                                                    {
-                                                        <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
-                                                    }
-                                                    else
-                                                    {
-                                                        <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
-                                                    }
-                                                    <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
-                                                    <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
-                                                    @*<input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
-                                                    @*<button type="submit" formaction="~/Admin/Vendors/AllVendors">Back</button>
-                                                    <input  type="submit" formaction="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback" value="Back To List"/>*@ 
-                                                    <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
+                                                    <div class="col-lg-4">
+                                                        <input type="checkbox"  class="form-control">
+                                                    </div>
                                                 </div>
-                                                <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
-                                                    </form>
+                                                <div style="border-style:double;display:none;"><br/>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Venue Type</label>
+                                                        <div class="col-lg-4">
+                                                            @Html.DropDownListFor(model => this.Model.Item3.VendorCategory, new SelectList(new[] { "Select Venue Type", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    @*<label class="control-label col-lg-4">Food</label>
+                                                    <div class="col-lg-4">
+                                                        @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control", @onchange = "itemsdisable1()" })
+                                                    </div>*@
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Veg Lunch Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                        </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Non-Veg Lunch Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealNonVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                        </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Veg Dinner Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                        </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Non-Veg Dinner Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealNonVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                        </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Deal Service Cost</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealServicePrice, new { @class = "form-control", placeholder = "Enter Service Cost" })
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                        <br />
+                                                        <div class="form-group">
+                                                            <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
+                                                            <div class="col-lg-4">
+                                                                <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" required />
+                                                                <br />
+                                                                @if (@ViewBag.imagescount != 0)
+                                                                { <p id="msg" style="color:green;font-size:large"><strong>You can Upload images upto @ViewBag.imagescount Only </strong></p> }
+                                                                @if (@ViewBag.imagescount == 0)
+                                                                { <p id="msg" style="color:red;font-size:large"><strong>You Have Reached Image Limit </strong></p> }
+                                                            </div>
+                                                            <br />
+                                                            <div id="imgbox"></div><br /><br /><br />
+                                                            <div align="center">
+                                                                @if (@ViewBag.images != null)
+                                                                {
+                                                                    foreach (var item in ViewBag.images)
+                                                                    {
+                                                                        <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
+                                                                                                                                                                                                                                                        @Html.ActionLink("X", "venue", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
+                                                                    }
+                                                                    if (@ViewBag.images.Count == 0)
+                                                                    {
+                                                                        <img src="~/noimages.png" />
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div id="editimage" style="min-height: 10px;min-width: 10px; "></div>
+
+                                                        <div id="dvPreview" align="center" style="padding:10px">
+                                                        </div>
+
+                                                        <div style="text-align:center" class="form-actions no-margin-bottom">
+                                                            @if (ViewBag.operation != null)
+                                                            {
+                                                                <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
+                                                            }
+                                                            <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
+                                                            <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
+                                                            @*<input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
+                                                            @*<button type="submit" formaction="~/Admin/Vendors/AllVendors">Back</button>
+                    <input  type="submit" formaction="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback" value="Back To List"/>*@
+                                                            <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
+                                                        </div>
+                                                        <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
+</form>
                                         </div>
                                     </div>
                                 </div>

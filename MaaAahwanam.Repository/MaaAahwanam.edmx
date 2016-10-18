@@ -91,9 +91,6 @@
           <Parameter Name="ServicType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="geteventsandtipsimages" ReturnType="Collection(MaaAahwanamModel.geteventsandtipsimages_Result)" />
-          <FunctionImport Name="getservicetype" ReturnType="Collection(MaaAahwanamModel.getservicetype_Result)">
-          <Parameter Name="ntype" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_AllRegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_AllRegisteredUsersDetails_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsers" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsers_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsersDetails_Result)">
@@ -163,6 +160,9 @@
           <Parameter Name="TicketId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_ordersdisplay" ReturnType="Collection(MaaAahwanamModel.sp_ordersdisplay_Result)" />
+          <FunctionImport Name="getservicetype" ReturnType="Collection(MaaAahwanamModel.getservicetype_Result)">
+            <Parameter Name="ntype" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
           <Property Type="Int64" Name="VendorMasterId" Nullable="false" />
@@ -195,10 +195,6 @@
           <Property Type="DateTime" Name="UpdatedDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="Status" Nullable="true" />
           <Property Type="String" Name="cropedimage" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="getservicetype_Result">
-          <Property Type="String" Name="vendortype" Nullable="true" />
-          <Property Type="String" Name="temp" Nullable="false" MaxLength="1" />
         </ComplexType>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -462,6 +458,10 @@
           <Property Type="String" Name="Landmark" Nullable="true" />
           <Property Type="String" Name="username" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="getservicetype_Result">
+          <Property Type="String" Name="vendortype" Nullable="true" />
+          <Property Type="Int64" Name="temp" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -505,14 +505,6 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="cropedimage" ColumnName="cropedimage" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getservicetype" FunctionName="MaaAahwanamModel.Store.getservicetype">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.getservicetype_Result">
-                <ScalarProperty Name="vendortype" ColumnName="vendortype" />
-                <ScalarProperty Name="temp" ColumnName="temp" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -875,6 +867,14 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Landmark" ColumnName="Landmark" />
                 <ScalarProperty Name="username" ColumnName="username" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getservicetype" FunctionName="MaaAahwanamModel.Store.getservicetype">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.getservicetype_Result">
+                <ScalarProperty Name="vendortype" ColumnName="vendortype" />
+                <ScalarProperty Name="temp" ColumnName="temp" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -18,6 +18,7 @@ namespace MaaAahwanam.Repository.db
         public DbSet<CartItem> CartItem { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<CommentDetail> CommentDetail { get; set; }
+        public DbSet<Deal> Deal { get; set; }
         public DbSet<Enquiry> Enquiry { get; set; }
         public DbSet<EventDate> EventDate { get; set; }
         public DbSet<EventInformation> EventInformation { get; set; }
