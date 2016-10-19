@@ -35,9 +35,9 @@ namespace MaaAahwanam.Service
             return l1;
         }
 
-        public List<Vendormaster> getvendorslistRB(string stype)
+        public List<Vendormaster> getvendorslistRB(string stype, string selectedtype)
         {
-            List<Vendormaster> l1 = serviceRequestRepository.getvendorsluistRB(stype,"Venue");
+            List<Vendormaster> l1 = serviceRequestRepository.getvendorsluistRB(stype, selectedtype);
             return l1;
         }
         public List<getservicetype_Result> getSubvendorslistRB(string stype)

@@ -1,0 +1,432 @@
+﻿@model List<MaaAahwanam.Repository.SP_Deals_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/SharedWeb/MainMaster.cshtml";
+}
+
+@section Navigation
+{
+    <div class="breads">
+        <div class="breads_inner">
+            <div class="pageWidth">
+                <div class="title">
+                    <h3>@ViewBag.ServiceType</h3>
+                </div>
+                <div class="breadcrumbs">
+                    <ul>
+                        <li><a href="~/Index/Index">Home</a></li>
+                        <li><i class="breads_arrow"></i></li>
+                        @*@if (ViewBag.ServiceType == "InvitationCard")
+                            {*@
+                        <li><a href="../product?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> @ViewBag.ServiceType</a></li>
+                        @*}*@
+                        @*@if (ViewBag.ServiceType == "Venue")
+                            {
+                            <li><a href="../product?par=Venue"> Venue</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Catering")
+                            {
+                            <li><a href="../product?par=Catering"> Catering</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Photography")
+                            {
+                            <li><a href="../product?par=Photography"> Photography</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Decorator")
+                            {
+                            <li><a href="../product?par=Decorator"> Decorator</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Entertainment")
+                            {
+                            <li><a href="../product?par=Entertainment"> Entertainment</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Eventorganiser")
+                            {
+                            <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "BeautyService")
+                            {
+                            <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Travel")
+                            {
+                            <li><a href="../product?par=Travel"> Travel</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Gift")
+                            {
+                            <li><a href="../product?par=Gift"> Gift</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "WeddingCollection")
+                            {
+                            <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
+                            }
+                            @if (ViewBag.ServiceType == "Other")
+                            {
+                            <li><a href="../product?par=Other"> Other</a></li>
+                            }*@
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<section>
+    <div class="about_main">
+        <div class="overlay2" style="display: none;">
+            <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+                <img src="/CSSWeb/images/Loader.gif" /><br>
+                <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+            </div>
+        </div>
+
+        <div class="pageWidth">
+            <aside>
+                <h4>Services</h4>
+                <span>&nbsp;</span>
+                <ul id="stpyesul">
+                    @{
+                        int i = 0;
+                        foreach (var item in @ViewBag.subservicetype)
+                        {
+                            if (item.vendortype != null)
+                            {
+                                if (i == 0)
+                                {
+                                    <li><a href="#" class="Test" id="@item.vendortype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="#" id="@item.vendortype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                                }
+                            }
+                            i++;
+                        }
+                    }
+                    @*<li><a href="../product?par=Venue"> Venue</a></li>
+                        <li><a href="../product?par=Catering"> Catering</a></li>
+                        <li><a href="../product?par=Photography"> Photography</a></li>
+                        <li><a href="../product?par=InvitationCard"> InvitationCard</a></li>
+                        <li><a href="../product?par=Decorator"> Decorator</a></li>
+                        <li><a href="../product?par=Entertainment"> Entertainment</a></li>
+                        <li><a href="../product?par=Eventorganiser"> Eventorganiser</a></li>
+                        <li><a href="../product?par=BeautyService"> Beauty Service</a></li>
+                        <li><a href="../product?par=Travel"> Travel</a></li>
+                        <li><a href="../product?par=Gift"> Gift</a></li>
+                        <li><a href="../product?par=WeddingCollection"> WeddingCollection</a></li>
+                        <li><a href="../product?par=Other"> Other</a></li>*@
+                </ul>
+                <div class="line">&nbsp;</div>
+                <h4>Filter By</h4>
+                <span>&nbsp;</span>
+                <div class="clear"></div>
+                <form name="myForm">
+                    <label>Location</label>
+                    <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onchange="locationchange(this)">
+                    @foreach (var item in this.Model)
+                    {
+                        if (item.subtype != "Banquet Hall")
+                        {
+                            <label>Price Range</label>
+                            <div class="radioButtons" id="radio-demo">
+                                <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
+                                <label for="rblASC">Low to High</label>
+                                <br />
+                                <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
+                                <label for="rblDESC">High to Low</label>
+                            </div>
+                            break;
+                        }
+                    }
+                </form>
+            </aside>
+            <article>
+                <div class="about_categories">
+                    <select>
+                        <option>Beautician</option>
+                        <option>Photographers</option>
+                        <option>Cake Vendors</option>
+                        <option>Caterer Decorators</option>
+                        <option>Designer Photographers</option>
+                        <option>Entertainment</option>
+                        <option>Fireworks</option>
+                        <option>Godi wale</option>
+                    </select>
+                </div>
+                <div class="about_content">
+                    <fieldset class="address-data-inputs">
+                        <div class="displayDiv">
+                            <div>
+                                @if (Model.Count != 0)
+                                {
+                                    foreach (var item in this.Model)
+                                    {
+                                        <div id="PhotographersDiv" class="step2">
+                                            <div class="deals-main" id="main">
+                                                <div class="deal">
+                                                    <div class="deal-thumb">
+                                                        <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid">
+                                                            <div class="zoomDiv">
+                                                                @* <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id">*@
+                                                                @if (item.image != null)
+                                                                {
+                                                                    <img src="~/vendorimages/@item.image" alt="thumb">
+                                                                }
+                                                                else if (item.image == null)
+                                                                {
+                                                                    @*<img src="~/vendorimages/@item.image" alt="thumb">*@
+                                                                    <img src="~/noimages.png" alt="No Image" />
+                                                                }
+                                                                @*</a>*@
+                                                                <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span>  </div>
+
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="deal-details">
+                                                        <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">@item.BusinessName</h4>
+                                                        <div class="amount">
+                                                            <input type="hidden" id="hdncost" value=@item.ServicType.Trim() />
+
+                                                            @if (item.ServicType != "Venue")
+                                                            {
+                                                                @*<p id="P_cost">*@
+                                                                <span class="price">Rs. @item.Cost</span>
+                                                                @*</p>*@
+                                                            }
+                                                            @if (item.subtype == "Convention Hall" || item.subtype == "Function Hall" || item.subtype == "Meeting Room" || item.subtype == "Roof Top")
+                                                            {
+                                                                <span class="price">Rs. @item.Servicecost</span>
+                                                            }
+                                                            <span class="buy">
+                                                                <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid"><i class="ti-shopping-cart"></i> Add to Cart</a>
+                                                            </span>
+                                                        </div>
+                                                        <p style="color:#838383 ;width: 200px;  white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;">@item.Description</p>
+                                                        @*<p><i class="ti-location-pin"></i> @item.City</p>*@
+
+                                                        <div class="deal-footer">
+                                                            <ul>
+                                                                <li><div class="rate" data-rate-value=5></div></li>
+                                                                <li><i class="ti-comment-alt"></i> 1362</li>
+                                                                <li><i class="ti-eye"></i> 1500</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <input type="hidden" id="hiddenlastrecord" value=@ViewBag.Lastrecordid />
+                                    <input type="hidden" id="hiddenlastrecord2" value="@Model.Last().ServicType" />
+                                }
+                                else if (Model.Count == 0)
+                                {
+                                    <h3>No Vendors found</h3>
+                                }
+                                @*}*@
+                            </div>
+
+                            <div id="sss"></div>
+
+
+                            <!--<div class="pagination2">
+                                <div class="prev">
+                                <a href="invitation.html" class="btn btn-big btn-green float-left"><i class="ti-angle-double-left"></i> Back to Prev</a>
+                                </div>
+                                <div class="next">
+                                <a href="../CardInfo/Index" class="btn btn-big btn-red float-right">Go to Next <i class="ti-angle-double-right"></i></a>
+                              </div>
+                            </div>-->
+                        </div>
+                        <!-- displayDiv -->
+                    </fieldset>
+                    <div class="loadMore">
+                        <button name="loadmore" id="LoadMore1" class="btn btn-green more-button"><i class="ti-reload"></i> Load More</button>
+                        <div id="abc"><h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1></div>
+                        @*<div id="imgloadergifdiv"> <img src="~/CSSWeb/ajax-loader.gif" id="imgloadergif" /></div>*@
+                    </div>
+                </div>
+            </article>
+
+            <div class="clear"></div>
+
+        </div>
+
+    </div>
+</section>
+<div class="clear"></div>
+@*<style>
+        li:first-child {
+            background-color: yellow;
+        }
+    </style>*@
+@section scriptfunctions
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            //if(document.getElementById("hdncost").value=='Catering')
+            //{
+            //    //alert('hi');
+            //    $("#P_cost").css("display", "none");
+            //}
+            $("#abc").hide();
+            $("#imgloadergifdiv").hide();
+            if(@Model.Count==0)
+            {
+                $("#LoadMore1").hide();
+            }
+            document.getElementById("txtlocation").value= window.location.search.split("=")[3].split("&")[0];
+            if(window.location.search.split("=")[2].split("&")[0].replace("%20"," ")!="Banquet Hall" && window.location.search.split("=")[2].split("&")[0].replace("%20"," ")!="%")
+            {
+                if(window.location.search.split("=")[4].split("&")[0]=='DESC')
+                {
+                    // alert('DESC');
+                    document.getElementById("rblDESC").checked = true;
+                }
+                else if(window.location.search.split("=")[4].split("&")[0]=='ASC')
+                {
+                    //alert('ASC');
+                    document.getElementById("rblASC").checked = true;
+                }
+            }
+            //alert(document.getElementById("hiddenlastrecord").value)
+            var subservicetype= window.location.search.split("=")[2].split("&")[0].replace("%20"," ");
+            //alert(subservicetype);
+            if(subservicetype!='%')
+            {
+                document.getElementById(subservicetype).className = "active";
+            }
+            else
+            {
+                var a= $(".Test").attr('id');
+                document.getElementById(a).className = "active";
+            }
+
+        };
+        /* -------------------------------  Loadmore functionality ------------------------ */
+        $('#LoadMore1').on('click', function (e) {
+            //$("#imgloadergifdiv").show();
+            $(".overlay").show();
+            $("#LoadMore1").hide();
+            var VID = document.getElementById("hiddenlastrecord").value;
+
+            //alert(hdncosttype);
+            var servicetypeQuerystring = document.getElementById("hiddenlastrecord2").value;
+
+            var servicetype = window.location.search.split("=")[1].split("&")[0];
+            var subservicetype= window.location.search.split("=")[2].split("&")[0];
+            var location = window.location.search.split("=")[3].split("&")[0];
+            var order = window.location.search.split("=")[4].split("&")[0];
+
+            var obj = {};
+            obj.VID = VID;
+            obj.servicetypeQuerystring = servicetypeQuerystring;
+            obj.servicetype=servicetype;
+            obj.subservicetype=subservicetype;
+            obj.location=location;
+            obj.order=order;
+            $.ajax({
+                type: "POST",
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Deals/Loadmore',
+                data: {},
+                data: JSON.stringify(obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.length == 4) {
+                        var hdncosttype = document.getElementById("hdncost").value;
+                        //alert(hdncosttype);
+                        if(hdncosttype!='Catering' && hdncosttype!='Venue' && hdncosttype!='InvitationCard')
+                        {
+                            //alert('Yes3');
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                        }
+                        else
+                        {
+                            //alert('no');
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                        }
+                    }
+                    else
+                    {
+                        var hdncosttype = document.getElementById("hdncost").value;
+                        //alert(hdncosttype);
+                        if(hdncosttype=='Catering' || hdncosttype=='Venue' || hdncosttype=='InvitationCard')
+                        {
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                            $("#LoadMore1").hide();
+                        }
+                        else
+                        {
+                            $.each(data, function (key, value) {
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                document.getElementById("hiddenlastrecord").value = value.Id;
+                            });
+                            $("#LoadMore1").hide();
+                        }
+                    }
+                    $(".rate").rate();
+                },
+                error: function (data) {
+                    alert('error')
+                }
+            });
+            //$("#imgloadergifdiv").hide();
+            $("#LoadMore1").show();
+            $(".overlay").hide();
+        });
+    </script>
+    <script>
+        function subservicechnage(s)
+        {
+            var subservicetype=s.text.trim();
+            var servicetype = window.location.search.split("=")[1].split("&")[0];
+            var location = window.location.search.split("=")[3].split("&")[0];
+            var order = window.location.search.split("=")[4].split("&")[0];
+            window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+            //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
+        }
+        function locationchange(s)
+        {
+            //alert(document.getElementById("txtlocation").value);
+            var subservicetype= window.location.search.split("=")[2].split("&")[0];
+            var servicetype = window.location.search.split("=")[1].split("&")[0];
+            var location = document.getElementById("txtlocation").value;
+
+            var order = window.location.search.split("=")[4].split("&")[0];
+            window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+            //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
+        }
+
+        var radother = document.myForm.radiogroup;
+        var prevother = null;
+        var rrother = null;
+        //alert(radother.length);
+        for (var i = 0; i < radother.length; i++) {
+            radother[i].onclick = function () {
+                if (this !== prevother) {
+                    prevother = this;
+                    var a = this.value;
+
+                    var subservicetype= window.location.search.split("=")[2].split("&")[0];
+                    var servicetype = window.location.search.split("=")[1].split("&")[0];
+                    var location = window.location.search.split("=")[3].split("&")[0];
+
+                    var order = a;
+                    window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+                    //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
+                }
+            };
+        }
+    </script>
+}

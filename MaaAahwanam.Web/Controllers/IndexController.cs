@@ -31,10 +31,10 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.HealthTips = Healthtips;
             ViewBag.BeautyTips = Beautytips;
             ProductService productService = new ProductService();
-            List<GetProducts_Result> Productlist_Photography = productService.GetProducts_Results("Photography", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_BeautyService = productService.GetProducts_Results("BeautyService", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Decorator = productService.GetProducts_Results("Decorator", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Travel = productService.GetProducts_Results("Travel", 0, "%", "Hyderabad", "ASC");
+            List<SP_Deals_Result> Productlist_Photography = productService.GetSP_Deals_Result("Photography", 0, "%", "Hyderabad", "ASC");
+            List<SP_Deals_Result> Productlist_BeautyService = productService.GetSP_Deals_Result("BeautyService", 0, "%", "Hyderabad", "ASC");
+            List<SP_Deals_Result> Productlist_Decorator = productService.GetSP_Deals_Result("Decorator", 0, "%", "Hyderabad", "ASC");
+            List<SP_Deals_Result> Productlist_Travel = productService.GetSP_Deals_Result("Travel", 0, "%", "Hyderabad", "ASC");
             ViewBag.PhotographersDetails = Productlist_Photography;
             ViewBag.Beautician = Productlist_BeautyService;
             ViewBag.Decorators = Productlist_Decorator;

@@ -17,6 +17,12 @@ namespace MaaAahwanam.Repository.db
             //maaAahwanamEntities.get
             return maaAahwanamEntities.GetProducts(parameters,VID, servicetypesType, servicetypeloc, servicetypeorder).ToList();
         }
+
+        public List<SP_Deals_Result> GetSP_Deals_Result(string parameters, int VID, string servicetypesType, string servicetypeloc, string servicetypeorder)
+        {
+            //maaAahwanamEntities.get
+            return maaAahwanamEntities.SP_Deals(parameters, VID, servicetypesType, servicetypeloc, servicetypeorder).ToList();
+        }
         public List<getservicetype_Result> Getservicetype_Result(string parameters)
         {
             return maaAahwanamEntities.getservicetype(parameters).ToList();
