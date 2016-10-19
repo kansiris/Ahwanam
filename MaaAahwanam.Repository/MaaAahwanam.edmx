@@ -58,6 +58,13 @@
         <Function Name="sp_AllOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="SP_Deals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nType" Type="nvarchar" Mode="In" />
+          <Parameter Name="VID" Type="int" Mode="In" />
+          <Parameter Name="stype" Type="varchar(max)" Mode="In" />
+          <Parameter Name="city" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="order" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_GetTestimonials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_LeastBidRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RequestId" Type="bigint" Mode="In" />
@@ -161,7 +168,14 @@
           </FunctionImport>
           <FunctionImport Name="sp_ordersdisplay" ReturnType="Collection(MaaAahwanamModel.sp_ordersdisplay_Result)" />
           <FunctionImport Name="getservicetype" ReturnType="Collection(MaaAahwanamModel.getservicetype_Result)">
-            <Parameter Name="ntype" Mode="In" Type="String" />
+          <Parameter Name="ntype" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Deals" ReturnType="Collection(MaaAahwanamModel.SP_Deals_Result)">
+            <Parameter Name="nType" Mode="In" Type="String" />
+            <Parameter Name="VID" Mode="In" Type="Int32" />
+            <Parameter Name="stype" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="order" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AllVendorList_Result">
@@ -461,6 +475,19 @@
         <ComplexType Name="getservicetype_Result">
           <Property Type="String" Name="vendortype" Nullable="true" />
           <Property Type="Int64" Name="temp" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Deals_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="Int64" Name="DealServicePrice" Nullable="false" />
+          <Property Type="Int64" Name="Servicecost" Nullable="false" />
+          <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -875,6 +902,23 @@
               <ComplexTypeMapping TypeName="MaaAahwanamModel.getservicetype_Result">
                 <ScalarProperty Name="vendortype" ColumnName="vendortype" />
                 <ScalarProperty Name="temp" ColumnName="temp" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Deals" FunctionName="MaaAahwanamModel.Store.SP_Deals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.SP_Deals_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="DealServicePrice" ColumnName="DealServicePrice" />
+                <ScalarProperty Name="Servicecost" ColumnName="Servicecost" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

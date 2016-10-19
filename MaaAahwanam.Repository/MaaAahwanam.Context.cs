@@ -275,5 +275,30 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
         }
+    
+        public virtual ObjectResult<SP_Deals_Result> SP_Deals(string nType, Nullable<int> vID, string stype, string city, string order)
+        {
+            var nTypeParameter = nType != null ?
+                new ObjectParameter("nType", nType) :
+                new ObjectParameter("nType", typeof(string));
+    
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            var stypeParameter = stype != null ?
+                new ObjectParameter("stype", stype) :
+                new ObjectParameter("stype", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("city", city) :
+                new ObjectParameter("city", typeof(string));
+    
+            var orderParameter = order != null ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Deals_Result>("SP_Deals", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
+        }
     }
 }

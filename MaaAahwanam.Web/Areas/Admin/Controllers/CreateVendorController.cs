@@ -15,8 +15,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
     {
         VendorImageService vendorImageService = new VendorImageService();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        DealService dealService = new DealService();
         const string imagepath = @"/vendorimages/";
         static string vendorid = "";
+        
         //public CreateVendorController(IAccommodationService accommodationService)
         //{ }
         public ActionResult Images()
@@ -1888,7 +1890,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult Venue(string id, [Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster,string src,string op,string vid)
+        public ActionResult Venue(string id, [Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, [Bind(Prefix = "Item3")]Deal deal, string src,string op,string vid)
         {
             VendorVenueService vendorVenueService = new VendorVenueService();
             if (vid!=null)
@@ -1915,8 +1917,13 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 var list = vendorImageService.GetVendorImagesService(long.Parse(id),long.Parse(vid));
                 ViewBag.imagescount = 10 - list.Count;
                 vendorVenue = vendorVenueService.GetVendorVenue(long.Parse(id),long.Parse(vid)); 
-                vendorMaster = vendorMasterService.GetVendor(long.Parse(id)); 
-                var a = new Tuple<Vendormaster, VendorVenue>(vendorMaster, vendorVenue);
+                vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
+                deal = dealService.GetDealService(int.Parse(id), int.Parse(vid));
+                if (deal != null)
+                {
+                    ViewBag.dealslist = 1;
+                }
+                var a = new Tuple<Vendormaster, VendorVenue,Deal>(vendorMaster, vendorVenue,deal);
                 ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                 ViewBag.masterid = id;
                 if (op != null)
@@ -1939,14 +1946,17 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Venue([Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file,string Command,string id, string vid)
+        public ActionResult Venue([Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, [Bind(Prefix = "Item3")]Deal deal, HttpPostedFileBase file,string Command,string id, string vid)
         {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string fileName = string.Empty;
             VendorVenueService vendorVenueService = new VendorVenueService();
-            vendorVenue.UpdatedBy = ValidUserUtility.ValidUser();
-            vendorMaster.UpdatedBy = ValidUserUtility.ValidUser();
+            //vendorVenue.UpdatedBy = user.UserId;
+            //vendorMaster.UpdatedBy = user.UserId;
             if (Command == "Save")
             {
+                vendorVenue.UpdatedBy = user.UserId;
+                vendorMaster.UpdatedBy = user.UserId;
                 vendorVenue = vendorVenueService.AddVenue(vendorVenue, vendorMaster);
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorVenue.Id;
@@ -1982,6 +1992,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (Command=="update")
             {
+                vendorVenue.UpdatedBy = user.UserId;
+                vendorMaster.UpdatedBy = user.UserId;
                 long masterid = vendorVenue.VendorMasterId  = vendorMaster.Id = long.Parse(id);
                 vendorMaster.UpdatedBy = vendorVenue.UpdatedBy = ValidUserUtility.ValidUser();
                 vendorVenue = vendorVenueService.UpdateVenue(vendorVenue, vendorMaster, masterid,long.Parse(vid));
@@ -1989,6 +2001,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 vendorImage.VendorId = vendorVenue.Id;
                 int imagecount = 10;
                 var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                if (deal != null)
+                {
+                    deal = dealService.UpdateDealService(deal, int.Parse(id), int.Parse(vid));
+                }
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     int imageno = 0;
@@ -2024,10 +2040,20 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     if (vendorVenue.Id != 0 || vendorImage.ImageId != 0) 
                     {
+                        if (deal.DealID != 0)
+                        {
+                            return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllDeals", "Deals") + "'</script>"); //, new { dropdown = "Venue" }
+                        }
                         return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "Venue" }
+                        
+                        
                     }
                     else
                     {
+                        if (deal.DealID != 0)
+                        {
+                            return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllDeals", "Deals") + "'</script>"); //, new { dropdown = "Venue" }
+                        }
                         return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                     }
                 }
@@ -2040,6 +2066,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (Command == "add")
             {
+                vendorVenue.UpdatedBy = user.UserId;
+                vendorMaster.UpdatedBy = user.UserId;
                 vendorMaster.Id = long.Parse(id);
                 vendorVenue = vendorVenueService.AddNewVenue(vendorVenue, vendorMaster);
                 VendorImage vendorImage = new VendorImage();
@@ -2072,6 +2100,21 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 else
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                }
+            }
+            if (Command == "Add Deal")
+            {
+                deal.VendorType = "Venue";
+                deal.VendorId = long.Parse(id);
+                deal.VendorSubId = long.Parse(vid);
+                deal = dealService.AddDealService(deal);
+                if (deal.DealID != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Deal Added');location.href='" + @Url.Action("AllDeals", "Deals") + "'</script>");
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("AllDeals", "Deals") + "'</script>");
                 }
             }
             return View();
