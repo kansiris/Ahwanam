@@ -31,10 +31,10 @@ namespace MaaAahwanam.Web.Controllers
             serviceRequest =serviceRequestService.SaveService(serviceRequest);
             return RedirectToAction("Index", "ReverseBiddingConfirmation", serviceRequest);
         }
-        public JsonResult Vendorlist(string selectedservice)
+        public JsonResult Vendorlist(string selectedservice,string selectedtype)
         {
             ServiceRequestService serviceRequestService = new ServiceRequestService();
-            var vlist = serviceRequestService.getvendorslistRB(selectedservice);
+            var vlist = serviceRequestService.getvendorslistRB(selectedservice, selectedtype);
             return Json(vlist);
         }
         public JsonResult SubVendorlist(string selectedservice)

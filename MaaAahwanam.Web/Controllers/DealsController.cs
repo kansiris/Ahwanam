@@ -1,5 +1,4 @@
-﻿using MaaAahwanam.Models;
-using MaaAahwanam.Repository;
+﻿using MaaAahwanam.Repository;
 using MaaAahwanam.Service;
 using System;
 using System.Collections.Generic;
@@ -9,10 +8,9 @@ using System.Web.Mvc;
 
 namespace MaaAahwanam.Web.Controllers
 {
-    public class ProductController : Controller
+    public class DealsController : Controller
     {
-        //
-        // GET: /CardSelect/
+        // GET: Deals
         public ActionResult Index()
         {
             ProductService productService = new ProductService();
@@ -20,19 +18,19 @@ namespace MaaAahwanam.Web.Controllers
             string servicetypesType = Request.QueryString["sType"];
             string servicetypeloc = Request.QueryString["loc"];
             string servicetypeorder = Request.QueryString["a"];
-            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, 0, servicetypesType, servicetypeloc, servicetypeorder);
+            List<SP_Deals_Result> Productlist = productService.GetSP_Deals_Result(servicetypeQuerystring, 0, servicetypesType, servicetypeloc, servicetypeorder);
             List<getservicetype_Result> servicetypelist = productService.Getservicetype_Result(servicetypeQuerystring);
             var s = servicetypelist.GroupBy(m => m.vendortype).Select(vendortype => vendortype.First());
-            long idlast=0;
-            if (Productlist.Count!=0)
-            { 
-            idlast = Productlist.Max(i=>i.Id);
+            long idlast = 0;
+            if (Productlist.Count != 0)
+            {
+                idlast = Productlist.Max(i => i.Id);
             }
             else
             {
-             idlast = 0;
+                idlast = 0;
             }
-            ViewBag.Lastrecordid=idlast;
+            ViewBag.Lastrecordid = idlast;
             ViewBag.ServiceType = servicetypeQuerystring;
             ViewBag.subservicetype = s;
             return View(Productlist);
