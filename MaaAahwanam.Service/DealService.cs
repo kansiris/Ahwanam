@@ -18,9 +18,9 @@ namespace MaaAahwanam.Service
             return dealRepository.AllDeals(dropstatus);
         }
 
-        public Deal GetDealService(int id, int vid)
+        public Deal GetDealService(int id)
         {
-            return dealRepository.GetDeal(id, vid);
+            return dealRepository.GetDeal(id);
         }
 
         public Deal AddDealService(Deal deal)
@@ -28,9 +28,9 @@ namespace MaaAahwanam.Service
             return dealRepository.AddDeal(deal);
         }
 
-        public Deal UpdateDealService(Deal deal,int id,int vid)
+        public Deal UpdateDealService(Deal deal,int id)
         {
-            return dealRepository.UpdateDeal(deal,id,vid);
+            return dealRepository.UpdateDeal(deal,id);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace MaaAahwanam.Models
         public decimal DealNonVegLunchCost { get; set; }
         public decimal DealVegDinnerCost { get; set; }
         public decimal DealNonVegDinnerCost { get; set; }
-        public long DealServicePrice { get; set; }
+        public decimal DealServicePrice { get; set; }
         public long VendorId { get; set; }
         public long VendorSubId { get; set; }
     }

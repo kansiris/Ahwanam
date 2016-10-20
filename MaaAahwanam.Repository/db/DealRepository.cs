@@ -16,9 +16,9 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.Deal.Where(m=>m.VendorType == dropstatus).ToList();
         }
 
-        public Deal GetDeal(int id,int vid)
+        public Deal GetDeal(int id)
         {
-            return _dbContext.Deal.Where(m => m.VendorId == id && m.VendorSubId == vid).FirstOrDefault();
+            return _dbContext.Deal.Where(m => m.DealID == id ).FirstOrDefault();
         }
 
         public Deal AddDeal(Deal deal)
@@ -28,13 +28,13 @@ namespace MaaAahwanam.Repository.db
             return deal;
         }
 
-        public Deal UpdateDeal(Deal deal,int id,int vid)
+        public Deal UpdateDeal(Deal deal,int id)
         {
-            var list = _dbContext.Deal.Where(m => m.VendorId == id && m.VendorSubId == vid).FirstOrDefault();
+            var list = _dbContext.Deal.Where(m => m.DealID == id ).FirstOrDefault();
             deal.DealID = list.DealID;
             deal.VendorType = list.VendorType;
-            deal.VendorId = id;
-            deal.VendorSubId = vid;
+            deal.VendorId = deal.VendorId;
+            deal.VendorSubId = deal.VendorSubId;
             _dbContext.Entry(list).CurrentValues.SetValues(deal);
             _dbContext.SaveChanges();
             return deal;

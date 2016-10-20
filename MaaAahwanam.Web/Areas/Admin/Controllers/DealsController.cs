@@ -18,7 +18,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AllDeals(string dropstatus,string command, string id, string vid)
+        public ActionResult AllDeals(string dropstatus,string command, string id, string vid,string dealid)
         {
             if (dropstatus != null && dropstatus != "")
             {
@@ -26,11 +26,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (command == "Edit")
             {
-                return RedirectToAction(dropstatus, "CreateVendor", new { id = id, vid = vid ,op = "editdeal"});
+                return RedirectToAction(dropstatus, "CreateVendor", new { id = id, vid = vid, d = dealid ,op = "editdeal"});
             }
             if (command == "View")
             {
-                return RedirectToAction(dropstatus, "CreateVendor", new { id = id, vid = vid, op = "displaydeal" });
+                return RedirectToAction(dropstatus, "CreateVendor", new { id = id, vid = vid, d = dealid , op = "displaydeal" });
             }
             return View();
         }
