@@ -11,26 +11,27 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class GetCartItems_Result
+    public partial class SP_dealsinfo_Result
     {
         public long Id { get; set; }
-        public string BusinessName { get; set; }
-        public string Description { get; set; }
         public string Address { get; set; }
+        public string BusinessName { get; set; }
         public string City { get; set; }
-        public string Landmark { get; set; }
         public string ContactNumber { get; set; }
+        public string ContactPerson { get; set; }
+        public string Description { get; set; }
+        public string Landmark { get; set; }
         public string ServicType { get; set; }
-        public long CartId { get; set; }
-        public bool Isdeal { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+        public Nullable<decimal> cost { get; set; }
+        public Nullable<decimal> cost1 { get; set; }
+        public Nullable<decimal> cost2 { get; set; }
+        public Nullable<decimal> cost3 { get; set; }
+        public Nullable<decimal> ActualServiceprice { get; set; }
+        public Nullable<decimal> DealServiceprice { get; set; }
+        public string MaxOrder { get; set; }
+        public string MinOrder { get; set; }
         public string image { get; set; }
-        public decimal TotalPrice { get; set; }
-        public string attribute { get; set; }
-        public int Quantity { get; set; }
-        public decimal Perunitprice { get; set; }
-        public long subid { get; set; }
-        public Nullable<System.DateTime> eventstartdate { get; set; }
-        public Nullable<System.DateTime> eventenddate { get; set; }
-        public Nullable<long> eventid { get; set; }
     }
 }
