@@ -15,6 +15,7 @@
 <script src="~/CSSWeb/js/jquery-ui.js"></script>
 <script src="~/CSSWeb/js/masterslider.min.js"></script>
 <script src="~/CSSWeb/js/owl.carousel.min.js"></script>
+<script src="~/Scripts/vendorservice.js"></script>
 <style>
     #imgbox {
             vertical-align: middle;
@@ -50,159 +51,6 @@
     </script>
 }
 
-@*Image Popup*@
-<script>
-    function imagepopup(obj) {       
-       $('body').on('click', 'img', function () {
-           var imgsrc = $(this).attr('src');
-
-           $('#myModal img').attr('src', $(this).attr('src'));
-       })
-    }
-    
-</script>
-
-@*Enable/disable buttons*@
-<script>
-        window.onload = function () {
-            var url = window.location.href;
-            var op = url.substring(url.lastIndexOf('=') + 1);
-            var up = window.location.search.substring(1);
-            $("#veglunch").hide(); 
-            $("#nonveglunch").hide();
-            $("#vegdinner").hide();
-            $("#nonvegdinner").hide(); 
-            $("#menuitem").hide();
-            //var stat = up.contains("vid");
-            //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
-            if (op == 'display') {
-                //alert("view purpose");
-                $("#btnadd").hide();
-                $('#btn').hide();
-                $("#btncancel").hide();
-                $('#btnback').show();
-                $('.deletelink').hide();
-                $('#fileUpload').hide();
-                $('#msg').hide();
-                $('.form-control').attr("disabled", "disabled");
-                itemsdisable1();
-            }
-            if (op == 'add') {
-                //alert("Add NEw");
-                $("[id^=Item1]").prop("disabled", true);
-                $("[id^=Item2]").val("");
-                $('#btn').hide();
-                $("#btncancel").show();
-                $('#btnback').hide();
-                $('.deletelink').hide();
-                $('#fileUpload').show();
-                $('#msg').show();
-                $("#btnadd").show();
-                $("#imagesdisplay").hide();
-            }
-            //op == url
-            if (up == 'vid=' + op || op == url) {
-                //alert("other");
-                $('#btn').show();
-                $("#btncancel").show();
-                $('#btnback').hide();
-                $('.deletelink').show();
-                $('#fileUpload').show();
-                $('#msg').show();
-                $('.form-control').removeAttr("disabled");
-                $("#btnadd").hide(); itemsdisable1();
-            }
-            $(".overlay").hide();
-        }
-</script>
-
-@*image Zoom*@
-<script>
-    function Large(obj) {
-        var imgbox = document.getElementById("imgbox");
-        imgbox.style.visibility = 'visible';
-        var img = document.createElement("img");
-
-        img.src = obj.src;
-        img.style.width = '400px';
-        img.style.height = '400px';
-
-        if (img.addEventListener) {
-            img.addEventListener('mouseout', Out, false);
-        } else {
-            img.attachEvent('onmouseout', Out);
-        }
-        imgbox.innerHTML = '';
-        imgbox.appendChild(img);
-        imgbox.style.left = (getElementLeft(obj) - 50) + 'px';
-        imgbox.style.top = (getElementTop(obj) - 50) + 'px';
-    }
-    function Out() {
-        document.getElementById("imgbox").style.visibility = 'hidden';
-    }
-</script>
-
-@*items enable/disable on type selection*@
-<script>
-    function itemsdisable() {
-        var type = $("#Item2_VenueType").val();
-        if (type == 'Banquet Hall') {
-            $("#veglunch").show();
-            $("#nonveglunch").show();
-            $("#vegdinner").show();
-            $("#nonvegdinner").show();
-            $("#menuitem").show();
-        }
-        else {
-            $("#veglunch").hide();
-            $("#nonveglunch").hide();
-            $("#vegdinner").hide();
-            $("#nonvegdinner").hide();
-            $("#menuitem").hide();
-            $("#Item2_VegLunchCost").val("");
-            $("#Item2_NonVegLunchCost").val("");
-            $("#Item2_VegDinnerCost").val("");
-            $("#Item2_NonVegDinnerCost").val("");
-            $("#Item2_Menuwiththenoofitems").val("");
-        }
-    }
-</script>
-
-@*item enable/disable on food type selection*@
-<script>
-    function itemsdisable1() {
-        var type1 = $("#Item2_VenueType").val();
-        var type2 = $("#Item2_Food").val(); 
-        if (type1 == 'Banquet Hall') {
-            if (type2 == 'Veg') {
-                $("#veglunch").show();
-                $("#nonveglunch").hide();
-                $("#vegdinner").show();
-                $("#nonvegdinner").hide();
-            }
-            else {
-                $("#veglunch").hide();
-                $("#nonveglunch").show();
-                $("#vegdinner").hide();
-                $("#nonvegdinner").show();
-            }
-        }
-        
-        else {
-            
-            $("#menuitem").hide();
-            $("#Item2_VegLunchCost").val("");
-            $("#Item2_NonVegLunchCost").val("");
-            $("#Item2_VegDinnerCost").val("");
-            $("#Item2_NonVegDinnerCost").val("");
-            $("#Item2_Menuwiththenoofitems").val("");
-        }
-    }
-</script>
-
-@*@using (Html.BeginForm("AllVendors", "Vendors", FormMethod.Post, new { enctype = "multipart/form-data",@class="form-horizontal" }))
-{*@
-
 @*Loader*@
 <div class="overlay" style="display: block;">
     <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
@@ -212,6 +60,7 @@
 </div>
 
 @*HTML Design*@
+
 <div id="content">
         <div class="inner">
             <div class="row">
@@ -561,61 +410,86 @@
                                                     <label class="control-label col-lg-4">Deal</label>
 
                                                     <div class="col-lg-4">
-                                                        <input type="checkbox"  class="form-control">
+                                                        <input type="checkbox" id="dealcheck" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div style="border-style:double;display:none;"><br/>
-                                                    <div class="form-group">
+                                                <div style="border-style:double;" id="dealdata">
+                                                    <br />
+                                                    <div class="form-group" style="display:none">
                                                         <label class="control-label col-lg-4">Venue Type</label>
                                                         <div class="col-lg-4">
-                                                            @Html.DropDownListFor(model => this.Model.Item3.VendorCategory, new SelectList(new[] { "Select Venue Type", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control" })
+                                                            @Html.TextBoxFor(model => this.Model.Item3.VendorCategory, new { @class = "form-control" })
                                                         </div>
                                                     </div>
                                                     @*<label class="control-label col-lg-4">Food</label>
-                                                    <div class="col-lg-4">
-                                                        @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control", @onchange = "itemsdisable1()" })
-                                                    </div>*@
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-4">Veg Lunch Price Per Plate</label>
+            <div class="col-lg-4">
+                @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control", @onchange = "itemsdisable1()" })
+            </div>*@
+                                                    <div id="dealprice">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4">Veg Lunch Price Per Plate</label>
 
-                                                        <div class="col-lg-4">
-                                                            @Html.TextBoxFor(model => this.Model.Item3.DealVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            <div class="col-lg-4">
+                                                                @Html.TextBoxFor(model => this.Model.Item3.DealVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            </div>
                                                         </div>
-                                                        </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-4">Non-Veg Lunch Price Per Plate</label>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4">Non-Veg Lunch Price Per Plate</label>
 
-                                                        <div class="col-lg-4">
-                                                            @Html.TextBoxFor(model => this.Model.Item3.DealNonVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            <div class="col-lg-4">
+                                                                @Html.TextBoxFor(model => this.Model.Item3.DealNonVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            </div>
                                                         </div>
-                                                        </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-4">Veg Dinner Price Per Plate</label>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4">Veg Dinner Price Per Plate</label>
 
-                                                        <div class="col-lg-4">
-                                                            @Html.TextBoxFor(model => this.Model.Item3.DealVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            <div class="col-lg-4">
+                                                                @Html.TextBoxFor(model => this.Model.Item3.DealVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            </div>
                                                         </div>
-                                                        </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-4">Non-Veg Dinner Price Per Plate</label>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4">Non-Veg Dinner Price Per Plate</label>
 
-                                                        <div class="col-lg-4">
-                                                            @Html.TextBoxFor(model => this.Model.Item3.DealNonVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            <div class="col-lg-4">
+                                                                @Html.TextBoxFor(model => this.Model.Item3.DealNonVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                            </div>
                                                         </div>
-                                                        </div>
-                                                    <div class="form-group">
+                                                    </div>
+                                                    <div class="form-group" id="dealservicecost">
                                                         <label class="control-label col-lg-4">Deal Service Cost</label>
 
                                                         <div class="col-lg-4">
                                                             @Html.TextBoxFor(model => this.Model.Item3.DealServicePrice, new { @class = "form-control", placeholder = "Enter Service Cost" })
                                                         </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Deal Start Date</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealStartDate, new { @class = "form-control", placeholder = "Enter Start Date" })
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Deal End Date</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealEndDate, new { @class = "form-control", placeholder = "Enter End Date" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Terms & Conditions</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextAreaFor(model => this.Model.Item3.TermsConditions, new { @class = "form-control", placeholder = "Enter Terms & Conditions", @rows = "3" })
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                         <br />
                                                         <div class="form-group">
                                                             <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
                                                             <div class="col-lg-4">
-                                                                <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" required />
+                                                                <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file"  />
                                                                 <br />
                                                                 @if (@ViewBag.imagescount != 0)
                                                                 { <p id="msg" style="color:green;font-size:large"><strong>You can Upload images upto @ViewBag.imagescount Only </strong></p> }
@@ -653,12 +527,21 @@
                                                             {
                                                                 <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
                                                             }
-                                                            <button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>
+                                                            @*<button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>*@
+                                                            <input type="submit" id="btnadd" value="Add New" class="btn text-muted text-center btn-success" name="Command" />
                                                             <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
                                                             @*<input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
                                                             @*<button type="submit" formaction="~/Admin/Vendors/AllVendors">Back</button>
                     <input  type="submit" formaction="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback" value="Back To List"/>*@
-                                                            <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
+                                                            @if (ViewBag.dealslist != null)
+                                                            {
+                                                                <a href="~/Admin/Deals/AllDeals" class="btn btn-success" id="btnback">Back To List</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
+                                                            }
+                                                            
                                                         </div>
                                                         <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
 </form>
@@ -686,38 +569,6 @@
                 </div>
     </div>
 
-@*E-Mail ID check*@
-<script>
-        function check() {
-            var emailId = $("#Item1_EmailId").val();
-            var label = $("#label");
-            $.ajax({
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/' + window.location.href.split("/")[3] + '/CreateVendor/checkemail',
-                type: 'POST',
-                data: JSON.stringify({ emailid: emailId }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == "exists") {
-                        $("#Item1_EmailId").focus();
-                        $("#btn").prop("disabled", true);
-                        $("#lblshow").show();
-                        label.html("E-Mail ID Already Taken!!! Try Another");
-                    }
-                    else {
-                        $("#btn").prop("disabled", false);
-                        $("#lblshow").hide();
-                        label.html("Valid");
-                    }
-                },
-                error: function (data)
-                { alert("Failed!!!"); }
-            });
-        }
-    </script>
-
-
-
     @section Bottom{
         <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
         <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -732,6 +583,18 @@
             });
         </script>
 
+       @*Deal Enable/Disable*@
+        <script>
+        $('#dealcheck').click(function () {
+               if (this.checked) {
+
+                   $("#dealdata").css({ "display": "block" });
+               }
+               else {
+                   $("#dealdata").css({ "display": "none" });
+               }
+           });
+    </script>
     }
 
 

@@ -19,7 +19,7 @@ namespace MaaAahwanam.Repository
         public decimal TotalPrice { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string AlternativeEmailID { get; set; }
         public string Landmark { get; set; }
+        public string username { get; set; }
     }
 }
