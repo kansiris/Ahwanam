@@ -34,5 +34,10 @@ namespace MaaAahwanam.Repository.db
             var a= maaAahwanamEntities.GetProductsInfo(vid,servicetype, Subvid).FirstOrDefault();
             return a;
         }
+        public SP_dealsinfo_Result getDealInfo(int vid, string servicetype, int Subvid)
+        {
+            var a = maaAahwanamEntities.SP_dealsinfo(vid, servicetype, Subvid).FirstOrDefault();
+            return a;
+        }
     }
 }

@@ -1,0 +1,1398 @@
+﻿@model Tuple<MaaAahwanam.Repository.SP_dealsinfo_Result, MaaAahwanam.Models.Review>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/SharedWeb/MainMaster.cshtml";
+}
+@*@using MaaAahwanam.Web.Custom
+    @{
+        var user = (CustomPrincipal)HttpContext.Current.User;
+    }*@
+@section Navigation
+{
+
+    <div class="breads">
+        <div class="breads_inner">
+            <div class="pageWidth">
+                <div class="title">
+                    <h3>The best service in the city</h3>
+                </div>
+                <div class="breadcrumbs">
+                    <ul>
+                        <li>
+                            <a href="~/Index/Index">Home</a>
+                        </li>
+                        <li>
+                            <i class="breads_arrow"></i>
+                        </li>
+                        <li>
+                            <a href="~/AllServices/Index">Categories</a>
+                        </li>
+                        <li>
+                            <i class="breads_arrow"></i>
+                        </li>
+                        @if (ViewBag.ServiceType == "InvitationCard")
+                        {
+                            <li>
+                                <a href="../product?par=InvitationCard&sType=%&loc=Hyderabad&a=ASC"> InvitationCard</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Venue")
+                        {
+                            <li>
+                                <a href="../product?par=Venue&sType=%&loc=Hyderabad&a=ASC"> Venue</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Catering")
+                        {
+                            <li>
+                                <a href="../product?par=Catering&sType=%&loc=Hyderabad&a=ASC"> Catering</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Photography")
+                        {
+                            <li>
+                                <a href="../product?par=Photography&sType=%&loc=Hyderabad&a=ASC"> Photography</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Decorators")
+                        {
+                            <li>
+                                <a href="../product?par=Decorator&sType=%&loc=Hyderabad&a=ASC"> Decorator</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Entertainment")
+                        {
+                            <li>
+                                <a href="../product?par=Entertainment&sType=%&loc=Hyderabad&a=ASC"> Entertainment</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "EventOrganiser")
+                        {
+                            <li>
+                                <a href="../product?par=Eventorganiser&sType=%&loc=Hyderabad&a=ASC"> Eventorganiser</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "BeautyService")
+                        {
+                            <li>
+                                <a href="../product?par=BeautyService&sType=%&loc=Hyderabad&a=ASC"> Beauty Service</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Travel")
+                        {
+                            <li>
+                                <a href="../product?par=Travel&sType=%&loc=Hyderabad&a=ASC"> Travel</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Gifts")
+                        {
+                            <li>
+                                <a href="../product?par=Gift&sType=%&loc=Hyderabad&a=ASC"> Gift</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "WeddingCollection")
+                        {
+                            <li>
+                                <a href="../product?par=WeddingCollection&sType=%&loc=Hyderabad&a=ASC"> WeddingCollection</a>
+                            </li>
+                        }
+                        @if (ViewBag.ServiceType == "Other")
+                        {
+                            <li>
+                                <a href="../product?par=Other&sType=%&loc=Hyderabad&a=ASC"> Other</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<section>
+    <div class="about_main">
+        <div class="pageWidth">
+
+            <div class="deal_info_main">
+                <div class="deal-info">
+                    <div class="deal-slider">
+                        <div class="sp-loading">
+                            <img src="../CSSWeb/images/sp-loading.gif" alt="">
+                            <br>
+                            LOADING IMAGES
+                        </div>
+                        @*<div class="zoomDiv">*@
+                        <div class="sp-wrap">
+                            @if (ViewBag.Imagelist != null)
+                            {
+                                foreach (var item in ViewBag.Imagelist)
+                                {
+                                    <a href="~/vendorimages/@item"> <img src="~/vendorimages/@item" alt="thumb"></a>
+                                }
+                            }
+                            else if (ViewBag.Imagelist == null)
+                            {
+                                <a href="#" onclick="return false">
+                                    <img src="~/noimages.png" />
+                                </a>
+                            }
+                        </div>
+                        @*</div>*@
+
+                    </div>
+                    <div class="deal-desc">
+                        <div class="review-area">
+                            <ul>
+                                <li>
+                                    <div class="rate" data-rate-value=4></div>
+                                    &nbsp;53
+                                </li>
+                                <li>
+                                    <a href="#review" class="move_review text-green"><i class="ti-comment-alt text-green"></i> Reviews @ViewBag.Reviewlist.Count</a>
+                                </li>
+                                @if (ViewBag.Userloginstatus != 0)
+                                {
+                                    <li class="text-red">
+                                        <a href="#writeReview" class="text-red popup-with-move-anim"><i class="ti-pencil-alt text-red"></i> Write a Review</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="text-red">
+                                        <a href="../Signin/Index" class="text-red"><i class="ti-pencil-alt text-red"></i> Write a Review</a>
+                                    </li>
+                                }
+                            </ul>
+
+
+                            <!-- popup -->
+                            <div data-role="popup" id="writeReview" class="zoom-anim-dialog mfp-hide small-dialog">
+                                <div class="popup-box pop-content">
+                                    <div class="popup-head">
+                                        <h3>Write a Review</h3>
+                                    </div>
+                                    <!-- /popup-head -->
+
+                                    <div class="popup-space popup-desc-space">
+                                        <div class="dashboardList dashboardList-nospace">
+                                            <div class="bidding_form">
+
+                                                @using (Html.BeginForm("WriteaRiview", "ProductInfo", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
+                                                {
+                                                    <ul>
+                                                        <li>
+                                                            <label>Name</label>
+                                                            @Html.TextBoxFor(model => model.Item2.FirstName, new { @id = "name", @name = "name", placeholder = "Name", required = "required" })
+                                                        </li>
+                                                        <li>
+                                                            <label>Emal ID <span>*</span></label>
+                                                            @Html.TextBoxFor(model => model.Item2.EmailId, new { @id = "EmailId", @name = "EmailId", placeholder = "EmailId", required = "required" })
+                                                        </li>
+                                                    </ul>
+                                                    <ul>
+                                                        <li class="full-width">
+                                                            <label>Review <span>*</span></label>
+                                                            <input type="hidden" id="stvalue" name="Minvalue" value="10">
+                                                            <input type="hidden" id="hmin" name="Minvalue" value="10">
+                                                            @Html.HiddenFor(model => model.Item2.Service, new { @id = "Service", @name = "Service", required = "required", Value = @Model.Item1.ServicType })
+                                                            @Html.HiddenFor(model => model.Item2.ServiceId, new { @id = "Review", @name = "Review", required = "required", Value = @Model.Item1.Id })
+                                                            @Html.HiddenFor(model => model.Item2.Sid, new { @id = "Subid", @name = "Review", required = "required", Value = @ViewBag.Subvid })
+                                                            @Html.TextAreaFor(model => model.Item2.Comments, new { @id = "Review", @name = "Review", placeholder = "Review", required = "required" })
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul>
+                                                        <li>&nbsp;</li>
+                                                        <li>
+                                                            <button type="submit" name="submit" class="btn btn-small btn-green float-right" value="submit">Submit <i class="ti-angle-double-right"></i></button>
+                                                        </li>
+                                                    </ul>
+                                                }
+
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!-- end popup -->
+
+                        </div>
+                        <div class="product_review" id="dviAddressService">
+                            <h4>Location</h4>
+                            <p>@Model.Item1.Landmark,@Model.Item1.Address,@Model.Item1.City,@Model.Item1.State</p>
+                        </div>
+                        <div class="product_review">
+                            <h4>Description</h4>
+                            <p class="comment">@Model.Item1.Description</p>
+                        </div>
+
+                        @*Calculation other Div*@
+                        <div class="deal_price" id="Calcdiv_Other" style="display:none">
+                            <div class="price_details">
+                                <dl>
+                                    <dt>Package Price: </dt>
+                                    <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
+                                    <dd>
+                                        @*<p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost</p>*@
+                                        <p id="demoother" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                    </dd>
+                                    @*<dt>Selling Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 1,800</h2>
+                                        </dd>
+                                        <dt>Total Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 2,200</h2>
+                                        </dd>*@
+                                </dl>
+                                <form name="myFormother">
+                                    <label style="display:none">Number of items<span>*</span></label>
+                                    <input type="hidden" id="hmin" name="Minvalue" value="10">
+                                    <input type="hidden" id="hmax" name="Maxvalue" value="50">
+                                    <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px; " type="text" id="txtquantityother" value="10" placeholder="Enter Quantity" onchange="Onchangequantityother()" /><br>
+                                    @*<input style="display:none;" type="radio" id="vlother" name="platetypeother" value="500" checked> item cost @Model.Item1.cost/-<br>*@
+                                </form>
+                            </div>
+                            @*<div class="deal_save">
+                                    <p>
+                                        You Save:
+                                        <span class="text-red">Rs. 1,800</span>
+                                    </p>
+                                    <h3>30% OFF</h3>
+                                </div>*@
+                        </div>
+
+                        @*Calculation venue Div*@
+                        <div class="deal_price" id="Calcdiv_venue" style="display:none">
+                            <div class="price_details">
+                                <dl>
+                                    <dt><p id="lblprice"></p></dt>
+                                    <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
+                                    <dd>
+                                        <p id="demovenue" style="color:#8ca436;font-size:20px"></p>
+                                    </dd>
+                                    @*<dt>Selling Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 1,800</h2>
+                                        </dd>
+                                        <dt>Total Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 2,200</h2>
+                                        </dd>*@
+                                </dl>
+                                <div id="pax">
+                                    <label>Number of pax<span>*</span></label>
+
+                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; " id="txtquantityvenue" value="10" onchange="Onchangequantityvenue()" /><br><br>
+                                </div>
+                                <form name="myFormvenue">
+                                    <fieldset>
+                                        @if (ViewBag.venuetype == "Banquet Hall")
+                                        {
+                                            <div class="radioButtons" id="radio-demo">
+                                                <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
+                                                <label for="vlvenue">Veg lunch Per plate cost @Model.Item1.cost/-</label><br />
+
+                                                <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
+                                                <label for="nvlvenue">Non veg lunch Per plate cost @Model.Item1.cost1/-</label><br />
+
+                                                <input type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2>
+                                                <label for="vdvenue">Veg Dinner Per plate cost @Model.Item1.cost2/-</label><br />
+
+                                                <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
+                                                <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <div class="price_details">
+                                                <dl>
+                                                    <dd>
+                                                        <input type="radio" id="vlvenue" name="platetypevenue" value=@ViewBag.servicecost checked style="display:none">
+                                                        @*<p name="platetypevenue" value=@Model.Item1.cost2 style="color:#8ca436;font-size:20px"> </p>*@
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        }
+                                    </fieldset>
+                                    <input type="hidden" id="rbselectedvalue" value="vlvenue" />
+                                    <input type="hidden" id="hdnsubid" value=@ViewBag.Subvid />
+                                    <input type="hidden" id="rbselectedamount" value=@Model.Item1.cost />
+                                    <input type="hidden" id="venuetype" value="@ViewBag.venuetype" />
+                                </form>
+
+                            </div>
+                            @*<div class="deal_save">
+                                    <p>
+                                        You Save:
+                                        <span class="text-red">Rs. 1,800</span>
+                                    </p>
+                                    <h3>30% OFF</h3>
+                                </div>*@
+                        </div>
+
+                        @*Calculation Caterer Div*@
+                        <div class="deal_price" id="Calcdiv_Caterer" style="display:none">
+                            <div class="price_details">
+                                <dl>
+                                    <dt><p id="lblcprice"></p></dt>
+                                    @*<dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>*@
+                                    <dd>
+                                        <p id="demoCatering" style="color:#8ca436;font-size:20px"></p>
+                                        @*</dd>
+                                            <dt>Selling Price: </dt>
+                                            <dd>
+                                                <h2>Rs. 1,800</h2>
+                                            </dd>
+                                            <dt>Total Price: </dt>
+                                            <dd>
+                                                <h2>Rs. 2,200</h2>
+                                            </dd>*@
+                                </dl>
+                                <form name="myFormCatering">
+                                    <label>Number of plates<span>*</span></label>
+                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; " id="txtquantityCatering" value="10" placeholder="Enter Quantity" onchange="OnchangequantityCatering()" /><br>
+                                    <br /> <fieldset>
+                                        <div class="radioButtons" id="radio-demo">
+                                            <input type="radio" id="vlCatering" name="platetypeCatering" value=@Model.Item1.cost checked>
+                                            <label for="vlCatering">Veg Per plate cost @Model.Item1.cost/-</label><br />
+
+                                            <input type="radio" id="nvlCatering" name="platetypeCatering" value=@Model.Item1.cost1>
+                                            <label for="nvlCatering"> Non veg Per plate cost @Model.Item1.cost1/-</label>
+                                        </div>
+                                    </fieldset>
+
+                                    <input type="hidden" id="rbselectedvalueCatering" value="vlvenue" />
+                                    <input type="hidden" id="hdnsubidCatering" value=@ViewBag.Subvid />
+                                    <input type="hidden" id="rbselectedamountCatering" value=@Model.Item1.cost />
+                                </form>
+                            </div>
+                            @*<div class="deal_save">
+                                    <p>
+                                        You Save:
+                                        <span class="text-red">Rs. 1,800</span>
+                                    </p>
+                                    <h3>30% OFF</h3>
+                                </div>*@
+                        </div>
+
+                        @*Calculation Gift Div*@
+                        <div class="deal_price" id="Calcdiv_Gift" style="display:none">
+                            <div class="price_details">
+                                <dl>
+                                    <dt>Number of gifts : Rs.</dt>
+                                    <dd>
+                                        @*<p id="demoGift" style="color:#8ca436;font-size:20px"></p>*@
+                                        <p id="demoGift" style="color:#8ca436;font-size:20px"></p>
+                                    </dd>
+                                    @*<dt>Selling Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 1,800</h2>
+                                        </dd>
+                                        <dt>Total Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 2,200</h2>
+                                        </dd>*@
+                                </dl>
+                                <form name="myFormGift">
+                                    <label>Number of gifts<span>*</span></label>
+                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:0px; " id="txtquantityGift" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGift()" /><br>
+                                    <br />
+                                    <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.cost checked> Gift cost @Model.Item1.cost/-<br>
+                                    <br />
+                                </form>
+                            </div>
+                            @*<div class="deal_save">
+                                    <p>
+                                        You Save:
+                                        <span class="text-red">Rs. 1,800</span>
+                                    </p>
+                                    <h3>30% OFF</h3>
+                                </div>*@
+                        </div>
+
+                        @*Calculation invitation Div*@
+                        <div class="deal_price" id="Calcdiv_invitation" style="display:none">
+                            <div class="price_details">
+                                <dl>
+                                    <dt>Deal Price: </dt>
+                                    <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
+                                    <dd>
+                                        <p id="demoinvitation" style="color:#8ca436;font-size:20px"></p>
+                                    </dd>
+                                    @*<dt>Selling Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 1,800</h2>
+                                        </dd>
+                                        <dt>Total Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 2,200</h2>
+
+                                        </dd>*@
+                                </dl>
+                                <form name="myForminvitation">
+                                    <label>Number of cards<span>*</span></label>
+                                    <input style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px; " type="text" id="txtquantityinvitation" value="10" placeholder="Enter Quantity" onchange="Onchangequantityinvitation()" /><br>
+                                    <br /><br />
+                                    <div class="radioButtons" id="radio-demo">
+                                        <input type="radio" id="vlinvitation" name="platetypeinvitation" value=@Model.Item1.cost checked />
+                                        <label for="vlinvitation"> Card cost Rs. @Model.Item1.cost/-</label><br /><br />
+                                        <input type="radio" id="nvlinvitation" name="platetypeinvitation" value=@Model.Item1.cost1 />
+                                        <label for="nvlinvitation"> Card cost with print Rs. @Model.Item1.cost1/-</label><br />
+                                        <br />
+                                    </div>
+
+                                </form>
+                            </div>
+                            @*<div class="deal_save">
+                                    <p>
+                                        You Save:
+                                        <span class="text-red">Rs. 1,800</span>
+                                    </p>
+                                    <h3>30% OFF</h3>
+                                </div>*@
+                        </div>
+
+                        @*Calculation General Div*@
+                        <div class="deal_price" id="Calcdiv_General" style="display:none">
+                            <div class="price_details">
+                                <dl>
+                                    <dt>Package Price: </dt>
+                                    <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
+                                    <dd>
+                                        @*<p id="demoGeneral" style="color:#8ca436;font-size:20px"> </p>*@
+                                        <p id="demoGeneral" style="color:#8ca436;font-size:20px">@Model.Item1.DealServiceprice</p>
+                                    </dd>
+                                    @*<dt>Selling Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 1,800</h2>
+                                        </dd>
+                                        <dt>Total Price: </dt>
+                                        <dd>
+                                            <h2>Rs. 2,200</h2>
+                                        </dd>*@
+                                </dl>
+                                <form name="myFormGeneral">
+                                    <label style="display:none">Number of items<span>*</span></label>
+                                    <input type="hidden" id="hmin" name="Minvalue" value="10">
+                                    <input type="hidden" id="hmax" name="Maxvalue" value="50">
+                                    <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px; " type="text" id="txtquantityGeneral" value="1" placeholder="Enter Quantity" onchange="OnchangequantityGeneral()" /><br />
+                                    @*<p style="display:none"> <input type="radio" id="vlGeneral" name="platetypeGeneral" value="@Model.Item1.cost" checked> item cost @Model.Item1.cost/-</p>*@
+                                    <br />
+                                </form>
+                            </div>
+                            @*<div class="deal_save">
+                                    <p>
+                                        You Save:
+                                        <span class="text-red">Rs. 1,800</span>
+                                    </p>
+                                    <h3>30% OFF</h3>
+                                </div>*@
+                        </div>
+
+                        <input type="hidden" id="stype" name="Minvalue" value=@ViewBag.servicetype>
+                        <div class="deal_buttons">
+                            @if (ViewBag.Userloginstatus != 0)
+                            {
+                                <a href="#quatation" id="btn1" class="btn btn-big btn-orange popup-with-move-anim" onclick="Sethdnvalue('addtocartbtn')">Add To Cart </a>
+                                <a href="#quatation" id="btn2" class="btn btn-big btn-green popup-with-move-anim" onclick="Sethdnvalue('buynow')"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
+                            }
+                            else
+                            {
+                                <a href="../Signin/Index" id="btn1" class="btn btn-big btn-orange">Add To Cart </a>
+                                <a href="../Signin/Index" id="btn2" class="btn btn-big btn-green"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
+                            }
+                            <a id="btn3" class="btn btn-big btn-orange" style="display:none">Update</a>
+                            <input type="hidden" id="btnname" />
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="deal_amenties">
+                        <div class="dashboardList">
+                            <table class="responsive">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <h2>Emenities</h2>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Brand : Canon - DSLR </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Model ID: EOS1200D Kit(EF S18-55 IS II+55-250mm IS II) with 8 GB Card & Bag </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shutter Speed in other Modes: Bulb, X-sync at 1/200 sec </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Continuous Shots: Yes, 3.0 Shots/sec </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Drive Modes: Single, Continuous, Self-timer </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maximum Burst: JPEG: 69 Shots, RAW: 6 Shots, RAW + JPEG: 4 Shots</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temperature: 0° C - 40°C </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Live View Shooting : Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Image Format: JPEG, RAW, RAW + JPEG </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="deal_reviews_all">
+                        <div class="dashboardList all_reviews" id="review">
+                            <table class="responsive">
+
+                                @if (ViewBag.Reviewlist.Count != 0)
+                                {
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h2>Most Popular Reviews</h2>
+                                                @*<a href="#">View All Reviews</a>*@
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var reviewitem in ViewBag.Reviewlist)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="review_title">
+                                                        <h5>@reviewitem.FirstName</h5>
+                                                        <small>@reviewitem.UpdatedDate</small>
+                                                    </div>
+                                                    <div class="review_rate">
+                                                        <div class="rate" data-rate-value=3></div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <p>@reviewitem.Comments</p>
+                                                    <p>
+                                                        Was this review helpful to you?
+                                                        <a href="#" class="text-green"><i class="ti-thumb-up text-green"></i> Yes</a> &nbsp;
+                                                        <a href="#" class="text-red"><i class="ti-thumb-down text-red"></i> No</a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="side-ads">
+                    <div class="ad_250" style="background-color:white;">
+                        <div style="border: groove; width: 75%; height:230px;">
+                            <br />
+                            @*<label style="font-size:14px; line-height:20px; display:block; color:#f38e07; position:relative; z-index:1; text-align:center; font-family:'aileronbold';align-content:center">CHECK AVAILABILITY</label>*@
+                            <label style="font-size:14px;margin-left:40px;margin-bottom:10px; line-height:20px;color:#f38e07; font-family:'aileronbold'">CHECK AVAILABILITY</label>
+                            <br />
+                            <center><input type="text" name="Email" placeholder="Start Date" id="datetimepicker5"></center>
+                            <br />
+                            <center><input type="text" name="Email" placeholder="End Date" id="datetimepicker6"></center>
+                            <br />
+                            <center><button type="submit" class="btn btn-green">Check <i class="ti-angle-double-right"></i></button></center>
+                        </div>
+                    </div>
+                    <div class="ad_250"> </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- popup -->
+    <div id="quatation" class="zoom-anim-dialog mfp-hide large-dialog">
+        <div class="popup-box pop-content">
+            <div class="popup-head">
+                <h3>Book Now</h3>
+            </div>
+            <!-- /popup-head -->
+            <div class="popup-space popup-desc-space">
+                <div class="dashboardList">
+                    <form id="contact_form" class="form">
+                        <ul>
+                            <li>
+                                <label>Event Name</label>
+                                <input type="text" id="Ename" name="Eventname" placeholder="Event Name">
+                            </li>
+                            @*<li>
+                                    <label>Last Name</label>
+                                    <input type="text" id="lname" name="lastname" placeholder="last Name">
+                                </li>*@
+                            <li>
+                                <label>Email ID</label>
+                                <input type="text" id="Eemail" name="email" placeholder="Email">
+                            </li>
+                        </ul>
+                        @*<ul>
+
+                                <li>
+                                    <label>Gender</label>
+                                    <select name="select_option" id="select_option">
+                                        <option value="">---Select---</option>
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                    </select>
+                                </li>
+                            </ul>*@
+                        <ul>
+                            <li>
+                                <label>Mobile Number</label>
+                                <input type="text" id="Emobile" name="mobile" placeholder="Mobile Number">
+                            </li>
+                            @*<li>
+                                    <label>Alternative Mobile Number</label>
+                                    <input type="text" id="mobile2" name="mobile2" placeholder="Alternative Mobile Number">
+                                </li>*@
+                            <li>
+                                <label>Street1</label>
+                                <input type="text" id="Estreet1" name="street2" placeholder="Street Name">
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <label>Street2</label>
+                                <input type="text" id="Estreet2" name="street2" placeholder="Street Name">
+                            </li>
+                            <li>
+                                <label>City</label>
+                                <input type="text" id="ECity" name="City" placeholder="City">
+                            </li>
+                        </ul>
+                        <ul>
+                            @*<li>
+                                    <label>Country</label>
+                                    <select name="select_option" id="select_option">
+                                        <option value="">---Select---</option>
+                                        <option value="1">India</option>
+                                        <option value="2">USA</option>
+                                    </select>
+                                </li>*@
+                            <li>
+                                <label>PostalCode</label>
+                                <input type="text" id="EPostalCode" name="PostalCode" placeholder="PostalCode">
+
+                            </li>
+                            <li>
+                                <label>State</label>
+                                <select name="select_option" id="select_option">
+                                    <option value="">---Select---</option>
+                                    <option value="1">Andhrapradesh</option>
+                                    <option value="2">Telangana</option>
+                                </select>
+                            </li>
+                        </ul>
+                        <div class="alert alert-error" id="alert" style="display:none;">
+                            <strong>Oh snap!</strong>
+
+                            <p></p>
+                        </div>
+                        <ul class="subinputs2">
+                            <li>
+                                <div class="event-date">
+                                    <label>Event Start Date <span>*</span></label>
+                                    <input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker1" required="required" class="startDate">
+                                </div>
+                                <div class="event-date">
+                                    <label>Event Start Time <span>*</span></label>
+                                    <input type="text" name="Email" placeholder="HH:MM" id="datetimepicker3" required>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="event-date">
+                                    <label>Event End Date <span>*</span></label>
+                                    <input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker2" required="required" class="endDate">
+                                </div>
+                                <div class="event-date">
+                                    <label>Event End Time <span>*</span></label>
+                                    <input type="text" name="Email" placeholder="HH:MM" id="datetimepicker4" required>
+                                </div>
+                            </li>
+                        </ul>
+                        @*<a href="#" class="add_field_button2">Add More</a>*@
+                        <ul>
+                            <li>&nbsp;</li>
+                            <li>
+                                <button type="button" name="submit" class="btn btn-big btn-green float-right" value="submit" id="lnkproceedtonext">Submit <i class="ti-angle-double-right"></i></button>
+                            </li>
+                        </ul>
+
+                    </form>
+                    <div class="clear"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end popup -->
+
+</section>
+<div class="clear"></div>
+@section scripts
+{
+    <script type="text/javascript" src="~/CSSWeb/js/jquery.datetimepicker.js"></script>
+}
+@section scriptfunctions
+{
+    <style type="text/css">
+        fieldset {
+            overflow: hidden;
+        }
+
+        .some-class {
+            float: left;
+            clear: none;
+        }
+
+        label {
+            float: left;
+            clear: none;
+            display: block;
+            padding: 2px 1em 0 0;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            //particular div enabling based on condition
+            var servicetype = document.getElementById("stype").value;
+            if (servicetype == "Other") {
+                $('#Calcdiv_Other').removeAttr("style");
+                $('#Calcdiv_Other').css({ "display": "block" });
+            }
+            else if (servicetype == "Venue") {
+                $('#Calcdiv_venue').removeAttr("style");
+                $('#Calcdiv_venue').css({ "display": "block" });
+            }
+            else if (servicetype == "InvitationCard") {
+                $('#Calcdiv_invitation').removeAttr("style");
+                $('#Calcdiv_invitation').css({ "display": "block" });
+                $('#dviAddressService').css({ "display": "none" });
+            }
+            else if (servicetype == "Catering") {
+                $('#Calcdiv_Caterer').removeAttr("style");
+                $('#Calcdiv_Caterer').css({ "display": "block" });
+            }
+            else if (servicetype == "Gifts") {
+                $('#Calcdiv_Gift').removeAttr("style");
+                $('#Calcdiv_Gift').css({ "display": "block" });
+                $('#dviAddressService').css({ "display": "none" });
+            }
+            else {
+                $('#Calcdiv_General').removeAttr("style");
+                $('#Calcdiv_General').css({ "display": "block" });
+            }
+            //alert($('input[name=platetypevenue]:checked', '#myFormvenue').val());
+
+            //performing calculations
+            var b;
+            var a = document.getElementById("txtquantityvenue").value;
+            var b = document.getElementById("txtquantityGeneral").value;
+            var c = document.getElementById("txtquantityGift").value;
+            //alert(document.getElementById("vlGift").value);
+            var type = $("#venuetype").val();
+            if (type == 'Banquet Hall') {
+                if (document.getElementById("vlvenue").checked) {
+                    $("#pax").show();
+                    document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value * a;
+                }
+            }
+            else {
+                if (document.getElementById("vlvenue").checked) {
+                    $("#pax").hide();
+                    document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value;
+                }
+            }
+            //if (document.getElementById("vlother").checked) {
+            //    document.getElementById("demoother").innerHTML =  document.getElementById("vlother").value * a;
+            //}
+            if (document.getElementById("vlCatering").checked) {
+                document.getElementById("demoCatering").innerHTML = document.getElementById("vlCatering").value * a;
+            }
+            if (document.getElementById("vlGift").checked) {
+                document.getElementById("demoGift").innerHTML =  document.getElementById("vlGift").value * c ;
+            }
+            if (document.getElementById("vlinvitation").checked) {
+                document.getElementById("demoinvitation").innerHTML = document.getElementById("vlinvitation").value * a;
+            }
+            //if (document.getElementById("vlGeneral").checked) {
+            //    //alert('s');
+            //    document.getElementById("demoGeneral").innerHTML =  document.getElementById("vlGeneral").value * b ;
+            //}
+
+            //var servicetype = document.getElementById("stype").value;
+
+
+
+
+
+            var fromcart = '@Request.QueryString["p"]';
+            var cid = '@Request.QueryString["cid"]';
+            //alert(fromcart);
+            if (fromcart == 'c') {
+                document.getElementById("btn1").style.display = "None";
+                document.getElementById("btn2").style.display = "None";
+                var itemdetails = {};
+                itemdetails.cid = cid;
+                //alert(itemdetails.cid);
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/getproductfromcart',
+                    data: {},
+                    data: JSON.stringify(itemdetails),
+                    //data: sendInfo,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        //alert(data.attribute);
+                        var page = window.location.search.split("=")[1].split("&")[0];
+                        //alert(page);
+                        if(page=="Venue")
+                        {
+                            document.getElementById("txtquantityvenue").value = data.Quantity;
+                            document.getElementById("demovenue").innerHTML = data.TotalPrice;
+                            document.getElementById("btn3").style.display = "block";
+                        }
+                        else if(page=="Catering")
+                        {
+                            document.getElementById("txtquantityCatering").value = data.Quantity;
+                            document.getElementById("demoCatering").innerHTML = data.TotalPrice;
+                            document.getElementById("btn3").style.display = "block";
+                        }
+                        document.getElementById(data.attribute).checked = true;
+
+                    },
+                    error: function (data) {
+                        alert('error')
+                    }
+                });
+            }
+        };
+
+        function Sethdnvalue(btn) {
+            document.getElementById("btnname").value = btn;
+            //alert(document.getElementById("btnname").value);
+        }
+
+        //for venues
+        var radvenue = document.myFormvenue.platetypevenue;
+        //var id = $(myFormvenue).find('option:selected').attr('id');
+        var prevvenue = null;
+        var rrvenue = null;
+        if (radvenue.length > 1) {
+            document.getElementById("lblprice").innerHTML = "Total Price";
+        }
+        else {
+            document.getElementById("lblprice").innerHTML = "Package Price";
+        }
+        for (var i = 0; i < radvenue.length; i++) {
+            radvenue[i].onclick = function () {
+                if (this !== prevvenue) {
+                    var idd = this.id;
+                    //alert(idd);
+                    document.getElementById("rbselectedvalue").value = idd;
+                    document.getElementById("rbselectedamount").value = this.value;
+                    prevvenue = this;
+                    var a = document.getElementById("txtquantityvenue").value;
+                    document.getElementById("demovenue").innerHTML = a * parseInt(this.value);
+                }
+            };
+        }
+        function Onchangequantityvenue() {
+            var b;
+            var a = document.getElementById("txtquantityvenue").value;
+
+            if (document.getElementById("vlvenue").checked) {
+                document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value * a;
+            }
+            else if (document.getElementById("nvlvenue").checked) {
+                document.getElementById("demovenue").innerHTML = document.getElementById("nvlvenue").value * a;
+            }
+            else if (document.getElementById("vdvenue").checked) {
+                document.getElementById("demovenue").innerHTML = document.getElementById("vdvenue").value * a;
+            }
+            else if (document.getElementById("nvdvenue").checked) {
+                document.getElementById("demovenue").innerHTML = document.getElementById("nvdvenue").value * a;
+            }
+        }
+
+
+
+        //for Catering
+        var radCatering = document.myFormCatering.platetypeCatering;
+        var prevCatering = null;
+        var rrCatering = null;
+        if (radCatering.length > 1) {
+            document.getElementById("lblcprice").innerHTML = "Total Price";
+        }
+        else {
+            document.getElementById("lblcprice").innerHTML = "Package Price";
+        }
+        for (var i = 0; i < radCatering.length; i++) {
+            radCatering[i].onclick = function () {
+                if (this !== prevCatering) {
+                    document.getElementById("rbselectedvalueCatering").value = this.id;
+                    document.getElementById("rbselectedamountCatering").value = this.value;
+                    prevCatering = this;
+                    var a = document.getElementById("txtquantityCatering").value;
+                    document.getElementById("demoCatering").innerHTML = a * parseInt(this.value);
+                }
+            };
+        }
+        function OnchangequantityCatering() {
+            var b;
+            var a = document.getElementById("txtquantityCatering").value;
+            if (document.getElementById("vlCatering").checked) {
+                document.getElementById("demoCatering").innerHTML = document.getElementById("vlCatering").value * a;
+            }
+            else if (document.getElementById("nvlvenue").checked) {
+                document.getElementById("demovenue").innerHTML = document.getElementById("nvlCatering").value * a;
+            }
+        }
+
+
+        //for Gift
+        var radGift = document.myFormGift.platetypeGift;
+        var prevGift = null;
+        var rrGift = null;
+        for (var i = 0; i < radGift.length; i++) {
+            radGift[i].onclick = function () {
+                if (this !== prevCatering) {
+                    prevGift = this;
+                    var a = document.getElementById("txtquantityGift").value;
+                    document.getElementById("demoGift").innerHTML = a * parseInt(this.value);
+                }
+            };
+        }
+        function OnchangequantityGift() {
+            var b;
+            var a = document.getElementById("txtquantityGift").value;
+            if (document.getElementById("vlGift").checked) {
+                document.getElementById("demoGift").innerHTML = document.getElementById("vlGift").value * a;
+            }
+        }
+
+
+        //for invitation
+        var radinvitation = document.myForminvitation.platetypeinvitation;
+        var previnvitation = null;
+        var rrinvitation = null;
+        for (var i = 0; i < radinvitation.length; i++) {
+            radinvitation[i].onclick = function () {
+                if (this !== previnvitation) {
+                    previnvitation = this;
+                    var a = document.getElementById("txtquantityinvitation").value;
+                    document.getElementById("demoinvitation").innerHTML = a * parseInt(this.value);
+                }
+            };
+        }
+        function Onchangequantityinvitation() {
+            var b;
+            var a = document.getElementById("txtquantityinvitation").value;
+            if (document.getElementById("vlinvitation").checked) {
+                document.getElementById("demoinvitation").innerHTML = document.getElementById("vlinvitation").value * a;
+            }
+            else if (document.getElementById("nvlinvitation").checked) {
+                document.getElementById("demoinvitation").innerHTML = document.getElementById("nvlinvitation").value * a;
+            }
+        }
+
+        //for General
+        var radGeneral = document.myFormGeneral.platetypeGeneral;
+        var prevGeneral = null;
+        var rrGeneral = null;
+        for (var i = 0; i < radGeneral.length; i++) {
+            radGeneral[i].onclick = function () {
+                if (this !== prevGeneral) {
+                    prevGeneral = this;
+                    var a = document.getElementById("txtquantityGeneral").value;
+                    document.getElementById("demoGeneral").innerHTML = a * parseInt(this.value);
+                }
+            };
+        }
+        function OnchangequantityGeneral() {
+            var b;
+            var a = document.getElementById("txtquantityGeneral").value;
+            if (document.getElementById("vlGeneral").checked) {
+                document.getElementById("demoGeneral").innerHTML = document.getElementById("vlGeneral").value * a;
+            }
+        }
+
+
+        //for other
+        var radother = document.myFormother.platetypeother;
+        var prevother = null;
+        var rrother = null;
+        for (var i = 0; i < radother.length; i++) {
+            radother[i].onclick = function () {
+                if (this !== prevother) {
+                    prevother = this;
+                    var a = document.getElementById("txtquantityother").value;
+                    document.getElementById("demoother").innerHTML = a * parseInt(this.value);
+                }
+            };
+        }
+        function Onchangequantityother() {
+            var b;
+            var a = document.getElementById("txtquantityother").value;
+            if (document.getElementById("vlother").checked) {
+                document.getElementById("demoother").innerHTML = document.getElementById("vlother").value * a;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $('#lnkproceedtonext').on('click', function (e) {
+            var a = document.getElementById("Service").value;
+            var b = document.getElementById("Review").value;
+            var c;var d;var e;var f;
+            var page = window.location.search.split("=")[1].split("&")[0];
+            //alert(page);
+            if(page=="Venue")
+            {
+                c = document.getElementById("demovenue").innerHTML;
+            }
+            else if(page=="Catering")
+            {
+                c = document.getElementById("demoCatering").innerHTML;
+            }
+            else if(page=="Gifts")
+            {
+                c = document.getElementById("demoGift").innerHTML;
+            }
+            else if(page=="InvitationCard")
+            {
+                c = document.getElementById("demoinvitation").innerHTML;
+            }
+            else if(page == "Other") {
+                c = document.getElementById("demoother").innerHTML;
+            }
+            else  {
+                c = document.getElementById("demoGeneral").innerHTML;
+                //alert(c);
+            }
+
+
+
+
+
+            if(page=="Venue")
+            {
+                d = document.getElementById("txtquantityvenue").value;
+            }
+            else if(page=="Catering")
+            {
+                d = document.getElementById("txtquantityCatering").value;
+            }
+            else if(page=="Gifts")
+            {
+                d = document.getElementById("txtquantityGift").value;
+            }
+            else if(page=="InvitationCard")
+            {
+                d = document.getElementById("txtquantityinvitation").value;
+            }
+            else if(page == "Other") {
+                d = document.getElementById("txtquantityother").value;
+            }
+            else  {
+                d = document.getElementById("txtquantityGeneral").value;
+            }
+
+
+
+            if(page=="Venue")
+            {
+                e = document.getElementById("rbselectedvalue").value;
+            }
+            else if(page=="Catering")
+            {
+                e = document.getElementById("rbselectedvalueCatering").value;
+            }
+            else if(page=="Gifts")
+            {
+                e="";
+            }
+            else if(page=="InvitationCard")
+            {
+                e="";
+            }
+            else if(page == "Other") {
+                e="";
+            }
+            else  {
+                e="";
+            }
+
+
+            if(page=="Venue")
+            {
+                f = document.getElementById("rbselectedamount").value;
+            }
+            else if(page=="Catering")
+            {
+                f = document.getElementById("rbselectedamountCatering").value;
+            }
+            else if(page=="Gifts")
+            {
+                f =0.00;
+            }
+            else if(page=="InvitationCard")
+            {
+                f =0.00;
+            }
+            else if(page == "Other") {
+                f =0.00;
+            }
+            else  {
+                f =0.00;
+            }
+
+            var g = document.getElementById("hdnsubid").value;
+            //alert(a+' '+b+' '+c+' '+d+' '+e+' '+f);
+            //Pop-up Values
+            var Ename = document.getElementById("Ename").value;
+            var Eemail = document.getElementById("Eemail").value;
+            var Emobile = document.getElementById("Emobile").value;
+            var EStreet1 = document.getElementById("Estreet1").value;
+            var EStreet2 = document.getElementById("Estreet2").value;
+            var Ecity = document.getElementById("ECity").value;
+            var EPostalCode = document.getElementById("EPostalCode").value;
+            var EState = document.getElementById("select_option").value;
+            var EstartDate = document.getElementById("datetimepicker1").value;
+            var EstartTime = document.getElementById("datetimepicker3").value;
+            var EendDate = document.getElementById("datetimepicker2").value;
+            var Eendtime = document.getElementById("datetimepicker4").value;
+            //End of pop-Up values
+            //alert(c);
+            EventDates = [];
+            item = {}
+            item["StartDate"] = EstartDate;
+            item["StartTime"] = EstartTime;
+            item["EndDate"] = EendDate;
+            item["EndTime"] = Eendtime;
+            EventDates.push(item);
+            var orderRequest = {};
+            orderRequest.VendorId = b;
+            orderRequest.ServiceType = a;
+            orderRequest.TotalPrice = c;
+            orderRequest.Quantity = d;
+            orderRequest.attribute = e;
+            orderRequest.Perunitprice = f;
+            orderRequest.EventName = Ename;
+            orderRequest.Email = Eemail;
+            orderRequest.Phone = Emobile;
+            orderRequest.Location = EStreet1;
+            orderRequest.Address = EStreet2;
+            orderRequest.City = Ecity;
+            orderRequest.PostalCode = EPostalCode;
+            orderRequest.State = EState;
+            orderRequest.EventDates = EventDates;
+            orderRequest.subid = g;
+            //alert(document.getElementById("txtquantityvenue").value);
+
+            //alert(document.getElementById("btnname").value);
+            if (document.getElementById("btnname").value == "addtocartbtn") {
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Addtocart',
+                    data: {},
+                    data: JSON.stringify(orderRequest),
+                    // data: sendInfo,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Success") {
+                            //if (document.getElementById("btnname").value == "addtocartbtn") {
+                            location.reload();
+                            //}
+                            //else if (document.getElementById("btnname").value == "buynow") {
+                            //window.location.href = '/CartView';
+                            //  alert('buyout_thank you page');
+                        }
+                        //}
+                        //else if (data == "NotLogin") {
+                        //    window.location.href = '/Signin';
+                        //}
+                    },
+                    error: function (data) {
+                        alert('error')
+                    }
+                });
+            }
+            else if (document.getElementById("btnname").value == "buynow") {
+                orderRequest.paidamount = "100.50";
+                orderRequest.cardnumber = "4222222222222";
+                orderRequest.CVV = "214";
+                orderRequest.Paiddate = "11/12/2016";
+                //alert('ss');
+                $.ajax({
+                    type: "POST",
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Buynow',
+                    data: {},
+                    data: JSON.stringify(orderRequest),
+                    //data: sendInfo,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        //if (data != null) {
+                        //    if (document.getElementById("btnname").value == "addtocartbtn") {
+                        //        location.reload();
+                        //    }
+                        //    else if (document.getElementById("btnname").value == "buynow") {
+                        //        alert('buyout_thank you page');
+                        window.location.href = '/orderconfirmation?oid=' + data;
+                        //    }
+                        //}
+                        //else if (data == "NotLogin") {
+                        //    window.location.href = '/Signin';
+                        //}
+                    },
+                    error: function (data) {
+                        alert('error')
+                    }
+                });
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $('#btn3').on('click', function (e) {
+            var a = document.getElementById("Service").value;
+            var b = document.getElementById("Review").value;
+
+            var c;var e ;var f;
+            var page = window.location.search.split("=")[1].split("&")[0];
+            //alert(page);
+            if(page=="Venue")
+            {
+                c = document.getElementById("demovenue").innerHTML;
+            }
+            else if(page=="Catering")
+            {
+                c = document.getElementById("demoCatering").innerHTML;
+            }
+            else if(page=="Gifts")
+            {
+                c = document.getElementById("demoGift").innerHTML;
+            }
+            else if(page=="InvitationCard")
+            {
+                c = document.getElementById("demoinvitation").innerHTML;
+            }
+            else if(page == "Other") {
+                c = document.getElementById("demoother").innerHTML;
+            }
+            else  {
+                c = document.getElementById("demoGeneral").innerHTML;
+                //alert(c);
+            }
+
+            if(page=="Venue")
+            {
+                d = document.getElementById("txtquantityvenue").value;
+            }
+            else if(page=="Catering")
+            {
+                d = document.getElementById("txtquantityCatering").value;
+            }
+            else if(page=="Gifts")
+            {
+                d = document.getElementById("txtquantityGift").value;
+            }
+            else if(page=="InvitationCard")
+            {
+                d = document.getElementById("txtquantityinvitation").value;
+            }
+            else if(page == "Other") {
+                d = document.getElementById("txtquantityother").value;
+            }
+            else  {
+                d = document.getElementById("txtquantityGeneral").value;
+            }
+
+
+            if(page=="Venue")
+            {
+                e = document.getElementById("rbselectedvalue").value;
+            }
+            else if(page=="Catering")
+            {
+                e = document.getElementById("rbselectedvalueCatering").value;
+            }
+
+            if(page=="Venue")
+            {
+                f = document.getElementById("rbselectedamount").value;
+            }
+            else if(page=="Catering")
+            {
+                f = document.getElementById("rbselectedamountCatering").value;
+            }
+
+
+
+            var cids = @Request.QueryString["cid"];
+            var subid = @Request.QueryString["subvid"];
+            var orderRequest = {};
+            orderRequest.VendorId = b;
+            orderRequest.ServiceType = a;
+            orderRequest.TotalPrice = c;
+            orderRequest.Quantity = d;
+            orderRequest.attribute = e;
+            orderRequest.Perunitprice = f;
+            orderRequest.cid = cids;
+            orderRequest.subid=subid;
+            $.ajax({
+                type: "POST",
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Updatecartitem',
+                data: {},
+                data: JSON.stringify(orderRequest),
+                // data: sendInfo,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data == "Success") {
+                        window.location.href = '/CartView';
+                    }
+                },
+                error: function (data) {
+                    alert('error')
+                }
+            });
+        });
+    </script>
+    <script>
+        //Operations to be done after binding from cart
+    </script>
+    <script>
+        //Operations to be done after binding from order
+    </script>
+
+    @*<script>
+            window.onload = function () {
+                var url = '@Request.QueryString["p"]';
+                if(url=='c')
+                {
+                    alert(url);
+                }
+            };
+        </script>*@
+}

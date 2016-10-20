@@ -41,6 +41,7 @@ namespace MaaAahwanam.Models
         public string attribute { get; set; }
         public long cid { get; set; }
         public long subid { get; set; }
+        public bool Isdeal { get; set; }
         public List<CartItem> Cartitems { get; set; }
 
         //public long PaymentID { get; set; }
