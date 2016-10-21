@@ -16,6 +16,19 @@
             var url = window.location.href;
             var op = url.substring(url.lastIndexOf('=') + 1);
             var up = window.location.search.substring(1);
+            var servicetype = $("#type").val();
+            if (servicetype != 'Venue' && servicetype != 'Others' && servicetype != 'InvitationCards' && servicetype != 'EventOrganisers' ) {
+                var hdn = $("#hdnservices").val();
+                if (hdn != '') {
+                    var valArr = hdn.split(","), i = 0, size = valArr.length,
+                    $options = $('#ddlservice option');
+
+                    for (i; i < size; i++) {
+                        $options.filter('[value="' + valArr[i] + '"]').prop('selected', true);
+                    }
+                }
+            }
+         
             //alert(op);
             $("#veglunch").hide(); 
             $("#nonveglunch").hide();
@@ -74,17 +87,38 @@
                 $("[id^=Item2]").prop("disabled", true);
                 $("#dealcheck").prop('checked', true).attr("disabled", "disabled");
                 $("#dealdata").css({ "display": "block" });
-                var type = $("#Item2_VenueType").val();
-                $("#Item3_VendorCategory").val(type);
-                if (type == 'Banquet Hall') {
-                    $("#dealprice").show();
-                    $("#dealservicecost").hide();
-                    itemsdisable1();
+                $("#ddlservice").attr("disabled", "disabled");
+                var hdnservice = $("#hdnservices").val();
+                if (hdnservice != null || hdnservice != '') {
+                    $("#Item3_VendorCategory").val(hdnservice);
+                }
+                
+                if (servicetype == 'Venue') {
+                    var type = $("#Item2_VenueType").val();
+                    $("#Item3_VendorCategory").val(type);
+                    if (type == 'Banquet Hall') {
+                        $("#dealprice").show();
+                        $("#dealservicecost").hide();
+                        itemsdisable1();
+                    }
+                    else {
+                        $("#dealprice").hide();
+                        $("#dealservicecost").show();
+                    }
+                }
+                else if (servicetype == 'BeautyServices') {
+                    $("#dealbeautyservicecost").show();
+                }
+                else if (servicetype == 'Catering') {
+                    $("#dealcateringcost").show();
+                }
+                else if (servicetype == 'InvitationCards') {
+                    $("#dealinvitation").show();
                 }
                 else {
-                    $("#dealprice").hide();
                     $("#dealservicecost").show();
                 }
+                
             }
             if (op == 'displaydeal') {
                 //alert("view purpose");
@@ -98,19 +132,34 @@
                 $('.form-control').attr("disabled", "disabled");
                 $("#dealcheck").prop('checked', true).attr("disabled", "disabled");
                 $("#dealdata").css({ "display": "block" });
-                var type = $("#Item2_VenueType").val();
-                if (type == 'Banquet Hall') {
-                    $("#dealprice").show();
-                    $("#dealservicecost").hide();
-                    itemsdisable1();
+                if (servicetype == 'Venue') {
+                    var type = $("#Item2_VenueType").val();
+                    if (type == 'Banquet Hall') {
+                        
+                        $("#dealprice").show();
+                        $("#dealservicecost").hide();
+                        itemsdisable1();
+                    }
+                    else {
+                        $("#dealprice").hide();
+                        $("#dealservicecost").show();
+                    }
+                }
+                else if (servicetype == 'BeautyServices') {
+                    $("#dealbeautyservicecost").show();
+                }
+                else if (servicetype == 'Catering') {
+                    $("#dealcateringcost").show();
+                }
+                else if (servicetype == 'InvitationCards') {
+                    $("#dealinvitation").show();
                 }
                 else {
-                    $("#dealprice").hide();
                     $("#dealservicecost").show();
                 }
+
             }
             if (op == 'editdeal') {
-                alert("hi");
                 $('#btn').show();
                 $("#btncancel").show();
                 $('#btnback').hide();
@@ -119,18 +168,37 @@
                 $('#msg').show();
                 $('.form-control').removeAttr("disabled");
                 $("#btnadd").hide();
+                
+                $("[id^=Item1]").prop("disabled", true);
+                $("[id^=Item2]").prop("disabled", true); $("#ddlservice").attr("disabled", "disabled"); 
                 $("#dealcheck").prop('checked', true).attr("disabled", "disabled");
                 $("#dealdata").css({ "display": "block" });
-                var type = $("#Item2_VenueType").val();
-                if (type == 'Banquet Hall') {
-                    $("#dealprice").show();
-                    $("#dealservicecost").hide();
-                    itemsdisable1();
+                if (servicetype == 'Venue') {
+                    var type = $("#Item2_VenueType").val();
+                    if (type == 'Banquet Hall') {
+                        $("#dealprice").show();
+                        $("#dealservicecost").hide();
+                        itemsdisable1();
+                    }
+                    else {
+                        $("#dealprice").hide();
+                        $("#dealservicecost").show();
+                    }
+                }
+                else if (servicetype == 'BeautyServices') {
+                    $("#dealbeautyservicecost").show();
+                }
+                else if (servicetype == 'Catering') {
+                    $("#dealcateringcost").show();
+                }
+                else if (servicetype == 'InvitationCards') {
+                    $("#dealinvitation").show();
                 }
                 else {
-                    $("#dealprice").hide();
                     $("#dealservicecost").show();
                 }
+
+
             }
             $(".overlay").hide();
         }

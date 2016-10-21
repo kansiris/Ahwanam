@@ -33,8 +33,9 @@ namespace MaaAahwanam.Repository.db
             var list = _dbContext.Deal.Where(m => m.DealID == id ).FirstOrDefault();
             deal.DealID = list.DealID;
             deal.VendorType = list.VendorType;
-            deal.VendorId = deal.VendorId;
-            deal.VendorSubId = deal.VendorSubId;
+            deal.VendorId = list.VendorId;
+            deal.VendorSubId = list.VendorSubId;
+            deal.VendorCategory = list.VendorCategory;
             _dbContext.Entry(list).CurrentValues.SetValues(deal);
             _dbContext.SaveChanges();
             return deal;
