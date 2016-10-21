@@ -12,6 +12,9 @@
         <Function Name="GetCartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetDealServiceType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ntype" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="geteventsandtipsimages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
@@ -106,6 +109,9 @@
           </FunctionImport>
           <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
             <Parameter Name="VID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetDealServiceType" ReturnType="Collection(MaaAahwanamModel.GetDealServiceType_Result)">
+            <Parameter Name="ntype" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="geteventsandtipsimages" ReturnType="Collection(MaaAahwanamModel.geteventsandtipsimages_Result)" />
           <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
@@ -230,6 +236,10 @@
           <Property Type="DateTime" Name="eventstartdate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="eventid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetDealServiceType_Result">
+          <Property Type="String" Name="vendortype" Nullable="true" />
+          <Property Type="Int64" Name="temp" Nullable="false" />
         </ComplexType>
         <ComplexType Name="geteventsandtipsimages_Result">
           <Property Type="Int64" Name="EventId" Nullable="false" />
@@ -436,6 +446,8 @@
           <Property Type="Decimal" Name="cost3" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="ActualServiceprice" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="DealServiceprice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="DealStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DealEndDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="MaxOrder" Nullable="true" />
           <Property Type="String" Name="MinOrder" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
@@ -578,6 +590,14 @@
                 <ScalarProperty Name="eventstartdate" ColumnName="eventstartdate" />
                 <ScalarProperty Name="eventenddate" ColumnName="eventenddate" />
                 <ScalarProperty Name="eventid" ColumnName="eventid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDealServiceType" FunctionName="MaaAahwanamModel.Store.GetDealServiceType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetDealServiceType_Result">
+                <ScalarProperty Name="vendortype" ColumnName="vendortype" />
+                <ScalarProperty Name="temp" ColumnName="temp" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -856,6 +876,8 @@
                 <ScalarProperty Name="cost3" ColumnName="cost3" />
                 <ScalarProperty Name="ActualServiceprice" ColumnName="ActualServiceprice" />
                 <ScalarProperty Name="DealServiceprice" ColumnName="DealServiceprice" />
+                <ScalarProperty Name="DealStartDate" ColumnName="DealStartDate" />
+                <ScalarProperty Name="DealEndDate" ColumnName="DealEndDate" />
                 <ScalarProperty Name="MaxOrder" ColumnName="MaxOrder" />
                 <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
                 <ScalarProperty Name="image" ColumnName="image" />

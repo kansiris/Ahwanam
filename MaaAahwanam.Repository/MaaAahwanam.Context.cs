@@ -51,6 +51,15 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     
+        public virtual ObjectResult<GetDealServiceType_Result> GetDealServiceType(string ntype)
+        {
+            var ntypeParameter = ntype != null ?
+                new ObjectParameter("ntype", ntype) :
+                new ObjectParameter("ntype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDealServiceType_Result>("GetDealServiceType", ntypeParameter);
+        }
+    
         public virtual ObjectResult<geteventsandtipsimages_Result> geteventsandtipsimages()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages");
