@@ -18,7 +18,7 @@
                         <li><i class="breads_arrow"></i></li>
                         @*@if (ViewBag.ServiceType == "InvitationCard")
                             {*@
-                        <li><a href="../product?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> @ViewBag.ServiceType</a></li>
+                        <li><a href="../Deals?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> @ViewBag.ServiceType</a></li>
                         @*}*@
                         @*@if (ViewBag.ServiceType == "Venue")
                             {
@@ -167,7 +167,7 @@
                                                     <div class="deal-thumb">
                                                         <a href="../DealInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid">
                                                             <div class="zoomDiv">
-                                                                @* <a href="../ProductInfo?par=@item.ServicType.Trim()&VID=@item.Id">*@
+                                                                @* <a href="../Dealinfo?par=@item.ServicType.Trim()&VID=@item.Id">*@
                                                                 @if (item.image != null)
                                                                 {
                                                                     <img src="~/vendorimages/@item.image" alt="thumb">
@@ -341,7 +341,7 @@
                         {
                             //alert('Yes3');
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                         }
@@ -349,7 +349,7 @@
                         {
                             //alert('no');
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                         }
@@ -361,7 +361,7 @@
                         if(hdncosttype=='Catering' || hdncosttype=='Venue' || hdncosttype=='InvitationCard')
                         {
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                             $("#LoadMore1").hide();
@@ -369,7 +369,7 @@
                         else
                         {
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../ProductInfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../ProductInfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                             $("#LoadMore1").hide();
@@ -393,7 +393,7 @@
             var servicetype = window.location.search.split("=")[1].split("&")[0];
             var location = window.location.search.split("=")[3].split("&")[0];
             var order = window.location.search.split("=")[4].split("&")[0];
-            window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+            window.location.href = '/Deals?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
             //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
         }
         function locationchange(s)
@@ -404,7 +404,7 @@
             var location = document.getElementById("txtlocation").value;
 
             var order = window.location.search.split("=")[4].split("&")[0];
-            window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+            window.location.href = '/Deals?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
             //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
         }
 
@@ -423,7 +423,7 @@
                     var location = window.location.search.split("=")[3].split("&")[0];
 
                     var order = a;
-                    window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+                    window.location.href = '/Deals?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
                     //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
                 }
             };
