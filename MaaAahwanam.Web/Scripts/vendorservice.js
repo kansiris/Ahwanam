@@ -64,7 +64,7 @@
             }
             //op == url
             if (up == 'vid=' + op || op == url) {
-                //alert("other");
+                alert("hi");
                 $('#btn').show();
                 $("#btncancel").show();
                 $('#btnback').hide();
@@ -72,6 +72,7 @@
                 $('#fileUpload').show();
                 $('#msg').show();
                 $('.form-control').removeAttr("disabled");
+                $("#dealcheck").attr("disabled", "disabled");
                 $("#btnadd").hide(); itemsdisable1();
             }
             if (op == 'adddeal' || op == 'adddeal#') {
