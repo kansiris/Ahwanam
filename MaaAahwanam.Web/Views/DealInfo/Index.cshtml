@@ -234,11 +234,29 @@
                         <div class="deal_price" id="Calcdiv_Other" style="display:none">
                             <div class="price_details">
                                 <dl>
+                                    <dt>Actual Price: </dt>
+                                    <dd>
+                                        <h2>Rs. @Model.Item1.ActualServiceprice</h2>
+                                    </dd>
+                                    <dt>Discount %: </dt>
+                                    <dd>
+                                        @if (Model.Item1.ActualServiceprice != 0 && Model.Item1.DealServiceprice != 0)
+                                        { @(((Model.Item1.ActualServiceprice - Model.Item1.DealServiceprice) / Model.Item1.ActualServiceprice) * 100);
+                                        }
+                                    </dd>
+                                    <dt>Deal StartDate: </dt>
+                                    <dd>
+                                         @Model.Item1.DealStartDate.Value.ToShortDateString()
+                                    </dd>
+                                    <dt>Deal EndDate: </dt>
+                                    <dd>
+                                        @Model.Item1.DealEndDate.Value.ToShortDateString()
+                                    </dd>
                                     <dt>Package Price: </dt>
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         @*<p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost</p>*@
-                                        <p id="demoother" style="color:#8ca436;font-size:20px">@Model.Item1.cost</p>
+                                        <p id="demoother" style="color:#8ca436;font-size:20px">@Model.Item1.DealServiceprice</p>
                                     </dd>
                                     @*<dt>Selling Price: </dt>
                                         <dd>
@@ -270,6 +288,14 @@
                         <div class="deal_price" id="Calcdiv_venue" style="display:none">
                             <div class="price_details">
                                 <dl>
+                                    <dt>Deal StartDate: </dt>
+                                    <dd>
+                                        @Model.Item1.DealStartDate.Value.ToShortDateString()
+                                    </dd>
+                                    <dt>Deal EndDate: </dt>
+                                    <dd>
+                                        @Model.Item1.DealEndDate.Value.ToShortDateString()
+                                    </dd>
                                     <dt><p id="lblprice"></p></dt>
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
@@ -293,31 +319,31 @@
                                     <fieldset>
                                         @if (ViewBag.venuetype == "Banquet Hall")
                                         {
-                                            <div class="radioButtons" id="radio-demo">
-                                                <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
-                                                <label for="vlvenue">Veg lunch Per plate cost @Model.Item1.cost/-</label><br />
+                                        <div class="radioButtons" id="radio-demo">
+                                            <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
+                                            <label for="vlvenue">Veg lunch Per plate cost @Model.Item1.cost/-</label><br />
 
-                                                <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
-                                                <label for="nvlvenue">Non veg lunch Per plate cost @Model.Item1.cost1/-</label><br />
+                                            <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
+                                            <label for="nvlvenue">Non veg lunch Per plate cost @Model.Item1.cost1/-</label><br />
 
-                                                <input type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2>
-                                                <label for="vdvenue">Veg Dinner Per plate cost @Model.Item1.cost2/-</label><br />
+                                            <input type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2>
+                                            <label for="vdvenue">Veg Dinner Per plate cost @Model.Item1.cost2/-</label><br />
 
-                                                <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
-                                                <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>
-                                            </div>
+                                            <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
+                                            <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>
+                                        </div>
                                         }
                                         else
                                         {
 
-                                            <div class="price_details">
-                                                <dl>
-                                                    <dd>
-                                                        <input type="radio" id="vlvenue" name="platetypevenue" value=@ViewBag.servicecost checked style="display:none">
-                                                        @*<p name="platetypevenue" value=@Model.Item1.cost2 style="color:#8ca436;font-size:20px"> </p>*@
-                                                    </dd>
-                                                </dl>
-                                            </div>
+                                        <div class="price_details">
+                                            <dl>
+                                                <dd>
+                                                    <input type="radio" id="vlvenue" name="platetypevenue" value=@ViewBag.servicecost checked style="display:none">
+                                                    @*<p name="platetypevenue" value=@Model.Item1.cost2 style="color:#8ca436;font-size:20px"> </p>*@
+                                                </dd>
+                                            </dl>
+                                        </div>
                                         }
                                     </fieldset>
                                     <input type="hidden" id="rbselectedvalue" value="vlvenue" />
@@ -340,6 +366,14 @@
                         <div class="deal_price" id="Calcdiv_Caterer" style="display:none">
                             <div class="price_details">
                                 <dl>
+                                    <dt>Deal StartDate: </dt>
+                                    <dd>
+                                        @Model.Item1.DealStartDate.Value.ToShortDateString()
+                                    </dd>
+                                    <dt>Deal EndDate: </dt>
+                                    <dd>
+                                        @Model.Item1.DealEndDate.Value.ToShortDateString()
+                                    </dd>
                                     <dt><p id="lblcprice"></p></dt>
                                     @*<dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>*@
                                     <dd>
@@ -462,6 +496,25 @@
                         <div class="deal_price" id="Calcdiv_General" style="display:none">
                             <div class="price_details">
                                 <dl>
+                                    <dt>Deal StartDate: </dt>
+                                    <dd>
+                                        @Model.Item1.DealStartDate.Value.ToShortDateString()
+                                    </dd>
+                                    <dt>Deal EndDate: </dt>
+                                    <dd>
+                                        @Model.Item1.DealEndDate.Value.ToShortDateString()
+                                    </dd>
+                                    <dt>Actual Price: </dt>
+                                    <dd>
+                                        <h2>Rs. @Model.Item1.ActualServiceprice</h2>
+                                    </dd>
+                                    <dt>Discount %: </dt>
+                                    <dd>
+                                        @if (Model.Item1.ActualServiceprice != 0 && Model.Item1.DealServiceprice != 0)
+                                        {
+                                            @(((Model.Item1.ActualServiceprice - Model.Item1.DealServiceprice) / Model.Item1.ActualServiceprice) * 100);
+                                        }
+                                    </dd>
                                     <dt>Package Price: </dt>
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>

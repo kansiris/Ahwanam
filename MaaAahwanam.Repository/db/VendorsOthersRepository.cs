@@ -27,6 +27,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.getservicetype(parameters).ToList();
         }
+        public List<GetDealServiceType_Result> GetDealsservicetype_Result(string parameters)
+        {
+            return maaAahwanamEntities.GetDealServiceType(parameters).ToList();
+        }
 
         //Product info page
         public GetProductsInfo_Result getProductsInfo(int vid,string servicetype,int Subvid)
