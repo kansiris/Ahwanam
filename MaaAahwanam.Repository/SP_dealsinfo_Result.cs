@@ -24,12 +24,14 @@ namespace MaaAahwanam.Repository
         public string ServicType { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
-        public decimal cost { get; set; }
-        public decimal cost1 { get; set; }
-        public decimal cost2 { get; set; }
-        public decimal cost3 { get; set; }
+        public Nullable<decimal> cost { get; set; }
+        public Nullable<decimal> cost1 { get; set; }
+        public Nullable<decimal> cost2 { get; set; }
+        public Nullable<decimal> cost3 { get; set; }
         public Nullable<decimal> ActualServiceprice { get; set; }
-        public decimal DealServiceprice { get; set; }
+        public Nullable<decimal> DealServiceprice { get; set; }
+        public Nullable<System.DateTime> DealStartDate { get; set; }
+        public Nullable<System.DateTime> DealEndDate { get; set; }
         public string MaxOrder { get; set; }
         public string MinOrder { get; set; }
         public string image { get; set; }

@@ -47,7 +47,7 @@
                 $('#fileUpload').hide();
                 $('#msg').hide();
                 $('.form-control').attr("disabled", "disabled");
-                itemsdisable1();
+                itemsdisable1(); $("#dealdisplay").hide();
             }
             if (op == 'add') {
                 //alert("Add NEw");
@@ -60,11 +60,10 @@
                 $('#fileUpload').show();
                 $('#msg').show();
                 $("#btnadd").show();
-                $("#imagesdisplay").hide();
+                $("#imagesdisplay").hide(); $("#dealdisplay").hide();
             }
             //op == url
             if (up == 'vid=' + op || op == url) {
-                alert("hi");
                 $('#btn').show();
                 $("#btncancel").show();
                 $('#btnback').hide();
@@ -72,7 +71,7 @@
                 $('#fileUpload').show();
                 $('#msg').show();
                 $('.form-control').removeAttr("disabled");
-                $("#dealcheck").attr("disabled", "disabled");
+                $("#dealdisplay").hide();
                 $("#btnadd").hide(); itemsdisable1();
             }
             if (op == 'adddeal' || op == 'adddeal#') {

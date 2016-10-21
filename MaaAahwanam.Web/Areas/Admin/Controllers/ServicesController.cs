@@ -114,7 +114,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 serviceResponse.RequestId = long.Parse(id);
                 ViewBag.QuotationRecordsList = serviceResponseService.GetQuotationList(serviceResponse);
                 ViewBag.quotdate = date;
-                ViewBag.quotid = id;
+                    ViewBag.quotid = id;
                 return View();
             }
             return View();
