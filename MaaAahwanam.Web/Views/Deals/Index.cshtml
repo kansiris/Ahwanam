@@ -122,7 +122,7 @@
                 <div class="clear"></div>
                 <form name="myForm">
                     <label>Location</label>
-                    <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onchange="locationchange(this)">
+                    <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onkeydown="if (event.keyCode == 13) alert('enter')"  onchange="locationchange(this)">
                     @foreach (var item in this.Model)
                     {
                         if (item.subtype != "Banquet Hall")
@@ -196,7 +196,7 @@
                                                             }
                                                             @if (item.subtype == "Convention Hall" || item.subtype == "Function Hall" || item.subtype == "Meeting Room" || item.subtype == "Roof Top")
                                                             {
-                                                                <span class="price">Rs. @item.Servicecost</span>
+                                                                <span class="price">Rs. @item.DealServicePrice</span>
                                                             }
                                                             <span class="buy">
                                                                 <a href="../DealInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid"><i class="ti-shopping-cart"></i> Add to Cart</a>
@@ -428,5 +428,12 @@
                 }
             };
         }
+        $("#txtlocation").keypress(function (event) {
+            alert('s');
+            //if ((event.keyCode || event.which) == 13) {
+                event.preventDefault();
+                return false;
+            //}
+        });
     </script>
 }

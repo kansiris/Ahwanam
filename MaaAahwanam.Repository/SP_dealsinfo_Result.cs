@@ -30,6 +30,8 @@ namespace MaaAahwanam.Repository
         public decimal cost3 { get; set; }
         public Nullable<decimal> ActualServiceprice { get; set; }
         public decimal DealServiceprice { get; set; }
+        public Nullable<System.DateTime> DealStartDate { get; set; }
+        public Nullable<System.DateTime> DealEndDate { get; set; }
         public string MaxOrder { get; set; }
         public string MinOrder { get; set; }
         public string image { get; set; }

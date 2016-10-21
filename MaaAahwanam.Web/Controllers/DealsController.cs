@@ -19,7 +19,7 @@ namespace MaaAahwanam.Web.Controllers
             string servicetypeloc = Request.QueryString["loc"];
             string servicetypeorder = Request.QueryString["a"];
             List<SP_Deals_Result> Productlist = productService.GetSP_Deals_Result(servicetypeQuerystring, 0, servicetypesType, servicetypeloc, servicetypeorder);
-            List<getservicetype_Result> servicetypelist = productService.Getservicetype_Result(servicetypeQuerystring);
+            List<GetDealServiceType_Result> servicetypelist = productService.GetDealsservicetype_Result(servicetypeQuerystring);
             var s = servicetypelist.GroupBy(m => m.vendortype).Select(vendortype => vendortype.First());
             long idlast = 0;
             if (Productlist.Count != 0)

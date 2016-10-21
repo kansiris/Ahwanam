@@ -26,5 +26,9 @@ namespace MaaAahwanam.Service
         {
             return vendorsOthersRepository.Getservicetype_Result(Param);
         }
+        public List<GetDealServiceType_Result> GetDealsservicetype_Result(string Param)
+        {
+            return vendorsOthersRepository.GetDealsservicetype_Result(Param);
+        }
     }
 }
