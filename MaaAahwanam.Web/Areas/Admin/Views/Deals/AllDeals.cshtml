@@ -134,19 +134,47 @@
                                                     </td>
                                                     <td>
                                                         @*@string.Format(@item.UpdatedDate.ToString(),"{0:MM/dd/yyyy}")*@
-                                                        @item.DealStartDate
+                                                        @item.DealStartDate.ToShortDateString()
                                                     </td>
                                                     <td>
-                                                        @item.DealEndDate
+                                                        @item.DealEndDate.ToShortDateString()
                                                     </td>
                                                     <td>
-                                                        @if (item.VendorCategory == "Banquet Hall")
+                                                        @if (item.VendorType == "Venue")
+                                                        {
+                                                            if (item.VendorCategory == "Banquet Hall")
+                                                            {
+                                                                <p>
+                                                                    Veg Lunch cost : @item.DealVegLunchCost,<br/>
+                                                                    Veg Dinner cost : @item.DealVegDinnerCost,<br />
+                                                                    Non-Veg Lunch cost : @item.DealNonVegLunchCost,<br />
+                                                                    Non-Veg Dinner cost : @item.DealNonVegDinnerCost<br />
+                                                                </p>
+                                                            }
+                                                        else
+                                                            {
+                                                                <p>Service Price : @item.DealServicePrice</p>
+                                                            }
+                                                        }
+                                                        else if (item.VendorType == "Catering")
                                                         {
                                                             <p>
-                                                                Veg Lunch cost : @item.DealVegLunchCost,<br/>
-                                                                Veg Dinner cost : @item.DealVegDinnerCost,<br />
-                                                                Non-Veg Lunch cost : @item.DealNonVegLunchCost,<br />
-                                                                Non-Veg Dinner cost : @item.DealNonVegDinnerCost,<br />
+                                                                Veg Price : @item.VegPricePerPlate,<br />
+                                                                Non-Veg Price : @item.NonVegPricePerPlate<br />
+                                                            </p>
+                                                        }
+                                                        else if (item.VendorType == "BeautyServices")
+                                                        {
+                                                            <p>
+                                                                Bridal Makeup Price : @item.BridalMakeupStartsFrom,<br />
+                                                                Party Makeup Price  : @item.PartyMakeupStartsFrom<br />
+                                                            </p>
+                                                        }
+                                                        else if (item.VendorType == "InvitationCards")
+                                                        {
+                                                            <p>
+                                                                Card Cost : @item.CardCost,<br />
+                                                                Card Cost With Print  : @item.CardCostWithPrint<br />
                                                             </p>
                                                         }
                                                         else
@@ -155,7 +183,7 @@
                                                         }
                                                     </td>
                                                     <td>
-                                                        @item.TermsConditions
+                                                        <p style="width: 300px; word-wrap:break-word;">@item.TermsConditions</p>
                                                     </td>
                                                     <td style="display:none">
                                                         @item.VendorId
