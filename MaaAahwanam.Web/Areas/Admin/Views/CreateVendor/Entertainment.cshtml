@@ -417,6 +417,51 @@ else
                }
            });
 </script>
+@*E-Mail ID validation*@
+<script type="text/javascript">
+    function ValidateEmail(email) {
+        var expr = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+        return expr.test(email);
+    };
+</script>
+@*E-Mail ID check*@
+<script>
+
+        function check() {
+            var emailId = $("#Item1_EmailId").val();
+            var label = $("#label");
+            if (!ValidateEmail(emailId)) {
+                $("#btn").prop("disabled", true);
+                $("#lblshow").show();
+                label.html("Invalid email address.");
+            }
+            else {
+                $.ajax({
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/' + window.location.href.split("/")[3] + '/CreateVendor/checkemail',
+                    type: 'POST',
+                    data: JSON.stringify({ emailid: emailId }),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data == "exists") {
+                            $("#Item1_EmailId").focus();
+                            $("#btn").prop("disabled", true);
+                            $("#lblshow").show();
+                            label.html("E-Mail ID Already Taken!!! Try Another");
+                        }
+                        else {
+                            $("#btn").prop("disabled", false);
+                            $("#lblshow").hide();
+                            label.html("");
+                        }
+                    },
+                    error: function (data)
+                    { alert("Failed!!!"); }
+                });
+            }
+
+        }
+</script>
                 }
 
 

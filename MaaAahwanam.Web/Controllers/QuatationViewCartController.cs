@@ -17,23 +17,26 @@ namespace MaaAahwanam.Web.Controllers
         static string serviceid;
         public ActionResult Index(string id,string rid)
         {
+            
             if (id != null)
             {
                 var record = dashBoardService.GetServiceDetailService(long.Parse(id));
                 ViewBag.service = record;
-               
                 ViewBag.comments = dashBoardService.GetServiceComments(long.Parse(id)).OrderByDescending(m => m.UpdatedDate);
                 ViewBag.commentscount = dashBoardService.GetServiceComments(long.Parse(id)).Count;
                 ViewBag.id = id;
                 serviceid = id;
+                ViewBag.type = dashBoardService.GetServiceType(long.Parse(id));
             }
             if ( rid != null)
             {
+                var record = dashBoardService.GetServiceDetailService(long.Parse(serviceid));
+                ViewBag.service = record;
                 ViewBag.id = serviceid;
                 ViewBag.rid = rid;
-                ViewBag.service = dashBoardService.GetServiceDetailService(long.Parse(serviceid));
                 ViewBag.comments = dashBoardService.GetQuotationComments(long.Parse(rid)).OrderByDescending(m => m.UpdatedDate);
                 ViewBag.commentscount = dashBoardService.GetQuotationComments(long.Parse(rid)).Count;
+                ViewBag.type = dashBoardService.GetServiceType(long.Parse(serviceid));
             }
             return View();
         }

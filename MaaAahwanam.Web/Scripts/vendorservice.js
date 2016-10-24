@@ -113,6 +113,8 @@
                     $("#dealcateringcost").show();
                 }
                 else if (servicetype == 'InvitationCards') {
+                    var cardtype = $("#Item2_CardType").val();
+                    $("#Item3_VendorCategory").val(cardtype);
                     $("#dealinvitation").show();
                 }
                 else {
@@ -288,34 +290,6 @@ function Out() {
     }
 //</script>
 
-//@*E-Mail ID check*@
-//<script>
-        function check() {
-            var emailId = $("#Item1_EmailId").val();
-            var label = $("#label");
-            $.ajax({
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/' + window.location.href.split("/")[3] + '/CreateVendor/checkemail',
-                type: 'POST',
-                data: JSON.stringify({ emailid: emailId }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == "exists") {
-                        $("#Item1_EmailId").focus();
-                        $("#btn").prop("disabled", true);
-                        $("#lblshow").show();
-                        label.html("E-Mail ID Already Taken!!! Try Another");
-                    }
-                    else {
-                        $("#btn").prop("disabled", false);
-                        $("#lblshow").hide();
-                        label.html("");
-                    }
-                },
-                error: function (data)
-                { alert("Failed!!!"); }
-            });
-        }
-//</script>
 
+       
  
