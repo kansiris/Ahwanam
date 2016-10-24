@@ -31,6 +31,10 @@ namespace MaaAahwanam.Web.Controllers
             VendorVenueService vendorVenueService = new VendorVenueService();
             Review review = new Review();
             string Servicetype = Request.QueryString["par"];
+            if(Servicetype== "Travel&Accomadation")
+            {
+                Servicetype = "Travel";
+            }
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
             int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
             ViewBag.Subvid = Svid;
