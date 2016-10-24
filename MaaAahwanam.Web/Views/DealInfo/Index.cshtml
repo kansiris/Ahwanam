@@ -178,7 +178,7 @@
                                         <div class="dashboardList dashboardList-nospace">
                                             <div class="bidding_form">
 
-                                                @using (Html.BeginForm("WriteaRiview", "ProductInfo", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
+                                                @using (Html.BeginForm("WriteaRiview", "DealsInfo", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
                                                 {
                                                     <ul>
                                                         <li>
@@ -238,11 +238,9 @@
                                     <dd>
                                         <h2>Rs. @Model.Item1.ActualServiceprice</h2>
                                     </dd>
-                                    <dt>Discount %: </dt>
+                                    <dt>Discount : </dt>
                                     <dd>
-                                        @if (Model.Item1.ActualServiceprice != 0 && Model.Item1.DealServiceprice != 0)
-                                        { @(((Model.Item1.ActualServiceprice - Model.Item1.DealServiceprice) / Model.Item1.ActualServiceprice) * 100);
-                                        }
+                                        @ViewBag.discountvalue %;
                                     </dd>
                                     <dt>Deal StartDate: </dt>
                                     <dd>
@@ -437,7 +435,7 @@
                                     <label>Number of gifts<span>*</span></label>
                                     <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:0px; " id="txtquantityGift" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGift()" /><br>
                                     <br />
-                                    <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.cost checked> Gift cost @Model.Item1.cost/-<br>
+                                    <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.DealServiceprice checked> Gift cost @Model.Item1.DealServiceprice/-<br>
                                     <br />
                                 </form>
                             </div>
@@ -508,12 +506,9 @@
                                     <dd>
                                         <h2>Rs. @Model.Item1.ActualServiceprice</h2>
                                     </dd>
-                                    <dt>Discount %: </dt>
+                                    <dt>Discount : </dt>
                                     <dd>
-                                        @if (Model.Item1.ActualServiceprice != 0 && Model.Item1.DealServiceprice != 0)
-                                        {
-                                            @(((Model.Item1.ActualServiceprice - Model.Item1.DealServiceprice) / Model.Item1.ActualServiceprice) * 100);
-                                        }
+                                        @ViewBag.discountvalue %
                                     </dd>
                                     <dt>Package Price: </dt>
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
@@ -909,7 +904,7 @@
                 //alert(itemdetails.cid);
                 $.ajax({
                     type: "POST",
-                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/getproductfromcart',
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/getproductfromcart',
                     data: {},
                     data: JSON.stringify(itemdetails),
                     //data: sendInfo,
@@ -1266,7 +1261,7 @@
             if (document.getElementById("btnname").value == "addtocartbtn") {
                 $.ajax({
                     type: "POST",
-                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Addtocart',
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/Addtocart',
                     data: {},
                     data: JSON.stringify(orderRequest),
                     // data: sendInfo,
@@ -1299,7 +1294,7 @@
                 //alert('ss');
                 $.ajax({
                     type: "POST",
-                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Buynow',
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/Buynow',
                     data: {},
                     data: JSON.stringify(orderRequest),
                     //data: sendInfo,
@@ -1415,7 +1410,7 @@
             orderRequest.subid=subid;
             $.ajax({
                 type: "POST",
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/ProductInfo/Updatecartitem',
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/Updatecartitem',
                 data: {},
                 data: JSON.stringify(orderRequest),
                 // data: sendInfo,

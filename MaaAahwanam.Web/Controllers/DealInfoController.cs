@@ -34,7 +34,18 @@ namespace MaaAahwanam.Web.Controllers
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
             int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
             ViewBag.Subvid = Svid;
+            if (Servicetype == "Travel&Accomadation")
+            {
+                Servicetype = "Travel";
+            }
+           
             SP_dealsinfo_Result Dealinfo = productInfoService.getDealsInfo_Result(vid, Servicetype, Svid);
+            ViewBag.discountvalue = 10.00;
+            if (Dealinfo.ActualServiceprice != 0 && Dealinfo.DealServiceprice != 0)
+            { 
+                string discountvalue=(((Dealinfo.ActualServiceprice - Dealinfo.DealServiceprice) / Dealinfo.ActualServiceprice) * 100).Value.ToString("0.00");
+                ViewBag.discountvalue = discountvalue;
+            }
             if (Dealinfo.image != null)
             {
                 string[] imagenameslist = Dealinfo.image.Replace(" ", "").Split(',');
@@ -148,6 +159,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.Status = "Active";
             orderDetail.UpdatedDate = DateTime.Now;
             orderDetail.UpdatedBy = user.UserId;
+            orderDetail.Isdeal = true;
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
 

@@ -90,7 +90,7 @@ namespace MaaAahwanam.Web.Controllers
             var Listoflocations = allVendorsService.VendorsList();
             var builder = new TagBuilder("<br/>");
 
-            string[] ListofEvents = { "Wedding", "Reception", "Enagagement", "Birthday", "Wedding Anniversary", "Get Together", "Kitty Party", "Cocktail Party" };
+            string[] ListofEvents = { "Wedding", "Reception", "Engagement", "Birthday", "Wedding Anniversary", "Get Together", "Kitty Party", "Cocktail Party" };
             return Json(new { Listoflocations, ListofEvents }, JsonRequestBehavior.AllowGet);
         }
     }
