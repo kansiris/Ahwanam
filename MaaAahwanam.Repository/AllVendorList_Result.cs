@@ -22,7 +22,12 @@ namespace MaaAahwanam.Repository
         public string Landmark { get; set; }
         public long VendorServiceId { get; set; }
         public string UnitPrice { get; set; }
+        public decimal cost1 { get; set; }
+        public decimal cost2 { get; set; }
+        public decimal cost3 { get; set; }
+        public decimal cost4 { get; set; }
         public string status { get; set; }
         public string VenueType { get; set; }
+        public string food { get; set; }
     }
 }

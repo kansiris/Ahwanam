@@ -119,7 +119,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsBeautyService.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsBeautyService.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("BeautyServices", "CreateVendor",new { id = vendorsBeautyService.Id}) + "'</script>");
                 }
@@ -228,7 +228,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsBeautyService.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsBeautyService.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -347,7 +347,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsCatering.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsCatering.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Catering", "CreateVendor") + "'</script>");
                 }
@@ -455,7 +455,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsCatering.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsCatering.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -575,7 +575,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsDecorator.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsDecorator.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Decorator", "CreateVendor") + "'</script>");
                 }
@@ -683,7 +683,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsDecorator.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsDecorator.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -802,7 +802,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsEntertainment.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsEntertainment.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Entertainment", "CreateVendor",new { id= vendorsEntertainment.Id}) + "'</script>");
                 }
@@ -910,7 +910,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsEntertainment.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsEntertainment.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -1030,7 +1030,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsEventOrganisers.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsEventOrganisers.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("EventOrganisers", "CreateVendor",new { id=vendorsEventOrganisers.Id}) + "'</script>");
                 }
@@ -1138,7 +1138,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsEventOrganisers.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsEventOrganisers.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -1257,7 +1257,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsGift.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsGift.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Gifts", "CreateVendor",new { id=vendorsGift.Id}) + "'</script>");
                 }
@@ -1365,7 +1365,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsGift.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsGift.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors","Vendors") + "'</script>");
                 }
@@ -1479,7 +1479,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsInvitationCard.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsInvitationCard.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("InvitationCards", "CreateVendor", new { id = vendorsInvitationCard.Id }) + "'</script>");
                 }
@@ -1587,7 +1587,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsInvitationCard.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsInvitationCard.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -1712,7 +1712,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsPhotography.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsPhotography.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Photography", "CreateVendor", new { id = vendorsPhotography.Id }) + "'</script>");
                 }
@@ -1824,7 +1824,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsPhotography.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsPhotography.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors","Vendors") + "'</script>");
                 }
@@ -1951,7 +1951,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsTravelandAccomodation.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsTravelandAccomodation.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("TravelAccomodation", "CreateVendor", new { id = vendorsTravelandAccomodation.Id }) + "'</script>");
                 }
@@ -2068,7 +2068,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsTravelandAccomodation.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsTravelandAccomodation.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -2176,7 +2176,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsWeddingCollection.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsWeddingCollection.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("WeddingCollection", "CreateVendor", new { id = vendorsWeddingCollection.Id }) + "'</script>");
                 }
@@ -2269,7 +2269,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsWeddingCollection.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsWeddingCollection.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -2381,7 +2381,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorVenue.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorVenue.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Venue", "CreateVendor",new { id=vendorVenue.Id}) + "'</script>");
                 }
@@ -2491,7 +2491,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorVenue.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorVenue.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
@@ -2619,7 +2619,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsOther.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsOther.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Others", "CreateVendor", new { id = vendorsOther.Id }) + "'</script>");
                 }
@@ -2630,7 +2630,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (Command == "update")
             {
-                if (deal != null)
+                if (d != null)
                 {
                     deal = dealService.UpdateDealService(deal, int.Parse(d));
                     if (deal.DealID != 0)
@@ -2730,7 +2730,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     }
                 }
-                if (vendorsOther.Id != 0 && vendorImage.ImageId != 0)
+                if (vendorsOther.Id != 0 || vendorImage.ImageId != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }

@@ -28,15 +28,6 @@ namespace MaaAahwanam.Repository
         }
     
     
-        public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
-        {
-            var servicTypeParameter = servicType != null ?
-                new ObjectParameter("ServicType", servicType) :
-                new ObjectParameter("ServicType", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
-        }
-    
         public virtual ObjectResult<geteventsandtipsimages_Result> geteventsandtipsimages()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages");
@@ -208,15 +199,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_QuotationComments_Result>("sp_QuotationComments", idParameter);
         }
     
-        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
-        {
-            var oIDParameter = oID.HasValue ?
-                new ObjectParameter("OID", oID) :
-                new ObjectParameter("OID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
-        }
-    
         public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
         {
             var orderByParameter = orderBy.HasValue ?
@@ -285,6 +267,23 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
         }
     
+        public virtual ObjectResult<SP_dealsinfo_Result> SP_dealsinfo(Nullable<int> vid, string nType, Nullable<int> vid2)
+        {
+            var vidParameter = vid.HasValue ?
+                new ObjectParameter("vid", vid) :
+                new ObjectParameter("vid", typeof(int));
+    
+            var nTypeParameter = nType != null ?
+                new ObjectParameter("nType", nType) :
+                new ObjectParameter("nType", typeof(string));
+    
+            var vid2Parameter = vid2.HasValue ?
+                new ObjectParameter("Vid2", vid2) :
+                new ObjectParameter("Vid2", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_dealsinfo_Result>("SP_dealsinfo", vidParameter, nTypeParameter, vid2Parameter);
+        }
+    
         public virtual ObjectResult<SP_Deals_Result> SP_Deals(string nType, Nullable<int> vID, string stype, string city, string order)
         {
             var nTypeParameter = nType != null ?
@@ -310,21 +309,22 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Deals_Result>("SP_Deals", nTypeParameter, vIDParameter, stypeParameter, cityParameter, orderParameter);
         }
     
-        public virtual ObjectResult<SP_dealsinfo_Result> SP_dealsinfo(Nullable<int> vid, string nType, Nullable<int> vid2)
+        public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
         {
-            var vidParameter = vid.HasValue ?
-                new ObjectParameter("vid", vid) :
-                new ObjectParameter("vid", typeof(int));
+            var oIDParameter = oID.HasValue ?
+                new ObjectParameter("OID", oID) :
+                new ObjectParameter("OID", typeof(int));
     
-            var nTypeParameter = nType != null ?
-                new ObjectParameter("nType", nType) :
-                new ObjectParameter("nType", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
+        }
     
-            var vid2Parameter = vid2.HasValue ?
-                new ObjectParameter("Vid2", vid2) :
-                new ObjectParameter("Vid2", typeof(int));
+        public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
+        {
+            var servicTypeParameter = servicType != null ?
+                new ObjectParameter("ServicType", servicType) :
+                new ObjectParameter("ServicType", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_dealsinfo_Result>("SP_dealsinfo", vidParameter, nTypeParameter, vid2Parameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
         }
     }
 }

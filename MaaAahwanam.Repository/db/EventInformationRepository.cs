@@ -31,6 +31,7 @@ namespace MaaAahwanam.Repository.db
         {
             var list = _dbContext.EventInformation.Where(s=>s.vendorid==Vid && s.subid == sid).FirstOrDefault();
             list.OrderDetailsid = OrderDetailsID;
+            _dbContext.Entry(list).CurrentValues.SetValues(list);
             _dbContext.SaveChanges();
         }
     }

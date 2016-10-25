@@ -335,7 +335,7 @@ else
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
             <div class="modal-body">
                 <img class="ms-nav-next ms-ctrl-hide" src="#" id="imagepreview" style="width: 100%;" alt="slider-1">
 
@@ -344,35 +344,6 @@ else
     </div>
 </div>
 
-@*E-Mail ID check*@
-<script>
-    function check() {
-        var emailId = $("#Item1_EmailId").val();
-        var label = $("#label");
-        $.ajax({
-            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/' + window.location.href.split("/")[3] + '/CreateVendor/checkemail',
-                type: 'POST',
-                data: JSON.stringify({ emailid: emailId }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == "exists") {
-                        $("#Item1_EmailId").focus();
-                        $("#btn").prop("disabled", true);
-                        $("#lblshow").show();
-                        label.html("E-Mail ID Already Taken!!! Try Another");
-                    }
-                    else {
-                        $("#btn").prop("disabled", false);
-                        $("#lblshow").hide();
-                        label.html("Valid");
-                    }
-                },
-                error :function(data)
-            { alert("Failed!!!");}
-            });
-        }
-</script>
 
                 @section Bottom{
                     <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>

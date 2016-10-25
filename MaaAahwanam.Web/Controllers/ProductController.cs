@@ -30,9 +30,9 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
-             idlast = 0;
+                idlast = 0;
             }
-            ViewBag.Lastrecordid=idlast;
+            ViewBag.Lastrecordid = idlast;
             ViewBag.ServiceType = servicetypeQuerystring;
             ViewBag.subservicetype = s;
             return View(Productlist);

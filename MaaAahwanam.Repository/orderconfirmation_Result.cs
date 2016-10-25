@@ -21,5 +21,6 @@ namespace MaaAahwanam.Repository
         public long Eventid { get; set; }
         public string image { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
+        public string StartTime { get; set; }
     }
 }

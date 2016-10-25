@@ -39,10 +39,13 @@ namespace MaaAahwanam.Web.Controllers
             int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
             ViewBag.Subvid = Svid;
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Svid);
-            if (Productinfo.image != null)
+            if (Productinfo != null)
             {
                 string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
                 ViewBag.Imagelist = imagenameslist;
+                //var list = vendorVenueService.GetVendorVenue(vid, Svid);
+                //ViewBag.venuetype = list.VenueType;
+                //ViewBag.servicecost = list.ServiceCost;
             }
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);

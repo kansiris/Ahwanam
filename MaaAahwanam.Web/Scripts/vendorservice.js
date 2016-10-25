@@ -113,9 +113,9 @@
                     $("#dealcateringcost").show();
                 }
                 else if (servicetype == 'InvitationCards') {
+                    $("#dealinvitation").show();
                     var cardtype = $("#Item2_CardType").val();
                     $("#Item3_VendorCategory").val(cardtype);
-                    $("#dealinvitation").show();
                 }
                 else {
                     $("#dealservicecost").show();

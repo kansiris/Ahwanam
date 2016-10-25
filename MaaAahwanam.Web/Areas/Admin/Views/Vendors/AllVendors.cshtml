@@ -4,7 +4,8 @@
 }
 @*<link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 @*<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">*@
-<link href="~/CSSWeb/css/dataTables.bootstrap.css" rel="stylesheet" />
+@*<link href="~/CSSWeb/css/dataTables.bootstrap.css" rel="stylesheet" />*@
+<link href="~/Assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 @*@section header{*@
     <!-- PAGE LEVEL STYLES -->
     
@@ -158,7 +159,24 @@
                                                     @if (item.VenueType != null || item.UnitPrice != null)
                                                     {
                                                         //@item.VenueType<br />
-                                                        @Html.Raw(Html.Encode(item.UnitPrice).Replace(",", "<br />"))<br />
+                                                        if (item.VenueType == "Banquet Hall")
+                                                        {
+                                                            if (item.food == "Veg")
+                                                            {
+                                                                <p>Veg Lunch Price Starts From : Rs.@item.cost1</p>
+                                                                <p>Veg Dinner Price Starts From : Rs.@item.cost2</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p>Non-Veg Lunch Price Starts From : Rs.@item.cost3</p>
+                                                                <p>Non-Veg Dinner Price Starts From : Rs.@item.cost4</p>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.Raw(Html.Encode(item.UnitPrice).Replace(",", "<br />"))<br />
+                                                        }
+
                                                     }
                                                     @if (item.VenueType == null && item.UnitPrice == null)
                                                     {
