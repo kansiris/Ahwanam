@@ -13,7 +13,7 @@ namespace MaaAahwanam.Service
         public List<dynamic> VendorsList()
         {
             VendormasterRepository vendormasterRepository = new VendormasterRepository();
-            var l1 = vendormasterRepository.VendormasterList().Select(i => i.Address + "," + i.Landmark + "," + i.City);
+            var l1 = vendormasterRepository.VendormasterList().Select(i => i.Landmark + "," + i.City);
             return l1.ToList<dynamic>();
         }
     }

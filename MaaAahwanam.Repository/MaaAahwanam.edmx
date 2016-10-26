@@ -20,7 +20,7 @@
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
           <Parameter Name="VID" Type="int" Mode="In" />
           <Parameter Name="stype" Type="varchar(max)" Mode="In" />
-          <Parameter Name="city" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Landmark" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="order" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetProductsInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -143,13 +143,6 @@
             <Parameter Name="nType" Mode="In" Type="String" />
             <Parameter Name="Vid2" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
-            <Parameter Name="nType" Mode="In" Type="String" />
-            <Parameter Name="VID" Mode="In" Type="Int32" />
-            <Parameter Name="stype" Mode="In" Type="String" />
-            <Parameter Name="city" Mode="In" Type="String" />
-            <Parameter Name="order" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_QuotationComments" ReturnType="Collection(MaaAahwanamModel.sp_QuotationComments_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -191,7 +184,14 @@
           <Parameter Name="OID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="AllVendorList" ReturnType="Collection(MaaAahwanamModel.AllVendorList_Result)">
-            <Parameter Name="ServicType" Mode="In" Type="String" />
+          <Parameter Name="ServicType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
+            <Parameter Name="nType" Mode="In" Type="String" />
+            <Parameter Name="VID" Mode="In" Type="Int32" />
+            <Parameter Name="stype" Mode="In" Type="String" />
+            <Parameter Name="Landmark" Mode="In" Type="String" />
+            <Parameter Name="order" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="geteventsandtipsimages_Result">
@@ -375,18 +375,6 @@
           <Property Type="String" Name="MinOrder" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetProducts_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Int64" Name="subid" Nullable="false" />
-          <Property Type="String" Name="subtype" Nullable="true" />
-          <Property Type="Int64" Name="Servicecost" Nullable="false" />
-          <Property Type="String" Name="image" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_QuotationComments_Result">
           <Property Type="String" Name="CommentDetails" Nullable="true" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
@@ -539,6 +527,18 @@
           <Property Type="String" Name="status" Nullable="true" />
           <Property Type="String" Name="VenueType" Nullable="true" />
           <Property Type="String" Name="food" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetProducts_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="Int64" Name="Servicecost" Nullable="false" />
+          <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -795,22 +795,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProducts" FunctionName="MaaAahwanamModel.Store.GetProducts">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProducts_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="subid" ColumnName="subid" />
-                <ScalarProperty Name="subtype" ColumnName="subtype" />
-                <ScalarProperty Name="Servicecost" ColumnName="Servicecost" />
-                <ScalarProperty Name="image" ColumnName="image" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_QuotationComments" FunctionName="MaaAahwanamModel.Store.sp_QuotationComments">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_QuotationComments_Result">
@@ -1013,6 +997,22 @@
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="VenueType" ColumnName="VenueType" />
                 <ScalarProperty Name="food" ColumnName="food" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProducts" FunctionName="MaaAahwanamModel.Store.GetProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProducts_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="Servicecost" ColumnName="Servicecost" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -15,23 +15,23 @@ namespace MaaAahwanam.Web.Controllers
     {
         ProductService productService = new ProductService();
         // GET: AllServices
-        public ActionResult Index()
+        public ActionResult Index(string l)
         {
             
-            List <GetProducts_Result> Productlist_Venue = productService.GetProducts_Results("Venue", 0,"%","Hyderabad","ASC");
-            List<GetProducts_Result> Productlist_Catering = productService.GetProducts_Results("Catering", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Decorator = productService.GetProducts_Results("Decorator", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Photography = productService.GetProducts_Results("Photography", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_InvitationCard = productService.GetProducts_Results("InvitationCard", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Gift = productService.GetProducts_Results("Gift", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Entertainment = productService.GetProducts_Results("Entertainment", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Travel = productService.GetProducts_Results("Travel", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Other = productService.GetProducts_Results("Other", 0, "%", "Hyderabad", "ASC");
+            List <GetProducts_Result> Productlist_Venue = productService.GetProducts_Results("Venue", 0,"%",l,"ASC");
+            List<GetProducts_Result> Productlist_Catering = productService.GetProducts_Results("Catering", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Decorator = productService.GetProducts_Results("Decorator", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Photography = productService.GetProducts_Results("Photography", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_InvitationCard = productService.GetProducts_Results("InvitationCard", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Gift = productService.GetProducts_Results("Gift", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Entertainment = productService.GetProducts_Results("Entertainment", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Travel = productService.GetProducts_Results("Travel", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Other = productService.GetProducts_Results("Other", 0, "%", l, "ASC");
 
 
-            List<GetProducts_Result> Productlist_BeautyServices = productService.GetProducts_Results("BeautyService", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Eventorganiser = productService.GetProducts_Results("Eventorganiser", 0, "%", "Hyderabad", "ASC");
-            List<GetProducts_Result> Productlist_Weddingcollection = productService.GetProducts_Results("WeddingCollection", 0, "%", "Hyderabad", "ASC");
+            List<GetProducts_Result> Productlist_BeautyServices = productService.GetProducts_Results("BeautyService", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Eventorganiser = productService.GetProducts_Results("Eventorganiser", 0, "%", l, "ASC");
+            List<GetProducts_Result> Productlist_Weddingcollection = productService.GetProducts_Results("WeddingCollection", 0, "%", l, "ASC");
 
 
             ViewBag.Venue = Productlist_Venue;

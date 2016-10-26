@@ -15,7 +15,7 @@ namespace MaaAahwanam.Repository
     {
         public long Id { get; set; }
         public string BusinessName { get; set; }
-        public string City { get; set; }
+        public string Landmark { get; set; }
         public string Description { get; set; }
         public string ServicType { get; set; }
         public decimal Cost { get; set; }
