@@ -87,7 +87,7 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult AutoCompleteCountry()
         {
             AllVendorsService allVendorsService = new AllVendorsService();
-            var Listoflocations = allVendorsService.VendorsList();
+            var Listoflocations = allVendorsService.VendorsList().Distinct();
             var builder = new TagBuilder("<br/>");
 
             string[] ListofEvents = { "Wedding", "Reception", "Engagement", "Birthday", "Wedding Anniversary", "Get Together", "Kitty Party", "Cocktail Party" };
