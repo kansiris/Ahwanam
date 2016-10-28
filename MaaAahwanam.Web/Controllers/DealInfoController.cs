@@ -71,7 +71,7 @@ namespace MaaAahwanam.Web.Controllers
             review.Status = "Active";
             review.UpdatedDate = DateTime.Now;
             reviewService.InsertReview(review);
-            return RedirectToAction("Index", new { par = review.Service, VID = review.ServiceId, subvid = review.Sid });
+            return RedirectToAction("Index", new { par = review.Service, VID = review.ServiceId, subvid = review.Sid,did = did });
 
             //return RedirectToAction("Index", "Signin");
         }
