@@ -127,7 +127,7 @@
     <form>
         <div class="dashboardList dashboardList-nospace">
            
-                <h3>Products & Services</h3>
+                <h3>Products & Services</h3> <input type="hidden" id="hdntable1" value="@ViewBag.AllOrders.Count" /> <input type="hidden" id="hdntable2" value="@ViewBag.Services.Count" />
             <br/>
                 <table class="responsive"  id="table1" > 
 
@@ -391,8 +391,14 @@
 <script type="text/javascript">
         $(document).ready(function () {
             //BootstrapDialog.alert('Welcom to MaaAahwanam DashBoard');
-            $('#table1').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
-            $('#table2').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
+            var t1 = $("#hdntable1").val(); var t2 = $("#hdntable2").val();
+            if (t1 != 0) {
+                $('#table1').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
+            }
+            if (t2 != 0) {
+                $('#table2').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
+            }
+            
         });
     </script>
 <script>

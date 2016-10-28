@@ -47,7 +47,8 @@
                 $('#fileUpload').hide();
                 $('#msg').hide();
                 $('.form-control').attr("disabled", "disabled");
-                itemsdisable1(); $("#dealdisplay").hide();
+                //itemsdisable1();
+                $("#dealdisplay").hide();
             }
             if (op == 'add') {
                 //alert("Add NEw");
@@ -60,7 +61,8 @@
                 $('#fileUpload').show();
                 $('#msg').show();
                 $("#btnadd").show();
-                $("#imagesdisplay").hide(); $("#dealdisplay").hide();
+                $("#imagesdisplay").hide();
+                $("#dealdisplay").hide();
             }
             //op == url
             if (up == 'vid=' + op || op == url) {
@@ -72,7 +74,8 @@
                 $('#msg').show();
                 $('.form-control').removeAttr("disabled");
                 $("#dealdisplay").hide();
-                $("#btnadd").hide(); itemsdisable1();
+                $("#btnadd").hide();
+                //itemsdisable1();
             }
             if (op == 'adddeal' || op == 'adddeal#') {
                 $("#btnadd").show().val("Add Deal").html("Add Deal");
@@ -99,7 +102,7 @@
                     if (type == 'Banquet Hall') {
                         $("#dealprice").show();
                         $("#dealservicecost").hide();
-                        itemsdisable1();
+                        //itemsdisable1();
                     }
                     else {
                         $("#dealprice").hide();
@@ -140,7 +143,7 @@
                         
                         $("#dealprice").show();
                         $("#dealservicecost").hide();
-                        itemsdisable1();
+                        //itemsdisable1();
                     }
                     else {
                         $("#dealprice").hide();
@@ -180,7 +183,7 @@
                     if (type == 'Banquet Hall') {
                         $("#dealprice").show();
                         $("#dealservicecost").hide();
-                        itemsdisable1();
+                        //itemsdisable1();
                     }
                     else {
                         $("#dealprice").hide();
@@ -249,45 +252,45 @@ function Out() {
             $("#vegdinner").hide();
             $("#nonvegdinner").hide();
             $("#menuitem").hide();
-            $("#Item2_VegLunchCost").val("");
-            $("#Item2_NonVegLunchCost").val("");
-            $("#Item2_VegDinnerCost").val("");
-            $("#Item2_NonVegDinnerCost").val("");
-            $("#Item2_Menuwiththenoofitems").val("");
+            //$("#Item2_VegLunchCost").val("");
+            //$("#Item2_NonVegLunchCost").val("");
+            //$("#Item2_VegDinnerCost").val("");
+            //$("#Item2_NonVegDinnerCost").val("");
+            //$("#Item2_Menuwiththenoofitems").val("");
         }
     }
 //</script>
 
 //@*item enable/disable on food type selection*@
 //<script>
-    function itemsdisable1() {
-        var type1 = $("#Item2_VenueType").val();
-        var type2 = $("#Item2_Food").val(); 
-        if (type1 == 'Banquet Hall') {
-            if (type2 == 'Veg') {
-                $("#veglunch").show();
-                $("#nonveglunch").hide();
-                $("#vegdinner").show();
-                $("#nonvegdinner").hide();
-            }
-            else {
-                $("#veglunch").hide();
-                $("#nonveglunch").show();
-                $("#vegdinner").hide();
-                $("#nonvegdinner").show();
-            }
-        }
+    //function itemsdisable1() {
+    //    var type1 = $("#Item2_VenueType").val();
+    //    var type2 = $("#Item2_Food").val(); 
+    //    if (type1 == 'Banquet Hall') {
+    //        if (type2 == 'Veg') {
+    //            $("#veglunch").show();
+    //            $("#nonveglunch").hide();
+    //            $("#vegdinner").show();
+    //            $("#nonvegdinner").hide();
+    //        }
+    //        else {
+    //            $("#veglunch").hide();
+    //            $("#nonveglunch").show();
+    //            $("#vegdinner").hide();
+    //            $("#nonvegdinner").show();
+    //        }
+    //    }
         
-        else {
+    //    else {
             
-            $("#menuitem").hide();
-            $("#Item2_VegLunchCost").val("");
-            $("#Item2_NonVegLunchCost").val("");
-            $("#Item2_VegDinnerCost").val("");
-            $("#Item2_NonVegDinnerCost").val("");
-            $("#Item2_Menuwiththenoofitems").val("");
-        }
-    }
+    //        $("#menuitem").hide();
+    //        $("#Item2_VegLunchCost").val("");
+    //        $("#Item2_NonVegLunchCost").val("");
+    //        $("#Item2_VegDinnerCost").val("");
+    //        $("#Item2_NonVegDinnerCost").val("");
+    //        $("#Item2_Menuwiththenoofitems").val("");
+    //    }
+    //}
 //</script>
 
 

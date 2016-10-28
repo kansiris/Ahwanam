@@ -63,10 +63,11 @@ namespace MaaAahwanam.Web.Controllers
             var tupleModel = new Tuple<SP_dealsinfo_Result, Review>(Dealinfo, review);
             return View(tupleModel);
         }
-        public ActionResult WriteaRiview([Bind(Prefix = "Item2")] Review review)
+        public ActionResult WriteaRiview([Bind(Prefix = "Item2")] Review review,string did)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             review.UpdatedBy = (int)user.UserId;
+            //int did = Convert.ToInt32(Request.QueryString["did"]);
             review.Status = "Active";
             review.UpdatedDate = DateTime.Now;
             reviewService.InsertReview(review);

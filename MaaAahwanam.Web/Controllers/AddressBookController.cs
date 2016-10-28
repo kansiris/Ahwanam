@@ -16,7 +16,8 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            ViewBag.Type = ValidUserUtility.UserType();
+            //ViewBag.Type = ValidUserUtility.UserType();
+            ViewBag.Type = user.UserType;
             ViewBag.Addressbooklist = userAddBookService.GetUserAddBook((int)user.UserId);
             return View();
         }
