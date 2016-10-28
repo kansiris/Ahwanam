@@ -3,6 +3,10 @@
     Layout = "~/Views/SharedWeb/DashboardMaster.cshtml";
     var i = 0; var j = 0;
 }
+
+<script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
+<script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 @section Navigation
 {
     <div class="breads">
@@ -125,7 +129,7 @@
            
                 <h3>Products & Services</h3>
             <br/>
-                <table class="responsive"  id="table1" onload="load()"> 
+                <table class="responsive"  id="table1" > 
 
                     <thead>
                         <tr>
@@ -384,11 +388,13 @@
         }*@
     <!-- /dashboardList -->
 </div>
-@*<script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function () {
-            BootstrapDialog.alert('Welcom to MaaAahwanam DashBoard');
+            //BootstrapDialog.alert('Welcom to MaaAahwanam DashBoard');
+            $('#table1').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
+            $('#table2').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
         });
-    </script>*@
+    </script>
 <script>
             function redirect(obj, id, date,type) {
                 var abc = obj.trim();
@@ -402,7 +408,12 @@
 
             }
     </script>
-
+@*<script type="text/javascript">
+    window.onload = function () {
+        $('#table1').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
+        $('#table2').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
+    };
+</script>*@
     @*<script language="javascript">
         $(function() {
             $('#tablebody2').pagination({
