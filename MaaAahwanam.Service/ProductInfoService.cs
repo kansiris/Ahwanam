@@ -17,9 +17,9 @@ namespace MaaAahwanam.Service
         {
             return vendorsOthersRepository.getProductsInfo(vid,servicetype, Subvid);
         }
-        public SP_dealsinfo_Result getDealsInfo_Result(int vid, string servicetype, int Subvid)
+        public SP_dealsinfo_Result getDealsInfo_Result(int vid, string servicetype, int Subvid, int did)
         {
-            return vendorsOthersRepository.getDealInfo(vid, servicetype, Subvid);
+            return vendorsOthersRepository.getDealInfo(vid, servicetype, Subvid,did);
         }
     }
 }

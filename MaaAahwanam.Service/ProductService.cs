@@ -26,7 +26,10 @@ namespace MaaAahwanam.Service
         {
             return vendorsOthersRepository.GetSP_Deals_Result(Param, VID, servicetypesType, servicetypeloc, servicetypeorder);
         }
-
+        public List<sp_indexdeals_Result> gettopdealsservice(string type)
+        {
+            return vendorsOthersRepository.gettopdeals(type);
+        }
         public List<getservicetype_Result> Getservicetype_Result(string Param)
         {
             return vendorsOthersRepository.Getservicetype_Result(Param);

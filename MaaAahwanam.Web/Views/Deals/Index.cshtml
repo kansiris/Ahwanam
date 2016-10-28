@@ -165,7 +165,7 @@
                                             <div class="deals-main" id="main">
                                                 <div class="deal">
                                                     <div class="deal-thumb">
-                                                        <a href="../DealInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid">
+                                                        <a href="../DealInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid&did=@item.DealID">
                                                             <div class="zoomDiv">
                                                                 @* <a href="../Dealinfo?par=@item.ServicType.Trim()&VID=@item.Id">*@
                                                                 @if (item.image != null)
@@ -206,7 +206,7 @@
                                                                 <span class="price">Rs. @item.DealServicePrice</span>
                                                             }
                                                             <span class="buy">
-                                                                <a href="../DealInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid"><i class="ti-shopping-cart"></i> Add to Cart</a>
+                                                                <a href="../DealInfo?par=@item.ServicType.Trim()&VID=@item.Id&subvid=@item.subid&did=@item.DealID"><i class="ti-shopping-cart"></i> Add to Cart</a>
                                                             </span>
                                                         </div>
                                                         <p style="color:#838383 ;width: 200px;  white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;">@item.Description</p>
@@ -279,7 +279,7 @@
             //}
             $("#abc").hide();
             $("#imgloadergifdiv").hide();
-            if(@Model.Count==0)
+            if(@Model.Count==0 || @Model.Count <=9)
             {
                 $("#LoadMore1").hide();
             }
@@ -349,7 +349,7 @@
                         {
                             //alert('Yes3');
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'&subvid='+value.subid+'&did='+value.DealID+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                         }
@@ -357,7 +357,7 @@
                         {
                             //alert('no');
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'&subvid='+value.subid+'&did='+value.DealID+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                         }
@@ -369,7 +369,7 @@
                         if(hdncosttype=='Catering' || hdncosttype=='Venue' || hdncosttype=='InvitationCard')
                         {
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'&subvid='+value.subid+'&did='+value.DealID+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price"></span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                             $("#LoadMore1").hide();
@@ -377,7 +377,7 @@
                         else
                         {
                             $.each(data, function (key, value) {
-                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
+                                $("#PhotographersDiv").append('<div class="deals-main"> <div class="deal"> <div class="deal-thumb"> <a href="../Dealinfo?par='+value.ServicType+'&VID='+value.Id+'&subvid='+value.subid+'&did='+value.DealID+'"> <div class="zoomDiv"> <img src="/vendorimages/' + value.image + '" alt="thumb"> <div class="deal-mask"> <span class="pic_img"><i class="ti-image"></i></span> </div> </div> </a> </div> <div class="deal-details"> <h4 style="font-size: 15px; font-weight:bold; color: #2d3e52; font-family: Helvetica,sans-serif; ">' + value.BusinessName + '</h4> <div class="amount"> <span class="price">Rs. ' + value.Cost + '</span> <span class="buy"> <a href="../Dealinfo?par=Venue&ID=101"><i class="ti-shopping-cart"></i> Add to Cart</a> </span> </div> <span style="color:#838383">' + value.Description + '</span> <div class="deal-footer"> <ul> <li><div class="rate" data-rate-value=5></div></li> <li><i class="ti-comment-alt"></i> 1362</li> <li><i class="ti-eye"></i> 1500</li> </ul> </div> </div> </div> </div>');
                                 document.getElementById("hiddenlastrecord").value = value.Id;
                             });
                             $("#LoadMore1").hide();

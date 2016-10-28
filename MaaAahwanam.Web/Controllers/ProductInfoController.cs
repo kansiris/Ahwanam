@@ -41,11 +41,12 @@ namespace MaaAahwanam.Web.Controllers
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Svid);
             if (Productinfo != null)
             {
-                string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
-                ViewBag.Imagelist = imagenameslist;
-                //var list = vendorVenueService.GetVendorVenue(vid, Svid);
-                //ViewBag.venuetype = list.VenueType;
-                //ViewBag.servicecost = list.ServiceCost;
+                if (Productinfo.image != null)
+                {
+                    string[] imagenameslist = Productinfo.image.Replace(" ", "").Split(',');
+                    ViewBag.Imagelist = imagenameslist;
+                }
+                
             }
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);

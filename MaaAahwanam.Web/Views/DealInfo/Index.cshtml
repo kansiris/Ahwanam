@@ -294,6 +294,18 @@
                                     <dd>
                                         @Model.Item1.DealEndDate.Value.ToShortDateString()
                                     </dd>
+                                    @if (ViewBag.venuetype != "Banquet Hall")
+                                    {
+                                    <dt>Actual Price: </dt>
+                                    <dd>
+                                        <h2>Rs. @Model.Item1.ActualServiceprice</h2>
+                                    </dd>
+                                    
+                                    <dt>Discount : </dt>
+                                    <dd>
+                                        @ViewBag.discountvalue %;
+                                    </dd>
+                                    }
                                     <dt><p id="lblprice"></p></dt>
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
@@ -318,7 +330,7 @@
                                         @if (ViewBag.venuetype == "Banquet Hall")
                                         {
                                         <div class="radioButtons" id="radio-demo">
-                                            <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
+                                            @*<input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
                                             <label for="vlvenue">Veg lunch Per plate cost @Model.Item1.cost/-</label><br />
 
                                             <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
@@ -328,8 +340,30 @@
                                             <label for="vdvenue">Veg Dinner Per plate cost @Model.Item1.cost2/-</label><br />
 
                                             <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
-                                            <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>
+                                            <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>*@
+                                            @*<table style="border-style:groove;width:500px">
+                                                <tr>
+                                                    <td>
+                                                        <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked><label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost/-</label>  <input type="text" style="display:none" /> <label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost4/-</label><br />
+                                                    </td>
+                                                    @*<td>
+                                                        <label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost4/-</label><br />
+                                                    </td>
+                                                </tr>
+                                            </table>*@
+                                            <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>  
+                                            <label for="vlvenue">Veg lunch Per plate  Deal Price Rs.@Model.Item1.cost/- <br/> Actual cost Rs.@Model.Item1.cost4/- </label>   @*--  <label for="vlvenue">Actual cost Rs.@Model.Item1.cost4/-</label><br />*@
+
+                                            <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
+                                            <label for="nvlvenue">Non veg lunch Per plate Deal price Rs.@Model.Item1.cost1/- <br/> Actual cost Rs.@Model.Item1.cost5/-</label>  @*--  <label for="nvlvenue">Actual cost Rs.@Model.Item1.cost5/-</label><br />*@
+
+                                            <input type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2>
+                                            <label for="vdvenue">Veg Dinner Per plate Deal price Rs.@Model.Item1.cost2/- <br/> Actual cost Rs.@Model.Item1.cost6/-</label>  @*--  <label for="vdvenue">Actual cost Rs.@Model.Item1.cost6/-</label><br />*@
+
+                                            <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
+                                            <label for="nvdvenue">Non Veg Dinner Per plate Deal price Rs.@Model.Item1.cost3/- <br/> Actual cost Rs.@Model.Item1.cost7/-</label>  @*--  <label for="nvdvenue">Actual cost Rs.@Model.Item1.cost7/-</label>*@
                                         </div>
+                                        
                                         }
                                         else
                                         {
@@ -337,12 +371,21 @@
                                         <div class="price_details">
                                             <dl>
                                                 <dd>
-                                                    <input type="radio" id="vlvenue" name="platetypevenue" value=@ViewBag.servicecost checked style="display:none">
+                                                    <input type="radio" id="vlvenue" name="platetypevenue"  value ="@Model.Item1.DealServiceprice" checked style="display:none"> @*value=@ViewBag.servicecost*@
                                                     @*<p name="platetypevenue" value=@Model.Item1.cost2 style="color:#8ca436;font-size:20px"> </p>*@
                                                 </dd>
                                             </dl>
                                         </div>
                                         }
+                                        @*<div class="deal_save" style="float:right">
+                                            <label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost4/-</label><br />
+
+                                            <label for="nvlvenue">Non veg lunch Per plate cost Rs.@Model.Item1.cost5/-</label><br />
+
+                                            <label for="vdvenue">Veg Dinner Per plate cost Rs.@Model.Item1.cost6/-</label><br />
+
+                                            <label for="nvdvenue">Non Veg Dinner Per plate cost Rs.@Model.Item1.cost7/-</label>
+                                        </div>*@
                                     </fieldset>
                                     <input type="hidden" id="rbselectedvalue" value="vlvenue" />
                                     <input type="hidden" id="hdnsubid" value=@ViewBag.Subvid />
@@ -392,10 +435,10 @@
                                     <br /> <fieldset>
                                         <div class="radioButtons" id="radio-demo">
                                             <input type="radio" id="vlCatering" name="platetypeCatering" value=@Model.Item1.cost checked>
-                                            <label for="vlCatering">Veg Per plate cost @Model.Item1.cost/-</label><br />
+                                            <label for="vlCatering">Veg Per plate Deal Price Rs.@Model.Item1.cost/- <br/>  Actual Price Rs.@Model.Item1.cost4</label><br />
 
                                             <input type="radio" id="nvlCatering" name="platetypeCatering" value=@Model.Item1.cost1>
-                                            <label for="nvlCatering"> Non veg Per plate cost @Model.Item1.cost1/-</label>
+                                            <label for="nvlCatering"> Non veg Per plate Deal Price Rs.@Model.Item1.cost1/- <br/> Actual price @Model.Item1.cost5 </label>
                                         </div>
                                     </fieldset>
 
@@ -435,7 +478,7 @@
                                     <label>Number of gifts<span>*</span></label>
                                     <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:0px; " id="txtquantityGift" value="10" placeholder="Enter Quantity" onchange="OnchangequantityGift()" /><br>
                                     <br />
-                                    <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.DealServiceprice checked> Gift cost @Model.Item1.DealServiceprice/-<br>
+                                    <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.DealServiceprice checked> Gift Deal price Rs.@Model.Item1.DealServiceprice/-<br> Actual Price Rs.@Model.Item1.ActualServiceprice
                                     <br />
                                 </form>
                             </div>
@@ -473,9 +516,9 @@
                                     <br /><br />
                                     <div class="radioButtons" id="radio-demo">
                                         <input type="radio" id="vlinvitation" name="platetypeinvitation" value=@Model.Item1.cost checked />
-                                        <label for="vlinvitation"> Card cost Rs. @Model.Item1.cost/-</label><br /><br />
+                                        <label for="vlinvitation"> Card cost Deal Price Rs. @Model.Item1.cost/- <br/> Actual price Rs. @Model.Item1.cost4</label><br /><br />
                                         <input type="radio" id="nvlinvitation" name="platetypeinvitation" value=@Model.Item1.cost1 />
-                                        <label for="nvlinvitation"> Card cost with print Rs. @Model.Item1.cost1/-</label><br />
+                                        <label for="nvlinvitation"> Card cost with print Deal Price Rs. @Model.Item1.cost1/- <br /> Actual price Rs.@Model.Item1.cost5</label><br />
                                         <br />
                                     </div>
 

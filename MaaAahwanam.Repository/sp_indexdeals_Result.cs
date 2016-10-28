@@ -11,19 +11,19 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class SP_Deals_Result
+    public partial class sp_indexdeals_Result
     {
         public long Id { get; set; }
         public string BusinessName { get; set; }
         public string City { get; set; }
         public string Description { get; set; }
         public string ServicType { get; set; }
-        public decimal Cost { get; set; }
+        public decimal cost { get; set; }
         public long subid { get; set; }
         public string subtype { get; set; }
+        public Nullable<long> Servicecost { get; set; }
         public Nullable<decimal> DealServicePrice { get; set; }
         public long DealID { get; set; }
-        public long Servicecost { get; set; }
         public string image { get; set; }
     }
 }

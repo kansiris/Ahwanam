@@ -29,6 +29,10 @@ namespace MaaAahwanam.Repository.db
             //maaAahwanamEntities.get
             return maaAahwanamEntities.SP_Deals(parameters, VID, servicetypesType, servicetypeloc, servicetypeorder).ToList();
         }
+        public List<sp_indexdeals_Result> gettopdeals(string type)
+        {
+            return maaAahwanamEntities.sp_indexdeals(type).ToList();
+        }
         public List<getservicetype_Result> Getservicetype_Result(string parameters)
         {
             return maaAahwanamEntities.getservicetype(parameters).ToList();
@@ -44,9 +48,9 @@ namespace MaaAahwanam.Repository.db
             var a= maaAahwanamEntities.GetProductsInfo(vid,servicetype, Subvid).FirstOrDefault();
             return a;
         }
-        public SP_dealsinfo_Result getDealInfo(int vid, string servicetype, int Subvid)
+        public SP_dealsinfo_Result getDealInfo(int vid, string servicetype, int Subvid,int did)
         {
-            var a = maaAahwanamEntities.SP_dealsinfo(vid, servicetype, Subvid).FirstOrDefault();
+            var a = maaAahwanamEntities.SP_dealsinfo(vid, servicetype, Subvid,did).FirstOrDefault();
             return a;
         }
     }

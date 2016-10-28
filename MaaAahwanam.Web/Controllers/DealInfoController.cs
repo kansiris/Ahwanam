@@ -33,13 +33,14 @@ namespace MaaAahwanam.Web.Controllers
             string Servicetype = Request.QueryString["par"];
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
             int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
+            int did = Convert.ToInt32(Request.QueryString["did"]);
             ViewBag.Subvid = Svid;
             if (Servicetype == "Travel&Accomadation")
             {
                 Servicetype = "Travel";
             }
            
-            SP_dealsinfo_Result Dealinfo = productInfoService.getDealsInfo_Result(vid, Servicetype, Svid);
+            SP_dealsinfo_Result Dealinfo = productInfoService.getDealsInfo_Result(vid, Servicetype, Svid,did);
             ViewBag.discountvalue = 10.00;
             if (Dealinfo.ActualServiceprice != 0 && Dealinfo.DealServiceprice != 0)
             { 

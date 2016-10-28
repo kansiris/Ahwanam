@@ -28,6 +28,10 @@ namespace MaaAahwanam.Repository
         public Nullable<decimal> cost1 { get; set; }
         public Nullable<decimal> cost2 { get; set; }
         public Nullable<decimal> cost3 { get; set; }
+        public Nullable<decimal> cost4 { get; set; }
+        public Nullable<decimal> cost5 { get; set; }
+        public Nullable<decimal> cost6 { get; set; }
+        public Nullable<decimal> cost7 { get; set; }
         public Nullable<decimal> ActualServiceprice { get; set; }
         public Nullable<decimal> DealServiceprice { get; set; }
         public Nullable<System.DateTime> DealStartDate { get; set; }
