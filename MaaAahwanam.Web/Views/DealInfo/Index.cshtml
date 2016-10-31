@@ -113,7 +113,7 @@
 <section>
     <div class="about_main">
         <div class="pageWidth">
-
+            <input type="hidden" id="hdndealid" value="@Request.QueryString["did"]" />
             <div class="deal_info_main">
                 <div class="deal-info">
                     <div class="deal-slider">
@@ -1052,11 +1052,13 @@
         function OnchangequantityCatering() {
             var b;
             var a = document.getElementById("txtquantityCatering").value;
+           
             if (document.getElementById("vlCatering").checked) {
+               
                 document.getElementById("demoCatering").innerHTML = document.getElementById("vlCatering").value * a;
             }
-            else if (document.getElementById("nvlvenue").checked) {
-                document.getElementById("demovenue").innerHTML = document.getElementById("nvlCatering").value * a;
+            else if (document.getElementById("nvlCatering").checked) {
+                document.getElementById("demoCatering").innerHTML = document.getElementById("nvlCatering").value * a;
             }
         }
 
@@ -1298,15 +1300,16 @@
             orderRequest.State = EState;
             orderRequest.EventDates = EventDates;
             orderRequest.subid = g;
+            var did=@Request.QueryString["did"];
             //alert(document.getElementById("txtquantityvenue").value);
 
             //alert(document.getElementById("btnname").value);
             if (document.getElementById("btnname").value == "addtocartbtn") {
                 $.ajax({
                     type: "POST",
-                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/Addtocart',
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/Addtocart?did='+did+'',
                     data: {},
-                    data: JSON.stringify(orderRequest),
+                    data: JSON.stringify(orderRequest),did,
                     // data: sendInfo,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -1337,7 +1340,7 @@
                 //alert('ss');
                 $.ajax({
                     type: "POST",
-                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/Buynow',
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/DealInfo/Buynow?did='+did+'',
                     data: {},
                     data: JSON.stringify(orderRequest),
                     //data: sendInfo,

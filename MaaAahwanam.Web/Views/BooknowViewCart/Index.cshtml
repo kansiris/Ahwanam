@@ -52,11 +52,23 @@
         {
             <tr>
                 <td>
-                    <div class="item-img"><img src="~/vendorimages/@item.image" alt="item-img" /></div>
-                    <div class="item-details">
-                        @*<h4>@item.Description</h4>*@
-                        <p style="width: 150px; font-weight:bold;overflow:hidden;line-height:1.5em;height:3em;">@item.Description</p>
-                    </div>
+                    @if (item.Isdeal == false)
+                    {
+                        <div class="item-img"><a href="../ParticularOrder?par=@item.ServicType&VID=@item.VendorId&subvid=@item.subid"><img src="~/vendorimages/@item.image" alt="item-img" /></a></div>
+                        <div class="item-details">
+                            @*<h4>@item.Description</h4>*@
+                            <a href="../ParticularOrder?par=@item.ServicType&VID=@item.VendorId&subvid=@item.subid"><p style="width: 150px; font-weight:bold;overflow:hidden;line-height:1.5em;height:3em;">@item.Description</p></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item-img"><a href="#"><img src="~/vendorimages/@item.image" alt="item-img" /></a></div>
+                        <div class="item-details">
+                            @*<h4>@item.Description</h4>*@
+                            <a href="#"><p style="width: 150px; font-weight:bold;overflow:hidden;line-height:1.5em;height:3em;">@item.Description</p></a>
+                        </div>
+                    }
+                    
                     <div class="clear"></div>
                     @*<div class="item-btns"> <a href="#" class="btn-small btn-green"><i class="ti-rocket"></i>Deliver More</a> <a href="#" class="btn-small btn-delete"><i class="ti-trash"></i>Delete</a> </div>*@
                 </td>

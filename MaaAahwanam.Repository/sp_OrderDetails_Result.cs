@@ -24,6 +24,9 @@ namespace MaaAahwanam.Repository
         public string image { get; set; }
         public decimal PerunitPrice { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public bool Isdeal { get; set; }
+        public long VendorId { get; set; }
+        public long subid { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public string StartTime { get; set; }
     }

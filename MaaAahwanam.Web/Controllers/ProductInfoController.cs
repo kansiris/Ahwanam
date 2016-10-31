@@ -155,6 +155,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.Status = "Active";
             orderDetail.UpdatedDate = DateTime.Now;
             orderDetail.UpdatedBy = user.UserId;
+            orderDetail.subid = orderRequest.subid;
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
 

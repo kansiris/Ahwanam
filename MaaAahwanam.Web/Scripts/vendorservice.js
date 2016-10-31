@@ -30,11 +30,11 @@
             }
          
             //alert(op);
-            $("#veglunch").hide(); 
-            $("#nonveglunch").hide();
-            $("#vegdinner").hide();
-            $("#nonvegdinner").hide(); 
-            $("#menuitem").hide();
+            //$("#veglunch").hide(); 
+            //$("#nonveglunch").hide();
+            //$("#vegdinner").hide();
+            //$("#nonvegdinner").hide(); 
+            //$("#menuitem").hide();
             //var stat = up.contains("vid");
             //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
             if (op == 'display') {

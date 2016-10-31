@@ -75,7 +75,7 @@ namespace MaaAahwanam.Web.Controllers
 
             //return RedirectToAction("Index", "Signin");
         }
-        public JsonResult Addtocart(OrderRequest orderRequest)
+        public JsonResult Addtocart(OrderRequest orderRequest,string did)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             CartItem cartItem = new CartItem();
@@ -89,6 +89,8 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.subid = orderRequest.subid;
             cartItem.attribute = orderRequest.attribute;
             cartItem.Isdeal = true;
+            cartItem.DealId = long.Parse(did);
+
             CartService cartService = new CartService();
             cartItem = cartService.AddCartItem(cartItem);
             EventInformation eventInformation = new EventInformation();
@@ -124,7 +126,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message3);
         }
         [Authorize]
-        public JsonResult Buynow(OrderRequest orderRequest)
+        public JsonResult Buynow(OrderRequest orderRequest,string did)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
 
@@ -162,6 +164,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.UpdatedDate = DateTime.Now;
             orderDetail.UpdatedBy = user.UserId;
             orderDetail.Isdeal = true;
+            orderDetail.DealId = long.Parse(did);
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
 

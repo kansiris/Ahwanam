@@ -27,5 +27,6 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedDate { get; set; }
         public long subid { get; set; }
         public bool Isdeal { get; set; }
+        public long DealId { get; set; }
     }
 }

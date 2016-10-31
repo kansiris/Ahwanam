@@ -29,5 +29,6 @@ namespace MaaAahwanam.Models
         public long OrderNo { get; set; }
         public long subid { get; set; }
         public bool Isdeal { get; set; }
+        public long DealId { get; set; }
     }
 }

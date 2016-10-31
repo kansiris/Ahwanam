@@ -23,6 +23,7 @@ namespace MaaAahwanam.Repository
         public string ServicType { get; set; }
         public long CartId { get; set; }
         public bool Isdeal { get; set; }
+        public long DealId { get; set; }
         public string image { get; set; }
         public decimal TotalPrice { get; set; }
         public string attribute { get; set; }
