@@ -163,6 +163,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.Status = "Active";
             orderDetail.UpdatedDate = DateTime.Now;
             orderDetail.UpdatedBy = user.UserId;
+            orderDetail.subid = orderRequest.subid;
             orderDetail.Isdeal = true;
             orderDetail.DealId = long.Parse(did);
             orderdetailsServices.SaveOrderDetail(orderDetail);

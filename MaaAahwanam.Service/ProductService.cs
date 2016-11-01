@@ -17,6 +17,10 @@ namespace MaaAahwanam.Service
             return vendorsOthersRepository.GetProducts_Results(Param,VID,servicetypesType,servicetypeloc,servicetypeorder);
         }
 
+        public List<ProductsDisplay_Result> ProductsDisplay(string Param, int VID, string servicetypesType, string servicetypeloc, string servicetypeorder)
+        {
+            return vendorsOthersRepository.ProductsDisplay(Param, VID, servicetypesType, servicetypeloc, servicetypeorder);
+        }
         //public List<sampleproc_Result> sampleproc(string VID)
         //{
         //    return vendorsOthersRepository.sampleproc( VID);

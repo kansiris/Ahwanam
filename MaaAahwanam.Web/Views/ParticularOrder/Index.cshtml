@@ -1,8 +1,245 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-    //Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
+    Layout = "~/Views/SharedWeb/MainMaster.cshtml";
 }
 
-<h2>Page Under Development</h2>
+<section>
+    <div class="about_main">
+        <div class="pageWidth">
+
+            <div class="deal_info_main">
+                <div class="deal-info">
+                    <div class="deal-slider">
+                        <div class="sp-loading">
+                            <img src="../CSSWeb/images/sp-loading.gif" alt="">
+                            <br>
+                            LOADING IMAGES
+                        </div>
+                        @*<div class="zoomDiv">*@
+                        <div class="sp-wrap">
+                            @if (ViewBag.Imagelist != null)
+                            {
+                                foreach (var item in ViewBag.Imagelist)
+                                {
+                                    <a href="~/vendorimages/@item"> <img src="~/vendorimages/@item" alt="thumb"></a>
+                                }
+                            }
+                            else if (ViewBag.Imagelist == null)
+                            {
+                                <a href="#" onclick="return false">
+                                    <img src="~/noimages.png" />
+                                </a>
+                            }
+                        </div>
+                        @*</div>*@
+
+                    </div>
+                    <div class="deal-desc">
+                        <div class="review-area">
+                            <ul>
+                                <li>
+                                    <div class="rate" data-rate-value=4></div>
+                                    &nbsp;53
+                                </li>
+                                <li>
+                                    <a href="#review" class="move_review text-green"><i class="ti-comment-alt text-green"></i> Reviews @ViewBag.Reviewlist.Count</a>
+                                </li>
+                                @*@if (ViewBag.Userloginstatus != 0)
+                                {
+                                    <li class="text-red">
+                                        <a href="#writeReview" class="text-red popup-with-move-anim"><i class="ti-pencil-alt text-red"></i> Write a Review</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="text-red">
+                                        <a href="../Signin/Index" class="text-red"><i class="ti-pencil-alt text-red"></i> Write a Review</a>
+                                    </li>
+                                }*@
+                            </ul>
+                        </div>
+                        <div class="product_review" id="dviAddressService">
+                            <h4>Location</h4>
+                            <p>@Model.Item1.Landmark,@Model.Item1.Address,@Model.Item1.City,@Model.Item1.State</p>
+                        </div>
+                        <div class="product_review">
+                            <h4>Description</h4>
+                            <p class="comment">@Model.Item1.Description</p>
+                        </div>
+                        
+                        @*Calculation General Div*@
+                        <div class="deal_price" id="Calcdiv_General">
+                            <div class="price_details">
+                                
+                                    
+                                    
+    @if (ViewBag.deal != null || ViewBag.deal != "")
+    {
+        <div class="price_details">
+            <dl>
+                @*<dt>Actual Price: </dt>
+                <dd>
+                    <h2>Rs. @Model.Item1.ActualServiceprice</h2>
+                </dd>
+                <dt>Discount : </dt>
+                <dd>
+                    @ViewBag.discountvalue %;
+                </dd>*@
+                <dt>Deal StartDate: </dt>
+                <dd>
+                    @Model.Item1.DealStartDate.ToShortDateString()
+                </dd>
+                <dt>Deal EndDate: </dt>
+                <dd>
+                    @Model.Item1.DealEndDate.ToShortDateString()
+                </dd>
+                @foreach (var item in ViewBag.price)
+                {
+                <dl>
+                    <dd>
+                    <dt>Order Price: </dt>
+                    <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
+                    <dt>
+                        <p id="demoGeneral" style="color:#8ca436;font-size:20px">
+                            @item.PerunitPrice
+                        </p>
+                    </dt>
+                    </dd>
+                </dl>
+                }
+                
+            </dl>
+            <form name="myFormother">
+                <label style="display:none">Number of items<span>*</span></label>
+                <input type="hidden" id="hmin" name="Minvalue" value="10">
+                <input type="hidden" id="hmax" name="Maxvalue" value="50">
+                <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:50px;" type="text" id="txtquantityother" value="10" placeholder="Enter Quantity" onchange="Onchangequantityother()" /><br>
+                @*<input style="display:none;" type="radio" id="vlother" name="platetypeother" value="500" checked> item cost @Model.Item1.cost/-<br>*@
+            </form>
+        </div>
+    }
+    else
+    {
+        foreach (var item in ViewBag.price)
+        {
+            <dl>
+                <dd>
+                <dt>Order Price: </dt>
+                <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
+                <dt>
+                    <p id="demoGeneral" style="color:#8ca436;font-size:20px">
+                        @item.PerunitPrice
+                    </p>
+                </dt>
+                </dd>              
+            </dl>
+        }
+    }
+
+                               
+
+                            </div>
+                            
+                        </div>
+                        
+                        <input type="hidden" id="stype" name="Minvalue" value=@ViewBag.servicetype>
+                        
+                    </div>
+                    <div class="clear"></div>
+
+                    <div class="deal_amenties">
+                        <div class="dashboardList">
+                            <table class="responsive">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <h2>Emenities</h2>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Brand : Canon - DSLR </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Model ID: EOS1200D Kit(EF S18-55 IS II+55-250mm IS II) with 8 GB Card & Bag </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shutter Speed in other Modes: Bulb, X-sync at 1/200 sec </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Continuous Shots: Yes, 3.0 Shots/sec </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Drive Modes: Single, Continuous, Self-timer </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maximum Burst: JPEG: 69 Shots, RAW: 6 Shots, RAW + JPEG: 4 Shots</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temperature: 0° C - 40°C </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Live View Shooting : Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Image Format: JPEG, RAW, RAW + JPEG </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="deal_reviews_all">
+                        <div class="dashboardList all_reviews" id="review">
+                            <table class="responsive">
+
+                                @if (ViewBag.Reviewlist.Count != 0)
+                                {
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h2>Most Popular Reviews</h2>
+                                                @*<a href="#">View All Reviews</a>*@
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var reviewitem in ViewBag.Reviewlist)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="review_title">
+                                                        <h5>@reviewitem.FirstName</h5>
+                                                        <small>@reviewitem.UpdatedDate</small>
+                                                    </div>
+                                                    <div class="review_rate">
+                                                        <div class="rate" data-rate-value=3></div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                    <p>@reviewitem.Comments</p>
+                                                    <p>
+                                                        Was this review helpful to you?
+                                                        <a href="#" class="text-green"><i class="ti-thumb-up text-green"></i> Yes</a> &nbsp;
+                                                        <a href="#" class="text-red"><i class="ti-thumb-down text-red"></i> No</a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
+                            </table>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</section>
 

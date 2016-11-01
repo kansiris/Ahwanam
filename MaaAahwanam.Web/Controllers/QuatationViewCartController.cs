@@ -17,7 +17,8 @@ namespace MaaAahwanam.Web.Controllers
         static string serviceid;
         public ActionResult Index(string id,string rid)
         {
-            
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            ViewBag.Type = user.UserType;
             if (id != null)
             {
                 var record = dashBoardService.GetServiceDetailService(long.Parse(id));
@@ -26,7 +27,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.commentscount = dashBoardService.GetServiceComments(long.Parse(id)).Count;
                 ViewBag.id = id;
                 serviceid = id;
-                ViewBag.type = dashBoardService.GetServiceType(long.Parse(id));
+                ViewBag.servicetype = dashBoardService.GetServiceType(long.Parse(id));
             }
             if ( rid != null)
             {
@@ -36,7 +37,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.rid = rid;
                 ViewBag.comments = dashBoardService.GetQuotationComments(long.Parse(rid)).OrderByDescending(m => m.UpdatedDate);
                 ViewBag.commentscount = dashBoardService.GetQuotationComments(long.Parse(rid)).Count;
-                ViewBag.type = dashBoardService.GetServiceType(long.Parse(serviceid));
+                ViewBag.servicetype = dashBoardService.GetServiceType(long.Parse(serviceid));
             }
             return View();
         }

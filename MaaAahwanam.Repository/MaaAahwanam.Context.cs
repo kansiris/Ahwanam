@@ -331,6 +331,31 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     
+        public virtual ObjectResult<ProductsDisplay_Result> ProductsDisplay(string nType, Nullable<int> vID, string stype, string landmark, string order)
+        {
+            var nTypeParameter = nType != null ?
+                new ObjectParameter("nType", nType) :
+                new ObjectParameter("nType", typeof(string));
+    
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            var stypeParameter = stype != null ?
+                new ObjectParameter("stype", stype) :
+                new ObjectParameter("stype", typeof(string));
+    
+            var landmarkParameter = landmark != null ?
+                new ObjectParameter("Landmark", landmark) :
+                new ObjectParameter("Landmark", typeof(string));
+    
+            var orderParameter = order != null ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductsDisplay_Result>("ProductsDisplay", nTypeParameter, vIDParameter, stypeParameter, landmarkParameter, orderParameter);
+        }
+    
         public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
         {
             var orderByParameter = orderBy.HasValue ?

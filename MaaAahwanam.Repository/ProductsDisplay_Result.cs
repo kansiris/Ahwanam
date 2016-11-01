@@ -11,25 +11,17 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class sp_OrderDetails_Result
+    public partial class ProductsDisplay_Result
     {
         public long Id { get; set; }
         public string BusinessName { get; set; }
-        public string Description { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
         public string Landmark { get; set; }
-        public string ContactNumber { get; set; }
+        public string Description { get; set; }
         public string ServicType { get; set; }
-        public string image { get; set; }
-        public decimal PerunitPrice { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public bool Isdeal { get; set; }
-        public long VendorId { get; set; }
+        public decimal Cost { get; set; }
         public long subid { get; set; }
-        public long orderdetailid { get; set; }
-        public long DealId { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public string StartTime { get; set; }
+        public string subtype { get; set; }
+        public long Servicecost { get; set; }
+        public string image { get; set; }
     }
 }

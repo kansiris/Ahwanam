@@ -116,5 +116,12 @@ namespace MaaAahwanam.Service
         {
             return dashBoardRepository.UpdateService(id);
         }
+
+        public List<OrderDetail> GetPrice(long id)
+        {
+            return dashBoardRepository.GetPrice(id);
+        }
+
+
     }
 }

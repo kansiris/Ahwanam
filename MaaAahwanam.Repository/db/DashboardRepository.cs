@@ -139,5 +139,11 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return serviceRequest;
         }
+
+        public List<OrderDetail> GetPrice(long id)
+        {
+            return _dbContext.OrderDetail.Where(m => m.OrderDetailId == id).ToList();
+        }
+
     }
 }

@@ -2462,7 +2462,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                 }
             }
-            if (Command == "add")
+            if (Command == "Add New")
             {
                 vendorVenue.UpdatedBy = user.UserId;
                 vendorMaster.UpdatedBy = user.UserId;
@@ -2470,7 +2470,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 vendorVenue = vendorVenueService.AddNewVenue(vendorVenue, vendorMaster);
                 VendorImage vendorImage = new VendorImage();
                 vendorImage.VendorId = vendorVenue.Id;
-                vendorImage.UpdatedBy = ValidUserUtility.ValidUser();
+                vendorImage.UpdatedBy = user.UserId;
                 //const string imagepath = @"/vendorimages";
                 if (Request.Files.Count <= 10)
                 {

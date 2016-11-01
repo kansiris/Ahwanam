@@ -83,16 +83,6 @@ namespace MaaAahwanam.Service
             vendorMaster.Status = "Active";
             vendorMaster.UpdatedDate = DateTime.Now;
             vendorMaster.ServicType = "Venue";
-            if (vendorVenue.Food == "Veg")
-            {
-                vendorVenue.NonVegLunchCost = 0;
-                vendorVenue.NonVegDinnerCost = 0;
-            }
-            else if (vendorVenue.Food == "Non-Veg")
-            {
-                vendorVenue.VegLunchCost = 0;
-                vendorVenue.VegDinnerCost = 0;
-            }
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster,masterid);
             vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue,masterid,vid);
             return vendorVenue;
