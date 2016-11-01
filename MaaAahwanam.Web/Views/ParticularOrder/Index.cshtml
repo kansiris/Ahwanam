@@ -74,7 +74,7 @@
                                 
                                     
                                     
-    @if (ViewBag.deal != null || ViewBag.deal != "")
+    @if (ViewBag.deal != null && ViewBag.deal != "")
     {
         <div class="price_details">
             <dl>
@@ -88,11 +88,25 @@
                 </dd>*@
                 <dt>Deal StartDate: </dt>
                 <dd>
-                    @Model.Item1.DealStartDate.ToShortDateString()
+                    @if (Model.Item1.DealStartDate != null)
+                    {
+                        @Model.Item1.DealStartDate.ToShortDateString()
+                    }
+                    else
+                    {
+                        <p>Not Available</p>
+                    }
                 </dd>
                 <dt>Deal EndDate: </dt>
                 <dd>
-                    @Model.Item1.DealEndDate.ToShortDateString()
+                    @if (Model.Item1.DealEndDate != null)
+                    {
+                        @Model.Item1.DealEndDate.ToShortDateString()
+                    }
+                    else
+                    {
+                        <p>Not Available</p>
+                    }
                 </dd>
                 @foreach (var item in ViewBag.price)
                 {
