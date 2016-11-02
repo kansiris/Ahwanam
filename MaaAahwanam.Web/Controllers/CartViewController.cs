@@ -73,13 +73,17 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.Status = "Active";
                 orderDetail.UpdatedDate = DateTime.Now;
                 orderDetail.UpdatedBy = user.UserId;
-                orderDetail = orderdetailsServices.SaveOrderDetail(orderDetail);
+                orderDetail.Isdeal = true;
                 if (i == 0)
                 {
+                    orderDetail.DealId = orderRequest.Cartitems[0].DealId;
+                    orderDetail = orderdetailsServices.SaveOrderDetail(orderDetail);
                     eventsService.updateeventodid(orderRequest.Cartitems[0].CartId,orderDetail.OrderDetailId);
                 }
                 else
                 {
+                    orderDetail.DealId = orderRequest.Cartitems[i].DealId;
+                    orderDetail = orderdetailsServices.SaveOrderDetail(orderDetail);
                     eventsService.updateeventodid(orderRequest.Cartitems[i].CartId, orderDetail.OrderDetailId);
                 }
                 i++;
