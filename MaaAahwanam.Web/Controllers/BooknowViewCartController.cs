@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -13,6 +14,9 @@ namespace MaaAahwanam.Web.Controllers
         Payment_orderServices payment_orderServices = new Payment_orderServices();
         public ActionResult Index(string id)
         {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            //ViewBag.Type = ValidUserUtility.UserType();
+            ViewBag.Type = user.UserType;
             if (id != null)
             {
                 var data  = dashBoardService.GetOrderDetailService(long.Parse(id));

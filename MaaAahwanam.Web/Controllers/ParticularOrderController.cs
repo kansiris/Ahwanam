@@ -46,7 +46,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.price = dashBoardService.GetPrice(oid);
             if (dealid != null && dealid != "")
             {
-                ViewBag.deal = 1;
+                ViewBag.deal = "1";
                 SP_dealsinfo_Result Dealinfo = productInfoService.getDealsInfo_Result(vid, Servicetype, Svid, int.Parse(dealid));
                 ViewBag.discountvalue = 10.00;
                 if (Dealinfo.ActualServiceprice != 0 && Dealinfo.DealServiceprice != 0)
