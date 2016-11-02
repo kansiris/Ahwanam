@@ -27,9 +27,16 @@ namespace MaaAahwanam.Repository.db
             list.OrderId = OrderID;
             _dbContext.SaveChanges();
         }
-        public void updateeventoids(long Vid,long sid,long OrderDetailsID)
+        //public void updateeventoids(long Vid,long sid,long OrderDetailsID)
+        //{
+        //    var list = _dbContext.EventInformation.Where(s=>s.vendorid==Vid && s.subid == sid).FirstOrDefault();
+        //    list.OrderDetailsid = OrderDetailsID;
+        //    _dbContext.Entry(list).CurrentValues.SetValues(list);
+        //    _dbContext.SaveChanges();
+        //}
+        public void updateeventoids(long cartid, long OrderDetailsID)
         {
-            var list = _dbContext.EventInformation.Where(s=>s.vendorid==Vid && s.subid == sid).FirstOrDefault();
+            var list = _dbContext.EventInformation.Where(s => s.CartId == cartid).FirstOrDefault();
             list.OrderDetailsid = OrderDetailsID;
             _dbContext.Entry(list).CurrentValues.SetValues(list);
             _dbContext.SaveChanges();

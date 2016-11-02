@@ -58,7 +58,7 @@ namespace MaaAahwanam.Web.Controllers
 
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
-
+            int i = 0;
             foreach (var item in orderRequest.OrderDetail)
             {
                 orderDetail.OrderId = order.OrderId;
@@ -74,7 +74,15 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.UpdatedDate = DateTime.Now;
                 orderDetail.UpdatedBy = user.UserId;
                 orderDetail = orderdetailsServices.SaveOrderDetail(orderDetail);
-                eventsService.updateeventodid(orderDetail.VendorId, orderDetail.subid, orderDetail.OrderDetailId);
+                if (i == 0)
+                {
+                    eventsService.updateeventodid(orderRequest.Cartitems[0].CartId,orderDetail.OrderDetailId);
+                }
+                else
+                {
+                    eventsService.updateeventodid(orderRequest.Cartitems[i].CartId, orderDetail.OrderDetailId);
+                }
+                i++;
             }
             foreach (var item1 in orderRequest.Cartitems)
             {

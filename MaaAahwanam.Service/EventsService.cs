@@ -26,9 +26,13 @@ namespace MaaAahwanam.Service
         {
             eventInformationRepository.updateeventid(CartId, OrderID);
         }
-        public void updateeventodid(long Vid, long sid, long OrderDetailsID)
+        //public void updateeventodid(long Vid, long sid, long OrderDetailsID)
+        //{
+        //    eventInformationRepository.updateeventoids(Vid,sid, OrderDetailsID);
+        //}
+        public void updateeventodid(long cartid, long OrderDetailsID)
         {
-            eventInformationRepository.updateeventoids(Vid,sid, OrderDetailsID);
+            eventInformationRepository.updateeventoids(cartid, OrderDetailsID);
         }
     }
 }
