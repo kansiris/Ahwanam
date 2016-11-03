@@ -55,11 +55,17 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-                ViewBag.cart = cartService.CartItemsList((int)user.UserId);
+                
+                List<GetCartItems_Result> cartlist1 = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                List<cartcount_Result> cartlist = cartService.cartcountservice(user.UserId);
+                decimal total = cartlist1.Sum(s => s.TotalPrice);
+                ViewBag.cartitems = cartlist;
+                ViewBag.Total = total;
+                ViewBag.cartcounttotal = cartService.cartcountservice(user.UserId).Count();
+                //ViewBag.cartitems = cartService.cartcountservice(user.UserId);
             }
             else
             {
-                ViewBag.cart = "";
                 ViewBag.cartCount = cartService.CartItemsCount(0);
             }
             return PartialView("ItemsCartViewBindingLayout");

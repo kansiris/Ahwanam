@@ -9,6 +9,9 @@
         <Function Name="AllVendorList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ServicType" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="cartcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetCartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
@@ -213,7 +216,10 @@
             <Parameter Name="order" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_OrderDetails" ReturnType="Collection(MaaAahwanamModel.sp_OrderDetails_Result)">
-            <Parameter Name="OrderBy" Mode="In" Type="Int64" />
+          <Parameter Name="OrderBy" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="cartcount" ReturnType="Collection(MaaAahwanamModel.cartcount_Result)">
+            <Parameter Name="id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="geteventsandtipsimages_Result">
@@ -599,6 +605,13 @@
           <Property Type="Int64" Name="DealId" Nullable="false" />
           <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="StartTime" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="cartcount_Result">
+          <Property Type="Int32" Name="cartcount" Nullable="true" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1119,6 +1132,17 @@
                 <ScalarProperty Name="DealId" ColumnName="DealId" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="cartcount" FunctionName="MaaAahwanamModel.Store.cartcount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.cartcount_Result">
+                <ScalarProperty Name="cartcount" ColumnName="cartcount" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

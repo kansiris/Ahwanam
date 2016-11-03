@@ -57,5 +57,10 @@ namespace MaaAahwanam.Service
             //}
             return cartItem;
         }
+
+        public List<cartcount_Result> cartcountservice(long id)
+        {
+            return cartItemRepoitory.cartcount(id);
+        }
     }
 }

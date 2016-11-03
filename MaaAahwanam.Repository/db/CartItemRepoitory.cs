@@ -51,5 +51,10 @@ namespace MaaAahwanam.Repository.db
             }
         }
 
+        public List<cartcount_Result> cartcount(long id)
+        {
+           return  maaAahwanamEntities.cartcount(id).ToList();
+        }
+
     }
 }

@@ -48,43 +48,44 @@
         <li>
             <a href="../CartView"> <span class="userName">@ViewBag.cartCount Items in Cart</span></a>
             <div class="scroll">*@
-    @if (ViewBag.cart.Count != 0)
-    {
+    @*@if (ViewBag.cart != "" && ViewBag.cart != null)*@
+@if (ViewBag.cartCount != 0)
+{
         <ul>
             <li>
-                <a href="../CartView"> <span class="userName">@ViewBag.cartCount Items in Cart</span></a>
+                <a href="../CartView"> <span class="userName">@ViewBag.cartcounttotal Items in Cart</span></a>
                 <div class="scroll">
                     <ul>
-                        @foreach (var item in ViewBag.cart)
+                        @foreach (var item in ViewBag.cartitems)
                         {
                             <span>&nbsp;</span>
                                                 <li class="no-border">
-                                                    <a href="cart-view.html">
+                                                    <a href="../CartView">
                                                         <div class="cart-thumb">
                                                             @if (item.image != null)
                                                             {
-                                                                <img src="../vendorimages/@item.image" alt="thumb">
+                                                                <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
 
                                                             }
                                                             else if (item.image == null)
                                                             {
-                                                                <img src="~/noimages.png" />
+                                                                <img width="100" height="100" src="~/noimages.png" />
                                                             }
                                                         </div>
                                                         <div class="cart-title">
                                                             <h3>@item.BusinessName</h3>
-                                                            <p>1 X @item.TotalPrice</p>
+                                                            <p>@item.cartcount X @item.TotalPrice</p>
                                                         </div>
                                                     </a>
                                                     @*<a href="#"><i class="ti-close"></i></a>*@
-                                                    <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="ti-close"></i></a>
+                                                    @*<a href="#" onclick="DeletecartItem(@item.CartId);"><i class="ti-close"></i></a>*@
                                                 </li>
                         }
                         <li>
                             <div class="clear"></div>
                             <div class="cart_footer">
-                                <a href="cart-view.html">Check Out</a>
-                                <div class="cart_total">Total: 5000.00</div>
+                                <a href="../CartView">Check Out</a>
+                                <div class="cart_total">Total: Rs.@ViewBag.Total</div>
                             </div>
                         </li>
                     </ul>
@@ -92,7 +93,7 @@
             </li>
         </ul>
     }
-    @if (ViewBag.cart.Count == 0)
+    @if (ViewBag.cartCount == 0)
     {
         
                 <a href="../CartView"> <span class="userName">No Items in Cart</span></a>
