@@ -42,13 +42,140 @@
         <span class="cart-icon"><i class="ti-shopping-cart"></i></span>
     </div>*@
 
- <div class="menu-cart">
+ <div class="menu-cart" style="width:160px">
         <div class="click-nav">
-            <ul>
-                <li>
-                    <a href="../CartView"> <span class="userName">@ViewBag.cartCount Items in Cart</span></a>                   
-                </li>
-            </ul>
-        </div>
-        <span class="cart-icon"><i class="ti-shopping-cart"></i></span>
+    @*<ul>
+        <li>
+            <a href="../CartView"> <span class="userName">@ViewBag.cartCount Items in Cart</span></a>
+            <div class="scroll">*@
+    @if (ViewBag.cart.Count != 0)
+    {
+        <ul>
+            <li>
+                <a href="../CartView"> <span class="userName">@ViewBag.cartCount Items in Cart</span></a>
+                <div class="scroll">
+                    <ul>
+                        @foreach (var item in ViewBag.cart)
+                        {
+                            <span>&nbsp;</span>
+                                                <li class="no-border">
+                                                    <a href="cart-view.html">
+                                                        <div class="cart-thumb">
+                                                            @if (item.image != null)
+                                                            {
+                                                                <img src="../vendorimages/@item.image" alt="thumb">
+
+                                                            }
+                                                            else if (item.image == null)
+                                                            {
+                                                                <img src="~/noimages.png" />
+                                                            }
+                                                        </div>
+                                                        <div class="cart-title">
+                                                            <h3>@item.BusinessName</h3>
+                                                            <p>1 X @item.TotalPrice</p>
+                                                        </div>
+                                                    </a>
+                                                    @*<a href="#"><i class="ti-close"></i></a>*@
+                                                    <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="ti-close"></i></a>
+                                                </li>
+                        }
+                        <li>
+                            <div class="clear"></div>
+                            <div class="cart_footer">
+                                <a href="cart-view.html">Check Out</a>
+                                <div class="cart_total">Total: 5000.00</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    }
+    @if (ViewBag.cart.Count == 0)
+    {
+        
+                <a href="../CartView"> <span class="userName">No Items in Cart</span></a>
+                @*<div class="scroll">
+                    <ul>
+                        <span>&nbsp;</span>
+                        <li class="no-border">
+                            <h4 align="center">No Items in Cart</h4>
+                        </li>
+                    </ul>
+                    </div>*@
+        
+                    }
+
+                </div>
+                <span class="cart-icon"><i class="ti-shopping-cart"></i></span>
     </div>
+
+@*<div class="menu-cart">
+    <div class="click-nav">
+        <ul>
+            <li>
+                <a href="cart-view.html"> <span class="userName">2 Items in Cart</span></a>
+                <div class="scroll">
+                    <ul>
+                        <span>&nbsp;</span>
+                        <li class="no-border">
+                            <a href="cart-view.html">
+                                <div class="cart-thumb"><img src="images/cart-thumb.jpg" alt="thumb"></div>
+                                <div class="cart-title">
+                                    <h3>Siri Digital Studio</h3>
+                                    <p>1 X 2500.00</p>
+                                </div>
+                            </a>
+                            <a href="#"><i class="ti-close"></i></a>
+                        </li>
+                        <li>
+                            <a href="cart-view.html">
+                                <div class="cart-thumb"><img src="images/cart-thumb.jpg" alt="thumb"></div>
+                                <div class="cart-title">
+                                    <h3>Siri Digital Studio</h3>
+                                    <p>1 X 2500.00</p>
+                                </div>
+                            </a>
+                            <a href="#"><i class="ti-close"></i></a>
+                        </li>
+                        <li>
+                            <div class="clear"></div>
+                            <div class="cart_footer">
+                                <a href="cart-view.html">Check Out</a>
+                                <div class="cart_total">Total: 5000.00</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <span class="cart-icon"><i class="ti-shopping-cart"></i></span>
+</div>*@
+
+<script>
+    //Deleteing cart item
+    function DeletecartItem(cartId)
+    {
+        var obj = {}
+        obj.cartId = cartId;
+        $.ajax({
+            type: "POST",
+            url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/CartView/DeletecartItem',
+            data: {},
+            data: JSON.stringify(obj),
+            //data: sendInfo,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    window.location.reload();
+                }
+            },
+            error: function (data) {
+                alert('error')
+            }
+        });
+    }
+</script>

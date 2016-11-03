@@ -55,9 +55,11 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                ViewBag.cart = cartService.CartItemsList((int)user.UserId);
             }
             else
             {
+                ViewBag.cart = "";
                 ViewBag.cartCount = cartService.CartItemsCount(0);
             }
             return PartialView("ItemsCartViewBindingLayout");
