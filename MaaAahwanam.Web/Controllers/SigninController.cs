@@ -18,7 +18,8 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class SigninController : Controller
     {
-        public ActionResult Index()
+        
+        public ActionResult Index(string ReturnUrl)
         {
             //if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             //{                
@@ -29,9 +30,13 @@ namespace MaaAahwanam.Web.Controllers
             //    TempData["Alert"] = TempData["AlertContent"];
             //    return View();
             //}
+            string VID = Request.QueryString["VID"];
+            //string subvid = Request.QueryString["subvid"];
+            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail,string ReturnUrl)
         {
             if (command == "Register")
@@ -59,16 +64,24 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //string ReturnTo = Request.QueryString["ReturnUrl"];
-                    //string ReturnTo = Request.Params.Get("ReturnUrl");
-                    string ReturnTo = ReturnUrl;
-
+                    string ReturnTo = Request.Params.Get("ReturnUrl");
+                    //string ReturnTo = ReturnUrl;
+                    string url = Request.UrlReferrer.ToString();
                     if (ReturnTo == null)
                     {
                         Response.Redirect("Index");
                     }
                     else
                     {
-                        Response.Redirect(ReturnTo);
+                        string particularurl;
+                        int vid = Convert.ToInt32(Request.QueryString["VID"]);
+                        int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
+                        int did = Convert.ToInt32(Request.QueryString["did"]);
+                        if (did != 0)
+                        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid + "&did=" + did;
+                        else
+                        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid ;
+                        Response.Redirect(particularurl);
                     }
 
                 }

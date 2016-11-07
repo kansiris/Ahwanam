@@ -73,7 +73,7 @@
                 <div class="form login wow fadeInRight animated animated" style="visibility: visible; animation-name: fadeInRight;">
                     <h4><b>Existing User</b> Login Here<span></span></h4>
 
-                    @using (Html.BeginForm("Index", "signin", FormMethod.Post, new { @id = "login_form" }))
+                    @using (Html.BeginForm("Index", "signin", FormMethod.Post, new { @id = "login_form" , ReturnUrl = ViewBag.ReturnUrl }))
                     {
                         @*<fieldset>
                                 <div class="radioButtons" id="radio-demo">
@@ -121,7 +121,7 @@
                         </ul>
                         <div class="clear"></div>
                             <div class="submit-btn">
-                                <button class="btn btn-green" name="Command" id="btnauth" value="AuthenticationUser" type="submit"><i class="ti-lock"></i> Log in</button>
+                                <button class="btn btn-green" name="Command" id="btnauth" value="AuthenticationUser" type="submit" formaction="~/Signin/index?ReturnUrl=@Request.UrlReferrer"><i class="ti-lock"></i> Log in</button>
                             </div>
                                 <div class="forgot-password"><a class="popup-with-move-anim" href="#fpw">Forgot Password?</a></div>
                                 <div class="clear"></div>
@@ -168,3 +168,20 @@
         document.getElementById("btnauth").value = 'Authentication' + value;
     }
 </script>
+
+@*<script>
+    function pagesubmit() {
+        var url=@Request.QueryString["ReturnUrl"];
+        alert("hi");
+    }
+
+
+    $(document).ready(function() {
+        $("#btnauth").click(function(){
+            alert("button");
+        }); 
+    });
+</script>*@
+
+
+

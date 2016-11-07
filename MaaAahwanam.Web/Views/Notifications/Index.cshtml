@@ -6,6 +6,7 @@
 <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
 <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
 @section Navigation
 {
 <div class="breads">
@@ -54,41 +55,44 @@
             </div>
             <!-- /popup -->
             <br />
-            @if (ViewBag.AllNotifications.Count!=0)
-        {
-            foreach (var item in ViewBag.AllNotifications)
+            @if (ViewBag.AllNotifications.Count != 0)
             {
-                    @*<div class="dashboardList dashboardList-nospace"  >
+                    @*<ul class="mail-list">*@
+                        foreach (var item in ViewBag.AllNotifications)
+                        {
+                            @*<div class="dashboardList dashboardList-nospace"  >
 
-                        <table class="responsive" style="width:100%" id="table1">
-                            <thead></thead>
-                            <tbody>
-                                <tr>
-                                    <td style="width: 10%; cursor: pointer;">
-                                        <a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;" /></a>
-                                    </td>
-                                    <td style="width: 28%; cursor: pointer;">
-                                        <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <p class="mail-sender">@item.description.Substring(0, 20)</p></a>
-                                    </td>
-                                    <td style="width: 35%; cursor: pointer;">
-                                        <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"><p class="mail-subject">@item.Subject</p> </a>
-                                    </td>
-                                    <td style="width: 18%; cursor: pointer;">
-                                        <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>*@
-                        <ul class="mail-list" id="table1">
+                                    <table class="responsive" style="width:100%" id="table1">
+                                        <thead></thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 10%; cursor: pointer;">
+                                                    <a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;" /></a>
+                                                </td>
+                                                <td style="width: 28%; cursor: pointer;">
+                                                    <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <p class="mail-sender">@item.description.Substring(0, 20)</p></a>
+                                                </td>
+                                                <td style="width: 35%; cursor: pointer;">
+                                                    <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"><p class="mail-subject">@item.Subject</p> </a>
+                                                </td>
+                                                <td style="width: 18%; cursor: pointer;">
+                                                    <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>*@
+                            <ul class="mail-list">
                             <li>
                                 <span class="ml-left">
                                     <a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;" /></a>
-                                </span> <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <span class="mail-sender" style="color:#838383;width:350px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">@item.description</span> <span class="mail-subject" >@item.Subject</span> </a> <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
+                                </span> <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> <span class="mail-sender" style="color:#838383;width:350px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">@item.description</span> <span class="mail-subject">@item.Subject</span> </a> <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
                             </li>
-                        </ul>
+                            </ul>
                         }
-                        }
+                    
+                    }
+                
                         @if (ViewBag.AllNotifications.Count == 0)
                         {
                             <h2>No Notifications Yet!!!!</h2>
@@ -106,9 +110,9 @@
     }
 </script>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
-     
+        //BootstrapDialog.alert('Welcom to MaaAahwanam DashBoard');
         $('#table1').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
     });
 </script>
