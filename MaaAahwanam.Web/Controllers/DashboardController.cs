@@ -25,12 +25,14 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             ViewBag.Type = user.UserType;
             int id = (int)user.UserId;
-            ViewBag.AllOrders = dashBoardService.GetOrdersService(id);
+            var orderslist = dashBoardService.GetOrdersService(id);
+            ViewBag.AllOrders = orderslist;
             ViewBag.Services = dashBoardService.GetServicesService(id);
             
             ViewBag.orderscount = dashBoardService.GetOrdersService(id).Count();
             ViewBag.servicescount = dashBoardService.GetServicesService(id).Count();
             ViewBag.notificationcount = notificationService.GetNotificationService(id).Count();
+            //var list = dashBoardService.GetDeal(orderslist[].OrderDate);
             return View();
         }
 

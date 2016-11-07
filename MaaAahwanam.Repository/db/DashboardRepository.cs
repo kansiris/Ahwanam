@@ -145,5 +145,10 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.OrderDetail.Where(m => m.OrderDetailId == id).ToList();
         }
 
+        public List<OrderDetail> GetDeal(long id)
+        {
+            return _dbContext.OrderDetail.Where(m => m.OrderId == id).ToList();
+        }
+
     }
 }

@@ -64,9 +64,15 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //string ReturnTo1 = Request.QueryString["ReturnUrl"];
-                    //string ReturnTo = Request.Params.Get("ReturnUrl");
-                    string ReturnTo = ReturnUrl;
+                    //string ReturnTo2 = Request.Params.Get("ReturnUrl");
                     //string url = Request.UrlReferrer.ToString();
+                    //string url2 = Request.RawUrl;
+                    //string url3 = Request.UrlReferrer.PathAndQuery;
+                    //string url4 = Request.UrlReferrer.Query.TrimEnd();
+
+
+                    string ReturnTo = ReturnUrl;
+                    
                     if (ReturnTo == null)
                     {
                         Response.Redirect("Index");
@@ -77,6 +83,7 @@ namespace MaaAahwanam.Web.Controllers
                         int vid = Convert.ToInt32(Request.QueryString["VID"]);
                         int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
                         int did = Convert.ToInt32(Request.QueryString["did"]);
+                        
                         if (vid != 0 && Svid != 0 )
                         {
                             if (did != 0)
@@ -87,7 +94,7 @@ namespace MaaAahwanam.Web.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Index");
+                            Response.Redirect(ReturnTo);
                         }
                         
                     }

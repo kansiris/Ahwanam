@@ -122,6 +122,9 @@ namespace MaaAahwanam.Service
             return dashBoardRepository.GetPrice(id);
         }
 
-
+        public List<OrderDetail> GetDeal(long id)
+        {
+            return dashBoardRepository.GetDeal(id);
+        }
     }
 }
