@@ -19,7 +19,7 @@ namespace MaaAahwanam.Web.Controllers
     public class SigninController : Controller
     {
         
-        public ActionResult Index(string ReturnUrl)
+        public ActionResult Index()
         {
             //if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             //{                
@@ -30,9 +30,9 @@ namespace MaaAahwanam.Web.Controllers
             //    TempData["Alert"] = TempData["AlertContent"];
             //    return View();
             //}
-            string VID = Request.QueryString["VID"];
+            //string VID = Request.QueryString["VID"];
             //string subvid = Request.QueryString["subvid"];
-            ViewBag.ReturnUrl = ReturnUrl;
+            //ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
         [HttpPost]
@@ -63,10 +63,10 @@ namespace MaaAahwanam.Web.Controllers
                     userResponse.UserType = "User";
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    //string ReturnTo = Request.QueryString["ReturnUrl"];
-                    string ReturnTo = Request.Params.Get("ReturnUrl");
-                    //string ReturnTo = ReturnUrl;
-                    string url = Request.UrlReferrer.ToString();
+                    //string ReturnTo1 = Request.QueryString["ReturnUrl"];
+                    //string ReturnTo = Request.Params.Get("ReturnUrl");
+                    string ReturnTo = ReturnUrl;
+                    //string url = Request.UrlReferrer.ToString();
                     if (ReturnTo == null)
                     {
                         Response.Redirect("Index");
@@ -77,11 +77,19 @@ namespace MaaAahwanam.Web.Controllers
                         int vid = Convert.ToInt32(Request.QueryString["VID"]);
                         int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
                         int did = Convert.ToInt32(Request.QueryString["did"]);
-                        if (did != 0)
-                        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid + "&did=" + did;
+                        if (vid != 0 && Svid != 0 )
+                        {
+                            if (did != 0)
+                                particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid + "&did=" + did;
+                            else
+                                particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid;
+                            Response.Redirect(particularurl);
+                        }
                         else
-                        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid ;
-                        Response.Redirect(particularurl);
+                        {
+                            return RedirectToAction("Index", "Index");
+                        }
+                        
                     }
 
                 }
