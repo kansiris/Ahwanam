@@ -130,15 +130,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<allnotifications_Result>("allnotifications");
         }
     
-        public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails_Result> MaaAahwanam_Orders_OrderDetails(Nullable<long> orderNo)
-        {
-            var orderNoParameter = orderNo.HasValue ?
-                new ObjectParameter("OrderNo", orderNo) :
-                new ObjectParameter("OrderNo", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
-        }
-    
         public virtual ObjectResult<GetProductsInfo_Result> GetProductsInfo(Nullable<int> vid, string nType, Nullable<int> vid2)
         {
             var vidParameter = vid.HasValue ?
@@ -372,6 +363,15 @@ namespace MaaAahwanam.Repository
         public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails_Result> MaaAahwanam_Orders_OrderDetails(Nullable<long> orderNo)
+        {
+            var orderNoParameter = orderNo.HasValue ?
+                new ObjectParameter("OrderNo", orderNo) :
+                new ObjectParameter("OrderNo", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
         }
     }
 }

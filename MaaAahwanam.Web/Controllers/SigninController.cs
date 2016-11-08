@@ -58,7 +58,7 @@ namespace MaaAahwanam.Web.Controllers
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                 userLogin.UserType = "User";
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (userResponse.UserLoginId != 0)
+                if (userResponse.UserLoginId != 0 && userResponse.UserType != "Admin")
                 {
                     userResponse.UserType = "User";
                     string userData = JsonConvert.SerializeObject(userResponse);
@@ -141,6 +141,11 @@ namespace MaaAahwanam.Web.Controllers
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                 var response = userLoginDetailsService.GetUser((int)user.UserId);
+                if (user.UserType == "Admin")
+                {
+                    UserDetail userDetail = new UserDetail();
+                    return PartialView("SigninPartial", userDetail);
+                }
                 return PartialView("SigninPartial", response);
             }
             else

@@ -145,9 +145,9 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.OrderDetail.Where(m => m.OrderDetailId == id).ToList();
         }
 
-        public List<OrderDetail> GetDeal(long id)
+        public List<ServiceRequest> GetParticularDate(long id)
         {
-            return _dbContext.OrderDetail.Where(m => m.OrderId == id).ToList();
+            return _dbContext.ServiceRequest.Where(m => m.RequestId == id).ToList();
         }
 
     }

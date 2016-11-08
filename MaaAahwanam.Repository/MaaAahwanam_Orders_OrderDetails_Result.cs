@@ -23,5 +23,6 @@ namespace MaaAahwanam.Repository
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal PerunitPrice { get; set; }
+        public bool Isdeal { get; set; }
     }
 }
