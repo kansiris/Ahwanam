@@ -21,5 +21,6 @@ namespace MaaAahwanam.Repository
         public string LastName { get; set; }
         public string Landmark { get; set; }
         public string username { get; set; }
+        public string Isdeal { get; set; }
     }
 }

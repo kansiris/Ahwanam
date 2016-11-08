@@ -17,7 +17,7 @@ namespace MaaAahwanam.Repository
         public Nullable<System.DateTime> OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
         public string Status { get; set; }
-        public bool Isdeal { get; set; }
+        public string Isdeal { get; set; }
         public string type { get; set; }
     }
 }

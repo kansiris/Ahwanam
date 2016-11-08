@@ -192,11 +192,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Tickets_Result>("sp_Tickets", ticketIdParameter);
         }
     
-        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
-        }
-    
         public virtual ObjectResult<GetDealServiceType_Result> GetDealServiceType(string ntype)
         {
             var ntypeParameter = ntype != null ?
@@ -322,15 +317,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     
-        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
-        }
-    
         public virtual ObjectResult<ProductsDisplay_Result> ProductsDisplay(string nType, Nullable<int> vID, string stype, string landmark, string order)
         {
             var nTypeParameter = nType != null ?
@@ -372,6 +358,20 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<cartcount_Result>("cartcount", idParameter);
+        }
+    
+        public virtual ObjectResult<sp_AllOrders_Result> sp_AllOrders(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
+        }
+    
+        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
         }
     }
 }
