@@ -24,12 +24,17 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(UserLogin userLogin)
+        public ActionResult Index(UserLogin userLogin,string OldPassword)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-            userLoginDetailsService.changepassword(userLogin, (int)user.UserId);
-            return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
+            string oldpwd = userLoginDetailsService.Getpassword(user.UserId);
+            if (oldpwd == OldPassword)
+            {
+                userLoginDetailsService.changepassword(userLogin, (int)user.UserId);
+                return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
+            }
+            return Content("<script language='javascript' type='text/javascript'>alert('Old Password Wrongly Entered');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
         }
     }
 }

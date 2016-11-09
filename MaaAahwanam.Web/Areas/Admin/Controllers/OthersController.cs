@@ -61,12 +61,21 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult TestimonialDetails(string id)
         {
             List<MaaAahwanam_Others_TestimonialDetail_Result> testimonal = othersService.TestimonalDetail(long.Parse(id));
-            string[] imagenameslist = testimonal[0].ImagePath.Replace(" ", "").Split(',');
-            ViewBag.Testimonal = othersService.TestimonalDetail(long.Parse(id));
-            List<string> testimonialimages = new List<string>();
-            for (int i = 0; i < imagenameslist.Length; i++)
+            //string[] imagenameslist = testimonal[0].ImagePath.Replace(" ", "").Split(',');
+            //string[] imagenameslist = null;
+            ViewBag.Testimonal = othersService.TestimonalDetail(long.Parse(id)).Take(1);
+            foreach (var item in ViewBag.Testimonal)
             {
-                testimonialimages.Add(imagenameslist[i]);
+                ViewBag.date = item.UpdatedDate.ToShortDateString();
+            }
+            List<string> testimonialimages = new List<string>();
+            //for (int i = 0; i < testimonal.Count; i++)
+            //{
+            //    testimonialimages.Add(imagenameslist[i]);
+            //}
+            foreach (var item in testimonal)
+            {
+                testimonialimages.Add(item.ImagePath);
             }
             ViewBag.images = testimonialimages;
             return View();

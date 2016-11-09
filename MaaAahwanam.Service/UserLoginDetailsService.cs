@@ -63,5 +63,9 @@ namespace MaaAahwanam.Service
         {
             return userLoginRepository.username(UserId);
         }
+        public string Getpassword(long UserId)
+        {
+            return userLoginRepository.password(UserId);
+        }
     }
 }

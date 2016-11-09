@@ -97,7 +97,7 @@
                                 }
                                 else
                                 {
-                                    <li><a href="#" id="@item.vendortype" onclick="subservicechnage(this)"> @item.vendortype</a></li>
+                                    <li><a href="#" id="@item.vendortype" onclick="subservicechnage(this)"> @item.vendortype.Replace(",",", ")</a></li>
                                 }
                             }
                             i++;
@@ -190,8 +190,8 @@
 
                                                             @if (item.ServicType != "Venue")
                                                             {
-                                                                if (item.ServicType == "Catering" || item.ServicType == "Gifts" || item.ServicType == "BeautyServices" )
-                                                                    {
+                                                                //if (item.ServicType == "Catering" || item.ServicType == "Gifts" || item.ServicType == "BeautyServices" )
+                                                                //    {
                                                                         <span class="price">Rs. @item.Cost</span>
                                                                     }
                                                                 else
@@ -199,7 +199,7 @@
                                                                         <span class="price">Rs. @item.Servicecost</span>
                                                                     }
                                                                 
-                                                            }
+                                                            @*  }*@
                                                             @if (item.subtype == "Convention Hall" || item.subtype == "Function Hall" || item.subtype == "Meeting Room" || item.subtype == "Roof Top")
                                                             {
                                                                 <span class="price">Rs. @item.Servicecost</span>
@@ -399,7 +399,7 @@
     <script>
         function subservicechnage(s)
         {
-            var subservicetype=s.text.trim();
+            var subservicetype=s.text.replace(" ","").replace("%20","");
             var servicetype = window.location.search.split("=")[1].split("&")[0];
             var location = window.location.search.split("=")[3].split("&")[0];
             var order = window.location.search.split("=")[4].split("&")[0];

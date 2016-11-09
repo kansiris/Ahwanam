@@ -18,7 +18,10 @@ namespace MaaAahwanam.Web.Controllers
         {
             ProductService productService = new ProductService();
             string servicetypeQuerystring = Request.QueryString["par"];
-            string servicetypesType = Request.QueryString["sType"];
+            //string servicetypesType = Request.QueryString["sType"].ToString();
+            string abc = Request.Url.PathAndQuery.Split('=')[2].Replace("%20"," ");
+            string second = abc.Remove(abc.Length - 4);
+            string servicetypesType = second.Replace(", ",",");
             string servicetypeloc = Request.QueryString["loc"];
             string servicetypeorder = Request.QueryString["a"];
             List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetypeQuerystring, 0, servicetypesType, servicetypeloc, servicetypeorder);

@@ -28,9 +28,13 @@ namespace MaaAahwanam.Web.Controllers
             TestmonialService testmonialService = new TestmonialService();
             adminTestimonial.UpdatedBy = (int)TempData["Uid"];
             adminTestimonial.Orderid = (int)TempData["Oid"];
+            adminTestimonial.UpdatedDate = DateTime.Now;
+            adminTestimonial.Status = "Pending";
             testmonialService.Savetestimonial(adminTestimonial);
             adminTestimonialPath.Id = adminTestimonial.Id;
-            adminTestimonial.Status = "Pending";
+            adminTestimonialPath.Status = "Pending";
+            adminTestimonialPath.UpdatedBy = (int)TempData["Uid"];
+            adminTestimonialPath.UpdatedDate = DateTime.Now;
             string fileName1 = "";
             string imagepath = @"/Testimonial/";
             for (int i = 0; i < Request.Files.Count; i++)
