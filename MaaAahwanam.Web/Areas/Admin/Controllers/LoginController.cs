@@ -9,6 +9,7 @@ using MaaAahwanam.Service;
 using System.Configuration;
 using System.Web.Security;
 using Newtonsoft.Json;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -41,12 +42,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                 userLogin.UserType = "Admin";
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    if (user.UserType == "Admin")
+                    {
+                        return RedirectToAction("dashboard", "dashboard", new { id = userResponse.UserLoginId });
+                    }
+                }
                 if (userResponse.UserLoginId != 0)
                 {
-                    userResponse.UserType = "Admin";
-                    string userData = JsonConvert.SerializeObject(userResponse);
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    return RedirectToAction("dashboard", "dashboard", new { id = userResponse.UserLoginId });                    
+                    
+                        userResponse.UserType = "Admin";
+                        string userData = JsonConvert.SerializeObject(userResponse);
+                        ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    
+                    return RedirectToAction("dashboard", "dashboard", new { id = userResponse.UserLoginId });
+                    
                 }
                 else
                 {

@@ -56,7 +56,12 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                if (user.UserType == "Admin")
+                {
+                    ViewBag.cartCount = cartService.CartItemsCount(0);
+                    return PartialView("ItemsCartViewBindingLayout");
+                }
+                    ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                 
                 List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                 //List<cartcount_Result> cartlist = cartService.cartcountservice(user.UserId);

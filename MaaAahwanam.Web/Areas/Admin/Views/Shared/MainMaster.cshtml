@@ -1,4 +1,5 @@
 ﻿@using MaaAahwanam.Web.Custom
+@using System.Web.Security
 @{
                 Layout = null;
     var user = (CustomPrincipal)HttpContext.Current.User;
@@ -88,7 +89,13 @@
 
                 <a class="user-link" href="#"><img class="media-object img-thumbnail user-img" alt="User Picture" src="~/adminimage.png" style="width:74px; height:74px" /></a> <br />
                 <br /> <div class="media-body">
-                    <h5 class="media-heading"> @user.FirstName @user.LastName</h5>
+                @if (user.UserType == "Admin")
+                {<h5 class="media-heading"> @user.FirstName @user.LastName</h5>}
+                @if (user.UserType != "Admin")
+                {
+                    FormsAuthentication.SignOut();
+                    <script>window.location = '/admin/login';</script>
+                }
                 @*<h5 class="media-heading"> @Html.Label(Model.FirstName)  @Html.Label(Model.LastName)</h5>
                            <br />
                            <br />   
