@@ -2079,7 +2079,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (Command == "Add Deal")
             {
-                deal.VendorType = "TravelAccomodation";
+                deal.VendorType = "Travel&Accommodation";
                 deal.VendorId = long.Parse(id);
                 deal.VendorSubId = long.Parse(vid);
                 deal = dealService.AddDealService(deal);
