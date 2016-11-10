@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
             ProductService productService = new ProductService();
             string servicetypeQuerystring = Request.QueryString["par"];
             //string servicetypesType = Request.QueryString["sType"];
-            string abc = Request.Url.PathAndQuery.Split('=')[2].Replace("%20", " ");
+            string abc = Request.Url.PathAndQuery.Split('=')[2].Replace("%20", " ").Replace("%25", "%");
             string second = abc.Remove(abc.Length - 4);
             string servicetypesType = second.Replace(", ", ",");
             string servicetypeloc = Request.QueryString["loc"];

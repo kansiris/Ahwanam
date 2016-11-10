@@ -18,8 +18,10 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class SigninController : Controller
     {
-        
-        public ActionResult Index()
+        static string perfecturl = "";
+        static string wrongpwdurl = "";
+        static int wrongpwdurlcount = 0;
+        public ActionResult Index(string ReturnUrl)
         {
             //if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             //{                
@@ -32,13 +34,14 @@ namespace MaaAahwanam.Web.Controllers
             //}
             //string VID = Request.QueryString["VID"];
             //string subvid = Request.QueryString["subvid"];
-            //ViewBag.ReturnUrl = ReturnUrl;
+            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail,string ReturnUrl)
         {
+            
             if (command == "Register")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
@@ -71,37 +74,43 @@ namespace MaaAahwanam.Web.Controllers
                     //string url4 = Request.UrlReferrer.Query.TrimEnd();
 
 
-                    string ReturnTo = ReturnUrl;
-                    
+                    //string ReturnTo = ReturnUrl;
+                    string ReturnTo = perfecturl;
                     if (ReturnTo == null)
                     {
                         Response.Redirect("Index");
                     }
                     else
                     {
-                        string particularurl;
-                        int vid = Convert.ToInt32(Request.QueryString["VID"]);
-                        int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
-                        int did = Convert.ToInt32(Request.QueryString["did"]);
-                        
-                        if (vid != 0 && Svid != 0 )
-                        {
-                            if (did != 0)
-                                particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid + "&did=" + did;
-                            else
-                                particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid;
-                            Response.Redirect(particularurl);
-                        }
+                        //string particularurl;
+                        //int vid = Convert.ToInt32(Request.QueryString["VID"]);
+                        //int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
+                        //int did = Convert.ToInt32(Request.QueryString["did"]);
+
+                        //if (vid != 0 && Svid != 0 )
+                        //{
+                        //    if (did != 0)
+                        //        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid + "&did=" + did;
+                        //    else
+                        //        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid;
+                        //    Response.Redirect(particularurl);
+                        //}
+                        //else
+                        //{
+                        string[] id = ReturnTo.Split('/');
+                        if (id[3] != "signin")
+                        Response.Redirect(ReturnTo);
                         else
-                        {
-                            Response.Redirect(ReturnTo);
-                        }
-                        
+                        Response.Redirect(wrongpwdurl);
+                        //}
+
                     }
 
                 }
                 else
                 {
+                    if (wrongpwdurlcount == 0)
+                    { wrongpwdurl = perfecturl; wrongpwdurlcount++; }
                     return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
                     //TempData["Alert"] = "<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password')</script>";
                 }
@@ -122,6 +131,10 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
                 }
+            }
+            if (command == "" || command == null)
+            {
+                perfecturl = ReturnUrl;
             }
             return View();
         }
