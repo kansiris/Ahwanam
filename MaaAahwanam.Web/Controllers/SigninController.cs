@@ -21,27 +21,14 @@ namespace MaaAahwanam.Web.Controllers
         static string perfecturl = "";
         static string wrongpwdurl = "";
         static int wrongpwdurlcount = 0;
-        public ActionResult Index(string ReturnUrl)
+        public ActionResult Index()
         {
-            //if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            //{                
-            //    return RedirectToAction("Index", "DashBoard");
-            //}
-            //else
-            //{
-            //    TempData["Alert"] = TempData["AlertContent"];
-            //    return View();
-            //}
-            //string VID = Request.QueryString["VID"];
-            //string subvid = Request.QueryString["subvid"];
-            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail,string ReturnUrl)
         {
-            
             if (command == "Register")
             {
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
@@ -63,17 +50,10 @@ namespace MaaAahwanam.Web.Controllers
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
                 if (userResponse.UserLoginId != 0)
                 {
+                    wrongpwdurlcount = 0;
                     userResponse.UserType = "User";
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    //string ReturnTo1 = Request.QueryString["ReturnUrl"];
-                    //string ReturnTo2 = Request.Params.Get("ReturnUrl");
-                    //string url = Request.UrlReferrer.ToString();
-                    //string url2 = Request.RawUrl;
-                    //string url3 = Request.UrlReferrer.PathAndQuery;
-                    //string url4 = Request.UrlReferrer.Query.TrimEnd();
-
-
                     //string ReturnTo = ReturnUrl;
                     string ReturnTo = perfecturl;
                     if (ReturnTo == null)
@@ -82,30 +62,12 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     else
                     {
-                        //string particularurl;
-                        //int vid = Convert.ToInt32(Request.QueryString["VID"]);
-                        //int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
-                        //int did = Convert.ToInt32(Request.QueryString["did"]);
-
-                        //if (vid != 0 && Svid != 0 )
-                        //{
-                        //    if (did != 0)
-                        //        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid + "&did=" + did;
-                        //    else
-                        //        particularurl = ReturnTo + "&VID=" + vid + "&subvid=" + Svid;
-                        //    Response.Redirect(particularurl);
-                        //}
-                        //else
-                        //{
-                        string[] id = ReturnTo.Split('/');
-                        if (id[3] != "signin")
-                        Response.Redirect(ReturnTo);
+                        string[] testid = ReturnTo.Split('/');
+                        if (testid.Contains("Signin") == false && testid.Contains("signin") == false)
+                            Response.Redirect(ReturnTo);
                         else
-                        Response.Redirect(wrongpwdurl);
-                        //}
-
+                            Response.Redirect(wrongpwdurl);
                     }
-
                 }
                 else
                 {
