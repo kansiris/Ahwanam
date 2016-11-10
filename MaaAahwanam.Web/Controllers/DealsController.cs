@@ -15,7 +15,10 @@ namespace MaaAahwanam.Web.Controllers
         {
             ProductService productService = new ProductService();
             string servicetypeQuerystring = Request.QueryString["par"];
-            string servicetypesType = Request.QueryString["sType"];
+            //string servicetypesType = Request.QueryString["sType"];
+            string abc = Request.Url.PathAndQuery.Split('=')[2].Replace("%20", " ");
+            string second = abc.Remove(abc.Length - 4);
+            string servicetypesType = second.Replace(", ", ",");
             string servicetypeloc = Request.QueryString["loc"];
             string servicetypeorder = Request.QueryString["a"];
             List<SP_Deals_Result> Productlist = productService.GetSP_Deals_Result(servicetypeQuerystring, 0, servicetypesType, servicetypeloc, servicetypeorder);
@@ -38,7 +41,8 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult Loadmore(string servicetypeQuerystring, string VID, string servicetype, string subservicetype, string location, string order)
         {
             ProductService productService = new ProductService();
-            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetype, int.Parse(VID), subservicetype, location, order);
+            string id = subservicetype.Replace("%20", " ");
+            List<GetProducts_Result> Productlist = productService.GetProducts_Results(servicetype, int.Parse(VID), id, location, order);
             ViewBag.ServiceType = servicetypeQuerystring;
             return Json(Productlist);
         }

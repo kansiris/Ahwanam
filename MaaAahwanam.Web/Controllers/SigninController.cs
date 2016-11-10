@@ -58,7 +58,7 @@ namespace MaaAahwanam.Web.Controllers
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                 userLogin.UserType = "User";
                 var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (userResponse.UserLoginId != 0 && userResponse.UserType != "Admin")
+                if (userResponse.UserLoginId != 0)
                 {
                     userResponse.UserType = "User";
                     string userData = JsonConvert.SerializeObject(userResponse);
