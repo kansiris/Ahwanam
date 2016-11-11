@@ -37,6 +37,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 idlast = 0;
             }
+            ViewBag.servicetypesType = servicetypesType;
             ViewBag.Lastrecordid = idlast;
             ViewBag.ServiceType = servicetypeQuerystring;
             ViewBag.subservicetype = s;
