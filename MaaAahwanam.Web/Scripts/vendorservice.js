@@ -47,7 +47,7 @@
                 $('#fileUpload').hide();
                 $('#msg').hide();
                 $('.form-control').attr("disabled", "disabled");
-                //itemsdisable1();
+                itemsdisable();
                 $("#dealdisplay").hide();
             }
             if (op == 'add') {
@@ -75,7 +75,7 @@
                 $('.form-control').removeAttr("disabled");
                 $("#dealdisplay").hide();
                 $("#btnadd").hide();
-                //itemsdisable1();
+                itemsdisable();
             }
             if (op == 'adddeal' || op == 'adddeal#') {
                 $("#btnadd").show().val("Add Deal").html("Add Deal");
@@ -138,6 +138,7 @@
                 $("#dealcheck").prop('checked', true).attr("disabled", "disabled");
                 $("#dealdata").css({ "display": "block" });
                 if (servicetype == 'Venue') {
+                    itemsdisable();
                     var type = $("#Item2_VenueType").val();
                     if (type == 'Banquet Hall') {
                         
@@ -179,6 +180,7 @@
                 $("#dealcheck").prop('checked', true).attr("disabled", "disabled");
                 $("#dealdata").css({ "display": "block" });
                 if (servicetype == 'Venue') {
+                    itemsdisable();
                     var type = $("#Item2_VenueType").val();
                     if (type == 'Banquet Hall') {
                         $("#dealprice").show();

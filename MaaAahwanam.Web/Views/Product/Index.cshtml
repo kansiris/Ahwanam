@@ -84,7 +84,7 @@
             <aside>
                 <h4>Services</h4>
                 <span>&nbsp;</span>
-                <ul id="stpyesul">
+                <ul id="stpyesul" class="display">
                     @{
                         int i = 0;
                         foreach (var item in @ViewBag.subservicetype)
@@ -97,7 +97,7 @@
                                 }
                                 else
                                 {
-                                    <li><a href="#" id="@item.vendortype.Replace(",", ", ")" onclick="subservicechnage(this)"> @item.vendortype.Replace(",",", ")</a></li>
+                                    <li><a href="#" id="@item.vendortype.Replace(",", ", ")" onclick="subservicechnage(this)"> @item.vendortype.Replace(",", ", ")</a></li>
                                 }
                             }
                             i++;
@@ -124,19 +124,23 @@
                     <label>Location</label>
                     <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onkeypress="onkey()" onchange="locationchange(this)"> @*onkeydown="if (event.keyCode == 13) event.preventDefault();"*@
                     @*@foreach (var item in this.Model)
-                    {*@
-                        @if (ViewBag.servicetypesType != "Banquet Hall")
-                        {
-                            <label>Price Range</label>
-                            <div class="radioButtons" id="radio-demo">
-                                <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
-                                <label for="rblASC">Low to High</label>
-                                <br />
-                                <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
-                                <label for="rblDESC">High to Low</label>
-                            </div>
-                            //break;
-                        }
+                    {*@ 
+                   
+                            @if (ViewBag.servicetypesType != "Banquet Hall")
+                            {
+                                <div id="pricerange">
+                                    <label>Price Range</label>
+                                    <div class="radioButtons" id="radio-demo">
+                                        <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
+                                        <label for="rblASC">Low to High</label>
+                                        <br />
+                                        <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
+                                        <label for="rblDESC">High to Low</label>
+                                    </div>
+                                </div>
+                                //break;
+                            }
+
                     @* } *@
                 </form>
             </aside>
@@ -294,6 +298,7 @@
             var locationchange = url.split('=')[3].replace("&a","");
             var filter=url.split('=')[4];
             document.getElementById("txtlocation").value= locationchange;
+           
             
             if(servicetype != 'Banquet Hall' ) 
             {
@@ -308,6 +313,8 @@
             }
             
             var subservicetype= servicetype;
+            
+            
             if(subservicetype!='%')
             {
                 document.getElementById(subservicetype).className = "active";
@@ -317,7 +324,13 @@
                 var a= $(".Test").attr('id');
                 document.getElementById(a).className = "active";
             }
-
+            var pricerange =$( "ul.display li" ).first().text();
+            if (pricerange = "Banquet Hall" && subservicetype == '%') {
+                $("#pricerange").hide();
+            }
+            else {
+                $("#pricerange").show();
+            }
         };
         /* -------------------------------  Loadmore functionality ------------------------ */
         $('#LoadMore1').on('click', function (e) {

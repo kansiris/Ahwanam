@@ -193,9 +193,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsBeautyService.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "InvitationCards" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -420,9 +434,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsCatering.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "InvitationCards" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -648,9 +676,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsDecorator.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "InvitationCards" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -875,9 +917,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsEntertainment.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "InvitationCards" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -1103,9 +1159,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsEventOrganisers.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "InvitationCards" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -1330,9 +1400,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsGift.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "InvitationCards" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -1553,9 +1637,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsInvitationCard.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "InvitationCards" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
                 
@@ -1791,6 +1889,17 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                             ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                             ViewBag.imagescount = imagecount - list.Count;
                             ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsPhotography.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "Photography" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
                         }
                     }
                 }
@@ -2036,6 +2145,18 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                             ViewBag.imagescount = imagecount - list.Count;
                             ViewData["error"] = "You Have Crossed Images Limit";
                         }
+                        else
+                        {
+                            if (vendorsTravelandAccomodation.Id != 0 || vendorImage.ImageId != 0)
+                            {
+
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "Venue" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -2237,9 +2358,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                    ViewBag.imagescount = imagecount - list.Count;
-                    ViewData["error"] = "You Have Crossed Images Limit";
+                    if (file != null)
+                    {
+                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                        ViewBag.imagescount = imagecount - list.Count;
+                        ViewData["error"] = "You Have Crossed Images Limit";
+                    }
+                    else
+                    {
+                        if (vendorsWeddingCollection.Id != 0 || vendorImage.ImageId != 0)
+                        {
+                            return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "WeddingCollection" }
+                        }
+                        else
+                        {
+                            return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                        }
+                    }
                 }
             }
             if (Command == "add")
@@ -2456,9 +2591,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-                        ViewBag.imagescount = imagecount - list.Count;
-                        ViewData["error"] = "You Have Crossed Images Limit";
+                        if (file != null)
+                        {
+                            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+                            ViewBag.imagescount = imagecount - list.Count;
+                            ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorVenue.Id != 0 || vendorImage.ImageId != 0)
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "Venue" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }
@@ -2695,9 +2844,24 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                     else
                     {
+                        if (file != null)
+                        {
                             ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
                             ViewBag.imagescount = imagecount - list.Count;
                             ViewData["error"] = "You Have Crossed Images Limit";
+                        }
+                        else
+                        {
+                            if (vendorsOther.Id != 0 || vendorImage.ImageId != 0)
+                            {
+
+                                return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>"); //, new { dropdown = "Venue" }
+                            }
+                            else
+                            {
+                                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+                            }
+                        }
                     }
                 }
             }

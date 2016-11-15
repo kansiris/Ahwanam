@@ -20,6 +20,8 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            if (user.UserType == "Admin")
+                return RedirectToAction("Index", "Signin");
             List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
             decimal total = cartlist.Sum(s => s.TotalPrice);
             ViewBag.Cartlist = cartlist;

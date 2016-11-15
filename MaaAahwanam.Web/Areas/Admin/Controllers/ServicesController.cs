@@ -152,7 +152,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 string message = serviceResponseService.UpdateServiceResponse(serviceResponse);
                 if (message == "Success")
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Quotation Updated successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId, date = serviceResponse.UpdatedDate }) + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Quotation Updated successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId, date = serviceResponse.UpdatedDate.Value.ToShortDateString() }) + "'</script>");
                 }
                 return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("Quotations", "Services") + "'</script>");
             }
