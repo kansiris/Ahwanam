@@ -84,7 +84,7 @@
             <aside>
                 <h4>Services</h4>
                 <span>&nbsp;</span>
-                <ul id="stpyesul">
+                <ul id="stpyesul" class="display">
                     @{
                         int i = 0;
                         foreach (var item in @ViewBag.subservicetype)
@@ -127,18 +127,20 @@
                     {*@
                         @if (ViewBag.servicetypesType != "Banquet Hall")
                         {
-                            <label>Price Range</label>
-                            <div class="radioButtons" id="radio-demo">
-                                <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
-                                <label for="rblASC">Low to High</label>
-                                <br />
-                                <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
-                                <label for="rblDESC">High to Low</label>
-                            </div>
-                           // break;
-                        }
-                    @* } *@
-                </form>
+                            <div id="pricerange">
+                                <label>Price Range</label>
+                                <div class="radioButtons" id="radio-demo">
+                                    <input type="radio" name="radiogroup" id="rblASC" checked value="ASC" />
+                                    <label for="rblASC">Low to High</label>
+                                    <br />
+                                    <input type="radio" name="radiogroup" id="rblDESC" value="DESC" />
+                                    <label for="rblDESC">High to Low</label>
+                                </div>
+                                </div>
+                                // break;
+                                }
+                                @* } *@
+</form>
             </aside>
             <article>
                 <div class="about_categories">
@@ -310,6 +312,13 @@
             {
                 var a= $(".Test").attr('id');
                 document.getElementById(a).className = "active";
+            }
+            var pricerange =$( "ul.display li" ).first().text();
+            if (pricerange = "Banquet Hall" && subservicetype == '%') {
+                $("#pricerange").hide();
+            }
+            else {
+                $("#pricerange").show();
             }
         };
         /* -------------------------------  Loadmore functionality ------------------------ */

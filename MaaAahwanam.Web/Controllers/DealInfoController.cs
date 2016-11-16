@@ -22,6 +22,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 ViewBag.Userloginstatus = user.UserId;
+                ViewBag.usertype = user.UserType;
             }
             else
             {
