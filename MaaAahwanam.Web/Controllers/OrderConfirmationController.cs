@@ -19,8 +19,10 @@ namespace MaaAahwanam.Web.Controllers
         {
             int OID = int.Parse(Request.QueryString["oid"]);
             ViewBag.Oid = OID;
-            OrderConfirmationService orderConfirmationService = new OrderConfirmationService();
-            List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
+            //OrderConfirmationService orderConfirmationService = new OrderConfirmationService();
+            //List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
+            DashBoardService dashBoardService = new DashBoardService();
+            List<sp_OrderDetails_Result> list = dashBoardService.GetOrderDetailService(OID);
             ViewBag.Total =list.Sum(i=>i.PerunitPrice);
             ViewBag.Orderconfirmation = list;
             return View();

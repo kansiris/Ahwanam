@@ -93,11 +93,11 @@
                             {
                                 if (i == 0)
                                 {
-                                    <li><a href="#" class="Test" id="@item.vendortype.Replace(",", ", ")" onclick="subservicechnage(this)"> @item.vendortype.Replace(",", ", ")</a></li>
+                                    <li><a href="#" style="text-transform:capitalize" class="Test" id="@item.vendortype.Replace(",", ", ")" onclick="subservicechnage(this)"> @item.vendortype.Replace(",", ", ")</a></li>
                                 }
                                 else
                                 {
-                                    <li><a href="#" id="@item.vendortype.Replace(",", ", ")" onclick="subservicechnage(this)"> @item.vendortype.Replace(",", ", ")</a></li>
+                                    <li><a href="#" style="text-transform:capitalize" id="@item.vendortype.Replace(",", ", ")" onclick="subservicechnage(this)"> @item.vendortype.Replace(",", ", ")</a></li>
                                 }
                             }
                             i++;
@@ -286,6 +286,7 @@
                 $("#LoadMore1").hide();
             }
             var url = unescape(document.URL);
+            var type = url.split('=')[1].replace("&sType","");
             var servicetype = url.split('=')[2].replace("&loc","");
             var locationchange = url.split('=')[3].replace("&a","");
             var filter=url.split('=')[4];
@@ -313,12 +314,14 @@
                 var a= $(".Test").attr('id');
                 document.getElementById(a).className = "active";
             }
-            var pricerange =$( "ul.display li" ).first().text();
-            if (pricerange = "Banquet Hall" && subservicetype == '%') {
-                $("#pricerange").hide();
-            }
-            else {
-                $("#pricerange").show();
+            if (type == 'Venue') {
+                var pricerange =$( "ul.display li" ).first().text();
+                if (pricerange = "Banquet Hall" && subservicetype == '%') {
+                    $("#pricerange").hide();
+                }
+                else {
+                    $("#pricerange").show();
+                }
             }
         };
         /* -------------------------------  Loadmore functionality ------------------------ */
