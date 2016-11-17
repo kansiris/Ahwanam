@@ -5,6 +5,7 @@
 }
 @*<script src="/Assets/plugins/dataTables/jquery.dataTables.js"></script>*@
 <script src="/Assets/plugins/jquery-2.0.3.min.js"></script>
+@*<script src="~/Scripts/jquery.paginate.js"></script>*@
 @*<script src="/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>*@
 <style>
    .current {
@@ -13,6 +14,10 @@
 #pagin li {
   display: inline-block;
 }
+    a.previous_link {
+        font-size:20px;
+    }
+
 </style>
 
 @section Navigation
@@ -38,18 +43,24 @@
 </div>
 }
 
-    <form>
+    <form id="form1">
         <div class="notifications">
             <div class="mail-content">
-                <ul class="mail-toolbar">
+                <ul class="mail-toolbar" id="mail">
                     @*<li>
                             <input type="checkbox" id="selectall">
                         </li>*@
                     <li class="refresh"><a href="javascript:$('form').submit();"><i class="ti-reload"></i>Refresh</a></li>
+                    
+                    <li></li>
                     @*<li class="delete"><a href="#"><i class="ti-trash"></i>Delete</a></li>*@
-                    <li class="mail-pagination"> <span>1-15 from 169</span> <a href="#" class="btn btn-green"><i class="ti-angle-left"></i></a> <a href="#" class="btn btn-green"><i class="ti-angle-right"></i></a> </li>
+                    <li class="mail-pagination" id="page_navigation"> 
+                    @*<span>1-15 from 169</span> 
+                    <a href="#" id="previous" class="btn btn-green"><i class="ti-angle-left"></i></a> 
+                    <a href="#" id="next" class="btn btn-green"><i class="ti-angle-right"></i></a>*@ 
+                    </li>
                 </ul>
-                @*<!-- popup -->
+                <!-- popup -->
                 <div id="notify" class="zoom-anim-dialog mfp-hide small-dialog">
                     <div class="popup-box pop-content">
                         <div class="popup-head">
@@ -61,21 +72,22 @@
                         </div>
                     </div>
                 </div>
-                <!-- /popup -->*@
-                <br />
+                <!-- /popup -->
 
                 @if (ViewBag.AllNotifications.Count != 0)
                 {
+                    <input type='hidden' id='current_page' />
+                    <input type='hidden' id='show_per_page' />
 
                     <div class="notificationlist">
-                        <ul class="mail-list">
+                        <ul class="mail-list" id="maillist">
                             @foreach (var item in ViewBag.AllNotifications)
                             {
                                 <li>
                                     <span class="ml-left">
                                         <a href="~/Notifications/Index?id=@item.id&&type=delete"><img src="~/Assets/img/trashcan.png" style="width: 17px;height: 17px;" /></a>
                                     </span> 
-                                    <a class="ml-center popup-with-move-anim" href="#notify" onclick="displaypopup('@item.description', '@item.Subject')"> 
+                                    <a id="openpopup" class="ml-center popup-with-move-anim" href="#notify"  onclick="displaypopup('@item.description', '@item.Subject')"> 
                                     <span class="mail-sender" style="width:350px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">@item.description</span> 
                                     <span class="mail-subject">@item.Subject</span> </a> 
                                     <span class="ml-right">@item.DateandTime.ToShortDateString()</span>
@@ -83,7 +95,8 @@
                             }
 
                         </ul>
-                        
+                    
+                        @*<div id='page_navigation'></div>*@  
                     </div>
                 }
 
@@ -96,30 +109,18 @@
         </div>
     </form>
 
-<!-- popup -->
-<div id="notify" class="zoom-anim-dialog mfp-hide small-dialog">
-    <div class="popup-box pop-content">
-        <div class="popup-head">
-            <h3 id="sub" style="font-size:large"></h3>
-        </div>
-        <!-- /popup-head -->
-        <div class="popup-space popup-desc-space">
-            <p id="desc"></p>
-        </div>
-    </div>
-</div>
-<!-- /popup -->
 
-<script>
+@*<script>
    
     $(document).ready(function () {
-        var options = $("div.notificationlist ul").wrapAll();
+        var options = $("ul.mail-list");
         options.each(function () {
-            var $table = $("div.notificationlist ul");
+            var $table = $("ul.mail-list");
             if ($table.is('ul')) {
                 var $ul = $table;
                 $table = $ul.wrap('<table><tbody/></table>').closest('table').addClass('dashboardList dashboardList-nospace mail-list').width('100%');
-                $ul.find('li').wrap('<tr><td/></tr>').contents().unwrap();
+                $ul.find('li').wrap('<tr><td/><tr>').contents().unwrap();
+                
                 $ul.find('td span.ml-right').css('float','right');
                 $ul.contents().unwrap()
                 $ul.find('td a.mail-sender').css('color:green');
@@ -127,20 +128,129 @@
                 $table.find('thead').hide();
             }
             $table.dataTable({
-                bFilter: false, ordering: false, bLengthChange: false, pagingType: 'simple',language: {
+                bFilter: false, ordering: false, bLengthChange: false, pagingType: 'simple', language: {
                     paginate: {
-                        next: '>', // or '→'
-                        previous: '<' // or '←' 
+                        next: '>', 
+                        previous: '<' 
                     }
                 }
             });
-            $("#DataTables_Table_0_info").detach().prependTo('#DataTables_Table_0_wrapper').css('float', 'right');
+            //pagination & records count positioning
+            $("#DataTables_Table_0_info").detach().prependTo('#DataTables_Table_0_wrapper').css('float','right').css('padding','30px');
             $("#DataTables_Table_0_paginate").detach().prependTo('#DataTables_Table_0_wrapper');
+            //$(".mail-toolbar ul").appendTo("<li class='mail-pagination'><div id='DataTables_Table_0_info'></div></li>");
         });
+
+        //merge two divs
+        //$(".mail-toolbar").append("<div class='notificationlist'></div>")
+        
     });
 </script>
+<script>
+    $(document).ready(function () {
+        var table = $('#DataTables_Table_0').DataTable();
+        $('#DataTables_Table_0 tbody').on('click', 'tr', '#openpopup', function () {
+            //var data = table.row(this).data();
+            //alert('You clicked on ' + data[0] + '\'s row');
+            //alert("hi");
+            //$("#notify").css("display","block");
+            //$(".zoom-anim-dialog").attr('display', 'block');
+            //notify(this);
+        });
+    });
+</script>*@
 
+<script>
+    $(document).ready(function () {
 
+        //how much items per page to show
+        var show_per_page = 5;
+        //getting the amount of elements inside content div
+        var number_of_items = $('#maillist').children().size();
+        //calculate the number of pages we are going to have
+        var number_of_pages = Math.ceil(number_of_items / show_per_page);
+
+        //set the value of our hidden input fields
+        $('#current_page').val(1);
+        $('#show_per_page').val(show_per_page);
+
+        //now when we got all we need for the navigation let's make it '
+
+        /*
+        what are we going to have in the navigation?
+            - link to previous page
+            - links to specific pages
+            - link to next page
+        */
+        //var navigation_html = '<a class="previous_link"  href="javascript:previous();">Prev</a>';
+        //var current_link = 1;
+        //while (number_of_pages > current_link) {
+        //    navigation_html += '<a class="page_link" href="javascript:go_to_page(' + current_link + ')" longdesc="' + current_link + '">' + (current_link + 1) + '</a>';
+        //    current_link++;
+        //}
+        //navigation_html += '<a class="next_link"  href="javascript:next();">Next</a>';
+         
+        //var navigation_html = 
+        var current_link = 1;
+        var i = 1;
+        var navigation_html = current_link + '-' + show_per_page + ' from ' + number_of_pages;
+        navigation_html += '<a class="previous_link btn btn-green"  href="javascript:previous();"><i class="ti-angle-left"></i></a>';
+        navigation_html += '<a class="next_link btn btn-green" href="javascript:next();"><i class="ti-angle-right"></i></a>';
+
+        $('#page_navigation').html(navigation_html);
+
+        //add active_page class to the first page link
+        $('#page_navigation .page_link:first').addClass('active_page');
+
+        //hide all the elements inside content div
+        $('#maillist').children().css('display', 'none');
+
+        //and show the first n (show_per_page) elements
+        $('#maillist').children().slice(0, show_per_page).css('display', 'block');
+
+    });
+
+    function previous() {
+
+        new_page = parseInt($('#current_page').val()) - 1;
+        //if there is an item before the current active link run the function
+        if ($('.active_page').prev('.page_link').length == false) {
+            go_to_page(new_page);
+        }
+        $("#present").val(new_page);
+    }
+
+    function next() {
+        new_page = parseInt($('#current_page').val()) + 1;
+        //if there is an item after the current active link run the function
+        if ($('.active_page').next('.page_link').length == false) {
+            go_to_page(new_page);
+        }
+        
+    }
+    function go_to_page(page_num) {
+        //get the number of items shown per page
+        var show_per_page = parseInt($('#show_per_page').val());
+
+        //get the element number where to start the slice from
+        start_from = page_num * show_per_page;
+
+        //get the element number where to end the slice
+        end_on = start_from + show_per_page;
+
+        //hide all children elements of content div, get specific items and show them
+        $('#maillist').children().css('display', 'none').slice(start_from, end_on).css('display', 'block');
+
+        /*get the page link that has longdesc attribute of the current page and add active_page class to it
+        and remove that class from previously active page link*/
+        $('.page_link[longdesc=' + page_num + ']').addClass('active_page').siblings('.active_page').removeClass('active_page');
+
+        //update the current page input field
+        $('#current_page').val(page_num);
+        $('#present').html(page_num);
+    }
+
+</script>
     <script type="text/javascript">
         function displaypopup(description, preference) {
             var desc = $("#desc");

@@ -32,7 +32,7 @@ namespace MaaAahwanam.Web.Controllers
             VendorVenueService vendorVenueService = new VendorVenueService();
             Review review = new Review();
             string Servicetype = Request.QueryString["par"];
-            if(Servicetype== "Travel&Accomadation")
+            if(Servicetype== "Travel&Accomadation" || Servicetype == "Travel&Accommodation")
             {
                 Servicetype = "Travel";
             }

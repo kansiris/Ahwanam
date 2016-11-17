@@ -36,7 +36,7 @@ namespace MaaAahwanam.Web.Controllers
             int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
             int did = Convert.ToInt32(Request.QueryString["did"]);
             ViewBag.Subvid = Svid;
-            if (Servicetype == "Travel&Accomadation")
+            if (Servicetype == "Travel&Accomadation" || Servicetype == "Travel&Accommodation")
             {
                 Servicetype = "Travel";
             }

@@ -107,15 +107,16 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult Quotations(string id, ServiceResponse serviceResponse, string date)
+        public ActionResult Quotations(string id, ServiceResponse serviceResponse)
         {
             if (id != null)
             {
-                serviceResponse.RequestId = long.Parse(id);
+                ServiceRequest serviceRequest = new ServiceRequest();
+                serviceRequest.RequestId = serviceResponse.RequestId = long.Parse(id);
                 ViewBag.QuotationRecordsList = serviceResponseService.GetQuotationList(serviceResponse);
-                ViewBag.quotdate = date;
-                    ViewBag.quotid = id;
-                return View();
+                var list = serviceRequestService.GetServiceRequestRecord(serviceRequest);
+                ViewBag.quotdate = list[0].EventStartDate.ToShortDateString();
+                ViewBag.quotid = id;
             }
             return View();
         }
@@ -126,38 +127,28 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Quotations(string command, string id, ServiceResponse serviceResponse, string rid)
         {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            serviceResponse.RequestId = long.Parse(id);
+            serviceResponse.Status = "Active";
+            serviceResponse.UpdatedDate = DateTime.Now;
+            serviceResponse.UpdatedBy= serviceResponse.ResponseBy = user.UserId;
+            string message = "";
             if (command == "Submit")
             {
-                //var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                serviceResponse.RequestId = long.Parse(id);
-                serviceResponse.Status = "Active";
-                serviceResponse.UpdatedBy = ValidUserUtility.ValidUser();//user.UserId;
-                serviceResponse.UpdatedDate = DateTime.Now;
-                serviceResponse.ResponseBy = ValidUserUtility.ValidUser();//user.UserId;
-                string message = serviceResponseService.SaveServiceResponse(serviceResponse);
+                message = serviceResponseService.SaveServiceResponse(serviceResponse);
                 if (message == "Success")
-                {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Quotation Replied successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId, date = serviceResponse.UpdatedDate }) + "'</script>");
-                }
-                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("Quotations", "Services") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Quotation Replied successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId }) + "'</script>");
             }
             if (command == "Update")
             {
-               // var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                serviceResponse.RequestId = long.Parse(id);
-                serviceResponse.Status = "Active";
-                serviceResponse.UpdatedBy = ValidUserUtility.ValidUser();//user.UserId;
-                serviceResponse.UpdatedDate = DateTime.Now;
-                serviceResponse.ResponseBy = ValidUserUtility.ValidUser();//user.UserId;
-                string message = serviceResponseService.UpdateServiceResponse(serviceResponse);
+                message = serviceResponseService.UpdateServiceResponse(serviceResponse);
                 if (message == "Success")
-                {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Quotation Updated successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId, date = serviceResponse.UpdatedDate.Value.ToShortDateString() }) + "'</script>");
-                }
-                return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("Quotations", "Services") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Quotation updated successfully!');location.href='" + @Url.Action("Quotations", "Services", new { id = serviceResponse.RequestId }) + "'</script>");
             }
-            
-            return View();
+            return Content("<script language='javascript' type='text/javascript'>alert('Failed!!!');location.href='" + @Url.Action("Quotations", "Services") + "'</script>");
         }
     }
 }
+            
+           
+        
