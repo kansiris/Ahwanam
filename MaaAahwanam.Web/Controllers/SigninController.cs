@@ -56,7 +56,7 @@ namespace MaaAahwanam.Web.Controllers
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //string ReturnTo = ReturnUrl;
                     string ReturnTo = perfecturl;
-                    if (ReturnTo == null)
+                    if (ReturnTo == null || ReturnTo == "")
                     {
                         Response.Redirect("Index");
                     }

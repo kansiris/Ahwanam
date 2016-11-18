@@ -25,7 +25,7 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             ViewBag.Type = user.UserType;
             long userid = user.UserId;
-            ViewBag.AllNotifications = notificationService.GetNotificationService(userid);
+            ViewBag.AllNotifications = notificationService.GetNotificationService(userid).OrderByDescending(m=>m.id);
             
             return View();
         }

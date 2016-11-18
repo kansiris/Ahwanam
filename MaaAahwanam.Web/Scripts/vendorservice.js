@@ -62,7 +62,7 @@
                 $('#msg').show();
                 $("#btnadd").show();
                 $("#imagesdisplay").hide();
-                $("#dealdisplay").hide();
+                $("#dealdisplay").hide(); itemsdisable();
             }
             //op == url
             if (up == 'vid=' + op || op == url) {
@@ -97,6 +97,7 @@
                 }
                 
                 if (servicetype == 'Venue') {
+                    itemsdisable();
                     var type = $("#Item2_VenueType").val();
                     $("#Item3_VendorCategory").val(type);
                     if (type == 'Banquet Hall') {
