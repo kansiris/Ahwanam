@@ -3,22 +3,8 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
 }
-@*<script src="/Assets/plugins/dataTables/jquery.dataTables.js"></script>*@
 <script src="/Assets/plugins/jquery-2.0.3.min.js"></script>
-@*<script src="~/Scripts/jquery.paginate.js"></script>*@
-@*<script src="/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>*@
-<style>
-   .current {
-  color: green;
-}
-#pagin li {
-  display: inline-block;
-}
-    a.previous_link {
-        font-size:20px;
-    }
 
-</style>
 
 @section Navigation
 {
@@ -43,7 +29,7 @@
 </div>
 }
 
-    <form id="form1">
+<form id="form1">
         <div class="notifications">
             <div class="mail-content">
                 <ul class="mail-toolbar" id="mail">
@@ -78,7 +64,8 @@
                 {
                     <input type='hidden' id='current_page' />
                     <input type='hidden' id='show_per_page' />
-
+                    <input type="hidden" id="pagecount" />
+                    <input type="hidden" id="recordscount" />
                     <div class="notificationlist">
                         <ul class="mail-list" id="maillist">
                             @foreach (var item in ViewBag.AllNotifications)
@@ -109,98 +96,30 @@
         </div>
     </form>
 
-
-@*<script>
-   
-    $(document).ready(function () {
-        var options = $("ul.mail-list");
-        options.each(function () {
-            var $table = $("ul.mail-list");
-            if ($table.is('ul')) {
-                var $ul = $table;
-                $table = $ul.wrap('<table><tbody/></table>').closest('table').addClass('dashboardList dashboardList-nospace mail-list').width('100%');
-                $ul.find('li').wrap('<tr><td/><tr>').contents().unwrap();
-                
-                $ul.find('td span.ml-right').css('float','right');
-                $ul.contents().unwrap()
-                $ul.find('td a.mail-sender').css('color:green');
-                $table.prepend('<thead><tr><th>' + ($ul.data('heading') || '') + '</th></tr></thead>');
-                $table.find('thead').hide();
-            }
-            $table.dataTable({
-                bFilter: false, ordering: false, bLengthChange: false, pagingType: 'simple', language: {
-                    paginate: {
-                        next: '>', 
-                        previous: '<' 
-                    }
-                }
-            });
-            //pagination & records count positioning
-            $("#DataTables_Table_0_info").detach().prependTo('#DataTables_Table_0_wrapper').css('float','right').css('padding','30px');
-            $("#DataTables_Table_0_paginate").detach().prependTo('#DataTables_Table_0_wrapper');
-            //$(".mail-toolbar ul").appendTo("<li class='mail-pagination'><div id='DataTables_Table_0_info'></div></li>");
-        });
-
-        //merge two divs
-        //$(".mail-toolbar").append("<div class='notificationlist'></div>")
-        
-    });
-</script>
 <script>
     $(document).ready(function () {
-        var table = $('#DataTables_Table_0').DataTable();
-        $('#DataTables_Table_0 tbody').on('click', 'tr', '#openpopup', function () {
-            //var data = table.row(this).data();
-            //alert('You clicked on ' + data[0] + '\'s row');
-            //alert("hi");
-            //$("#notify").css("display","block");
-            //$(".zoom-anim-dialog").attr('display', 'block');
-            //notify(this);
-        });
-    });
-</script>*@
-
-<script>
-    $(document).ready(function () {
-
         //how much items per page to show
-        var show_per_page = 5;
+        var show_per_page = 10;
         //getting the amount of elements inside content div
         var number_of_items = $('#maillist').children().size();
         //calculate the number of pages we are going to have
         var number_of_pages = Math.ceil(number_of_items / show_per_page);
 
         //set the value of our hidden input fields
-        $('#current_page').val(1);
+        $('#current_page').val(0);
         $('#show_per_page').val(show_per_page);
-
+        $('#pagecount').val(number_of_pages);
+        $('#recordscount').val(number_of_items);
+        
         //now when we got all we need for the navigation let's make it '
-
-        /*
-        what are we going to have in the navigation?
-            - link to previous page
-            - links to specific pages
-            - link to next page
-        */
-        //var navigation_html = '<a class="previous_link"  href="javascript:previous();">Prev</a>';
-        //var current_link = 1;
-        //while (number_of_pages > current_link) {
-        //    navigation_html += '<a class="page_link" href="javascript:go_to_page(' + current_link + ')" longdesc="' + current_link + '">' + (current_link + 1) + '</a>';
-        //    current_link++;
-        //}
-        //navigation_html += '<a class="next_link"  href="javascript:next();">Next</a>';
-         
-        //var navigation_html = 
-        var current_link = 1;
-        var i = 1;
-        var navigation_html = current_link + '-' + show_per_page + ' from ' + number_of_pages;
-        navigation_html += '<a class="previous_link btn btn-green"  href="javascript:previous();"><i class="ti-angle-left"></i></a>';
-        navigation_html += '<a class="next_link btn btn-green" href="javascript:next();"><i class="ti-angle-right"></i></a>';
+        var navigation_html = '<text id="present"></text>' + '-' + '<text id="next"></text>' + ' from ' + number_of_items;
+        navigation_html += '<a class="previous_link btn btn-green" id="previous_link"  href="javascript:previous();"><i class="ti-angle-left"></i></a>';
+        navigation_html += '<a class="next_link btn btn-green" id="next_link" href="javascript:next();"><i class="ti-angle-right"></i></a>';
 
         $('#page_navigation').html(navigation_html);
 
         //add active_page class to the first page link
-        $('#page_navigation .page_link:first').addClass('active_page');
+        $('#page_navigation .previous_link:first').addClass('active_page');
 
         //hide all the elements inside content div
         $('#maillist').children().css('display', 'none');
@@ -208,25 +127,23 @@
         //and show the first n (show_per_page) elements
         $('#maillist').children().slice(0, show_per_page).css('display', 'block');
 
+        $('#present').html(1);
+        $('#next').html(show_per_page);
     });
 
     function previous() {
-
         new_page = parseInt($('#current_page').val()) - 1;
-        //if there is an item before the current active link run the function
-        if ($('.active_page').prev('.page_link').length == false) {
+        if (new_page >= 0) {
             go_to_page(new_page);
         }
-        $("#present").val(new_page);
+        
     }
 
     function next() {
         new_page = parseInt($('#current_page').val()) + 1;
-        //if there is an item after the current active link run the function
-        if ($('.active_page').next('.page_link').length == false) {
+        if (new_page < $("#pagecount").val()) {
             go_to_page(new_page);
-        }
-        
+        }        
     }
     function go_to_page(page_num) {
         //get the number of items shown per page
@@ -234,9 +151,16 @@
 
         //get the element number where to start the slice from
         start_from = page_num * show_per_page;
-
+        var lastrecord = start_from + show_per_page;
         //get the element number where to end the slice
-        end_on = start_from + show_per_page;
+
+        if ($("#recordscount").val() < lastrecord) {
+            end_on = $("#recordscount").val();
+        }
+        else {
+            end_on = lastrecord;
+        }
+        var present = (page_num - 1) * show_per_page + 1;
 
         //hide all children elements of content div, get specific items and show them
         $('#maillist').children().css('display', 'none').slice(start_from, end_on).css('display', 'block');
@@ -247,11 +171,13 @@
 
         //update the current page input field
         $('#current_page').val(page_num);
-        $('#present').html(page_num);
+        $('#present').html(start_from+1);
+        $('#next').html(end_on);
     }
 
 </script>
-    <script type="text/javascript">
+
+<script type="text/javascript">
         function displaypopup(description, preference) {
             var desc = $("#desc");
             var pref = $("#sub");
