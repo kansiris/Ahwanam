@@ -26,8 +26,16 @@
                             <i class="breads_arrow"></i>
                         </li>
                         <li>
-                            @*<a href="~/Deals/Index">Categories</a>*@
-                            <a href="#" onclick="testlogin()">Categories</a>
+                            @*@if (ViewBag.ServiceType == "Decorators")
+                            { <a href="~/Deals/Index?par=Decorator&sType=%&loc=@Model.Item1.Landmark&a=ASC">Categories</a> }
+                            @if (ViewBag.ServiceType == "BeautyServices")
+                            { <a href="~/Deals/Index?par=BeautyService&sType=%&loc=@Model.Item1.Landmark&a=ASC">Categories</a> }
+                            @if (ViewBag.ServiceType == "Gifts")
+                            { <a href="~/Deals/Index?par=Gift&sType=%&loc=@Model.Item1.Landmark&a=ASC">Categories</a> }
+                            else
+                            {
+                            <a href="~/Deals/Index?par=@Request.QueryString["par"]&sType=%&loc=@Model.Item1.Landmark&a=ASC">Categories</a>}*@
+                            <a href="#" onclick="testlogin()">Categories</a><input type="hidden" value="@Model.Item1.Landmark" id="hdnlocation"/>
                         </li>
                         <li>
                             <i class="breads_arrow"></i>
@@ -1507,8 +1515,17 @@
 </script>
 <script>
     function testlogin() {
-        window.location.href = document.referrer;
-        //$.post("/Signin/Index", { ReturnUrl: url }, function (data) { });
+        var url = unescape(document.URL);
+        var type = url.split('=')[1].replace("&VID","");
+        var location = $("#hdnlocation").val();
+        if (type == "Decorators")
+        { window.location.href='/Deals?par=Decorator&sType=%&loc='+location+'&a=ASC'; }
+        else if (type == "BeautyServices")
+        { window.location.href='/Deals?par=BeautyService&sType=%&loc='+location+'&a=ASC'; }
+        else if (type == "Gifts")
+        { window.location.href='/Deals?par=Gift&sType=%&loc='+location+'&a=ASC'; }
+        else
+        { window.location.href='/Deals?par='+type+'&sType=%&loc='+location+'&a=ASC' ; }
     }
 </script>
     @*<script>

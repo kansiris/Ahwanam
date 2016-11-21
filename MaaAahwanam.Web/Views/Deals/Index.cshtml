@@ -281,7 +281,7 @@
             //}
             $("#abc").hide();
             $("#imgloadergifdiv").hide();
-            if(@Model.Count==0 || @Model.Count <8)
+            if(@Model.Count < 10)
             {
                 $("#LoadMore1").hide();
             }
@@ -334,10 +334,15 @@
             //alert(hdncosttype);
             var servicetypeQuerystring = document.getElementById("hiddenlastrecord2").value;
 
-            var servicetype = window.location.search.split("=")[1].split("&")[0];
-            var subservicetype= window.location.search.split("=")[2].split("&")[0];
-            var location = window.location.search.split("=")[3].split("&")[0];
-            var order = window.location.search.split("=")[4].split("&")[0];
+            //var servicetype = window.location.search.split("=")[1].split("&")[0];
+            //var subservicetype= window.location.search.split("=")[2].split("&")[0];
+            //var location = window.location.search.split("=")[3].split("&")[0];
+            //var order = window.location.search.split("=")[4].split("&")[0];
+            var url = unescape(document.URL);
+            var servicetype = url.split('=')[1].replace("&sType","");
+            var subservicetype = url.split('=')[2].replace("&loc","");
+            var location = url.split('=')[3].replace("&a","");
+            var order = url.split('=')[4];
 
             var obj = {};
             obj.VID = VID;
@@ -409,28 +414,37 @@
     <script>
         function subservicechnage(s)
         {
-            var subservicetype=s.text.trim();
-            var servicetype = window.location.search.split("=")[1].split("&")[0];
-            var location = window.location.search.split("=")[3].split("&")[0];
-            var order = window.location.search.split("=")[4].split("&")[0];
+            //var subservicetype=s.text.trim();
+            //var servicetype = window.location.search.split("=")[1].split("&")[0];
+            //var location = window.location.search.split("=")[3].split("&")[0];
+            //var order = window.location.search.split("=")[4].split("&")[0];
+            var url = unescape(document.URL);
+            var servicetype = url.split('=')[1].replace("&sType","");
+            var subservicetype = s.text.replace(" ","").replace("%20","");
+            var location = url.split('=')[3].replace("&a","");
+            var order = url.split('=')[4];
             window.location.href = '/Deals?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
             //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
         }
         function locationchange(s)
         {
             //alert(document.getElementById("txtlocation").value);
-            var subservicetype= window.location.search.split("=")[2].split("&")[0];
-            var servicetype = window.location.search.split("=")[1].split("&")[0];
-            var location = document.getElementById("txtlocation").value;
-
-            var order = window.location.search.split("=")[4].split("&")[0];
+            //var subservicetype= window.location.search.split("=")[2].split("&")[0];
+            //var servicetype = window.location.search.split("=")[1].split("&")[0];
+            //var location = document.getElementById("txtlocation").value;
+            var url = unescape(document.URL);
+            var servicetype = url.split('=')[1].replace("&sType","");
+            var subservicetype = url.split('=')[2].replace("&loc","");
+            var location =  document.getElementById("txtlocation").value;
+            var order = url.split('=')[4];
+            //var order = window.location.search.split("=")[4].split("&")[0];
             window.location.href = '/Deals?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
             //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);
         }
 
         var radother = document.myForm.radiogroup;
         var prevother = null;
-        var rrother = null;
+        var rrother = null;var url1 = unescape(document.URL);
         //alert(radother.length);
         for (var i = 0; i < radother.length; i++) {
             radother[i].onclick = function () {
@@ -438,10 +452,12 @@
                     prevother = this;
                     var a = this.value;
 
-                    var subservicetype= window.location.search.split("=")[2].split("&")[0];
-                    var servicetype = window.location.search.split("=")[1].split("&")[0];
-                    var location = window.location.search.split("=")[3].split("&")[0];
-
+                    //var subservicetype= window.location.search.split("=")[2].split("&")[0];
+                    //var servicetype = window.location.search.split("=")[1].split("&")[0];
+                    //var location = window.location.search.split("=")[3].split("&")[0];
+                    var servicetype = url1.split('=')[1].replace("&sType","");
+                    var subservicetype = url1.split('=')[2].replace("&loc","");
+                    var location = url1.split('=')[3].replace("&a","");
                     var order = a;
                     window.location.href = '/Deals?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
                     //alert('/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order);

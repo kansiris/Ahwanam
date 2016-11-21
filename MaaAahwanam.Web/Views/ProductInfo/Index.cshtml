@@ -27,8 +27,8 @@
                             <i class="breads_arrow"></i>
                         </li>
                         <li>
-                            @*<a href="~/AllServices/Index">Categories</a>*@
-                            <a href="#" onclick="testlogin()">Categories</a>
+                            <a href="~/AllServices/Index?l=@Model.Item1.Landmark">Categories</a>
+                            @*<a href="#" onclick="testlogin()">Categories</a>*@
                         </li>
                         <li>
                             <i class="breads_arrow"></i>
@@ -1294,18 +1294,22 @@
             }
         }
     </script>
+    @*temeperary redirection can be useful later*@
     <script>
         function testlogin() {
             var url = document.referrer;
             var l;
-            var type = url.split('/')[3];
-            if (type == 'AllServices') {
-                l = url.split('=')[1];
-            }
-            if (type.startsWith('product',0) == true) {
-                l = url.split('&')[2].replace("loc=","");
-            }
-            window.location.href='/AllServices/Index?l='+l;
+                var type = url.split('/')[3];
+                var type1 = url.split('/')[3];
+                alert(type1);
+                if (type == 'AllServices' || type == 'allservices') {
+                    l = url.split('=')[1];
+                }
+                if (type1.startsWith('product',0) == true) {
+                    l = url.split('&')[2].replace("loc=","");
+                }
+                $("#hdnredirect").val(1);
+                window.location.href='/AllServices/Index?l='+l;            
         }
     </script>
     @*<script>
