@@ -170,9 +170,9 @@
                 $('#btn').show();
                 $("#btncancel").show();
                 $('#btnback').hide();
-                $('.deletelink').show();
-                $('#fileUpload').show();
-                $('#msg').show();
+                $('.deletelink').hide();
+                $('#fileUpload').hide();
+                $('#msg').hide();
                 $('.form-control').removeAttr("disabled");
                 $("#btnadd").hide();
                 

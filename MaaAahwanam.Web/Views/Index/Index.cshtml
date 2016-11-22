@@ -20,12 +20,14 @@
     <div class="slider">
         @*@using (Html.BeginForm("Index", "AllServices", FormMethod.Post))
             {*@
-        <div class="ms-layer search-box" style="left:0; right:0; top:215px;">
-            <div class="select-cats">
-                <select id="e2" style="width:100%">
-                    <option selected="selected">Select Event</option>
+        <div class="ms-layer search-box" style="left:0; right:0; top:215px;" >
+            <div class="select-cats"><input type="hidden" id="hdnselected" />
+                <form autocomplete="off">
+                    <select id="e2" style="width:100%" onchange="change(this.value)">
+                        <option>Select Event</option>
 
-                </select>
+                    </select>
+                </form>
             </div>
             <div class="search-input">
                 <input type="text" name="name" class="autosuggest" id="txt_Location_Bottom" placeholder="Enter your location">
@@ -596,8 +598,14 @@
 <!-- // Events -->
 @section scripts
 {
+
 }
 <script type="text/javascript" async="async" defer="defer" data-cfasync="false" src="https://mylivechat.com/chatinline.aspx?hccid=84879164">
 
 </script>
 
+<script>
+    function change(value) {
+        document.getElementById('hdnselected').value = value;
+    }
+</script>
