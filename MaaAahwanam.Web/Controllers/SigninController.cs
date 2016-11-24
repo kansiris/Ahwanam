@@ -23,6 +23,10 @@ namespace MaaAahwanam.Web.Controllers
         static int wrongpwdurlcount = 0;
         public ActionResult Index()
         {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Index");
+            }
             return View();
         }
         [HttpPost]
@@ -45,37 +49,39 @@ namespace MaaAahwanam.Web.Controllers
             }
             if (command == "AuthenticationUser")
             {
-                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                userLogin.UserType = "User";
-                var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
-                if (userResponse.UserLoginId != 0)
-                {
-                    wrongpwdurlcount = 0;
-                    userResponse.UserType = "User";
-                    string userData = JsonConvert.SerializeObject(userResponse);
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    //string ReturnTo = ReturnUrl;
-                    string ReturnTo = perfecturl;
-                    if (ReturnTo == null || ReturnTo == "")
+                
+                    UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                    userLogin.UserType = "User";
+                    var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
+                    if (userResponse.UserLoginId != 0)
                     {
-                        Response.Redirect("Index");
+                        wrongpwdurlcount = 0;
+                        userResponse.UserType = "User";
+                        string userData = JsonConvert.SerializeObject(userResponse);
+                        ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                        //string ReturnTo = ReturnUrl;
+                        string ReturnTo = perfecturl;
+                        if (ReturnTo == null || ReturnTo == "")
+                        {
+                            Response.Redirect("Index");
+                        }
+                        else
+                        {
+                            string[] testid = ReturnTo.Split('/');
+                            if (testid.Contains("Signin") == false && testid.Contains("signin") == false)
+                                Response.Redirect(ReturnTo);
+                            else
+                                Response.Redirect(wrongpwdurl);
+                        }
                     }
                     else
                     {
-                        string[] testid = ReturnTo.Split('/');
-                        if (testid.Contains("Signin") == false && testid.Contains("signin") == false)
-                            Response.Redirect(ReturnTo);
-                        else
-                            Response.Redirect(wrongpwdurl);
+                        if (wrongpwdurlcount == 0)
+                        { wrongpwdurl = perfecturl; wrongpwdurlcount++; }
+                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                        //TempData["Alert"] = "<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password')</script>";
                     }
-                }
-                else
-                {
-                    if (wrongpwdurlcount == 0)
-                    { wrongpwdurl = perfecturl; wrongpwdurlcount++; }
-                    return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
-                    //TempData["Alert"] = "<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password')</script>";
-                }
+                
             }
             if (command == "AuthenticationVendor")
             {

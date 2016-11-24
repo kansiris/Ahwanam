@@ -4,12 +4,13 @@
     Layout = "~/Views/SharedWeb/DashBoardMaster.cshtml";
     var i = 1; var j = 0;
 }
+<script src="~/Scripts/jquery-1.10.2.js"></script>
 @section Navigation
 {
 <div class="breads">
     <div class="breads_inner">
         <div class="pageWidth">
-            <div class="title">
+            <div class="title"><input type="hidden" id="hdntype" value="@ViewBag.servicetype" />
                 @if (ViewBag.servicetype == "Bidding")
                 {
                     <h3>  Bidding View Cart  </h3>
@@ -199,89 +200,93 @@
      <br/>
 @if (ViewBag.service.Count != 0)
 {
-     <form method="post">
-         <div class="pay-btn btn-right">
-             <button class="btn btn-big btn-green" type="button" id="btnpay" name="command" value="Pay" onclick="return valid();"><i class="ti-money"></i> Pay Now</button> @*onclick="window.location.href='/Payment/Index';"*@
-             <div class="clear"></div> @**@
-         </div>
-     </form>
+    //Comments Section
+    <div id="commentsection">
+        <form method="post">
+            <div class="pay-btn btn-right">
+                <button class="btn btn-big btn-green" type="button" id="btnpay" name="command" value="Pay" onclick="return valid();"><i class="ti-money"></i> Pay Now</button> @*onclick="window.location.href='/Payment/Index';"*@
+                <div class="clear"></div> @**@
+            </div>
+        </form>
 
         <!-- /price-information -->
-     <br/><br/>
+        <br /><br />
         <div class="comments-box">
             @*<form id="contact_form" class="form">*@
-                @using (Html.BeginForm("Index", "QuatationViewCart", routeValues: new { id = @ViewBag.id,rid=@ViewBag.rid }, method: FormMethod.Post)) //"index", "QuatationViewCart",new { @id="contact_from",@class="form"}
+            @using (Html.BeginForm("Index", "QuatationViewCart", routeValues: new { id = @ViewBag.id,rid=@ViewBag.rid }, method: FormMethod.Post)) //"index", "QuatationViewCart",new { @id="contact_from",@class="form"}
                 {
-                <ul id="contact_form" class="form">
-                    <li class="full">
-                        <label>Comments</label>
-                        @Html.TextAreaFor(Model => Model.CommentDetails, new { @class = "form-control", placeholder = "Enter your comments here ...", @rows = "3" })
-                        @*<textarea id="comments" name="comments" placeholder="Enter your comments here ..."></textarea>*@
-                    </li>
-                </ul>
-                
-                
-                    <button class="btn btn btn-orange m-l-0 btn-right" type="submit" name="command" value="Submit"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
+            <ul id="contact_form" class="form">
+                <li class="full">
+                    <label>Comments</label>
+                    @Html.TextAreaFor(Model => Model.CommentDetails, new { @class = "form-control", placeholder = "Enter your comments here ...", @rows = "3" })
+                    @*<textarea id="comments" name="comments" placeholder="Enter your comments here ..."></textarea>*@
+                </li>
+            </ul>
+
+
+            <button class="btn btn btn-orange m-l-0 btn-right" type="submit" name="command" value="Submit"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
                     //<input type="submit" value="Submit" class="btn btn btn-orange m-l-0 btn-right" name="command" />
                 }
-                <div class="clear"></div>
+            <div class="clear"></div>
             @*</form>*@
 
             <div class="clear"></div>
         </div>
         <!-- /comments-box -->
         <div class="replyStyle comments m-t-30">
-           
+
             @if (ViewBag.comments != null)
             {
                if (ViewBag.rid != null)
-               { 
-                   <h2>  ID :   @ViewBag.rid   Comments <span>(@ViewBag.commentscount)</span> </h2>
+               {
+            <h2>  ID :   @ViewBag.rid   Comments <span>(@ViewBag.commentscount)</span> </h2>
                 }
                 else
                 {
-                    <h2> Comments <span>(@ViewBag.commentscount)</span> </h2>
+            <h2> Comments <span>(@ViewBag.commentscount)</span> </h2>
                 }
                 foreach (var item in ViewBag.comments)
                 {
-                    <dl class="first-child">
-                        <dt>
-                            @if (item.image != null && item.image != "")
+            <dl class="first-child">
+                <dt>
+                    @if (item.image != null && item.image != "")
                             {
-                                <img class="person" alt="img-profile1" src="~/Content/UserDPs/@item.image" />
+                            <img class="person" alt="img-profile1" src="~/Content/UserDPs/@item.image" />
                             }
                             else
                             {
-                                <img class="person" alt="img-profile1" src="~/Content/UserDPs/user1.jpg" />
+                            <img class="person" alt="img-profile1" src="~/Content/UserDPs/user1.jpg" />
                             }
-                        </dt>
-                        <dd>
-                            <h5>@item.FirstName @item.LastName</h5>
-                            <p>@item.CommentDetails.</p>
-                            <div class="cmntsPublish">
-                                <ul>
-                                    <li><i class="ti-time"></i><span>@item.UpdatedDate.ToShortDateString()</span></li>
-                                </ul>
-                            </div>
-                        </dd>
-                    </dl>
+                </dt>
+                <dd>
+                    <h5>@item.FirstName @item.LastName</h5>
+                    <p>@item.CommentDetails.</p>
+                    <div class="cmntsPublish">
+                        <ul>
+                            <li><i class="ti-time"></i><span>@item.UpdatedDate.ToShortDateString()</span></li>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
                 }
             }
             @if (ViewBag.comments == null)
             {
-                <dl>
-                    <p>No Comments</p>
-                </dl>
+            <dl>
+                <p>No Comments</p>
+            </dl>
             }
-            </div>
+        </div>
         <div class="clear"></div>
+    </div>
 }
     </div>
     <!-- /dashInner -->
 
 <script>
     //displays order id on page load
-    window.onload = function () {
+    $(document).ready(function () { 
+
         var label = $("#label");
         var url = window.location.href;
         var id = url.substring(url.lastIndexOf('=') + 1);
@@ -294,6 +299,17 @@
             label.html(id1);
         }
 
+        var stype = $("#hdntype").val();
+        var url=window.location.href;
+        var id = url.split('?')[1];
+        if (stype == 'Quotation' && id.startsWith('id',0) == true) {
+            $("#commentsection").css("display","none");
+        }
+        if (stype == 'Quotation' && id.startsWith('rid', 0) == true) {
+            $("#commentsection").css("display", "block");
+        }
+    });
+
     //    $('#mytable tbody tr').each(function () {
     //        var budget = $(this).find("td").eq(5).html();
     //        var amount = $("#price");
@@ -304,7 +320,7 @@
     //        taxamount.html(taxcalc);
     //        amount.html(budget);
     //    });
-    };
+    
 </script>
 
 <script>
