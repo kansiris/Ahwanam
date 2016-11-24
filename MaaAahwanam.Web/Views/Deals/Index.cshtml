@@ -10,7 +10,26 @@
         <div class="breads_inner">
             <div class="pageWidth">
                 <div class="title">
-                    <h3>@ViewBag.ServiceType</h3>
+                    @if (ViewBag.ServiceType == "Eventorganiser")
+                    {
+                        <h3>Event Organisers</h3>
+                    }
+                    else if (ViewBag.ServiceType == "BeautyService")
+                    {
+                        <h3>Beauty Services</h3>
+                    }
+                    else if (ViewBag.ServiceType == "WeddingCollection")
+                    {
+                        <h3>Wedding Collections</h3>
+                    }
+                    else if (ViewBag.ServiceType == "InvitationCard")
+                    {
+                        <h3>Invitation Cards</h3>
+                    }
+                    else
+                    {
+                        <h3><text>@ViewBag.ServiceType</text>s</h3>
+                    }
                 </div>
                 <div class="breadcrumbs">
                     <ul>
@@ -18,8 +37,28 @@
                         <li><i class="breads_arrow"></i></li>
                         @*@if (ViewBag.ServiceType == "InvitationCard")
                             {*@
-                        <li><a href="../Deals?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> @ViewBag.ServiceType</a></li>
+                        
                         @*}*@
+                        @if (ViewBag.ServiceType == "Eventorganiser")
+                        {
+                            <li><a href="../Deals?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> Event Organisers</a></li>
+                        }
+                        else if (ViewBag.ServiceType == "BeautyService")
+                        {
+                            <li><a href="../Deals?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> Beauty Services</a></li>
+                        }
+                        else if (ViewBag.ServiceType == "WeddingCollection")
+                        {
+                            <li><a href="../Deals?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> Wedding Collections</a></li>
+                        }
+                        else if (ViewBag.ServiceType == "InvitationCard")
+                        {
+                            <li><a href="../Deals?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> Invitation Cards </a></li>
+                        }
+                        else
+                        {
+                            <li><a href="../Deals?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> <text>@ViewBag.ServiceType</text>s</a></li>
+                        }
                         @*@if (ViewBag.ServiceType == "Venue")
                             {
                             <li><a href="../product?par=Venue"> Venue</a></li>
@@ -122,7 +161,7 @@
                 <div class="clear"></div>
                 <form name="myForm">
                     <label>Location</label>
-                    <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onkeypress="onkey()" onchange="locationchange(this)">
+                    <input type="text" id="txtlocation" name="location" placeholder="Enter your Location" onkeypress="onkey(this)" onchange="locationchange(this)">
                     @*@foreach (var item in this.Model)
                     {*@
                         @if (ViewBag.servicetypesType != "Banquet Hall")
@@ -281,7 +320,7 @@
             //}
             $("#abc").hide();
             $("#imgloadergifdiv").hide();
-            if(@Model.Count < 10)
+            if(@Model.Count < 9)
             {
                 $("#LoadMore1").hide();
             }
@@ -464,11 +503,11 @@
                 }
             };
         }
-        function onkey(){
+        function onkey(s){
             //alert('s');
             if ((event.keyCode || event.which) == 13) {
-            event.preventDefault();
-            return false;
+                event.preventDefault();
+                locationchange(s);
             }
         }
     </script>

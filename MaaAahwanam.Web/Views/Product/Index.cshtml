@@ -10,7 +10,27 @@
         <div class="breads_inner">
             <div class="pageWidth">
                 <div class="title">
-                    <h3>@ViewBag.ServiceType</h3>
+                    @if (ViewBag.ServiceType == "Eventorganiser")
+                    {
+                        <h3>Event Organisers</h3>
+                    }
+                    else if (ViewBag.ServiceType == "BeautyService")
+                    {
+                        <h3>Beauty Services</h3>
+                    }
+                    else if (ViewBag.ServiceType == "WeddingCollection")
+                    {
+                        <h3>Wedding Collections</h3>
+                    }
+                    else if (ViewBag.ServiceType == "InvitationCard")
+                    {
+                        <h3>Invitation Cards</h3>
+                    }
+                    else
+                    {
+                        <h3><text>@ViewBag.ServiceType</text>s</h3>
+                    }
+                    
                 </div>
                 <div class="breadcrumbs">
                     <ul>
@@ -19,8 +39,28 @@
                         @*@if (ViewBag.ServiceType == "InvitationCard")
                             {*@
                         @*<li><a href="../product?par=@ViewBag.ServiceType&sType=%&loc=Hyderabad&a=ASC" id="lnkservicetype"> @ViewBag.ServiceType</a></li>*@
-                        <li><a href="@Request.RawUrl" id="lnkservicetype">@ViewBag.ServiceType</a></li>
+                        
                         @*}*@
+                        @if (ViewBag.ServiceType == "Eventorganiser")
+                        {
+                            <li><a href="@Request.RawUrl" id="lnkservicetype">Event Organisers</a></li>
+                        }
+                        else if (ViewBag.ServiceType == "BeautyService")
+                        {
+                            <li><a href="@Request.RawUrl" id="lnkservicetype">Beauty Services</a></li>
+                        }
+                        else if (ViewBag.ServiceType == "WeddingCollection")
+                        {
+                            <li><a href="@Request.RawUrl" id="lnkservicetype">Wedding Collections</a></li>
+                        }
+                        else if (ViewBag.ServiceType == "InvitationCard")
+                        {
+                            <li><a href="@Request.RawUrl" id="lnkservicetype">Invitation Cards</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Request.RawUrl" id="lnkservicetype"><text>@ViewBag.ServiceType</text>s</a></li>
+                        }
                         @*@if (ViewBag.ServiceType == "Venue")
                             {
                             <li><a href="../product?par=Venue"> Venue</a></li>
@@ -290,7 +330,7 @@
             
             $("#abc").hide();
             $("#imgloadergifdiv").hide();
-            if(@Model.Count < 10)
+            if(@Model.Count < 9)
             {
                 $("#LoadMore1").hide();
             }
@@ -486,21 +526,11 @@
         }
 
         // Location textbox enter key restriction
-        function onkey(){
+        function onkey(s){
             //alert('s');
             if ((event.keyCode || event.which) == 13) {
             event.preventDefault();
-                return false;
-                //var url = unescape(document.URL);
-            
-                //var servicetype = url.split('=')[1].replace("&sType","");
-                //var subservicetype = url.split('=')[2].replace("&loc","");
-                //var location =  document.getElementById("txtlocation").value;
-                //var order = url.split('=')[4];
-                ////var t = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
-                ////alert(unescape(t));
-                ////$.post("/product?par="+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order,null, function (data) { });
-                //window.location.href = '/product?par='+servicetype+'&sType='+subservicetype+'&loc='+location+'&a='+order;
+            locationchange(s);
             }
         }
 

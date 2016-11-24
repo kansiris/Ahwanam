@@ -46,14 +46,18 @@
                         <li><a href="~/EditProfile"><i class="ti-pencil-alt"></i>Edit Profile</a></li>
                         <li><a href="~/Notifications"><i class="ti-bell"></i>Notifications</a></li>
                         <li><a href="~/Tickets"><i class="ti-ticket"></i>Tickets</a></li>
-                        @if (ViewBag.Type == "User")
+                        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                         {
-                            <li><a href="../AddressBook"><i class="ti-book"></i>Address Book</a></li>
-                        }
-                        @if (ViewBag.Type == "Vendor")
-                        {
-                            <li><a href="../Orders"><i class="ti-book"></i>Orders</a></li>
-                            <li><a href="../DatesBooked"><i class="ti-pencil-alt"></i>DatesBooked</a></li>
+                            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                            if ( user.UserType == "User")
+                            {
+                                <li><a href="../AddressBook"><i class="ti-book"></i>Address Book</a></li>
+                            }
+                            if (user.UserType == "Vendor")
+                            {
+                                <li><a href="../Orders"><i class="ti-book"></i>Orders</a></li>
+                                <li><a href="../DatesBooked"><i class="ti-pencil-alt"></i>DatesBooked</a></li>
+                            }
                         }
                         <li><a href="../ChangePassword"><i class="ti-key"></i>Change Password</a></li>
                         <li><a href="../Signin/SignOut"><i class="ti-power-off"></i>Logout</a></li>
