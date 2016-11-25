@@ -29,5 +29,10 @@ namespace MaaAahwanam.Service
         {
             testimonialpathRepository.SaveAdminTestimonial(adminTestimonialPath);
         }
+
+        public List<AdminTestimonial> GetOrderid(long id)
+        {
+            return testimonialRepository.GetOrderid(id);
+        }
     }
 }

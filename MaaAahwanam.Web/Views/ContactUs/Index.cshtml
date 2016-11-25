@@ -23,6 +23,8 @@
         </div>
     </div>
 }
+<script  src="~/CSSWeb/js/jquery-1.9.1.js"></script>
+<script  src="~/Scripts/validate.js"></script>
 <section>
     <div class="about_main">
         <div class="pageWidth">
@@ -39,25 +41,26 @@
                     <option>Godi wale</option>
                 </select>
             </div>
+
             <div class="contactForm">
                 <div class="leftPanel">
-                    @using (Html.BeginForm("Index", "ContactUs", FormMethod.Post, new { @class = "form", @id = "contact_form" }))
-                    {
-                        @*<form id="contact_form" class="form">*@
+                    @*@using (Html.BeginForm("Index", "ContactUs", FormMethod.Post, new { @class = "form", @id = "contact_form" }))
+                    {*@
+                        <form id="contact_form" class="form" method="post">
                         <ul>
                             <li>
                                 <label>Name<span>*</span></label>
-                                @Html.TextBoxFor(Model => Model.PersonName, new { @id = "firstname", @name = "firstname", placeholder = "First Name", required = "required" })
+                                @Html.TextBoxFor(Model => Model.PersonName, new { placeholder = "First Name" }) @*, required = "required"*@
                             </li>
                             <li>
                                 <label>Email<span>*</span></label>
-                                @Html.TextBoxFor(Model => Model.SenderEmailId, new { @id = "email", @name = "email", placeholder = "Email", required = "required" })
+                                @Html.TextBoxFor(Model => Model.SenderEmailId, new {  placeholder = "Email"})
                             </li>
                         </ul>
                         <ul>
                             <li>
                                 <label>Phone<span>*</span></label>
-                                @Html.TextBoxFor(Model => Model.SenderPhone, new { @id = "phoneno", @name = "phoneno", placeholder = "Phone", required = "required" })
+                                @Html.TextBoxFor(Model => Model.SenderPhone, new {  placeholder = "Phone" })
                             </li>
                             <li>
                                 <label>Country <span>*</span></label>
@@ -68,28 +71,28 @@
                                                new { Text ="USA", Value = "USA" },
                                                new { Text ="Australia", Value = "Australia" },
                                             },
-                                          "value", "text"), new { @class = "validate[required] form-control", required = "required" })
+                                          "value", "text"), new { @class = "validate[required] form-control" })
                             </li>
                         </ul>
                         <ul>
                             <li>
                                 <label>Postal Code</label>
-                                @Html.TextBoxFor(Model => Model.PostalCode, new { @id = "postalcode", @name = "postalcode", placeholder = "Postal Code", required = "required" })
+                                @Html.TextBoxFor(Model => Model.PostalCode, new {  placeholder = "Postal Code" })
                             </li>
                             <li>
                                 <label>Company Name<span>*</span></label>
-                                @Html.TextBoxFor(Model => Model.CompanyName, new { @id = "company", @name = "company", placeholder = "Company Name", required = "required" })
+                                @Html.TextBoxFor(Model => Model.CompanyName, new {  placeholder = "Company Name" })
                             </li>
                         </ul>
                         <ul>
                             <li class="full">
                                 <label>Message<span>*</span></label>
-                                @Html.TextAreaFor(Model => Model.EnquiryDetails, new { @class = "validate[required] form-control", required = "required" })
+                                @Html.TextAreaFor(Model => Model.EnquiryDetails, new { @class = "validate[required] form-control" })
                             </li>
                         </ul>
                         <button type="submit" class="btn btn-green">Submit <i class="ti-angle-double-right"></i></button>
-                        @*</form>*@
-                    }
+                        </form>
+                    @* } *@
                 </div>
                 <div class="rightPanel">
                     <div class="contactList">
@@ -149,3 +152,9 @@
 
 <div class="clear"></div>
 
+@*<script>
+    $(document).ready(function () {
+
+        
+    });
+</script>*@

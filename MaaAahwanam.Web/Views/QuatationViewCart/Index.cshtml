@@ -201,7 +201,7 @@
 @if (ViewBag.service.Count != 0)
 {
     //Comments Section
-    <div id="commentsection">
+    
         <form method="post">
             <div class="pay-btn btn-right">
                 <button class="btn btn-big btn-green" type="button" id="btnpay" name="command" value="Pay" onclick="return valid();"><i class="ti-money"></i> Pay Now</button> @*onclick="window.location.href='/Payment/Index';"*@
@@ -211,74 +211,75 @@
 
         <!-- /price-information -->
         <br /><br />
-        <div class="comments-box">
-            @*<form id="contact_form" class="form">*@
-            @using (Html.BeginForm("Index", "QuatationViewCart", routeValues: new { id = @ViewBag.id,rid=@ViewBag.rid }, method: FormMethod.Post)) //"index", "QuatationViewCart",new { @id="contact_from",@class="form"}
+        <div id="commentsection">
+            <div class="comments-box">
+                @*<form id="contact_form" class="form">*@
+                @using (Html.BeginForm("Index", "QuatationViewCart", routeValues: new { id = @ViewBag.id, rid = @ViewBag.rid }, method: FormMethod.Post)) //"index", "QuatationViewCart",new { @id="contact_from",@class="form"}
                 {
-            <ul id="contact_form" class="form">
-                <li class="full">
-                    <label>Comments</label>
-                    @Html.TextAreaFor(Model => Model.CommentDetails, new { @class = "form-control", placeholder = "Enter your comments here ...", @rows = "3" })
-                    @*<textarea id="comments" name="comments" placeholder="Enter your comments here ..."></textarea>*@
-                </li>
-            </ul>
+                    <ul id="contact_form" class="form">
+                        <li class="full">
+                            <label>Comments</label>
+                            @Html.TextAreaFor(Model => Model.CommentDetails, new { @class = "form-control", placeholder = "Enter your comments here ...", @rows = "3" })
+                            @*<textarea id="comments" name="comments" placeholder="Enter your comments here ..."></textarea>*@
+                        </li>
+                    </ul>
 
 
-            <button class="btn btn btn-orange m-l-0 btn-right" type="submit" name="command" value="Submit"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
+                    <button class="btn btn btn-orange m-l-0 btn-right" type="submit" name="command" value="Submit"><i class="ti-thumb-up"></i> &nbsp;Submit</button>
                     //<input type="submit" value="Submit" class="btn btn btn-orange m-l-0 btn-right" name="command" />
                 }
-            <div class="clear"></div>
-            @*</form>*@
+                <div class="clear"></div>
+                @*</form>*@
 
+                <div class="clear"></div>
+            </div>
+            <!-- /comments-box -->
+            <div class="replyStyle comments m-t-30">
+
+                @if (ViewBag.comments != null)
+                {
+                    if (ViewBag.rid != null)
+                    {
+                        <h2>  ID :   @ViewBag.rid   Comments <span>(@ViewBag.commentscount)</span> </h2>
+                    }
+                    else
+                    {
+                        <h2> Comments <span>(@ViewBag.commentscount)</span> </h2>
+                    }
+                    foreach (var item in ViewBag.comments)
+                    {
+                        <dl class="first-child">
+                            <dt>
+                                @if (item.image != null && item.image != "")
+                                {
+                                    <img class="person" alt="img-profile1" src="~/Content/UserDPs/@item.image" />
+                                }
+                                else
+                                {
+                                    <img class="person" alt="img-profile1" src="~/Content/UserDPs/user1.jpg" />
+                                }
+                            </dt>
+                            <dd>
+                                <h5>@item.FirstName @item.LastName</h5>
+                                <p>@item.CommentDetails.</p>
+                                <div class="cmntsPublish">
+                                    <ul>
+                                        <li><i class="ti-time"></i><span>@item.UpdatedDate.ToShortDateString()</span></li>
+                                    </ul>
+                                </div>
+                            </dd>
+                        </dl>
+                    }
+                }
+                @if (ViewBag.comments == null)
+                {
+                    <dl>
+                        <p>No Comments</p>
+                    </dl>
+                }
+            </div>
             <div class="clear"></div>
         </div>
-        <!-- /comments-box -->
-        <div class="replyStyle comments m-t-30">
-
-            @if (ViewBag.comments != null)
-            {
-               if (ViewBag.rid != null)
-               {
-            <h2>  ID :   @ViewBag.rid   Comments <span>(@ViewBag.commentscount)</span> </h2>
-                }
-                else
-                {
-            <h2> Comments <span>(@ViewBag.commentscount)</span> </h2>
-                }
-                foreach (var item in ViewBag.comments)
-                {
-            <dl class="first-child">
-                <dt>
-                    @if (item.image != null && item.image != "")
-                            {
-                            <img class="person" alt="img-profile1" src="~/Content/UserDPs/@item.image" />
-                            }
-                            else
-                            {
-                            <img class="person" alt="img-profile1" src="~/Content/UserDPs/user1.jpg" />
-                            }
-                </dt>
-                <dd>
-                    <h5>@item.FirstName @item.LastName</h5>
-                    <p>@item.CommentDetails.</p>
-                    <div class="cmntsPublish">
-                        <ul>
-                            <li><i class="ti-time"></i><span>@item.UpdatedDate.ToShortDateString()</span></li>
-                        </ul>
-                    </div>
-                </dd>
-            </dl>
-                }
-            }
-            @if (ViewBag.comments == null)
-            {
-            <dl>
-                <p>No Comments</p>
-            </dl>
-            }
-        </div>
-        <div class="clear"></div>
-    </div>
 }
     </div>
     <!-- /dashInner -->

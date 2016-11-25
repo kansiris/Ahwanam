@@ -35,17 +35,19 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (command == "Register")
             {
-                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                userLogin.UserType = "User";
-                var response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
-                if (response == "sucess")
-                {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
-                }
-                else
-                {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
-                }
+                
+                    UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                    userLogin.UserType = "User";
+                    var response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+                    if (response == "sucess")
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                    }
+                    else
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                    }
+                
             }
             if (command == "AuthenticationUser")
             {

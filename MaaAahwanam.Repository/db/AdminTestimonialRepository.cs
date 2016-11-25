@@ -22,5 +22,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return adminTestimonial;
         }
+
+        public List<AdminTestimonial> GetOrderid(long id)
+        {
+            return _dbContext.AdminTesimonial.Where(m=>m.Orderid == id).ToList();
+        }
     }
 }
