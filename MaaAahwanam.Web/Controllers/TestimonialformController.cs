@@ -30,11 +30,12 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult Saveform(HttpPostedFileBase file, AdminTestimonial adminTestimonial)
         {
-            string[] url = Request.UrlReferrer.Query.Split('=');
-            //adminTestimonial.UpdatedBy = (int)TempData["Uid"];
-            //adminTestimonial.Orderid = (int)TempData["Oid"];
-            adminTestimonial.UpdatedBy = int.Parse(url[1].Replace("&Oid",""));
-            adminTestimonial.Orderid = int.Parse(url[2]);
+
+            adminTestimonial.UpdatedBy = (int)TempData["Uid"];
+            adminTestimonial.Orderid = (int)TempData["Oid"];
+            //string[] url = Request.UrlReferrer.Query.Split('=');
+            //adminTestimonial.UpdatedBy = int.Parse(url[1].Replace("&Oid",""));
+            //adminTestimonial.Orderid = int.Parse(url[2]);
             adminTestimonial.UpdatedDate = DateTime.Now;
             adminTestimonial.Status = "Pending";
             testmonialService.Savetestimonial(adminTestimonial);
