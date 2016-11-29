@@ -373,5 +373,22 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Orders_OrderDetails_Result>("MaaAahwanam_Orders_OrderDetails", orderNoParameter);
         }
+    
+        public virtual ObjectResult<Nullable<long>> ratingscount(Nullable<long> vid, Nullable<long> subid, string type)
+        {
+            var vidParameter = vid.HasValue ?
+                new ObjectParameter("vid", vid) :
+                new ObjectParameter("vid", typeof(long));
+    
+            var subidParameter = subid.HasValue ?
+                new ObjectParameter("subid", subid) :
+                new ObjectParameter("subid", typeof(long));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<long>>("ratingscount", vidParameter, subidParameter, typeParameter);
+        }
     }
 }

@@ -65,6 +65,11 @@
           <Parameter Name="Landmark" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="order" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="ratingscount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vid" Type="bigint" Mode="In" />
+          <Parameter Name="subid" Type="bigint" Mode="In" />
+          <Parameter Name="type" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="serviceconfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RequestID" Type="int" Mode="In" />
         </Function>
@@ -219,7 +224,12 @@
           </FunctionImport>
           <FunctionImport Name="sp_ordersdisplay" ReturnType="Collection(MaaAahwanamModel.sp_ordersdisplay_Result)" />
           <FunctionImport Name="MaaAahwanam_Orders_OrderDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Orders_OrderDetails_Result)">
-            <Parameter Name="OrderNo" Mode="In" Type="Int64" />
+          <Parameter Name="OrderNo" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="ratingscount" ReturnType="Collection(Int64)">
+            <Parameter Name="vid" Mode="In" Type="Int64" />
+            <Parameter Name="subid" Mode="In" Type="Int64" />
+            <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="geteventsandtipsimages_Result">
@@ -1150,6 +1160,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ratingscount" FunctionName="MaaAahwanamModel.Store.ratingscount" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
