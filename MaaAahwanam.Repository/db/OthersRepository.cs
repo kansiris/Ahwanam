@@ -102,6 +102,7 @@ namespace MaaAahwanam.Repository.db
             adminTestimonial.UpdatedBy = Getadmintestional.UpdatedBy;
             adminTestimonial.UpdatedDate = DateTime.Now;
             adminTestimonial.Orderid = Getadmintestional.Orderid;
+            adminTestimonial.Ratings = Getadmintestional.Ratings;
             _dbContext.Entry(Getadmintestional).CurrentValues.SetValues(adminTestimonial);
             _dbContext.SaveChanges();
             return adminTestimonial;

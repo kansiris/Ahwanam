@@ -9,6 +9,7 @@
 function code() {
     $.fn.textWidth = function () {
         var html_calc = $('<span>' + $(this).html() + '</span>');
+        
         html_calc.css('font-size', $(this).css('font-size')).hide();
         html_calc.prependTo('body');
         var width = html_calc.width();
@@ -180,13 +181,13 @@ function code() {
                 if (this.settings.convert_to_utf8) {
                     symbol[i] = String.fromCodePoint(symbol[i]);
                 }
-                layer_body += "<span>" + (symbol[i]) + "</span>";
+                layer_body += "<span onclick='get(" + i + ")' value = '" + i + "'>" + (symbol[i]) + "</span>";
             }
             else {
                 if (this.settings.convert_to_utf8) {
                     symbol = String.fromCodePoint(symbol);
                 }
-                layer_body += "<span>" + symbol + "</span>";
+                layer_body += "<span onclick='get(" + i + ")' value = '" + i + "'>" + symbol + "</span>";
             }
         }
         layer_body += "</div>";

@@ -18,7 +18,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult BidRequests(ServiceRequest serviceRequest, string BidReqId, string name, ServiceResponse serviceResponse)
         {
             serviceRequest.Type = "Bidding";
-            ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest);
+            ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest).OrderByDescending(m=>m.RequestId);
             if (name == "View")
             {
                 serviceRequest.RequestId = long.Parse(BidReqId);
@@ -36,7 +36,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult QuotRequests(ServiceRequest serviceRequest, string BidReqId, string name, ServiceResponse serviceResponse)
         {
             serviceRequest.Type = "Quotation";
-            ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest);
+            ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest).OrderByDescending(m => m.RequestId);
             if (name == "View")
             {
                 serviceRequest.RequestId = long.Parse(BidReqId);
@@ -50,7 +50,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult RevBidRequests(ServiceRequest serviceRequest, string BidReqId, string name, ServiceResponse serviceResponse)
         {
             serviceRequest.Type = "ReverseBidding";
-            ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest);
+            ViewBag.records = serviceRequestService.GetServiceRequestList(serviceRequest).OrderByDescending(m => m.RequestId);
             if (name == "View")
             {
                 serviceRequest.RequestId = long.Parse(BidReqId);

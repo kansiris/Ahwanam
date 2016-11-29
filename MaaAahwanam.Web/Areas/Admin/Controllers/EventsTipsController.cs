@@ -150,7 +150,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
         public ActionResult AllRecords()
         {
-            var list = eventsandtipsService.EventsandTipsList();
+            var list = eventsandtipsService.EventsandTipsList().OrderByDescending(m => m.EventId);
             ViewBag.EventsandTipsList = list;
             return View();
         }

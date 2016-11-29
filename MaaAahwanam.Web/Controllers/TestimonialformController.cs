@@ -21,10 +21,10 @@ namespace MaaAahwanam.Web.Controllers
             TempData["Uid"] = Uid;
             TempData["Oid"] = Oid;
             var orderslist = testmonialService.GetOrderid(Oid).Count;
-            if (orderslist > 0)
-            {
-                return Content("<script language='javascript' type='text/javascript'>alert('Feedback Form Already Submitted!!!');location.href='" + @Url.Action("Index", "Index") + "'</script>");
-            }
+            //if (orderslist > 0)
+            //{
+            //    return Content("<script language='javascript' type='text/javascript'>alert('Feedback Form Already Submitted!!!');location.href='" + @Url.Action("Index", "Index") + "'</script>");
+            //}
             return View();
         }
 
