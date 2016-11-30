@@ -43,6 +43,10 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Subvid = Svid;
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);
+            string type = Request.QueryString["par"];
+            //Ratings count & avg rating 
+            ViewBag.ratingscount = productInfoService.GetCount(vid, Svid,type).Count();
+            ViewBag.rating = productInfoService.ratingscount(vid, Svid, type);
             ViewBag.price = dashBoardService.GetPrice(oid);
             if (dealid != null && dealid != "")
             {

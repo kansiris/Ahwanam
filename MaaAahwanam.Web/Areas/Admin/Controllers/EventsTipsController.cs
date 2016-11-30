@@ -7,6 +7,7 @@ using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.IO;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -18,13 +19,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         // GET: /Admin/EventsTips/
         public ActionResult Index(string id, string src)
         {
+            //Retrieves Avaliable Recordes List
             var list = eventsandtipsService.EventsandTipsList();
             ViewBag.EventsandTipsList = list;
-            
             if (id!=null)
             {
-                
+                //Gets particular Record
                 var particularevent = eventsandtipsService.GetEventandTip(long.Parse(id));
+                //Assigns images list to a variable
                 string x = particularevent.Image.ToString();
                 if (x != "" && x != null)
                 {
@@ -41,11 +43,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(EventsandTip eventAndTip,HttpPostedFileBase file,string Command,string id)
         {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             EventsandtipsService eventsAndTipsService = new EventsandtipsService();
             long value = eventsAndTipsService.EventIDCount();
             string fileName = string.Empty;
             string ImagesURL = string.Empty;
-            eventAndTip.UpdatedBy = ValidUserUtility.ValidUser();
+            eventAndTip.UpdatedBy = user.UserId;
             if (Command == "Save")
             {
                 if (Request.Files.Count <= 10)
@@ -79,11 +82,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 eventAndTip.Image = ImagesURL.TrimEnd(',');
                 eventAndTip = eventsAndTipsService.AddEventandTip(eventAndTip);
                 if (eventAndTip.EventId != 0)
-                {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
-                }
-                
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed!!!');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed!!!');location.href='" + @Url.Action("Index", "EventsTips") + "'</script>");
                 }
 
             if (Command == "Update")
@@ -92,18 +92,15 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 string x = particularevent.Image.ToString();
                 ViewBag.images = x.Split(',');
                 int count = Enumerable.Count(ViewBag.images);
+                ViewBag.imagescount = count;
                 int imageno = 0;
-                for (int i = 0; i < count; i++)
+                string x1 = ViewBag.images[0].ToString();
+                string[] y = x1.Split('_', '.');
+                if (y[0]!= "" && y != null)
                 {
-                    string x1 = ViewBag.images[i].ToString();
-                    string[] y = x1.Split('_', '.');
-                    if (y[0]!= "" && y != null)
-                    {
-                        imageno = int.Parse(y[1]);
-                    }
-                    
+                     imageno = int.Parse(y[1]);
                 }
-
+               
                 if (Request.Files.Count <= 10 - count)
                 {
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -131,19 +128,20 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                             ImagesURL += filename + ",";
                         }
                     }
+                    
                 }
                 else
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('You have Crossed Images Limit');location.href='" + @Url.Action("Index", "EventsTips", new { id = id }) + "'</script>");
-                }
-                eventAndTip.Image = particularevent.Image+","+ ImagesURL.TrimEnd(',');
-                eventAndTip = eventsAndTipsService.UpdateEventandTip(eventAndTip, long.Parse(id));
-                if (eventAndTip.EventId != 0)
-                {
+                    if (file != null)
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('You have Crossed Images Limit');location.href='" + @Url.Action("Index", "EventsTips", new { id = id }) + "'</script>");
+                    }
+                    eventAndTip.Image = particularevent.Image + "," + ImagesURL.TrimEnd(',');
+                    eventAndTip = eventsAndTipsService.UpdateEventandTip(eventAndTip, long.Parse(id));
+                    if (eventAndTip.EventId != 0)
                     return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Update Failed!!!');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
                 }
-
-                return Content("<script language='javascript' type='text/javascript'>alert('Update Failed!!!');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
             }
             return View();
         }

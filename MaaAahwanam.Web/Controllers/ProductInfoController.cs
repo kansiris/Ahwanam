@@ -51,9 +51,10 @@ namespace MaaAahwanam.Web.Controllers
             }
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);
+            string type = Request.QueryString["par"];
             //Ratings count & avg rating 
-            ViewBag.ratingscount = productInfoService.GetCount(vid,Svid, Request.QueryString["par"]).Count();
-            ViewBag.rating = productInfoService.ratingscount(vid, Svid, Request.QueryString["par"]);
+            ViewBag.ratingscount = productInfoService.GetCount(vid,Svid, type).Count();
+            ViewBag.rating = productInfoService.ratingscount(vid, Svid, type);
             if (Productinfo.ServicType == "Venue")
             {
                 var list = vendorVenueService.GetVendorVenue(vid, Svid);
