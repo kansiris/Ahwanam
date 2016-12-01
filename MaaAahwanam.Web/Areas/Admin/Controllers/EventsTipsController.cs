@@ -128,7 +128,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                             ImagesURL += filename + ",";
                         }
                     }
-                    
+                    eventAndTip.Image = particularevent.Image + "," + ImagesURL.TrimEnd(',');
+                    eventAndTip = eventsAndTipsService.UpdateEventandTip(eventAndTip, long.Parse(id));
+                    if (eventAndTip.EventId != 0)
+                    return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Update Failed!!!');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
                 }
                 else
                 {
@@ -136,12 +140,16 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     {
                         return Content("<script language='javascript' type='text/javascript'>alert('You have Crossed Images Limit');location.href='" + @Url.Action("Index", "EventsTips", new { id = id }) + "'</script>");
                     }
-                    eventAndTip.Image = particularevent.Image + "," + ImagesURL.TrimEnd(',');
-                    eventAndTip = eventsAndTipsService.UpdateEventandTip(eventAndTip, long.Parse(id));
-                    if (eventAndTip.EventId != 0)
-                    return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
-                    return Content("<script language='javascript' type='text/javascript'>alert('Update Failed!!!');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
+                    else
+                    {
+                        eventAndTip.Image = particularevent.Image;
+                        eventAndTip = eventsAndTipsService.UpdateEventandTip(eventAndTip, long.Parse(id));
+                        if (eventAndTip.EventId != 0)
+                        return Content("<script language='javascript' type='text/javascript'>alert('Updated Successfully');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('Update Failed!!!');location.href='" + @Url.Action("AllRecords", "EventsTips") + "'</script>");
+                    }
                 }
+                
             }
             return View();
         }

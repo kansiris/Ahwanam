@@ -1,4 +1,4 @@
-﻿\@model MaaAahwanam.Models.ServiceRequest
+﻿@model MaaAahwanam.Models.ServiceRequest
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/ServicesMaster.cshtml";
@@ -50,27 +50,28 @@
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
 
         <p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        @using (Html.BeginForm("Index", "QuoatationSubmit", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
-        {
+        @*@using (Html.BeginForm("Index", "QuoatationSubmit", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
+        {*@
+        <form id="register_form" class="form" method="post">
             <div class="displayDiv">
                 <div class="bidding_form">
 
                     <li style="list-style-type:none">
                         <label style="color:#666;font-size:13px;">Name</label>
                         @*<input type="text" name="event" placeholder="Enter your budjet in rupees">*@
-                        @Html.TextBoxFor(model => model.Name, new { @id = "name", @name = "name", placeholder = "Name", required = "required" })
+                        @Html.TextBoxFor(model => model.Name, new { placeholder = "Name" })
 
                     </li>
                     <ul>
                         <li>
                             <label>Budget</label>
                             @*<input type="text" name="event" placeholder="Enter your budjet in rupees">*@
-                            @Html.TextBoxFor(model => model.Budget, new { @id = "Budget", @name = "Budget", placeholder = "Enter your budget in rupees", required = "required" })
+                            @Html.TextBoxFor(model => model.Budget, new { placeholder = "Enter your budget in rupees"})
                         </li>
                         <li>
                             <label>Service Type <span>*</span></label>
                             @*<br/>*@
-                            @Html.DropDownList("s", new SelectList(
+                            @Html.DropDownList("ddlservice", new SelectList(
                                     new List<Object>{
                                         //new {Text ="Select your Service", Value = ""},
                                             new { Text ="Venue", Value = "Venue"  },
@@ -86,7 +87,7 @@
                                             new { Text ="WeddingCollection", Value = "WeddingCollection" },
                                             new { Text ="Other", Value = "Other" },
                            },
-                            "value", "text"), new { @multiple = "multiple", @id = "ddlservice", @onchange = "GetSelectedTextValue(this)", placeholder = "Choose Your Services" })
+                            "value", "text"), new { @multiple = "multiple", @id = "ddlservice", @onchange = "GetSelectedTextValue(this)", placeholder = "Choose Your Services", required = "required" })
                             @Html.HiddenFor(Model => Model.ServiceType, new { @id = "hdnservices" })
                         </li>
                         @*@class = "validate[required] form-control"*@
@@ -95,30 +96,30 @@
                         <li>
                             <label>Preferences<span>*</span></label>
                             @*<textarea name="Preferences" placeholder="Preferences"></textarea>*@
-                            @Html.TextAreaFor(model => model.Preferences, new { @id = "Preferences", @name = "Preferences", placeholder = "Preferences", required = "required" })
+                            @Html.TextAreaFor(model => model.Preferences, new { placeholder = "Preferences" })
                         </li>
                         <li>
                             <label>Event Address  <span>*</span></label>
                             @*<textarea name="Event Address" placeholder="Event Address"></textarea>*@
-                            @Html.TextAreaFor(model => model.EventAddress, new { @id = "EventAddress", @name = "EventAddress", placeholder = "Event Address", required = "required" })
+                            @Html.TextAreaFor(model => model.EventAddress, new {  placeholder = "Event Address" })
                         </li>
                     </ul>
                     <ul>
                         <li>
                             <label>Event Location <span>*</span></label>
                             @*<input type="text" name="event" placeholder="Event Location">*@
-                            @Html.TextBoxFor(model => model.EventLocation, new { @id = "EventLocation", @name = "EventLocation", placeholder = "Event Location", required = "required" })
+                            @Html.TextBoxFor(model => model.EventLocation, new { placeholder = "Event Location" })
                         </li>
                         <li>
                             <label>State <span>*</span></label>
                             @*<select class="selectBox">
-                                    <option>Select State</option>
-                                    <option value="1">Andhrapradesh</option>
-                                    <option value="2">Telangana</option>
-                                    <option value="3">Kerala</option>
-                                    <option value="4">Kanataka</option>
-                                    <option value="5">Tamilnadu</option>
-                                </select>*@
+                                <option>Select State</option>
+                                <option value="1">Andhrapradesh</option>
+                                <option value="2">Telangana</option>
+                                <option value="3">Kerala</option>
+                                <option value="4">Kanataka</option>
+                                <option value="5">Tamilnadu</option>
+                            </select>*@
 
                             @Html.DropDownListFor(Model => Model.State, new SelectList(
                                           new List<Object>{
@@ -136,24 +137,24 @@
                         <li>
                             <label>City <span>*</span></label>
                             @*<input type="text" name="city" placeholder="City">*@
-                            @Html.TextBoxFor(model => model.City, new { @id = "City", @name = "City", placeholder = "City", required = "required" })
+                            @Html.TextBoxFor(model => model.City, new {  placeholder = "City" })
                         </li>
                         <li>
                             <label>Postal Code <span>*</span></label>
                             @*<input type="text" name="postcal_code" placeholder="Postal Code">*@
-                            @Html.TextBoxFor(model => model.PostalCode, new { @id = "PostalCode", @name = "PostalCode", placeholder = "Postal Code", required = "required" })
+                            @Html.TextBoxFor(model => model.PostalCode, new {  placeholder = "Postal Code"})
                         </li>
                     </ul>
                     <ul>
                         <li>
                             <label>Email <span>*</span></label>
                             @*<input type="text" name="Email" placeholder="satyam.g@siriinnovations.com">*@
-                            @Html.TextBoxFor(model => model.EmailId, new { @id = "EmailId", @name = "EmailId", placeholder = "satyam.g@siriinnovations.com", required = "required" })
+                            @Html.TextBoxFor(model => model.EmailId, new { placeholder = "satyam.g@siriinnovations.com" })
                         </li>
                         <li>
                             <label>Phone <span>*</span></label>
                             @*<input type="text" name="postcal_code" placeholder="96525 44441">*@
-                            @Html.TextBoxFor(model => model.PhoneNo, new { @id = "PhoneNo", @name = "PhoneNo", placeholder = "96525 44441", required = "required" })
+                            @Html.TextBoxFor(model => model.PhoneNo, new { placeholder = "96525 44441" })
                         </li>
                     </ul>
                     <ul>
@@ -198,15 +199,16 @@
 
                 </div>
             </div>
-        }
-        @*<select id="people" multiple="multiple">
+            </form>
+            @*}*@
+            @*<select id="people" multiple="multiple">
                 <option>Low</option>
                 <option>Medium</option>
                 <option>High</option>
             </select>*@
-        <!-- displayDiv -->
+            <!-- displayDiv -->
 
-    </div>
+</div>
 </article>
 <div class="clear"></div>
 @section advertisement
@@ -276,5 +278,93 @@
     });
     //$('#people').dropdownchecklist();
 
+</script>
+
+@*Validation*@
+<script>
+    $(document).ready(function () {
+
+        $("#register_form").validate({
+            rules: {
+                Name: {
+                    required: true
+                },
+                EmailId: {
+                    required: true,
+                    email: true
+                },
+                PhoneNo: {
+                    required: true,
+                    number: true,
+                    minlength: 10,
+                    maxlength: 12
+                },
+                State: {
+                    required: true
+                },
+                ddlservice: {
+                    required: true
+                },
+                Budget: {
+                    required: true,
+                    number: true,
+                    minlength: 6
+                },
+                EventLocation: {
+                    required: true
+                },
+                City: {
+                    required: true
+                },
+                PostalCode: {
+                    required: true
+                },
+
+                Preferences: {
+                    required: true
+                },
+                EventAddress: {
+                    required: true
+                }
+
+            },
+            messages: {
+                Name: {
+                    required: "Please Enter Your Name"
+                },
+                EmailId: {
+                    required: "Please Enter Your Email-ID "
+                },
+                PhoneNo: {
+                    required: "Please Enter Your Phone Number"
+                },
+                State: {
+                    required: "Please Select Country"
+                },
+                ddlservice: {
+                    required: "Please Select Services"
+                },
+                Budget: {
+                    required: "Please Enter Your Budget"
+                },
+                EventLocation: {
+                    required: "Please Enter Event Location"
+                },
+                City: {
+                    required: "Please Enter City"
+                },
+                PostalCode: {
+                    required: "Please Enter Postal Code"
+                },
+                Preferences: {
+                    required: "Please Enter Your Preferences"
+                },
+                EventAddress: {
+                    required: "Please Enter Event Address"
+                },
+            },
+        });
+
+    });
 </script>
 

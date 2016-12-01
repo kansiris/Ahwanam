@@ -50,21 +50,22 @@
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
                     <p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-                    @using (Html.BeginForm("Index", "Bidding", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
-                    {
-                        <div class="displayDiv">
-                            <div class="bidding_form">
-                                <ul>
-                                <li>
-                                    <label>Event Name</label>
-                                    @*<input type="text" name="event" placeholder="Enter your budjet in rupees">*@
-                                    @Html.TextBoxFor(model => model.EventName, new { @id = "name", @name = "name", placeholder = "Name", required = "required" })
+                    @*@using (Html.BeginForm("Index", "Bidding", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
+                    {*@
+                        <form id="register_form" class="form" method="post">
+                            <div class="displayDiv">
+                                <div class="bidding_form">
+                                    <ul>
+                                        <li>
+                                            <label>Event Name</label>
+                                            @*<input type="text" name="event" placeholder="Enter your budjet in rupees">*@
+                                            @Html.TextBoxFor(model => model.EventName, new { placeholder = "Name"})
 
-                                </li>
+                                        </li>
 
-                                    <li>
-                                        <label>Service Type <span>*</span></label>
-                                        @Html.DropDownListFor(Model => Model.ServiceType, new SelectList(
+                                        <li>
+                                            <label>Service Type <span>*</span></label>
+                                            @Html.DropDownListFor(Model => Model.ServiceType, new SelectList(
                                           new List<Object>{
                                               new {Text ="Select Service Type", Value = ""},
                                                new { Text ="Venue", Value = "Venue"  },
@@ -81,38 +82,38 @@
                                                new { Text ="Other", Value = "Other" },
                                             },
                                           "value", "text"), new { @class = "validate[required] form-control" })
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <label>Preferences<span>*</span></label>
-                                        @*<textarea name="Preferences" placeholder="Preferences"></textarea>*@
-                                        @Html.TextAreaFor(model => model.Preferences, new { @id = "Preferences", @name = "Preferences", placeholder = "Preferences", required = "required" })
-                                    </li>
-                                    <li>
-                                        <label>Event Address  <span>*</span></label>
-                                        @*<textarea name="Event Address" placeholder="Event Address"></textarea>*@
-                                        @Html.TextAreaFor(model => model.EventAddress, new { @id = "EventAddress", @name = "EventAddress", placeholder = "Event Address", required = "required" })
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <label>Event Location <span>*</span></label>
-                                        @*<input type="text" name="event" placeholder="Event Location">*@
-                                        @Html.TextBoxFor(model => model.EventLocation, new { @id = "EventLocation", @name = "EventLocation", placeholder = "Event Location", required = "required" })
-                                    </li>
-                                    <li>
-                                        <label>State <span>*</span></label>
-                                        @*<select class="selectBox">
-                                <option>Select State</option>
-                                <option value="1">Andhrapradesh</option>
-                                <option value="2">Telangana</option>
-                                <option value="3">Kerala</option>
-                                <option value="4">Kanataka</option>
-                                <option value="5">Tamilnadu</option>
-                            </select>*@
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Preferences<span>*</span></label>
+                                            @*<textarea name="Preferences" placeholder="Preferences"></textarea>*@
+                                            @Html.TextAreaFor(model => model.Preferences, new {  placeholder = "Preferences"})
+                                        </li>
+                                        <li>
+                                            <label>Event Address  <span>*</span></label>
+                                            @*<textarea name="Event Address" placeholder="Event Address"></textarea>*@
+                                            @Html.TextAreaFor(model => model.EventAddress, new {  placeholder = "Event Address"})
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Event Location <span>*</span></label>
+                                            @*<input type="text" name="event" placeholder="Event Location">*@
+                                            @Html.TextBoxFor(model => model.EventLocation, new {  placeholder = "Event Location" })
+                                        </li>
+                                        <li>
+                                            <label>State <span>*</span></label>
+                                            @*<select class="selectBox">
+                                                    <option>Select State</option>
+                                                    <option value="1">Andhrapradesh</option>
+                                                    <option value="2">Telangana</option>
+                                                    <option value="3">Kerala</option>
+                                                    <option value="4">Kanataka</option>
+                                                    <option value="5">Tamilnadu</option>
+                                                </select>*@
 
-                                        @Html.DropDownListFor(Model => Model.State, new SelectList(
+                                            @Html.DropDownListFor(Model => Model.State, new SelectList(
                                           new List<Object>{
                                               new {Text ="Select State", Value = ""},
                                                new { Text ="Andhrapradesh", Value = "Andhrapradesh"  },
@@ -122,76 +123,77 @@
                                                new { Text ="Tamilnadu", Value = "Tamilnadu" },
                                             },
                                           "value", "text"), new { @class = "validate[required] form-control" })
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <label>City <span>*</span></label>
-                                        @*<input type="text" name="city" placeholder="City">*@
-                                        @Html.TextBoxFor(model => model.City, new { @id = "City", @name = "City", placeholder = "City", required = "required" })
-                                    </li>
-                                    <li>
-                                        <label>Postal Code <span>*</span></label>
-                                        @*<input type="text" name="postcal_code" placeholder="Postal Code">*@
-                                        @Html.TextBoxFor(model => model.PostalCode, new { @id = "PostalCode", @name = "PostalCode", placeholder = "Postal Code", required = "required" })
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <label>Email <span>*</span></label>
-                                        @*<input type="text" name="Email" placeholder="satyam.g@siriinnovations.com">*@
-                                        @Html.TextBoxFor(model => model.EmailId, new { @id = "EmailId", @name = "EmailId", placeholder = "satyam.g@siriinnovations.com", required = "required" })
-                                    </li>
-                                    <li>
-                                        <label>Phone <span>*</span></label>
-                                        @*<input type="text" name="postcal_code" placeholder="96525 44441">*@
-                                        @Html.TextBoxFor(model => model.PhoneNo, new { @id = "PhoneNo", @name = "PhoneNo", placeholder = "96525 44441", required = "required" })
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <div class="event-date">
-                                            <label>Event Start Date <span>*</span></label>
-                                            @*<input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker1">*@
-                                            @Html.TextBoxFor(model => model.EventStartDate, new { @id = "datetimepicker1", @name = "EventStartDate", placeholder = "DD/MM/YYYY", required = "required" })
-                                        </div>
-                                        <div class="event-date">
-                                            <label>Event Start Time <span>*</span></label>
-                                            @*<input type="text" name="Email" placeholder="HH:MM" id="datetimepicker3">*@
-                                            @Html.TextBoxFor(model => model.EventStartTime, new { @id = "datetimepicker3", @name = "EventStartTime", placeholder = "HH:MM", required = "required" })
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="event-date">
-                                            <label>Event End Date <span>*</span></label>
-                                            @*<input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker2">*@
-                                            @Html.TextBoxFor(model => model.EventEnddate, new { @id = "datetimepicker2", @name = "EventEnddate", placeholder = "DD/MM/YYYY", required = "required" })
-                                        </div>
-                                        <div class="event-date">
-                                            <label>Event End Time <span>*</span></label>
-                                            @*<input type="text" name="Email" placeholder="HH:MM" id="datetimepicker4">*@
-                                            @Html.TextBoxFor(model => model.EventEndtime, new { @id = "datetimepicker4", @name = "EventEndtime", placeholder = "HH:MM", required = "required" })
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>City <span>*</span></label>
+                                            @*<input type="text" name="city" placeholder="City">*@
+                                            @Html.TextBoxFor(model => model.City, new {  placeholder = "City"})
+                                        </li>
+                                        <li>
+                                            <label>Postal Code <span>*</span></label>
+                                            @*<input type="text" name="postcal_code" placeholder="Postal Code">*@
+                                            @Html.TextBoxFor(model => model.PostalCode, new { placeholder = "Postal Code"})
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Email <span>*</span></label>
+                                            @*<input type="text" name="Email" placeholder="satyam.g@siriinnovations.com">*@
+                                            @Html.TextBoxFor(model => model.EmailId, new { placeholder = "satyam.g@siriinnovations.com"})
+                                        </li>
+                                        <li>
+                                            <label>Phone <span>*</span></label>
+                                            @*<input type="text" name="postcal_code" placeholder="96525 44441">*@
+                                            @Html.TextBoxFor(model => model.PhoneNo, new {  placeholder = "96525 44441" })
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <div class="event-date">
+                                                <label>Event Start Date <span>*</span></label>
+                                                @*<input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker1">*@
+                                                @Html.TextBoxFor(model => model.EventStartDate, new { @id = "datetimepicker1", @name = "EventStartDate", placeholder = "DD/MM/YYYY", required = "required" })
+                                            </div>
+                                            <div class="event-date">
+                                                <label>Event Start Time <span>*</span></label>
+                                                @*<input type="text" name="Email" placeholder="HH:MM" id="datetimepicker3">*@
+                                                @Html.TextBoxFor(model => model.EventStartTime, new { @id = "datetimepicker3", @name = "EventStartTime", placeholder = "HH:MM", required = "required" })
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="event-date">
+                                                <label>Event End Date <span>*</span></label>
+                                                @*<input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker2">*@
+                                                @Html.TextBoxFor(model => model.EventEnddate, new { @id = "datetimepicker2", @name = "EventEnddate", placeholder = "DD/MM/YYYY", required = "required" })
+                                            </div>
+                                            <div class="event-date">
+                                                <label>Event End Time <span>*</span></label>
+                                                @*<input type="text" name="Email" placeholder="HH:MM" id="datetimepicker4">*@
+                                                @Html.TextBoxFor(model => model.EventEndtime, new { @id = "datetimepicker4", @name = "EventEndtime", placeholder = "HH:MM", required = "required" })
 
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="alert alert-error" id="alert" style="display:none;">
-                                    <strong>Oh snap!</strong>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="alert alert-error" id="alert" style="display:none;">
+                                        <strong>Oh snap!</strong>
 
-                                    <p></p>
+                                        <p></p>
+                                    </div>
+                                    <ul>
+                                        <li>&nbsp;</li>
+                                        <li>
+                                            @*<a href="~/QuoatationConfirm/Index" class="btn btn-big btn-green float-right">Submit <i class="ti-angle-double-right"></i></a>*@
+                                            <button type="submit" class="btn btn-big btn-green float-right" id="btnsubmit">Submit <i class="ti-angle-double-right"></i></button>
+                                        </li>
+                                    </ul>
+
                                 </div>
-                                <ul>
-                                    <li>&nbsp;</li>
-                                    <li>
-                                        @*<a href="~/QuoatationConfirm/Index" class="btn btn-big btn-green float-right">Submit <i class="ti-angle-double-right"></i></a>*@
-                                        <button type="submit" class="btn btn-big btn-green float-right" id="btnsubmit">Submit <i class="ti-angle-double-right"></i></button>
-                                    </li>
-                                </ul>
-
                             </div>
-                        </div>
-                    }
-                </div>
+                            </form>
+                            @*}*@
+</div>
             </article>
  <div class="clear"></div>
 @section advertisement
@@ -202,5 +204,88 @@
                 </div>
     </div>*@  
 }
+<script src="~/CSSWeb/jquery.js"></script>
+
+@*Validation*@
+<script>
+    $(document).ready(function () {
+
+        $("#register_form").validate({
+            rules: {
+                EventName: {
+                    required: true
+                },
+                EmailId: {
+                    required: true,
+                    email: true
+                },
+                PhoneNo: {
+                    required: true,
+                    number: true,
+                    minlength: 10,
+                    maxlength: 12
+                },
+                State: {
+                    required: true
+                },
+                ServiceType: {
+                    required: true
+                },
+                
+                EventLocation: {
+                    required: true
+                },
+                City: {
+                    required: true
+                },
+                PostalCode: {
+                    required: true
+                },
+
+                Preferences: {
+                    required: true
+                },
+                EventAddress: {
+                    required: true
+                }
+
+            },
+            messages: {
+                EventName: {
+                    required: "Please Enter Your Name"
+                },
+                EmailId: {
+                    required: "Please Enter Your Email-ID "
+                },
+                PhoneNo: {
+                    required: "Please Enter Your Phone Number"
+                },
+                State: {
+                    required: "Please Select Country"
+                },
+                ServiceType: {
+                    required: "Please Select Services"
+                },
+                
+                EventLocation: {
+                    required: "Please Enter Event Location"
+                },
+                City: {
+                    required: "Please Enter City"
+                },
+                PostalCode: {
+                    required: "Please Enter Postal Code"
+                },
+                Preferences: {
+                    required: "Please Enter Your Preferences"
+                },
+                EventAddress: {
+                    required: "Please Enter Event Address"
+                },
+            },
+        });
+
+    });
+</script>
 
 

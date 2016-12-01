@@ -47,6 +47,7 @@ namespace MaaAahwanam.Web.Controllers
             { 
                 string discountvalue=(((Dealinfo.ActualServiceprice - Dealinfo.DealServiceprice) / Dealinfo.ActualServiceprice) * 100).Value.ToString("0.00");
                 ViewBag.discountvalue = discountvalue;
+                //ViewBag.savedamount = Dealinfo.ActualServiceprice - Dealinfo.DealServiceprice;
             }
             if (Dealinfo.image != null)
             {

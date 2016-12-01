@@ -48,19 +48,20 @@
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
 
         <p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        @using (Html.BeginForm("Index", "ReverseBidding", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
-        {
+        @*@using (Html.BeginForm("Index", "ReverseBidding", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off" }))
+        {*@
+        <form id="register_form" class="form" method="post">
             <div class="displayDiv">
                 <div class="bidding_form">
 
-                        <li style="list-style-type:none">
-                            <label style="color:#666;font-size:13px;">Name<span>*</span></label>
-                            @Html.TextBoxFor(model => model.Name, new { @id = "name", @name = "name", placeholder = "Name", required = "required" })
-                        </li>
+                    <li style="list-style-type:none">
+                        <label style="color:#666;font-size:13px;">Name<span>*</span></label>
+                        @Html.TextBoxFor(model => model.Name, new {  placeholder = "Name"})
+                    </li>
 
-                        <li style="list-style-type:none">
-                            <label style="color:#666;font-size:13px;">Service Type <span>*</span></label>
-                            @Html.DropDownListFor(Model => Model.ServiceType, new SelectList(
+                    <li style="list-style-type:none">
+                        <label style="color:#666;font-size:13px;">Service Type <span>*</span></label>
+                        @Html.DropDownListFor(Model => Model.ServiceType, new SelectList(
                                           new List<Object>{
                                               new {Text ="Select Service Type", Value = ""},
                                                new { Text ="Venue", Value = "Venue"  },
@@ -76,13 +77,13 @@
                                                new { Text ="WeddingCollection", Value = "WeddingCollection" },
                                                new { Text ="Other", Value = "Other" },
                                             },
-                                          "value", "text"), new { @class = "validate[required] form-control", @id = "ddlstype", @onchange = "GetSelectedTextValue(this)" })
-                        </li>
+                                          "value", "text"), new { @class = "validate[required] form-control", @id = "ServiceType", @onchange = "GetSelectedTextValue(this)" })
+                    </li>
                     <li style="list-style-type:none">
                         <label style="color:#666;font-size:13px;">Service Type<span>*</span></label>
                         @Html.DropDownListFor(Model => Model.SubserviceType, new SelectList(
                            new List<Object> { new { Text = "Select Vendor Category", Value = "" } }, "value", "text"),
-                           new { @class = "validate[required] form-control", @id = "ddlsubvnames", @onchange = "GetSelectedservice(this)" })
+                           new { @class = "validate[required] form-control", @id = "SubserviceType", @onchange = "GetSelectedservice(this)" })
                     </li>
                     <ul>
                         <li style="list-style-type:none">
@@ -90,12 +91,12 @@
                             @*@Html.TextBoxFor(model => model.VendorId, new { @id = "VendorId", @name = "VendorId", placeholder = "VendorId", required = "required" })*@
                             @Html.DropDownListFor(Model => Model.VendorId, new SelectList(
                            new List<Object> { new { Text = "Select Vendor Type", Value = "" } }, "value", "text"),
-                           new { @class = "validate[required] form-control", @id = "ddlvnames" })
+                           new { @class = "validate[required] form-control", @id = "VendorId" })
                             @*@Html.HiddenFor(Model=>Model.VendorId,new { @id= "hdnVendorId" })*@
                         </li>
                         <li>
                             <label>Budget</label>
-                            @Html.TextBoxFor(model => model.Budget, new { @id = "Budget", @name = "Budget", placeholder = "Enter your budget in rupees", required = "required" })
+                            @Html.TextBoxFor(model => model.Budget, new {  placeholder = "Enter your budget in rupees" })
                         </li>
 
 
@@ -104,30 +105,30 @@
                         <li>
                             <label>Preferences<span style="color:red;">*</span></label>
                             @*<textarea name="Preferences" placeholder="Preferences"></textarea>*@
-                            @Html.TextAreaFor(model => model.Preferences, new { @id = "Preferences", @name = "Preferences", placeholder = "Preferences", required = "required" })
+                            @Html.TextAreaFor(model => model.Preferences, new { placeholder = "Preferences" })
                         </li>
                         <li>
                             <label>Event Address  <span style="color:red;">*</span></label>
                             @*<textarea name="Event Address" placeholder="Event Address"></textarea>*@
-                            @Html.TextAreaFor(model => model.EventAddress, new { @id = "EventAddress", @name = "EventAddress", placeholder = "Event Address", required = "required" })
+                            @Html.TextAreaFor(model => model.EventAddress, new { placeholder = "Event Address" })
                         </li>
                     </ul>
                     <ul>
                         <li>
                             <label>Event Location <span>*</span></label>
                             @*<input type="text" name="event" placeholder="Event Location">*@
-                            @Html.TextBoxFor(model => model.EventLocation, new { @id = "EventLocation", @name = "EventLocation", placeholder = "Event Location", required = "required" })
+                            @Html.TextBoxFor(model => model.EventLocation, new {  placeholder = "Event Location" })
                         </li>
                         <li>
                             <label>State <span>*</span></label>
                             @*<select class="selectBox">
-                                    <option>Select State</option>
-                                    <option value="1">Andhrapradesh</option>
-                                    <option value="2">Telangana</option>
-                                    <option value="3">Kerala</option>
-                                    <option value="4">Kanataka</option>
-                                    <option value="5">Tamilnadu</option>
-                                </select>*@
+                                <option>Select State</option>
+                                <option value="1">Andhrapradesh</option>
+                                <option value="2">Telangana</option>
+                                <option value="3">Kerala</option>
+                                <option value="4">Kanataka</option>
+                                <option value="5">Tamilnadu</option>
+                            </select>*@
 
                             @Html.DropDownListFor(Model => Model.State, new SelectList(
                                           new List<Object>{
@@ -145,24 +146,24 @@
                         <li>
                             <label>City <span>*</span></label>
                             @*<input type="text" name="city" placeholder="City">*@
-                            @Html.TextBoxFor(model => model.City, new { @id = "City", @name = "City", placeholder = "City", required = "required" })
+                            @Html.TextBoxFor(model => model.City, new {  placeholder = "City" })
                         </li>
                         <li>
                             <label>Postal Code <span>*</span></label>
                             @*<input type="text" name="postcal_code" placeholder="Postal Code">*@
-                            @Html.TextBoxFor(model => model.PostalCode, new { @id = "PostalCode", @name = "PostalCode", placeholder = "Postal Code", required = "required" })
+                            @Html.TextBoxFor(model => model.PostalCode, new {  placeholder = "Postal Code" })
                         </li>
                     </ul>
                     <ul>
                         <li>
                             <label>Email <span>*</span></label>
                             @*<input type="text" name="Email" placeholder="satyam.g@siriinnovations.com">*@
-                            @Html.TextBoxFor(model => model.EmailId, new { @id = "EmailId", @name = "EmailId", placeholder = "satyam.g@siriinnovations.com", required = "required" })
+                            @Html.TextBoxFor(model => model.EmailId, new { placeholder = "satyam.g@siriinnovations.com"})
                         </li>
                         <li>
                             <label>Phone <span>*</span></label>
                             @*<input type="text" name="postcal_code" placeholder="96525 44441">*@
-                            @Html.TextBoxFor(model => model.PhoneNo, new { @id = "PhoneNo", @name = "PhoneNo", placeholder = "96525 44441", required = "required" })
+                            @Html.TextBoxFor(model => model.PhoneNo, new { placeholder = "96525 44441" })
                         </li>
                     </ul>
                     <ul>
@@ -207,10 +208,11 @@
 
                 </div>
             </div>
-        }
-        <!-- displayDiv -->
+            </form>
+            @*}*@
+            <!-- displayDiv -->
 
-    </div>
+</div>
 </article>
 <div class="clear"></div>
 @section advertisement
@@ -221,6 +223,9 @@
         </div>
     </div>*@
 }
+
+<script src="~/CSSWeb/jquery.js"></script>
+
 <script>
 
     function GetSelectedTextValue(value) {
@@ -238,10 +243,10 @@
                 if (data != null) {
                     //  alert(data.BusinessName);
                     //document.getElementById("ddlstype").value = data.BusinessName;
-                    $('#ddlsubvnames').empty();
-                    $('#ddlsubvnames').append($('<option></option>').val("Select Category Type").html("Select Category Type"));
+                    $('#SubserviceType').empty();
+                    $('#SubserviceType').append($('<option></option>').val("Select Category Type").html("Select Category Type"));
                     $(data).each(function (index, item) {
-                        $('#ddlsubvnames').append($('<option></option>').val(item.vendortype).html(item.vendortype));
+                        $('#SubserviceType').append($('<option></option>').val(item.vendortype).html(item.vendortype));
                     });
                 }
             },
@@ -254,7 +259,7 @@
      
     function GetSelectedservice(value)
     {
-        var b=$('#ddlstype :selected').text();
+        var b = $('#ServiceType :selected').text();
         //alert($('#ddlstype :selected').text());
         var service = {};
         service.selectedservice = value.value;
@@ -270,10 +275,10 @@
                 if (data!= null) {
                   //  alert(data.BusinessName);
                     //document.getElementById("ddlstype").value = data.BusinessName;
-                    $('#ddlvnames').empty();
-                    $('#ddlvnames').append($('<option></option>').val("Select Vendor Type").html("Select Vendor Type"));
+                    $('#VendorId').empty();
+                    $('#VendorId').append($('<option></option>').val("Select Vendor Type").html("Select Vendor Type"));
                     $(data).each(function (index, item) { 
-                        $('#ddlvnames').append($('<option></option>').val(item.Id).html(item.BusinessName));
+                        $('#VendorId').append($('<option></option>').val(item.Id).html(item.BusinessName));
                     });
                 }
             },
@@ -290,5 +295,103 @@
     //}
 </script>
 
+@*Validation*@
+<script>
+    $(document).ready(function () {
 
+        $("#register_form").validate({
+            rules: {
+                Name: {
+                    required: true
+                },
+                EmailId: {
+                    required: true,
+                    email: true
+                },
+                PhoneNo: {
+                    required: true,
+                    number: true,
+                    minlength: 10,
+                    maxlength: 12
+                },
+                State: {
+                    required: true
+                },
+                ServiceType: {
+                    required: true
+                },
+                SubserviceType: {
+                    required: true
+                },
+                VendorId: {
+                    required: true
+                },
+                Budget: {
+                    required: true,
+                    number: true,
+                    minlength: 6
+                },
+                EventLocation: {
+                    required: true
+                },
+                City: {
+                    required: true
+                },
+                PostalCode: {
+                    required: true
+                },
+
+                Preferences: {
+                    required: true
+                },
+                EventAddress: {
+                    required: true
+                }
+
+            },
+            messages: {
+                Name: {
+                    required: "Please Enter Your Name"
+                },
+                EmailId: {
+                    required: "Please Enter Your Email-ID "
+                },
+                PhoneNo: {
+                    required: "Please Enter Your Phone Number"
+                },
+                State: {
+                    required: "Please Select Country"
+                },
+                ServiceType: {
+                    required: "Please Select Services"
+                },
+                SubserviceType: {
+                    required: "Please Select Vendor Category"
+                },
+                VendorId: {
+                    required: "Please Select Vendor ID"
+                },
+                Budget: {
+                    required: "Please Enter Your Budget"
+                },
+                EventLocation: {
+                    required: "Please Enter Event Location"
+                },
+                City: {
+                    required: "Please Enter City"
+                },
+                PostalCode: {
+                    required: "Please Enter Postal Code"
+                },
+                Preferences: {
+                    required: "Please Enter Your Preferences"
+                },
+                EventAddress: {
+                    required: "Please Enter Event Address"
+                },
+            },
+        });
+
+    });
+</script>
 
