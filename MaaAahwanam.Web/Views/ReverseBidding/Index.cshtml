@@ -337,7 +337,8 @@
                     required: true
                 },
                 PostalCode: {
-                    required: true
+                    required: true,
+                    number: true
                 },
 
                 Preferences: {
@@ -396,6 +397,11 @@
 
 <script>
     $("#Budget").keypress(function (event) {
+        if (event.which == 45 || event.which == 189 || event.which == 48 && this.value.length == 0) {
+            event.preventDefault();
+        }
+    });
+    $("#PostalCode").keypress(function (event) {
         if (event.which == 45 || event.which == 189 || event.which == 48 && this.value.length == 0) {
             event.preventDefault();
         }

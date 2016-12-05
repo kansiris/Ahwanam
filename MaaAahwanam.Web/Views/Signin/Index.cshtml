@@ -190,3 +190,46 @@
         $.post("/Signin/Index", { ReturnUrl: url }, function (data) { });
     }
 </script>
+
+
+@*Validation*@
+<script>
+    $(document).ready(function () {
+
+        $("#register_form").validate({
+            rules: {
+                firstname: {
+                    required: true
+                },
+                lastname: {
+                    required: true
+                },
+                EmailId: {
+                    required: true,
+                    email: true
+                },
+                PhoneNo: {
+                    required: true,
+                    number: true,
+                    minlength: 10,
+                    maxlength: 12
+                },
+            },
+            messages: {
+                firstname: {
+                    required: "Please Enter First Name"
+                },
+                lastname: {
+                    required: "Please Enter Last Name"
+                },
+                EmailId: {
+                    required: "Please Enter Your Email-ID "
+                },
+                PhoneNo: {
+                    required: "Please Enter Your Phone Number"
+                },
+            },
+        });
+
+    });
+</script>
