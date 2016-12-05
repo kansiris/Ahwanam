@@ -130,9 +130,6 @@
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsersDetails_Result)">
           <Parameter Name="UserLoginId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="MaaAahwanam_Others_TestimonialDetail" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_TestimonialDetail_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
           <FunctionImport Name="sp_LeastBidRecord" ReturnType="Collection(MaaAahwanamModel.sp_LeastBidRecord_Result)">
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
@@ -235,7 +232,10 @@
           </FunctionImport>
           <FunctionImport Name="MaaAahwanam_Others_Testimonials" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_Testimonials_Result)" />
           <FunctionImport Name="ServicesRecordView" ReturnType="Collection(MaaAahwanamModel.ServicesRecordView_Result)">
-            <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          <Parameter Name="RequestId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="MaaAahwanam_Others_TestimonialDetail" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_TestimonialDetail_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="geteventsandtipsimages_Result">
@@ -290,19 +290,6 @@
           <Property Type="String" Name="UserName" Nullable="true" />
           <Property Type="Int64" Name="UserDetailId" Nullable="false" />
           <Property Type="String" Name="UserPhone" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="MaaAahwanam_Others_TestimonialDetail_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="Int64" Name="UpdatedBy" Nullable="false" />
-          <Property Type="String" Name="FirstName" Nullable="true" />
-          <Property Type="String" Name="LastName" Nullable="true" />
-          <Property Type="String" Name="Email" Nullable="true" />
-          <Property Type="String" Name="UserPhone" Nullable="true" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="ImagePath" Nullable="true" />
-          <Property Type="String" Name="Status" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_GetTestimonials_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
@@ -662,6 +649,19 @@
           <Property Type="String" Name="UserPhone" Nullable="true" />
           <Property Type="String" Name="Address" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="MaaAahwanam_Others_TestimonialDetail_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="UpdatedBy" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="true" />
+          <Property Type="String" Name="UserPhone" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ImagePath" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -734,23 +734,6 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
                 <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_TestimonialDetail" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_TestimonialDetail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_TestimonialDetail_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1230,6 +1213,23 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_TestimonialDetail" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_TestimonialDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_TestimonialDetail_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
