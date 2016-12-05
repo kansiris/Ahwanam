@@ -80,7 +80,7 @@
                                           "value", "text"), new { @class = "validate[required] form-control", @id = "ServiceType", @onchange = "GetSelectedTextValue(this)" })
                     </li>
                     <li style="list-style-type:none">
-                        <label style="color:#666;font-size:13px;">Service Type<span>*</span></label>
+                        <label style="color:#666;font-size:13px;">Vendor Category<span>*</span></label>
                         @Html.DropDownListFor(Model => Model.SubserviceType, new SelectList(
                            new List<Object> { new { Text = "Select Vendor Category", Value = "" } }, "value", "text"),
                            new { @class = "validate[required] form-control", @id = "SubserviceType", @onchange = "GetSelectedservice(this)" })
@@ -328,8 +328,7 @@
                 },
                 Budget: {
                     required: true,
-                    number: true,
-                    minlength: 6
+                    number: true
                 },
                 EventLocation: {
                     required: true
@@ -360,7 +359,7 @@
                     required: "Please Enter Your Phone Number"
                 },
                 State: {
-                    required: "Please Select Country"
+                    required: "Please Select State"
                 },
                 ServiceType: {
                     required: "Please Select Services"
@@ -395,3 +394,10 @@
     });
 </script>
 
+<script>
+    $("#Budget").keypress(function (event) {
+        if (event.which == 45 || event.which == 189 || event.which == 48 && this.value.length == 0) {
+            event.preventDefault();
+        }
+    });
+</script>

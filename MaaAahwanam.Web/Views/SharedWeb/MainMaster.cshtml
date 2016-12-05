@@ -738,7 +738,7 @@
                 var end = endDate.split("/").reverse().join("/");
                 if (endDate != '') {
                     if (start > end) {
-                        $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+                        $('#alert').show().find('strong').text('The start date can not be greater than the end date');
                         
                     } else {
                         $('#alert').hide();
@@ -763,7 +763,7 @@
                 var end = endDate.split("/").reverse().join("/");
                 if (end < start) {
                     
-                    $('#alert').show().find('strong').text('The end date can not be less then the start date');
+                    $('#alert').show().find('strong').text('The end date can not be less than the start date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 } else {
@@ -812,12 +812,48 @@
                 datepicker: false,
                 format: 'H:i',
                 step: 5
+            }).on('change', function (ev) {
+
+                var startTime = $('#datetimepicker3').val();
+                var endTime = $('#datetimepicker4').val();
+                //var start = startDate.split("/").reverse().join("/");
+                //var end = endDate.split("/").reverse().join("/");
+                if (endTime != '') {
+                    if (startTime > endTime) {
+
+                        $('#alert').show().find('strong').text('The event end time can not be greater than the event start time');
+                        $("#lnkproceedtonext").hide();
+                        $("#btnsubmit").hide();
+                    } else {
+
+                        $('#alert').hide();
+                        $("#lnkproceedtonext").show();
+                        $("#btnsubmit").show();
+                    }
+                }
             });
             // event end time
             $('#datetimepicker4').datetimepicker({
                 datepicker: false,
                 format: 'H:i',
                 step: 5
+            }).on('change', function (ev) {
+
+                var startTime = $('#datetimepicker3').val();
+                var endTime = $('#datetimepicker4').val();
+                //var start = startDate.split("/").reverse().join("/");
+                //var end = endDate.split("/").reverse().join("/");
+                if (endTime < startTime) {
+
+                    $('#alert').show().find('strong').text('The event end time can not be less than the event start time');
+                    $("#lnkproceedtonext").hide();
+                    $("#btnsubmit").hide();
+                } else {
+
+                    $('#alert').hide();
+                    $("#lnkproceedtonext").show();
+                    $("#btnsubmit").show();
+                }
             });
             $('#datetimepicker5').datetimepicker({
                 lang: 'en',

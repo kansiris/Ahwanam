@@ -52,15 +52,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_RegisteredUsersDetails_Result>("MaaAahwanam_Others_RegisteredUsersDetails", userLoginIdParameter);
         }
     
-        public virtual ObjectResult<MaaAahwanam_Others_TestimonialDetail_Result> MaaAahwanam_Others_TestimonialDetail(Nullable<long> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_TestimonialDetail_Result>("MaaAahwanam_Others_TestimonialDetail", idParameter);
-        }
-    
         public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetTestimonials_Result>("SP_GetTestimonials");
@@ -398,6 +389,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("RequestId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ServicesRecordView_Result>("ServicesRecordView", requestIdParameter);
+        }
+    
+        public virtual ObjectResult<MaaAahwanam_Others_TestimonialDetail_Result> MaaAahwanam_Others_TestimonialDetail(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_TestimonialDetail_Result>("MaaAahwanam_Others_TestimonialDetail", idParameter);
         }
     }
 }
