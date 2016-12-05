@@ -21,10 +21,11 @@ namespace MaaAahwanam.Service
 
         public VendorsEntertainment AddEntertainment(VendorsEntertainment vendorEntertainment, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorEntertainment.Status = "Active";
-            vendorEntertainment.UpdatedDate =  DateTime.Now;
+            vendorEntertainment.UpdatedDate =  Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Entertainment";
             vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
             vendorEntertainment.VendorMasterId = vendorMaster.Id;
@@ -33,8 +34,8 @@ namespace MaaAahwanam.Service
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
-            userLogin.RegDate = DateTime.Now;
-            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.RegDate = Convert.ToDateTime(updateddate);
+            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             userLogin.Status = "Active";
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
@@ -47,7 +48,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -69,10 +70,11 @@ namespace MaaAahwanam.Service
 
         public VendorsEntertainment UpdateEntertainment(VendorsEntertainment vendorsEntertainment, Vendormaster vendorMaster, long masterid, long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsEntertainment.Status = "Active";
-            vendorsEntertainment.UpdatedDate = DateTime.Now;
+            vendorsEntertainment.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Entertainment";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsEntertainment = vendorEntertainmentRespository.UpdateEntertainment(vendorsEntertainment, masterid,vid);
@@ -81,8 +83,9 @@ namespace MaaAahwanam.Service
 
         public VendorsEntertainment AddNewEntertainment(VendorsEntertainment vendorsEntertainment, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsEntertainment.Status = "Active";
-            vendorsEntertainment.UpdatedDate = DateTime.Now;
+            vendorsEntertainment.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsEntertainment.VendorMasterId = vendorMaster.Id;
             vendorsEntertainment = vendorEntertainmentRespository.AddEntertainment(vendorsEntertainment);
             return vendorsEntertainment;

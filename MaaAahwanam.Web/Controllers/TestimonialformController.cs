@@ -30,19 +30,20 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult Saveform(HttpPostedFileBase file, AdminTestimonial adminTestimonial)
         {
-
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             adminTestimonial.UpdatedBy = (int)TempData["Uid"];
             adminTestimonial.Orderid = (int)TempData["Oid"];
             //string[] url = Request.UrlReferrer.Query.Split('=');
             //adminTestimonial.UpdatedBy = int.Parse(url[1].Replace("&Oid",""));
             //adminTestimonial.Orderid = int.Parse(url[2]);
-            adminTestimonial.UpdatedDate = DateTime.Now;
+            adminTestimonial.UpdatedDate = Convert.ToDateTime(updateddate);
             adminTestimonial.Status = "Pending";
             testmonialService.Savetestimonial(adminTestimonial);
             adminTestimonialPath.Id = adminTestimonial.Id;
             adminTestimonialPath.Status = "Pending";
             adminTestimonialPath.UpdatedBy = (int)TempData["Uid"];
-            adminTestimonialPath.UpdatedDate = DateTime.Now;
+            //adminTestimonialPath.UpdatedDate = DateTime.Now;
+            adminTestimonialPath.UpdatedDate = Convert.ToDateTime(updateddate);
             string fileName1 = "";
             string imagepath = @"/Testimonial/";
             for (int i = 0; i < Request.Files.Count; i++)

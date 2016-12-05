@@ -128,9 +128,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult Quotations(string command, string id, ServiceResponse serviceResponse, string rid)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             serviceResponse.RequestId = long.Parse(id);
             serviceResponse.Status = "Active";
-            serviceResponse.UpdatedDate = DateTime.Now;
+            serviceResponse.UpdatedDate = Convert.ToDateTime(updateddate);
             serviceResponse.UpdatedBy= serviceResponse.ResponseBy = user.UserId;
             string message = "";
             if (command == "Submit")

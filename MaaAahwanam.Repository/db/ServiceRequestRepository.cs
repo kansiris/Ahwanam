@@ -28,10 +28,15 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.ServiceRequest.Where(m => m.Type == Servicecount).ToList();
         }
 
-        public List<ServiceRequest> ServiceRequestRecord(ServiceRequest serviceRequest)
+        //public List<ServiceRequest> ServiceRequestRecord(ServiceRequest serviceRequest)
+        //{
+        //    return _dbContext.ServiceRequest.Where(m => m.RequestId == serviceRequest.RequestId).ToList();
+        //} 
+
+        public List<ServicesRecordView_Result> ServiceRequestRecord(ServiceRequest serviceRequest)
         {
-            return _dbContext.ServiceRequest.Where(m => m.RequestId == serviceRequest.RequestId).ToList();
-        } 
+            return maaAahwanamEntities.ServicesRecordView(serviceRequest.RequestId).ToList();
+        }
 
         public ServiceRequest UpdateBidStatus(ServiceRequest serviceRequest)
         {

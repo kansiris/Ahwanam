@@ -80,12 +80,13 @@ namespace MaaAahwanam.Repository.db
         }
         public AdminTestimonialPath AdminTestimonialPathStatus(long id,AdminTestimonialPath adminTestimonialPath)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             var Getadmintestionalpath = _dbContext.AdminTestimonialPath.Where(m=>m.Id == id).FirstOrDefault();
             adminTestimonialPath.Id = Getadmintestionalpath.Id;
             adminTestimonialPath.PathId = Getadmintestionalpath.PathId;
             adminTestimonialPath.ImagePath = Getadmintestionalpath.ImagePath;
             adminTestimonialPath.UpdatedBy = Getadmintestionalpath.UpdatedBy;
-            adminTestimonialPath.UpdatedDate = DateTime.Now;
+            adminTestimonialPath.UpdatedDate = Convert.ToDateTime(updateddate);
             _dbContext.Entry(Getadmintestionalpath).CurrentValues.SetValues(adminTestimonialPath);
             _dbContext.SaveChanges();
             return adminTestimonialPath;
@@ -94,13 +95,14 @@ namespace MaaAahwanam.Repository.db
 
         public AdminTestimonial AdminTestimonialStatus(long id, AdminTestimonial adminTestimonial)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             var Getadmintestional = _dbContext.AdminTesimonial.Where(m => m.Id == id).FirstOrDefault();
             adminTestimonial.Id = Getadmintestional.Id;
             adminTestimonial.Name = Getadmintestional.Name;
             adminTestimonial.Description = Getadmintestional.Description;
             adminTestimonial.Email = Getadmintestional.Email;
             adminTestimonial.UpdatedBy = Getadmintestional.UpdatedBy;
-            adminTestimonial.UpdatedDate = DateTime.Now;
+            adminTestimonial.UpdatedDate = Convert.ToDateTime(updateddate);
             adminTestimonial.Orderid = Getadmintestional.Orderid;
             adminTestimonial.Ratings = Getadmintestional.Ratings;
             _dbContext.Entry(Getadmintestional).CurrentValues.SetValues(adminTestimonial);

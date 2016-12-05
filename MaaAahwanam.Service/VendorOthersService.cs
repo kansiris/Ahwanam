@@ -20,10 +20,11 @@ namespace MaaAahwanam.Service
         VendorOthersRepository vendorOthersRepository = new VendorOthersRepository();
         public VendorsOther AddOther(VendorsOther vendorOther, Vendormaster vendorMaster)
        {
-           vendorOther.Status = "Active";
-           vendorOther.UpdatedDate =  DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorOther.Status = "Active";
+           vendorOther.UpdatedDate =  Convert.ToDateTime(updateddate);
            vendorMaster.Status = "Active";
-           vendorMaster.UpdatedDate = DateTime.Now;
+           vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
            vendorMaster.ServicType = "Other";
            vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
            vendorOther.VendorMasterId = vendorMaster.Id;
@@ -33,8 +34,8 @@ namespace MaaAahwanam.Service
             userLogin.UserType = "Vendor";
             userLogin.Status = "Active";
             userLogin.UpdatedBy = 2;
-            userLogin.RegDate = DateTime.Now;
-            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.RegDate = Convert.ToDateTime(updateddate);
+            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
             userDetail.FirstName = vendorMaster.BusinessName;
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -68,10 +69,11 @@ namespace MaaAahwanam.Service
 
         public VendorsOther UpdateOther(VendorsOther vendorOther, Vendormaster vendorMaster, long masterid, long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorOther.Status = "Active";
-            vendorOther.UpdatedDate = DateTime.Now;
+            vendorOther.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Other";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorOther = vendorOthersRepository.UpdateOthers(vendorOther, masterid,vid);
@@ -79,8 +81,9 @@ namespace MaaAahwanam.Service
         }
         public VendorsOther AddNewOther(VendorsOther vendorsOther, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsOther.Status = "Active";
-            vendorsOther.UpdatedDate = DateTime.Now;
+            vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsOther.VendorMasterId = vendorMaster.Id;
             vendorsOther = vendorOthersRepository.AddOthers(vendorsOther);
             return vendorsOther;

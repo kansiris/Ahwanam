@@ -33,7 +33,8 @@ namespace MaaAahwanam.Service
             string message = string.Empty;
             try
             {
-                issueTicket.UpdatedDate = DateTime.Now;
+                string updateddate = DateTime.UtcNow.ToShortDateString();
+                issueTicket.UpdatedDate = Convert.ToDateTime(updateddate);
                 issueTicketRepository.Insertissueticket(issueTicket);
                 message = "Success";
             }

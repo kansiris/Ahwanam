@@ -29,10 +29,11 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string name, IssueTicket issueTicket)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             issueTicket.UpdatedBy = (int)user.UserId;
             issueTicket.Status = "Active";
             issueTicket.UpdatedBy =user.UserId;
-            issueTicket.UpdatedDate =DateTime.Now;
+            issueTicket.UpdatedDate =Convert.ToDateTime(updateddate);
             issueTicket.UserLoginId = user.UserId;
             string status = ticketsServices.Insertissueticket(issueTicket);
             if (status == "Success")

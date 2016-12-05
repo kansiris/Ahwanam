@@ -20,10 +20,11 @@ namespace MaaAahwanam.Service
         VendorInvitationCardsRepository vendorInvitationCardsRepository = new VendorInvitationCardsRepository();
         public VendorsInvitationCard AddInvitationCard(VendorsInvitationCard vendorInvitationCard, Vendormaster vendorMaster)
        {
-           vendorInvitationCard.Status = "Active";
-           vendorInvitationCard.UpdatedDate =  DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorInvitationCard.Status = "Active";
+           vendorInvitationCard.UpdatedDate =  Convert.ToDateTime(updateddate);
            vendorMaster.Status = "Active";
-           vendorMaster.UpdatedDate = DateTime.Now;
+           vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
            vendorMaster.ServicType = "InvitationCard";
            vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
            vendorInvitationCard.VendorMasterId = vendorMaster.Id;
@@ -32,8 +33,8 @@ namespace MaaAahwanam.Service
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
-            userLogin.RegDate = DateTime.Now;
-            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.RegDate = Convert.ToDateTime(updateddate);
+            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             userLogin.Status = "Active";
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -67,10 +68,11 @@ namespace MaaAahwanam.Service
 
         public VendorsInvitationCard UpdatesInvitationCard(VendorsInvitationCard vendorsInvitationCard, Vendormaster vendorMaster, long masterid,long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsInvitationCard.Status = "Active";
-            vendorsInvitationCard.UpdatedDate = DateTime.Now;
+            vendorsInvitationCard.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "InvitationCard";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsInvitationCard = vendorInvitationCardsRepository.UpdatesInvitationCard(vendorsInvitationCard, masterid,vid);
@@ -79,8 +81,9 @@ namespace MaaAahwanam.Service
 
         public VendorsInvitationCard AddNewInvitationCard(VendorsInvitationCard vendorsInvitationCard, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsInvitationCard.Status = "Active";
-            vendorsInvitationCard.UpdatedDate = DateTime.Now;
+            vendorsInvitationCard.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsInvitationCard.VendorMasterId = vendorMaster.Id;
             vendorsInvitationCard = vendorInvitationCardsRepository.AddInvitationCards(vendorsInvitationCard);
             return vendorsInvitationCard;

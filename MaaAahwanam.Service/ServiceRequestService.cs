@@ -29,10 +29,16 @@ namespace MaaAahwanam.Service
             return l1.Count;
         }
 
-        public List<ServiceRequest> GetServiceRequestRecord(ServiceRequest serviceRequest)
+        //public List<ServiceRequest> GetServiceRequestRecord(ServiceRequest serviceRequest)
+        //{
+        //    List<ServiceRequest> l1 = serviceRequestRepository.ServiceRequestRecord(serviceRequest);
+        //    return l1;
+        //}
+
+        public List<ServicesRecordView_Result> GetServiceRequestRecord(ServiceRequest serviceRequest)
         {
-            List<ServiceRequest> l1 = serviceRequestRepository.ServiceRequestRecord(serviceRequest);
-            return l1;
+            return serviceRequestRepository.ServiceRequestRecord(serviceRequest);
+             
         }
 
         public List<Vendormaster> getvendorslistRB(string stype, string selectedtype)

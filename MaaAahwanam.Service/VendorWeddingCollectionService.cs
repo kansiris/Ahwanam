@@ -20,10 +20,11 @@ namespace MaaAahwanam.Service
         VendorWeddingCollectionsRepository vendorsWeddingCollectionsRepository = new VendorWeddingCollectionsRepository();
         public VendorsWeddingCollection AddWeddingCollection(VendorsWeddingCollection vendorsWeddingCollection, Vendormaster vendorMaster)
        {
-           vendorsWeddingCollection.Status = "Active";
-           vendorsWeddingCollection.UpdatedDate =  DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorsWeddingCollection.Status = "Active";
+           vendorsWeddingCollection.UpdatedDate =  Convert.ToDateTime(updateddate);
            vendorMaster.Status = "Active";
-           vendorMaster.UpdatedDate = DateTime.Now;
+           vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
            vendorMaster.ServicType = "WeddingCollection";
            vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
            vendorsWeddingCollection.VendorMasterId = vendorMaster.Id;
@@ -32,9 +33,9 @@ namespace MaaAahwanam.Service
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
-            userLogin.RegDate = DateTime.Now;
+            userLogin.RegDate = Convert.ToDateTime(updateddate);
             userLogin.Status = "Active";
-            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
             userDetail.FirstName = vendorMaster.BusinessName;
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -67,10 +68,11 @@ namespace MaaAahwanam.Service
 
         public VendorsWeddingCollection UpdateWeddingCollection(VendorsWeddingCollection vendorsWeddingCollection, Vendormaster vendorMaster, long masterid,long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsWeddingCollection.Status = "Active";
-            vendorsWeddingCollection.UpdatedDate = DateTime.Now;
+            vendorsWeddingCollection.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "WeddingCollection";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsWeddingCollection = vendorsWeddingCollectionsRepository.UpdateWeddingCollection(vendorsWeddingCollection, masterid,vid);
@@ -79,8 +81,9 @@ namespace MaaAahwanam.Service
 
         public VendorsWeddingCollection AddNewWeddingCollection(VendorsWeddingCollection vendorsWeddingCollection, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsWeddingCollection.Status = "Active";
-            vendorsWeddingCollection.UpdatedDate = DateTime.Now;
+            vendorsWeddingCollection.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsWeddingCollection.VendorMasterId = vendorMaster.Id;
             vendorsWeddingCollection = vendorsWeddingCollectionsRepository.AddWeddingCollections(vendorsWeddingCollection);
             return vendorsWeddingCollection;

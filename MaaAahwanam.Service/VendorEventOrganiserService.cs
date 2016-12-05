@@ -20,10 +20,11 @@ namespace MaaAahwanam.Service
         VendorEventOrganiserRepository vendorEventOrganiserRepository = new VendorEventOrganiserRepository();
         public VendorsEventOrganiser AddEventOrganiser(VendorsEventOrganiser vendorEventOrganiser, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorEventOrganiser.Status = "Active";
-            vendorEventOrganiser.UpdatedDate =  DateTime.Now;
+            vendorEventOrganiser.UpdatedDate =  Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "EventOrganiser";
             vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
             vendorEventOrganiser.VendorMasterId = vendorMaster.Id;
@@ -32,8 +33,8 @@ namespace MaaAahwanam.Service
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
-            userLogin.RegDate = DateTime.Now;
-            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.RegDate = Convert.ToDateTime(updateddate);
+            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             userLogin.Status = "Active";
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -67,10 +68,11 @@ namespace MaaAahwanam.Service
 
         public VendorsEventOrganiser UpdateEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster, long masterid, long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsEventOrganiser.Status = "Active";
-            vendorsEventOrganiser.UpdatedDate = DateTime.Now;
+            vendorsEventOrganiser.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "EventOrganiser";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, masterid,vid);
@@ -79,8 +81,9 @@ namespace MaaAahwanam.Service
 
         public VendorsEventOrganiser AddNewEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsEventOrganiser.Status = "Active";
-            vendorsEventOrganiser.UpdatedDate = DateTime.Now;
+            vendorsEventOrganiser.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsEventOrganiser.VendorMasterId = vendorMaster.Id;
             vendorsEventOrganiser = vendorEventOrganiserRepository.AddEventOrganiser(vendorsEventOrganiser);
             return vendorsEventOrganiser;

@@ -18,8 +18,9 @@ namespace MaaAahwanam.Service
         public string InsertUserAddBook(UserAddBook userAddBook)
         {
             string message;
-            try { 
-            userAddBook.UpdatedDate = DateTime.Now;
+            try {
+                string updateddate = DateTime.UtcNow.ToShortDateString();
+                userAddBook.UpdatedDate = Convert.ToDateTime(updateddate);
             userAddBookRepository.InsertUserAddBook(userAddBook);
             message = "Success";
             }

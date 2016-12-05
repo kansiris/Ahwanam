@@ -24,7 +24,8 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(IssueDetail issueDetail)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            issueDetail.UpdatedDate = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            issueDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             issueDetail.UpdatedBy =user.UserId;
             _ticketsService.InsertIssueDetail(issueDetail);
             return Content("<script language='javascript' type='text/javascript'>alert('Submitted successfully!');location.href='" + @Url.Action("Index", "TicketDetails",new { tid= issueDetail.TicketId}) + "'</script>");

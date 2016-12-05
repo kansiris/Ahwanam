@@ -22,9 +22,10 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(ServiceRequest serviceRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             ServiceRequestService serviceRequestService = new ServiceRequestService();
             serviceRequest.Type = "Bidding";
-            serviceRequest.UpdatedTime =DateTime.Now;
+            serviceRequest.UpdatedTime =Convert.ToDateTime(updateddate);
             serviceRequest.Status = "Due";
             serviceRequest.UpdatedBy =user.UserId;
             serviceRequest =serviceRequestService.SaveService(serviceRequest);

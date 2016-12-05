@@ -20,10 +20,11 @@ namespace MaaAahwanam.Service
         VendorsTravelandAccomodationRepository vendorsTravelandAccomodationRepository = new VendorsTravelandAccomodationRepository();
         public VendorsTravelandAccomodation AddTravelAndAccomadation(VendorsTravelandAccomodation vendorsTravelandAccomodation, Vendormaster vendorMaster)
        {
-           vendorsTravelandAccomodation.Status = "Active";
-           vendorsTravelandAccomodation.UpdatedDate  = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorsTravelandAccomodation.Status = "Active";
+           vendorsTravelandAccomodation.UpdatedDate  = Convert.ToDateTime(updateddate);
            vendorMaster.Status = "Active";
-           vendorMaster.UpdatedDate = DateTime.Now;
+           vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
            vendorMaster.ServicType = "Travel&Accommodation";
            vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
            vendorsTravelandAccomodation.VendorMasterId = vendorMaster.Id;
@@ -33,8 +34,8 @@ namespace MaaAahwanam.Service
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
             userLogin.Status = "Active";
-            userLogin.RegDate = DateTime.Now;
-            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.RegDate = Convert.ToDateTime(updateddate);
+            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
             userDetail.FirstName = vendorMaster.BusinessName;
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -68,10 +69,11 @@ namespace MaaAahwanam.Service
 
         public VendorsTravelandAccomodation UpdateTravelandAccomodation(VendorsTravelandAccomodation vendorTravelandAccomodation, Vendormaster vendorMaster, long masterid,long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorTravelandAccomodation.Status = "Active";
-            vendorTravelandAccomodation.UpdatedDate = DateTime.Now;
+            vendorTravelandAccomodation.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Travel&Accommodation";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorTravelandAccomodation = vendorsTravelandAccomodationRepository.UpdateTravelandAccomodation(vendorTravelandAccomodation, masterid,vid);
@@ -80,8 +82,9 @@ namespace MaaAahwanam.Service
 
         public VendorsTravelandAccomodation AddNewTravelandAccomodation(VendorsTravelandAccomodation vendorsTravelandAccomodation, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsTravelandAccomodation.Status = "Active";
-            vendorsTravelandAccomodation.UpdatedDate = DateTime.Now;
+            vendorsTravelandAccomodation.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsTravelandAccomodation.VendorMasterId = vendorMaster.Id;
             vendorsTravelandAccomodation = vendorsTravelandAccomodationRepository.AddTravelandAccomodation(vendorsTravelandAccomodation);
             return vendorsTravelandAccomodation;

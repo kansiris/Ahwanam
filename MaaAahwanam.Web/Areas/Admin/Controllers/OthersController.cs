@@ -35,6 +35,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult TicketDetails(string id,string Command,IssueDetail issueDetail)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             if (id!=null)
             {
                 ViewBag.record = othersService.TicketRecordService(long.Parse(id));
@@ -44,7 +45,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             {
                 issueDetail.TicketId = long.Parse(id);
                 issueDetail.RepliedBy = ValidUserUtility.ValidUser();
-                issueDetail.ReplayedDate = DateTime.Now;
+                issueDetail.ReplayedDate = Convert.ToDateTime(updateddate);
                 issueDetail.UpdatedBy = ValidUserUtility.ValidUser();
                 issueDetail = othersService.AddTicket(issueDetail);
                 if (issueDetail.TicketCommuId != 0)

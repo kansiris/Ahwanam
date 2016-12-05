@@ -20,9 +20,10 @@ namespace MaaAahwanam.Service
         UserDetail userDetail = new UserDetail();
         public VendorsBeautyService AddBeautyService(VendorsBeautyService vendorBeautyService,Vendormaster vendorMaster)
         {
-            vendorBeautyService.UpdatedDate = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorBeautyService.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorBeautyService.Status = "Active";
-            vendorMaster.UpdatedDate = userLogin.RegDate = userLogin.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = userLogin.RegDate = userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status =  userLogin.Status= "Active";
             vendorMaster.ServicType = "BeautyServices";
             vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
@@ -43,7 +44,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -64,10 +65,11 @@ namespace MaaAahwanam.Service
 
         public VendorsBeautyService UpdatesBeautyService(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster, long masterid,long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsBeautyService.Status = "Active";
-            vendorsBeautyService.UpdatedDate = DateTime.Now;
+            vendorsBeautyService.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "BeautyServices";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsBeautyService = vendorBeautyServiceRespository.UpdatesBeautyService(vendorsBeautyService, masterid,vid);
@@ -75,8 +77,9 @@ namespace MaaAahwanam.Service
         }
         public VendorsBeautyService AddNewBeautyService(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsBeautyService.Status = "Active";
-            vendorsBeautyService.UpdatedDate = DateTime.Now;
+            vendorsBeautyService.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsBeautyService.VendorMasterId = vendorMaster.Id;
             vendorsBeautyService = vendorBeautyServiceRespository.AddBeautyService(vendorsBeautyService);
             return vendorsBeautyService;

@@ -21,8 +21,9 @@ namespace MaaAahwanam.Service
 
         public CommentDetail AddComment(CommentDetail commentDetail)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             commentDetail.Status = "Active";
-            commentDetail.UpdatedDate = DateTime.Now;
+            commentDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             return othersRepository.AddComment(commentDetail);
         }
 
@@ -47,8 +48,9 @@ namespace MaaAahwanam.Service
         }
         public IssueDetail AddTicket(IssueDetail issueDetail)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             issueDetail.Status = "Active";
-            issueDetail.UpdatedDate = DateTime.Now;
+            issueDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             return othersRepository.AddTicket(issueDetail);
         }
         public List<IssueDetail> TicketDetail(long id)

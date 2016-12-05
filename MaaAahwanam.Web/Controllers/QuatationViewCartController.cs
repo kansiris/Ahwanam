@@ -95,6 +95,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             if (command == "Pay")
             {
+                string updateddate = DateTime.UtcNow.ToShortDateString();
                 OrdersServiceRequest ordersServiceRequest = new OrdersServiceRequest();
                 Payments_Requests payments_Requests = new Payments_Requests();
                 ServiceResponse serviceResponse = dashBoardService.GetService(long.Parse(selected));
@@ -102,7 +103,7 @@ namespace MaaAahwanam.Web.Controllers
                 ordersServiceRequest.ResponseId = long.Parse(id);
                 ordersServiceRequest.TotalPrice = serviceResponse.Amount;
                 ordersServiceRequest.UpdatedBy = ValidUserUtility.ValidUser();
-                ordersServiceRequest.UpdatedDate = DateTime.Now;
+                ordersServiceRequest.UpdatedDate = Convert.ToDateTime(updateddate);
                 ordersServiceRequest.Status = "Active";
                 ordersServiceRequest = dashBoardService.InsertNewOrderService(ordersServiceRequest);
                 pid = ordersServiceRequest.ResponseId;
@@ -111,7 +112,7 @@ namespace MaaAahwanam.Web.Controllers
                 payments_Requests.paidamount = ordersServiceRequest.TotalPrice;
                 payments_Requests.cardnumber = "2222 2222 2222 2222";
                 payments_Requests.CVV = "234";
-                payments_Requests.Paiddate = DateTime.Now;
+                payments_Requests.Paiddate = Convert.ToDateTime(updateddate);
                 payments_Requests = dashBoardService.AddNewPaymentRequest(payments_Requests);
                 //Updating Payment ID in OrdersServiceRequest table               
                 ordersServiceRequest = dashBoardService.UpdateOrdersServiceRequest(pid, ordersServiceRequest);

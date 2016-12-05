@@ -67,9 +67,10 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult WriteaRiview([Bind(Prefix = "Item2")] Review review)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             review.UpdatedBy = (int)user.UserId;
             review.Status = "Active";
-            review.UpdatedDate = DateTime.Now;
+            review.UpdatedDate = Convert.ToDateTime(updateddate);
             reviewService.InsertReview(review);
             return RedirectToAction("Index", new { par = review.Service, VID = review.ServiceId , subvid =review.Sid});
 
@@ -78,6 +79,7 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult Addtocart(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             CartItem cartItem = new CartItem();
             cartItem.VendorId = orderRequest.VendorId;
             cartItem.ServiceType = orderRequest.ServiceType;
@@ -85,7 +87,7 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.TotalPrice = orderRequest.TotalPrice;
             cartItem.Orderedby = user.UserId;
             cartItem.Quantity = orderRequest.Quantity;
-            cartItem.UpdatedDate = DateTime.Now;
+            cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
             cartItem.subid = orderRequest.subid;
             cartItem.attribute = orderRequest.attribute;
             CartService cartService = new CartService();
@@ -126,14 +128,14 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult Buynow(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             OrderService orderService = new OrderService();
             Order order = new Order();
             order.TotalPrice = Convert.ToDecimal(orderRequest.TotalPrice);
-            order.OrderDate = DateTime.Now;
+            order.OrderDate = Convert.ToDateTime(updateddate);
             order.UpdatedBy = (Int64)user.UserId;
             order.OrderedBy = (Int64)user.UserId;
-            order.UpdatedDate = DateTime.Now;
+            order.UpdatedDate = Convert.ToDateTime(updateddate);
             order.Status = "Active";
             order = orderService.SaveOrder(order);
 
@@ -158,7 +160,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.OrderId = order.OrderId;
             orderDetail.VendorId = orderRequest.VendorId;
             orderDetail.Status = "Active";
-            orderDetail.UpdatedDate = DateTime.Now;
+            orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             orderDetail.UpdatedBy = user.UserId;
             orderDetail.subid = orderRequest.subid;
             orderdetailsServices.SaveOrderDetail(orderDetail);
@@ -207,6 +209,7 @@ namespace MaaAahwanam.Web.Controllers
         {
 
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             CartItem cartItem = new CartItem();
             cartItem.VendorId = orderRequest.VendorId;
             cartItem.ServiceType = orderRequest.ServiceType;
@@ -214,7 +217,7 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.TotalPrice = orderRequest.TotalPrice;
             cartItem.Orderedby = user.UserId;
             cartItem.Quantity = orderRequest.Quantity;
-            cartItem.UpdatedDate = DateTime.Now;
+            cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
             cartItem.attribute = orderRequest.attribute;
             cartItem.CartId = orderRequest.cid;
 

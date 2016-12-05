@@ -13,8 +13,9 @@ namespace MaaAahwanam.Service
         VendorImageRepository vendorImageRepository = new VendorImageRepository();
         public VendorImage AddVendorImage(VendorImage vendorImage, Vendormaster vendorMaster)
        {
-           vendorImage.Status = "Active";
-           vendorImage.UpdatedDate = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorImage.Status = "Active";
+           vendorImage.UpdatedDate = Convert.ToDateTime(updateddate);
            vendorImage.VendorMasterId = vendorMaster.Id;
            vendorImage = vendorImageRepository.AddVendorImage(vendorImage);
            return vendorImage;

@@ -19,7 +19,8 @@ namespace MaaAahwanam.Service
 
         public EventsandTip AddEventandTip(EventsandTip eventAndTip)
         {
-            eventAndTip.UpdatedDate = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            eventAndTip.UpdatedDate = Convert.ToDateTime(updateddate);
             eventAndTip.Status = "Active";
             eventsandTipRepository.AddEventsAndTip(eventAndTip);
             return eventAndTip;
@@ -37,7 +38,8 @@ namespace MaaAahwanam.Service
 
         public EventsandTip UpdateEventandTip(EventsandTip eventAndTip,long id)
         {
-            eventAndTip.UpdatedDate = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            eventAndTip.UpdatedDate = Convert.ToDateTime(updateddate);
             eventAndTip.Status = "Active";
             eventsandTipRepository.UpdateEventsAndTip(eventAndTip,id);
             return eventAndTip;

@@ -31,14 +31,14 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult payamount(OrderRequest orderRequest)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             OrderService orderService = new OrderService();
             Order order = new Order();
             order.TotalPrice = orderRequest.TotalPrice;
-            order.OrderDate = DateTime.Now;
+            order.OrderDate = Convert.ToDateTime(updateddate);
             order.UpdatedBy = user.UserId;
             order.OrderedBy = user.UserId;
-            order.UpdatedDate = DateTime.Now;
+            order.UpdatedDate = Convert.ToDateTime(updateddate);
             order.Status = "Active";
             //order.PaymentId = payment_Orders.OrderID;
             order = orderService.SaveOrder(order);
@@ -73,7 +73,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.VendorId = item.VendorId;
                 orderDetail.subid = item.subid;
                 orderDetail.Status = "Active";
-                orderDetail.UpdatedDate = DateTime.Now;
+                orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                 orderDetail.UpdatedBy = user.UserId;
                 
                 if (i == 0)

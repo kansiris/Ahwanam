@@ -20,11 +20,12 @@ namespace MaaAahwanam.Service
         UserDetail userDetail = new UserDetail();
         public VendorsDecorator AddDecorator(VendorsDecorator vendorsdecorator,Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorMaster.ServicType = "Decorators";
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate =  DateTime.Now;
+            vendorMaster.UpdatedDate =  Convert.ToDateTime(updateddate);
             vendorsdecorator.Status = "Active";
-            vendorsdecorator.UpdatedDate = DateTime.Now;
+            vendorsdecorator.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
             vendorsdecorator.VendorMasterId = vendorMaster.Id;
             vendorsdecorator = vendorsDecoratorRepository.AddDecorator(vendorsdecorator);
@@ -32,8 +33,8 @@ namespace MaaAahwanam.Service
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
-            userLogin.RegDate = DateTime.Now;
-            userLogin.UpdatedDate = DateTime.Now;
+            userLogin.RegDate = Convert.ToDateTime(updateddate);
+            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
             userLogin.Status = "Active";
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = DateTime.Now;
+            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -68,10 +69,11 @@ namespace MaaAahwanam.Service
 
         public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster, long masterid,long vid)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsDecorator.Status = "Active";
-            vendorsDecorator.UpdatedDate = DateTime.Now;
+            vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = DateTime.Now;
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Decorators";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, masterid,vid);
@@ -80,8 +82,9 @@ namespace MaaAahwanam.Service
 
         public VendorsDecorator AddNewDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster)
         {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             vendorsDecorator.Status = "Active";
-            vendorsDecorator.UpdatedDate = DateTime.Now;
+            vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsDecorator.VendorMasterId = vendorMaster.Id;
             vendorsDecorator = vendorsDecoratorRepository.AddDecorator(vendorsDecorator);
             return vendorsDecorator;

@@ -69,15 +69,17 @@ namespace MaaAahwanam.Service
 
         public Comment InsertCommentService(Comment comment)
         {
-            comment.UpdatedDate = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            comment.UpdatedDate = Convert.ToDateTime(updateddate);
             comment.Status = "Active";
             return dashBoardRepository.InsertComment(comment);
         }
 
         public CommentDetail InsertCommentDetailService(CommentDetail commentDetail)
         {
-            commentDetail.CommentDate = DateTime.Now;
-            commentDetail.UpdatedDate = DateTime.Now;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            commentDetail.CommentDate = Convert.ToDateTime(updateddate);
+            commentDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             commentDetail.Status = "Active";
             return dashBoardRepository.InsertCommentDetail(commentDetail);
         }

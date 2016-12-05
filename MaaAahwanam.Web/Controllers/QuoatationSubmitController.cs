@@ -25,10 +25,11 @@ namespace MaaAahwanam.Web.Controllers
             //string sdate = String.Format("{0:MM-dd-yyyy}", serviceRequest.EventEnddate);
             //serviceRequest.EventEnddate = DateTime.ParseExact(sdate, "MM-dd-yyyy", new CultureInfo("en-US"), DateTimeStyles.None);
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string updateddate = DateTime.UtcNow.ToShortDateString();
             ServiceRequestService serviceRequestService = new ServiceRequestService();
             serviceRequest.Type = "Quotation";
             //serviceRequest.UpdatedTime = DateTime.Parse(String.Format("{0:MM-dd-yyyy}", DateTime.Now));
-            serviceRequest.UpdatedTime = DateTime.Now;
+            serviceRequest.UpdatedTime = Convert.ToDateTime(updateddate);
             serviceRequest.UpdatedBy = (int)user.UserId;
             serviceRequest.Status = "Due";
             serviceRequest.ServiceType.TrimStart(',');
