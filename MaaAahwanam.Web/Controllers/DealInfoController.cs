@@ -160,6 +160,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.OrderBy = user.UserId;
             orderDetail.PaymentId = payment_Orders.PaymentID;
             orderDetail.ServiceType = orderRequest.ServiceType;
+            orderDetail.ServicePrice = orderRequest.ServicePrice;
             orderDetail.PerunitPrice = orderRequest.TotalPrice;
             orderDetail.Quantity = orderRequest.Quantity;
             orderDetail.OrderId = order.OrderId;

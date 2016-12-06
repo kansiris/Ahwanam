@@ -29,6 +29,7 @@ namespace MaaAahwanam.Repository
         public long subid { get; set; }
         public long orderdetailid { get; set; }
         public long DealId { get; set; }
+        public decimal ServicePrice { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public string StartTime { get; set; }
     }

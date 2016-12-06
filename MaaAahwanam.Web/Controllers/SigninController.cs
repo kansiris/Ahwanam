@@ -128,8 +128,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     UserDetail userDetail = new UserDetail();
                     return PartialView("SigninPartial", userDetail);
-                }
-                return PartialView("SigninPartial", response);
+                }               
+                return PartialView("SigninPartial", response);                
             }
             else
             {
