@@ -196,15 +196,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<orderconfirmation_Result>("orderconfirmation", oIDParameter);
         }
     
-        public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
-        {
-            var servicTypeParameter = servicType != null ?
-                new ObjectParameter("ServicType", servicType) :
-                new ObjectParameter("ServicType", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
-        }
-    
         public virtual ObjectResult<GetProducts_Result> GetProducts(string nType, Nullable<int> vID, string stype, string landmark, string order)
         {
             var nTypeParameter = nType != null ?
@@ -398,6 +389,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("OrderBy", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
+        }
+    
+        public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
+        {
+            var servicTypeParameter = servicType != null ?
+                new ObjectParameter("ServicType", servicType) :
+                new ObjectParameter("ServicType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
         }
     }
 }

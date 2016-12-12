@@ -176,9 +176,6 @@
           <FunctionImport Name="orderconfirmation" ReturnType="Collection(MaaAahwanamModel.orderconfirmation_Result)">
           <Parameter Name="OID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="AllVendorList" ReturnType="Collection(MaaAahwanamModel.AllVendorList_Result)">
-          <Parameter Name="ServicType" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetProducts" ReturnType="Collection(MaaAahwanamModel.GetProducts_Result)">
             <Parameter Name="nType" Mode="In" Type="String" />
             <Parameter Name="VID" Mode="In" Type="Int32" />
@@ -235,7 +232,10 @@
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="sp_OrderDetails" ReturnType="Collection(MaaAahwanamModel.sp_OrderDetails_Result)">
-            <Parameter Name="OrderBy" Mode="In" Type="Int64" />
+          <Parameter Name="OrderBy" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="AllVendorList" ReturnType="Collection(MaaAahwanamModel.AllVendorList_Result)">
+            <Parameter Name="ServicType" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="geteventsandtipsimages_Result">
@@ -428,24 +428,6 @@
           <Property Type="String" Name="image" Nullable="true" />
           <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="StartTime" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="AllVendorList_Result">
-          <Property Type="Int64" Name="VendorMasterId" Nullable="false" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="String" Name="ContactNumber" Nullable="true" />
-          <Property Type="String" Name="address" Nullable="true" />
-          <Property Type="String" Name="Landmark" Nullable="true" />
-          <Property Type="Int64" Name="VendorServiceId" Nullable="false" />
-          <Property Type="String" Name="UnitPrice" Nullable="true" />
-          <Property Type="Decimal" Name="cost1" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost2" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost3" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost4" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="status" Nullable="true" />
-          <Property Type="String" Name="VenueType" Nullable="true" />
-          <Property Type="String" Name="food" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetProducts_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
@@ -662,6 +644,26 @@
           <Property Type="Decimal" Name="ServicePrice" Nullable="false" Precision="18" Scale="2" />
           <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="StartTime" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="AllVendorList_Result">
+          <Property Type="Int64" Name="VendorMasterId" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" />
+          <Property Type="String" Name="address" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="Int64" Name="VendorServiceId" Nullable="false" />
+          <Property Type="String" Name="UnitPrice" Nullable="true" />
+          <Property Type="Decimal" Name="cost1" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost2" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost3" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost4" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="status" Nullable="true" />
+          <Property Type="String" Name="VenueType" Nullable="true" />
+          <Property Type="String" Name="food" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="true" />
+          <Property Type="String" Name="Password" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -940,28 +942,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="AllVendorList" FunctionName="MaaAahwanamModel.Store.AllVendorList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.AllVendorList_Result">
-                <ScalarProperty Name="VendorMasterId" ColumnName="VendorMasterId" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="VendorServiceId" ColumnName="VendorServiceId" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="cost1" ColumnName="cost1" />
-                <ScalarProperty Name="cost2" ColumnName="cost2" />
-                <ScalarProperty Name="cost3" ColumnName="cost3" />
-                <ScalarProperty Name="cost4" ColumnName="cost4" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="VenueType" ColumnName="VenueType" />
-                <ScalarProperty Name="food" ColumnName="food" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetProducts" FunctionName="MaaAahwanamModel.Store.GetProducts">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProducts_Result">
@@ -1232,6 +1212,30 @@
                 <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AllVendorList" FunctionName="MaaAahwanamModel.Store.AllVendorList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.AllVendorList_Result">
+                <ScalarProperty Name="VendorMasterId" ColumnName="VendorMasterId" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="VendorServiceId" ColumnName="VendorServiceId" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="cost1" ColumnName="cost1" />
+                <ScalarProperty Name="cost2" ColumnName="cost2" />
+                <ScalarProperty Name="cost3" ColumnName="cost3" />
+                <ScalarProperty Name="cost4" ColumnName="cost4" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="VenueType" ColumnName="VenueType" />
+                <ScalarProperty Name="food" ColumnName="food" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
