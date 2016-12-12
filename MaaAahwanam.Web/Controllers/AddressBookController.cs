@@ -9,6 +9,7 @@ namespace MaaAahwanam.Web.Controllers
     [Authorize]
     public class AddressBookController : Controller
     {
+        
         UserAddBookService userAddBookService = new UserAddBookService();
         //
         // GET: /AddressBook/
@@ -37,6 +38,13 @@ namespace MaaAahwanam.Web.Controllers
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('Error Occured');location.href='" + @Url.Action("Index", "AddressBook") + "'</script>");
             }
+        }
+
+        public JsonResult delete(string[] customerIDs)
+        {
+            
+            string msg = userAddBookService.DeleteAddressBook(customerIDs);
+            return Json("Selected Addresses deleted successfully!");
         }
     }
 }

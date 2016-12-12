@@ -45,6 +45,9 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return serviceResponse;
         }
-
+        public List<ServiceResponse> BidHistory(long ResponseID)
+        {
+            return _dbContext.ServiceResponse.Where(m => m.RequestId == ResponseID).ToList();
+        }
     }
 }

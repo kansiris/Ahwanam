@@ -16,6 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
             string Rid = Request.QueryString["Rid"];
+            ViewBag.BidHistory = serviceResponseService.BidHistory(long.Parse(Rid));
             ViewBag.rid = Rid;
             return View();
         }

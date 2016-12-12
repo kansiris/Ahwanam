@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
             serviceRequest.Type = "Bidding";
             ServiceRequestService serviceRequestService = new ServiceRequestService();
             List<ServiceRequest> bidlist=serviceRequestService.GetServiceRequestList(serviceRequest);
-            ViewBag.bidlist = bidlist;
+            ViewBag.bidlist = bidlist.OrderByDescending(m => m.RequestId);
             return View();
         }
         public ActionResult test()

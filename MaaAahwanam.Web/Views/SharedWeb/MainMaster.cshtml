@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html>
 <head>
-  
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Welcome to Maa Aahwanam</title>
@@ -29,7 +29,7 @@
     @RenderSection("css", required: false)
     @using MaaAahwanam.Web.Custom
     @{
-        //var user = (CustomPrincipal)HttpContext.Current.User;
+//var user = (CustomPrincipal)HttpContext.Current.User;
     }
 </head>
 <body class="homepage">
@@ -47,10 +47,10 @@
                         <p class="wow fadeInLeft animated"><i class="ti-mobile"></i> 1800 180 180</p>
                         ​<p class="selectcity" style="margin-top:-73px;margin-left:130px">
                             @*<select onchange="citychange()" id="selectcity" style="width: 120px; height:28px; border-radius: 4px; overflow: hidden; background: #fafafa;padding:5px;line-height:0px;">
-                                <option selected="selected">
-                                    Hyderabad
-                                </option>
-                            </select>*@
+                                    <option selected="selected">
+                                        Hyderabad
+                                    </option>
+                                </select>*@
                         </p>
                         <div class="searchDiv" style="display:none;">
                             <a class="dropdown-toggle2" href="javascript:void(0)"><i class="ti-search"></i><span>  Search</span></a>
@@ -64,7 +64,7 @@
                                             </select>
                                         </div>
                                         <div class="search-input">
-                                            <input type="text" class="autosuggest" id="txt_Location_Top" placeholder="Enter your location"/>
+                                            <input type="text" class="autosuggest" id="txt_Location_Top" placeholder="Enter your location" />
                                         </div>
                                         <div class="submit-button">
                                             <button class="btn-1" value="Search" onclick="GetSearchValue_Top()">Search</button>
@@ -102,7 +102,7 @@
                             </nav>
                             @{Html.RenderAction("ItemsCartViewBindingLayout", "Index");}
                         </div>
-                    }
+                                }
                 </div>
             </div>
 
@@ -261,7 +261,7 @@
     <script type="text/javascript" src="~/CSSWeb/js/owl.carousel.min.js"></script>
 
     @RenderSection("scripts", required: false)
-    
+
 
     <script>
         //Jump Top_sai
@@ -307,7 +307,7 @@
         function GetSearchValue_Top() {
             var selectedText = e1.options[e1.selectedIndex].innerHTML;
             var Searchlocation = document.getElementById('txt_Location_Top').value.split(",")[0].replace("%20", " ");
-            //alert(selectedText);            
+            //alert(selectedText);
             if (selectedText == 'Select Event' || Searchlocation == '') {
                 //if (selectedText == 'Select Event' && selectedText == ''){
                 //    alert('please Select Event and enter location');
@@ -337,8 +337,7 @@
             //var selectedText = e2.options[e2.selectedIndex].innerHTML;
             var selectedText = $("#select2-chosen-4").text();
             var Searchlocation = document.getElementById('txt_Location_Bottom').value.split(",")[0].replace("%20", " ");
-            if (selectedText == 'Select Event' || Searchlocation == '')
-            {    
+            if (selectedText == 'Select Event' || Searchlocation == '') {
                 if (selectedText == 'Select Event' && Searchlocation == '') {
                     alert('please Select Event and enter location');
                 }
@@ -349,8 +348,7 @@
                     alert('please enter Location');
                 }
             }
-            else
-            {
+            else {
                 window.location.href = "../AllServices/Index?l=" + Searchlocation + "";
             }
 
@@ -387,7 +385,7 @@
     </script>
     <script>
         /* --------------- To bind auto complete location details to the search ------------------ */
-        $(document).ready(function () {           
+        $(document).ready(function () {
             var LocationList = [];
             var EventsList = [];
             $.ajax({
@@ -408,7 +406,7 @@
                     //alert("Error");
                 }
             });
-           
+
             $("#txt_Location_Top").autocomplete({
                 delay: 0,
                 source: function (request, response) {
@@ -644,7 +642,7 @@
                 $("#Index").removeClass("active hvr-sweep-to-bottom").addClass("hvr-sweep-to-bottom");
                 $("#Services").addClass("active hvr-sweep-to-bottom");
             }
-            
+
         });
     </script>
 
@@ -707,7 +705,7 @@
                 $(".slidingDiv").fadeIn('slow');
                 e.stopPropagation();
             });
-            
+
         });
     </script>
     <script>
@@ -719,82 +717,86 @@
 
         $('#datetimepicker_format').datetimepicker({ value: '2015/12/12 05:03', format: $("#datetimepicker_format_value").val() });
         $("#datetimepicker_format_change").on("click", function (e) {
-                $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
-            });
-            $("#datetimepicker_format_locale").on("change", function (e) {
-                $.datetimepicker.setLocale($(e.currentTarget).val());
-            });
+            $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
+        });
+        $("#datetimepicker_format_locale").on("change", function (e) {
+            $.datetimepicker.setLocale($(e.currentTarget).val());
+        });
 
-            // event start date
-            $('#datetimepicker1').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                formatDate: 'Y/m/d',
-            }).on('change', function () {
-                var startDate = $('#datetimepicker1').val();
-                var endDate = $('#datetimepicker2').val();
-                var start = startDate.split("/").reverse().join("/");
-                var end = endDate.split("/").reverse().join("/");
-                var startTime = $('#datetimepicker3').val();
-                var endTime = $('#datetimepicker4').val();
-                if (endDate != '') {
-                    if (start == end && startTime > endTime) {
-                            $('#alert').show().find('strong').text('The event start time can not be greater than the event end time');
-                            $("#lnkproceedtonext").hide();
-                            $("#btnsubmit").hide();
-                        }                    
-                    else if (start > end) {
-                        $('#alert').show().find('strong').text('The start date can not be greater than the end date');
-                        $("#lnkproceedtonext").hide();
-                        $("#btnsubmit").hide();
-                    } else {
-                        $('#alert').hide();
-                        $("#lnkproceedtonext").show();
-                        $("#btnsubmit").show();
-                        //startDate = new Date(ev.date.format("{0:dd/mm/yyyy}"));
-                    }
+        // event start date
+        $('#datetimepicker1').datetimepicker({
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            formatDate: 'Y/m/d',
+        }).on('change', function () {
+            var startDate = $('#datetimepicker1').val();
+            var endDate = $('#datetimepicker2').val();
+            var start = startDate.split("/").reverse().join("/");
+            var end = endDate.split("/").reverse().join("/");
+            var startTime = $('#datetimepicker3').val();
+            var endTime = $('#datetimepicker4').val();
+            if (endDate != '') {
+                if (start == end && startTime > endTime) {
+                    $('#alert').show().find('strong').text('The event start time can not be greater than the event end time');
+                    $("#lnkproceedtonext").hide();
+                    $("#btnsubmit").hide();
                 }
-            });
-
-
-            // event end date
-            $('#datetimepicker2').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                //formatDate: 'Y/m/d',
-            }).on('change', function (ev) {
-                
-                var startDate = $('#datetimepicker1').val();
-                var endDate = $('#datetimepicker2').val();
-                var start = startDate.split("/").reverse().join("/");
-                var end = endDate.split("/").reverse().join("/");
-                var startTime = $('#datetimepicker3').val();
-                var endTime = $('#datetimepicker4').val();
-                //Comparing date & time
-                if (endTime != '') {
-                    if (start == end && endTime < startTime) {
-                        $('#alert').show().find('strong').text('The event end time can not be less than the event start time');
-                        $("#lnkproceedtonext").hide();
-                        $("#btnsubmit").hide();
-                    }
+            }
+            if (end != '') {
+                if (start > end) {
+                    $('#alert').show().find('strong').text('The start date can not be greater than the end date');
+                    $("#lnkproceedtonext").hide();
+                    $("#btnsubmit").hide();
+                } else {
+                    $('#alert').hide();
+                    $("#lnkproceedtonext").show();
+                    $("#btnsubmit").show();
+                    //startDate = new Date(ev.date.format("{0:dd/mm/yyyy}"));
                 }
-                //Comparing only dates
+            }
+        });
+
+
+        // event end date
+        $('#datetimepicker2').datetimepicker({
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            //formatDate: 'Y/m/d',
+        }).on('change', function (ev) {
+
+            var startDate = $('#datetimepicker1').val();
+            var endDate = $('#datetimepicker2').val();
+            var start = startDate.split("/").reverse().join("/");
+            var end = endDate.split("/").reverse().join("/");
+            var startTime = $('#datetimepicker3').val();
+            var endTime = $('#datetimepicker4').val();
+            //Comparing date & time
+            if (endTime != '') {
+                if (start == end && endTime < startTime) {
+                    $('#alert').show().find('strong').text('The event end time can not be less than the event start time');
+                    $("#lnkproceedtonext").hide();
+                    $("#btnsubmit").hide();
+                }
+            }
+            //Comparing only dates
+            if (end != '') {
                 if (end < start) {
                     $('#alert').show().find('strong').text('The end date can not be less than the start date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 } else {
-                    
+
                     $('#alert').hide();
                     $("#lnkproceedtonext").show();
                     $("#btnsubmit").show();
                 }
-            });
+            }
+        });
 
-            
-            
+
+
         //$('#datetimepicker1').datepicker()
         //            .on('change', function () {
         //                var startDate = $('#datetimepicker1').val();
@@ -826,28 +828,35 @@
 
 
 
-            // event start time
-            $('#datetimepicker3').datetimepicker({
-                datepicker: false,
-                format: 'H:i',
-                step: 5
-            }).on('change', function (ev) {
+        // event start time
+        $('#datetimepicker3').datetimepicker({
+            datepicker: false,
+            format: 'H:i',
+            step: 5
+        }).on('change', function (ev) {
 
-                var startTime = $('#datetimepicker3').val();
-                var endTime = $('#datetimepicker4').val();
-                var startDate = $('#datetimepicker1').val();
-                var endDate = $('#datetimepicker2').val();
-                var start = startDate.split("/").reverse().join("/");
-                var end = endDate.split("/").reverse().join("/");
-                if (endTime != '') {
-                    if (start == end && startTime > endTime) {
-                        $('#alert').show().find('strong').text('The event end time can not be greater than the event start time');
-                        $("#lnkproceedtonext").hide();
-                        $("#btnsubmit").hide();
-                    }
+            var startTime = $('#datetimepicker3').val();
+            var endTime = $('#datetimepicker4').val();
+            var startDate = $('#datetimepicker1').val();
+            var endDate = $('#datetimepicker2').val();
+            var start = startDate.split("/").reverse().join("/");
+            var end = endDate.split("/").reverse().join("/");
+            alert(endTime);
+            if (endTime != '') {
+                if (start == end && startTime > endTime) {
+                    $('#alert').show().find('strong').text('The event end time can not be greater than the event start time');
+                    $("#lnkproceedtonext").hide();
+                    $("#btnsubmit").hide();
                 }
-                if (end > start) {
-                    $('#alert').show().find('strong').text('The end date can not be greater than the start date');
+                else {
+                    $('#alert').hide();
+                    $("#lnkproceedtonext").show();
+                    $("#btnsubmit").show();
+                }
+            }
+            if(end != '') {
+                if (start > end) {
+                    $('#alert').show().find('strong').text('The start date can not be greater than the end date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 }
@@ -857,49 +866,55 @@
                     $("#lnkproceedtonext").show();
                     $("#btnsubmit").show();
                 }
-            });
-            // event end time
-            $('#datetimepicker4').datetimepicker({
-                datepicker: false,
-                format: 'H:i',
-                step: 5
-            }).on('change', function (ev) {
+        }
+        });
+        // event end time
+        $('#datetimepicker4').datetimepicker({
+            datepicker: false,
+            format: 'H:i',
+            step: 5
+        }).on('change', function (ev) {
 
-                var startTime = $('#datetimepicker3').val();
-                var endTime = $('#datetimepicker4').val();
-                var startDate = $('#datetimepicker1').val();
-                var endDate = $('#datetimepicker2').val();
-                var start = startDate.split("/").reverse().join("/");
-                var end = endDate.split("/").reverse().join("/");
+            var startTime = $('#datetimepicker3').val();
+            var endTime = $('#datetimepicker4').val();
+            var startDate = $('#datetimepicker1').val();
+            var endDate = $('#datetimepicker2').val();
+            var start = startDate.split("/").reverse().join("/");
+            var end = endDate.split("/").reverse().join("/");
+            if (endTime != '') {
                 if (start == end && endTime < startTime) {
-                        $('#alert').show().find('strong').text('The event end time can not be less than the event start time');
-                        $("#lnkproceedtonext").hide();
-                        $("#btnsubmit").hide();
+                    $('#alert').show().find('strong').text('The event end time can not be less than the event start time');
+                    $("#lnkproceedtonext").hide();
+                    $("#btnsubmit").hide();
                 }
-                else if (start > end) {
+            }
+            if(end != ''){
+                if (start > end) {
                     $('#alert').show().find('strong').text('The start date can not be greater than end date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 }
-                 else {
+                else {
                     $('#alert').hide();
                     $("#lnkproceedtonext").show();
                     $("#btnsubmit").show();
                 }
-            });
-            $('#datetimepicker5').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                formatDate: 'Y/m/d',
-            });
-            $('#datetimepicker6').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                formatDate: 'Y/m/d',
-            });
+        }
         
+        });
+        $('#datetimepicker5').datetimepicker({
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            formatDate: 'Y/m/d',
+        });
+        $('#datetimepicker6').datetimepicker({
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            formatDate: 'Y/m/d',
+        });
+
     </script>
 
     <script type="text/javascript">
@@ -909,12 +924,12 @@
         }
     </script>
 
-    
-   
+
+
     @RenderSection("scriptfunctions", required: false)
     @*<script>
-    alert('Please enter Event and location');
-    </script>*@
+        alert('Please enter Event and location');
+        </script>*@
 </body>
-</html>  
+</html>
 @*@Html.Raw(TempData["Alert"])*@

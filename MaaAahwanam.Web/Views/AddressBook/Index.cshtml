@@ -121,50 +121,81 @@
     </div>
     <!-- end popup -->
     <!-- /dashDetails -->
-    <div class="dashboardList dashboardList-nospace">
+    <form id="addressform">
+        <div class="dashboardList dashboardList-nospace">
 
-        <table class="responsive" id="AddressBookList">
-            <thead>
-                <tr>
-                    <th style="width: 10%; cursor: pointer;"><a href="#" class="selectall"><a href="#" title="Delete Record"><i class="ti-trash close"></i></a></a></th>
-                    <th style="width: 20%; cursor: pointer;">Name</th>
-                    <th style="width: 34%; cursor: pointer;">Address</th>
-                    <th style="width: 15%; cursor: pointer;">Phone</th>
-                    <th style="width: 21%; cursor: pointer;">Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (MaaAahwanam.Models.UserAddBook item in ViewBag.Addressbooklist)
-                {
+            <table class="responsive" id="AddressBookList">
+                <thead>
                     <tr>
-                        <td><input type="checkbox" /></td>
-                        <td>@item.PersonName</td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>@item.PersonAddress<br />@item.PersonLocation<br />@item.PersonCity</td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>@item.PersonPhone</td>
-                        <td>@item.PersonEmail</td>
+                        <th style="width: 10%; cursor: pointer;"><a href="#" class="selectall"><a href="#" id="deleterecord" title="Delete Record"><i class="ti-trash close"></i></a></a></th>
+                        <th style="width: 20%; cursor: pointer;">Name</th>
+                        <th style="width: 34%; cursor: pointer;">Address</th>
+                        <th style="width: 15%; cursor: pointer;">Phone</th>
+                        <th style="width: 21%; cursor: pointer;">Email</th>
                     </tr>
+                </thead>
+                <tbody>
+                    @foreach (MaaAahwanam.Models.UserAddBook item in ViewBag.Addressbooklist)
+                {
+                        <tr>
+                            <td><input type="checkbox" class="checkBox" value="@item.AddBookId" /></td>
+                            <td>@item.PersonName</td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>@item.PersonAddress<br />@item.PersonLocation<br />@item.PersonCity</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>@item.PersonPhone</td>
+                            <td>@item.PersonEmail</td>
+                        </tr>
                 }
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
 
-        <div class="clear"></div>
+            <div class="clear"></div>
 
-    </div>
+        </div>
+    </form>
     <!-- /dashboardList -->
 
 </div>
+<script src="~/Scripts/jquery.min.js"></script>
 <script type="text/javascript">
     window.onload = function () {
         $('#AddressBookList').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });
     };
+</script>
+
+<script>
+    //$(document).ready(function () { 
+    $('#deleterecord').on('click', function () {
+        var selectedIDs = new Array();
+        $('input:checkbox.checkBox').each(function () {
+            if ($(this).prop('checked')) {
+                selectedIDs.push($(this).val());
+            }
+        });
+
+        var options = {};
+        options.url = "/AddressBook/delete";
+        options.type = "POST";
+        options.data = JSON.stringify(selectedIDs);
+        options.contentType = "application/json";
+        options.dataType = "json";
+        options.success = function (msg) {
+            $("#addressform").closest("form").submit();
+            alert(msg);
+        };
+        options.error = function () {
+            alert("Error while deleting the records!");
+        };
+        $.ajax(options);
+    });
+    //});
 </script>
 
 

@@ -65,6 +65,9 @@ namespace MaaAahwanam.Service
             }
             return message;
         }
-
+        public List<ServiceResponse> BidHistory(long ResponseID)
+        {
+            return serviceResponseRepository.BidHistory(ResponseID);
+        }
     }
 }

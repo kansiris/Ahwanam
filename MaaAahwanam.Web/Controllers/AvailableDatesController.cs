@@ -25,14 +25,9 @@ namespace MaaAahwanam.Web.Controllers
             availabledates.vendorId = (int)user.UserId;
             string a=availabledatesService.saveavailabledates(availabledates);
             if(a== "Success")
-            {
                 return Content("<script language='javascript' type='text/javascript'>alert('Dates Submitted Successfully');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");
-            }
             else
-            {
                 return Content("<script language='javascript' type='text/javascript'>alert('Failed to Submitted dates');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");
-            }
-            return View();
         }
     }
 }

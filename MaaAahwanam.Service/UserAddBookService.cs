@@ -21,6 +21,7 @@ namespace MaaAahwanam.Service
             try {
                 string updateddate = DateTime.UtcNow.ToShortDateString();
                 userAddBook.UpdatedDate = Convert.ToDateTime(updateddate);
+                userAddBook.Status = "Active";
             userAddBookRepository.InsertUserAddBook(userAddBook);
             message = "Success";
             }
@@ -29,6 +30,10 @@ namespace MaaAahwanam.Service
                 message = "Failed To Insert";
             }
                 return message;
+        }
+        public string DeleteAddressBook(string[] id)
+        {
+            return userAddBookRepository.DeleteAddressBook(id);
         }
     }
 }

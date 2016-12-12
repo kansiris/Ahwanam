@@ -3,9 +3,12 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/VendorMaster.cshtml";
 }
+<link rel="stylesheet" href="~/CSSWeb/bootstrap/css/Datatable_css.css" />
+<script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
 @section Navigation
 {
-    <script type="text/javascript" src="~/CSSWeb/js/jquery-1.9.1.js"></script>
+    <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
+<script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <div class="breads">
         <div class="breads_inner">
             <div class="pageWidth">
@@ -24,7 +27,7 @@
         </div>
     </div>
 }
-<div style="">
+
     <div class="heading-title">
         <h2>Vendor Response (reverse Bidding)</h2>
     </div>
@@ -62,5 +65,55 @@
             </div>
         </div>
     }
+<br />
+<h3>Bid History :</h3><br />
+<div class="dashboardList dashboardList-nospace">
+    <table class="responsive" id="table1">
+        <thead>
+            <tr>
+                <th>RequestID</th>
+                <th>Description</th>
+                <th>Bid Amount</th>
+                <th>Bid Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.BidHistory != null)
+            {
+                foreach (var item in ViewBag.BidHistory)
+                {
+                    <tr>
+                        <td>@item.RequestId</td>
+                        <td>@item.Description</td>
+                        <td>@item.Amount</td>
+                        <td>
+                            @if (item.UpdatedDate != null)
+                            {
+                                @item.UpdatedDate.ToShortDateString()
+                            }
+                            else
+                            {
+                                <p>Not Available</p>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><p>Not Bidded Yet</p></tr>
+            }
+        </tbody>
+    </table>
 </div>
 
+@section scripts{
+    <script type="text/javascript" src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //BootstrapDialog.alert('Welcom to MaaAahwanam DashBoard');
+            $('#table1').dataTable({ bFilter: false, ordering: false, bLengthChange: false, "pageLength": 1 });
+        });
+    </script>
+}

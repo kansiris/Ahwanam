@@ -29,5 +29,7 @@ namespace MaaAahwanam.Repository
         public string status { get; set; }
         public string VenueType { get; set; }
         public string food { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }

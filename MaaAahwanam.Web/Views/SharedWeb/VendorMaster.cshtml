@@ -22,688 +22,701 @@
     <link rel="stylesheet" href="~/CSSWeb/css/AutocompleteStyle.css" />
 </head>
 @using MaaAahwanam.Web.Custom
-<body class="homepage">
-    @*<div class="overlay" style="display: block;">
-        <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
-            <img src="../CSSWeb/images/Loader.gif" />
-            <br>
-            <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
-        </div>
-    </div>*@
-    <header>
-        <div class="sticky-navigation">
-            <div class="top-bar">
-                <div class="pageWidth">
-                    <div class="top-mobile">
-                        <p class="wow fadeInLeft animated"><i class="ti-mobile"></i> 1800 180 180</p>
-                        <div class="searchDiv" style="display:none;">
-                            <a class="dropdown-toggle2" href="javascript:void(0)"><i class="ti-search"></i><span>Search</span></a>
-                            <div class="topSearchForm">
-                                <span class="arrowUp2"></span>
-                                <div class="dropdownList">
-                                    <div class="search-box2" style="left:0; right:0; top:5px;">
-                                        <div class="select-cats">
-                                            <select id="e1" style="width:100%">
-                                                <option>Select Event</option>
-                                            </select>
-                                        </div>
-                                        <div class="search-input">
-                                            <input type="text" class="autosuggest" id="txt_Location_Top" placeholder="Enter your location" />
-                                        </div>
-                                        <div class="submit-button">
-                                            <button class="btn-1" value="Search" onclick="GetSearchValue_Top()">Search</button>
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+    if (user.UserType == "Vendor")
+    {
+        <body class="homepage">
+            @*<div class="overlay" style="display: block;">
+                    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+                        <img src="../CSSWeb/images/Loader.gif" />
+                        <br>
+                        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+                    </div>
+                </div>*@
+            <header>
+                <div class="sticky-navigation">
+                    <div class="top-bar">
+                        <div class="pageWidth">
+                            <div class="top-mobile">
+                                <p class="wow fadeInLeft animated"><i class="ti-mobile"></i> 1800 180 180</p>
+                                <div class="searchDiv" style="display:none;">
+                                    <a class="dropdown-toggle2" href="javascript:void(0)"><i class="ti-search"></i><span>Search</span></a>
+                                    <div class="topSearchForm">
+                                        <span class="arrowUp2"></span>
+                                        <div class="dropdownList">
+                                            <div class="search-box2" style="left:0; right:0; top:5px;">
+                                                <div class="select-cats">
+                                                    <select id="e1" style="width:100%">
+                                                        <option>Select Event</option>
+                                                    </select>
+                                                </div>
+                                                <div class="search-input">
+                                                    <input type="text" class="autosuggest" id="txt_Location_Top" placeholder="Enter your location" />
+                                                </div>
+                                                <div class="submit-button">
+                                                    <button class="btn-1" value="Search" onclick="GetSearchValue_Top()">Search</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @{Html.RenderAction("SigninPartial", "signin");}
                         </div>
                     </div>
-                    @{Html.RenderAction("SigninPartial", "signin");}
+                    <div class="menu">
+                        <div class="pageWidth">
+                            <div class="headLeft"> <a href="../Index"><img src="../CSSWeb/images/logo.png" alt="logo" title="Maa Aahwanam" /></a> </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="menu">
-                <div class="pageWidth">
-                    <div class="headLeft"> <a href="../Index"><img src="../CSSWeb/images/logo.png" alt="logo" title="Maa Aahwanam" /></a> </div>
-                </div>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </header>
-    @RenderSection("Navigation", required: false)
-    <div class="dashboard-page">
-        <div class="pageWidth">
-            <div class="dashboard">
-                <aside>
-                    <div class="sidebar">
-                        <ul class="userInfo">
-                            <li>
-                                <div class="userPic">
-                                    <img src="~/CSSWeb/images/user1.jpg" alt="img-profile">
-                                    @*<div class="file_up">
-                        <input type="text" class="inputBtn">
-                        <input type="file" class="hide">
-                    </div>*@
-                                </div>
-                                <div class="userDetails">
-                                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                                    {
-                                        var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                                        <p><strong>@user.FirstName  @user.LastName</strong></p>
-                                    }
+                <div class="clear"></div>
+            </header>
+            @RenderSection("Navigation", required: false)
 
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- /profile pic -->
-                        <ul class="sidebar-links">
-                            <li><a href="../VendorDashBoard"><i class="ti-dashboard"></i>Dashboard</a></li>
-                            <li><a href="../VendorBiddingslist"><i class="ti-receipt"></i>Bidding Response</a></li>
-                            <li><a href="../VendorReverseBiddingslist"><i class="ti-reload"></i>Reverse Bidding Response</a></li>
-                            <li><a href="../Vendorsdatesbooked"><i class="ti-pencil-alt"></i>Dates Booked</a></li>
-                            <li><a href="../AvailableDates"><i class="ti-pencil-alt2"></i>Available Dates</a></li>
-                            <li><a href="../Signin/SignOut"><i class="ti-power-off"></i>Logout</a></li>
-                        </ul>
-                        <!-- left menu -->
+            <div class="dashboard-page">
+                <div class="pageWidth">
+                    <div class="dashboard">
+                        <aside>
+                            <div class="sidebar">
+                                <ul class="userInfo">
+                                    <li>
+                                        <div class="userPic">
+                                            <img src="~/CSSWeb/images/user1.jpg" alt="img-profile">
+                                            @*<div class="file_up">
+                                                    <input type="text" class="inputBtn">
+                                                    <input type="file" class="hide">
+                                                </div>*@
+                                        </div>
+                                        <div class="userDetails">
+                                            <p><strong>@user.FirstName  @user.LastName</strong></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- /profile pic -->
+
+                                <ul class="sidebar-links">
+                                    <li><a href="../VendorDashBoard"><i class="ti-dashboard"></i>Dashboard</a></li>
+                                    <li><a href="../VendorBiddingslist"><i class="ti-receipt"></i>Bidding Response</a></li>
+                                    <li><a href="../VendorReverseBiddingslist"><i class="ti-reload"></i>Reverse Bidding Response</a></li>
+                                    <li><a href="../Vendorsdatesbooked"><i class="ti-pencil-alt"></i>Dates Booked</a></li>
+                                    <li><a href="../AvailableDates"><i class="ti-pencil-alt2"></i>Available Dates</a></li>
+                                    <li><a href="../Signin/SignOut"><i class="ti-power-off"></i>Logout</a></li>
+                                </ul>
+
+                                <!-- left menu -->
+                            </div>
+                            <!-- /sidebar -->
+                            <div id="SecondMenu">
+                                <div class="MenuHeading"><i class="icon-gears"></i>Dashboard Settings</div>
+                            </div>
+                        </aside>
+                        <div class="dashboard-content">
+                            @RenderBody()
+                            <!-- /dashInner -->
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <!-- /sidebar -->
-                    <div id="SecondMenu">
-                        <div class="MenuHeading"><i class="icon-gears"></i>Dashboard Settings</div>
-                    </div>
-                </aside>
-                <div class="dashboard-content">
-                    @RenderBody()
-                    <!-- /dashInner -->
                 </div>
                 <div class="clear"></div>
             </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="clear"></div>
-    @*<div class="clear"></div>*@
-    <footer>
-        <div class="footerBottom">
-            <div class="pageWidth">
-                <p>All rights reserved ©  <a href="http://maa-aahwanam.com/" style="color:white">Maa-Aahwanam.com</a> 2015.</p>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </footer>
 
-    <a href="javascript:void(0)" id="btn-scrollup"><i class="ti-angle-up"></i></a>
-    <style>
-        .deal-thumb, .zoomDiv img {
-            transition: all 1s ease 0s;
-        }
-    </style>
-    <style>
-        .overlay {
-            background: no-repeat scroll center center #FFF;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999999;
-            background-color: rgba(0,0,0,0.8);
-            /* END EXTERNAL S */
-        }
-    </style>
+            <div class="clear"></div>
+            @*<div class="clear"></div>*@
+            <footer>
+                <div class="footerBottom">
+                    <div class="pageWidth">
+                        <p>All rights reserved ©  <a href="http://maa-aahwanam.com/" style="color:white">Maa-Aahwanam.com</a> 2015.</p>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </footer>
 
-    <style>
-        /*Autocomplete css*/
-        .ui-autocomplete {
-            overflow-y: scroll auto;
-            overflow-x: hidden;
-            max-height: 250px;
-            position: relative;
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            float: left;
-            display: none;
-            min-width: 160px;
-            padding: 4px 0;
-            margin: 0 0 10px 25px;
-            list-style: none;
-            background-color: #ffffff;
-            border-color: #ccc;
-            border-color: rgba(0, 0, 0, 0.2);
-            border-style: solid;
-            border-width: 1px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            -webkit-background-clip: padding-box;
-            -moz-background-clip: padding;
-            background-clip: padding-box;
-            *border-right-width: 2px;
-            *border-bottom-width: 2px;
-        }
-
-        .ui-menu-item > a.ui-corner-all {
-            display: block;
-            padding: 3px 15px;
-            clear: both;
-            font-weight: normal;
-            line-height: 18px;
-            color: #555555;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .ui-state-hover, .ui-state-active {
-            color: #ffffff;
-            text-decoration: none;
-            background-color: #0088cc;
-            border-radius: 0px;
-            -webkit-border-radius: 0px;
-            -moz-border-radius: 0px;
-            background-image: none;
-        }
-    </style>
-    @*<script type="text/javascript" src="~/CSSWeb/js/jquery-1.9.1.js"></script>*@
-    <script type="text/javascript" src="~/CSSWeb/js/select2.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/menu.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/stickynavigation.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/wow.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/nicescroll.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/jquery.magnific-popup.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/plugins.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/validations.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/jquery.counterup.min.js" async></script>
-    <script type="text/javascript" src="~/CSSWeb/js/feedback.js" async></script>
-    <script type="text/javascript" src="~/CSSWeb/js/rater.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/timeline.js" async></script>
-    <script type="text/javascript" src="~/CSSWeb/js/responsive-tables.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/jquery.shorten.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/smoothproducts.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/waypoints.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/alert.js" async></script>
-    <script type="text/javascript" src="~/CSSWeb/js/Lazyload.js"></script>
-
-    <script type="text/javascript" src="~/CSSWeb/js/jquery-ui.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/masterslider.min.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/tabs.js"></script>
-    <script type="text/javascript" src="~/CSSWeb/js/owl.carousel.min.js"></script>
-    @RenderSection("scripts", required: false)
-
-    <script>
-        //Jump Top_sai
-        $('#btn-scrollup').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 'fast');
-            //return false;
-            //e.preventDefault();
-        });
-    </script>
-    <script>
-        /* ---------------------- To signup validation for password field ------------------ */
-        $(document).ready(function () {
-            $.ajax({
-                type: "POST",
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Login/RegularExpressionPattern_Password',
-                data: {},
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    document.getElementById("PasswordValue_Login").pattern = result;
-                    document.getElementById("PasswordValue_Reg").pattern = result;
-                },
-                error: function (data) {
-                },
-            });
-        });
-        function check() {
-            if (document.getElementById("PasswordValue_Reg").value == document.getElementById("ConfirmPassword").value) {
-                ConfirmPassword.setCustomValidity("");
-            }
-            else {
-                ConfirmPassword.setCustomValidity("Passwords Don't Match");
-            }
-        }
-        function Clear() {
-            document.getElementById("LoginForm").reset();
-            document.getElementById("ForgotpasswordForm").reset();
-            document.getElementById("RegistrationForm").reset();
-        }
-    </script>
-    <script type="text/javascript">
-        /* ---------------------- After clicking on search button ------------------ */
-        function GetSearchValue_Top() {
-            var selectedText = e1.options[e1.selectedIndex].innerHTML;
-            var Searchlocation = document.getElementById('txt_Location_Top');
-            alert(Searchlocation.value + "," + selectedText);
-        }
-        function GetSearchValue_Bottom() {
-            var selectedText = e2.options[e2.selectedIndex].innerHTML;
-            var Searchlocation = document.getElementById('txt_Location_Bottom');
-           // alert(Searchlocation.value + "," + selectedText);
-        }
-    </script>
-
-    <script>
-        /* ------------------ To save the subscriber -----------------------------  */
-        function SaveSubscriber() {
-            var Subscription = {};
-            Subscription.EmailId = $('#emailid').val();
-            Subscription.Status = null;
-            $.ajax({
-                type: "POST",
-                url: "/Index/SubmittingSubscriber",
-                content: "application/json; charset=utf-8",
-                dataType: "json",
-                data: {},
-                //data: JSON.stringify(Subscription),
-                data: Subscription,
-                success: function (data) {
-                    alert(data);
-                    //if (data == 'success')
-                    //    alert('subscribed successfully');
-                    //if (data == 'failed')
-                    //    alert('subscription failed');
-                },
-                error: function (data) {
-                    alert("Exception as occured");
+            <a href="javascript:void(0)" id="btn-scrollup"><i class="ti-angle-up"></i></a>
+            <style>
+                .deal-thumb, .zoomDiv img {
+                    transition: all 1s ease 0s;
                 }
-            });
-        }
-    </script>
-    <script>
-        /* --------------- To bind auto complete location details to the search ------------------ */
-        $(document).ready(function () {
-            var LocationList = [];
-            var EventsList = [];
-            $.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Index/AutoCompleteCountry',
-                data: {},
-                dataType: "json",
-                success: function (result) {
-                    LocationList = $.map(result.Listoflocations, function (item) { return item });
-                    EventsList = $.map(result.ListofEvents, function (item) { return item });
-                    for (var i = 0; i < EventsList.length; i++) {
-                        $("#e1").append($("<option></option>").val(EventsList[i]).html(EventsList[i]))
-                        $("#e2").append($("<option></option>").val(EventsList[i]).html(EventsList[i]))
-                    }
-                },
-                error: function (result) {
-                    //alert("Error");
+            </style>
+            <style>
+                .overlay {
+                    background: no-repeat scroll center center #FFF;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 9999999;
+                    background-color: rgba(0,0,0,0.8);
+                    /* END EXTERNAL S */
                 }
-            });
-            $("#txt_Location_Top").autocomplete({
-                delay: 0,
-                source: function (request, response) {
-                    var results = $.ui.autocomplete.filter(LocationList, request.term);
-                    if (!results.length) {
-                        response([{ label: 'No results found...', val: -1 }]);
-                    } else {
-                        response(results);
+            </style>
+
+            <style>
+                /*Autocomplete css*/
+                .ui-autocomplete {
+                    overflow-y: scroll auto;
+                    overflow-x: hidden;
+                    max-height: 250px;
+                    position: relative;
+                    top: 100%;
+                    left: 0;
+                    z-index: 1000;
+                    float: left;
+                    display: none;
+                    min-width: 160px;
+                    padding: 4px 0;
+                    margin: 0 0 10px 25px;
+                    list-style: none;
+                    background-color: #ffffff;
+                    border-color: #ccc;
+                    border-color: rgba(0, 0, 0, 0.2);
+                    border-style: solid;
+                    border-width: 1px;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    border-radius: 5px;
+                    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                    -webkit-background-clip: padding-box;
+                    -moz-background-clip: padding;
+                    background-clip: padding-box;
+                    *border-right-width: 2px;
+                    *border-bottom-width: 2px;
+                }
+
+                .ui-menu-item > a.ui-corner-all {
+                    display: block;
+                    padding: 3px 15px;
+                    clear: both;
+                    font-weight: normal;
+                    line-height: 18px;
+                    color: #555555;
+                    white-space: nowrap;
+                    text-decoration: none;
+                }
+
+                .ui-state-hover, .ui-state-active {
+                    color: #ffffff;
+                    text-decoration: none;
+                    background-color: #0088cc;
+                    border-radius: 0px;
+                    -webkit-border-radius: 0px;
+                    -moz-border-radius: 0px;
+                    background-image: none;
+                }
+            </style>
+            @*<script type="text/javascript" src="~/CSSWeb/js/jquery-1.9.1.js"></script>*@
+            <script type="text/javascript" src="~/CSSWeb/js/select2.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/jquery.easing.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/menu.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/stickynavigation.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/wow.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/nicescroll.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/jquery.magnific-popup.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/plugins.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/validations.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/jquery.counterup.min.js" async></script>
+            <script type="text/javascript" src="~/CSSWeb/js/feedback.js" async></script>
+            <script type="text/javascript" src="~/CSSWeb/js/rater.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/timeline.js" async></script>
+            <script type="text/javascript" src="~/CSSWeb/js/responsive-tables.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/jquery.shorten.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/smoothproducts.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/waypoints.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/alert.js" async></script>
+            <script type="text/javascript" src="~/CSSWeb/js/Lazyload.js"></script>
+
+            <script type="text/javascript" src="~/CSSWeb/js/jquery-ui.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/masterslider.min.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/tabs.js"></script>
+            <script type="text/javascript" src="~/CSSWeb/js/owl.carousel.min.js"></script>
+            @RenderSection("scripts", required: false)
+
+            <script>
+                //Jump Top_sai
+                $('#btn-scrollup').click(function () {
+                    $('html, body').animate({ scrollTop: 0 }, 'fast');
+                    //return false;
+                    //e.preventDefault();
+                });
+            </script>
+            <script>
+                /* ---------------------- To signup validation for password field ------------------ */
+                $(document).ready(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Login/RegularExpressionPattern_Password',
+                        data: {},
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            document.getElementById("PasswordValue_Login").pattern = result;
+                            document.getElementById("PasswordValue_Reg").pattern = result;
+                        },
+                        error: function (data) {
+                        },
+                    });
+                });
+                function check() {
+                    if (document.getElementById("PasswordValue_Reg").value == document.getElementById("ConfirmPassword").value) {
+                        ConfirmPassword.setCustomValidity("");
                     }
-                },
-                select: function (e, u) {
-                    if (u.item.val == -1) {
-                        return false;
+                    else {
+                        ConfirmPassword.setCustomValidity("Passwords Don't Match");
                     }
                 }
-            });
-            $("#txt_Location_Bottom").autocomplete({
-                delay: 0,
-                source: function (request, response) {
-                    var results = $.ui.autocomplete.filter(LocationList, request.term);
-                    if (!results.length) {
-                        response([{ label: 'No results found...', val: -1 }]);
-                    } else {
-                        response(results);
+                function Clear() {
+                    document.getElementById("LoginForm").reset();
+                    document.getElementById("ForgotpasswordForm").reset();
+                    document.getElementById("RegistrationForm").reset();
+                }
+            </script>
+            <script type="text/javascript">
+                /* ---------------------- After clicking on search button ------------------ */
+                function GetSearchValue_Top() {
+                    var selectedText = e1.options[e1.selectedIndex].innerHTML;
+                    var Searchlocation = document.getElementById('txt_Location_Top');
+                    alert(Searchlocation.value + "," + selectedText);
+                }
+                function GetSearchValue_Bottom() {
+                    var selectedText = e2.options[e2.selectedIndex].innerHTML;
+                    var Searchlocation = document.getElementById('txt_Location_Bottom');
+                    // alert(Searchlocation.value + "," + selectedText);
+                }
+            </script>
+
+            <script>
+                /* ------------------ To save the subscriber -----------------------------  */
+                function SaveSubscriber() {
+                    var Subscription = {};
+                    Subscription.EmailId = $('#emailid').val();
+                    Subscription.Status = null;
+                    $.ajax({
+                        type: "POST",
+                        url: "/Index/SubmittingSubscriber",
+                        content: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: {},
+                        //data: JSON.stringify(Subscription),
+                        data: Subscription,
+                        success: function (data) {
+                            alert(data);
+                            //if (data == 'success')
+                            //    alert('subscribed successfully');
+                            //if (data == 'failed')
+                            //    alert('subscription failed');
+                        },
+                        error: function (data) {
+                            alert("Exception as occured");
+                        }
+                    });
+                }
+            </script>
+            <script>
+                /* --------------- To bind auto complete location details to the search ------------------ */
+                $(document).ready(function () {
+                    var LocationList = [];
+                    var EventsList = [];
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/Index/AutoCompleteCountry',
+                        data: {},
+                        dataType: "json",
+                        success: function (result) {
+                            LocationList = $.map(result.Listoflocations, function (item) { return item });
+                            EventsList = $.map(result.ListofEvents, function (item) { return item });
+                            for (var i = 0; i < EventsList.length; i++) {
+                                $("#e1").append($("<option></option>").val(EventsList[i]).html(EventsList[i]))
+                                $("#e2").append($("<option></option>").val(EventsList[i]).html(EventsList[i]))
+                            }
+                        },
+                        error: function (result) {
+                            //alert("Error");
+                        }
+                    });
+                    $("#txt_Location_Top").autocomplete({
+                        delay: 0,
+                        source: function (request, response) {
+                            var results = $.ui.autocomplete.filter(LocationList, request.term);
+                            if (!results.length) {
+                                response([{ label: 'No results found...', val: -1 }]);
+                            } else {
+                                response(results);
+                            }
+                        },
+                        select: function (e, u) {
+                            if (u.item.val == -1) {
+                                return false;
+                            }
+                        }
+                    });
+                    $("#txt_Location_Bottom").autocomplete({
+                        delay: 0,
+                        source: function (request, response) {
+                            var results = $.ui.autocomplete.filter(LocationList, request.term);
+                            if (!results.length) {
+                                response([{ label: 'No results found...', val: -1 }]);
+                            } else {
+                                response(results);
+                            }
+                        },
+                        select: function (e, u) {
+                            if (u.item.val == -1) {
+                                return false;
+                            }
+                        }
+                    });
+                });
+
+            </script>
+            <script type="text/javascript">
+                /* -------------------------------  wait for images to load ------------------------ */
+                $(window).load(function () {
+                    $('.sp-wrap').smoothproducts();
+                    $(".overlay").hide();
+                });
+            </script>
+            <script>
+                $(document).ready(function () {
+                    $(".comment").shorten();
+                    $(".comment-small").shorten({ showChars: 10 });
+                });
+            </script>
+            <script>
+                //toparrow
+                $('a.move_review').click(function () {
+                    $('html,body').animate({ scrollTop: $(this.hash).offset().top - 225 }, 1000);
+                    return false;
+                    e.preventDefault();
+
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    jQuery('.sidebar').meanmenu({
+                        shrinkTarget: '#SecondMenu',
+                        meanShowChildren: false, meanScreenWidth: "767"
+                    });
+                });
+
+                //--------------- dropdown -----------------//
+                $(document).ready(function () {
+                    $('.dropdown-toggle').click(function (e) {
+                        $(".loginForm").toggle();
+                        $(".dropdown-toggle").toggleClass('open');
+                        e.stopPropagation();
+                    });
+                });
+                $(document).click(function (e) {
+                    if (!$(e.target).is('.loginForm, .loginForm *')) {
+                        $(".loginForm").hide();
+                        $(".dropdown-toggle").removeClass('open');
                     }
-                },
-                select: function (e, u) {
-                    if (u.item.val == -1) {
-                        return false;
-                    }
-                }
-            });
-        });
+                });
+            </script>
 
-    </script>
-    <script type="text/javascript">
-        /* -------------------------------  wait for images to load ------------------------ */
-        $(window).load(function () {
-            $('.sp-wrap').smoothproducts();
-            $(".overlay").hide();
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $(".comment").shorten();
-            $(".comment-small").shorten({ showChars: 10 });
-        });
-    </script>
-    <script>
-        //toparrow
-        $('a.move_review').click(function () {
-            $('html,body').animate({ scrollTop: $(this.hash).offset().top - 225 }, 1000);
-            return false;
-            e.preventDefault();
-
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            jQuery('.sidebar').meanmenu({
-                shrinkTarget: '#SecondMenu',
-                meanShowChildren: false, meanScreenWidth: "767"
-            });
-        });
-
-        //--------------- dropdown -----------------//
-        $(document).ready(function () {
-            $('.dropdown-toggle').click(function (e) {
-                $(".loginForm").toggle();
-                $(".dropdown-toggle").toggleClass('open');
-                e.stopPropagation();
-            });
-        });
-        $(document).click(function (e) {
-            if (!$(e.target).is('.loginForm, .loginForm *')) {
-                $(".loginForm").hide();
-                $(".dropdown-toggle").removeClass('open');
-            }
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var owl = $("#edit_card");
-            owl.owlCarousel({
-                items: 1, //10 items above 1000px browser width
-                itemsDesktop: [1000, 1], //5 items between 1000px and 901px
-                itemsDesktopSmall: [900, 1], // betweem 900px and 601px
-                itemsTablet: [600, 1], //2 items between 600 and 0
-                itemsMobile: false, // itemsMobile disabled - inherit from itemsTablet option
-                loop: true
-            });
-
-            // Custom Navigation Events
-            $(".next").click(function () {
-                owl.trigger('next');
-            })
-            $(".prev").click(function () {
-                owl.trigger('prev');
-            })
-        });
-    </script>
-    <!--Tabs Plugin Initialisation-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //Horizontal Tab
-            $('#parentHorizontalTab').easyResponsiveTabs({
-                type: 'default', //Types: default, vertical, accordion
-                width: 'auto', //auto or any width like 600px
-                fit: true, // 100% fit in a container
-                tabidentify: 'hor_1', // The tab groups identifier
-                activate: function (event) { // Callback function if tab is switched
-                    var $tab = $(this);
-                    var $info = $('#nested-tabInfo');
-                    var $name = $('span', $info);
-                    $name.text($tab.text());
-                    $info.show();
-                }
-            });
-
-            $('#parentHorizontalTab2').easyResponsiveTabs({
-                type: 'default', //Types: default, vertical, accordion
-                width: 'auto', //auto or any width like 600px
-                fit: true, // 100% fit in a container
-                tabidentify: 'hor_1', // The tab groups identifier
-                activate: function (event) { // Callback function if tab is switched
-                    var $tab = $(this);
-                    var $info = $('#nested-tabInfo');
-                    var $name = $('span', $info);
-                    $name.text($tab.text());
-                    $info.show();
-                }
-            });
-        });
-
-
-        var results;
-        results = $('.select2-drop-active > .select2-results');
-        results.niceScroll({
-            autohidemode: false,
-            cursorcolor: "#4A4A4A",
-            cursorwidth: 6
-        });
-
-        //select box
-        $(function () {
-            // turn the element to select2 select style
-            $('#e1').select2();
-            $('#e2').select2();
-        });
-
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#testimonials").owlCarousel({
-                items: 2,
-                pagination: true,
-                autoPlay: true,
-                autoPlayTimeout: 400,
-                nav: true,
-                loop: true,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: {
-                        items: 1,
-                        nav: true
-                    },
-                    540: {
-                        items: 1,
-                        nav: true
-                    },
-                    640: {
-                        items: 1,
-                        nav: true
-                    },
-                    720: {
-                        items: 2,
-                        nav: true
-                    },
-                    768: {
-                        items: 2,
-                        nav: true
-                    },
-                    1000: {
-                        items: 2,
-                        nav: true,
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var owl = $("#edit_card");
+                    owl.owlCarousel({
+                        items: 1, //10 items above 1000px browser width
+                        itemsDesktop: [1000, 1], //5 items between 1000px and 901px
+                        itemsDesktopSmall: [900, 1], // betweem 900px and 601px
+                        itemsTablet: [600, 1], //2 items between 600 and 0
+                        itemsMobile: false, // itemsMobile disabled - inherit from itemsTablet option
                         loop: true
+                    });
+
+                    // Custom Navigation Events
+                    $(".next").click(function () {
+                        owl.trigger('next');
+                    })
+                    $(".prev").click(function () {
+                        owl.trigger('prev');
+                    })
+                });
+            </script>
+            <!--Tabs Plugin Initialisation-->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    //Horizontal Tab
+                    $('#parentHorizontalTab').easyResponsiveTabs({
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto', //auto or any width like 600px
+                        fit: true, // 100% fit in a container
+                        tabidentify: 'hor_1', // The tab groups identifier
+                        activate: function (event) { // Callback function if tab is switched
+                            var $tab = $(this);
+                            var $info = $('#nested-tabInfo');
+                            var $name = $('span', $info);
+                            $name.text($tab.text());
+                            $info.show();
+                        }
+                    });
+
+                    $('#parentHorizontalTab2').easyResponsiveTabs({
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto', //auto or any width like 600px
+                        fit: true, // 100% fit in a container
+                        tabidentify: 'hor_1', // The tab groups identifier
+                        activate: function (event) { // Callback function if tab is switched
+                            var $tab = $(this);
+                            var $info = $('#nested-tabInfo');
+                            var $name = $('span', $info);
+                            $name.text($tab.text());
+                            $info.show();
+                        }
+                    });
+                });
+
+
+                var results;
+                results = $('.select2-drop-active > .select2-results');
+                results.niceScroll({
+                    autohidemode: false,
+                    cursorcolor: "#4A4A4A",
+                    cursorwidth: 6
+                });
+
+                //select box
+                $(function () {
+                    // turn the element to select2 select style
+                    $('#e1').select2();
+                    $('#e2').select2();
+                });
+
+            </script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#testimonials").owlCarousel({
+                        items: 2,
+                        pagination: true,
+                        autoPlay: true,
+                        autoPlayTimeout: 400,
+                        nav: true,
+                        loop: true,
+                        autoplayHoverPause: true,
+                        responsive: {
+                            0: {
+                                items: 1,
+                                nav: true
+                            },
+                            540: {
+                                items: 1,
+                                nav: true
+                            },
+                            640: {
+                                items: 1,
+                                nav: true
+                            },
+                            720: {
+                                items: 2,
+                                nav: true
+                            },
+                            768: {
+                                items: 2,
+                                nav: true
+                            },
+                            1000: {
+                                items: 2,
+                                nav: true,
+                                loop: true
+                            }
+                        }
+                    });
+                });
+            </script>
+
+            <!-- Master slider -->
+            <script type="text/javascript">
+                // Master slider
+                jQuery(document).ready(function () {
+                    var slider = new MasterSlider();
+                    slider.setup('masterslider', {
+                        width: 1600,
+                        height: 500,
+                        //space:100,
+                        fullwidth: true,
+                        centerControls: true,
+                        speed: 30,
+                        autoplay: false,
+                        swipe: true,
+                        mouse: true,
+                    });
+                    //slider.control('arrows');
+                    slider.control('arrows', { autohide: true });
+                    //slider.control('bullets');
+                });
+
+                // Show div on the scroll
+                $(document).scroll(function () {
+                    var y = $(this).scrollTop();
+                    if (y > 100) {
+                        $('.searchDiv').fadeIn();
+                    } else {
+                        $('.searchDiv').fadeOut();
                     }
-                }
-            });
-        });
-    </script>
-
-    <!-- Master slider -->
-    <script type="text/javascript">
-        // Master slider
-        jQuery(document).ready(function () {
-            var slider = new MasterSlider();
-            slider.setup('masterslider', {
-                width: 1600,
-                height: 500,
-                //space:100,
-                fullwidth: true,
-                centerControls: true,
-                speed: 30,
-                autoplay: false,
-                swipe: true,
-                mouse: true,
-            });
-            //slider.control('arrows');
-            slider.control('arrows', { autohide: true });
-            //slider.control('bullets');
-        });
-
-        // Show div on the scroll
-        $(document).scroll(function () {
-            var y = $(this).scrollTop();
-            if (y > 100) {
-                $('.searchDiv').fadeIn();
-            } else {
-                $('.searchDiv').fadeOut();
-            }
-        });
+                });
 
 
-        // Show div on the scroll
-        $(document).scroll(function () {
-            var y = $(this).scrollTop();
-            if (y > 100) {
-                $('.search-box, #select2-drop').fadeOut();
-                $('.ui-autocomplete').hide();
-                //$("#txt_Location_Bottom").Clear();
-            } else {
-                $('.search-box').fadeIn();
-                //$("#txt_Location_Top").Clear();
-            }
-        });
-    </script>
-    <script>
-        // Show / Hide div
-        $(document).ready(function () {
-            $(".slidingDiv").hide();
-            $(".show_hide").show();
-            $("body").not(".show_hide,.slidingDiv").click(function () {
-                $(".slidingDiv").fadeOut("slow");
-            });
-
-            $(".show_hide").click(function (e) {
-                $(".slidingDiv").fadeIn('slow');
-                e.stopPropagation();
-            });
-
-        });
-    </script>
-    @*<script>
-        /*
-        window.onerror = function(errorMsg) {
-            $('#console').html($('#console').html()+'<br>'+errorMsg)
-        }*/
-        //$.datetimepicker.setLocale('en');
-
-        $('#datetimepicker_format').datetimepicker({ value: '2015/12/12 05:03', format: $("#datetimepicker_format_value").val() });
-        $("#datetimepicker_format_change").on("click", function (e) {
-            $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
-        });
-        $("#datetimepicker_format_locale").on("change", function (e) {
-            $.datetimepicker.setLocale($(e.currentTarget).val());
-        });
-
-        // event start date
-        $('#datetimepicker1').datetimepicker({
-            lang: 'en',
-            timepicker: false,
-            format: 'd/m/Y',
-            formatDate: 'Y/m/d',
-        });
-        // event end date
-        $('#datetimepicker2').datetimepicker({
-            lang: 'en',
-            timepicker: false,
-            format: 'd/m/Y',
-            formatDate: 'Y/m/d',
-        });
-        // event start time
-        $('#datetimepicker3').datetimepicker({
-            datepicker: false,
-            format: 'H:i',
-            step: 5
-        });
-        // event end time
-        $('#datetimepicker4').datetimepicker({
-            datepicker: false,
-            format: 'H:i',
-            step: 5
-        });
-
-        $('#datetimepicker5').datetimepicker({
-            inline: true,
-            lang: 'en',
-            startDate: '-1m',
-            endDate: lastDate,
-            timepicker: false,
-            format: 'd/m/Y',
-            formatDate: 'Y/m/d',
-        });
-    </script>*@
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $("#contact_form").validate({
-                rules: {
-                    name: {
-                        required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    phone: {
-                        required: true,
-                        number: true,
-                        minlength: 10,
-                        maxlength: 12
-                    },
-                    country: {
-                        required: true
-                    },
-                    postal_code: {
-                        required: true
-                    },
-                    company_name: {
-                        required: true
-                    },
-
-                    message: {
-                        required: true
+                // Show div on the scroll
+                $(document).scroll(function () {
+                    var y = $(this).scrollTop();
+                    if (y > 100) {
+                        $('.search-box, #select2-drop').fadeOut();
+                        $('.ui-autocomplete').hide();
+                        //$("#txt_Location_Bottom").Clear();
+                    } else {
+                        $('.search-box').fadeIn();
+                        //$("#txt_Location_Top").Clear();
                     }
+                });
+            </script>
+            <script>
+                // Show / Hide div
+                $(document).ready(function () {
+                    $(".slidingDiv").hide();
+                    $(".show_hide").show();
+                    $("body").not(".show_hide,.slidingDiv").click(function () {
+                        $(".slidingDiv").fadeOut("slow");
+                    });
 
-                },
-                messages: {
-                    name: {
-                        required: "Please enter your name"
-                    },
-                    email: {
-                        required: "Please enter your email Id "
-                    },
-                    phone: {
-                        required: "Please enter your phone number"
-                    },
-                    country: {
-                        required: "Please select country"
-                    },
-                    postal_code: {
-                        required: "Please enter your Postal Code"
-                    },
-                    company_name: {
-                        required: "Please enter your company name"
-                    },
-                    message: {
-                        required: "Please enter your Message"
-                    },
+                    $(".show_hide").click(function (e) {
+                        $(".slidingDiv").fadeIn('slow');
+                        e.stopPropagation();
+                    });
+
+                });
+            </script>
+            @*<script>
+                    /*
+                    window.onerror = function(errorMsg) {
+                        $('#console').html($('#console').html()+'<br>'+errorMsg)
+                    }*/
+                    //$.datetimepicker.setLocale('en');
+
+                    $('#datetimepicker_format').datetimepicker({ value: '2015/12/12 05:03', format: $("#datetimepicker_format_value").val() });
+                    $("#datetimepicker_format_change").on("click", function (e) {
+                        $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
+                    });
+                    $("#datetimepicker_format_locale").on("change", function (e) {
+                        $.datetimepicker.setLocale($(e.currentTarget).val());
+                    });
+
+                    // event start date
+                    $('#datetimepicker1').datetimepicker({
+                        lang: 'en',
+                        timepicker: false,
+                        format: 'd/m/Y',
+                        formatDate: 'Y/m/d',
+                    });
+                    // event end date
+                    $('#datetimepicker2').datetimepicker({
+                        lang: 'en',
+                        timepicker: false,
+                        format: 'd/m/Y',
+                        formatDate: 'Y/m/d',
+                    });
+                    // event start time
+                    $('#datetimepicker3').datetimepicker({
+                        datepicker: false,
+                        format: 'H:i',
+                        step: 5
+                    });
+                    // event end time
+                    $('#datetimepicker4').datetimepicker({
+                        datepicker: false,
+                        format: 'H:i',
+                        step: 5
+                    });
+
+                    $('#datetimepicker5').datetimepicker({
+                        inline: true,
+                        lang: 'en',
+                        startDate: '-1m',
+                        endDate: lastDate,
+                        timepicker: false,
+                        format: 'd/m/Y',
+                        formatDate: 'Y/m/d',
+                    });
+                </script>*@
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    $("#contact_form").validate({
+                        rules: {
+                            name: {
+                                required: true
+                            },
+                            email: {
+                                required: true,
+                                email: true
+                            },
+                            phone: {
+                                required: true,
+                                number: true,
+                                minlength: 10,
+                                maxlength: 12
+                            },
+                            country: {
+                                required: true
+                            },
+                            postal_code: {
+                                required: true
+                            },
+                            company_name: {
+                                required: true
+                            },
+
+                            message: {
+                                required: true
+                            }
+
+                        },
+                        messages: {
+                            name: {
+                                required: "Please enter your name"
+                            },
+                            email: {
+                                required: "Please enter your email Id "
+                            },
+                            phone: {
+                                required: "Please enter your phone number"
+                            },
+                            country: {
+                                required: "Please select country"
+                            },
+                            postal_code: {
+                                required: "Please enter your Postal Code"
+                            },
+                            company_name: {
+                                required: "Please enter your company name"
+                            },
+                            message: {
+                                required: "Please enter your Message"
+                            },
 
 
 
-                },
-            });
-        });
-    </script>
-</body>
-
+                        },
+                    });
+                });
+            </script>
+        </body>
+                                    }
+                                    if (user.UserType == "Admin")
+                                    {
+                                        Response.Redirect("Admin/dashboard/dashboard/" + user.UserId + "");
+                                    }
+                                    if (user.UserType == "User")
+                                    {
+                                        Response.Redirect("/Dashboard/Index");
+                                    }
+                                }
 </html>

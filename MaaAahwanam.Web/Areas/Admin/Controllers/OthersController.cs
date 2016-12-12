@@ -146,7 +146,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult RegisteredUsers()
         {
-            ViewBag.users = othersService.RegisteredUsersList().OrderByDescending(m=>m.UserLoginId);
+            ViewBag.users = othersService.RegisteredUsersList();
             return View();
         }
         public ActionResult RegUserDetails(string id)
@@ -160,7 +160,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
         public ActionResult Notification()
         {
-            ViewBag.notification = othersService.Notifications().OrderByDescending(m=>m.id);
+            ViewBag.notification = othersService.Notifications();
             return View();
         }
 	}
