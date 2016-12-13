@@ -68,6 +68,7 @@ namespace MaaAahwanam.Web.Controllers
                     var list = vendorVenueService.GetVendorVenue(vid, Svid);
                     ViewBag.venuetype = list.VenueType;
                     ViewBag.servicecost = list.ServiceCost;
+                    ViewBag.vendortype = vendorVenueService.GetVendorType(Svid).VenueType;
                 }
                 var tupleModel1 = new Tuple<SP_dealsinfo_Result, Review>(Dealinfo, review);
                 return View(tupleModel1);

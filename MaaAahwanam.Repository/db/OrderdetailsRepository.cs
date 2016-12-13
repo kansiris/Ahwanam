@@ -29,5 +29,12 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.ratingscount(vid,subid,servicetype).FirstOrDefault();
         }
+
+        public List<VendorsDatesbooked_Result> DatesBooked(int id)
+        {
+            var list = _dbContext.UserLogin.Where(m => m.UserLoginId == id).FirstOrDefault();
+            var list1 = _dbContext.Vendormaster.Where(m => m.EmailId == list.UserName).FirstOrDefault();
+            return maaAahwanamEntities.VendorsDatesbooked((int)list1.Id).ToList();
+        }
     }
 }

@@ -26,8 +26,8 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "User")  return RedirectToAction("Index", "Index");
-                else return View();
+                if (user.UserType == "User") { return RedirectToAction("Index", "Index"); }
+                else { return View(); }
             }
             return View();
         }

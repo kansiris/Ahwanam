@@ -119,6 +119,7 @@
                                                 else
                                                 {
                                                     <p>Deal Price:Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
+                                                    <input type="hidden" id="hdnactualprice @j" value="@item.ServicePrice" />
                                                 }
                                                     </div>
                                                 </td>
@@ -359,10 +360,12 @@
             ttotal  =   ttotal +parseInt(trp);
             var tid = document.getElementById('tid ' + i).innerHTML;
             var sids = document.getElementById('sid ' + i).innerHTML;
+            var actualprice = document.getElementById('hdnactualprice ' + i).value;
             item = {}
             item["PerunitPrice"] = trp;
             item["VendorId"] = tid;
             item["subid"] = sids;
+            item["ServicePrice"] = actualprice;
             OrderDetails.push(item);
         }
         eventids = [];

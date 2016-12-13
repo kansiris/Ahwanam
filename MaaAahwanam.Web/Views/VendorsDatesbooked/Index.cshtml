@@ -2,11 +2,14 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/VendorMaster.cshtml";
+    var i = 1;
 }
-
+<link rel="stylesheet" href="~/CSSWeb/bootstrap/css/Datatable_css.css" />
+<script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
 @section Navigation
 {
-    <script type="text/javascript" src="~/CSSWeb/js/jquery-1.9.1.js"></script>
+    <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
+<script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <div class="breads">
         <div class="breads_inner">
             <div class="pageWidth">
@@ -29,7 +32,7 @@
     <div class="dashboardList dashboardList-nospace">
         @if (ViewBag.Vdatesbooked.Count != 0)
         {
-            <table class=" responsive">
+            <table class="responsive" id="table1">
                 <thead>
                     <tr>
                         <th style="width:10%">S.No</th>
@@ -44,16 +47,17 @@
                     @foreach (var item in ViewBag.Vdatesbooked)
                     {
                         <tr>
-                            <td class="green-link">1</td>
-                            <td>@item.EventStartDate</td>
-                            <td>@item.EventEnddate</td>
-                            <td>@item.EventName</td>
-                            <td>@item.EventAddress</td>
+                            <td class="green-link">@i</td>
+                            <td> @if (item.StartDate != null) { <p> @item.StartDate.ToShortDateString() </p> } else { <p> Not Available </p> } </td>
+                            <td> @if (item.EndDate != null) { <p> @item.EndDate.ToShortDateString() </p> } else { <p> Not Available </p> } </td>
+                            <td> @item.EventName </td>
+                            <td> @item.Address </td>
                         </tr>
+                        i++;
                     }
                 </tbody>
             </table>
-            <div class="pagination">
+            @*<div class="pagination">
                 <ul>
                     <li><a href="javascript:void(0)">Prev</a></li>
                     <li><a href="javascript:void(0)" class="active">1</a></li>
@@ -63,7 +67,7 @@
                     <li><a href="javascript:void(0)">25</a></li>
                     <li><a href="javascript:void(0)">Next</a></li>
                 </ul>
-            </div>
+            </div>*@
         }
         else
         {
@@ -74,5 +78,13 @@
     </div>
     <div class="clear"></div>
 </div>
-
+@section scripts{
+    <script type="text/javascript" src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table1').dataTable({ bFilter: false, ordering: false, bLengthChange: false, "pageLength": 5 });
+        });
+    </script>
+}
 

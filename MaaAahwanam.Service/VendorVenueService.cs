@@ -99,5 +99,10 @@ namespace MaaAahwanam.Service
             vendorVenue = vendorVenueRepository.AddVenue(vendorVenue);
             return vendorVenue;
         }
+
+        public VendorVenue GetVendorType(long id)
+        {
+            return vendorVenueRepository.GetVendorType(id);
+        }
     }
 }

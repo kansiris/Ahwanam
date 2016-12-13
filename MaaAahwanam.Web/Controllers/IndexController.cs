@@ -20,8 +20,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "User") return RedirectToAction("Index", "Index");
-                else if (user.UserType == "Vendor") return RedirectToAction("Index", "VendorDashBoard");//("VendorDashBoard","Index");
+                if (user.UserType == "Vendor") return RedirectToAction("Index", "VendorDashBoard");//("VendorDashBoard","Index");
             }
             EventsService eventsService = new EventsService();
             ViewBag.EventsCount = eventsService.EventInformationCount();//Successful Events Count

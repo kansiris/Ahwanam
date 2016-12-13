@@ -13,6 +13,7 @@ namespace MaaAahwanam.Web.Controllers
     public class AvailableDatesController : Controller
     {
         AvailabledatesService availabledatesService = new AvailabledatesService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
         // GET: AvailableDates
         public ActionResult Index()
         {
@@ -23,6 +24,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             availabledates.vendorId = (int)user.UserId;
+            availabledates.servicetype = vendorMasterService.GetVendorServiceType(user.UserId).ServicType;
             string a=availabledatesService.saveavailabledates(availabledates);
             if(a== "Success")
                 return Content("<script language='javascript' type='text/javascript'>alert('Dates Submitted Successfully');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");

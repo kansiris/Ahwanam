@@ -19,6 +19,7 @@ namespace MaaAahwanam.Web.Controllers
                 var list = paymentRequestService.GetServiceResponse(long.Parse(id)).Select(m=>m.ResponseId);
                 ViewBag.payment = paymentRequestService.GetPaymentRequest(long.Parse(id));
                 ViewBag.date = dashBoardService.GetParticularDate(long.Parse(id));
+                ViewBag.servicetype = dashBoardService.GetServiceType(long.Parse(id));
             }
             return View();
         }

@@ -15,7 +15,8 @@ namespace MaaAahwanam.Web.Controllers
     {
 
         ServiceResponseService serviceResponseService = new ServiceResponseService();
-        SP_vendordatesbooked_Result SP_vendordatesbooked_Result = new SP_vendordatesbooked_Result();
+        //SP_vendordatesbooked_Result SP_vendordatesbooked_Result = new SP_vendordatesbooked_Result();
+        OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
         // GET: VendorsDatesbooked
         public ActionResult Index()
         {
@@ -24,7 +25,8 @@ namespace MaaAahwanam.Web.Controllers
             if (user.UserId != 0 && (user.UserType == "Vendor"))
             {
                 int a = (int)user.UserId;
-                ViewBag.Vdatesbooked = serviceResponseService.GetVendordatesbooked(a);
+                //ViewBag.Vdatesbooked = serviceResponseService.GetVendordatesbooked(a);
+                ViewBag.Vdatesbooked = orderdetailsServices.DatesBooked(a);
             }
             return View();
         }

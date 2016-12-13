@@ -3,7 +3,11 @@
     ViewBag.Title = "Index";  
     Layout = "~/Views/SharedWeb/ServicesMaster.cshtml";
 }
-
+<style>
+    body, html, #wrapper {
+    width: 100%;
+}
+</style>
 
 @section Navigation
 {
@@ -69,7 +73,7 @@
 
         <p>But also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         <div class="displayDiv">
-            <div class="dashboardList dashboardList-nospace">
+            <div class="dashboardList dashboardList-nospace" id="div_Detdiv">
                 <table class="responsive">
                     <thead>
                         <tr>
@@ -116,8 +120,8 @@
 
                 <div class="pagination">
                     <div class="next">
-                        <button class="btn btn-orange">Print</button>
-                        <button class="btn btn-green">Email</button>
+                        <button class="btn btn-orange" onClick="javascript: parent.print()">Print</button>
+                        <button class="btn btn-green" onclick="sendemail()">Email</button>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -135,3 +139,31 @@
     </div>
 </div> 
 }
+
+<script>
+    function sendemail() {
+        var Detdiv = document.getElementById("div_Detdiv").outerHTML;
+
+        //var Detdiv = $('#div_Detdiv').html();
+        var Detdivobj = {};
+        Detdivobj.Detdiv = Detdiv;
+        Detdivobj.oid = @Model.EmailId;
+        $.ajax({
+            type: "POST",
+            //url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/OrderConfirmation/EmailOrderConfirmation',
+            url: "/QuoatationConfirm/EmailOrderConfirmation",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: {},
+            data: JSON.stringify(Detdivobj),
+            //data: { content: $('#div_Detdiv').html() },
+            // data: sendInfo,
+            success: function (data) {
+                alert("Order details and feedback form sent to your email id");
+            },
+            error: function (data) {
+                alert("E-Mail Sending Failed!!!");
+            }
+        });
+    }
+</script>

@@ -30,6 +30,7 @@ namespace MaaAahwanam.Repository
         public int Quantity { get; set; }
         public decimal Perunitprice { get; set; }
         public long subid { get; set; }
+        public decimal ServicePrice { get; set; }
         public Nullable<System.DateTime> eventstartdate { get; set; }
         public Nullable<System.DateTime> eventenddate { get; set; }
         public Nullable<long> eventid { get; set; }

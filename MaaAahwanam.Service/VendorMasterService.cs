@@ -20,5 +20,10 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.checkemail(emailid);
         }
+
+        public Vendormaster GetVendorServiceType(long id)
+        {
+            return vendormasterRepository.GetVendorServiceType(id);
+        }
     }
 }

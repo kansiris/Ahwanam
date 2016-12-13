@@ -66,7 +66,7 @@
     {
         <div class="price_details">
             <dl>
-                <dt>Deal StartDate : </dt>
+                <dt>Deal Start Date : </dt>
                 <dd>
                     @if (Model.Item1.DealStartDate != null)
                     {
@@ -77,7 +77,7 @@
                         <p>Not Available</p>
                     }
                 </dd>
-                <dt>Deal EndDate : </dt>
+                <dt>Deal End Date : </dt>
                 <dd>
                     @if (Model.Item1.DealEndDate != null)
                     {
@@ -88,8 +88,19 @@
                         <p>Not Available</p>
                     }
                 </dd>
-                <dt>Actual price : </dt> <dd> @Model.Item1.ActualServiceprice </dd>
-                <dt> Discount % : </dt> <dd> @ViewBag.discountvalue </dd>
+             
+                    @if (ViewBag.servicetype == "Venue" && ViewBag.vendortype == "Banquet Hall")
+                    {
+                        <dt> Service Cost : </dt>
+                    }
+                    else
+                    {
+                        <dt> Actual price : </dt>
+                    }
+                    
+            
+                <dd> @Model.Item1.ActualServiceprice </dd> 
+                <dt> Discount : </dt> <dd> @ViewBag.discountvalue%</dd>
                 @foreach (var item in ViewBag.price)
                 {
                 <dl>

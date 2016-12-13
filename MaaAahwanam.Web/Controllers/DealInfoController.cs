@@ -85,6 +85,7 @@ namespace MaaAahwanam.Web.Controllers
             CartItem cartItem = new CartItem();
             cartItem.VendorId = orderRequest.VendorId;
             cartItem.ServiceType = orderRequest.ServiceType;
+            cartItem.ServicePrice = orderRequest.ServicePrice;
             cartItem.Perunitprice = orderRequest.Perunitprice;
             cartItem.TotalPrice = orderRequest.TotalPrice;
             cartItem.Orderedby = user.UserId;

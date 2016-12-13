@@ -3,10 +3,11 @@
     Layout = "~/Views/SharedWeb/DashboardMaster.cshtml";
     var i = 0; var j = 0;
 }
-
-<script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
 <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+<script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
+
+
 @section Navigation
 {
     <div class="breads">
@@ -115,7 +116,7 @@
                     <div class="info-icon info-icon-red"> <i class="ti-ticket"></i> </div>
                     <div class="info-details">
                         <h4>Services</h4>
-                        <p>@*@this.Model.Item3[0].TICKETSCOUNT*@ @ViewBag.servicescount</p>
+                        <p>@ViewBag.servicescount</p>@*@this.Model.Item3[0].TICKETSCOUNT*@ 
                     </div>
                 </div>
             </li>
@@ -264,8 +265,6 @@
         </div>
     </form>
 
-    
-
     @*}*@
     @*@if (ViewBag.Type == "Vendor")
         {
@@ -399,15 +398,24 @@
         }*@
     <!-- /dashboardList -->
 </div>
+
 <script type="text/javascript">
         $(document).ready(function () {
             //BootstrapDialog.alert('Welcom to MaaAahwanam DashBoard');
             var t1 = $("#hdntable1").val(); var t2 = $("#hdntable2").val();
             if (t1 != 0) {
-                $('#table1').dataTable({ bFilter: false, ordering: false, bLengthChange: false, "pageLength": 5 });
+                $('#table1').dataTable({ bFilter: false, "order": [[0, "desc"]],columnDefs: [{
+                    targets: "_all",
+                    orderable: false
+                }], bLengthChange: false, "pageLength": 5 });
             }
             if (t2 != 0) {
-                $('#table2').dataTable({ bFilter: false, ordering: false, bLengthChange: false, "pageLength": 5 });
+                $('#table2').dataTable({
+                    bFilter: false, "order": [[0, "desc"]], columnDefs: [{
+                        targets: "_all",
+                        orderable: false
+                    }], bLengthChange: false, "pageLength": 5
+                });
             }
             
         });
@@ -425,6 +433,7 @@
 
             }
     </script>
+    
 @*<script type="text/javascript">
     window.onload = function () {
         $('#table1').dataTable({ bFilter: false, ordering: true, bLengthChange: false, "pageLength": 5 });

@@ -40,5 +40,11 @@ namespace MaaAahwanam.Repository.db
             int i = _dbContext.Vendormaster.Where(m => m.EmailId == emailid).Count();
             return i;
         }
+
+        public Vendormaster GetVendorServiceType(long id)
+        {
+            var list = _dbContext.UserLogin.Where(m => m.UserLoginId == id).FirstOrDefault();
+            return _dbContext.Vendormaster.Where(m => m.EmailId == list.UserName).FirstOrDefault();
+        }
     }
 }
