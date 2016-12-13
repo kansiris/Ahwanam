@@ -276,15 +276,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_dealsinfo_Result>("SP_dealsinfo", vidParameter, nTypeParameter, vid2Parameter, didParameter);
         }
     
-        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
-        }
-    
         public virtual ObjectResult<ProductsDisplay_Result> ProductsDisplay(string nType, Nullable<int> vID, string stype, string landmark, string order)
         {
             var nTypeParameter = nType != null ?
@@ -398,6 +389,24 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("ServicType", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
+        }
+    
+        public virtual ObjectResult<VendorsDatesbooked_Result> VendorsDatesbooked(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorsDatesbooked_Result>("VendorsDatesbooked", idParameter);
+        }
+    
+        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     }
 }
