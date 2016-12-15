@@ -88,6 +88,8 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.ServicePrice = orderRequest.ServicePrice;
             cartItem.Perunitprice = orderRequest.Perunitprice;
             cartItem.TotalPrice = orderRequest.TotalPrice;
+            cartItem.Discount = orderRequest.Discount;
+            cartItem.DiscountPrice = orderRequest.DiscountPrice;
             cartItem.Orderedby = user.UserId;
             cartItem.Quantity = orderRequest.Quantity;
             cartItem.UpdatedDate = Convert.ToDateTime(updateddate);

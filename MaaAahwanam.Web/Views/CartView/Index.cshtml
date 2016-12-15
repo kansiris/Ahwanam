@@ -57,16 +57,16 @@
                                             j++;
                                             <tr class="item">
                                                 <td style="display:none">
-                                                    <span id="cid @j">@item.CartId</span><span id="hdndeal @j">@item.DealId</span>
+                                                    <span id="cid @j">@item.CartId</span>||<span id="hdndeal @j">@item.DealId</span>||<span id="hdnqty @j">@item.Quantity</span>
                                                 </td>
                                                 <td style="display:none">
-                                                    <span id="eid @j">@item.eventid</span><span id="hdndealcheck @j">@item.Isdeal</span>
+                                                    <span id="eid @j">@item.eventid</span>||<span id="hdndealcheck @j">@item.Isdeal</span>||<span id="hdndiscpercent @j">@item.Discount</span>
                                                 </td>
                                                 <td style="display:none">
-                                                    <span id="tid @j">@item.Id</span>
+                                                    <span id="tid @j">@item.Id</span>||<span id="hdnactualprice @j">@item.ServicePrice</span>||<span id="hdndisc @j">@item.DiscountPrice</span>
                                                 </td>
                                                 <td style="display:none">
-                                                    <span id="sid @j">@item.subid</span>
+                                                    <span id="sid @j">@item.subid</span>||<span id="hdnattribute @j">@item.attribute</span>
                                                 </td>
                                                 <td>
                                                     @if (item.image != null)
@@ -119,7 +119,6 @@
                                                 else
                                                 {
                                                     <p>Deal Price:Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
-                                                    <input type="hidden" id="hdnactualprice @j" value="@item.ServicePrice" />
                                                 }
                                                     </div>
                                                 </td>
@@ -360,12 +359,21 @@
             ttotal  =   ttotal +parseInt(trp);
             var tid = document.getElementById('tid ' + i).innerHTML;
             var sids = document.getElementById('sid ' + i).innerHTML;
-            var actualprice = document.getElementById('hdnactualprice ' + i).value;
+            var attribute = document.getElementById('hdnattribute ' + i).innerHTML;
+            var qty = document.getElementById('hdnqty ' + i).innerHTML;
+            var disc = document.getElementById('hdndiscpercent ' + i).innerHTML;
+            var discpercent = document.getElementById('hdndisc ' + i).innerHTML;
+            var actualprice = document.getElementById('hdnactualprice ' + i).innerHTML;
+            //alert(actualprice);
             item = {}
             item["PerunitPrice"] = trp;
             item["VendorId"] = tid;
             item["subid"] = sids;
             item["ServicePrice"] = actualprice;
+            item["attribute"] = attribute;
+            item["Quantity"] = qty;
+            item["Discount"] = disc;
+            item["DiscountPrice"] = discpercent;
             OrderDetails.push(item);
         }
         eventids = [];

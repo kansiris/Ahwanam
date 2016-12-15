@@ -1,5 +1,5 @@
 ﻿@model Tuple<MaaAahwanam.Repository.SP_dealsinfo_Result, MaaAahwanam.Models.Review>
-
+@using MaaAahwanam.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/MainMaster.cshtml";
@@ -345,38 +345,17 @@
                                         @if (ViewBag.venuetype == "Banquet Hall")
                                         {
                                         <div class="radioButtons" id="radio-demo">
-                                            @*<input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>
-                                            <label for="vlvenue">Veg lunch Per plate cost @Model.Item1.cost/-</label><br />
-
-                                            <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
-                                            <label for="nvlvenue">Non veg lunch Per plate cost @Model.Item1.cost1/-</label><br />
-
-                                            <input type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2>
-                                            <label for="vdvenue">Veg Dinner Per plate cost @Model.Item1.cost2/-</label><br />
-
-                                            <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
-                                            <label for="nvdvenue">Non Veg Dinner Per plate cost @Model.Item1.cost3/-</label>*@
-                                            @*<table style="border-style:groove;width:500px">
-                                                <tr>
-                                                    <td>
-                                                        <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked><label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost/-</label>  <input type="text" style="display:none" /> <label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost4/-</label><br />
-                                                    </td>
-                                                    @*<td>
-                                                        <label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost4/-</label><br />
-                                                    </td>
-                                                </tr>
-                                            </table>*@
                                             <input type="radio" id="vlvenue" name="platetypevenue" value=@Model.Item1.cost checked>  
-                                            <label for="vlvenue">Veg lunch Per plate  Deal Price Rs.@Model.Item1.cost/- <br/> Actual cost Rs.@Model.Item1.cost4/- </label>   @*--  <label for="vlvenue">Actual cost Rs.@Model.Item1.cost4/-</label><br />*@
+                                            <label for="vlvenue">Veg lunch Per plate  Deal Price Rs.<text id="venueveglunchdeal">@Model.Item1.cost</text>/- <br/> Actual cost Rs.<text id="venueveglunch">@Model.Item1.cost4</text>/- </label>   @*--  <label for="vlvenue">Actual cost Rs.@Model.Item1.cost4/-</label><br />*@
 
                                             <input type="radio" id="nvlvenue" name="platetypevenue" value=@Model.Item1.cost1>
-                                            <label for="nvlvenue">Non veg lunch Per plate Deal price Rs.@Model.Item1.cost1/- <br/> Actual cost Rs.@Model.Item1.cost5/-</label>  @*--  <label for="nvlvenue">Actual cost Rs.@Model.Item1.cost5/-</label><br />*@
+                                            <label for="nvlvenue">Non veg lunch Per plate Deal price Rs.<text id="venuenonveglunchdeal">@Model.Item1.cost1</text>/-<br /> Actual cost Rs.<text id="venuenonveglunch">@Model.Item1.cost5</text>/-</label>  @*--  <label for="nvlvenue">Actual cost Rs.@Model.Item1.cost5/-</label><br />*@
 
                                             <input type="radio" id="vdvenue" name="platetypevenue" value=@Model.Item1.cost2>
-                                            <label for="vdvenue">Veg Dinner Per plate Deal price Rs.@Model.Item1.cost2/- <br/> Actual cost Rs.@Model.Item1.cost6/-</label>  @*--  <label for="vdvenue">Actual cost Rs.@Model.Item1.cost6/-</label><br />*@
+                                            <label for="vdvenue">Veg Dinner Per plate Deal price Rs.<text id="venuevegdinnerdeal">@Model.Item1.cost2</text>/- <br /> Actual cost Rs.<text id="venuevegdinner">@Model.Item1.cost6</text>/-</label>  @*--  <label for="vdvenue">Actual cost Rs.@Model.Item1.cost6/-</label><br />*@
 
                                             <input type="radio" id="nvdvenue" name="platetypevenue" value=@Model.Item1.cost3>
-                                            <label for="nvdvenue">Non Veg Dinner Per plate Deal price Rs.@Model.Item1.cost3/- <br/> Actual cost Rs.@Model.Item1.cost7/-</label>  @*--  <label for="nvdvenue">Actual cost Rs.@Model.Item1.cost7/-</label>*@
+                                            <label for="nvdvenue">Non Veg Dinner Per plate Deal price Rs.<text id="venuenonvegdinnerdeal">@Model.Item1.cost3</text>/- <br /> Actual cost Rs.<text id="venuenonvegdinner">@Model.Item1.cost7</text>/-</label>  @*--  <label for="nvdvenue">Actual cost Rs.@Model.Item1.cost7/-</label>*@
                                         </div>
                                         
                                         }
@@ -392,20 +371,14 @@
                                             </dl>
                                         </div>
                                         }
-                                        @*<div class="deal_save" style="float:right">
-                                            <label for="vlvenue">Veg lunch Per plate cost Rs.@Model.Item1.cost4/-</label><br />
-
-                                            <label for="nvlvenue">Non veg lunch Per plate cost Rs.@Model.Item1.cost5/-</label><br />
-
-                                            <label for="vdvenue">Veg Dinner Per plate cost Rs.@Model.Item1.cost6/-</label><br />
-
-                                            <label for="nvdvenue">Non Veg Dinner Per plate cost Rs.@Model.Item1.cost7/-</label>
-                                        </div>*@
                                     </fieldset>
-                                    <input type="hidden" id="rbselectedvalue" value="vlvenue" />
+                                    <input type="hidden" id="rbselectedvalue" value="" />
                                     <input type="hidden" id="hdnsubid" value=@ViewBag.Subvid />
                                     <input type="hidden" id="rbselectedamount" value=@Model.Item1.cost />
                                     <input type="hidden" id="venuetype" value="@ViewBag.venuetype" />
+                                    <input type="hidden" id="venuediscount" value="" />
+                                    <input type="hidden" id="venuediscountprice" value="" />
+                                    <input type="hidden" id="venueactualamount" value="" />
                                 </form>
 
                             </div>
@@ -453,16 +426,19 @@
                                     <br /> <fieldset>
                                         <div class="radioButtons" id="radio-demo">
                                             <input type="radio" id="vlCatering" name="platetypeCatering" value=@Model.Item1.cost checked>
-                                            <label for="vlCatering">Veg Per plate Deal Price Rs.@Model.Item1.cost/- <br/>  Actual Price Rs.@Model.Item1.cost4/-</label><br />
+                                            <label for="vlCatering">Veg Per plate Deal Price Rs.<text id="Cateringvegdeal">@Model.Item1.cost</text>/- <br/>  Actual Price Rs.<text id="Cateringveg">@Model.Item1.cost4</text>/-</label><br />
 
                                             <input type="radio" id="nvlCatering" name="platetypeCatering" value=@Model.Item1.cost1>
-                                            <label for="nvlCatering"> Non-Veg Per plate Deal Price Rs.@Model.Item1.cost1/- <br/>  Actual price Rs.@Model.Item1.cost5/- </label>
+                                            <label for="nvlCatering"> Non-Veg Per plate Deal Price Rs.<text id="Cateringnonvegdeal">@Model.Item1.cost1</text>/-<br/>  Actual price Rs.<text id="Cateringnonveg">@Model.Item1.cost5</text>/- </label>
                                         </div>
                                     </fieldset>
 
-                                    <input type="hidden" id="rbselectedvalueCatering" value="vlvenue" />
+                                    <input type="hidden" id="rbselectedvalueCatering" value="" />
                                     <input type="hidden" id="hdnsubidCatering" value=@ViewBag.Subvid />
-                                    <input type="hidden" id="rbselectedamountCatering" value=@Model.Item1.cost />
+                                    <input type="hidden" id="rbselectedamountCatering" value=""/> @*value=@Model.Item1.cost*@
+                                    <input type="hidden" id="cateringdiscount" value="" />
+                                    <input type="hidden" id="cateringdiscountprice" value=""/>
+                                    <input type="hidden" id="cateringactualamount" value="" />
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -557,12 +533,17 @@
                                     <br /><br />
                                     <div class="radioButtons" id="radio-demo">
                                         <input type="radio" id="vlinvitation" name="platetypeinvitation" value=@Model.Item1.cost checked />
-                                        <label for="vlinvitation"> Card cost Deal Price Rs. @Model.Item1.cost/- <br/> &nbsp; &nbsp;&nbsp; &nbsp; Actual price Rs. @Model.Item1.cost4</label><br /><br />
+                                        <label for="vlinvitation"> Card cost Deal Price Rs.<text id="invitationcarddeal">@Model.Item1.cost</text>/- <br/>  Actual Price Rs.<text id="invitationcard">@Model.Item1.cost4</text>/-</label><br />
                                         <input type="radio" id="nvlinvitation" name="platetypeinvitation" value=@Model.Item1.cost1 />
-                                        <label for="nvlinvitation"> Card cost with print Deal Price Rs. @Model.Item1.cost1/- <br /> &nbsp; &nbsp;&nbsp; &nbsp; Actual price Rs.@Model.Item1.cost5</label><br />
+                                        <label for="nvlinvitation"> Card cost with print Deal Price Rs.<text id="invitationcardprintdeal">@Model.Item1.cost1</text>/-<br />  Actual price Rs.<text id="invitationcardprint">@Model.Item1.cost5</text>/- </label>
                                         <br />
                                     </div>
-
+                                    <input type="hidden" id="rbselectedvalueinvitation" value="" />
+                                    <input type="hidden" id="rbselectedamountinvitation" value="" />
+                                    <input type="hidden" id="hdnsubidinvitation" value=@ViewBag.Subvid />
+                                    <input type="hidden" id="invitationdiscount" value="" />
+                                    <input type="hidden" id="invitationdiscountprice" value="" />
+                                    <input type="hidden" id="invitationactualamount" value="" />
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -1030,9 +1011,18 @@
 
         //for venues
         var radvenue = document.myFormvenue.platetypevenue;
-        //var id = $(myFormvenue).find('option:selected').attr('id');
         var prevvenue = null;
         var rrvenue = null;
+        if ("@Request.QueryString["par"]" == "Venue") {
+            venueactualamount = document.getElementById('venueveglunch').innerHTML * document.getElementById("txtquantityvenue").value;
+            venuediscountprice = document.getElementById('venueveglunch').innerHTML - document.getElementById('venueveglunchdeal').innerHTML;
+            venuediscount = (venuediscountprice/document.getElementById('venueveglunch').innerHTML)*100;
+            document.getElementById('venuediscountprice').value = venuediscountprice;
+            document.getElementById('venuediscount').value = venuediscount;
+            document.getElementById('venueactualamount').value = venueactualamount;
+        }
+        document.getElementById("rbselectedvalue").value = "@attribute.VenueVegLunchCost";
+        var venuediscount,venuediscountprice,venueactualamount;
         if (radvenue.length > 1) {
             document.getElementById("lblprice").innerHTML = "Total Price";
         }
@@ -1042,40 +1032,83 @@
         for (var i = 0; i < radvenue.length; i++) {
             radvenue[i].onclick = function () {
                 if (this !== prevvenue) {
-                    var idd = this.id;
+                    var idd = this.id;var a = document.getElementById("txtquantityvenue").value;
                     //alert(idd);
-                    document.getElementById("rbselectedvalue").value = idd;
+                    if (this.id == "nvlvenue") {
+                        document.getElementById("rbselectedvalue").value = "@attribute.VenueNonVegLunchCost";
+                        venuediscountprice = document.getElementById('venuenonveglunch').innerHTML - document.getElementById('venuenonveglunchdeal').innerHTML;
+                        venuediscount = (venuediscountprice/document.getElementById('venuenonveglunch').innerHTML)*100;
+                        venueactualamount = document.getElementById('venuenonveglunch').innerHTML * a;
+                    }
+                    else if (this.id == "vdvenue") {
+                        document.getElementById("rbselectedvalue").value = "@attribute.VenueVegDinnerCost";
+                        venuediscountprice = document.getElementById('venuevegdinner').innerHTML - document.getElementById('venuevegdinnerdeal').innerHTML;
+                        venuediscount = (venuediscountprice/document.getElementById('venuevegdinner').innerHTML)*100;
+                        venueactualamount = document.getElementById('venuevegdinner').innerHTML * a;
+                    }
+                    else if (this.id == "nvdvenue") {
+                        document.getElementById("rbselectedvalue").value = "@attribute.VenueNonVegDinnerCost";
+                        venuediscountprice = document.getElementById('venuenonvegdinner').innerHTML - document.getElementById('venuenonvegdinnerdeal').innerHTML;
+                        venuediscount = (venuediscountprice/document.getElementById('venuenonvegdinner').innerHTML)*100;
+                        venueactualamount = document.getElementById('venuenonvegdinner').innerHTML * a;
+                    }
+                    else {
+                        document.getElementById("rbselectedvalue").value = "@attribute.VenueVegLunchCost";
+                        venuediscountprice = document.getElementById('venueveglunch').innerHTML - document.getElementById('venueveglunchdeal').innerHTML;
+                        venuediscount = (venuediscountprice/document.getElementById('venueveglunch').innerHTML)*100;
+                        venueactualamount = document.getElementById('venueveglunch').innerHTML * a;
+                    }
                     document.getElementById("rbselectedamount").value = this.value;
                     prevvenue = this;
                     var a = document.getElementById("txtquantityvenue").value;
                     document.getElementById("demovenue").innerHTML = a * parseInt(this.value);
+                    document.getElementById('venuediscountprice').value = venuediscountprice;
+                    document.getElementById('venuediscount').value = venuediscount;
+                    document.getElementById('venueactualamount').value = venueactualamount;
+                    
                 }
             };
         }
+
         function Onchangequantityvenue() {
             var b;
             var a = document.getElementById("txtquantityvenue").value;
 
             if (document.getElementById("vlvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value * a;
+                venueactualamount = document.getElementById('venueveglunch').innerHTML * a;
             }
             else if (document.getElementById("nvlvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("nvlvenue").value * a;
+                venueactualamount = document.getElementById('venuenonveglunch').innerHTML * a;
             }
             else if (document.getElementById("vdvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("vdvenue").value * a;
+                venueactualamount = document.getElementById('venuevegdinner').innerHTML * a;
             }
             else if (document.getElementById("nvdvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("nvdvenue").value * a;
+                venueactualamount = document.getElementById('venuenonvegdinner').innerHTML * a;
             }
+            document.getElementById('venueactualamount').value = venueactualamount;
         }
 
-
+        //-------------------------end of venue---------------------------------//
 
         //for Catering
         var radCatering = document.myFormCatering.platetypeCatering;
         var prevCatering = null;
         var rrCatering = null;
+        var cateringdiscount,cateringdiscountprice,cateringactualamount;
+        if ("@Request.QueryString["par"]" == "Catering") {
+            cateringactualamount = document.getElementById('Cateringveg').innerHTML * document.getElementById("txtquantityCatering").value;
+            cateringdiscountprice = document.getElementById('Cateringveg').innerHTML - document.getElementById('Cateringvegdeal').innerHTML;
+            cateringdiscount = (cateringdiscountprice/document.getElementById('Cateringveg').innerHTML)*100;
+            document.getElementById('cateringdiscountprice').value = cateringdiscountprice;
+            document.getElementById('cateringdiscount').value = cateringdiscount;
+            document.getElementById('cateringactualamount').value = cateringactualamount;
+        }
+        document.getElementById("rbselectedvalueCatering").value = "@attribute.CateringVegPerPlate";
         if (radCatering.length > 1) {
             document.getElementById("lblcprice").innerHTML = "Total Price";
         }
@@ -1085,27 +1118,46 @@
         for (var i = 0; i < radCatering.length; i++) {
             radCatering[i].onclick = function () {
                 if (this !== prevCatering) {
-                    document.getElementById("rbselectedvalueCatering").value = this.id;
+                    var a = document.getElementById("txtquantityCatering").value;
+                    if (this.id == "nvlCatering") {
+                        cateringdiscountprice = document.getElementById('Cateringnonveg').innerHTML - document.getElementById('Cateringnonvegdeal').innerHTML;
+                        cateringdiscount = (cateringdiscountprice/document.getElementById('Cateringnonveg').innerHTML)*100;
+                        document.getElementById("rbselectedvalueCatering").value = "@attribute.CateringNonVegPerPlate";
+                        cateringactualamount = document.getElementById('Cateringnonveg').innerHTML * a;
+                    }
+                    else {
+
+                        cateringdiscountprice = document.getElementById('Cateringveg').innerHTML - document.getElementById('Cateringvegdeal').innerHTML;
+                        cateringdiscount = (cateringdiscountprice/document.getElementById('Cateringveg').innerHTML)*100;
+                        document.getElementById("rbselectedvalueCatering").value = "@attribute.CateringVegPerPlate";
+                        cateringactualamount = document.getElementById('Cateringveg').innerHTML * a;
+                    }
                     document.getElementById("rbselectedamountCatering").value = this.value;
                     prevCatering = this;
                     var a = document.getElementById("txtquantityCatering").value;
                     document.getElementById("demoCatering").innerHTML = a * parseInt(this.value);
+                    document.getElementById('cateringdiscountprice').value = cateringdiscountprice;
+                    document.getElementById('cateringdiscount').value = cateringdiscount.toFixed(2);
                 }
             };
         }
+
         function OnchangequantityCatering() {
             var b;
             var a = document.getElementById("txtquantityCatering").value;
-           
+
             if (document.getElementById("vlCatering").checked) {
-               
                 document.getElementById("demoCatering").innerHTML = document.getElementById("vlCatering").value * a;
+                cateringactualamount = document.getElementById('Cateringveg').innerHTML * a;
             }
             else if (document.getElementById("nvlCatering").checked) {
                 document.getElementById("demoCatering").innerHTML = document.getElementById("nvlCatering").value * a;
+                cateringactualamount = document.getElementById('Cateringnonveg').innerHTML * a;
             }
+            document.getElementById('cateringactualamount').value = cateringactualamount;
         }
 
+        //-------------------------end of catering---------------------------------//
 
         //for Gift
         var radGift = document.myFormGift.platetypeGift;
@@ -1128,30 +1180,65 @@
             }
         }
 
+        //-------------------------end of gift---------------------------------//
 
         //for invitation
         var radinvitation = document.myForminvitation.platetypeinvitation;
         var previnvitation = null;
         var rrinvitation = null;
+        var invitationdiscount,invitationdiscountprice,invitationactualamount;
+        if ("@Request.QueryString["par"]" == "InvitationCard") {
+            invitationactualamount = document.getElementById('invitationcard').innerHTML * document.getElementById("txtquantityinvitation").value;
+            invitationdiscountprice = document.getElementById('invitationcard').innerHTML - document.getElementById('invitationcarddeal').innerHTML;
+            invitationdiscount = (invitationdiscountprice/document.getElementById('invitationcard').innerHTML)*100;
+            document.getElementById('invitationdiscountprice').value = invitationdiscountprice;
+            document.getElementById('invitationdiscount').value = invitationdiscount;
+            document.getElementById('invitationactualamount').value = invitationactualamount;
+        }
+        document.getElementById("rbselectedvalueinvitation").value = "@attribute.InviationCardsCardCost";
         for (var i = 0; i < radinvitation.length; i++) {
             radinvitation[i].onclick = function () {
                 if (this !== previnvitation) {
-                    previnvitation = this;
+                    previnvitation = this;var a = document.getElementById("txtquantityinvitation").value;
+                    if (this.id == "nvlinvitation") {
+                        invitationdiscountprice = document.getElementById('invitationcardprint').innerHTML - document.getElementById('invitationcardprintdeal').innerHTML;
+                        invitationdiscount = (invitationdiscountprice/document.getElementById('invitationcardprint').innerHTML)*100;
+                        document.getElementById("rbselectedvalueinvitation").value = "@attribute.InviationCardsCardCostWithPrint";
+                        invitationactualamount = document.getElementById('invitationcardprint').innerHTML * a;
+                    }
+                    else {
+                        invitationdiscountprice = document.getElementById('invitationcard').innerHTML - document.getElementById('invitationcarddeal').innerHTML;
+                        invitationdiscount = (invitationdiscountprice/document.getElementById('invitationcard').innerHTML)*100;
+                        document.getElementById("rbselectedvalueinvitation").value = "@attribute.InviationCardsCardCost";
+                        invitationactualamount = document.getElementById('invitationcard').innerHTML * a;
+                    }
+                    document.getElementById("rbselectedamountinvitation").value = this.value;
                     var a = document.getElementById("txtquantityinvitation").value;
                     document.getElementById("demoinvitation").innerHTML = a * parseInt(this.value);
+                    document.getElementById('invitationdiscountprice').value = invitationdiscountprice;
+                    document.getElementById('invitationdiscount').value = invitationdiscount.toFixed(2);
+                    document.getElementById('invitationactualamount').value = invitationactualamount;
+                    alert(invitationactualamount);
                 }
             };
         }
+
         function Onchangequantityinvitation() {
             var b;
             var a = document.getElementById("txtquantityinvitation").value;
             if (document.getElementById("vlinvitation").checked) {
                 document.getElementById("demoinvitation").innerHTML = document.getElementById("vlinvitation").value * a;
+                invitationactualamount = document.getElementById('invitationcard').innerHTML * a;
             }
             else if (document.getElementById("nvlinvitation").checked) {
                 document.getElementById("demoinvitation").innerHTML = document.getElementById("nvlinvitation").value * a;
+                invitationactualamount = document.getElementById('invitationcardprint').innerHTML * a;
             }
+            document.getElementById('invitationactualamount').value = invitationactualamount;
+            alert(invitationactualamount);
         }
+
+        //-------------------------end of invitation---------------------------------//
 
         //for General
         var radGeneral = document.myFormGeneral.platetypeGeneral;
@@ -1166,6 +1253,7 @@
                 }
             };
         }
+
         function OnchangequantityGeneral() {
             var b;
             var a = document.getElementById("txtquantityGeneral").value;
@@ -1174,6 +1262,7 @@
             }
         }
 
+        //-------------------------end of general---------------------------------//
 
         //for other
         var radother = document.myFormother.platetypeother;
@@ -1200,107 +1289,55 @@
         $('#lnkproceedtonext').on('click', function (e) {
             var a = document.getElementById("Service").value;
             var b = document.getElementById("Review").value;
-            var c;var d;var e;var f;
+            var c;var d;var e;var f;var discountpercent;var discount,actualamount;
             var page = window.location.search.split("=")[1].split("&")[0];
             //alert(page);
             if(page=="Venue")
             {
                 c = document.getElementById("demovenue").innerHTML;
+                d = document.getElementById("txtquantityvenue").value;
+                e = document.getElementById("rbselectedvalue").value;
+                f = document.getElementById("rbselectedamount").value;
+                discountpercent = document.getElementById('venuediscount').value;
+                discountprice = document.getElementById('venuediscountprice').value;
+                actualamount = document.getElementById('venueactualamount').value;
             }
             else if(page=="Catering")
             {
                 c = document.getElementById("demoCatering").innerHTML;
+                d = document.getElementById("txtquantityCatering").value;
+                e = document.getElementById("rbselectedvalueCatering").value;
+                f = document.getElementById("rbselectedamountCatering").value;
+                discountpercent = document.getElementById('cateringdiscount').value;
+                discountprice = document.getElementById('cateringdiscountprice').value;
+                actualamount = document.getElementById('cateringactualamount').value;
             }
             else if(page=="Gifts")
             {
                 c = document.getElementById("demoGift").innerHTML;
+                d = document.getElementById("txtquantityGift").value;
+                e="";f =0.00;
             }
             else if(page=="InvitationCard")
             {
                 c = document.getElementById("demoinvitation").innerHTML;
+                d = document.getElementById("txtquantityinvitation").value;
+                e = document.getElementById("rbselectedvalueinvitation").value;
+                f = document.getElementById("rbselectedamountinvitation").value;
+                discountpercent = document.getElementById('invitationdiscount').value;
+                discountprice = document.getElementById('invitationdiscountprice').value;
+                actualamount = document.getElementById('invitationactualamount').value;
             }
             else if(page == "Other") {
                 c = document.getElementById("demoother").innerHTML;
+                d = document.getElementById("txtquantityother").value;
+                e="";f =0.00;
             }
             else  {
                 c = document.getElementById("demoGeneral").innerHTML;
-                //alert(c);
-            }
-
-
-
-
-
-            if(page=="Venue")
-            {
-                d = document.getElementById("txtquantityvenue").value;
-            }
-            else if(page=="Catering")
-            {
-                d = document.getElementById("txtquantityCatering").value;
-            }
-            else if(page=="Gifts")
-            {
-                d = document.getElementById("txtquantityGift").value;
-            }
-            else if(page=="InvitationCard")
-            {
-                d = document.getElementById("txtquantityinvitation").value;
-            }
-            else if(page == "Other") {
-                d = document.getElementById("txtquantityother").value;
-            }
-            else  {
                 d = document.getElementById("txtquantityGeneral").value;
-            }
-
-
-
-            if(page=="Venue")
-            {
-                e = document.getElementById("rbselectedvalue").value;
-            }
-            else if(page=="Catering")
-            {
-                e = document.getElementById("rbselectedvalueCatering").value;
-            }
-            else if(page=="Gifts")
-            {
-                e="";
-            }
-            else if(page=="InvitationCard")
-            {
-                e="";
-            }
-            else if(page == "Other") {
-                e="";
-            }
-            else  {
-                e="";
-            }
-
-
-            if(page=="Venue")
-            {
-                f = document.getElementById("rbselectedamount").value;
-            }
-            else if(page=="Catering")
-            {
-                f = document.getElementById("rbselectedamountCatering").value;
-            }
-            else if(page=="Gifts")
-            {
-                f =0.00;
-            }
-            else if(page=="InvitationCard")
-            {
-                f =0.00;
-            }
-            else if(page == "Other") {
-                f =0.00;
-            }
-            else  {
-                f =0.00;
+                e="";f =0.00;
+                //alert(c);
             }
 
             var g = document.getElementById("hdnsubid").value;
@@ -1330,11 +1367,13 @@
             var orderRequest = {};
             orderRequest.VendorId = b;
             orderRequest.ServiceType = a;
-            orderRequest.ServicePrice=@Model.Item1.ActualServiceprice
+            orderRequest.ServicePrice = actualamount;
             orderRequest.TotalPrice = c;
             orderRequest.Quantity = d;
             orderRequest.attribute = e;
             orderRequest.Perunitprice = f;
+            orderRequest.Discount = discountpercent;
+            orderRequest.DiscountPrice = discountprice;
             orderRequest.EventName = Ename;
             orderRequest.Email = Eemail;
             orderRequest.Phone = Emobile;

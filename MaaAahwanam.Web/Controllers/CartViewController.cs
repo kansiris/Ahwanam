@@ -70,12 +70,15 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.ServiceType = item.ServiceType;
                 orderDetail.ServicePrice = item.ServicePrice;
                 orderDetail.TotalPrice = orderRequest.TotalPrice;
-                orderDetail.OrderId = order.OrderId;
+                orderDetail.Quantity = item.Quantity;
+                orderDetail.Discount = item.Discount;
+                orderDetail.DiscountPrice = item.DiscountPrice;
                 orderDetail.VendorId = item.VendorId;
                 orderDetail.subid = item.subid;
                 orderDetail.Status = "Active";
                 orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                 orderDetail.UpdatedBy = user.UserId;
+                orderDetail.attribute = item.attribute;
                 
                 if (i == 0)
                 {

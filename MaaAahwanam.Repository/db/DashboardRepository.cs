@@ -140,9 +140,9 @@ namespace MaaAahwanam.Repository.db
             return serviceRequest;
         }
 
-        public List<OrderDetail> GetPrice(long id)
+        public OrderDetail GetPrice(long id)
         {
-            return _dbContext.OrderDetail.Where(m => m.OrderDetailId == id).ToList();
+            return _dbContext.OrderDetail.Where(m => m.OrderDetailId == id).FirstOrDefault();
         }
 
         public List<ServiceRequest> GetParticularDate(long id)

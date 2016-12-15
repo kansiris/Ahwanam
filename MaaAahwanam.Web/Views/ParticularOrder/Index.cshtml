@@ -64,7 +64,7 @@
                                     
     @if (ViewBag.deal != null && ViewBag.deal != "")
     {
-        <div class="price_details">
+        <div class="price_details" style="width:100%">
             <dl>
                 <dt>Deal Start Date : </dt>
                 <dd>
@@ -89,27 +89,21 @@
                     }
                 </dd>
              
-                    @if (ViewBag.servicetype == "Venue" && ViewBag.vendortype == "Banquet Hall")
+                    @*@if (ViewBag.servicetype == "Venue" && ViewBag.vendortype == "Banquet Hall")
                     {
                         <dt> Service Cost : </dt>
                     }
                     else
                     {
                         <dt> Actual price : </dt>
-                    }
-                    
-            
-                <dd> @Model.Item1.ActualServiceprice </dd> 
+                    }*@
+                <dt>@ViewBag.costtype : </dt>  <dd>Rs.@ViewBag.actualprice/-</dd>
+                @*<dd> @Model.Item1.ActualServiceprice </dd>*@ 
                 <dt> Discount : </dt> <dd> @ViewBag.discountvalue%</dd>
-                @foreach (var item in ViewBag.price)
-                {
-                <dl>
-                    <dd>
-                    <dt>Order Price : </dt>
-                    <dt><p style="color:#8ca436;font-size:20px">Rs.@item.PerunitPrice</p></dt>
-                    </dd>
-                </dl>
-                }
+                
+                <dt>Paid Amount : </dt>  <dd><p style="color:#8ca436;font-size:20px">Rs.@ViewBag.price/-</p></dd>
+                
+                <dt>Amount Saved : </dt>  <dd><p style="color:red;font-size:20px">Rs.@ViewBag.amountsaved/-</p></dd>
                 
             </dl>
             
@@ -118,15 +112,14 @@
     }
     else
     {
-        foreach (var item in ViewBag.price)
-        {
+       
             <dl>
                 <dd>
                 <dt>Order Price : </dt>
-                <dt><p style="color:#8ca436;font-size:20px">Rs.@item.PerunitPrice</p></dt>
+                <dt><p style="color:#8ca436;font-size:20px">Rs.@ViewBag.price</p></dt>
                 </dd>              
             </dl>
-        }
+        
     }
 
                                
