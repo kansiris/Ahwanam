@@ -97,6 +97,8 @@ namespace MaaAahwanam.Web.Controllers
             cartItem.attribute = orderRequest.attribute;
             cartItem.Isdeal = true;
             cartItem.DealId = long.Parse(did);
+            cartItem.Status = "Active";
+            cartItem.UpdatedBy = user.UserId;
 
             CartService cartService = new CartService();
             cartItem = cartService.AddCartItem(cartItem);
@@ -164,9 +166,12 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.PaymentId = payment_Orders.PaymentID;
             orderDetail.ServiceType = orderRequest.ServiceType;
             orderDetail.ServicePrice = orderRequest.ServicePrice;
-            orderDetail.PerunitPrice = orderRequest.TotalPrice;
+            orderDetail.PerunitPrice = orderRequest.Perunitprice;
             orderDetail.Quantity = orderRequest.Quantity;
             orderDetail.OrderId = order.OrderId;
+            orderDetail.TotalPrice = orderRequest.TotalPrice;
+            orderDetail.Discount = orderRequest.Discount;
+            orderDetail.DiscountPrice = orderRequest.DiscountPrice;
             orderDetail.VendorId = orderRequest.VendorId;
             orderDetail.Status = "Active";
             orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
@@ -174,6 +179,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.subid = orderRequest.subid;
             orderDetail.Isdeal = true;
             orderDetail.DealId = long.Parse(did);
+            orderDetail.attribute= orderRequest.attribute;
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
 

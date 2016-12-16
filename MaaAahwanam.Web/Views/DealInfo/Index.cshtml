@@ -253,7 +253,7 @@
                                     </dd>
                                     <dt>Actual Price: </dt>
                                     <dd>
-                                        <h2>Rs. @Model.Item1.ActualServiceprice</h2>
+                                        <h2>Rs. @Model.Item1.ActualServiceprice</h2> <text id="otheractualprice" style="display:none">@Model.Item1.ActualServiceprice</text>
                                     </dd>
                                     <dt>Discount : </dt>
                                     <dd>
@@ -265,7 +265,7 @@
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         @*<p id="demoother" style="color:#8ca436;font-size:20px">@*Rs. @Model.cost</p>*@
-                                        <p id="demoother" style="color:#8ca436;font-size:20px">@Model.Item1.DealServiceprice</p>
+                                        <p id="demoother" style="color:#8ca436;font-size:20px">@Model.Item1.DealServiceprice</p><text id="otherdealprice" style="display:none">@Model.Item1.DealServiceprice</text>
                                     </dd>
                                     
                                     @*<dt>Selling Price: </dt>
@@ -283,6 +283,11 @@
                                     <input type="hidden" id="hmax" name="Maxvalue" value="50">
                                     <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:100px;" type="text" id="txtquantityother" value="10" placeholder="Enter Quantity" oninput="Onchangequantityother()" onkeypress="onkey()"/><br>
                                     @*<input style="display:none;" type="radio" id="vlother" name="platetypeother" value="500" checked> item cost @Model.Item1.cost/-<br>*@
+                                    
+                                    <br />
+                                    <input type="hidden" id="otherdiscount" value="" />
+                                    <input type="hidden" id="otherdiscountprice" value="" />
+                                    <input type="hidden" id="otheractualamount" value="" />
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -374,7 +379,7 @@
                                     </fieldset>
                                     <input type="hidden" id="rbselectedvalue" value="" />
                                     <input type="hidden" id="hdnsubid" value=@ViewBag.Subvid />
-                                    <input type="hidden" id="rbselectedamount" value=@Model.Item1.cost />
+                                    <input type="hidden" id="rbselectedamount" value="" />
                                     <input type="hidden" id="venuetype" value="@ViewBag.venuetype" />
                                     <input type="hidden" id="venuediscount" value="" />
                                     <input type="hidden" id="venuediscountprice" value="" />
@@ -484,8 +489,11 @@
                                     <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px;width:100px; " id="txtquantityGift" value="10" placeholder="Enter Quantity" oninput="OnchangequantityGift()"  onkeypress="onkey()" /><br>
                                     <br />
                                     <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.DealServiceprice checked> Gift Deal price Rs.@Model.Item1.DealServiceprice/- <br /> &nbsp; &nbsp;&nbsp; &nbsp;Actual Price Rs.@Model.Item1.ActualServiceprice/-
-
+                                    <text id="giftactualprice" style="display:none">@Model.Item1.ActualServiceprice</text><text id="giftdealprice" style="display:none">@Model.Item1.DealServiceprice</text>
                                     <br />
+                                    <input type="hidden" id="giftdiscount" value="" />
+                                    <input type="hidden" id="giftdiscountprice" value="" />
+                                    <input type="hidden" id="giftactualamount" value="" />
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -569,7 +577,7 @@
                                     </dd>
                                     <dt>Actual Price: </dt>
                                     <dd>
-                                        <h2>Rs. @Model.Item1.ActualServiceprice</h2>
+                                        <h2>Rs. @Model.Item1.ActualServiceprice/-</h2> <text id="generalactualprice" style="display:none">@Model.Item1.ActualServiceprice</text>
                                     </dd>
                                     <dt>Discount : </dt>
                                     <dd>
@@ -581,7 +589,7 @@
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <dd>
                                         @*<p id="demoGeneral" style="color:#8ca436;font-size:20px"> </p>*@
-                                        <p id="demoGeneral" style="color:#8ca436;font-size:20px">@Model.Item1.DealServiceprice</p>
+                                        <p id="demoGeneral" style="color:#8ca436;font-size:20px"> @Model.Item1.DealServiceprice</p> <text id="generaldealprice" style="display:none">@Model.Item1.DealServiceprice</text>
                                     </dd>
                                     
                                     @*<dt>Selling Price: </dt>
@@ -600,6 +608,9 @@
                                     <input type="text" style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px;width:100px; " id="txtquantityGeneral" value="1" placeholder="Enter Quantity" oninput="OnchangequantityGeneral()"  onkeypress="onkey()"/><br />
                                     @*<p style="display:none"> <input type="radio" id="vlGeneral" name="platetypeGeneral" value="@Model.Item1.cost" checked> item cost @Model.Item1.cost/-</p>*@
                                     <br />
+                                    <input type="hidden" id="generaldiscount" value="" />
+                                    <input type="hidden" id="generaldiscountprice" value="" />
+                                    <input type="hidden" id="generalactualamount" value="" />
                                 </form>
                             </div>
                             @*<div class="deal_save">
@@ -1065,7 +1076,7 @@
                     document.getElementById('venuediscountprice').value = venuediscountprice;
                     document.getElementById('venuediscount').value = venuediscount;
                     document.getElementById('venueactualamount').value = venueactualamount;
-                    
+
                 }
             };
         }
@@ -1077,18 +1088,22 @@
             if (document.getElementById("vlvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("vlvenue").value * a;
                 venueactualamount = document.getElementById('venueveglunch').innerHTML * a;
+                document.getElementById("rbselectedamount").value = document.getElementById('venueveglunchdeal').innerHTML;
             }
             else if (document.getElementById("nvlvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("nvlvenue").value * a;
                 venueactualamount = document.getElementById('venuenonveglunch').innerHTML * a;
+                document.getElementById("rbselectedamount").value = document.getElementById('venuenonveglunchdeal').innerHTML;
             }
             else if (document.getElementById("vdvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("vdvenue").value * a;
                 venueactualamount = document.getElementById('venuevegdinner').innerHTML * a;
+                document.getElementById("rbselectedamount").value = document.getElementById('venuevegdinnerdeal').innerHTML;
             }
             else if (document.getElementById("nvdvenue").checked) {
                 document.getElementById("demovenue").innerHTML = document.getElementById("nvdvenue").value * a;
                 venueactualamount = document.getElementById('venuenonvegdinner').innerHTML * a;
+                document.getElementById("rbselectedamount").value = document.getElementById('venuenonvegdinnerdeal').innerHTML;
             }
             document.getElementById('venueactualamount').value = venueactualamount;
         }
@@ -1138,6 +1153,8 @@
                     document.getElementById("demoCatering").innerHTML = a * parseInt(this.value);
                     document.getElementById('cateringdiscountprice').value = cateringdiscountprice;
                     document.getElementById('cateringdiscount').value = cateringdiscount.toFixed(2);
+                    document.getElementById('cateringactualamount').value = cateringactualamount;
+                    alert(this.value);
                 }
             };
         }
@@ -1149,12 +1166,16 @@
             if (document.getElementById("vlCatering").checked) {
                 document.getElementById("demoCatering").innerHTML = document.getElementById("vlCatering").value * a;
                 cateringactualamount = document.getElementById('Cateringveg').innerHTML * a;
+                document.getElementById("rbselectedamountCatering").value = document.getElementById('Cateringvegdeal').innerHTML;
             }
             else if (document.getElementById("nvlCatering").checked) {
                 document.getElementById("demoCatering").innerHTML = document.getElementById("nvlCatering").value * a;
                 cateringactualamount = document.getElementById('Cateringnonveg').innerHTML * a;
+                document.getElementById("rbselectedamountCatering").value = document.getElementById('Cateringnonvegdeal').innerHTML;
             }
             document.getElementById('cateringactualamount').value = cateringactualamount;
+            
+            alert(document.getElementById("rbselectedamountCatering").value);
         }
 
         //-------------------------end of catering---------------------------------//
@@ -1163,6 +1184,15 @@
         var radGift = document.myFormGift.platetypeGift;
         var prevGift = null;
         var rrGift = null;
+        var giftdiscount,giftdiscountprice,giftactualamount;
+        if ("@Request.QueryString["par"]" == "Gifts") {
+            giftactualamount = document.getElementById('giftactualprice').innerHTML * document.getElementById("txtquantityGift").value;
+            giftdiscountprice = document.getElementById('giftactualprice').innerHTML - document.getElementById('giftdealprice').innerHTML;
+            giftdiscount = (giftdiscountprice/document.getElementById('giftactualprice').innerHTML)*100;
+            document.getElementById('giftdiscountprice').value = giftdiscountprice;
+            document.getElementById('giftdiscount').value = giftdiscount;
+            document.getElementById('giftactualamount').value = giftactualamount;
+        }
         for (var i = 0; i < radGift.length; i++) {
             radGift[i].onclick = function () {
                 if (this !== prevCatering) {
@@ -1177,6 +1207,8 @@
             var a = document.getElementById("txtquantityGift").value;
             if (document.getElementById("vlGift").checked) {
                 document.getElementById("demoGift").innerHTML = document.getElementById("vlGift").value * a;
+                giftactualamount = document.getElementById('giftactualprice').innerHTML * a;
+                document.getElementById('giftactualamount').value = giftactualamount;
             }
         }
 
@@ -1218,7 +1250,6 @@
                     document.getElementById('invitationdiscountprice').value = invitationdiscountprice;
                     document.getElementById('invitationdiscount').value = invitationdiscount.toFixed(2);
                     document.getElementById('invitationactualamount').value = invitationactualamount;
-                    alert(invitationactualamount);
                 }
             };
         }
@@ -1229,30 +1260,76 @@
             if (document.getElementById("vlinvitation").checked) {
                 document.getElementById("demoinvitation").innerHTML = document.getElementById("vlinvitation").value * a;
                 invitationactualamount = document.getElementById('invitationcard').innerHTML * a;
+                document.getElementById("rbselectedamountinvitation").value = document.getElementById('invitationcarddeal').innerHTML;
             }
             else if (document.getElementById("nvlinvitation").checked) {
                 document.getElementById("demoinvitation").innerHTML = document.getElementById("nvlinvitation").value * a;
                 invitationactualamount = document.getElementById('invitationcardprint').innerHTML * a;
+                document.getElementById("rbselectedamountinvitation").value = document.getElementById('invitationcardprintdeal').innerHTML;
             }
             document.getElementById('invitationactualamount').value = invitationactualamount;
-            alert(invitationactualamount);
         }
 
         //-------------------------end of invitation---------------------------------//
+
+        //for other
+        var radother = document.myFormother.platetypeother;
+        var prevother = null;
+        var rrother = null;
+        var otherdiscount,otherdiscountprice,otheractualamount;
+        if ("@Request.QueryString["par"]" == "Other") {
+            otheractualamount = document.getElementById('otheractualprice').innerHTML ; //* document.getElementById("txtquantityother").value
+            otherdiscountprice = document.getElementById('otheractualprice').innerHTML - document.getElementById('otherdealprice').innerHTML;
+            otherdiscount = (otherdiscountprice/document.getElementById('otheractualprice').innerHTML)*100;
+            document.getElementById('otherdiscountprice').value = otherdiscountprice;
+            document.getElementById('otherdiscount').value = otherdiscount;
+            document.getElementById('otheractualamount').value = otheractualamount;
+        }
+        if (radother != undefined) {
+            for (var i = 0; i < radother.length; i++) {
+                radother[i].onclick = function () {
+                    if (this !== prevother) {
+                        prevother = this;
+                        var a = document.getElementById("txtquantityother").value;
+                        document.getElementById("demoother").innerHTML = a * parseInt(this.value);
+                    }
+                };
+            }
+        }
+        
+        function Onchangequantityother() {
+            var b;
+            var a = document.getElementById("txtquantityother").value;
+            if (document.getElementById("vlother").checked) {
+                document.getElementById("demoother").innerHTML = document.getElementById("vlother").value * a;
+            }
+        }
+
+        //-------------------------end of other---------------------------------------//
 
         //for General
         var radGeneral = document.myFormGeneral.platetypeGeneral;
         var prevGeneral = null;
         var rrGeneral = null;
-        for (var i = 0; i < radGeneral.length; i++) {
-            radGeneral[i].onclick = function () {
-                if (this !== prevGeneral) {
-                    prevGeneral = this;
-                    var a = document.getElementById("txtquantityGeneral").value;
-                    document.getElementById("demoGeneral").innerHTML = a * parseInt(this.value);
-                }
-            };
+        var a = "@Request.QueryString["par"]";
+        arr = ["Venue", "Catering", "Gifts", "InvitationCard","Other"];
+        if (arr.indexOf(a) != 0 ) {
+            document.getElementById('generalactualamount').value = document.getElementById('generalactualprice').innerHTML ;
+            document.getElementById('generaldiscountprice').value = document.getElementById('generalactualprice').innerHTML - document.getElementById('generaldealprice').innerHTML;
+            document.getElementById('generaldiscount').value = (document.getElementById('generaldiscountprice').value/document.getElementById('generalactualprice').innerHTML)*100;
         }
+        //document.getElementById('generaldiscountprice').value = generaldiscountprice;
+        //document.getElementById('generaldiscount').value = generaldiscount;
+        //document.getElementById('generalactualamount').value = generalactualamount;
+        //for (var i = 0; i < radGeneral.length; i++) {
+        //    radGeneral[i].onclick = function () {
+        //        if (this !== prevGeneral) {
+        //            prevGeneral = this;
+        //            var a = document.getElementById("txtquantityGeneral").value;
+        //            document.getElementById("demoGeneral").innerHTML = a * parseInt(this.value);
+        //        }
+        //    };
+        //}
 
         function OnchangequantityGeneral() {
             var b;
@@ -1264,32 +1341,13 @@
 
         //-------------------------end of general---------------------------------//
 
-        //for other
-        var radother = document.myFormother.platetypeother;
-        var prevother = null;
-        var rrother = null;
-        for (var i = 0; i < radother.length; i++) {
-            radother[i].onclick = function () {
-                if (this !== prevother) {
-                    prevother = this;
-                    var a = document.getElementById("txtquantityother").value;
-                    document.getElementById("demoother").innerHTML = a * parseInt(this.value);
-                }
-            };
-        }
-        function Onchangequantityother() {
-            var b;
-            var a = document.getElementById("txtquantityother").value;
-            if (document.getElementById("vlother").checked) {
-                document.getElementById("demoother").innerHTML = document.getElementById("vlother").value * a;
-            }
-        }
+
     </script>
     <script type="text/javascript">
         $('#lnkproceedtonext').on('click', function (e) {
             var a = document.getElementById("Service").value;
             var b = document.getElementById("Review").value;
-            var c;var d;var e;var f;var discountpercent;var discount,actualamount;
+            var c;var d;var e;var f;var discountpercent;var discountprice,actualamount;
             var page = window.location.search.split("=")[1].split("&")[0];
             //alert(page);
             if(page=="Venue")
@@ -1316,7 +1374,11 @@
             {
                 c = document.getElementById("demoGift").innerHTML;
                 d = document.getElementById("txtquantityGift").value;
-                e="";f =0.00;
+                e="";
+                f = document.getElementById('giftdealprice').innerHTML;
+                discountpercent = document.getElementById('giftdiscount').value;
+                discountprice = document.getElementById('giftdiscountprice').value;
+                actualamount = document.getElementById('giftactualamount').value;
             }
             else if(page=="InvitationCard")
             {
@@ -1330,14 +1392,21 @@
             }
             else if(page == "Other") {
                 c = document.getElementById("demoother").innerHTML;
-                d = document.getElementById("txtquantityother").value;
-                e="";f =0.00;
+                d = 0;
+                e="";
+                f = document.getElementById('otherdealprice').innerHTML;
+                discountpercent = document.getElementById('otherdiscount').value;
+                discountprice = document.getElementById('otherdiscountprice').value;
+                actualamount = document.getElementById('otheractualamount').value;
             }
             else  {
                 c = document.getElementById("demoGeneral").innerHTML;
-                d = document.getElementById("txtquantityGeneral").value;
-                e="";f =0.00;
-                //alert(c);
+                d = 0;
+                e="";
+                f = document.getElementById("demoGeneral").innerHTML;
+                discountpercent = document.getElementById('generaldiscount').value;
+                discountprice = document.getElementById('generaldiscountprice').value;
+                actualamount = document.getElementById('generalactualamount').value;
             }
 
             var g = document.getElementById("hdnsubid").value;
@@ -1437,7 +1506,8 @@
                         //    }
                         //    else if (document.getElementById("btnname").value == "buynow") {
                         //        alert('buyout_thank you page');
-                        window.location.href = '/orderconfirmation?oid=' + data;
+                        //window.location.href = '/orderconfirmation?oid=' + data;
+                        //window.open('/orderconfirmation?oid=' + data);
                         //    }
                         //}
                         //else if (data == "NotLogin") {

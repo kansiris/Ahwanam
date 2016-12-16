@@ -17,15 +17,23 @@ namespace MaaAahwanam.Web.Controllers
         // GET: OrderConfirmation
         public ActionResult Index()
         {
-            int OID = int.Parse(Request.QueryString["oid"]);
-            ViewBag.Oid = OID;
-            //OrderConfirmationService orderConfirmationService = new OrderConfirmationService();
-            //List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
-            DashBoardService dashBoardService = new DashBoardService();
-            List<sp_OrderDetails_Result> list = dashBoardService.GetOrderDetailService(OID);
-            ViewBag.Total =list.Sum(i=>i.PerunitPrice);
-            ViewBag.Orderconfirmation = list;
-            return View();
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                int OID = int.Parse(Request.QueryString["oid"]);
+                ViewBag.Oid = OID;
+                //OrderConfirmationService orderConfirmationService = new OrderConfirmationService();
+                //List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
+                DashBoardService dashBoardService = new DashBoardService();
+                List<sp_OrderDetails_Result> list = dashBoardService.GetOrderDetailService(OID);
+                ViewBag.Total = list.Sum(i => i.PerunitPrice);
+                ViewBag.Orderconfirmation = list;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Signin");
+            }
         }
 
         public JsonResult EmailOrderConfirmation(string Detdiv,string oid)
