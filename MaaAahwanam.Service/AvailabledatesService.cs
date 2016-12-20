@@ -32,5 +32,10 @@ namespace MaaAahwanam.Service
             }
             return message;
         }
+
+        public List<Availabledates> GetDates(long id)
+        {
+            return availabledatesRepository.GetDates(id);
+        }
     }
 }

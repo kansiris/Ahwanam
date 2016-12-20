@@ -16,5 +16,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return availabledates;
         }
+
+        public List<Availabledates> GetDates(long id)
+        {
+            return _dbContext.Availabledates.Where(m => m.vendorId == id).ToList();
+        }
     }
 }
