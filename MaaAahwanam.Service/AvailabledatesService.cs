@@ -14,7 +14,7 @@ namespace MaaAahwanam.Service
         public string saveavailabledates(Availabledates availabledates)
         {
             string message = "";
-            availabledates=availabledatesRepository.saveavailabledates(availabledates);
+            availabledates = availabledatesRepository.saveavailabledates(availabledates);
             if (availabledates != null)
             {
                 if (availabledates.Id != 0)
@@ -36,6 +36,11 @@ namespace MaaAahwanam.Service
         public List<Availabledates> GetDates(long id)
         {
             return availabledatesRepository.GetDates(id);
+        }
+
+        public string removedates(Availabledates availabledates, long id)
+        {
+            return availabledatesRepository.removedates(availabledates,id);
         }
     }
 }

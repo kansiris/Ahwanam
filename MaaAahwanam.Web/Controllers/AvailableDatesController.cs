@@ -20,21 +20,32 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(Availabledates availabledates,string availabledate)
+        public ActionResult Index(Availabledates availabledates, string availabledate, string command)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            string[] dates =  availabledate.Split(',');
-                       
+            string[] dates = availabledate.Split(',');
             string a = "";
-            for (int i = 0; i < dates.Length - 1; i++)
+            for (int i = 0; i < dates.Length; i++)
             {
                 availabledates.vendorId = (int)user.UserId;
                 availabledates.servicetype = vendorMasterService.GetVendorServiceType(user.UserId).ServicType;
-                availabledates.availabledate = Convert.ToDateTime(dates[i].Remove(dates[i].Length - 4));
-                a = availabledatesService.saveavailabledates(availabledates);
+                if (command == "save")
+                {
+                    availabledates.availabledate = Convert.ToDateTime(dates[i].Remove(dates[i].Length - 4));
+                    a = availabledatesService.saveavailabledates(availabledates);
+                }
+                if (command == "remove")
+                {
+                    availabledates.availabledate = Convert.ToDateTime(dates[i]);
+                    a = availabledatesService.removedates(availabledates, user.UserId);
+                }
             }
             if (a == "Success")
                 return Content("<script language='javascript' type='text/javascript'>alert('Dates Submitted Successfully');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");
+            else if (a == "failed" || a == "Failed")
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed to Submitted dates');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");
+            else if (a == "Removed")
+                return Content("<script language='javascript' type='text/javascript'>alert('Dates Removed Successfully');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");
             else
                 return Content("<script language='javascript' type='text/javascript'>alert('Failed to Submitted dates');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");
         }
@@ -42,8 +53,8 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult GetDates()
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            var availabledates = availabledatesService.GetDates(user.UserId).Select(m=>m.availabledate.ToShortDateString());
-            return Json(availabledates,JsonRequestBehavior.AllowGet);
+            var availabledates = availabledatesService.GetDates(user.UserId).Select(m => m.availabledate.ToShortDateString());
+            return Json(availabledates, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -12,63 +12,13 @@
     <meta name="googlebot" content="noindex, nofollow">
     <script type="text/javascript" src="//code.jquery.com/jquery-1.8.3.js"></script>
     @*<link rel="stylesheet" type="text/css" href="/css/result-light.css">*@
-    <script type="text/javascript" src="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.css">
+    @*<script type="text/javascript" src="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.css">*@
     <script src="http://multidatespickr.sourceforge.net/jquery-ui.multidatespicker.js"></script>
-
-    <style type="text/css">
-        .ui-datepicker {
-            width: 40em;
-            padding: .2em .2em 0;
-            display: none;
-            background-color: white;
-        }
-
-            .ui-datepicker table {
-                width: 100%;
-                font-size: .7em;
-                border-collapse: collapse;
-                margin: 0 0 .4em;
-            }
-
-        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-            background: #ffffff;
-        }
-
-        .ui-datepicker td span, .ui-datepicker td a {
-            padding: 20px 15px !important;
-            background-color: white;
-        }
-
-        .ui-datepicker td.ui-state-disabled > span {
-            background: green;
-            font-size: large;
-            color: black;
-        }
-
-        .ui-datepicker td.ui-state-disabled {
-            opacity: 70;
-        }
-
-        .ui-datepicker-prev ui-corner-all ui-state-hover ui-datepicker-prev-hover {
-            background-image: url(/CSSWeb/images/left_arrow.png);
-        }
-
-        .ui-state-default ui-state-active > a {
-            background: green;
-        }
-
-        /*.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
-            border: 2px solid #e21212;
-        }*/
-
-        .ui-datepicker-today.ui-datepicker-current-day a.ui-state-highlight,.ui-state-default ui-state-highlight a.ui-state-active {
-            border-color:  #ffffff;
-            border: 1px solid #d3d3d3;
-            /*background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
-            color: #212121;*/
-        }
-    </style>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <link href="~/CSSWeb/dates.css" rel="stylesheet" />
+       
     <title></title>
 
     @*<script type='text/javascript'>
@@ -118,9 +68,14 @@
         <div id="products_delivery" align="center"></div>
 
         <br /><br />
-        <div align="center"><button type="submit" class="btn btn-big btn-green">Save Date<i class="ti-angle-double-right"></i></button></div>
+        <div align="center">
+            <button type="submit" name="command" value="save" class="btn btn-big btn-green">Save Date<i class="ti-angle-double-right"></i></button>
+            <button type="submit" name="command" value="remove" class="btn btn-big btn-red">Remove Selected<i class="ti-trash"></i></button>
+        </div>
 
-        @Html.HiddenFor(m => m.availabledate,new { @style = "width: 500px;" })
+        @Html.HiddenFor(m => m.availabledate, new { @style = "width: 500px;" })
+
+        <input type="hidden" id="removedates" />
     }
 
     <script>
@@ -137,11 +92,13 @@
                 success: function (data) {
                     debugger;
                     unavailableDates = data; var today = new Date();
+                    //var firstDay = today.toLocaleDateString();
+                    //alert(data);
                     $('#products_delivery').multiDatesPicker({
-                        altField: '#availabledate',
-                        dateFormat: 'dd/mm/yyyy', inline: true, selectMultiple: true,//minDate: 0,maxDate: 30,
+                        altField: '#availabledate', minDate:today, //minDate: '-1m', maxDate: '+1m',
+                        dateFormat: 'dd/mm/yyyy', //addDisabledDates: [unavailableDates.split(',')],
                         beforeShowDay: function (date) {
-                            var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                            var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(); 
                             debugger;
                             if ($.inArray(dmy, unavailableDates) == -1) {
                                 return [true, ""];
@@ -157,7 +114,27 @@
         }
     </script>
     <script>
-        $('.ui-state-default ui-state-active').click(function () { alert("hi") });
+        $("body").on('click', ".ui-datepicker td.myclass > span", function () {
+            var date = new Date();
+            var today = new Date().getDate() + 1;
+            var value = $(this).html();
+            var removeddates = $('#removedates').val();
+            var date = value + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+            if (value > today) {
+                $(this).css('background', 'red');
+                $('#removedates').val(date);
+                appendWords(date);
+            }
+            
+        });
+
+        function appendWords(d) {
+            var resultObj = $("#availabledate");
+            var outputObj = $("#removedates");
+            var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";
+            resultObj.val(stringToAppend + outputObj.val());
+            var appended = $("#availabledate").val();
+        }
     </script>
 </body>
 </html>
