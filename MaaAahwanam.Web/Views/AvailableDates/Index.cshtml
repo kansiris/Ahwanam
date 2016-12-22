@@ -83,7 +83,7 @@
             getdates();
         });
 
-        var unavailableDates;
+        var unavailableDates='';
         function getdates() {
             $.ajax({
                 type: "POST",
@@ -91,11 +91,30 @@
                 data: '',
                 success: function (data) {
                     debugger;
-                    unavailableDates = data; var today = new Date();
-                    //var firstDay = today.toLocaleDateString();
-                    //alert(data);
+                    var final = '';
+                    for (var i = 0; i < data.length; i++) {
+                        var dateslist = data[i].split('/');
+                        if (dateslist[0] < 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] < 10 && dateslist[1] > 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] > 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else {
+                            final = final + data[i] + ",";
+                        }
+                        unavailableDates =  final.slice(0, -1).split(',') ;
+                    }
+                    var today = new Date();
+                    
                     $('#products_delivery').multiDatesPicker({
-                        altField: '#availabledate', minDate:today, //minDate: '-1m', maxDate: '+1m',
+                        altField: '#availabledate', minDate:today, minDate: '-1m', maxDate: '+1m',
                         dateFormat: 'dd/mm/yyyy', //addDisabledDates: [unavailableDates.split(',')],
                         beforeShowDay: function (date) {
                             var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(); 
@@ -104,6 +123,7 @@
                                 return [true, ""];
                             } else {
                                 return [false, "myclass", "Unavailable"];
+                                
                             }
                         }
                     });
@@ -123,18 +143,82 @@
             if (value > today) {
                 $(this).css('background', 'red');
                 $('#removedates').val(date);
-                appendWords(date);
+                appendWords(date,this);
+            }
+            else {
+                alert("Cannot Select This Date");
             }
             
         });
 
-        function appendWords(d) {
+        function appendWords(d,t) {
+            var flag = true;
             var resultObj = $("#availabledate");
             var outputObj = $("#removedates");
-            var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";
-            resultObj.val(stringToAppend + outputObj.val());
-            var appended = $("#availabledate").val();
-        }
+            var testing = resultObj.val().split(",");
+            for (var i = 0; i < testing.length; i++) {
+                if (testing[i] == outputObj.val()) {
+                    flag = false;
+                    $(t).css('background', 'green');
+                    var index = testing[i].indexOf(outputObj.val());
+                    if (index > -1) {
+                        testing.splice(i, 1);
+                        var stringToAppend = testing ;
+                        resultObj.val(stringToAppend + '');
+                        var appended = $("#availabledate").val();
+                    }
+                }
+            }
+            
+            if (flag) {
+                var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";
+                resultObj.val(stringToAppend + outputObj.val());
+                 var appended = $("#availabledate").val();
+            }
+        }        
+    </script>
+
+    <script>
+        $("body").on('click', "ui-state-default > a", function () { alert("hi") });
     </script>
 </body>
 </html>
+
+@*//$("#availabledate").each(function () {
+    //    if (testing == outputObj.val()) {
+    //        flag = false;
+    //        alert("duplicate");
+    //    }
+    //});*@
+
+@*//function appendWords(d) {
+        //    var resultObj = $("#availabledate");
+        //    var outputObj = $("#removedates");
+        //    var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";
+        //    resultObj.val(stringToAppend + outputObj.val());
+        //    var appended = $("#availabledate").val();
+        //}
+        //function appendWords(d) {
+        //    var resultObj = $("#availabledate");
+        //    var outputObj = $("#removedates");
+        //    var match_found = 0;
+        //    if (outputObj.length > 0) {
+        //        match_found = match(outputObj.val());
+        //    }
+        //    if (match_found == 0) {
+        //        var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";
+        //        resultObj.val(stringToAppend + outputObj.val());
+        //        var appended = $("#availabledate").val();
+        //    }
+        //}
+
+        //function match(str) {
+        //    var retval = 0;
+        //    $("#availabledate").each(function () {
+        //        if (str == $(this).text()) {
+        //            retval = 1;
+        //            return false;
+        //        }
+        //    });
+        //    return retval;
+        //}*@

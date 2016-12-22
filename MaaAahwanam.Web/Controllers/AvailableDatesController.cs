@@ -25,10 +25,10 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string[] dates = availabledate.Split(',');
             string a = "";
+            availabledates.vendorId = (int)user.UserId;
+            availabledates.servicetype = vendorMasterService.GetVendorServiceType(user.UserId).ServicType;
             for (int i = 0; i < dates.Length; i++)
             {
-                availabledates.vendorId = (int)user.UserId;
-                availabledates.servicetype = vendorMasterService.GetVendorServiceType(user.UserId).ServicType;
                 if (command == "save")
                 {
                     availabledates.availabledate = Convert.ToDateTime(dates[i].Remove(dates[i].Length - 4));
