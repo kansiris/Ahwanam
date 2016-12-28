@@ -24,19 +24,16 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult EmailOrderConfirmation(string Detdiv, string oid)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            string testurl = Request.Url.Scheme + "://" + Request.Url.Authority + "/testimonialform?Uid=" + user.UserId + "&Oid=" + oid;
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
             string Username = userLoginDetailsService.Getusername(user.UserId);
             StreamReader reader = new StreamReader(Server.MapPath("../Content/EmailTemplates/TempOrderconfirmation.html"));
             string readFile = reader.ReadToEnd();
             string StrContent = "";
-            StrContent = readFile + "<h2>Feedback Form</h2>" + testurl;
-            //StrContent = readFile + "<h2>Feedback Form</h2>" + "http://localhost:8566/testimonialform?Uid=" + user.UserId + "&Oid=" + oid;
+            StrContent = readFile;
             StrContent = StrContent.Replace("@@MessageDiv@@", Detdiv);
             string Mailmessage = "<Table>" + Detdiv + "</Table>";
-
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Test Order Confirmation");
+            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Quotation Confirmation");
             return Json("Success");
         }
     }

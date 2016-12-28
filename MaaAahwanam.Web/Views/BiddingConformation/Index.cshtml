@@ -49,7 +49,7 @@
 
         <div class="displayDiv">
             <div class="dashboardList dashboardList-nospace">
-                <table class="responsive">
+                <table class="responsive" id="div_Detdiv">
                     <thead>
                         <tr>
                             <th style="width:50%">Bidding ID  :  @Model.RequestId</th>
@@ -91,8 +91,8 @@
 
                 <div class="pagination">
                     <div class="next">
-                        <button class="btn btn-orange">Print</button>
-                        <button class="btn btn-green">Email</button>
+                        <button class="btn btn-orange" onClick="javascript: parent.print()">Print</button>
+                        <button class="btn btn-green" onclick="sendemail()">Email</button>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -100,6 +100,30 @@
         </div>
     </div>
 </article>
+
+<script>
+    function sendemail() {
+        var Detdiv = document.getElementById("div_Detdiv").outerHTML;
+        var Detdivobj = {};
+        Detdivobj.Detdiv = Detdiv;
+        Detdivobj.oid = '@Model.EmailId';
+        $.ajax({
+            type: "POST",
+            url: "/QuoatationConfirm/EmailOrderConfirmation",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: {},
+            data: JSON.stringify(Detdivobj),
+            success: function (data) {
+                alert("Bidding Request sent to your email id");
+            },
+            error: function (data) {
+                alert("E-Mail Sending Failed!!!");
+            }
+        });
+    }
+</script>
+
 @section advertisement
 {
     @*<div class="ad">
