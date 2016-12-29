@@ -133,8 +133,10 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-        public ActionResult confirmation(string id)
+        public ActionResult confirmation() //string id
         {
+            //string id = Request.QueryString["id"];
+            string id = Request.UrlReferrer.OriginalString.Split('=')[1];
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;

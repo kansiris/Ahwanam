@@ -16,11 +16,11 @@ namespace MaaAahwanam.Web.Controllers
     {
         // GET: OrderConfirmation
         public ActionResult Index()
-        {
+        {            
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                int OID = int.Parse(Request.QueryString["oid"]);
+                int OID = int.Parse(Request.QueryString["oid"]); 
                 ViewBag.Oid = OID;
                 //OrderConfirmationService orderConfirmationService = new OrderConfirmationService();
                 //List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
