@@ -14,11 +14,12 @@
     @*<link rel="stylesheet" type="text/css" href="/css/result-light.css">*@
     @*<script type="text/javascript" src="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.css">*@
-    <script src="http://multidatespickr.sourceforge.net/jquery-ui.multidatespicker.js"></script>
+    
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script src="http://multidatespickr.sourceforge.net/jquery-ui.multidatespicker.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <link href="~/CSSWeb/dates.css" rel="stylesheet" />
-
+    <script src="~/CSSWeb/availabledates.js"></script>
     <title></title>
 
     @*<script type='text/javascript'>
@@ -69,182 +70,13 @@
 
         <br /><br />
         <div align="center">
-            <button type="submit" name="command" value="save" class="btn btn-big btn-green">Save Date<i class="ti-angle-double-right"></i></button>
-            <button type="submit" name="command" value="remove" class="btn btn-big btn-red">Remove Selected<i class="ti-trash"></i></button>
+            <button type="submit" name="command" id="save" value="save" class="btn btn-big btn-green">Save Date<i class="ti-angle-double-right"></i></button>
+            <button type="submit" name="command" id="remove" value="remove" class="btn btn-big btn-red">Remove Selected<i class="ti-trash"></i></button>
         </div>
 
         @Html.HiddenFor(m => m.availabledate, new { @style = "width: 500px;" })
         <input type="hidden" id="removedates" />
         @*<input type="text" id="removedates" style="width:500px"/><br/><br/><input type="text" id="availabledate" style="width:500px" />*@
     }
-
-    <script>
-        var fixeddate;
-        var inext = 1; var iprev = 1;
-        $(function () {
-            getdates();
-        });
-        //next month click
-        $(document).on('click', '.ui-datepicker-next', function () {
-            var month = getmonth($('span.ui-datepicker-month').text());
-            $(".ui-datepicker td.myclass > span").attr({ "data-month": month, "data-year": $('span.ui-datepicker-year').text() });
-        })
-
-        //prev month click
-        $(document).on('click', '.ui-datepicker-prev', function () {
-            var month = getmonth($('span.ui-datepicker-month').text());
-            $(".ui-datepicker td.myclass > span").attr({ "data-month": month, "data-year": $('span.ui-datepicker-year').text() });
-        })
-
-        var unavailableDates = '';
-        function getdates() {
-            $.ajax({
-                type: "POST",
-                url: "/AvailableDates/GetDates",
-                data: '',
-                success: function (data) {
-                    //debugger;
-                    var final = '';
-                    for (var i = 0; i < data.length; i++) {
-                        var dateslist = data[i].split('/');
-                        if (dateslist[0] < 10 && dateslist[1] < 10) {
-                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
-                            final = final + datepart + ",";
-                        }
-                        else if (dateslist[0] < 10 && dateslist[1] > 10) {
-                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
-                            final = final + datepart + ",";
-                        }
-                        else if (dateslist[0] > 10 && dateslist[1] < 10) {
-                            var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
-                            final = final + datepart + ",";
-                        }
-                        else {
-                            final = final + data[i] + ",";
-                        }
-                        unavailableDates = final.slice(0, -1).split(',');
-                    }
-                    var today = new Date(); today.setDate(1); today.setHours(-1);
-                    var currentmonth = (today.getMonth() + 2);
-                    var firstDay = new Date(today.getFullYear(), today.getMonth(), 1); // prev month first day
-                    var lastDay = new Date(today.getFullYear(), (today.getMonth() + 3), 0); // next month last day
-                    $('#products_delivery').multiDatesPicker({
-                        altField: '#availabledate',//altField: '#removedates'
-                        minDate: new Date(), maxDate: lastDay, //minDate: firstDay,
-                        dateFormat: 'dd/mm/yyyy', 
-                        //onSelect: function(dateText, inst) {
-                        //    appendselection(dateText);
-                        //},
-                        beforeShowDay: function (date) {
-                            var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-                            //debugger;
-                            if ($.inArray(dmy, unavailableDates) == -1) {
-                                return [true, ""];
-                            } else {
-                                return [false, "myclass", "Unavailable"];
-                            }
-                            
-                        }
-                    });
-                    $(".ui-datepicker td.myclass > span").attr({ "data-month": currentmonth, "data-year": today.getFullYear() });
-                },
-                dataType: "json",
-                traditional: true,
-
-            });
-        }
-
-        function getmonth(month) {
-            var collection = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            return collection.indexOf(month);
-        }
-    </script>
-
-    <script>
-        $("body").on('click', ".ui-datepicker td.myclass > span", function () {
-            var date = new Date(); //alert(typeof(date));
-            //var today = new Date(new Date().getTime() + (1 * 24 * 60 * 60 * 1000)).toLocaleDateString();
-            var today = (date.getDate() + 1) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-            var value = $(this).html() + "/" + $(this).attr('data-month') + "/" + $(this).attr('data-year');
-            var comparetoday = new Date(date.getFullYear(), (date.getMonth() + 1), (date.getDate() + 1));
-            var comparevalue = new Date($(this).attr('data-year'), $(this).attr('data-month'), $(this).html());
-            var removeddates = $('#removedates').val();
-            var date = value;
-            if (comparevalue > comparetoday) {
-                $(this).css('background', 'red');
-                $('#removedates').val(date);
-                appendWords(date, this);
-            }
-            else {
-                alert("Cannot Select This Date");
-            }
-
-        });
-
-
-        function appendWords(d, t) {
-            var flag = true;
-            var resultObj = $("#availabledate");
-            var outputObj = $("#removedates");
-            var testing = resultObj.val().split(",");
-            for (var i = 0; i < testing.length; i++) {
-                if (testing[i] == outputObj.val()) {
-                    flag = false;
-                    $(t).css('background', 'green');
-                    var index = testing[i].indexOf(outputObj.val());
-                    if (index > -1) {
-                        testing.splice(i, 1);
-                        var stringToAppend = testing;
-                        resultObj.val(stringToAppend + '');
-                        var appended = $("#availabledate").val();
-                    }
-                }
-            }
-
-            if (flag) {
-                
-                var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";
-                resultObj.val(stringToAppend + outputObj.val());
-                //var appended = $("#availabledate").val();
-            }
-        }
-    </script>
-
-    <script>
-        //function appendselection(dateText) {
-        //    var today1 = new Date();
-        //    today1 = today1.getDate() + '/' + (today1.getMonth() + 1) + '/' + today1.getFullYear();
-        //    var selDate = dateText.slice(0, -4);
-        //    if (selDate < today1) {
-        //        alert(selDate);
-        //        $('td.ui-state-highlight a.ui-state-default').css('background', 'white');
-                
-        //    }
-        //    else {
-        //        $('#removedates').val(selDate);
-        //        appendWords(date, this);
-        //    }
-
-
-            //alert("hi");
-            //var today = (date.getDate() + 1) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-            //var value = $(this).html() + "/" + $(this).attr('data-month') + "/" + $(this).attr('data-year');
-            //var comparetoday = new Date(date.getFullYear(), (date.getMonth() + 1), (date.getDate() + 1));
-            //var comparevalue = selDate;
-            //var removeddates = $('#removedates').val();
-            //var date = value;
-            //if (comparevalue > comparetoday) {
-            //    $(this).css('background', 'red');
-            //    $('#removedates').val(date);
-            //    appendWords(date, this);
-            //}
-            //else {
-            //    alert("Cannot Select This Date");
-            //}
-
-        //}
-    </script>
 </body>
 </html>
-
-
