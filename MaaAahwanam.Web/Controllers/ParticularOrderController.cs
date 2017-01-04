@@ -48,7 +48,9 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.ratingscount = productInfoService.GetCount(vid, Svid,type).Count();
             ViewBag.rating = productInfoService.ratingscount(vid, Svid, type);
             var price = dashBoardService.GetPrice(oid);
-            ViewBag.price = price.PerunitPrice; 
+            ViewBag.price = price.PerunitPrice;
+            List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
+            ViewBag.Amenities = Amenities;
             if (dealid != null && dealid != "")
             {
                 ViewBag.deal = "1";

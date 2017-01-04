@@ -30,12 +30,12 @@ namespace MaaAahwanam.Repository
         public string MineralWaterIncluded { get; set; }
         public string TransportIncluded { get; set; }
         public string Menuitems { get; set; }
-        public Nullable<int> PreWeddingShoot { get; set; }
-        public Nullable<int> DestinationPhotography { get; set; }
-        public Nullable<int> PriorBookingsDays { get; set; }
+        public string PreWeddingShoot { get; set; }
+        public string DestinationPhotography { get; set; }
+        public string PriorBookingsDays { get; set; }
         public string Design { get; set; }
         public string OnlineStore { get; set; }
         public string InStore { get; set; }
-        public Nullable<int> HomeServices { get; set; }
+        public string HomeServices { get; set; }
     }
 }

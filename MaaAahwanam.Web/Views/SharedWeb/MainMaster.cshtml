@@ -624,8 +624,7 @@
                 $("#Index").removeClass("active hvr-sweep-to-bottom").addClass("hvr-sweep-to-bottom");
                 $("#aboutus").addClass("active hvr-sweep-to-bottom");
             }
-            if(page=="/product")
-            {
+            if (page == "/product") {
                 $("#Index").removeClass("active hvr-sweep-to-bottom").addClass("hvr-sweep-to-bottom");
                 $("#ReturnGifts").addClass("active hvr-sweep-to-bottom");
             }
@@ -637,8 +636,7 @@
                 $("#Index").removeClass("active hvr-sweep-to-bottom").addClass("hvr-sweep-to-bottom");
                 $("#ContactUs").addClass("active hvr-sweep-to-bottom");
             }
-            if (page == "/Quatation" || page == "/Biddings" || page == "/ReverseBiddings")
-            {
+            if (page == "/Quatation" || page == "/Biddings" || page == "/ReverseBiddings") {
                 $("#Index").removeClass("active hvr-sweep-to-bottom").addClass("hvr-sweep-to-bottom");
                 $("#Services").addClass("active hvr-sweep-to-bottom");
             }
@@ -742,9 +740,9 @@
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 }
-            //}
-            //if (end != '') {
-               else if (start > end) {
+                    //}
+                    //if (end != '') {
+                else if (start > end) {
                     $('#alert').show().find('strong').text('The start date can not be greater than the end date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
@@ -779,10 +777,10 @@
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 }
-            //}
-            //Comparing only dates
-            //if (end != '') {
-               else if (end < start) {
+                    //}
+                    //Comparing only dates
+                    //if (end != '') {
+                else if (end < start) {
                     $('#alert').show().find('strong').text('The end date can not be less than the start date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
@@ -842,33 +840,33 @@
             var start = startDate.split("/").reverse().join("/");
             var end = endDate.split("/").reverse().join("/");
             if (endTime != '' && end != '') {
-               
+
                 if (start == end && startTime > endTime) {
                     $('#alert').show().find('strong').text('The event start time can not be greater than the event end time');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 }
-                //else {
-                //    $('#alert').hide();
-                //    $("#lnkproceedtonext").show();
-                //    $("#btnsubmit").show();
-                //}
-            //}
-            //if (end != '') {
-                
-               else if (start > end) {
+                    //else {
+                    //    $('#alert').hide();
+                    //    $("#lnkproceedtonext").show();
+                    //    $("#btnsubmit").show();
+                    //}
+                    //}
+                    //if (end != '') {
+
+                else if (start > end) {
                     $('#alert').show().find('strong').text('The start date can not be greater than the end date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 }
-                
+
                 else {
 
                     $('#alert').hide();
                     $("#lnkproceedtonext").show();
                     $("#btnsubmit").show();
                 }
-        }
+            }
         });
         // event end time
         $('#datetimepicker4').datetimepicker({
@@ -889,9 +887,9 @@
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
                 }
-            //}
-            //if(end != ''){
-               else if (start > end) {
+                    //}
+                    //if(end != ''){
+                else if (start > end) {
                     $('#alert').show().find('strong').text('The start date can not be greater than end date');
                     $("#lnkproceedtonext").hide();
                     $("#btnsubmit").hide();
@@ -901,22 +899,50 @@
                     $("#lnkproceedtonext").show();
                     $("#btnsubmit").show();
                 }
-        }
+            }
+
+        });
+        var today = new Date();
+        var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
         
-        });
         $('#datetimepicker5').datetimepicker({
+            inline: true,
             lang: 'en',
+            startDate: '-1m',
+            endDate: lastDate,
             timepicker: false,
-            format: 'd/m/Y',
+            format: 'd/m/Y', minDate: firstDay, maxDate: lastDate,
             formatDate: 'Y/m/d',
+            //beforeShowDay: function (date) {
+            //    var disableddates = ["20/1/2017", "12/1/2017", "16/1/2017", "25/1/2017"];
+            //    var date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+            //    return [disableddates.indexOf(date) == -1];
+            //}
         });
+        //var disableddates = ["20-01-2017", "12-01-2017", "16-01-2017", "25-01-2017"];
+
+
+        //function DisableSpecificDates(date) {
+        //    //var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
+        //    var date = this.datepicker.formatDate('dd-mm-yy', date);
+ 
+        //    return [disableddates.indexOf(date) == -1];
+        //}
+            //.on('change', function (e) {
+            //    var minDate = this.value.split("/").reverse().join("/");
+            //    //$('#datetimepicker6').attr('minDate', minDate);
+            //    //alert($("#datetimepicker5").val());
+            //    $('#datetimepicker6').datepicker("option", "minDate", minDate);
+            //});
+       
         $('#datetimepicker6').datetimepicker({
             lang: 'en',
             timepicker: false,
             format: 'd/m/Y',
-            formatDate: 'Y/m/d',
+            formatDate: 'Y/m/d', 
         });
-
+        
     </script>
 
     <script type="text/javascript">

@@ -42,6 +42,8 @@ namespace MaaAahwanam.Web.Controllers
             }
            
             SP_dealsinfo_Result Dealinfo = productInfoService.getDealsInfo_Result(vid, Servicetype, Svid,did);
+            List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
+            ViewBag.Amenities = Amenities;
             ViewBag.discountvalue = 10.00;
             if (Dealinfo.ActualServiceprice != 0 && Dealinfo.DealServiceprice != 0)
             { 
