@@ -32,5 +32,10 @@ namespace MaaAahwanam.Service
         {
             return orderdetailsRepository.ratingscount(vid, subid, servicetype);
         }
+
+        public List<SP_Amenities_Result> GetAmenities(long subid, string type)
+        {
+            return orderdetailsRepository.GetAmenities(subid, type);
+        }
     }
 }

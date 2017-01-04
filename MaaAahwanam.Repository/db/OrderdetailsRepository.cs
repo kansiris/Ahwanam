@@ -36,5 +36,10 @@ namespace MaaAahwanam.Repository.db
             var list1 = _dbContext.Vendormaster.Where(m => m.EmailId == list.UserName).FirstOrDefault();
             return maaAahwanamEntities.VendorsDatesbooked((int)list1.Id).ToList();
         }
+
+        public List<SP_Amenities_Result> GetAmenities(long subid, string type)
+        {
+            return maaAahwanamEntities.SP_Amenities(subid, type).ToList();
+        }
     }
 }

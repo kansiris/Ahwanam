@@ -20,7 +20,7 @@ namespace MaaAahwanam.Repository.db
         public List<Availabledates> GetDates(long id)
         {
             var today = DateTime.UtcNow;
-            var first = new DateTime(today.Year, today.Month - 1, 1);
+            var first = new DateTime(today.Year, today.Month , 1);
             var last = today.AddMonths(2);
             var lastday = last.AddDays(-(last.Day));
             return _dbContext.Availabledates.Where(m => m.vendorId == id && m.availabledate > first && m.availabledate < lastday).ToList();

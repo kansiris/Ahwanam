@@ -7,16 +7,16 @@ $(function () {
     getdates();
 });
 //next month click
-$(document).on('click', '.ui-datepicker-next', function () {
-    var month = getmonth($('span.ui-datepicker-month').text());
-    $(".ui-datepicker td.myclass ").attr({ "data-month": month, "data-year": $('span.ui-datepicker-year').text() });
-})
+//$(document).on('click', '.ui-datepicker-next', function () {
+//    var month = getmonthnumber($('span.ui-datepicker-month').text());
+//    //$(".ui-datepicker td.myclass ").attr({ "data-month": month, "data-year": $('span.ui-datepicker-year').text() });
+//})
 
-//prev month click
-$(document).on('click', '.ui-datepicker-prev', function () {
-    var month = getmonth($('span.ui-datepicker-month').text());
-    $(".ui-datepicker td.myclass ").attr({ "data-month": month, "data-year": $('span.ui-datepicker-year').text() });
-})
+////prev month click
+//$(document).on('click', '.ui-datepicker-prev', function () {
+//    var month = getmonthnumber($('span.ui-datepicker-month').text());
+//    $(".ui-datepicker td.myclass ").attr({ "data-month": month, "data-year": $('span.ui-datepicker-year').text() });
+//})
 
 var unavailableDates = '';
 function getdates() {
@@ -74,13 +74,13 @@ function getdates() {
     });
 }
 
-function getmonth(month) {
+function getmonthnumber(month) {
     var collection = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return collection.indexOf(month);
 }
 
     $("body").on('click', ".ui-datepicker td.myclass > span", function () {
-        var month = getmonth($('span.ui-datepicker-month').text());
+        var month = getmonthnumber($('span.ui-datepicker-month').text());
         var date = new Date(); //alert(typeof(date));
         var today = (date.getDate() + 1) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(); 
         var value = $(this).html() + "/" + month + "/" + $('span.ui-datepicker-year').text();
@@ -92,7 +92,7 @@ function getmonth(month) {
             $("#remove").css('display', 'block');
             $(this).css('background', 'red');
             $('#removedates').val(date);
-            appendWords(date, this);
+            appendWords(this);
         }
         else {
             alert("Cannot Select This Date");
@@ -101,18 +101,17 @@ function getmonth(month) {
     });
 
 
-function appendWords(d, t) {
-    var flag = true;
+function appendWords(t) {
+    var flag = true; //var finaldates = $("#availabledate").val();
     var resultObj = $("#availabledate");
     var outputObj = $("#removedates");
     var testing = resultObj.val().split(",");
     for (var i = 0; i < testing.length; i++) {
         if (testing[i] == outputObj.val()) {
-            flag = false;
+            flag = false; $("#remove").css('display', 'none');
             $(t).css('background', 'green');
             var index = testing[i].indexOf(outputObj.val());
             if (index > -1) {
-                $("#remove").css('display', 'none');
                 testing.splice(i, 1);
                 var stringToAppend = testing;
                 resultObj.val(stringToAppend + '');
@@ -120,7 +119,9 @@ function appendWords(d, t) {
             }
         }
     }
-
+    //if (finaldates == null) {
+    //    $("#remove").css('display', 'none');
+    //}
     if (flag) {
                 
         var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";

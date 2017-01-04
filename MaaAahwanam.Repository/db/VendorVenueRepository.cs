@@ -41,5 +41,7 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendorVenue.Where(m => m.Id == id).FirstOrDefault();
         }
+
+
     }
 }

@@ -40,6 +40,8 @@ namespace MaaAahwanam.Web.Controllers
             int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
             ViewBag.Subvid = Svid;
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Svid);
+            List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
+            ViewBag.Amenities = Amenities;
             if (Productinfo != null)
             {
                 if (Productinfo.image != null)
@@ -61,6 +63,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.venuetype = list.VenueType;
                 ViewBag.servicecost = list.ServiceCost;
             }
+            //var tupleModel = new Tuple<GetProductsInfo_Result, Review,SP_Amenities_Result>(Productinfo, review,Amenities);
             var tupleModel = new Tuple<GetProductsInfo_Result, Review>(Productinfo, review);
             return View(tupleModel);
         }

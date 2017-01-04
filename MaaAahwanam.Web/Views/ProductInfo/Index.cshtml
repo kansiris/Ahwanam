@@ -7,6 +7,7 @@
 @*@using MaaAahwanam.Web.Custom
     @{
         var user = (CustomPrincipal)HttpContext.Current.User;
+    //,MaaAahwanam.Repository.SP_Amenities_Result
     }*@
 @section Navigation
 {
@@ -254,7 +255,7 @@
                                     <label style="display:none">Number of items<span>*</span></label>
                                     <input type="hidden" id="hmin" name="Minvalue" value="10">
                                     <input type="hidden" id="hmax" name="Maxvalue" value="50">
-                                    <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px;  width:100px;" type="text" id="txtquantityother" value="10" placeholder="Enter Quantity" onchange="Onchangequantityother()" onkeydown="if (event.keyCode == 13) event.returnValue=false"/><br>
+                                    <input style="display:none;border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px;  border-radius: 30px; outline:0; height:25px;   padding-left:10px; padding-right:10px;  width:100px;" type="text" id="txtquantityother" value="10" placeholder="Enter Quantity" onchange="Onchangequantityother()" onkeydown="if (event.keyCode == 13) event.returnValue=false" /><br>
                                     @*<input style="display:none;" type="radio" id="vlother" name="platetypeother" value="500" checked> item cost @Model.Item1.cost/-<br>*@
                                 </form>
                             </div>
@@ -271,11 +272,12 @@
                         <div class="deal_price" id="Calcdiv_venue" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt><p id="lblprice" style="font-size:17px;"></p></dt><dt>:</dt>
+                                    <dt><p id="lblprice" style="font-size:17px;"></p></dt>
+                                    <dt>:</dt>
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
-                                    
+
                                     <dd> <p id="demovenue" style="color:#8ca436;font-size:20px"></p></dd>
-                                    
+
                                     @*<dt>Selling Price: </dt>
                                         <dd>
                                             <h2>Rs. 1,800</h2>
@@ -288,7 +290,7 @@
                                 <div id="pax">
                                     <label>Number of pax<span>*</span></label>
 
-                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:100px;" id="txtquantityvenue" placeholder="Enter Quantity" value="10" oninput="Onchangequantityvenue()" onkeypress="onkey()"/><br><br>
+                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:100px;" id="txtquantityvenue" placeholder="Enter Quantity" value="10" oninput="Onchangequantityvenue()" onkeypress="onkey()" /><br><br>
                                 </div>
                                 <form name="myFormvenue">
                                     <fieldset>
@@ -342,14 +344,15 @@
                         <div class="deal_price" id="Calcdiv_Caterer" style="display:none">
                             <div class="price_details">
                                 <dl>
-                                    <dt><p id="lblcprice"  style="font-size:17px;"></p></dt><dt>:</dt>
+                                    <dt><p id="lblcprice" style="font-size:17px;"></p></dt>
+                                    <dt>:</dt>
                                     <dt><p style="color:#8ca436;font-size:20px">Rs.</p></dt>
                                     <p id="demoCatering" style="color:#8ca436;font-size:20px"></p>
                                     <dd>
                                 </dl>
                                 <form name="myFormCatering">
                                     <label>Number of plates<span>*</span></label>
-                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px;width:100px;" id="txtquantityCatering" placeholder="Enter Quantity" value="10" oninput="OnchangequantityCatering()" onkeypress="onkey()"/><br><br>
+                                    <input type="text" style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px;width:100px;" id="txtquantityCatering" placeholder="Enter Quantity" value="10" oninput="OnchangequantityCatering()" onkeypress="onkey()" /><br><br>
                                     <br /> <fieldset>
                                         <div class="radioButtons" id="radio-demo">
                                             <input type="radio" id="vlCatering" name="platetypeCatering" value=@Model.Item1.cost checked>
@@ -394,8 +397,8 @@
                                 </dl>
                                 <form name="myFormGift">
                                     <label>Number of gifts<span>*</span></label>
-                                    <input style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:0px;  width:100px"  type="text"id="txtquantityGift" value="10" placeholder="Enter Quantity" oninput="OnchangequantityGift()" onkeypress="onkey()"/><br>
-                                    <br/>
+                                    <input style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:0px;  width:100px" type="text" id="txtquantityGift" value="10" placeholder="Enter Quantity" oninput="OnchangequantityGift()" onkeypress="onkey()" /><br>
+                                    <br />
                                     <input type="radio" id="vlGift" name="platetypeGift" value=@Model.Item1.cost checked> Gift cost Rs.@Model.Item1.cost/-<br>
                                     <br />
                                 </form>
@@ -430,7 +433,7 @@
                                 </dl>
                                 <form name="myForminvitation">
                                     <label>Number of cards<span>*</span></label>
-                                    <input style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:100px" type="text" id="txtquantityinvitation" value="10" placeholder="Enter Quantity" oninput="Onchangequantityinvitation()" onkeypress="onkey()"/><br>
+                                    <input style="border: 1px solid #848484;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:100px" type="text" id="txtquantityinvitation" value="10" placeholder="Enter Quantity" oninput="Onchangequantityinvitation()" onkeypress="onkey()" /><br>
                                     <br /><br />
                                     <div class="radioButtons" id="radio-demo">
                                         <input type="radio" id="vlinvitation" name="platetypeinvitation" value=@Model.Item1.cost checked />
@@ -474,7 +477,7 @@
                                     <label style="display:none">Number of items<span>*</span></label>
                                     <input type="hidden" id="hmin" name="Minvalue" value="10">
                                     <input type="hidden" id="hmax" name="Maxvalue" value="50">
-                                    <input  style="border: 1px solid #848484;display:none;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:75px" type="text" id="txtquantityGeneral" value="1" placeholder="Enter Quantity" oninput="OnchangequantityGeneral()"  onkeypress="onkey()"/><br />
+                                    <input style="border: 1px solid #848484;display:none;-webkit-border-radius: 30px; -moz-border-radius: 30px; font-size:12px ; border-radius: 5px; outline:0; height:33px;   padding-left:10px; padding-right:10px; width:75px" type="text" id="txtquantityGeneral" value="1" placeholder="Enter Quantity" oninput="OnchangequantityGeneral()" onkeypress="onkey()" /><br />
                                     @*<p style="display:none"> <input type="radio" id="vlGeneral" name="platetypeGeneral" value="@Model.Item1.cost" checked> item cost @Model.Item1.cost/-</p>*@
                                     <br />
                                 </form>
@@ -492,13 +495,13 @@
                         <div class="deal_buttons">
                             @if (ViewBag.Userloginstatus != 0 && ViewBag.usertype != "Admin")
                             {
-                            <a href="#quatation" id="btn1" class="btn btn-big btn-orange popup-with-move-anim" onclick="Sethdnvalue('addtocartbtn')"><i class="ti-shopping-cart"></i>Add To Cart </a>
-                            <a href="#quatation" id="btn2" class="btn btn-big btn-green popup-with-move-anim" onclick="Sethdnvalue('buynow')"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
+                                <a href="#quatation" id="btn1" class="btn btn-big btn-orange popup-with-move-anim" onclick="Sethdnvalue('addtocartbtn')"><i class="ti-shopping-cart"></i>Add To Cart </a>
+                                <a href="#quatation" id="btn2" class="btn btn-big btn-green popup-with-move-anim" onclick="Sethdnvalue('buynow')"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
                             }
                             else
                             {
-                            @*<a href="../Signin/Index?ReturnUrl=@Request.Url" id="btn1" class="btn btn-big btn-orange">Add To Cart </a>
-                            <a href="../Signin/Index?ReturnUrl=@Request.Url" id="btn2" class="btn btn-big btn-green"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>*@
+                                @*<a href="../Signin/Index?ReturnUrl=@Request.Url" id="btn1" class="btn btn-big btn-orange">Add To Cart </a>
+                                    <a href="../Signin/Index?ReturnUrl=@Request.Url" id="btn2" class="btn btn-big btn-green"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>*@
                                 <a href="../Signin/Index" id="btn1" class="btn btn-big btn-orange"><i class="ti-shopping-cart"></i>Add To Cart </a>
                                 <a href="../Signin/Index" id="btn2" class="btn btn-big btn-green"><i class="ti-money"></i><span id="btnupdate">Buy Now</span> </a>
                             }
@@ -517,53 +520,208 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Brand : Canon - DSLR </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Model ID: EOS1200D Kit(EF S18-55 IS II+55-250mm IS II) with 8 GB Card & Bag </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shutter Speed in other Modes: Bulb, X-sync at 1/200 sec </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Continuous Shots: Yes, 3.0 Shots/sec </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Drive Modes: Single, Continuous, Self-timer </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Maximum Burst: JPEG: 69 Shots, RAW: 6 Shots, RAW + JPEG: 4 Shots</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Temperature: 0° C - 40°C </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Live View Shooting : Yes</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Image Format: JPEG, RAW, RAW + JPEG </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                    <div class="deal_reviews_all">
-                        <div class="dashboardList all_reviews" id="review">
-                            <table class="responsive">
-
-                                @if (ViewBag.Reviewlist.Count != 0)
+                                @if (ViewBag.servicetype == "Venue")
                                 {
-                                    <thead>
+                                    foreach (var item in ViewBag.Amenities)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>Venue Type : @item.VenueType </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Food: @item.Food </td>
+                                            </tr>
+                                            <tr>
+                                                <td>CockTails: @item.CockTails </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rooms: @item.Rooms </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Seating Capacity: @item.SeatingCapacity </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dining Capacity: @item.DiningCapacity</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Minimum Seating Capacity: @item.MinimumSeatingCapacity </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Maximum Seating Capacity : @item.MaximumCapacity</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Decoration Allowed: @item.DecorationAllowed </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hall Type: @item.HallType </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wifi Availablity: @item.Wifi</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Menu Items Count: @item.MenuItemsCount </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Distance From Main Places : @item.DistanceFromMainPlaces</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Live Cooking Station Allowed: @item.LiveCookingStation </td>
+                                            </tr>
+                                        </tbody>
+                                    }
+
+                                }
+                                @if (ViewBag.servicetype == "Catering")
+                                {
+                                    foreach (var item in ViewBag.Amenities)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>Venue Type : @item.VenueType </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mineral Water Availability : @item.MineralWaterIncluded</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Transport Availability : @item.TransportIncluded</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Menu Items : @item.Menuitems</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Live Cooking Station : @item.LiveCookingStation</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                                @if (ViewBag.servicetype == "Photography")
+                                {
+                                    foreach (var item in ViewBag.Amenities)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>Venue Type : @item.VenueType </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pre-Wedding Shoot : @item.PreWeddingShoot</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Destination Photography : @item.DestinationPhotography</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Prior Booking Days : @item.PriorBookingsDays</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                                @if (ViewBag.servicetype == "InvitationCard")
+                                {
+                                    foreach (var item in ViewBag.Amenities)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>Venue Type : @item.VenueType </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Design Name : @item.Design</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                                @if (ViewBag.servicetype == "BeautyService")
+                                {
+                                    foreach (var item in ViewBag.Amenities)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>Venue Type : @item.VenueType </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Home Services : @item.HomeServices</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                                @if (ViewBag.servicetype == "WeddingCollection")
+                                {
+                                    foreach (var item in ViewBag.Amenities)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>Online Store : @item.OnlineStore</td>
+                                            </tr>
+                                            <tr>
+                                                <td>In Store : @item.InStore</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                                @if (ViewBag.servicetype == "Decorators" || ViewBag.servicetype == "Entertainment" || ViewBag.servicetype == "Travel" || ViewBag.servicetype == "Gifts")
+                                {
+                                    foreach (var item in ViewBag.Amenities)
+                                    {
+                                        <tbody>
+                                            <tr>
+                                                <td>Venue Type : @item.VenueType </td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                }
+                                @if (ViewBag.servicetype == "EventOrganiser" || ViewBag.servicetype == "Other")
+                                {
+                                    <tbody>
                                         <tr>
-                                            <th>
-                                                <h2>Most Popular Reviews</h2>
-                                                @*<a href="#">View All Reviews</a>*@
-                                            </th>
+                                            <td>Not Available</td>
                                         </tr>
-                                    </thead>
+                                    </tbody>
+                                }
+@*<tbody>
+        <tr>
+            <td>Brand : Canon - DSLR </td>
+        </tr>
+        <tr>
+            <td>Model ID: EOS1200D Kit(EF S18-55 IS II+55-250mm IS II) with 8 GB Card & Bag </td>
+        </tr>
+        <tr>
+            <td>Shutter Speed in other Modes: Bulb, X-sync at 1/200 sec </td>
+        </tr>
+        <tr>
+            <td>Continuous Shots: Yes, 3.0 Shots/sec </td>
+        </tr>
+        <tr>
+            <td>Drive Modes: Single, Continuous, Self-timer </td>
+        </tr>
+        <tr>
+            <td>Maximum Burst: JPEG: 69 Shots, RAW: 6 Shots, RAW + JPEG: 4 Shots</td>
+        </tr>
+        <tr>
+            <td>Temperature: 0° C - 40°C </td>
+        </tr>
+        <tr>
+            <td>Live View Shooting : Yes</td>
+        </tr>
+        <tr>
+            <td>Image Format: JPEG, RAW, RAW + JPEG </td>
+        </tr>
+    </tbody>*@
+</table>
+<div class="clear"></div>
+</div>
+</div>
+<div class="deal_reviews_all">
+    <div class="dashboardList all_reviews" id="review">
+        <table class="responsive">
+
+            @if (ViewBag.Reviewlist.Count != 0)
+            {
+                <thead>
+                    <tr>
+                        <th>
+                            <h2>Most Popular Reviews</h2>
+                            @*<a href="#">View All Reviews</a>*@
+                        </th>
+                    </tr>
+                </thead>
                                     <tbody>
                                         @foreach (var reviewitem in ViewBag.Reviewlist)
                                         {
@@ -587,159 +745,159 @@
                                             </tr>
                                         }
                                     </tbody>
-                                }
-                            </table>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <div class="side-ads">
-                    <div class="ad_250" style="background-color:white;">
-                        <div style="border: groove; width: 75%; height:230px;">
-                            <br />
-                            @*<label style="font-size:14px; line-height:20px; display:block; color:#f38e07; position:relative; z-index:1; text-align:center; font-family:'aileronbold';align-content:center">CHECK AVAILABILITY</label>*@
-                            <label style="font-size:14px;margin-left:40px;margin-bottom:10px; line-height:20px;color:#f38e07; font-family:'aileronbold'">CHECK AVAILABILITY</label>
-                            <br />
-                            <center><input type="text" name="Email" placeholder="Start Date" id="datetimepicker5"></center>
-                            <br />
-                            <center><input type="text" name="Email" placeholder="End Date" id="datetimepicker6"></center>
-                            <br />
-                            <center><button type="submit" class="btn btn-green">Check <i class="ti-angle-double-right"></i></button></center>
-                        </div>
-                    </div>
-                    <div class="ad_250"> </div>
-                </div>
-            </div>
-            <div class="clear"></div>
+            }
+        </table>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="side-ads">
+    <div class="ad_250" style="background-color:white;">
+        <div style="border: groove; width: 75%; height:230px;">
+            <br />
+            @*<label style="font-size:14px; line-height:20px; display:block; color:#f38e07; position:relative; z-index:1; text-align:center; font-family:'aileronbold';align-content:center">CHECK AVAILABILITY</label>*@
+            <label style="font-size:14px;margin-left:40px;margin-bottom:10px; line-height:20px;color:#f38e07; font-family:'aileronbold'">CHECK AVAILABILITY</label>
+            <br />
+            <center><input type="text" name="Email" placeholder="Start Date" id="datetimepicker5"></center>
+            <br />
+            <center><input type="text" name="Email" placeholder="End Date" id="datetimepicker6"></center>
+            <br />
+            <center><button type="submit" class="btn btn-green">Check <i class="ti-angle-double-right"></i></button></center>
         </div>
     </div>
+    <div class="ad_250"> </div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
 
-    <!-- popup -->
-    <div id="quatation" class="zoom-anim-dialog mfp-hide large-dialog">
-        <div class="popup-box pop-content">
-            <div class="popup-head">
-                <h3>Book Now</h3>
-            </div>
-            <!-- /popup-head -->
-            <div class="popup-space popup-desc-space">
-                <div class="dashboardList">
-                    <form id="contact_form" class="form">
-                        <ul>
-                            <li>
-                                <label>Event Name</label>
-                                <input type="text" id="Ename" name="Eventname" placeholder="Event Name">
-                            </li>
-                            @*<li>
-                                    <label>Last Name</label>
-                                    <input type="text" id="lname" name="lastname" placeholder="last Name">
-                                </li>*@
-                            <li>
-                                <label>Email ID</label>
-                                <input type="text" id="Eemail" name="email" placeholder="Email">
-                            </li>
-                        </ul>
-                        @*<ul>
+<!-- popup -->
+<div id="quatation" class="zoom-anim-dialog mfp-hide large-dialog">
+    <div class="popup-box pop-content">
+        <div class="popup-head">
+            <h3>Book Now</h3>
+        </div>
+        <!-- /popup-head -->
+        <div class="popup-space popup-desc-space">
+            <div class="dashboardList">
+                <form id="contact_form" class="form">
+                    <ul>
+                        <li>
+                            <label>Event Name</label>
+                            <input type="text" id="Ename" name="Eventname" placeholder="Event Name">
+                        </li>
+                        @*<li>
+                                <label>Last Name</label>
+                                <input type="text" id="lname" name="lastname" placeholder="last Name">
+                            </li>*@
+                        <li>
+                            <label>Email ID</label>
+                            <input type="text" id="Eemail" name="email" placeholder="Email">
+                        </li>
+                    </ul>
+                    @*<ul>
 
-                                <li>
-                                    <label>Gender</label>
-                                    <select name="select_option" id="select_option">
-                                        <option value="">---Select---</option>
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
-                                    </select>
-                                </li>
-                            </ul>*@
-                        <ul>
                             <li>
-                                <label>Mobile Number</label>
-                                <input type="text" id="Emobile" name="mobile" placeholder="Mobile Number">
-                            </li>
-                            @*<li>
-                                    <label>Alternative Mobile Number</label>
-                                    <input type="text" id="mobile2" name="mobile2" placeholder="Alternative Mobile Number">
-                                </li>*@
-                            <li>
-                                <label>Street1</label>
-                                <input type="text" id="Estreet1" name="street2" placeholder="Street Name">
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>
-                                <label>Street2</label>
-                                <input type="text" id="Estreet2" name="street2" placeholder="Street Name">
-                            </li>
-                            <li>
-                                <label>City</label>
-                                <input type="text" id="ECity" name="City" placeholder="City">
-                            </li>
-                        </ul>
-                        <ul>
-                            @*<li>
-                                    <label>Country</label>
-                                    <select name="select_option" id="select_option">
-                                        <option value="">---Select---</option>
-                                        <option value="1">India</option>
-                                        <option value="2">USA</option>
-                                    </select>
-                                </li>*@
-                            <li>
-                                <label>PostalCode</label>
-                                <input type="text" id="EPostalCode" name="PostalCode" placeholder="PostalCode">
-
-                            </li>
-                            <li>
-                                <label>State</label>
+                                <label>Gender</label>
                                 <select name="select_option" id="select_option">
                                     <option value="">---Select---</option>
-                                    <option value="1">Andhrapradesh</option>
-                                    <option value="2">Telangana</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
                                 </select>
                             </li>
-                        </ul>
-                        <div class="alert alert-error" id="alert" style="display:none;">
-                            <strong>Oh snap!</strong>
+                        </ul>*@
+                    <ul>
+                        <li>
+                            <label>Mobile Number</label>
+                            <input type="text" id="Emobile" name="mobile" placeholder="Mobile Number">
+                        </li>
+                        @*<li>
+                                <label>Alternative Mobile Number</label>
+                                <input type="text" id="mobile2" name="mobile2" placeholder="Alternative Mobile Number">
+                            </li>*@
+                        <li>
+                            <label>Street1</label>
+                            <input type="text" id="Estreet1" name="street2" placeholder="Street Name">
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <label>Street2</label>
+                            <input type="text" id="Estreet2" name="street2" placeholder="Street Name">
+                        </li>
+                        <li>
+                            <label>City</label>
+                            <input type="text" id="ECity" name="City" placeholder="City">
+                        </li>
+                    </ul>
+                    <ul>
+                        @*<li>
+                                <label>Country</label>
+                                <select name="select_option" id="select_option">
+                                    <option value="">---Select---</option>
+                                    <option value="1">India</option>
+                                    <option value="2">USA</option>
+                                </select>
+                            </li>*@
+                        <li>
+                            <label>PostalCode</label>
+                            <input type="text" id="EPostalCode" name="PostalCode" placeholder="PostalCode">
 
-                            <p></p>
-                        </div>
-                        <ul class="subinputs2">
-                            <li>
-                                <div class="event-date">
-                                    <label>Event Start Date <span>*</span></label>
-                                    <input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker1" required="required" class="startDate">
-                                </div>
-                                <div class="event-date">
-                                    <label>Event Start Time <span>*</span></label>
-                                    <input type="text" name="Email" placeholder="HH:MM" id="datetimepicker3" required>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="event-date">
-                                    <label>Event End Date <span>*</span></label>
-                                    <input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker2" required="required" class="endDate">
-                                </div>
-                                <div class="event-date">
-                                    <label>Event End Time <span>*</span></label>
-                                    <input type="text" name="Email" placeholder="HH:MM" id="datetimepicker4" required>
-                                </div>
-                            </li>
-                        </ul>
-                        @*<a href="#" class="add_field_button2">Add More</a>*@
-                        <ul>
-                            <li>&nbsp;</li>
-                            <li>
-                                <button type="button" name="submit" class="btn btn-big btn-green float-right" value="submit" id="lnkproceedtonext">Submit <i class="ti-angle-double-right"></i></button>
-                            </li>
-                        </ul>
+                        </li>
+                        <li>
+                            <label>State</label>
+                            <select name="select_option" id="select_option">
+                                <option value="">---Select---</option>
+                                <option value="1">Andhrapradesh</option>
+                                <option value="2">Telangana</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <div class="alert alert-error" id="alert" style="display:none;">
+                        <strong>Oh snap!</strong>
 
-                    </form>
-                    <div class="clear"></div>
-                </div>
+                        <p></p>
+                    </div>
+                    <ul class="subinputs2">
+                        <li>
+                            <div class="event-date">
+                                <label>Event Start Date <span>*</span></label>
+                                <input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker1" required="required" class="startDate">
+                            </div>
+                            <div class="event-date">
+                                <label>Event Start Time <span>*</span></label>
+                                <input type="text" name="Email" placeholder="HH:MM" id="datetimepicker3" required>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="event-date">
+                                <label>Event End Date <span>*</span></label>
+                                <input type="text" name="Email" placeholder="DD/MM/YYYY" id="datetimepicker2" required="required" class="endDate">
+                            </div>
+                            <div class="event-date">
+                                <label>Event End Time <span>*</span></label>
+                                <input type="text" name="Email" placeholder="HH:MM" id="datetimepicker4" required>
+                            </div>
+                        </li>
+                    </ul>
+                    @*<a href="#" class="add_field_button2">Add More</a>*@
+                    <ul>
+                        <li>&nbsp;</li>
+                        <li>
+                            <button type="button" name="submit" class="btn btn-big btn-green float-right" value="submit" id="lnkproceedtonext">Submit <i class="ti-angle-double-right"></i></button>
+                        </li>
+                    </ul>
 
+                </form>
+                <div class="clear"></div>
             </div>
+
         </div>
     </div>
-    <!-- end popup -->
+</div>
+<!-- end popup -->
 
 </section>
 <div class="clear"></div>
@@ -874,7 +1032,7 @@
                             document.getElementById("btn3").style.display = "block";
                         }
                         document.getElementById(data.attribute).checked = true;
-                        
+
                     },
                     error: function (data) {
                         alert('error')
@@ -1114,7 +1272,7 @@
             var EstartTime = document.getElementById("datetimepicker3").value;
             var EendDate = document.getElementById("datetimepicker2").value;
             var Eendtime = document.getElementById("datetimepicker4").value;
-            
+
             //End of pop-Up values
             //alert(c);
             EventDates = [];
@@ -1248,7 +1406,7 @@
                 d = document.getElementById("txtquantityGeneral").value;
                 //alert(c);
             }
-            
+
             var cids = @Request.QueryString["cid"];
             var subid = @Request.QueryString["subvid"];
             var orderRequest = {};
@@ -1298,17 +1456,17 @@
         function testlogin() {
             var url = document.referrer;
             var l;
-                var type = url.split('/')[3];
-                var type1 = url.split('/')[3];
-                alert(type1);
-                if (type == 'AllServices' || type == 'allservices') {
-                    l = url.split('=')[1];
-                }
-                if (type1.startsWith('product',0) == true) {
-                    l = url.split('&')[2].replace("loc=","");
-                }
-                $("#hdnredirect").val(1);
-                window.location.href='/AllServices/Index?l='+l;            
+            var type = url.split('/')[3];
+            var type1 = url.split('/')[3];
+            alert(type1);
+            if (type == 'AllServices' || type == 'allservices') {
+                l = url.split('=')[1];
+            }
+            if (type1.startsWith('product',0) == true) {
+                l = url.split('&')[2].replace("loc=","");
+            }
+            $("#hdnredirect").val(1);
+            window.location.href='/AllServices/Index?l='+l;
         }
     </script>
     @*<script>

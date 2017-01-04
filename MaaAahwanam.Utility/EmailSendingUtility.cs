@@ -34,19 +34,19 @@ namespace MaaAahwanam.Utility
             //smtp.Send(Msg);
 
             //Mail method for go daddy
-            string HostAdd = "relay-hosting.secureserver.net";
-            string FromEmailid = "maaaahwanamtest@gmail.com";
-            string Pass = "maaaahwanamtest";
-            string to = txtto.ToString();
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = FromEmailid;
-            mailMessage.Subject = subj;
-            mailMessage.BodyFormat = MailFormat.Html;
-            mailMessage.Body = txtmessage;
-            mailMessage.To = to;
-            System.Web.Mail.SmtpMail.SmtpServer = HostAdd;
-            System.Web.Mail.SmtpMail.Send(mailMessage);
-            mailMessage = null;
+            //string HostAdd = "relay-hosting.secureserver.net";
+            //string FromEmailid = "maaaahwanamtest@gmail.com";
+            //string Pass = "maaaahwanamtest";
+            //string to = txtto.ToString();
+            //MailMessage mailMessage = new MailMessage();
+            //mailMessage.From = FromEmailid;
+            //mailMessage.Subject = subj;
+            //mailMessage.BodyFormat = MailFormat.Html;
+            //mailMessage.Body = txtmessage;
+            //mailMessage.To = to;
+            //System.Web.Mail.SmtpMail.SmtpServer = HostAdd;
+            //System.Web.Mail.SmtpMail.Send(mailMessage);
+            //mailMessage = null;
         }
     }
 }

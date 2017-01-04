@@ -79,6 +79,10 @@
         <Function Name="sp_AllOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="SP_Amenities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vendorid" Type="bigint" Mode="In" />
+          <Parameter Name="ntype" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_Deals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
           <Parameter Name="VID" Type="int" Mode="In" />
@@ -231,17 +235,21 @@
           <FunctionImport Name="MaaAahwanam_Others_TestimonialDetail" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_TestimonialDetail_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="sp_OrderDetails" ReturnType="Collection(MaaAahwanamModel.sp_OrderDetails_Result)">
-          <Parameter Name="OrderBy" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="AllVendorList" ReturnType="Collection(MaaAahwanamModel.AllVendorList_Result)">
           <Parameter Name="ServicType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="VendorsDatesbooked" ReturnType="Collection(MaaAahwanamModel.VendorsDatesbooked_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_OrderDetails" ReturnType="Collection(MaaAahwanamModel.sp_OrderDetails_Result)">
+          <Parameter Name="OrderBy" Mode="In" Type="Int64" />
+          </FunctionImport>
           <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
-            <Parameter Name="VID" Mode="In" Type="Int32" />
+          <Parameter Name="VID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Amenities" ReturnType="Collection(MaaAahwanamModel.SP_Amenities_Result)">
+            <Parameter Name="vendorid" Mode="In" Type="Int64" />
+            <Parameter Name="ntype" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="geteventsandtipsimages_Result">
@@ -608,27 +616,6 @@
           <Property Type="String" Name="ImagePath" Nullable="true" />
           <Property Type="String" Name="Status" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_OrderDetails_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="Landmark" Nullable="true" />
-          <Property Type="String" Name="ContactNumber" Nullable="true" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="String" Name="image" Nullable="true" />
-          <Property Type="Decimal" Name="PerunitPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="Boolean" Name="Isdeal" Nullable="false" />
-          <Property Type="Int64" Name="VendorId" Nullable="false" />
-          <Property Type="Int64" Name="subid" Nullable="false" />
-          <Property Type="Int64" Name="orderdetailid" Nullable="false" />
-          <Property Type="Int64" Name="DealId" Nullable="false" />
-          <Property Type="Decimal" Name="ServicePrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="StartTime" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="AllVendorList_Result">
           <Property Type="Int64" Name="VendorMasterId" Nullable="false" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
@@ -660,6 +647,28 @@
           <Property Type="String" Name="State" Nullable="true" />
           <Property Type="String" Name="City" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="sp_OrderDetails_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="Decimal" Name="PerunitPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="Isdeal" Nullable="false" />
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="Int64" Name="orderdetailid" Nullable="false" />
+          <Property Type="Int64" Name="DealId" Nullable="false" />
+          <Property Type="Decimal" Name="ServicePrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StartTime" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="GetCartItems_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="BusinessName" Nullable="true" />
@@ -684,6 +693,32 @@
           <Property Type="DateTime" Name="eventstartdate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="eventid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_Amenities_Result">
+          <Property Type="String" Name="VenueType" Nullable="true" />
+          <Property Type="String" Name="Food" Nullable="true" />
+          <Property Type="String" Name="CockTails" Nullable="true" />
+          <Property Type="String" Name="Rooms" Nullable="true" />
+          <Property Type="Int32" Name="SeatingCapacity" Nullable="false" />
+          <Property Type="Int32" Name="DiningCapacity" Nullable="false" />
+          <Property Type="Int32" Name="MinimumSeatingCapacity" Nullable="false" />
+          <Property Type="Int32" Name="MaximumCapacity" Nullable="false" />
+          <Property Type="String" Name="DecorationAllowed" Nullable="true" />
+          <Property Type="String" Name="HallType" Nullable="true" />
+          <Property Type="String" Name="Wifi" Nullable="true" />
+          <Property Type="String" Name="MenuItemsCount" Nullable="true" />
+          <Property Type="String" Name="DistanceFromMainPlaces" Nullable="true" />
+          <Property Type="String" Name="LiveCookingStation" Nullable="true" />
+          <Property Type="String" Name="MineralWaterIncluded" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="TransportIncluded" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="Menuitems" Nullable="false" MaxLength="3" />
+          <Property Type="Int32" Name="PreWeddingShoot" Nullable="true" />
+          <Property Type="Int32" Name="DestinationPhotography" Nullable="true" />
+          <Property Type="Int32" Name="PriorBookingsDays" Nullable="true" />
+          <Property Type="String" Name="Design" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="OnlineStore" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="InStore" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="HomeServices" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1184,31 +1219,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_OrderDetails" FunctionName="MaaAahwanamModel.Store.sp_OrderDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_OrderDetails_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="PerunitPrice" ColumnName="PerunitPrice" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="Isdeal" ColumnName="Isdeal" />
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="subid" ColumnName="subid" />
-                <ScalarProperty Name="orderdetailid" ColumnName="orderdetailid" />
-                <ScalarProperty Name="DealId" ColumnName="DealId" />
-                <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AllVendorList" FunctionName="MaaAahwanamModel.Store.AllVendorList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.AllVendorList_Result">
@@ -1248,6 +1258,32 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_OrderDetails" FunctionName="MaaAahwanamModel.Store.sp_OrderDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_OrderDetails_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="PerunitPrice" ColumnName="PerunitPrice" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Isdeal" ColumnName="Isdeal" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="orderdetailid" ColumnName="orderdetailid" />
+                <ScalarProperty Name="DealId" ColumnName="DealId" />
+                <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetCartItems" FunctionName="MaaAahwanamModel.Store.GetCartItems">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.GetCartItems_Result">
@@ -1274,6 +1310,36 @@
                 <ScalarProperty Name="eventstartdate" ColumnName="eventstartdate" />
                 <ScalarProperty Name="eventenddate" ColumnName="eventenddate" />
                 <ScalarProperty Name="eventid" ColumnName="eventid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Amenities" FunctionName="MaaAahwanamModel.Store.SP_Amenities">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.SP_Amenities_Result">
+                <ScalarProperty Name="VenueType" ColumnName="VenueType" />
+                <ScalarProperty Name="Food" ColumnName="Food" />
+                <ScalarProperty Name="CockTails" ColumnName="CockTails" />
+                <ScalarProperty Name="Rooms" ColumnName="Rooms" />
+                <ScalarProperty Name="SeatingCapacity" ColumnName="SeatingCapacity" />
+                <ScalarProperty Name="DiningCapacity" ColumnName="DiningCapacity" />
+                <ScalarProperty Name="MinimumSeatingCapacity" ColumnName="MinimumSeatingCapacity" />
+                <ScalarProperty Name="MaximumCapacity" ColumnName="MaximumCapacity" />
+                <ScalarProperty Name="DecorationAllowed" ColumnName="DecorationAllowed" />
+                <ScalarProperty Name="HallType" ColumnName="HallType" />
+                <ScalarProperty Name="Wifi" ColumnName="Wifi" />
+                <ScalarProperty Name="MenuItemsCount" ColumnName="MenuItemsCount" />
+                <ScalarProperty Name="DistanceFromMainPlaces" ColumnName="DistanceFromMainPlaces" />
+                <ScalarProperty Name="LiveCookingStation" ColumnName="LiveCookingStation" />
+                <ScalarProperty Name="MineralWaterIncluded" ColumnName="MineralWaterIncluded" />
+                <ScalarProperty Name="TransportIncluded" ColumnName="TransportIncluded" />
+                <ScalarProperty Name="Menuitems" ColumnName="Menuitems" />
+                <ScalarProperty Name="PreWeddingShoot" ColumnName="PreWeddingShoot" />
+                <ScalarProperty Name="DestinationPhotography" ColumnName="DestinationPhotography" />
+                <ScalarProperty Name="PriorBookingsDays" ColumnName="PriorBookingsDays" />
+                <ScalarProperty Name="Design" ColumnName="Design" />
+                <ScalarProperty Name="OnlineStore" ColumnName="OnlineStore" />
+                <ScalarProperty Name="InStore" ColumnName="InStore" />
+                <ScalarProperty Name="HomeServices" ColumnName="HomeServices" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -46,5 +46,10 @@ namespace MaaAahwanam.Repository.db
             var list = _dbContext.UserLogin.Where(m => m.UserLoginId == id).FirstOrDefault();
             return _dbContext.Vendormaster.Where(m => m.EmailId == list.UserName).FirstOrDefault();
         }
+
+        //public List<> amenities(string type,long id)
+        //{
+
+        //}
     }
 }
