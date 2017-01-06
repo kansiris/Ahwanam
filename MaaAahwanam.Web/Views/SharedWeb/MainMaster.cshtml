@@ -917,25 +917,16 @@
             maxDate: lastDate,
             formatDate: 'Y/m/d',
             beforeShowDay: function (date) {
-                var disableddates = $('#vendoravailabledates').val(); var unavailableDates = '';
-                var final = ''; var dateslist = disableddates.split(',');
+                var disableddates = $('#vendoravailabledates').val();
+                if (disableddates != '') {
+                var unavailableDates = '';
+                var final = ''; var dateslist = disableddates.split(','); 
                 for (var i = 0; i < dateslist.length; i++) {
                     var dates = dateslist[i].split('/');
-                    if (dates[0] < 10 && dates[1] < 10) {
-                        var datepart = dates[0].slice(-1, 2) + '/' + dates[1].slice(-1, 2) + '/' + dates[2];
-                        final = final + datepart + ",";
-                    }
-                    else if (dates[0] < 10 && dates[1] > 10) {
-                        var datepart = dates[0].slice(-1, 2) + '/' + dates[1] + '/' + dates[2];
-                        final = final + datepart + ",";
-                    }
-                    else if (dates[0] > 10 && dates[1] < 10) {
-                        var datepart = dates[0] + '/' + dates[1].slice(-1, 2) + '/' + dates[2];
-                        final = final + datepart + ",";
-                    }
-                    else {
-                        final = final + data[i] + ",";
-                    }
+                    var dates1 = new Date(dates[2], dates[1] - 1, dates[0]).toLocaleDateString();
+                    var dates2 = dates1.split('/');
+                    var dates3 = dates2[1] + '/' + dates2[0] + '/' + dates2[2];
+                    final = final + dates3 + ",";
                     unavailableDates = final.slice(0, -1).split(',');
                 }
                 var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
@@ -943,6 +934,14 @@
                     return [false, "myclass", "Unavailable"];
                 } else {
                     return [true, ""];
+                }
+                }
+                else {
+                    $('#datetimepicker5').hide();
+                    $('.xdsoft_datetimepicker').hide();
+                    var msg = 'Vendor is Not Available at the moment';
+                    document.getElementById('msg').innerHTML = msg;
+                    //$('#msg').val();
                 }
             }
         }).on('change', function (date) {
@@ -972,3 +971,20 @@
 </body>
 </html>
 @*@Html.Raw(TempData["Alert"])*@
+
+
+@*//if (dates[0] < 10 && dates[1] < 10) {
+                    //    var datepart = dates[0].slice(-1, 2) + '/' + dates[1].slice(-1, 2) + '/' + dates[2];
+                    //    final = final + datepart + ",";
+                    //}
+                    //else if (dates[0] < 10 && dates[1] > 10) {
+                    //    var datepart = dates[0].slice(-1, 2) + '/' + dates[1] + '/' + dates[2];
+                    //    final = final + datepart + ",";
+                    //}
+                    //else if (dates[0] > 10 && dates[1] < 10) {
+                    //    var datepart = dates[0] + '/' + dates[1].slice(-1, 2) + '/' + dates[2];
+                    //    final = final + datepart + ",";
+                    //}
+                    //else {
+                        //final = final + data[i] + ",";
+                    //}*@
