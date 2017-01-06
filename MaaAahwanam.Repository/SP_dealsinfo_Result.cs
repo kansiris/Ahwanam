@@ -24,6 +24,7 @@ namespace MaaAahwanam.Repository
         public string ServicType { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public string EmailId { get; set; }
         public Nullable<decimal> cost { get; set; }
         public Nullable<decimal> cost1 { get; set; }
         public Nullable<decimal> cost2 { get; set; }

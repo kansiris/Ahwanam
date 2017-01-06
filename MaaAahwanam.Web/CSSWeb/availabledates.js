@@ -108,7 +108,7 @@ function appendWords(t) {
     var testing = resultObj.val().split(",");
     for (var i = 0; i < testing.length; i++) {
         if (testing[i] == outputObj.val()) {
-            flag = false; $("#remove").css('display', 'none');
+            flag = false; 
             $(t).css('background', 'green');
             var index = testing[i].indexOf(outputObj.val());
             if (index > -1) {
@@ -116,6 +116,9 @@ function appendWords(t) {
                 var stringToAppend = testing;
                 resultObj.val(stringToAppend + '');
                 var appended = $("#availabledate").val();
+                if (appended == null || appended == '') {
+                    $("#remove").css('display', 'none');
+                }
             }
         }
     }
@@ -123,10 +126,9 @@ function appendWords(t) {
     //    $("#remove").css('display', 'none');
     //}
     if (flag) {
-                
         var stringToAppend = resultObj.val().length > 0 ? resultObj.val() + "," : "";
         resultObj.val(stringToAppend + outputObj.val());
-        //var appended = $("#availabledate").val();
+        var appended = $("#availabledate").val();
     }
 }
 

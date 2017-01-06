@@ -14,6 +14,8 @@ namespace MaaAahwanam.Web.Controllers
     public class ProductInfoController : Controller
     {
         ReviewService reviewService = new ReviewService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        AvailabledatesService availabledatesService = new AvailabledatesService();
         //
         // GET: /CardInfo/
         public ActionResult Index()
@@ -42,6 +44,13 @@ namespace MaaAahwanam.Web.Controllers
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Svid);
             List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
             ViewBag.Amenities = Amenities;
+            //Vendor Available Dates
+            var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId).UserLoginId;
+            var vendordates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m=>m.availabledate.ToShortDateString());
+            ViewBag.vendoravailabledates = string.Join(",", vendordates.ToArray());
+            
+            //List<DateTime> availabledates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m=>m.a);
+
             if (Productinfo != null)
             {
                 if (Productinfo.image != null)

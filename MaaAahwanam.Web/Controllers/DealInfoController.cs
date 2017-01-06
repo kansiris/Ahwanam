@@ -14,6 +14,8 @@ namespace MaaAahwanam.Web.Controllers
     public class DealInfoController : Controller
     {
         ReviewService reviewService = new ReviewService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        AvailabledatesService availabledatesService = new AvailabledatesService();
         //
         // GET: /CardInfo/
         public ActionResult Index()
@@ -44,6 +46,10 @@ namespace MaaAahwanam.Web.Controllers
             SP_dealsinfo_Result Dealinfo = productInfoService.getDealsInfo_Result(vid, Servicetype, Svid,did);
             List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
             ViewBag.Amenities = Amenities;
+            //Vendor Available Dates
+            var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Dealinfo.EmailId).UserLoginId;
+            var vendordates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m => m.availabledate.ToShortDateString());
+            ViewBag.vendoravailabledates = string.Join(",", vendordates.ToArray());
             ViewBag.discountvalue = 10.00;
             if (Dealinfo.ActualServiceprice != 0 && Dealinfo.DealServiceprice != 0)
             { 

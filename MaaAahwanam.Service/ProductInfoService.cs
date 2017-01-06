@@ -14,6 +14,7 @@ namespace MaaAahwanam.Service
         VendorsOthersRepository vendorsOthersRepository = new VendorsOthersRepository();
         VendorVenueRepository vendorVenueRepository = new VendorVenueRepository();
         OrderdetailsRepository orderdetailsRepository = new OrderdetailsRepository();
+        
         public GetProductsInfo_Result getProductsInfo_Result(int vid,string servicetype,int Subvid)
         {
             return vendorsOthersRepository.getProductsInfo(vid,servicetype, Subvid);
@@ -37,5 +38,6 @@ namespace MaaAahwanam.Service
         {
             return orderdetailsRepository.GetAmenities(subid, type);
         }
+        
     }
 }

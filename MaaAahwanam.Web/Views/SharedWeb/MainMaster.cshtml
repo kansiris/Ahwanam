@@ -912,30 +912,43 @@
             startDate: '-1m',
             endDate: lastDate,
             timepicker: false,
-            format: 'd/m/Y', minDate: firstDay, maxDate: lastDate,
+            format: 'd/m/Y',
+            minDate: firstDay,
+            maxDate: lastDate,
             formatDate: 'Y/m/d',
-            //beforeShowDay: function (date) {
-            //    var disableddates = ["20/1/2017", "12/1/2017", "16/1/2017", "25/1/2017"];
-            //    var date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-            //    return [disableddates.indexOf(date) == -1];
-            //}
+            beforeShowDay: function (date) {
+                var disableddates = $('#vendoravailabledates').val(); var unavailableDates = '';
+                var final = ''; var dateslist = disableddates.split(',');
+                for (var i = 0; i < dateslist.length; i++) {
+                    var dates = dateslist[i].split('/');
+                    if (dates[0] < 10 && dates[1] < 10) {
+                        var datepart = dates[0].slice(-1, 2) + '/' + dates[1].slice(-1, 2) + '/' + dates[2];
+                        final = final + datepart + ",";
+                    }
+                    else if (dates[0] < 10 && dates[1] > 10) {
+                        var datepart = dates[0].slice(-1, 2) + '/' + dates[1] + '/' + dates[2];
+                        final = final + datepart + ",";
+                    }
+                    else if (dates[0] > 10 && dates[1] < 10) {
+                        var datepart = dates[0] + '/' + dates[1].slice(-1, 2) + '/' + dates[2];
+                        final = final + datepart + ",";
+                    }
+                    else {
+                        final = final + data[i] + ",";
+                    }
+                    unavailableDates = final.slice(0, -1).split(',');
+                }
+                var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                if ($.inArray(dmy, unavailableDates) == -1) {
+                    return [false, "myclass", "Unavailable"];
+                } else {
+                    return [true, ""];
+                }
+            }
+        }).on('change', function (date) {
+            $('#btncheck').css('display', 'block');
         });
-        //var disableddates = ["20-01-2017", "12-01-2017", "16-01-2017", "25-01-2017"];
 
-
-        //function DisableSpecificDates(date) {
-        //    //var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
-        //    var date = this.datepicker.formatDate('dd-mm-yy', date);
- 
-        //    return [disableddates.indexOf(date) == -1];
-        //}
-            //.on('change', function (e) {
-            //    var minDate = this.value.split("/").reverse().join("/");
-            //    //$('#datetimepicker6').attr('minDate', minDate);
-            //    //alert($("#datetimepicker5").val());
-            //    $('#datetimepicker6').datepicker("option", "minDate", minDate);
-            //});
-       
         $('#datetimepicker6').datetimepicker({
             lang: 'en',
             timepicker: false,
@@ -951,8 +964,6 @@
             //window.location.assign("../Index")
         }
     </script>
-
-
 
     @RenderSection("scriptfunctions", required: false)
     @*<script>

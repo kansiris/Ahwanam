@@ -42,5 +42,10 @@ namespace MaaAahwanam.Service
         {
             return availabledatesRepository.removedates(availabledates,id);
         }
+
+        public List<Availabledates> GetCurrentMonthDates(long id)
+        {
+            return availabledatesRepository.GetCurrentMonthDates(id);
+        }
     }
 }

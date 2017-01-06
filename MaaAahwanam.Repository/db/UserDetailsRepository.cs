@@ -80,5 +80,10 @@ namespace MaaAahwanam.Repository.db
             string imagename = list.UserImgName;
             return imagename;
         }
+
+        public UserLogin GetLoginDetailsByEmail(string username)
+        {
+            return _dbContext.UserLogin.Where(m => m.UserName == username).FirstOrDefault();
+        }
     }
 }

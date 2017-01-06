@@ -157,11 +157,6 @@
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="allnotifications" ReturnType="Collection(MaaAahwanamModel.allnotifications_Result)" />
-          <FunctionImport Name="GetProductsInfo" ReturnType="Collection(MaaAahwanamModel.GetProductsInfo_Result)">
-            <Parameter Name="vid" Mode="In" Type="Int32" />
-            <Parameter Name="nType" Mode="In" Type="String" />
-            <Parameter Name="Vid2" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_QuotationComments" ReturnType="Collection(MaaAahwanamModel.sp_QuotationComments_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -199,12 +194,6 @@
             <Parameter Name="stype" Mode="In" Type="String" />
             <Parameter Name="city" Mode="In" Type="String" />
             <Parameter Name="order" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_dealsinfo" ReturnType="Collection(MaaAahwanamModel.SP_dealsinfo_Result)">
-            <Parameter Name="vid" Mode="In" Type="Int32" />
-            <Parameter Name="nType" Mode="In" Type="String" />
-            <Parameter Name="Vid2" Mode="In" Type="Int32" />
-            <Parameter Name="did" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ProductsDisplay" ReturnType="Collection(MaaAahwanamModel.ProductsDisplay_Result)">
             <Parameter Name="nType" Mode="In" Type="String" />
@@ -250,6 +239,17 @@
           <FunctionImport Name="SP_Amenities" ReturnType="Collection(MaaAahwanamModel.SP_Amenities_Result)">
             <Parameter Name="vendorid" Mode="In" Type="Int64" />
             <Parameter Name="ntype" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsInfo" ReturnType="Collection(MaaAahwanamModel.GetProductsInfo_Result)">
+            <Parameter Name="vid" Mode="In" Type="Int32" />
+            <Parameter Name="nType" Mode="In" Type="String" />
+            <Parameter Name="Vid2" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_dealsinfo" ReturnType="Collection(MaaAahwanamModel.SP_dealsinfo_Result)">
+            <Parameter Name="vid" Mode="In" Type="Int32" />
+            <Parameter Name="nType" Mode="In" Type="String" />
+            <Parameter Name="Vid2" Mode="In" Type="Int32" />
+            <Parameter Name="did" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="geteventsandtipsimages_Result">
@@ -371,26 +371,6 @@
           <Property Type="String" Name="Subject" Nullable="true" />
           <Property Type="String" Name="EmailID" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetProductsInfo_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="ContactNumber" Nullable="true" />
-          <Property Type="String" Name="ContactPerson" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="Landmark" Nullable="true" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="String" Name="State" Nullable="true" />
-          <Property Type="String" Name="ZipCode" Nullable="true" />
-          <Property Type="Decimal" Name="cost" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost1" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost2" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost3" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="MaxOrder" Nullable="true" />
-          <Property Type="String" Name="MinOrder" Nullable="true" />
-          <Property Type="String" Name="image" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_QuotationComments_Result">
           <Property Type="String" Name="CommentDetails" Nullable="true" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
@@ -481,34 +461,6 @@
           <Property Type="Decimal" Name="DealServicePrice" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Int64" Name="DealID" Nullable="false" />
           <Property Type="Int64" Name="Servicecost" Nullable="false" />
-          <Property Type="String" Name="image" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_dealsinfo_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="ContactNumber" Nullable="true" />
-          <Property Type="String" Name="ContactPerson" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="Landmark" Nullable="true" />
-          <Property Type="String" Name="ServicType" Nullable="true" />
-          <Property Type="String" Name="State" Nullable="true" />
-          <Property Type="String" Name="ZipCode" Nullable="true" />
-          <Property Type="Decimal" Name="cost" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost1" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost2" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost3" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost4" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost5" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost6" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="cost7" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="ActualServiceprice" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="DealServiceprice" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="DateTime" Name="DealStartDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="DealEndDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="MaxOrder" Nullable="true" />
-          <Property Type="String" Name="MinOrder" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
         <ComplexType Name="ProductsDisplay_Result">
@@ -720,6 +672,56 @@
           <Property Type="String" Name="InStore" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="HomeServices" Nullable="false" MaxLength="3" />
         </ComplexType>
+        <ComplexType Name="GetProductsInfo_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" />
+          <Property Type="String" Name="ContactPerson" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="String" Name="State" Nullable="true" />
+          <Property Type="String" Name="ZipCode" Nullable="true" />
+          <Property Type="String" Name="EmailId" Nullable="true" />
+          <Property Type="Decimal" Name="cost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost1" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost2" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost3" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="MaxOrder" Nullable="true" />
+          <Property Type="String" Name="MinOrder" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_dealsinfo_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" />
+          <Property Type="String" Name="ContactPerson" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="String" Name="State" Nullable="true" />
+          <Property Type="String" Name="ZipCode" Nullable="true" />
+          <Property Type="String" Name="EmailId" Nullable="true" />
+          <Property Type="Decimal" Name="cost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost1" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost2" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost3" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost4" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost5" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost6" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost7" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ActualServiceprice" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DealServiceprice" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="DealStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DealEndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MaxOrder" Nullable="true" />
+          <Property Type="String" Name="MinOrder" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -893,30 +895,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetProductsInfo" FunctionName="MaaAahwanamModel.Store.GetProductsInfo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProductsInfo_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="cost1" ColumnName="cost1" />
-                <ScalarProperty Name="cost2" ColumnName="cost2" />
-                <ScalarProperty Name="cost3" ColumnName="cost3" />
-                <ScalarProperty Name="MaxOrder" ColumnName="MaxOrder" />
-                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
-                <ScalarProperty Name="image" ColumnName="image" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_QuotationComments" FunctionName="MaaAahwanamModel.Store.sp_QuotationComments">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_QuotationComments_Result">
@@ -1045,38 +1023,6 @@
                 <ScalarProperty Name="DealServicePrice" ColumnName="DealServicePrice" />
                 <ScalarProperty Name="DealID" ColumnName="DealID" />
                 <ScalarProperty Name="Servicecost" ColumnName="Servicecost" />
-                <ScalarProperty Name="image" ColumnName="image" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_dealsinfo" FunctionName="MaaAahwanamModel.Store.SP_dealsinfo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.SP_dealsinfo_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="cost1" ColumnName="cost1" />
-                <ScalarProperty Name="cost2" ColumnName="cost2" />
-                <ScalarProperty Name="cost3" ColumnName="cost3" />
-                <ScalarProperty Name="cost4" ColumnName="cost4" />
-                <ScalarProperty Name="cost5" ColumnName="cost5" />
-                <ScalarProperty Name="cost6" ColumnName="cost6" />
-                <ScalarProperty Name="cost7" ColumnName="cost7" />
-                <ScalarProperty Name="ActualServiceprice" ColumnName="ActualServiceprice" />
-                <ScalarProperty Name="DealServiceprice" ColumnName="DealServiceprice" />
-                <ScalarProperty Name="DealStartDate" ColumnName="DealStartDate" />
-                <ScalarProperty Name="DealEndDate" ColumnName="DealEndDate" />
-                <ScalarProperty Name="MaxOrder" ColumnName="MaxOrder" />
-                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
                 <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -1340,6 +1286,64 @@
                 <ScalarProperty Name="OnlineStore" ColumnName="OnlineStore" />
                 <ScalarProperty Name="InStore" ColumnName="InStore" />
                 <ScalarProperty Name="HomeServices" ColumnName="HomeServices" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsInfo" FunctionName="MaaAahwanamModel.Store.GetProductsInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProductsInfo_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="cost1" ColumnName="cost1" />
+                <ScalarProperty Name="cost2" ColumnName="cost2" />
+                <ScalarProperty Name="cost3" ColumnName="cost3" />
+                <ScalarProperty Name="MaxOrder" ColumnName="MaxOrder" />
+                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_dealsinfo" FunctionName="MaaAahwanamModel.Store.SP_dealsinfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.SP_dealsinfo_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="cost1" ColumnName="cost1" />
+                <ScalarProperty Name="cost2" ColumnName="cost2" />
+                <ScalarProperty Name="cost3" ColumnName="cost3" />
+                <ScalarProperty Name="cost4" ColumnName="cost4" />
+                <ScalarProperty Name="cost5" ColumnName="cost5" />
+                <ScalarProperty Name="cost6" ColumnName="cost6" />
+                <ScalarProperty Name="cost7" ColumnName="cost7" />
+                <ScalarProperty Name="ActualServiceprice" ColumnName="ActualServiceprice" />
+                <ScalarProperty Name="DealServiceprice" ColumnName="DealServiceprice" />
+                <ScalarProperty Name="DealStartDate" ColumnName="DealStartDate" />
+                <ScalarProperty Name="DealEndDate" ColumnName="DealEndDate" />
+                <ScalarProperty Name="MaxOrder" ColumnName="MaxOrder" />
+                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -41,5 +41,14 @@ namespace MaaAahwanam.Repository.db
                 return "Failed!!!";
             }
         }
+
+        public List<Availabledates> GetCurrentMonthDates(long id)
+        {
+            var today = DateTime.UtcNow;
+            var first = new DateTime(today.Year, today.Month, 1);
+            var last = first.AddMonths(1).AddDays(-1);
+            return _dbContext.Availabledates.Where(m => m.vendorId == id && m.availabledate > first && m.availabledate < last).ToList();
+            //return _dbContext.Availabledates.Where(m => m.vendorId == id).ToList();
+        }
     }
 }

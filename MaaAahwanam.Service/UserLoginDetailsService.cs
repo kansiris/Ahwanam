@@ -68,5 +68,10 @@ namespace MaaAahwanam.Service
         {
             return userLoginRepository.password(UserId);
         }
+
+        public UserLogin GetLoginDetailsByEmail(string username)
+        {
+            return userDetailsRepository.GetLoginDetailsByEmail(username);
+        }
     }
 }
