@@ -81,9 +81,14 @@ namespace MaaAahwanam.Repository.db
             return imagename;
         }
 
-        public UserLogin GetLoginDetailsByEmail(string username)
+        public long GetLoginDetailsByEmail(string username)
         {
-            return _dbContext.UserLogin.Where(m => m.UserName == username).FirstOrDefault();
+            var count = _dbContext.UserLogin.Where(m => m.UserName == username).FirstOrDefault();
+            if (count != null)
+                return count.UserLoginId;
+            else
+                //count.UserLoginId = 0;
+                return 0;
         }
     }
 }

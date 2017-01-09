@@ -33,11 +33,11 @@ function getdates() {
                     var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
                     final = final + datepart + ",";
                 }
-                else if (dateslist[0] < 10 && dateslist[1] > 10) {
+                else if (dateslist[0] < 10 && dateslist[1] >= 10) {
                     var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
                     final = final + datepart + ",";
                 }
-                else if (dateslist[0] > 10 && dateslist[1] < 10) {
+                else if (dateslist[0] >= 10 && dateslist[1] < 10) {
                     var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
                     final = final + datepart + ",";
                 }
@@ -141,3 +141,13 @@ function appendWords(t) {
             $("#save").css('display', 'none');
         }
     }
+
+//var final = ''; //var dateslist = data.split(','); 
+//for (var i = 0; i < data.length; i++) {
+//    var dates = data[i].split('/');
+//    var dates1 = new Date(dates[2], dates[1] - 1, dates[0]).toLocaleDateString();
+//    var dates2 = dates1.split('/');
+//    var dates3 = dates2[1] + '/' + dates2[0] + '/' + dates2[2];
+//    final = final + dates3 + ",";
+//    unavailableDates = final.slice(0, -1).split(',');
+//}

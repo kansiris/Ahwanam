@@ -45,9 +45,13 @@ namespace MaaAahwanam.Web.Controllers
             List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
             ViewBag.Amenities = Amenities;
             //Vendor Available Dates
-            var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId).UserLoginId;
-            var vendordates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m=>m.availabledate.ToShortDateString());
-            ViewBag.vendoravailabledates = string.Join(",", vendordates.ToArray());
+            var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
+            if (vendorid != 0)
+            {
+                var vendordates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m => m.availabledate.ToShortDateString());
+                ViewBag.vendoravailabledates = string.Join(",", vendordates.ToArray());
+            }
+            
             
             //List<DateTime> availabledates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m=>m.a);
 

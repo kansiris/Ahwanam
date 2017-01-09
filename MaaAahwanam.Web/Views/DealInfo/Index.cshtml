@@ -4,6 +4,17 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/MainMaster.cshtml";
 }
+
+<style>
+    .xdsoft_datetimepicker .xdsoft_label i {
+        display: none;
+    }
+
+    .xdsoft_datetimepicker .xdsoft_label {
+        z-index: 0;
+    }
+</style>
+
 @*@using MaaAahwanam.Web.Custom
     @{
         var user = (CustomPrincipal)HttpContext.Current.User;
@@ -120,7 +131,7 @@
 }
 
 <section>
-    <div class="about_main">
+    <div class="about_main"><input type="hidden" id="vendoravailabledates" value="@ViewBag.vendoravailabledates" />
         <div class="pageWidth">
             <input type="hidden" id="hdndealid" value="@Request.QueryString["did"]" />
             <div class="deal_info_main">
@@ -1794,7 +1805,10 @@
 </script>
 
 <script>
-        $('#btncheck').click(function(){
+    $('#btncheck').click(function(){
+        var selected = $('#datetimepicker5').val();
+        $('#datetimepicker1').val(selected);
+        $('#datetimepicker2').val(selected);
             $('#lnkproceedtonext').show();
         });
 </script>

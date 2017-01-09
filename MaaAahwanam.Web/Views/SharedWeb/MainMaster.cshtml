@@ -902,31 +902,43 @@
             }
 
         });
+
         var today = new Date();
-        var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        var firstDay = new Date(today.getFullYear(), today.getMonth(), 1).toLocaleDateString();
         var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
         
         $('#datetimepicker5').datetimepicker({
             inline: true,
-            lang: 'en',
-            startDate: '-1m',
-            endDate: lastDate,
             timepicker: false,
             format: 'd/m/Y',
-            minDate: firstDay,
+            minDate: new Date(),
             maxDate: lastDate,
+            changeMonth: false,
+            changeYear: false,
             formatDate: 'Y/m/d',
             beforeShowDay: function (date) {
                 var disableddates = $('#vendoravailabledates').val();
                 if (disableddates != '') {
                 var unavailableDates = '';
-                var final = ''; var dateslist = disableddates.split(','); 
-                for (var i = 0; i < dateslist.length; i++) {
-                    var dates = dateslist[i].split('/');
-                    var dates1 = new Date(dates[2], dates[1] - 1, dates[0]).toLocaleDateString();
-                    var dates2 = dates1.split('/');
-                    var dates3 = dates2[1] + '/' + dates2[0] + '/' + dates2[2];
-                    final = final + dates3 + ",";
+                var final = ''; var dateslist1 = disableddates.split(',');
+                for (var i = 0; i < dateslist1.length; i++) {
+                    var dateslist = dateslist1[i].split('/');
+                    if (dateslist[0] < 10 && dateslist[1] < 10) {
+                        var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                        final = final + datepart + ",";
+                    }
+                    else if (dateslist[0] < 10 && dateslist[1] >= 10) {
+                        var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                        final = final + datepart + ",";
+                    }
+                    else if (dateslist[0] >= 10 && dateslist[1] < 10) {
+                        var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                        final = final + datepart + ",";
+                    }
+                   
+                    else {
+                        final = final + dateslist1[i] + ",";
+                    }
                     unavailableDates = final.slice(0, -1).split(',');
                 }
                 var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
@@ -935,6 +947,8 @@
                 } else {
                     return [true, ""];
                 }
+                //$(document).find('.xdsoft_datetimepicker button.xdsoft_prev').css('background-color', 'red');
+                //document.getElementsByClassName('.xdsoft_prev').diabled = none;
                 }
                 else {
                     $('#datetimepicker5').hide();
@@ -946,7 +960,7 @@
             }
         }).on('change', function (date) {
             $('#btncheck').css('display', 'block');
-        });
+        }).on('load', function (date    ) { alert('date picker');});
 
         $('#datetimepicker6').datetimepicker({
             lang: 'en',
@@ -988,3 +1002,14 @@
                     //else {
                         //final = final + data[i] + ",";
                     //}*@
+
+
+@*  //var final = ''; var dateslist = disableddates.split(',');
+    //for (var i = 0; i < dateslist.length; i++) {
+    //    var dates = dateslist[i].split('/');
+    //    var dates1 = new Date(dates[2], dates[1] - 1, dates[0]).toLocaleDateString();
+    //    var dates2 = dates1.split('/');
+    //    var dates3 = dates2[1] + '/' + dates2[0] + '/' + dates2[2];
+    //    final = final + dates3 + ",";
+    //    unavailableDates = final.slice(0, -1).split(',');
+        //} *@
