@@ -26,7 +26,7 @@ namespace MaaAahwanam.Web.Controllers
                 //List<orderconfirmation_Result> list= orderConfirmationService.GetOrderConfirmation(OID);
                 DashBoardService dashBoardService = new DashBoardService();
                 List<sp_OrderDetails_Result> list = dashBoardService.GetOrderDetailService(OID);
-                ViewBag.Total = list.Sum(i => i.PerunitPrice);
+                ViewBag.Total = list.Select(i=>i.TotalPrice);// list.Sum(i => i.PerunitPrice);
                 ViewBag.Orderconfirmation = list;
                 return View();
             }

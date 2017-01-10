@@ -92,6 +92,10 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         ViewBag.costtype = "Actual Non-Veg Dinner Price";
                     }
+                    else if (price.attribute == "venueservice")
+                    {
+                        ViewBag.costtype = "Package Price";
+                    }
                 }
                 else if (Dealinfo.ServicType == "InvitationCard")
                 {
