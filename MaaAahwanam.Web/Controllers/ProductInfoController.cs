@@ -172,6 +172,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.PaymentId = payment_Orders.PaymentID;
             orderDetail.ServiceType = orderRequest.ServiceType;
             orderDetail.ServicePrice = orderRequest.ServicePrice;
+            orderDetail.TotalPrice = Convert.ToDecimal(orderRequest.TotalPrice);
             orderDetail.PerunitPrice = orderRequest.TotalPrice;
             orderDetail.Quantity = orderRequest.Quantity;
             orderDetail.OrderId = order.OrderId;
