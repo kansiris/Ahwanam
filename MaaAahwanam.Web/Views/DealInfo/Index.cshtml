@@ -1162,7 +1162,7 @@
         var radvenue = document.myFormvenue.platetypevenue;
         var prevvenue = null;var type = $("#venuetype").val();
         var rrvenue = null;
-        if ("@Request.QueryString["par"]" == "Venue") { 
+        if ("@Request.QueryString["par"]" == "Venue") {
             if(type == 'Banquet Hall'){
                 venueactualamount = document.getElementById('venueveglunch').innerHTML * document.getElementById("txtquantityvenue").value;
                 venuediscountprice = document.getElementById('venueveglunch').innerHTML - document.getElementById('venueveglunchdeal').innerHTML;
@@ -1170,6 +1170,7 @@
                 document.getElementById('venuediscountprice').value = venuediscountprice;
                 document.getElementById('venuediscount').value = venuediscount;
                 document.getElementById('venueactualamount').value = venueactualamount;
+                document.getElementById("rbselectedvalue").value = "@attribute.VenueVegLunchCost";
             }
             else {
                 venueactualamount = @Model.Item1.ActualServiceprice;
@@ -1179,10 +1180,11 @@
                 document.getElementById('venuediscount').value = venuediscount;
                 document.getElementById('venueactualamount').value = venueactualamount;
                 document.getElementById("rbselectedamount").value = @Model.Item1.DealServiceprice;
+                document.getElementById("rbselectedvalue").value = "@attribute.ServicesExceptBanquetHall";
                 //alert(document.getElementById("rbselectedamount").value);
             }
         }
-        document.getElementById("rbselectedvalue").value = "@attribute.VenueVegLunchCost";
+
         var venuediscount,venuediscountprice,venueactualamount;
         if (radvenue.length > 1) {
             document.getElementById("lblprice").innerHTML = "Total Price";

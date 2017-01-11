@@ -26,7 +26,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 int a = (int)user.UserId;
                 //ViewBag.Vdatesbooked = serviceResponseService.GetVendordatesbooked(a);
-                ViewBag.Vdatesbooked = orderdetailsServices.DatesBooked(a);
+                ViewBag.Vdatesbooked = orderdetailsServices.DatesBooked(a).OrderByDescending(i=>i.StartDate);
             }
             return View();
         }

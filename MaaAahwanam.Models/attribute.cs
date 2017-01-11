@@ -13,6 +13,7 @@ namespace MaaAahwanam.Models
         public static string VenueNonVegLunchCost = "nvlvenue";
         public static string VenueVegDinnerCost = "vdvenue";
         public static string VenueNonVegDinnerCost = "nvdvenue";
+        public static string ServicesExceptBanquetHall = "venueservice";
 
         //Catering
         public static string CateringVegPerPlate = "vlCatering"; 

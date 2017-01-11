@@ -48,7 +48,14 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.ratingscount = productInfoService.GetCount(vid, Svid,type).Count();
             ViewBag.rating = productInfoService.ratingscount(vid, Svid, type);
             var price = dashBoardService.GetPrice(oid);
-            ViewBag.price = price.PerunitPrice;
+            if (price.ServiceType == "Venue" || price.ServiceType == "Catering" || price.ServiceType == "InvitationCard" || price.ServiceType == "Gifts")
+            {
+                ViewBag.price = price.TotalPrice;
+            }
+            else
+            {
+                ViewBag.price = price.PerunitPrice;
+            }
             List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
             ViewBag.Amenities = Amenities;
             if (dealid != null && dealid != "")
@@ -61,7 +68,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     ViewBag.discountvalue = price.Discount;
                     ViewBag.actualprice = price.ServicePrice;
-                    ViewBag.amountsaved = ViewBag.actualprice - price.PerunitPrice;
+                    ViewBag.amountsaved = ViewBag.actualprice - price.TotalPrice;
                     if (price.attribute == "nvlCatering")
                     {
                         ViewBag.costtype = "Actual Non-Veg Price";
@@ -75,7 +82,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     ViewBag.discountvalue = price.Discount;
                     ViewBag.actualprice = price.ServicePrice;
-                    ViewBag.amountsaved = ViewBag.actualprice - price.PerunitPrice;
+                    ViewBag.amountsaved = ViewBag.actualprice - price.TotalPrice;
                     if (price.attribute == "vlvenue")
                     {
                         ViewBag.costtype = "Actual Veg Lunch Price";
@@ -101,7 +108,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     ViewBag.discountvalue = price.Discount;
                     ViewBag.actualprice = price.ServicePrice;
-                    ViewBag.amountsaved = ViewBag.actualprice - price.PerunitPrice;
+                    ViewBag.amountsaved = ViewBag.actualprice - price.TotalPrice;
                     if (price.attribute == "vlinvitation")
                     {
                         ViewBag.costtype = "Actual Card Cost";
