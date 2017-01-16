@@ -18,7 +18,9 @@
         <Function Name="GetDealServiceType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ntype" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="geteventsandtipsimages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="geteventsandtipsimages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
           <Parameter Name="VID" Type="int" Mode="In" />
@@ -131,7 +133,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="MaaAahwanamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MaaAahwanamEntities" annotation:LazyLoadingEnabled="true" >
-          <FunctionImport Name="geteventsandtipsimages" ReturnType="Collection(MaaAahwanamModel.geteventsandtipsimages_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_AllRegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_AllRegisteredUsersDetails_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsers" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsers_Result)" />
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsersDetails_Result)">
@@ -251,26 +252,10 @@
             <Parameter Name="Vid2" Mode="In" Type="Int32" />
             <Parameter Name="did" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="geteventsandtipsimages" ReturnType="Collection(MaaAahwanamModel.geteventsandtipsimages_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="geteventsandtipsimages_Result">
-          <Property Type="Int64" Name="EventId" Nullable="false" />
-          <Property Type="String" Name="Title" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="Location" Nullable="true" />
-          <Property Type="String" Name="Image" Nullable="true" />
-          <Property Type="String" Name="Phone" Nullable="true" />
-          <Property Type="Decimal" Name="Price" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="Person" Nullable="true" />
-          <Property Type="String" Name="Type" Nullable="true" />
-          <Property Type="String" Name="Link" Nullable="true" />
-          <Property Type="DateTime" Name="Eventstartdate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="Eventenddate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Imageid" Nullable="true" />
-          <Property Type="Int64" Name="UpdatedBy" Nullable="false" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Status" Nullable="true" />
-          <Property Type="String" Name="cropedimage" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
           <Property Type="String" Name="FirstName" Nullable="true" />
@@ -722,35 +707,31 @@
           <Property Type="String" Name="MinOrder" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="geteventsandtipsimages_Result">
+          <Property Type="Int64" Name="EventId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Location" Nullable="true" />
+          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="String" Name="Phone" Nullable="true" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Person" Nullable="true" />
+          <Property Type="String" Name="Type" Nullable="true" />
+          <Property Type="String" Name="Link" Nullable="true" />
+          <Property Type="DateTime" Name="Eventstartdate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Eventenddate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Imageid" Nullable="true" />
+          <Property Type="Int64" Name="UpdatedBy" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="String" Name="cropedimage" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MaaAahwanamModelStoreContainer" CdmEntityContainer="MaaAahwanamEntities" >
-          <FunctionImportMapping FunctionImportName="geteventsandtipsimages" FunctionName="MaaAahwanamModel.Store.geteventsandtipsimages">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.geteventsandtipsimages_Result">
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Person" ColumnName="Person" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="Eventstartdate" ColumnName="Eventstartdate" />
-                <ScalarProperty Name="Eventenddate" ColumnName="Eventenddate" />
-                <ScalarProperty Name="Imageid" ColumnName="Imageid" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="cropedimage" ColumnName="cropedimage" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MaaAahwanam_Others_AllRegisteredUsersDetails" FunctionName="MaaAahwanamModel.Store.MaaAahwanam_Others_AllRegisteredUsersDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -1344,6 +1325,29 @@
                 <ScalarProperty Name="MaxOrder" ColumnName="MaxOrder" />
                 <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
                 <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="geteventsandtipsimages" FunctionName="MaaAahwanamModel.Store.geteventsandtipsimages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.geteventsandtipsimages_Result">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Person" ColumnName="Person" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Eventstartdate" ColumnName="Eventstartdate" />
+                <ScalarProperty Name="Eventenddate" ColumnName="Eventenddate" />
+                <ScalarProperty Name="Imageid" ColumnName="Imageid" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="cropedimage" ColumnName="cropedimage" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

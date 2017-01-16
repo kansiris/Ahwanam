@@ -1,0 +1,82 @@
+﻿@model MaaAahwanam.Models.EventsandTip
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/SharedWeb/MainMaster.cshtml";
+
+}
+
+@section Navigation
+{
+    <div class="breads">
+        <div class="breads_inner">
+            <div class="pageWidth">
+                <div class="title">
+                    <h3>Event Info</h3>
+                </div>
+                <div class="breadcrumbs">
+                    <ul>
+                        <li><a href="../index/index">Home</a></li>
+                        <li><i class="breads_arrow"></i></li>
+                        <li>Event Info</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="deal-info">
+    <div class="deal-slider">
+        
+        <div class="sp-wrap">
+            @if (ViewBag.Imagelist != null)
+            {
+                foreach (var item in ViewBag.Imagelist)
+                {
+                    <a href="~/vendorimages/@item"> <img src="~/vendorimages/@item" alt="thumb"></a>
+                }
+            }
+            else if (ViewBag.Imagelist == null)
+            {
+                <a href="#" onclick="return false">
+                    <img src="~/noimages.png" />
+                </a>
+            }
+        </div>
+    </div>
+    <div class="deal-desc">
+        <div class="product_review">
+            <h4>Location</h4>
+            <p> @Model.Location </p>
+        </div>
+        <div class="product_review">
+            <h4>Description</h4>
+            <p class="comment"> @Model.Description   </p>
+        </div>
+        <div class="deal_price">
+            <div class="price_details">
+                <dl>
+                    <dt>Person: </dt>
+                    <dd>
+                        @Model.Person
+                    </dd>
+                    <dt>Contact No: </dt>
+                    <dd>
+                        @Model.Phone
+                    </dd>
+                    <dt>Event Date: </dt>
+                    <dd>
+                        @Model.Eventstartdate
+                    </dd>
+                    <dt>Price: </dt>
+                    <dd>
+                        Rs.@Model.Price
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+

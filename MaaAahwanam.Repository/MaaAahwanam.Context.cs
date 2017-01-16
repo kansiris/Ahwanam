@@ -28,11 +28,6 @@ namespace MaaAahwanam.Repository
         }
     
     
-        public virtual ObjectResult<geteventsandtipsimages_Result> geteventsandtipsimages()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages");
-        }
-    
         public virtual ObjectResult<MaaAahwanam_Others_AllRegisteredUsersDetails_Result> MaaAahwanam_Others_AllRegisteredUsersDetails()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_AllRegisteredUsersDetails_Result>("MaaAahwanam_Others_AllRegisteredUsersDetails");
@@ -420,6 +415,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("did", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_dealsinfo_Result>("SP_dealsinfo", vidParameter, nTypeParameter, vid2Parameter, didParameter);
+        }
+    
+        public virtual ObjectResult<geteventsandtipsimages_Result> geteventsandtipsimages(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<geteventsandtipsimages_Result>("geteventsandtipsimages", idParameter);
         }
     }
 }

@@ -12,9 +12,9 @@ namespace MaaAahwanam.Service
     public class EventsandtipsService
     {
         EventsandTipRepository eventsandTipRepository = new EventsandTipRepository();
-        public List<geteventsandtipsimages_Result> EventsandTipsList()
+        public List<geteventsandtipsimages_Result> EventsandTipsList(int id)
         {
-            return eventsandTipRepository.EventsandTipList();
+            return eventsandTipRepository.EventsandTipList(id);
         }
 
         public EventsandTip AddEventandTip(EventsandTip eventAndTip)
@@ -44,9 +44,9 @@ namespace MaaAahwanam.Service
             eventsandTipRepository.UpdateEventsAndTip(eventAndTip,id);
             return eventAndTip;
         }
-        public List<geteventsandtipsimages_Result> EventsandTipsListUser(string type)
+        public List<geteventsandtipsimages_Result> EventsandTipsListUser(string type,int id)
         {
-            return eventsandTipRepository.EventsandTipList().Where(o=>o.Type== type).ToList<geteventsandtipsimages_Result>();
+            return eventsandTipRepository.EventsandTipList(id).Where(o=>o.Type== type).ToList();
         }
     }
 }

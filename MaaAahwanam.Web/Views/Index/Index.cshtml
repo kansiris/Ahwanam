@@ -1,27 +1,28 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/MainMaster.cshtml";
 }
 
 @*<div class="feedback_right">
-    <a href="#" class="email-signup-link"><img src="../CSSWeb/images/btn-request.png" alt=""></a>
-    <div class="email-signup">
-        <ul>
-            <li><a href="~/Deals/Index">Book Now</a></li>
-            <li><a href="~/Invitation/Index">Invitation</a></li>
-            <li><a href="~/QuatationSubmit/Index">Quatation</a></li>
-            <li><a href="~/Bidding/Index">Bidding</a></li>
-            <li><a href="~/ReturnGift/Index">Return Gifts</a></li>
-        </ul>
-    </div>
-</div>*@
+        <a href="#" class="email-signup-link"><img src="../CSSWeb/images/btn-request.png" alt=""></a>
+        <div class="email-signup">
+            <ul>
+                <li><a href="~/Deals/Index">Book Now</a></li>
+                <li><a href="~/Invitation/Index">Invitation</a></li>
+                <li><a href="~/QuatationSubmit/Index">Quatation</a></li>
+                <li><a href="~/Bidding/Index">Bidding</a></li>
+                <li><a href="~/ReturnGift/Index">Return Gifts</a></li>
+            </ul>
+        </div>
+    </div>*@
 @*<meta http-equiv="refresh" content="300" />*@
 <section>
     <div class="slider">
         @*@using (Html.BeginForm("Index", "AllServices", FormMethod.Post))
             {*@
-        <div class="ms-layer search-box" style="left:0; right:0; top:215px;" >
-            <div class="select-cats"><input type="hidden" id="hdnselected" />
+        <div class="ms-layer search-box" style="left:0; right:0; top:215px;">
+            <div class="select-cats">
+                <input type="hidden" id="hdnselected" />
                 <form autocomplete="off">
                     <select id="e2" style="width:100%" onchange="change(this.value)">
                         <option>Select Event</option>
@@ -199,7 +200,7 @@
                                                         <a href="../Dealinfo?par=@PhDet.ServicType.Trim()&VID=@PhDet.Id&subvid=@PhDet.subid&did=@PhDet.DealID"><i class="ti-shopping-cart"></i> Add to Cart</a>
                                                     </span>
                                                 </div>
-                                                <p style="color:#838383;width:200px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">@PhDet.Description</p> 
+                                                <p style="color:#838383;width:200px;white-space:nowrap;overflow: hidden;text-overflow: ellipsis;">@PhDet.Description</p>
                                                 <div class="deal-footer">
                                                     <ul>
                                                         <li><div class="rate" data-rate-value=5></div></li>
@@ -376,10 +377,10 @@
 <!-- testimonials -->
 @if (ViewBag.Testimonials.Count != 0)
             {
-<section>
-    <div class="pageWidth">
-        <div class="testimonials">
-           
+    <section>
+        <div class="pageWidth">
+            <div class="testimonials">
+
                 <div class="heading-title">
                     <h2>What Our Customers Say!</h2>
                 </div>
@@ -418,11 +419,11 @@
                     }
 
                 </div>
+            </div>
         </div>
-    </div>
 
-</section>
-            }
+    </section>
+}
 <!-- // testimonials -->
 
 <section>
@@ -466,126 +467,147 @@
                 </ul>
                 <div class="resp-tabs-container hor_1">
                     <!-- UpcomingEvents -->
-                    <div>
-                        @if (ViewBag.UpcomingEvents != null)
-                        {
-                            foreach (var Upcomingevents in ViewBag.UpcomingEvents)
+                    
+                    @*<div>*@
+                        <div id="EventsDiv">
+                            <input type="hidden" id="EventLastRecord" value="@ViewBag.EventLastRecord" />
+                            @if (ViewBag.UpcomingEvents != null)
                             {
-                                <a href="#">
-                                    <div class="home_events_main no-margin">
-                                        <div class="event-thumb">@*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@ 
-                                            @if (Upcomingevents.cropedimage != null && Upcomingevents.cropedimage != "")
-                                            {
-                                                <img width="100" height="100" src="~/EventsAndTipsimages/@Upcomingevents.cropedimage" alt="" style="height:102px;width:102px"/>
-                                            }
-                                            @if (Upcomingevents.cropedimage == null || Upcomingevents.cropedimage == "")
-                                            {
-                                                <img width="100" height="100" src="~/EventsAndTipsimages/@Upcomingevents.Image" alt="" style="height:102px;width:102px"/>
-                                            }
+
+                                foreach (var Upcomingevents in ViewBag.UpcomingEvents)
+                                {
+                                    <a href="~/Events">
+                                        <div class="home_events_main no-margin">
+                                            <div class="event-thumb">
+                                                @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
+                                                @if (Upcomingevents.cropedimage != null && Upcomingevents.cropedimage != "")
+                                                {
+                                                    <img width="100" height="100" src="~/EventsAndTipsimages/@Upcomingevents.cropedimage" alt="" style="height:102px;width:102px" />
+                                                }
+                                                @if (Upcomingevents.cropedimage == null || Upcomingevents.cropedimage == "")
+                                                {
+                                                    <img width="100" height="100" src="~/EventsAndTipsimages/@Upcomingevents.Image" alt="" style="height:102px;width:102px" />
+                                                }
+                                            </div>
+                                            <div class="event-details">
+                                                <h2>@Upcomingevents.Title</h2>
+                                                <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">@Upcomingevents.Description</p> @*.ToString().Substring(0, 5)*@
+                                                <p><i class="ti-location-pin"></i>@Upcomingevents.Location</p>
+                                                <p><i class="ti-user"></i>@Upcomingevents.Person</p>
+                                                <p><i class="ti-mobile"></i>@Upcomingevents.Phone</p>
+                                                <p><i class="ti-calendar"></i>@Upcomingevents.Eventstartdate.ToString("dd-MM-yyyy")</p> @*am*@
+                                                @*<p>Rs.@Html.Encode(string.Format("{0:2}", Upcomingevents.Price))</p>*@
+                                                <p>Rs.@Upcomingevents.Price</p>
+                                            </div>
                                         </div>
-                                        <div class="event-details">
-                                            <h2>@Upcomingevents.Title</h2> 
-                                            <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">@Upcomingevents.Description</p> @*.ToString().Substring(0, 5)*@
-                                            <p><i class="ti-location-pin"></i>@Upcomingevents.Location</p>
-                                            <p><i class="ti-user"></i>@Upcomingevents.Person</p>
-                                            <p><i class="ti-mobile"></i>@Upcomingevents.Phone</p>
-                                            <p><i class="ti-calendar"></i>@Upcomingevents.Eventstartdate.ToString("dd-MM-yyyy")</p> @*am*@
-                                            @*<p>Rs.@Html.Encode(string.Format("{0:2}", Upcomingevents.Price))</p>*@
-                                            <p>Rs.@Upcomingevents.Price</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            }
-                        }
-                        else
-                        {
-                            <div class="home_events_main no-margin">
-                                <div class="event-details">
-                                    <h2>No UpcomingEvents found</h2>
+                                    </a>
+                                }
+                                <div class="loadMore" id="Event">
+                                    @*<button name="loadmore" id="LoadMore1" class="btn btn-green more-button" onclick="load('Event')"><i class="ti-reload"></i> Load More</button>*@
+                                    <button class="btn btn-green more-button" onclick="location.href = 'Events'"><i class="ti-share"></i> View All Events</button>
                                 </div>
-                            </div>
-                        }
-                    </div>
+                            }
+                            else
+                            {
+                                <div class="home_events_main no-margin">
+                                    <div class="event-details">
+                                        <h2>No Upcoming Events found</h2>
+                                    </div>
+                                </div>
+                            }
+                            
+                        </div>
+                    @*</div>*@
+                        
+                    
                     <!-- HealthTips -->
-                    <div>
+                    <div id="HealthDiv">
+                        <input type="hidden" id="HealthtipsLastRecord" value="@ViewBag.HealthtipsLastRecord" />
                         @if (ViewBag.HealthTips != null)
                         {
                             foreach (var HealthTips in ViewBag.HealthTips)
                             {
-                                <a href="#">
+                                <a href="~/EventInfo/@HealthTips.EventId">
                                     <div class="home_events_main no-margin">
                                         <div class="event-thumb">
-                                        @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
+                                            @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
                                             @if (HealthTips.cropedimage != null && HealthTips.cropedimage != "")
                                             {
-                                                <img width="100" height="100" src="~/EventsAndTipsimages/@HealthTips.cropedimage" alt="" style="height:102px;width:102px"/>
+                                            <img width="100" height="100" src="~/EventsAndTipsimages/@HealthTips.cropedimage" alt="" style="height:102px;width:102px" />
                                             }
                                             @if (HealthTips.cropedimage == null || HealthTips.cropedimage == "")
                                             {
-                                                <img width="100" height="100" src="~/EventsAndTipsimages/@HealthTips.Image" alt="" style="height:102px;width:102px"/>
+                                            <img width="100" height="100" src="~/EventsAndTipsimages/@HealthTips.Image" alt="" style="height:102px;width:102px" />
                                             }
-                                         </div>
+                                        </div>
                                         <div class="event-details">
                                             <h2>@HealthTips.Title</h2>
                                             <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">@HealthTips.Description</p> @*.ToString().Substring(0, 5)*@
                                             @*<p><i class="ti-location-pin"></i>@HealthTips.Location</p>
-                                              <p><i class="ti-user"></i>@HealthTips.Person</p>
-                                              <p><i class="ti-mobile"></i>@HealthTips.Phone</p>
-                                              <p><i class="ti-calendar"></i>@HealthTips.Eventstartdate</p> am*@
+                                                <p><i class="ti-user"></i>@HealthTips.Person</p>
+                                                <p><i class="ti-mobile"></i>@HealthTips.Phone</p>
+                                                <p><i class="ti-calendar"></i>@HealthTips.Eventstartdate</p> am*@
                                             @*<p>Rs.@Html.Encode(string.Format("{0:2}", HealthTips.Price))</p>*@
                                             @*<p>Rs.@HealthTips.Price</p>*@
                                         </div>
                                     </div>
                                 </a>
                             }
+                            <div class="loadMore" id="Health">
+                                <button name="loadmore" id="LoadMore1" class="btn btn-green more-button" onclick="load('Health')"><i class="ti-reload"></i> Load More</button>
+                            </div>
                         }
                         else
                         {
                             <div class="home_events_main no-margin">
                                 <div class="event-details">
-                                    <h2>No HealthTips Found</h2>
+                                    <h2>No Health Tips Found</h2>
                                 </div>
                             </div>
                         }
                     </div>
                     <!-- BeautyTips -->
-                    <div>
+                    <div id="BeautyDiv">
+                        <input type="hidden" id="BeautytipsLastRecord" value="@ViewBag.BeautytipsLastRecord" />
                         @if (ViewBag.BeautyTips != null)
                         {
                             foreach (var BeautyTips in ViewBag.BeautyTips)
                             {
-                                <a href="#">
+                                <a href="~/EventInfo/@BeautyTips.EventId">
                                     <div class="home_events_main no-margin">
                                         <div class="event-thumb">
-                                        @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
+                                            @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
                                             @if (BeautyTips.cropedimage != null && BeautyTips.cropedimage != "")
                                             {
-                                                <img width="100" height="100" src="~/EventsAndTipsimages/@BeautyTips.cropedimage" alt="" style="height:102px;width:102px"/>
+                                            <img width="100" height="100" src="~/EventsAndTipsimages/@BeautyTips.cropedimage" alt="" style="height:102px;width:102px" />
                                             }
                                             @if (BeautyTips.cropedimage == null || BeautyTips.cropedimage == "")
                                             {
-                                                <img width="100" height="100" src="~/EventsAndTipsimages/@BeautyTips.Image" alt="" style="height:102px;width:102px"/>
+                                            <img width="100" height="100" src="~/EventsAndTipsimages/@BeautyTips.Image" alt="" style="height:102px;width:102px" />
                                             }
-                                         </div>
+                                        </div>
                                         <div class="event-details">
                                             <h2>@BeautyTips.Title</h2>
                                             <p class="event-desc" style="color:#838383;width: 350px; overflow:hidden;line-height:1.5em;height:3em;">@BeautyTips.Description</p> @*.ToString().Substring(0, 5)*@
                                             @*<p><i class="ti-location-pin"></i>@BeautyTips.Location</p>
-                                              <p><i class="ti-user"></i>@BeautyTips.Person</p>
-                                              <p><i class="ti-mobile"></i>@BeautyTips.Phone</p>
-                                              <p><i class="ti-calendar"></i>@BeautyTips.Eventstartdate</p> am*@
+                                                <p><i class="ti-user"></i>@BeautyTips.Person</p>
+                                                <p><i class="ti-mobile"></i>@BeautyTips.Phone</p>
+                                                <p><i class="ti-calendar"></i>@BeautyTips.Eventstartdate</p> am*@
                                             @*<p>Rs.@Html.Encode(string.Format("{0:2}", BeautyTips.Price))</p>*@
                                             @*<p>Rs.@BeautyTips.Price</p>*@
                                         </div>
                                     </div>
                                 </a>
                             }
+                            <div class="loadMore" id="Beauty">
+                                <button name="loadmore" id="LoadMore1" class="btn btn-green more-button" onclick="load('Beauty')"><i class="ti-reload"></i> Load More</button>
+                            </div>
                         }
                         else
                         {
                             <div class="home_events_main no-margin">
                                 <div class="event-details">
-                                    <h2>No BeautyTips found</h2>
+                                    <h2>No Beauty Tips found</h2>
                                 </div>
                             </div>
                         }
@@ -602,10 +624,10 @@
         if (val != '' && val != undefined) {
             $("#select2-chosen-4").text(val);
         }
-
-        
     }
 </script>
+
+<script src="~/Scripts/jquery.min.js"></script>
 @section scripts
 {
 
@@ -617,6 +639,57 @@
 <script>
     function change(value) {
         document.getElementById('hdnselected').value = value;
+    }
+</script>
+
+<script>
+    function load(typ) {
+        var lastrecord;
+        if (typ == 'Event') {
+            lastrecord = document.getElementById("EventLastRecord").value;
+        }
+        else if (typ == 'Beauty') {
+            lastrecord = document.getElementById("BeautytipsLastRecord").value;
+        }
+        else if (typ == 'Health') {
+            lastrecord = document.getElementById("HealthtipsLastRecord").value;
+        }
+        var obj = {};
+        obj.lastrecord = lastrecord;
+        obj.typ = typ;
+        $.ajax({
+            type: "POST",
+            url: '/Index/Loadmore',
+            data: {},
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.length == 4) {
+                    if (typ == 'Event') {
+                        $.each(data, function (key, value) {
+                            $("#EventsDiv").append('<a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="~/EventsAndTipsimages/' + value.image + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p> <p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i>' + value.Eventstartdate + '</p> </div> </div> </a>');
+                            document.getElementById("EventLastRecord").value = value.EventId;
+                        });
+                    }
+                    else if (typ == 'Beauty') {
+                        $.each(data, function (key, value) {
+                            $("#BeautyDiv").append('<a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="~/EventsAndTipsimages/' + value.image + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p> <p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i>' + value.Eventstartdate + '</p> </div> </div> </a>');
+                            document.getElementById("BeautytipsLastRecord").value = value.EventId;
+                        });
+                    }
+                    else if (typ == 'Health') {
+                        $.each(data, function (key, value) {
+                            $("#HealthDiv").append('<a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="~/EventsAndTipsimages/' + value.image + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p> <p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i>' + value.Eventstartdate + '</p> </div> </div> </a>');
+                            document.getElementById("HealthtipsLastRecord").value = value.EventId;
+                        });
+                    }
+                }
+                else {
+                    alert("That's All Folks!!!");
+                }
+            }
+        });
     }
 </script>
 

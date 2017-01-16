@@ -6,22 +6,22 @@
 
 @section Navigation
 {
-<div class="breads">
-    <div class="breads_inner">
-        <div class="pageWidth">
-            <div class="title">
-                <h3>Successful Events</h3>
-            </div>
-            <div class="breadcrumbs">
-                <ul>
-                    <li><a href="../index/index">Home</a></li>
-                    <li><i class="breads_arrow"></i></li>
-                    <li>Successful Events</li>
-                </ul>
+    <div class="breads">
+        <div class="breads_inner">
+            <div class="pageWidth">
+                <div class="title">
+                    <h3>Successful Events</h3>
+                </div>
+                <div class="breadcrumbs">
+                    <ul>
+                        <li><a href="../index/index">Home</a></li>
+                        <li><i class="breads_arrow"></i></li>
+                        <li>Successful Events</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 }
 <article>
@@ -37,284 +37,97 @@
             <option>Godi wale</option>
         </select>
     </div>
+
     <div class="about_content">
+        <input type="hidden" id="EventLastRecord" value="@ViewBag.EventLastRecord" />
         <div class="events_main">
-            <ul>
+            <ul id="EventsDiv">
+                @if (ViewBag.UpcomingEvents != null)
+                {
+                    foreach (var Upcomingevents in ViewBag.UpcomingEvents)
+                    {
                 <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>6th Edition Hyderabad Kids Fair 2015</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
+                        <a href="~/EventInfo?id=@Upcomingevents.EventId">
+                            <div class="home_events_main no-margin">
+                                <div class="event-thumb">
+                                    @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
+                                    @if (Upcomingevents.cropedimage != null && Upcomingevents.cropedimage != "")
+                                            {
+                                            <img src="~/EventsAndTipsimages/@Upcomingevents.cropedimage" alt="" style="height:102px;width:102px" />
+                                            }
+                                    @if (Upcomingevents.cropedimage == null || Upcomingevents.cropedimage == "")
+                                            {
+                                            <img src="~/EventsAndTipsimages/@Upcomingevents.Image" alt="" style="height:102px;width:102px" />
+                                            }
+                                </div>
+                                <div class="event-details">
+                                    <h2>@Upcomingevents.Title</h2>
+                                    <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em">@Upcomingevents.Description</p> @*.ToString().Substring(0, 5)*@
+                                    <p><i class="ti-location-pin"></i>@Upcomingevents.Location</p>
+                                    <p><i class="ti-user"></i>@Upcomingevents.Person</p>
+                                    <p><i class="ti-mobile"></i>@Upcomingevents.Phone</p>
+                                    <p><i class="ti-calendar"></i>@Upcomingevents.Eventstartdate.ToString("dd-MM-yyyy")</p> @*am*@
+                                    @*<p>Rs.@Html.Encode(string.Format("{0:2}", Upcomingevents.Price))</p>*@
+                                    <p>Rs.@Upcomingevents.Price</p>
+                                </div>
                             </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
                         </a>
-                    </div>
                 </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>31-12 Seventh New Year Eve Party Edition </h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
+                    }
+                
+                }
+                else
+                {
+                <div class="home_events_main no-margin">
+                    <div class="event-details">
+                        <h2>No Upcoming Events found</h2>
                     </div>
-                </li>
+                </div>
+                }
             </ul>
-            <ul>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-2.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Successful Business Idea Generation in a simp Start Art 2015</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-3.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Start Art 2015 International Art Exhibition </h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-4.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>IIFA Utsavam 2015</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-5.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>SKYFEST 2015 - Combo and Seasonal Donor Passe</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-6.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Student Smaash</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-7.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Happy New Year, New Year Party of the Year</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Successful Business Idea Generation in a simp Start Art 2015</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-1.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>6th Edition Hyderabad Kids Fair 2015</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-2.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Start Art 2015 International Art Exhibition </h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-3.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>SKYFEST 2015 - Combo and Seasonal Donor Passe</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-4.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>6th Edition Hyderabad Kids Fair 2015</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-5.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Happy New Year, New Year Party of the Year</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-6.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>Student Smaash</h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="events">
-                        <a href="#">
-                            <div class="event-thumb"> <img src="../CSSWeb/images/events/thumb-7.jpg" alt="events"> </div>
-                            <div class="event-details">
-                                <h2>31-12 Seventh New Year Eve Party Edition </h2>
-                                <p class="event-desc">Nam interdum faucibus magna. Aenean mauris felis, bibendum id eros vel</p>
-                            </div>
-                            <p class="event-desc1"><i class="ti-location-pin"></i> Banjarahills, Hyderabad</p>
-                            <p class="event-desc1"><i class="ti-user"></i> Satyam</p>
-                            <p class="event-desc1"><i class="ti-mobile"></i> 96525 44441</p>
-                            <p class="event-desc1"><i class="ti-calendar"></i> Dec 24, 2015 10:00 am</p>
-                            <p class="event-desc1">Rs. 1500.00</p>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="clear"></div>
-        <div class="loadMore">
-            <button name="loadmore" class="btn btn-green more-button"><i class="ti-reload"></i> Load More</button>
+            <div class="loadMore" id="Event">
+                <button name="loadmore" id="LoadMore1" class="btn btn-green more-button" onclick="load()"><i class="ti-reload"></i> Load More</button>
+                @*<button class="btn btn-green more-button" onclick="location.href = 'Events'"><i class="ti-share"></i> View All Events</button>*@
+            </div>
         </div>
     </div>
 </article>
+
+<script src="~/Scripts/jquery.min.js"></script>
+
+<script>
+    function load() {
+        var lastrecord = document.getElementById("EventLastRecord").value;
+
+        var obj = {};
+        obj.lastrecord = lastrecord;
+
+        $.ajax({
+            type: "POST",
+            url: '/Events/Loadmore',
+            data: {},
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.length == 4) {
+                    $.each(data, function (key, value) {
+                        //$("#EventsDiv").append('<li> <a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img src="~/EventsAndTipsimages/' + value.image + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p> <p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i> ' + value.Updateddate + '</p> </div> </div> </a> </li>');
+                        var date = new Date(parseInt(value.Eventstartdate.substr(6))).toLocaleDateString().split('/');
+                        $("#EventsDiv").append('<li> <a href="~/EventInfo"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img src="/EventsAndTipsimages/' + value.image + ' " alt="" style="height:102px;width:102px" /> </div> <div class="event-details"> <h2> ' + value.Title + '</h2> <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em"> ' + value.Description + ' </p> <p><i class="ti-location-pin"></i> ' + value.Location + ' </p> <p><i class="ti-user"></i> ' + value.Person + ' </p> <p><i class="ti-mobile"></i> ' + value.Phone + ' </p> <p><i class="ti-calendar"></i> ' + date[1] +'-'+ date[0] +'-'+date[2] + ' </p>   <p>Rs.' + value.Price + '</p> </div> </div> </a> </li>');
+                        document.getElementById("EventLastRecord").value = value.EventId;
+                    });
+                }
+                else {
+                    alert("That's All Folks!!!");
+                }
+            }
+        });
+    }
+</script>
+
+
+
+
+
+

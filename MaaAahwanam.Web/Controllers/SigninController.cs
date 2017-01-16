@@ -37,7 +37,10 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (command == "Register")
             {
-                
+                if (userLogin.UserLoginId != 0)
+                {
+
+
                     UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                     userLogin.UserType = "User";
                     var response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
@@ -49,7 +52,8 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
                     }
-                
+                }
+                return View();
             }
             if (command == "AuthenticationUser")
             {

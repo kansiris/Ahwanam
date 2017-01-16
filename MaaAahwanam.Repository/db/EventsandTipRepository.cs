@@ -12,9 +12,9 @@ namespace MaaAahwanam.Repository.db
     {
         readonly ApiContext _dbContext = new ApiContext();
         MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
-        public List<geteventsandtipsimages_Result> EventsandTipList()
+        public List<geteventsandtipsimages_Result> EventsandTipList(int id)
         {
-            return maaAahwanamEntities.geteventsandtipsimages().ToList();
+            return maaAahwanamEntities.geteventsandtipsimages(id).ToList();
         }
 
         public EventsandTip AddEventsAndTip(EventsandTip eventAndTip)

@@ -914,48 +914,48 @@
             inline: true,
             timepicker: false,
             format: 'd/m/Y',
-            minDate: new Date(),
-            maxDate: lastDate,
+            minDate: new Date(today.getFullYear(), (today.getMonth() + 1), (today.getDate() - 1)),
+            maxDate: firstDay,
             changeMonth: false,
             changeYear: false,
             formatDate: 'Y/m/d',
             beforeShowDay: function (date) {
                 var disableddates = $('#vendoravailabledates').val();
                 if (disableddates != '') {
-                var unavailableDates = '';
-                var final = ''; var dateslist1 = disableddates.split(',');
-                for (var i = 0; i < dateslist1.length; i++) {
-                    var dateslist = dateslist1[i].split('/');
-                    if (dateslist[0] < 10 && dateslist[1] < 10) {
-                        var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
-                        final = final + datepart + ",";
-                    }
-                    else if (dateslist[0] < 10 && dateslist[1] >= 10) {
-                        var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
-                        final = final + datepart + ",";
-                    }
-                    else if (dateslist[0] >= 10 && dateslist[1] < 10) {
-                        var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
-                        final = final + datepart + ",";
-                    }
+                    var unavailableDates = '';
+                    var final = ''; var dateslist1 = disableddates.split(',');
+                    for (var i = 0; i < dateslist1.length; i++) {
+                        var dateslist = dateslist1[i].split('/');
+                        if (dateslist[0] < 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] < 10 && dateslist[1] >= 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] >= 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
                    
-                    else {
-                        final = final + dateslist1[i] + ",";
+                        else {
+                            final = final + dateslist1[i] + ",";
+                        }
+                        unavailableDates = final.slice(0, -1).split(',');
                     }
-                    unavailableDates = final.slice(0, -1).split(',');
-                }
-                var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-                if ($.inArray(dmy, unavailableDates) == -1) {
-                    return [false, "myclass", "Unavailable"];
-                } else {
-                    return [true, ""];
-                }
-                //$(document).find('.xdsoft_datetimepicker button.xdsoft_prev').css('background-color', 'red');
-                //document.getElementsByClassName('.xdsoft_prev').diabled = none;
+                    var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                    if ($.inArray(dmy, unavailableDates) == -1) {
+                        return [false, "myclass", "Unavailable"];
+                    } else {
+                        return [true, ""];
+                    }
+                    //$(document).find('.xdsoft_datetimepicker button.xdsoft_prev').css('background-color', 'red');
+                    //document.getElementsByClassName('.xdsoft_prev').diabled = none;
                 }
                 else {
-                    $('#datetimepicker5').hide();
-                    $('.xdsoft_datetimepicker').hide();
+                    //$('#datetimepicker5').hide();
+                    //$('.xdsoft_datetimepicker').hide();
                     var msg = 'Vendor is Not Available at the moment';
                     document.getElementById('msg').innerHTML = msg;
                     //$('#msg').val();
@@ -963,7 +963,7 @@
             }
         }).on('change', function (date) {
             $('#btncheck').css('display', 'block');
-        }).on('load', function (date    ) { alert('date picker');});
+        });
 
         $('#datetimepicker6').datetimepicker({
             lang: 'en',

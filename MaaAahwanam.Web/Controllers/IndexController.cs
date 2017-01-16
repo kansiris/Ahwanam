@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class IndexController : Controller
     {
+        EventsandtipsService eventsandtipsService = new EventsandtipsService();
         public ActionResult Index()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -29,13 +30,16 @@ namespace MaaAahwanam.Web.Controllers
             TestmonialService testmonialService = new TestmonialService();
             ViewBag.Testimonials = testmonialService.TestmonialServiceList();//Testimonials List
             //Products List Index(4 Services Photography,Beautition,Decorators,Travels)
-            EventsandtipsService eventsandtipsService = new EventsandtipsService();
-            var Events = eventsandtipsService.EventsandTipsListUser("Event");
-            var Beautytips = eventsandtipsService.EventsandTipsListUser("Beauty Tips");
-            var Healthtips = eventsandtipsService.EventsandTipsListUser("Health Tips");
+            
+            var Events = eventsandtipsService.EventsandTipsListUser("Event",0).OrderByDescending(m=>m.EventId).Take(4);
+            var Beautytips = eventsandtipsService.EventsandTipsListUser("Beauty Tips",0).OrderByDescending(m => m.EventId).Take(4);
+            var Healthtips = eventsandtipsService.EventsandTipsListUser("Health Tips",0).OrderByDescending(m => m.EventId).Take(4);
             ViewBag.UpcomingEvents = Events;
             ViewBag.HealthTips = Healthtips;
             ViewBag.BeautyTips = Beautytips;
+            ViewBag.EventLastRecord = Events.Last().EventId;
+            ViewBag.BeautytipsLastRecord = Beautytips.Last().EventId;
+            ViewBag.HealthtipsLastRecord = Healthtips.Last().EventId;
             ProductService productService = new ProductService();
             //List<SP_Deals_Result> Productlist_Photography = productService.GetSP_Deals_Result("Photography", 0, "%", "Hyderabad", "ASC");
             //List<SP_Deals_Result> Productlist_BeautyService = productService.GetSP_Deals_Result("BeautyService", 0, "%", "Hyderabad", "ASC");
@@ -115,6 +119,29 @@ namespace MaaAahwanam.Web.Controllers
 
             string[] ListofEvents = { "Wedding", "Reception", "Engagement", "Birthday", "Wedding Anniversary", "Get Together", "Kitty Party", "Cocktail Party" };
             return Json(new { Listoflocations, ListofEvents }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Loadmore(string lastrecord,string typ)
+        {
+            //if (typ == "Event")
+            //{
+            //    var Events = eventsandtipsService.EventsandTipsListUser("Event",int.Parse(lastrecord)).OrderByDescending(m => m.EventId).Take(4);
+            //    //ViewBag.EventLastRecord = Events.Last().EventId;
+            //    return Json(Events);
+            //}
+             if (typ == "Beauty")
+            {
+                var Beauty = eventsandtipsService.EventsandTipsListUser("Beauty Tips", int.Parse(lastrecord)).OrderByDescending(m => m.EventId).Take(4);
+                //ViewBag.BeautytipsLastRecord = Beauty.Last().EventId;
+                return Json(Beauty);
+            }
+            else if (typ == "Health")
+            {
+                var Health = eventsandtipsService.EventsandTipsListUser("Health Tips", int.Parse(lastrecord)).OrderByDescending(m => m.EventId).Take(4);
+                //ViewBag.HealthtipsLastRecord = Health.Last().EventId;
+                return Json(Health);
+            }
+            return Json(JsonRequestBehavior.AllowGet);
         }
     }
 }

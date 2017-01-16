@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult Index(string id, string src)
         {
             //Retrieves Avaliable Recordes List
-            var list = eventsandtipsService.EventsandTipsList();
+            var list = eventsandtipsService.EventsandTipsList(0);
             ViewBag.EventsandTipsList = list;
             if (id!=null)
             {
@@ -156,7 +156,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
         public ActionResult AllRecords()
         {
-            var list = eventsandtipsService.EventsandTipsList().OrderByDescending(m => m.EventId);
+            var list = eventsandtipsService.EventsandTipsList(0).OrderByDescending(m => m.EventId);
             ViewBag.EventsandTipsList = list;
             return View();
         }
