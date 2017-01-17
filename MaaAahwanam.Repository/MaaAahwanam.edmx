@@ -12,6 +12,9 @@
         <Function Name="cartcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="Deal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetCartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
@@ -253,7 +256,10 @@
             <Parameter Name="did" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="geteventsandtipsimages" ReturnType="Collection(MaaAahwanamModel.geteventsandtipsimages_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Deal" ReturnType="Collection(MaaAahwanamModel.Deal_Result)">
+            <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -725,6 +731,28 @@
           <Property Type="DateTime" Name="UpdatedDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="Status" Nullable="true" />
           <Property Type="String" Name="cropedimage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Deal_Result">
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="Int64" Name="DealID" Nullable="false" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
+          <Property Type="String" Name="VendorCategory" Nullable="true" />
+          <Property Type="DateTime" Name="DealStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DealEndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TermsConditions" Nullable="true" />
+          <Property Type="Decimal" Name="DealVegLunchCost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DealNonVegLunchCost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DealVegDinnerCost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DealNonVegDinnerCost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DealServicePrice" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="Int64" Name="VendorSubId" Nullable="false" />
+          <Property Type="Decimal" Name="VegPricePerPlate" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="NonVegPricePerPlate" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BridalMakeupStartsFrom" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PartyMakeupStartsFrom" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="CardCost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="CardCostWithPrint" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1348,6 +1376,32 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="cropedimage" ColumnName="cropedimage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Deal" FunctionName="MaaAahwanamModel.Store.Deal">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Deal_Result">
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="VendorCategory" ColumnName="VendorCategory" />
+                <ScalarProperty Name="DealStartDate" ColumnName="DealStartDate" />
+                <ScalarProperty Name="DealEndDate" ColumnName="DealEndDate" />
+                <ScalarProperty Name="TermsConditions" ColumnName="TermsConditions" />
+                <ScalarProperty Name="DealVegLunchCost" ColumnName="DealVegLunchCost" />
+                <ScalarProperty Name="DealNonVegLunchCost" ColumnName="DealNonVegLunchCost" />
+                <ScalarProperty Name="DealVegDinnerCost" ColumnName="DealVegDinnerCost" />
+                <ScalarProperty Name="DealNonVegDinnerCost" ColumnName="DealNonVegDinnerCost" />
+                <ScalarProperty Name="DealServicePrice" ColumnName="DealServicePrice" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorSubId" ColumnName="VendorSubId" />
+                <ScalarProperty Name="VegPricePerPlate" ColumnName="VegPricePerPlate" />
+                <ScalarProperty Name="NonVegPricePerPlate" ColumnName="NonVegPricePerPlate" />
+                <ScalarProperty Name="BridalMakeupStartsFrom" ColumnName="BridalMakeupStartsFrom" />
+                <ScalarProperty Name="PartyMakeupStartsFrom" ColumnName="PartyMakeupStartsFrom" />
+                <ScalarProperty Name="CardCost" ColumnName="CardCost" />
+                <ScalarProperty Name="CardCostWithPrint" ColumnName="CardCostWithPrint" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -13,7 +13,7 @@ namespace MaaAahwanam.Service
     {
         DealRepository dealRepository = new DealRepository();
 
-        public List<Deal> AllDealsService(string dropstatus)
+        public List<Deal_Result> AllDealsService(string dropstatus)
         {
             return dealRepository.AllDeals(dropstatus);
         }

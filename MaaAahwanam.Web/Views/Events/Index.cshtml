@@ -114,7 +114,14 @@
                     $.each(data, function (key, value) {
                         //$("#EventsDiv").append('<li> <a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img src="~/EventsAndTipsimages/' + value.image + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p> <p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i> ' + value.Updateddate + '</p> </div> </div> </a> </li>');
                         var date = new Date(parseInt(value.Eventstartdate.substr(6))).toLocaleDateString().split('/');
-                        $("#EventsDiv").append('<li> <a href="~/EventInfo"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img src="/EventsAndTipsimages/' + value.image + ' " alt="" style="height:102px;width:102px" /> </div> <div class="event-details"> <h2> ' + value.Title + '</h2> <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em"> ' + value.Description + ' </p> <p><i class="ti-location-pin"></i> ' + value.Location + ' </p> <p><i class="ti-user"></i> ' + value.Person + ' </p> <p><i class="ti-mobile"></i> ' + value.Phone + ' </p> <p><i class="ti-calendar"></i> ' + date[1] +'-'+ date[0] +'-'+date[2] + ' </p>   <p>Rs.' + value.Price + '</p> </div> </div> </a> </li>');
+                        var Eventimage;
+                        if (value.cropedimage != null && value.cropedimage != "") {
+                            Eventimage = value.cropedimage;
+                        }
+                        else {
+                            Eventimage = value.Image;
+                        }
+                        $("#EventsDiv").append('<li> <a href="~/EventInfo"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img src="/EventsAndTipsimages/' + Eventimage + ' " alt="" style="height:102px;width:102px" /> </div> <div class="event-details"> <h2> ' + value.Title + '</h2> <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em"> ' + value.Description + ' </p> <p><i class="ti-location-pin"></i> ' + value.Location + ' </p> <p><i class="ti-user"></i> ' + value.Person + ' </p> <p><i class="ti-mobile"></i> ' + value.Phone + ' </p> <p><i class="ti-calendar"></i> ' + date[1] + '-' + date[0] + '-' + date[2] + ' </p>   <p>Rs.' + value.Price + '</p> </div> </div> </a> </li>');
                         document.getElementById("EventLastRecord").value = value.EventId;
                     });
                 }

@@ -909,15 +909,13 @@
         var today = new Date();
         var firstDay = new Date(today.getFullYear(), today.getMonth(), 1).toLocaleDateString();
         var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-        
+   
         $('#datetimepicker5').datetimepicker({
             inline: true,
             timepicker: false,
             format: 'd/m/Y',
-            minDate: new Date(today.getFullYear(), (today.getMonth() + 1), (today.getDate() - 1)),
-            maxDate: firstDay,
-            changeMonth: false,
-            changeYear: false,
+            minDate: today, //new Date(today.getFullYear(), (today.getMonth() + 1), (today.getDate() - 1)),
+            maxDate: lastDate,
             formatDate: 'Y/m/d',
             beforeShowDay: function (date) {
                 var disableddates = $('#vendoravailabledates').val();
@@ -950,15 +948,11 @@
                     } else {
                         return [true, ""];
                     }
-                    //$(document).find('.xdsoft_datetimepicker button.xdsoft_prev').css('background-color', 'red');
-                    //document.getElementsByClassName('.xdsoft_prev').diabled = none;
                 }
                 else {
-                    //$('#datetimepicker5').hide();
-                    //$('.xdsoft_datetimepicker').hide();
                     var msg = 'Vendor is Not Available at the moment';
                     document.getElementById('msg').innerHTML = msg;
-                    //$('#msg').val();
+                    return [false, "myclass", "Unavailable"];
                 }
             }
         }).on('change', function (date) {

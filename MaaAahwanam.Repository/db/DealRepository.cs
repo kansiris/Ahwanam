@@ -4,16 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Repository.db
 {
     public class DealRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
-        
-        public List<Deal> AllDeals(string dropstatus)
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
+
+
+        public List<Deal_Result> AllDeals(string dropstatus)
         {
-            return _dbContext.Deal.Where(m=>m.VendorType == dropstatus).ToList();
+            return maaAahwanamEntities.Deal(dropstatus).ToList();
+            //return _dbContext.Deal.Where(m=>m.VendorType == dropstatus).ToList();
         }
 
         public Deal GetDeal(int id)
