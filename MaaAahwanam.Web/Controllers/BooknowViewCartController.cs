@@ -22,7 +22,20 @@ namespace MaaAahwanam.Web.Controllers
                 var data  = dashBoardService.GetOrderDetailService(long.Parse(id));
                 ViewBag.OrderDetail = data;
                 ViewBag.date = data[0].UpdatedDate;
-                ViewBag.subtotal = data[0].TotalPrice;//data.Sum(m=>m.PerunitPrice);
+                decimal totalamount = 0;
+                foreach (var item in data)
+                {
+                    if (item.Isdeal == true)
+                    {
+                        totalamount = item.TotalPrice;
+                    }
+                    else
+                    {
+                        totalamount = item.PerunitPrice;
+                    }
+                    
+                }
+                ViewBag.subtotal = totalamount;
                 ViewBag.payment = payment_orderServices.GetPaymentOrderService(long.Parse(id));
             }
             return View();

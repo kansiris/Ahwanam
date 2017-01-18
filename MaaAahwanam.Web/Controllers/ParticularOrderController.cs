@@ -118,6 +118,12 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.costtype = "Actual Card Cost With Print";
                     }
                 }
+                else if (Dealinfo.ServicType == "Gifts")
+                {
+                    ViewBag.discountvalue = price.Discount;
+                    ViewBag.actualprice = price.ServicePrice;
+                    ViewBag.amountsaved = ViewBag.actualprice - price.TotalPrice;
+                }
                 else //(Dealinfo.ActualServiceprice != 0 && Dealinfo.DealServiceprice != 0)
                 {
                     string discountvalue = (((Dealinfo.ActualServiceprice - Dealinfo.DealServiceprice) / Dealinfo.ActualServiceprice) * 100).Value.ToString("0.00");
