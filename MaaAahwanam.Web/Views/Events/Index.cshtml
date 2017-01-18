@@ -40,49 +40,50 @@
 
     <div class="about_content">
         <input type="hidden" id="EventLastRecord" value="@ViewBag.EventLastRecord" />
+        <input type="hidden" id="Event1" value="@ViewBag.EventLastRecord" />
         <div class="events_main">
             <ul id="EventsDiv">
                 @if (ViewBag.UpcomingEvents != null)
                 {
                     foreach (var Upcomingevents in ViewBag.UpcomingEvents)
                     {
-                <li>
-                        <a href="~/EventInfo?id=@Upcomingevents.EventId">
-                            <div class="home_events_main no-margin">
-                                <div class="event-thumb">
-                                    @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
-                                    @if (Upcomingevents.cropedimage != null && Upcomingevents.cropedimage != "")
-                                            {
+                        <li>
+                            <a href="~/EventInfo?id=@Upcomingevents.EventId">
+                                <div class="home_events_main no-margin">
+                                    <div class="event-thumb">
+                                        @*<img src="blank.gif" class="lazy" data-src="../CSSWeb/images/events/thumb-1.jpg" alt="events">*@
+                                        @if (Upcomingevents.cropedimage != null && Upcomingevents.cropedimage != "")
+                                        {
                                             <img src="~/EventsAndTipsimages/@Upcomingevents.cropedimage" alt="" style="height:102px;width:102px" />
-                                            }
-                                    @if (Upcomingevents.cropedimage == null || Upcomingevents.cropedimage == "")
-                                            {
+                                        }
+                                        @if (Upcomingevents.cropedimage == null || Upcomingevents.cropedimage == "")
+                                        {
                                             <img src="~/EventsAndTipsimages/@Upcomingevents.Image" alt="" style="height:102px;width:102px" />
-                                            }
+                                        }
+                                    </div>
+                                    <div class="event-details">
+                                        <h2>@Upcomingevents.Title</h2>
+                                        <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em">@Upcomingevents.Description</p> @*.ToString().Substring(0, 5)*@
+                                        <p><i class="ti-location-pin"></i>@Upcomingevents.Location</p>
+                                        <p><i class="ti-user"></i>@Upcomingevents.Person</p>
+                                        <p><i class="ti-mobile"></i>@Upcomingevents.Phone</p>
+                                        <p><i class="ti-calendar"></i>@Upcomingevents.Eventstartdate.ToString("dd-MM-yyyy")</p> @*am*@
+                                        @*<p>Rs.@Html.Encode(string.Format("{0:2}", Upcomingevents.Price))</p>*@
+                                        <p>Rs.@Upcomingevents.Price</p>
+                                    </div>
                                 </div>
-                                <div class="event-details">
-                                    <h2>@Upcomingevents.Title</h2>
-                                    <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em">@Upcomingevents.Description</p> @*.ToString().Substring(0, 5)*@
-                                    <p><i class="ti-location-pin"></i>@Upcomingevents.Location</p>
-                                    <p><i class="ti-user"></i>@Upcomingevents.Person</p>
-                                    <p><i class="ti-mobile"></i>@Upcomingevents.Phone</p>
-                                    <p><i class="ti-calendar"></i>@Upcomingevents.Eventstartdate.ToString("dd-MM-yyyy")</p> @*am*@
-                                    @*<p>Rs.@Html.Encode(string.Format("{0:2}", Upcomingevents.Price))</p>*@
-                                    <p>Rs.@Upcomingevents.Price</p>
-                                </div>
-                            </div>
-                        </a>
-                </li>
+                            </a>
+                        </li>
                     }
-                
+
                 }
                 else
                 {
-                <div class="home_events_main no-margin">
-                    <div class="event-details">
-                        <h2>No Upcoming Events found</h2>
+                    <div class="home_events_main no-margin">
+                        <div class="event-details">
+                            <h2>No Upcoming Events found</h2>
+                        </div>
                     </div>
-                </div>
                 }
             </ul>
             <div class="loadMore" id="Event">
@@ -121,7 +122,7 @@
                         else {
                             Eventimage = value.Image;
                         }
-                        $("#EventsDiv").append('<li> <a href="~/EventInfo"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img src="/EventsAndTipsimages/' + Eventimage + ' " alt="" style="height:102px;width:102px" /> </div> <div class="event-details"> <h2> ' + value.Title + '</h2> <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em"> ' + value.Description + ' </p> <p><i class="ti-location-pin"></i> ' + value.Location + ' </p> <p><i class="ti-user"></i> ' + value.Person + ' </p> <p><i class="ti-mobile"></i> ' + value.Phone + ' </p> <p><i class="ti-calendar"></i> ' + date[1] + '-' + date[0] + '-' + date[2] + ' </p>   <p>Rs.' + value.Price + '</p> </div> </div> </a> </li>');
+                        $("#EventsDiv").append('<li> <a href="/EventInfo?id=' + value.EventId + '"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img src="/EventsAndTipsimages/' + Eventimage + ' " alt="" style="height:102px;width:102px" /> </div> <div class="event-details"> <h2> ' + value.Title + '</h2> <p class="event-desc" style="color:#838383;overflow:hidden;line-height: 1.5em;height:3em"> ' + value.Description + ' </p> <p><i class="ti-location-pin"></i> ' + value.Location + ' </p> <p><i class="ti-user"></i> ' + value.Person + ' </p> <p><i class="ti-mobile"></i> ' + value.Phone + ' </p> <p><i class="ti-calendar"></i> ' + date[1] + '-' + date[0] + '-' + date[2] + ' </p>   <p>Rs.' + value.Price + '</p> </div> </div> </a> </li>');
                         document.getElementById("EventLastRecord").value = value.EventId;
                     });
                 }
@@ -133,6 +134,11 @@
     }
 </script>
 
+<script>
+    window.onload = function () {
+        $('#EventLastRecord').val($('#Event1').val());
+    }
+</script>
 
 
 

@@ -518,6 +518,7 @@
                     <!-- HealthTips -->
                     <div id="HealthDiv">
                         <input type="hidden" id="HealthtipsLastRecord" value="@ViewBag.HealthtipsLastRecord" />
+                        <input type="hidden" id="Health1" value="@ViewBag.HealthtipsLastRecord" />
                         @if (ViewBag.HealthTips != null)
                         {
                             foreach (var HealthTips in ViewBag.HealthTips)
@@ -548,6 +549,7 @@
                                     </div>
                                 </a>
                             }
+
                             @*<div class="loadMore" id="Health">
                                 <button name="loadmore" id="LoadMore1" class="btn btn-green more-button" onclick="load('Health')"><i class="ti-reload"></i> Load More</button>
                             </div>*@
@@ -567,6 +569,7 @@
                     <!-- BeautyTips -->
                     <div id="BeautyDiv">
                         <input type="hidden" id="BeautytipsLastRecord" value="@ViewBag.BeautytipsLastRecord" />
+                        <input type="hidden" id="Beauty1" value="@ViewBag.BeautytipsLastRecord" />
                         @if (ViewBag.BeautyTips != null)
                         {
                             foreach (var BeautyTips in ViewBag.BeautyTips)
@@ -625,6 +628,21 @@
         if (val != '' && val != undefined) {
             $("#select2-chosen-4").text(val);
         }
+        var livalue = $('#eventslist > li.resp-tab-active').text();
+        if (livalue == 'Health Tips') {
+            $('#Beauty').css('display', 'none');
+            $('#Health').css('display', 'block');
+            $('#HealthtipsLastRecord').val($('#Health1').val());
+        }
+        else if (livalue == 'Beauty Tips') {
+            $('#Health').css('display', 'none');
+            $('#Beauty').css('display', 'block');
+            $('#BeautytipsLastRecord').val($('#BEauty1').val());
+        }
+        else if (livalue == 'Upcoming Events') {
+            $('#Health').css('display', 'none');
+            $('#Beauty').css('display', 'none');
+        }
     }
 </script>
 
@@ -669,7 +687,7 @@
                 if (data.length == 4) {
                     if (typ == 'Event') {
                         $.each(data, function (key, value) {
-                            $("#EventsDiv").append('<a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="~/EventsAndTipsimages/' + value.Image + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p> <p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i>' + value.Eventstartdate + '</p> </div> </div> </a>');
+                            $("#EventsDiv").append('<a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="/EventsAndTipsimages/' + value.Image + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p> <p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i>' + value.Eventstartdate + '</p> </div> </div> </a>');
                             document.getElementById("EventLastRecord").value = value.EventId;
                         });
                     }
@@ -682,7 +700,7 @@
                             else {
                                 Beautytipimage = value.Image;
                             }
-                            $("#BeautyDiv").append('<a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="~/EventsAndTipsimages/' + Beautytipimage + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p>  </div> </div> </a>');
+                            $("#BeautyDiv").append('<a href="/EventInfo?id='+value.EventId+'"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="/EventsAndTipsimages/' + Beautytipimage + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p>  </div> </div> </a>');
                             document.getElementById("BeautytipsLastRecord").value = value.EventId;
                         });
                     }
@@ -695,7 +713,7 @@
                             else {
                                 Healthtipimage = value.Image;
                             }
-                            $("#HealthDiv").append('<a href="#"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="~/EventsAndTipsimages/' + Healthtipimage + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p>  </div> </div> </a>'); //<p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i>' + value.Eventstartdate + '</p>
+                            $("#HealthDiv").append('<a href="/EventInfo?id=' + value.EventId + '"> <div class="home_events_main no-margin"> <div class="event-thumb"> <img width="100" height="100" src="/EventsAndTipsimages/' + Healthtipimage + ' " alt="" style="height:102px;width:102px"/> </div>  <div class="event-details"><h2>' + value.Title + '</h2> <p class="event-desc" style="color:#838383;width: 350px;overflow:hidden;line-height:1.5em;height:3em;">' + value.Description + '</p>  </div> </div> </a>'); //<p><i class="ti-user"></i> ' + value.Person + '</p> <p><i class="ti-mobile"></i>' + value.Phone + '</p> <p><i class="ti-calendar"></i>' + value.Eventstartdate + '</p>
                             document.getElementById("HealthtipsLastRecord").value = value.EventId;
                         });
                     }
@@ -724,14 +742,4 @@
             $('#Beauty').css('display', 'none');
         }
     });
-
-    //$(document).ready(function () {
-    //    var livalue =  $('#eventslist > li.hor_1 resp-tab-active').val();
-    //    alert(livalue);
-    //});
-    //$(document).ready(function () {
-    //    var listArray = $('#eventslist > li.resp-tab-activ').text();//document.getElementById('eventslist > li.resp-tab-activ').innerHTML;//$("#eventslist > li.resp-tab-activ").value;//$('#eventslist li.resp-tab-active').index();
-    //    //var selectedLI = listArray.find('li.active');//listArray.find('.resp-tab-active').parent().val();//.text();//listArray.index(listArray.find('.hor_1 resp-tab-active'));
-    //    alert(listArray);
-    //});
 </script>
