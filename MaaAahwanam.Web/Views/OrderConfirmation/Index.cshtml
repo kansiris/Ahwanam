@@ -71,11 +71,27 @@
                                                 {
                                                     <p>Original Price :<br/> Rs.@item.ServicePrice</p>
                                                     <p>
-                                                        Deal Price :<br /> Rs.@item.PerunitPrice
-                                                        @*@if (item.ServicType == "Venue" || item.ServicType == "Catering" || item.ServicType == "InvitationCard" || item.ServicType == "Gifts")
-                                                        {   @item.TotalPrice }
+                                                        Deal Price :<br /> Rs.
+                                                        
+
+
+                                                        @if (item.ServicType == "Venue" || item.ServicType == "Catering" || item.ServicType == "InvitationCard" || item.ServicType == "Gifts")
+                                                        {
+                                                            if (ViewBag.itemscount == 1)
+                                                            { 
+                                                                
+                                                                @item.TotalPrice
+                                                            }
+                                                            else
+                                                            {
+                                                                @item.PerunitPrice
+                                                            }
+
+                                                        }
                                                         else
-                                                        {@item.PerunitPrice }*@
+                                                        {
+                                                            @item.PerunitPrice 
+                                                        }
                                                     </p>
                                                     //<p>Deal Price :<br /> Rs. @item.PerunitPrice</p>
 
@@ -113,7 +129,7 @@
                                     <tr>
                                         <td><h5>Payble Total</h5></td>
                                         <td align="center"><h5>:</h5></td>
-                                        <td><h5>@ViewBag.Total</h5></td>
+                                        <td><h5>Rs.@ViewBag.Total</h5></td>
                                         <td>
                                             <input type="hidden" id="hdnoid" value=@ViewBag.Oid />
                                         </td>

@@ -42,6 +42,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Total = totalamount;
                 //ViewBag.Total = list[0].TotalPrice;//Select(i=>i.TotalPrice);// list.Sum(i => i.PerunitPrice);
                 ViewBag.Orderconfirmation = list;
+                ViewBag.itemscount = list.Count();
                 return View();
             }
             else

@@ -116,10 +116,23 @@
                                             else
                                             { <p> Deal Price :<br /> Rs. @item.PerunitPrice </p> }
                                             </text>*@
-                                        <p>Deal Price :<br /> Rs. @item.PerunitPrice
-                                        @*@if (item.ServicType == "Venue" || item.ServicType == "Catering" || item.ServicType == "InvitationCard"  || item.ServicType == "Gifts")
-                                        {   @item.TotalPrice }
-                                        else {@item.PerunitPrice }*@
+                                        <p>Deal Price :<br /> Rs.
+                                        @if (item.ServicType == "Venue" || item.ServicType == "Catering" || item.ServicType == "InvitationCard" || item.ServicType == "Gifts")
+                                        {
+                                            if (ViewBag.itemscount == 1)
+                                            {
+                                                @item.TotalPrice
+                                                
+                                            }
+                                            else
+                                            {
+                                                @item.PerunitPrice
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @item.PerunitPrice 
+                                        }
                                         </p>
                                     }
                                 </div>
@@ -287,7 +300,7 @@
                     <tr>
                         <td style="width:55%;">Sub Total</td>
                         <td style="width:15%;" align="center">:</td>
-                        <td style="width:30%;">@ViewBag.subtotal</td>
+                        <td style="width:30%;">Rs.@ViewBag.subtotal</td>
                     </tr>
                     @*<tr>
                             <td>Tax</td>

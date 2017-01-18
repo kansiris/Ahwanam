@@ -36,6 +36,7 @@ namespace MaaAahwanam.Web.Controllers
                     
                 }
                 ViewBag.subtotal = totalamount;
+                ViewBag.itemscount = data.Count();
                 ViewBag.payment = payment_orderServices.GetPaymentOrderService(long.Parse(id));
             }
             return View();
