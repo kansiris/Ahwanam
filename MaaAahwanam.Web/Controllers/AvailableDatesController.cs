@@ -26,13 +26,14 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(Availabledates availabledates, string availabledate, string command)
+        public ActionResult Index(Availabledates availabledates, string availabledate, string command,string vendorservicelist)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string[] dates = availabledate.Split(',');
             string a = "";
             availabledates.vendorId = (int)user.UserId;
             availabledates.servicetype = vendorMasterService.GetVendorServiceType(user.UserId).ServicType;
+            availabledates.vendorsubid = long.Parse(vendorservicelist);
             for (int i = 0; i < dates.Length; i++)
             {
                 if (command == "save")
@@ -43,7 +44,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (command == "remove")
                 {
                     availabledates.availabledate = Convert.ToDateTime(dates[i]);
-                    a = availabledatesService.removedates(availabledates, user.UserId);
+                    a = availabledatesService.removedates(availabledates, user.UserId, availabledates.vendorsubid);
                 }
             }
             if (a == "Success")

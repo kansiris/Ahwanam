@@ -46,5 +46,16 @@ namespace MaaAahwanam.Repository.db
             long orderid = _dbContext.OrderDetail.Where(m => m.OrderDetailId == id).Select(m=>m.OrderId).FirstOrDefault();
             return _dbContext.OrderDetail.Where(m => m.OrderId == orderid).Count();
         }
+        public string disabledate(long vid, long subid, string servicetype)
+        {
+            var orderid = _dbContext.OrderDetail.Where(m => m.VendorId == vid && m.subid == subid && m.ServiceType == servicetype).Select(m=>m.OrderId).ToList();
+            var bookeddates = "";
+            foreach (var item in orderid)
+            {
+                var dates = _dbContext.Order.FirstOrDefault(m => m.OrderId == item);
+                bookeddates = bookeddates + "," + dates.OrderDate.Value.ToShortDateString();
+            }
+            return bookeddates;
+        }
     }
 }

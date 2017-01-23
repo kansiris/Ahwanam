@@ -39,9 +39,9 @@ namespace MaaAahwanam.Service
             return availabledatesRepository.GetDates(id,subid);
         }
 
-        public string removedates(Availabledates availabledates, long id)
+        public string removedates(Availabledates availabledates, long id, long subid)
         {
-            return availabledatesRepository.removedates(availabledates,id);
+            return availabledatesRepository.removedates(availabledates,id, subid);
         }
 
         public List<Availabledates> GetCurrentMonthDates(long id)

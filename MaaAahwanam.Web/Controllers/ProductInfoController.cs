@@ -43,18 +43,26 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Subvid = Svid;
             GetProductsInfo_Result Productinfo = productInfoService.getProductsInfo_Result(vid, Servicetype, Svid);
             List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
-            ViewBag.Amenities = Amenities;
+            ViewBag.Amenities = Amenities; string type = Request.QueryString["par"];
             //Vendor Available Dates
             var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
             if (vendorid != 0)
             {
-                var vendordates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m => m.availabledate.ToShortDateString());
-                ViewBag.vendoravailabledates = string.Join(",", vendordates.ToArray());
+                var today = DateTime.UtcNow;
+                var first = new DateTime(today.Year, today.Month, 1);
+                var vendordates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m => m.availabledate.ToShortDateString()).ToArray();
+                //var bookeddates = productInfoService.GetCount(vid, Svid, type).Where(m => m.UpdatedDate > first).Select(m => m.UpdatedDate.Value.ToShortDateString()).Distinct().ToArray();
+                var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
+                var finalbookeddates = bookeddates.Except(vendordates);
+                var finalvendordates = vendordates.Except(bookeddates);
+                var finalbookeddates1 = bookeddates;
+                var finalvendordates1 = vendordates;
+                if (finalbookeddates.Count() != 0)
+                    ViewBag.vendoravailabledates = string.Join(",", finalvendordates) +  string.Join(",", finalbookeddates);
+                else
+                    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
             }
-            
-            
             //List<DateTime> availabledates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m=>m.a);
-
             if (Productinfo != null)
             {
                 if (Productinfo.image != null)
@@ -66,9 +74,10 @@ namespace MaaAahwanam.Web.Controllers
             }
             ViewBag.servicetype = Servicetype;
             ViewBag.Reviewlist = reviewService.GetReview(vid);
-            string type = Request.QueryString["par"];
+            
             //Ratings count & avg rating 
             ViewBag.ratingscount = productInfoService.GetCount(vid,Svid, type).Count();
+            
             ViewBag.rating = productInfoService.ratingscount(vid, Svid, type);
             if (Productinfo.ServicType == "Venue")
             {
@@ -92,7 +101,7 @@ namespace MaaAahwanam.Web.Controllers
 
             //return RedirectToAction("Index", "Signin");
         }
-        public JsonResult Addtocart(OrderRequest orderRequest)
+        public JsonResult Addtocart(OrderRequest orderRequest, string bookeddate)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string updateddate = DateTime.UtcNow.ToShortDateString();
@@ -141,14 +150,14 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message3);
         }
         [Authorize]
-        public JsonResult Buynow(OrderRequest orderRequest)
+        public JsonResult Buynow(OrderRequest orderRequest,string bookeddate)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string updateddate = DateTime.UtcNow.ToShortDateString();
             OrderService orderService = new OrderService();
             Order order = new Order();
             order.TotalPrice = Convert.ToDecimal(orderRequest.TotalPrice);
-            order.OrderDate = Convert.ToDateTime(updateddate);
+            order.OrderDate = Convert.ToDateTime(bookeddate); //Convert.ToDateTime(updateddate);
             order.UpdatedBy = (Int64)user.UserId;
             order.OrderedBy = (Int64)user.UserId;
             order.UpdatedDate = Convert.ToDateTime(updateddate);

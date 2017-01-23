@@ -31,9 +31,11 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     else
                     {
-                        totalamount = item.PerunitPrice;
+                        if (data.Count() == 1)
+                            totalamount = item.PerunitPrice;
+                        else
+                            totalamount = item.TotalPrice;
                     }
-                    
                 }
                 ViewBag.subtotal = totalamount;
                 ViewBag.itemscount = data.Count();

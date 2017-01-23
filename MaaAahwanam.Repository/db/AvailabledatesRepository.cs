@@ -28,11 +28,11 @@ namespace MaaAahwanam.Repository.db
             //return _dbContext.Availabledates.Where(m => m.vendorId == id).ToList();
         }
 
-        public string removedates(Availabledates availabledates, long id)
+        public string removedates(Availabledates availabledates, long id,long subid)
         {
             try
             {
-                var list = _dbContext.Availabledates.FirstOrDefault(m => m.vendorId == id && m.availabledate == availabledates.availabledate);
+                var list = _dbContext.Availabledates.FirstOrDefault(m => m.vendorId == id && m.vendorsubid == subid && m.availabledate == availabledates.availabledate);
                 _dbContext.Availabledates.Remove(list);
                 _dbContext.SaveChanges();
                 return "Removed";

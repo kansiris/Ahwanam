@@ -38,6 +38,10 @@ namespace MaaAahwanam.Service
         {
             return orderdetailsRepository.GetAmenities(subid, type);
         }
-        
-    }
+
+        public string disabledate(long vid, long subid, string servicetype)
+        {
+            return orderdetailsRepository.disabledate(vid, subid, servicetype);
+        }
+        }
 }
