@@ -17,6 +17,12 @@ namespace MaaAahwanam.Web.Controllers
         // GET: AvailableDates
         public ActionResult Index()
         {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            var vendordetails = vendorMasterService.GetVendorServiceType(user.UserId);
+            long vendorid = vendordetails.Id;
+            string vendortype = vendordetails.ServicType;
+            var vendordata = new SelectList(availabledatesService.VendorAllServices(vendortype, vendorid), "Id", "Type");
+            ViewBag.vendorservicelist = vendordata; //availabledatesService.VendorAllServices(vendortype,vendorid);
             return View();
         }
         [HttpPost]
@@ -50,10 +56,10 @@ namespace MaaAahwanam.Web.Controllers
                 return Content("<script language='javascript' type='text/javascript'>alert('Failed to Submitted dates');location.href='" + @Url.Action("Index", "AvailableDates") + "'</script>");
         }
 
-        public JsonResult GetDates()
+        public JsonResult GetDates(long id)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            var availabledates = availabledatesService.GetDates(user.UserId).Select(m => m.availabledate.ToShortDateString());
+            var availabledates = availabledatesService.GetDates(user.UserId,id).Select(m => m.availabledate.ToShortDateString());
             return Json(availabledates, JsonRequestBehavior.AllowGet);
         }
     }

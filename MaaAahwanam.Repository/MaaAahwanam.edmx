@@ -127,6 +127,10 @@
         <Function Name="SP_vendordatesbooked" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
+        <Function Name="vendorallservices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="varchar" Mode="In" />
+          <Parameter Name="id" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="VendorsDatesbooked" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -259,7 +263,11 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Deal" ReturnType="Collection(MaaAahwanamModel.Deal_Result)">
+          <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="vendorallservices" ReturnType="Collection(MaaAahwanamModel.vendorallservices_Result)">
             <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -753,6 +761,10 @@
           <Property Type="Decimal" Name="PartyMakeupStartsFrom" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="CardCost" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="CardCostWithPrint" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="vendorallservices_Result">
+          <Property Type="String" Name="type" Nullable="true" />
+          <Property Type="Int64" Name="Id" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1402,6 +1414,14 @@
                 <ScalarProperty Name="PartyMakeupStartsFrom" ColumnName="PartyMakeupStartsFrom" />
                 <ScalarProperty Name="CardCost" ColumnName="CardCost" />
                 <ScalarProperty Name="CardCostWithPrint" ColumnName="CardCostWithPrint" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="vendorallservices" FunctionName="MaaAahwanamModel.Store.vendorallservices">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.vendorallservices_Result">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

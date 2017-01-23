@@ -41,5 +41,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.SP_Amenities(subid, type).ToList();
         }
+        public int OrdersCount(long id)
+        {
+            long orderid = _dbContext.OrderDetail.Where(m => m.OrderDetailId == id).Select(m=>m.OrderId).FirstOrDefault();
+            return _dbContext.OrderDetail.Where(m => m.OrderId == orderid).Count();
+        }
     }
 }

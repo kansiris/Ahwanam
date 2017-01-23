@@ -434,5 +434,18 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Deal_Result>("Deal", typeParameter);
         }
+    
+        public virtual ObjectResult<vendorallservices_Result> vendorallservices(string type, Nullable<long> id)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vendorallservices_Result>("vendorallservices", typeParameter, idParameter);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Controllers
     {
         ReviewService reviewService = new ReviewService();
         DashBoardService dashBoardService = new DashBoardService();
+        OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
         // GET: ParticularOrder
         public ActionResult Index()
         {
@@ -35,7 +36,7 @@ namespace MaaAahwanam.Web.Controllers
             int vid = Convert.ToInt32(Request.QueryString["VID"]);
             int Svid = Convert.ToInt32(Request.QueryString["subvid"]);
             string  dealid = Request.QueryString["did"];
-            
+            int ordercount = orderdetailsServices.OrdersCount(oid);
             if (Servicetype == "Travel&Accomadation")
             {
                 Servicetype = "Travel";
@@ -50,13 +51,19 @@ namespace MaaAahwanam.Web.Controllers
             var price = dashBoardService.GetPrice(oid);
             if (type == "Venue" || type == "Catering" || type == "InvitationCard" || type == "Gifts")
             {
-                //ViewBag.price = price.TotalPrice;
-                ViewBag.price = price.PerunitPrice;
+                if (ordercount == 1)
+                {
+                    ViewBag.price = price.TotalPrice;
+                }
+                else
+                {
+                    ViewBag.price = price.PerunitPrice;
+                }
             }
             else
             {
-                //ViewBag.price = price.PerunitPrice;
-                ViewBag.price = price.TotalPrice;
+                ViewBag.price = price.PerunitPrice;
+                //ViewBag.price = price.TotalPrice;
             }
             List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
             ViewBag.Amenities = Amenities;

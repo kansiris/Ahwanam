@@ -4,7 +4,7 @@ var inext = 1; var iprev = 1;
 $(function () {
     $("#save").css('display', 'none');
     $("#remove").css('display', 'none');
-    getdates();
+    //getdates();
 });
 //next month click
 //$(document).on('click', '.ui-datepicker-next', function () {
@@ -18,11 +18,17 @@ $(function () {
 //    $(".ui-datepicker td.myclass ").attr({ "data-month": month, "data-year": $('span.ui-datepicker-year').text() });
 //})
 
+
+$("body").on('change', "#vendorservicelist", function () {
+    //$('#products_delivery').multiDatesPicker('setDate', null);
+    getdates(this.value);
+});
+
 var unavailableDates = '';
-function getdates() {
+function getdates(id) {
     $.ajax({
         type: "POST",
-        url: "/AvailableDates/GetDates",
+        url: "/AvailableDates/GetDates?id="+id+"",
         data: '',
         success: function (data) {
             //debugger;

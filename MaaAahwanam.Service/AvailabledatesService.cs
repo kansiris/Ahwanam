@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Models;
 using MaaAahwanam.Repository.db;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
@@ -33,9 +34,9 @@ namespace MaaAahwanam.Service
             return message;
         }
 
-        public List<Availabledates> GetDates(long id)
+        public List<Availabledates> GetDates(long id, long subid)
         {
-            return availabledatesRepository.GetDates(id);
+            return availabledatesRepository.GetDates(id,subid);
         }
 
         public string removedates(Availabledates availabledates, long id)
@@ -46,6 +47,10 @@ namespace MaaAahwanam.Service
         public List<Availabledates> GetCurrentMonthDates(long id)
         {
             return availabledatesRepository.GetCurrentMonthDates(id);
+        }
+        public List<vendorallservices_Result> VendorAllServices(string type, long id)
+        {
+            return availabledatesRepository.VendorAllServices(type,id);
         }
     }
 }

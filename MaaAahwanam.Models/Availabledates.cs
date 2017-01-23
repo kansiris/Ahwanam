@@ -14,5 +14,6 @@ namespace MaaAahwanam.Models
         public long vendorId { get; set; }
         public string servicetype { get; set; }
         public DateTime availabledate { get; set; }
+        public long vendorsubid { get; set; }
     }
 }

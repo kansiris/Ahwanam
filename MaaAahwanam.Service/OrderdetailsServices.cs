@@ -21,5 +21,9 @@ namespace MaaAahwanam.Service
         {
             return orderdetailsRepository.DatesBooked(id);
         }
+        public int OrdersCount(long id)
+        {
+            return orderdetailsRepository.OrdersCount(id);
+        }
     }
 }

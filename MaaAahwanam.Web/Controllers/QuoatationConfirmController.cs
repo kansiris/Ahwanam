@@ -25,7 +25,8 @@ namespace MaaAahwanam.Web.Controllers
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-            string Username = userLoginDetailsService.Getusername(user.UserId);
+            //string Username = userLoginDetailsService.Getusername(user.UserId);
+            string Username = oid;
             StreamReader reader = new StreamReader(Server.MapPath("../Content/EmailTemplates/TempOrderconfirmation.html"));
             string readFile = reader.ReadToEnd();
             string StrContent = "";

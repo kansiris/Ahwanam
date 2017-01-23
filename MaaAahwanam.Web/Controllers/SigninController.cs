@@ -33,63 +33,58 @@ namespace MaaAahwanam.Web.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail,string ReturnUrl)
+        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
             if (command == "Register")
             {
-                if (userLogin.UserLoginId != 0)
+                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                userLogin.UserType = "User";
+                var response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+                if (response == "sucess")
                 {
-
-
-                    UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                    userLogin.UserType = "User";
-                    var response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
-                    if (response == "sucess")
-                    {
-                        return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
-                    }
-                    else
-                    {
-                        return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
-                    }
+                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
                 }
                 return View();
             }
             if (command == "AuthenticationUser")
             {
-                
-                    UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-                    userLogin.UserType = "User";
-                    var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
-                    if (userResponse.UserLoginId != 0)
+
+                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                userLogin.UserType = "User";
+                var userResponse = userLoginDetailsService.AuthenticateUser(userLogin);
+                if (userResponse.UserLoginId != 0)
+                {
+                    wrongpwdurlcount = 0;
+                    userResponse.UserType = "User";
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    //string ReturnTo = ReturnUrl;
+                    string ReturnTo = perfecturl;
+                    if (ReturnTo == null || ReturnTo == "")
                     {
-                        wrongpwdurlcount = 0;
-                        userResponse.UserType = "User";
-                        string userData = JsonConvert.SerializeObject(userResponse);
-                        ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                        //string ReturnTo = ReturnUrl;
-                        string ReturnTo = perfecturl;
-                        if (ReturnTo == null || ReturnTo == "")
-                        {
-                            Response.Redirect("Index");
-                        }
-                        else
-                        {
-                            string[] testid = ReturnTo.Split('/');
-                            if (testid.Contains("Signin") == false && testid.Contains("signin") == false)
-                                Response.Redirect(ReturnTo);
-                            else
-                                Response.Redirect(wrongpwdurl);
-                        }
+                        Response.Redirect("Index");
                     }
                     else
                     {
-                        if (wrongpwdurlcount == 0)
-                        { wrongpwdurl = perfecturl; wrongpwdurlcount++; }
-                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
-                        //TempData["Alert"] = "<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password')</script>";
+                        string[] testid = ReturnTo.Split('/');
+                        if (testid.Contains("Signin") == false && testid.Contains("signin") == false)
+                            Response.Redirect(ReturnTo);
+                        else
+                            Response.Redirect(wrongpwdurl);
                     }
-                
+                }
+                else
+                {
+                    if (wrongpwdurlcount == 0)
+                    { wrongpwdurl = perfecturl; wrongpwdurlcount++; }
+                    return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "Signin") + "'</script>");
+                    //TempData["Alert"] = "<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password')</script>";
+                }
+
             }
             if (command == "AuthenticationVendor")
             {
@@ -110,7 +105,11 @@ namespace MaaAahwanam.Web.Controllers
             }
             if (command == "" || command == null)
             {
-                perfecturl = ReturnUrl;
+                string value = ReturnUrl.Split('/')[3];
+                if (value != "Signin" && value != "signin")
+                {
+                    perfecturl = ReturnUrl;
+                }
             }
             return View();
         }
@@ -134,8 +133,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     UserDetail userDetail = new UserDetail();
                     return PartialView("SigninPartial", userDetail);
-                }               
-                return PartialView("SigninPartial", response);                
+                }
+                return PartialView("SigninPartial", response);
             }
             else
             {

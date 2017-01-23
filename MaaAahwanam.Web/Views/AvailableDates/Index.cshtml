@@ -14,7 +14,7 @@
     @*<link rel="stylesheet" type="text/css" href="/css/result-light.css">*@
     @*<script type="text/javascript" src="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="http://saumurbikehire.com/booking/datetime/jquery.datetimepicker.css">*@
-    
+
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <script src="http://multidatespickr.sourceforge.net/jquery-ui.multidatespicker.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
@@ -38,6 +38,11 @@
                 });
             });
         </script>*@
+    <style>
+        #vendorservicelist {
+        width:50%
+        }
+    </style>
 </head>
 
 @section Navigation
@@ -65,18 +70,22 @@
     @using (Html.BeginForm("Index", "AvailableDates", FormMethod.Post, new { @class = "form-signin", @id = "register_form", @autocomplete = "off", @enctype = "multipart/form-data" }))
     {
         @*@Html.TextAreaFor(m => m.availabledate, new { @id = "products_delivery", @name = "products_delivery", @class = "some_class", required = "required" })*@
-
+        <div align="center" style="width:100%">
+            <label>Select Service Type</label>
+            @Html.DropDownList("vendorservicelist", "--Select Service Type--")
+        </div>
+        <br />
         <div id="products_delivery" align="center"></div>
 
-        <br /><br />
-        <div align="center">
-            <button type="submit" name="command" id="save" value="save" class="btn btn-big btn-green">Save Date<i class="ti-angle-double-right"></i></button>
-            <button type="submit" name="command" id="remove" value="remove" class="btn btn-big btn-red">Remove Selected<i class="ti-trash"></i></button>
-        </div>
+            <br /><br />
+            <div align="center">
+                <button type="submit" name="command" id="save" value="save" class="btn btn-big btn-green">Save Date<i class="ti-angle-double-right"></i></button>
+                <button type="submit" name="command" id="remove" value="remove" class="btn btn-big btn-red">Remove Selected<i class="ti-trash"></i></button>
+            </div>
 
-        @Html.HiddenFor(m => m.availabledate, new { @style = "width: 500px;" })
-        <input type="hidden" id="removedates" />
-        @*<input type="text" id="removedates" style="width:500px"/><br/><br/><input type="text" id="availabledate" style="width:500px" />*@
+            @Html.HiddenFor(m => m.availabledate, new { @style = "width: 500px;" })
+            <input type="hidden" id="removedates" />
+            @*<input type="text" id="removedates" style="width:500px"/><br/><br/><input type="text" id="availabledate" style="width:500px" />*@
     }
 </body>
 </html>
