@@ -57,7 +57,7 @@
                                             j++;
                                             <tr class="item">
                                                 <td style="display:none">
-                                                    <span id="cid @j">@item.CartId</span>||<span id="hdndeal @j">@item.DealId</span>||<span id="hdnqty @j">@item.Quantity</span>
+                                                    <span id="cid @j">@item.CartId</span>||<span id="hdndeal @j">@item.DealId</span>||<span id="hdnqty @j">@item.Quantity</span>||<span id="bdate @j">@item.eventstartdate</span> />
                                                 </td>
                                                 <td style="display:none">
                                                     <span id="eid @j">@item.eventid</span>||<span id="hdndealcheck @j">@item.Isdeal</span>||<span id="hdndiscpercent @j">@item.Discount</span>
@@ -66,7 +66,7 @@
                                                     <span id="tid @j">@item.Id</span>||<span id="hdnactualprice @j">@item.ServicePrice</span>||<span id="hdndisc @j">@item.DiscountPrice</span>
                                                 </td>
                                                 <td style="display:none">
-                                                    <span id="sid @j">@item.subid</span>||<span id="hdnattribute @j">@item.attribute</span>
+                                                    <span id="sid @j">@item.subid</span>||<span id="hdnattribute @j">@item.attribute</span>||<span id="hdntype @j">@item.ServicType</span>
                                                 </td>
                                                 <td>
                                                     @if (item.image != null)
@@ -97,6 +97,7 @@
                                                 <td>
                                                     <div class="event-date-time">
                                                         <div class="event-dates">
+                                                            
                                                             @if (item.eventstartdate != null && item.eventenddate != null)
                                                             {
                                                             <p>Event Start Date : @item.eventstartdate.ToString("dd MMM yyyy")<br/> Event End Date&nbsp;&nbsp;:&nbsp;@item.eventenddate.ToString("dd MMM yyyy")
@@ -365,6 +366,8 @@
             var disc = document.getElementById('hdndiscpercent ' + i).innerHTML;
             var discpercent = document.getElementById('hdndisc ' + i).innerHTML;
             var actualprice = document.getElementById('hdnactualprice ' + i).innerHTML;
+            var servicetype = document.getElementById('hdntype ' + i).innerHTML;
+            var bookeddate = document.getElementById('bdate ' + i).innerHTML;
             //alert(actualprice);
             item = {}
             item["PerunitPrice"] = trp;
@@ -375,6 +378,8 @@
             item["Quantity"] = qty;
             item["Discount"] = disc;
             item["DiscountPrice"] = discpercent;
+            item["ServiceType"] = servicetype;
+            item["BookedDate"] = bookeddate;
             OrderDetails.push(item);
         }
         eventids = [];

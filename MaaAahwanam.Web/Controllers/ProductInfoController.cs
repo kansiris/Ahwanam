@@ -45,18 +45,22 @@ namespace MaaAahwanam.Web.Controllers
             List<SP_Amenities_Result> Amenities = productInfoService.GetAmenities(Svid, Servicetype);
             ViewBag.Amenities = Amenities; string type = Request.QueryString["par"];
             //Vendor Available Dates
+            if (type == "Travel")
+            {
+                type = "Travel&Accommodation";
+            }
             var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
             if (vendorid != 0)
             {
                 var today = DateTime.UtcNow;
                 var first = new DateTime(today.Year, today.Month, 1);
                 var vendordates = availabledatesService.GetCurrentMonthDates(vendorid).Select(m => m.availabledate.ToShortDateString()).ToArray();
-                //var bookeddates = productInfoService.GetCount(vid, Svid, type).Where(m => m.UpdatedDate > first).Select(m => m.UpdatedDate.Value.ToShortDateString()).Distinct().ToArray();
-                var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
+                var bookeddates = productInfoService.GetCount(vid, Svid, type).Where(m => m.BookedDate > first).Select(m => m.BookedDate.Value.ToShortDateString()).Distinct().ToArray();
+                //var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
                 var finalbookeddates = bookeddates.Except(vendordates);
                 var finalvendordates = vendordates.Except(bookeddates);
-                var finalbookeddates1 = bookeddates;
-                var finalvendordates1 = vendordates;
+                //var finalbookeddates1 = bookeddates;
+                //var finalvendordates1 = vendordates;
                 if (finalbookeddates.Count() != 0)
                     ViewBag.vendoravailabledates = string.Join(",", finalvendordates) +  string.Join(",", finalbookeddates);
                 else
@@ -157,7 +161,7 @@ namespace MaaAahwanam.Web.Controllers
             OrderService orderService = new OrderService();
             Order order = new Order();
             order.TotalPrice = Convert.ToDecimal(orderRequest.TotalPrice);
-            order.OrderDate = Convert.ToDateTime(bookeddate); //Convert.ToDateTime(updateddate);
+            order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
             order.UpdatedBy = (Int64)user.UserId;
             order.OrderedBy = (Int64)user.UserId;
             order.UpdatedDate = Convert.ToDateTime(updateddate);
@@ -190,6 +194,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
             orderDetail.UpdatedBy = user.UserId;
             orderDetail.subid = orderRequest.subid;
+            orderDetail.BookedDate = Convert.ToDateTime(bookeddate);
             orderdetailsServices.SaveOrderDetail(orderDetail);
 
 

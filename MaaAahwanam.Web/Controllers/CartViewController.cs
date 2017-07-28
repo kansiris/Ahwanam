@@ -67,6 +67,9 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.OrderBy = user.UserId;
                 orderDetail.PerunitPrice = item.PerunitPrice;
                 orderDetail.PaymentId = payment_Orders.PaymentID;
+                if(item.ServiceType.StartsWith("Travel"))
+                    orderDetail.ServiceType = "Travel&Accommodation";
+                else
                 orderDetail.ServiceType = item.ServiceType;
                 orderDetail.ServicePrice = item.ServicePrice;
                 orderDetail.TotalPrice = orderRequest.TotalPrice;
@@ -79,7 +82,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                 orderDetail.UpdatedBy = user.UserId;
                 orderDetail.attribute = item.attribute;
-                
+                orderDetail.BookedDate = item.BookedDate;
                 if (i == 0)
                 {
                     orderDetail.Isdeal = orderRequest.Cartitems[0].Isdeal;

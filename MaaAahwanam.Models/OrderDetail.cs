@@ -31,5 +31,6 @@ namespace MaaAahwanam.Models
         public bool Isdeal { get; set; }
         public long DealId { get; set; }
         public string attribute { get; set; }
+        public DateTime? BookedDate { get; set; }
     }
 }

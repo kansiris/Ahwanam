@@ -5,6 +5,7 @@ $(function () {
     $("#save").css('display', 'none');
     $("#remove").css('display', 'none');
     //getdates();
+    $("#vendorservicelist").attr('title','Select Service');
 });
 //next month click
 //$(document).on('click', '.ui-datepicker-next', function () {
@@ -20,12 +21,17 @@ $(function () {
 
 
 $("body").on('change', "#vendorservicelist", function () {
-    //$('#products_delivery').multiDatesPicker('setDate', null);
-    getdates(this.value);
+    //$("#products_delivery").multiDatesPicker('resetDates', 'disabled');
+    $("#availabledate").val('');
+    getdates(this.value); //$("#availabledate").val('');
+    //alert($("#availabledate").val());
+    //$('#products_delivery').multiDatesPicker().find(".ui-datepicker-current-day a ").removeClass("ui-state-highlight ui-state-active");
+    //$("#products_delivery").multiDatesPicker("refresh");
 });
 
 var unavailableDates = '';
 function getdates(id) {
+    
     $.ajax({
         type: "POST",
         url: "/AvailableDates/GetDates?id="+id+"",
@@ -52,32 +58,50 @@ function getdates(id) {
                 }
                 unavailableDates = final.slice(0, -1).split(',');
             }
+            var todaydate=new Date();
             var today = new Date(); today.setDate(1); today.setHours(-1);
             var currentmonth = (today.getMonth() + 2);
             var firstDay = new Date(today.getFullYear(), today.getMonth(), 1); // prev month first day
             var lastDay = new Date(today.getFullYear(), (today.getMonth() + 3), 0); // next month last day
+            var yesterday = new Date(todaydate.getFullYear(), (todaydate.getMonth()), (todaydate.getDate() - 1));
+            //alert(yesterday);
+            //$("#products_delivery").multiDatesPicker('resetDates', 'disabled');
+            //$('#products_delivery').multiDatesPicker("destroy");//.find("td.ui-datepicker-current-day").removeClass("ui-state-highlight");
+            //$('#products_delivery').multiDatesPicker().multiDatesPicker("setDate", yesterday);
             $('#products_delivery').multiDatesPicker({
+                //$('#products_delivery'+id+'').multiDatesPicker({
                 altField: '#availabledate',//altField: '#removedates'
                 minDate: new Date(), maxDate: lastDay, //minDate: firstDay,
-                dateFormat: 'dd/mm/yyyy', 
-                        
+                dateFormat: 'dd/mm/yyyy',
+                todayHighlight: false,//defaultDate: null,//defaultDate:yesterday,
                 beforeShowDay: function (date) {
                     var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
                     //debugger;
                     if ($.inArray(dmy, unavailableDates) == -1) {
                         return [true, ""];
                     } else {
-                        return [false, "myclass", "Unavailable"]; 
+                        return [false, "myclass", "Unavailable"];
                     }
-                            
+                    //$.find('.ui-state-highlight.ui-state-hover').removeClass('ui-state-highlight ui-state-hover')
+                    //$("#products_delivery a.ui-state-highlight").removeClass("ui-state-highlight");
                 }
-                , onSelect: function (data, e) {  select(); }
-            });
+                , onSelect: function (data, e) {
+                    select();
+                },
+                //defaultDate: yesterday,
+            });//.multiDatesPicker("setDate", yesterday);//.find("td.ui-datepicker-today").removeClass("ui-state-highlight"); //,'resetDates', 'disabled'
         },
         dataType: "json",
         traditional: true,
 
     });
+    unavailableDates = '';
+    //$("#products_delivery .ui-state-active").removeClass("ui-state-active");
+    //$("#products_delivery .ui-state-highlight").removeClass("ui-state-highlight");
+    //$("#products_delivery .ui-datepicker-today").removeClass("ui-datepicker-today");
+    //$("#products_delivery").multiDatesPicker("refresh");
+    //$('#products_delivery').multiDatesPicker("destroy");
+    //$('#products_delivery').multiDatesPicker().find(".ui-datepicker-current-day a ").removeClass("ui-state-highlight ui-state-active");
 }
 
 function getmonthnumber(month) {
@@ -85,7 +109,7 @@ function getmonthnumber(month) {
     return collection.indexOf(month);
 }
 
-    $("body").on('click', ".ui-datepicker td.myclass > span", function () {
+$("body").on('click', ".ui-datepicker td.myclass > span", function () {
         var month = getmonthnumber($('span.ui-datepicker-month').text());
         var date = new Date(); //alert(typeof(date));
         var today = (date.getDate() + 1) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(); 
@@ -95,6 +119,8 @@ function getmonthnumber(month) {
         var removeddates = $('#removedates').val();
         var date = value;
         if (comparevalue > comparetoday) {
+            $('#vendorsubid').val($('#vendorservicelist').val());
+            $('#vendorservicelist').prop("disabled", true).prop("title","Make Sure that below dates are not selected");
             $("#remove").css('display', 'block');
             $(this).css('background', 'red');
             $('#removedates').val(date);
@@ -108,6 +134,7 @@ function getmonthnumber(month) {
 
 
 function appendWords(t) {
+    
     var flag = true; //var finaldates = $("#availabledate").val();
     var resultObj = $("#availabledate");
     var outputObj = $("#removedates");
@@ -124,6 +151,7 @@ function appendWords(t) {
                 var appended = $("#availabledate").val();
                 if (appended == null || appended == '') {
                     $("#remove").css('display', 'none');
+                    $('#vendorservicelist').prop("disabled", false).prop("title", "Select Service");
                 }
             }
         }
@@ -142,9 +170,11 @@ function appendWords(t) {
         var val = $("#availabledate").val();
         if (val != null && val != '') {
             $("#save").css('display', 'block');
+            //$('#vendorservicelist').prop("disabled", true).prop("title", "Make Sure that below dates are not selected");
         }
         else {
             $("#save").css('display', 'none');
+            //$('#vendorservicelist').prop("disabled", false);
         }
     }
 

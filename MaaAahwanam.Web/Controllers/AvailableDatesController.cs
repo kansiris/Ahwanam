@@ -33,7 +33,7 @@ namespace MaaAahwanam.Web.Controllers
             string a = "";
             availabledates.vendorId = (int)user.UserId;
             availabledates.servicetype = vendorMasterService.GetVendorServiceType(user.UserId).ServicType;
-            availabledates.vendorsubid = long.Parse(vendorservicelist);
+            //availabledates.vendorsubid = availabledates.vendorsubid; //long.Parse(vendorservicelist);
             for (int i = 0; i < dates.Length; i++)
             {
                 if (command == "save")
