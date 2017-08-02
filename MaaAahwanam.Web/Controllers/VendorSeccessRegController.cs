@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace MaaAahwanam.Web.Controllers
 {
-    public class VendorSignUp4Controller : Controller
+    public class VendorSeccessRegController : Controller
     {
-        // GET: VendorSignUp4
-        public ActionResult Index(string id, string vid)
+        // GET: VendorSeccessReg
+        public ActionResult Index()
         {
             return View();
         }
