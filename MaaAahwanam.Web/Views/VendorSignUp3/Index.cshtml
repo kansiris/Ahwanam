@@ -161,11 +161,12 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <div class="checkbox col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="checkbox" value="Veg" id="Food" name="Food">Veg</label>
+                        <input type="hidden" id="Food" name="Food" />
+                        <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                            <label><input type="checkbox" value="Veg"> Veg </label>
                         </div>
-                        <div class="checkbox col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="checkbox" value="Non-Veg" id="Food" name="Food">Non-Veg</label>
+                        <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                            <label><input type="checkbox" value="Non-Veg"> Non-Veg </label>
                         </div>
                     </div>
                 </div>
@@ -229,12 +230,9 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="HallType" id="HallType" value="AC">AC</label>
-                        </div>
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="HallType" id="HallType" value="Non_AC">Non_AC</label>
-                        </div>
+                        <input type="hidden" name="HallType" id="HallType" />
+                        <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="AC"> AC </label></div>
+                        <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="Non_AC"> Non_AC </label></div>
                     </div>
                 </div>
             </div>
@@ -393,12 +391,32 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     @*<a href="/VendorSignUp4" class="btn btn-default red-bg white">Save</a>*@
-                    <input type="submit" value="Next" class="btn btn-default red-bg white" />
+                    <input type="submit" value="Next" class="btn btn-default red-bg white margin-left" />
+                    <a href="/VendorSignUp2" class="btn btn-default red-bg white margin-left">Prev</a>
                 </div>
             </div>
         </form>
     </div>
     <script type="text/javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
+    <script>
+        //Hall Type checkBoxes
+        $(".HallType input[type='checkbox']").change(function () {
+            var arr = [], i = 0;
+            $(".HallType input[type='checkbox']:checked").each(function () {
+                arr[i++] = $(this).parent("label").text();
+            });
+            $('#HallType').val(arr);
+        });
+
+        //Food Type checkBoxes
+        $(".Foodtype input[type='checkbox']").change(function () {
+            var arr = [], i = 0;
+            $(".Foodtype input[type='checkbox']:checked").each(function () {
+                arr[i++] = $(this).parent("label").text();
+            });
+            $('#Food').val(arr);
+        });
+    </script>
 </body>
 </html>

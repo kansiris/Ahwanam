@@ -46,5 +46,16 @@ namespace MaaAahwanam.Web.Controllers
             }
             return cultureList;
         }
+
+        public JsonResult checkemail(string emailid)
+        {
+            VendorMasterService vendorMasterService = new VendorMasterService();
+            int query = vendorMasterService.checkemail(emailid);
+            if (query != 0)
+            {
+                return Json("exists", JsonRequestBehavior.AllowGet);
+            }
+            return Json("valid", JsonRequestBehavior.AllowGet);
+        }
     }
 }
