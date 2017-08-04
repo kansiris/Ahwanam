@@ -25,5 +25,10 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.GetVendorServiceType(id);
         }
+
+        public Vendormaster UpdateVendorMaster(Vendormaster vendorMaster, long id)
+        {
+            return vendormasterRepository.UpdateVendorMaster(vendorMaster,id);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VendorSignUp3
         public ActionResult Index(string id, string vid)
         {
+            ViewBag.id = id;
+            ViewBag.vid = vid;
             return View();
         }
 

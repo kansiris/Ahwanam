@@ -76,7 +76,7 @@
                         @*<button type="button" class="btn btn-default red-bg white" onclick="javascript: document.getElementById('fileUpload1').click();">Click Here</button>
                         <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" style="display:none"/>*@
                         <button type="button" class="btn btn-default red-bg white" onclick="javascript: document.getElementById('fileUpload1').click();">Click Here</button>
-                        <input type="file" multiple="multiple" accept="image/*" id='fileUpload1' name="file" style="display:none">    
+                        <input type="file" multiple="multiple" accept="image/*" id='fileUpload1' name="file" style="display:none">     
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     @*<a href="/VendorSignUp3" class="btn btn-default red-bg white">Next</a>*@
                     <input type="submit" value="Next" class="btn btn-default red-bg white margin-left" />
-                    <a href="/VendorSignUp1" class="btn btn-default red-bg white margin-left">Cancel</a>
+                    <a href="/VendorSignUp3?id=@ViewBag.id&&vid=@ViewBag.vid" class="btn btn-default red-bg white margin-left">Skip</a>
                 </div>
             </div>
         </form>
@@ -134,17 +134,15 @@
         //$("p.red").click(function () {
             var x = $(this).parents(".blocks").css({ "transform": "translateX(1000px)", "opacity": "0" });
             setTimeout(function () { x.remove(); }, 200);
-            //var file = $(this).data("file");
-            //for (var i = 0; i < storedFiles.length; i++) {
-            //    if (storedFiles[i].name === file) {
-            //        storedFiles.splice(i, 1);
-            //        break;
-            //    }
-            //}
-            //$(this).parent().remove();
             var imgname = $(this).parents("div.row").parents("div.thumbnail").find("div.thumb-img").children("img").attr('alt');
             //alert(imgname); //parents("div.thumbnail").html());
             // $('#fileUpload1')[0].files[0][imgname];
+            var files = new Array();
+            $("#fileUpload1").each(function () {
+                var name = $(this).attr("href");
+                files.push(name);
+            });
+            alert(files.join('\n'));
         });
         /*=============== Image Block remove =============*/
 

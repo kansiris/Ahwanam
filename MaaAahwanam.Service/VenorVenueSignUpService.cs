@@ -33,18 +33,18 @@ namespace MaaAahwanam.Service
 
         public UserDetail AddUserDetail(UserDetail userDetail, Vendormaster vendormaster)
         {
-            //userDetail.FirstName = vendormaster.BusinessName;
-            //userDetail.UserPhone = vendormaster.ContactNumber;
-            //userDetail.Url = vendormaster.Url;
-            //userDetail.Address = vendormaster.Address;
-            //userDetail.City = vendormaster.City;
-            //userDetail.State = vendormaster.State;
-            //userDetail.ZipCode = vendormaster.ZipCode;
+            userDetail.FirstName = vendormaster.BusinessName;
+            userDetail.UserPhone = vendormaster.ContactNumber;
+            userDetail.Url = vendormaster.Url;
+            userDetail.Address = vendormaster.Address;
+            userDetail.City = vendormaster.City;
+            userDetail.State = vendormaster.State;
+            userDetail.ZipCode = vendormaster.ZipCode;
             userDetail.Status = "InActive";
             userDetail.UpdatedBy = 2;
             userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
-            //userDetail.AlternativeEmailID = vendormaster.EmailId;
-            //userDetail.Landmark = vendormaster.Landmark;
+            userDetail.AlternativeEmailID = vendormaster.EmailId;
+            userDetail.Landmark = vendormaster.Landmark;
             return vendorVenueSignUpRepository.AddUserDetail(userDetail);
         }
 
