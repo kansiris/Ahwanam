@@ -76,10 +76,22 @@
                         @*<button type="button" class="btn btn-default red-bg white" onclick="javascript: document.getElementById('fileUpload1').click();">Click Here</button>
                         <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" style="display:none"/>*@
                         <button type="button" class="btn btn-default red-bg white" onclick="javascript: document.getElementById('fileUpload1').click();">Click Here</button>
-                        <input type="file" multiple="multiple" accept="image/*" id='fileUpload1' name="file" style="display:none">     
+                        <input type="file" multiple="multiple" accept="image/*" id='fileUpload1' name="file" style="display:none"> 
+                        <input type="hidden" id="removedimages" name="removedimages" />
                     </div>
                 </div>
             </div>
+            <!-- The global progress bar -->
+            <!-- The global progress state -->
+            <div class="col-lg-5 fileupload-progress fade">
+                <!-- The global progress bar -->
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
             <div class="block margin-top-30">
                 <div class="row margin-top margin-bottom" id="dvPreview">
                     
@@ -89,7 +101,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     @*<a href="/VendorSignUp3" class="btn btn-default red-bg white">Next</a>*@
-                    <input type="submit" value="Next" class="btn btn-default red-bg white margin-left" />
+                    <input type="submit" value="Next" class="btn btn-default red-bg white margin-left" id="uploadBtn"/>
                     <a href="/VendorSignUp3?id=@ViewBag.id&&vid=@ViewBag.vid" class="btn btn-default red-bg white margin-left">Skip</a>
                 </div>
             </div>
@@ -97,8 +109,10 @@
     </div>
     <script type="text/javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
+
     <script>
-        $("#fileUpload1").change(function () {
+        $(document).on('change', '#fileUpload1', function () {
+        //$("#fileUpload1").change(function () {
             if (typeof (FileReader) != "undefined") {
                 var dvPreview = $("#dvPreview");
                 //dvPreview.html("");
@@ -123,7 +137,7 @@
                         return false;
                     }
                     //i++;
-                   // document.getElementById("fileUpload1").value = "";
+                    //document.getElementById("fileUpload1").value = "";
                 });
             } else {
                 alert("This browser does not support HTML5 FileReader.");
@@ -131,21 +145,20 @@
         });
         /*=============== Image Block remove =============*/
         $(document).on('click', 'p.red', function () {
-        //$("p.red").click(function () {
+            //$("p.red").click(function () {
+            var removed;
             var x = $(this).parents(".blocks").css({ "transform": "translateX(1000px)", "opacity": "0" });
             setTimeout(function () { x.remove(); }, 200);
             var imgname = $(this).parents("div.row").parents("div.thumbnail").find("div.thumb-img").children("img").attr('alt');
-            //alert(imgname); //parents("div.thumbnail").html());
-            // $('#fileUpload1')[0].files[0][imgname];
-            var files = new Array();
-            $("#fileUpload1").each(function () {
-                var name = $(this).attr("href");
-                files.push(name);
-            });
-            alert(files.join('\n'));
+            var value = $('#removedimages').val();
+            if (value == "") 
+                removed = imgname;
+            else
+                removed = imgname + ',' + value;
+
+            $('#removedimages').val(removed);
         });
         /*=============== Image Block remove =============*/
-
     </script>
 </body>
 </html>

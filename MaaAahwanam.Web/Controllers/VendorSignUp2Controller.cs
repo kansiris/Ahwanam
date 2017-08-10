@@ -21,7 +21,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string vid, HttpPostedFileBase file)
+        public ActionResult Index(string id, string vid, HttpPostedFileBase file,string removedimages)
         {
             string fileName = string.Empty;
             VendorImage vendorImage = new VendorImage();
@@ -33,16 +33,19 @@ namespace MaaAahwanam.Web.Controllers
                 for (int i = 0; i < Request.Files.Count; i++)
                 {
                     int j = i + 1;
-
                     var file1 = Request.Files[i];
-                    if (file1 != null && file1.ContentLength > 0)
+                    if (removedimages.Contains(file1.FileName)) { }
+                    else
                     {
-                        string path = System.IO.Path.GetExtension(file.FileName);
-                        var filename = "Venue_" + id + "_" + vid + "_" + j + path;
-                        fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
-                        file1.SaveAs(fileName);
-                        vendorImage.ImageName = filename;
-                        vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                        if (file1 != null && file1.ContentLength > 0)
+                        {
+                            string path = System.IO.Path.GetExtension(file.FileName);
+                            var filename = "Venue_" + id + "_" + vid + "_" + j + path;
+                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                            file1.SaveAs(fileName);
+                            vendorImage.ImageName = filename;
+                            vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                        }
                     }
                 }
             }
