@@ -29,8 +29,8 @@ namespace MaaAahwanam.Web.Controllers
             vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
             //string testurl = Request.Url.Scheme + "://" + Request.Url.Authority + "/VendorSignUp4/Index?id=" + user.UserId + "&Oid=" + oid;
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-            string Username = userLoginDetailsService.Getusername(long.Parse(id));
-            StreamReader reader = new StreamReader(Server.MapPath("/newdesign/mailtemplates/thankyou.html"));
+            string Username = vendorMaster.EmailId;//userLoginDetailsService.Getusername(long.Parse(id));
+            StreamReader reader = new StreamReader(Server.MapPath("~/newdesign/mailtemplates/thankyou.html"));
             string readFile = reader.ReadToEnd();
             string StrContent = readFile;
             //StrContent = readFile + "<h2>Feedback Form</h2>" + testurl;
