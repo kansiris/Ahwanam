@@ -27,16 +27,9 @@ namespace MaaAahwanam.Web.Controllers
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             vendorMaster.discount = discount;
             vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
-            //string testurl = Request.Url.Scheme + "://" + Request.Url.Authority + "/VendorSignUp4/Index?id=" + user.UserId + "&Oid=" + oid;
-            UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-            string Username = vendorMaster.EmailId;//userLoginDetailsService.Getusername(long.Parse(id));
+            string Username = vendorMaster.EmailId;
             StreamReader reader = new StreamReader(Server.MapPath("~/newdesign/mailtemplates/thankyou.html"));
-            string readFile = reader.ReadToEnd();
-            string StrContent = readFile;
-            //StrContent = readFile + "<h2>Feedback Form</h2>" + testurl;
-            //StrContent = StrContent.Replace("@@MessageDiv@@", Detdiv);
-            //string Mailmessage = "<Table>" + Detdiv + "</Table>";
-
+            string StrContent = reader.ReadToEnd();
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Registration Confirmation");
             return RedirectToAction("Index", "VendorSeccessReg");

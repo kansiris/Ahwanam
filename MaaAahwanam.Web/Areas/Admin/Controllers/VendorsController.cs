@@ -40,6 +40,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             {
                 return RedirectToAction(dropstatus, "CreateVendor", new { id = id, vid = vid, op = "add" });
             }
+            if (command == "confirm")
+            {
+                TempData["confirm"] = 1;
+                return RedirectToAction(dropstatus, "CreateVendor", new { id = id, vid = vid, op = "confirm" });
+            }
             return View();
         }
         public ActionResult ActiveVendors()

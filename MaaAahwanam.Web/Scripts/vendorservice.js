@@ -37,7 +37,7 @@
             //$("#menuitem").hide();
             //var stat = up.contains("vid");
             //alert(url); alert(up.trimLeft("vid")); alert(op); //alert(stat);
-            if (op == 'display') {
+            if (op == 'display' || op == 'confirm') {
                 //alert("view purpose");
                 $("#btnadd").hide();
                 $('#btn').hide();

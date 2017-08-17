@@ -2417,6 +2417,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult Venue(string id, [Bind(Prefix = "Item2")] VendorVenue vendorVenue, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, [Bind(Prefix = "Item3")]Deal deal, string src,string op,string vid,string d)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorVenueService vendorVenueService = new VendorVenueService();
             if (vid!=null)
             {
