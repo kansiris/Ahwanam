@@ -30,6 +30,7 @@ namespace MaaAahwanam.Repository.db
         public Vendormaster UpdateVendorMaster(Vendormaster vendorMaster, long id)
         {
             var GetMasterRecord = _dbContext.Vendormaster.SingleOrDefault(m => m.Id == id);
+            vendorMaster.Id = GetMasterRecord.Id;
             _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(vendorMaster);
             _dbContext.SaveChanges();
             return vendorMaster;

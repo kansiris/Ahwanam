@@ -80,9 +80,9 @@ namespace MaaAahwanam.Service
         public VendorVenue UpdateVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid,long vid)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();
-            vendorVenue.Status = "Active";
+            //vendorVenue.Status = "Active";
             vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendorMaster.Status = "Active";
+            //vendorMaster.Status = "Active";
             vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Venue";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster,masterid);

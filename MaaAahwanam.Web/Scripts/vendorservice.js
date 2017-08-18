@@ -46,7 +46,7 @@
                 $('.deletelink').hide();
                 $('#fileUpload').hide();
                 $('#msg').hide();
-                $('.form-control').attr("disabled", "disabled");
+                $('.form-control').attr("readonly", "true");
                 itemsdisable();
                 $("#dealdisplay").hide();
             }
