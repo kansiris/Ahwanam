@@ -152,17 +152,33 @@
                         <h4><i class="fa fa-suitcase" aria-hidden="true"></i> Business Information</h4>
                     </div>
                 </div>
+                @*<div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
+                    <select class="form-control" id="sel1" multiple size="5">
+                        <option>Venues</option>
+                        <option>Decoration</option>
+                        <option>Catering</option>
+                        <option>Photography</option>
+                        <option>Entertainments</option>
+                        <option>Beauty Services</option>
+                    </select>
+                </div>*@
                 <div class="row margin-top margin-bottom">@Html.HiddenFor(model=>model.Item3.Address)
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
-                            @Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Landmark *", Required = "Required" })
+                            @*@Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Landmark *", Required = "Required" })*@
                             @*@Html.DropDownListFor(Model => Model.Item3.Country, (SelectList)ViewBag.country, "Select country", new { @class = "form-control", required = "required" })*@
-                            @*<select class="form-control" id="sel1">
-                                <option>List One</option>
-                                <option>List Two</option>
-                                <option>List Three</option>
-                                <option>List Four</option>
-                            </select>*@
+                            <select class="form-control" id="sel1" multiple size="5">
+                                <option>Venues</option>
+                                <option>Decoration</option>
+                                <option>Catering</option>
+                                <option>Photography</option>
+                                <option>Entertainments</option>
+                                <option>Beauty Services</option>
+                            </select>
+                        </div>
+                        <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
+                            @*<input type="text" class="form-control" placeholder="City/Town *">*@
+                            @Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Landmark *", Required = "Required" })
                         </div>
                         <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                             @*<input type="text" class="form-control" placeholder="City/Town *">*@
@@ -212,8 +228,8 @@
                         <h4><i class="fa fa-suitcase" aria-hidden="true"></i> Your Business Category</h4>
                     </div>
                 </div>
-                <div class="row margin-top margin-bottom">
-                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                <div class="row margin-top margin-bottom" id="businesscategory">
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Venues">
                         <h4>Venues</h4> <input type="hidden" name="Item4.VenueType" id="Item1_VenueType" />
                         <div class="checkbox">
                             <label><input type="checkbox">Convention Hall</label>
@@ -240,6 +256,37 @@
                             <label><input type="checkbox">Resort</label>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Catering">
+                        <h4>Catering</h4>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Indian</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Chinese</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Mexican</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">South Indian</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Continental</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Multi Cuisine</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Chaat</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Fast Food</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Othersl</label>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0 border-default-bottom hr-line"></div>
@@ -284,6 +331,23 @@
         $('#Item1_EmailId').on('input', function () {
             $('#Item2_UserName').val(this.value);
         });
+        /*------- Select Business Category -------------*/
+        var listval, idval;
+        $("#sel1").on('change', function () {
+            listval = $(this).val();
+            alert(listval);
+            $("#businesscategory > div").each(function () {
+                //var v = listval.split(",");
+                //alert(v);
+                idval = $(this).attr("id");
+                //alert(idval);
+                if (listval == idval) {
+                    //alert("YES");
+                    $(this).css("display", "block");
+                }
+            });
+        });
+        /*------- Select Business Category -------------*/
     </script>
     @*E-Mail ID check*@
     <script>

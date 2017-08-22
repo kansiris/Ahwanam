@@ -524,7 +524,7 @@
                                                     {
                                                         @*<input type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active"/>*@
                                                         <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate vendor</button>
-                                                        <button type="button" name="Command" class="btn text-muted text-center btn-rect" value="Query">Require More Info</button>
+                                                        <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
                                                         <button type="submit" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline vendor</button>
                                                     }
                                                     @if (ViewBag.operation != null)
@@ -576,6 +576,22 @@
         </div>
     </div>
 
+@*Query POPUP*@
+<div class="modal fade" id="querymodal" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+            <div class="modal-body">
+                <textarea rows="5" placeholder="Query.....?" style="width:100%;background-color:#eeeeee"></textarea>
+            </div>
+            <div class="modal-footer" align="center">
+                <button type="button" name="Command" class="btn text-muted text-center btn-success">Submit Query</button>
+                <button type="button" name="Command" class="btn text-muted text-center btn-danger" id="cancelquery">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     @section Bottom{
         <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
         <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -584,6 +600,10 @@
         <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
         <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
         <script src="~/Assets/js/image_gallery.js"></script>
+        <script>
+            //hide modal popup
+            $('#cancelquery').click(function () { $('#querymodal').css('display', 'none').css('aria-hidden','true'); });
+        </script>
         <script>
             $(document).ready(function () {
                 $('#dataTables-example').dataTable();

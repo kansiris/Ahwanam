@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
     {
         VendorImageService vendorImageService = new VendorImageService();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         DealService dealService = new DealService();
         const string imagepath = @"/vendorimages/";
         static string vendorid = "";
@@ -2530,6 +2531,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             {
                 vendorVenue.Status = vendorMaster.Status = Command;
                 vendorVenue = vendorVenueService.UpdateVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
+                userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
                 return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
             }
             if (Command == "update")

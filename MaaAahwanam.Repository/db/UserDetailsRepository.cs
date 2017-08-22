@@ -90,5 +90,36 @@ namespace MaaAahwanam.Repository.db
                 //count.UserLoginId = 0;
                 return 0;
         }
+
+       
+
+        public int UpdateUserDetail(string email, string status)
+        {
+            // Query the database for the row to be updated.
+            var query1 = _dbContext.UserLogin.Where(m => m.UserName == email).FirstOrDefault();
+            var query =
+                from ord in _dbContext.UserDetail
+                where ord.UserLoginId == query1.UserLoginId
+                select ord;
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (UserDetail ord in query)
+            {
+                ord.Status = status;
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception Ex)
+            {
+                return 0;
+            }
+            return 1;
+        }
     }
 }
