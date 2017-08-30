@@ -31,8 +31,11 @@ namespace MaaAahwanam.Web.Controllers
             StreamReader reader = new StreamReader(Server.MapPath("~/newdesign/mailtemplates/thankyou.html"));
             string StrContent = reader.ReadToEnd();
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Registration Confirmation");
-            return RedirectToAction("Index", "VendorSeccessReg");
+            //emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Registration Confirmation");
+            emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Registration Confirmation");
+            emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Registration Confirmation");
+            //return RedirectToAction("Index", "VendorSeccessReg");
+            return Content("<script language='javascript' type='text/javascript'>alert('Registration successful. Please click on Activation link which has been sent to your Email to enable your Login Access.');location.href='" + @Url.Action("Index", "VendorSeccessReg") + "'</script>");
         }
     }
 }

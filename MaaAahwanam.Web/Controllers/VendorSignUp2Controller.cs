@@ -49,7 +49,8 @@ namespace MaaAahwanam.Web.Controllers
                     }
                 }
             }
-            return RedirectToAction("Index", "VendorSignUp3", new { id = id, vid = vid });
+            //return RedirectToAction("Index", "VendorSignUp3", new { id = id, vid = vid });
+            return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='" + @Url.Action("Index", "VendorSignUp3", new { id = id, vid = vid }) + "'</script>");
         }
     }
 }

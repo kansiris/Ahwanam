@@ -33,7 +33,7 @@ namespace MaaAahwanam.Service
 
         public UserDetail AddUserDetail(UserDetail userDetail, Vendormaster vendormaster)
         {
-            userDetail.FirstName = vendormaster.BusinessName;
+            userDetail.FirstName = vendormaster.ContactPerson;
             userDetail.UserPhone = vendormaster.ContactNumber;
             userDetail.Url = vendormaster.Url;
             userDetail.Address = vendormaster.Address;

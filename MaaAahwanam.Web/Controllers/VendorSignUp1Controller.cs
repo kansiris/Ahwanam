@@ -28,7 +28,8 @@ namespace MaaAahwanam.Web.Controllers
             vendorMaster = vendorVenueSignUpService.AddvendorMaster(vendorMaster);
             vendorVenue.VendorMasterId = vendorMaster.Id;
             vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
-            return RedirectToAction("Index", "VendorSignUp2",new { id=vendorMaster.Id,vid=vendorVenue.Id});
+            //return RedirectToAction("Index", "VendorSignUp2",new { id=vendorMaster.Id,vid=vendorVenue.Id});
+            return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = vendorMaster.Id, vid = vendorVenue.Id }) + "'</script>"); 
         }
 
         private List<SelectListItem> CountryList()
