@@ -17,6 +17,12 @@ namespace MaaAahwanam.Repository.db
             return userLogin;
         }
 
+        public UserLogin GetUserLogin(UserLogin userLogin)
+        {
+           var data= _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault();
+            return data;
+        }
+
         public Vendormaster AddVendormaster(Vendormaster vendormaster)
         {
             _dbContext.Vendormaster.Add(vendormaster);

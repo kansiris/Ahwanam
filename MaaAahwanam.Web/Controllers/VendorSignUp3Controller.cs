@@ -31,7 +31,8 @@ namespace MaaAahwanam.Web.Controllers
             long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorVenue = venorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, masterid, long.Parse(vid));
             //return RedirectToAction("Index", "VendorSignUp4", new { id = id, vid = vid });
-            return Content("<script language='javascript' type='text/javascript'>alert('FAQ's Updated');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = id, vid = vid }) + "'</script>");
+            //return Content("<script language='javascript' type='text/javascript'>alert('FAQ's Updated');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = id, vid = vid }) + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = id, vid = vid }) + "'</script>");
         }
     }
 }

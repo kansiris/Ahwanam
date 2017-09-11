@@ -23,6 +23,11 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.AddUserLogin(userLogin);
         }
 
+        public UserLogin GetUserLogin(UserLogin userLogin)
+        {
+            return vendorVenueSignUpRepository.GetUserLogin(userLogin);
+        }
+
         public Vendormaster AddvendorMaster(Vendormaster vendormaster)
         {
             vendormaster.Status = "InActive";
