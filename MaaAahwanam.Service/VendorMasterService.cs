@@ -30,5 +30,10 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.UpdateVendorMaster(vendorMaster,id);
         }
+
+        public Vendormaster GetVendorByEmail(string emailid)
+        {
+            return vendormasterRepository.GetVendorByEmail(emailid);
+        }
     }
 }

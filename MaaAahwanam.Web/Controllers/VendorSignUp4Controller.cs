@@ -16,13 +16,13 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
         // GET: VendorSignUp4
-        public ActionResult Index(string id, string vid)
+        public ActionResult Index(string id)
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string vid,string discount)
+        public ActionResult Index(string id,string discount)
         {
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             vendorMaster.discount = discount;

@@ -48,6 +48,11 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.Vendormaster.Where(m => m.EmailId == list.UserName).FirstOrDefault();
         }
 
+        public Vendormaster GetVendorByEmail(string emailid)
+        {
+            return _dbContext.Vendormaster.Where(m => m.EmailId == emailid).FirstOrDefault();
+        }
+
         //public List<> amenities(string type,long id)
         //{
 

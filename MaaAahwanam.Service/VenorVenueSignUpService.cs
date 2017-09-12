@@ -12,6 +12,7 @@ namespace MaaAahwanam.Service
     {
         VendorVenueSignUpRepository vendorVenueSignUpRepository = new VendorVenueSignUpRepository();
         VendorVenueRepository vendorVenueRepository = new VendorVenueRepository();
+        VendorCateringRepository vendorCateringRepository = new VendorCateringRepository();
         string updateddate = DateTime.UtcNow.ToShortDateString();
         public UserLogin AddUserLogin(UserLogin userLogin)
         {
@@ -32,7 +33,7 @@ namespace MaaAahwanam.Service
         {
             vendormaster.Status = "InActive";
             vendormaster.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendormaster.ServicType = "Venue";
+            //vendormaster.ServicType = "Venue";
             return vendorVenueSignUpRepository.AddVendormaster(vendormaster);
         }
 
@@ -53,6 +54,8 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.AddUserDetail(userDetail);
         }
 
+        //Venue Area
+
         public VendorVenue AddVendorVenue(VendorVenue VendorVenue)
         {
             return vendorVenueSignUpRepository.AddVendorVenue(VendorVenue);
@@ -64,9 +67,37 @@ namespace MaaAahwanam.Service
             vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.Status = "InActive";
             vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendorMaster.ServicType = "Venue";
+            //vendorMaster.ServicType = "Venue";
             vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, masterid, vid);
             return vendorVenue;
+        }
+
+        public VendorVenue GetVendorVenue(long id)
+        {
+            return vendorVenueSignUpRepository.GetVendorVenue(id);
+        }
+
+        //Catering Area
+
+        public VendorsCatering AddVendorCatering(VendorsCatering vendorsCatering)
+        {
+            return vendorVenueSignUpRepository.AddVendorCatering(vendorsCatering);
+        }
+
+        public VendorsCatering UpdateCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            vendorsCatering.Status = "InActive";
+            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.Status = "InActive";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.ServicType = "Venue";
+            vendorsCatering = vendorCateringRepository.UpdatesCatering(vendorsCatering, masterid, vid);
+            return vendorsCatering;
+        }
+
+        public VendorsCatering GetVendorCatering(long id)
+        {
+            return vendorVenueSignUpRepository.GetVendorCatering(id);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace MaaAahwanam.Repository.db
 
         public UserLogin GetUserLogin(UserLogin userLogin)
         {
-           var data= _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault();
+           var data= _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password && p.UserType == userLogin.UserType).FirstOrDefault();
             return data;
         }
 
@@ -42,6 +42,23 @@ namespace MaaAahwanam.Repository.db
             _dbContext.VendorVenue.Add(vendorVenue);
             _dbContext.SaveChanges();
             return vendorVenue;
+        }
+
+        public VendorsCatering AddVendorCatering(VendorsCatering vendorsCatering)
+        {
+            _dbContext.VendorsCatering.Add(vendorsCatering);
+            _dbContext.SaveChanges();
+            return vendorsCatering;
+        }
+
+        public VendorVenue GetVendorVenue(long id)
+        {
+            return _dbContext.VendorVenue.Where(p => p.VendorMasterId == id).FirstOrDefault();
+        }
+
+        public VendorsCatering GetVendorCatering(long id)
+        {
+            return _dbContext.VendorsCatering.Where(p => p.VendorMasterId == id).FirstOrDefault();
         }
     }
 }

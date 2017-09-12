@@ -21,15 +21,29 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index([Bind(Prefix = "Item1")] Vendormaster vendorMaster, [Bind(Prefix = "Item2")] UserLogin userLogin, [Bind(Prefix = "Item3")]UserDetail userDetail, [Bind(Prefix = "Item4")]VendorVenue vendorVenue)
         {
+            string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
+            string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
+            List<string> matchingvenues = venueservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+            List<string> matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
             userLogin = vendorVenueSignUpService.AddUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
-            userDetail= vendorVenueSignUpService.AddUserDetail(userDetail,vendorMaster);
-
+            userDetail = vendorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
             vendorMaster = vendorVenueSignUpService.AddvendorMaster(vendorMaster);
-            vendorVenue.VendorMasterId = vendorMaster.Id;
-            vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
+            if (vendorMaster.ServicType.Split(',').Contains("Venue"))
+            {
+                vendorVenue.VenueType = string.Join<string>(",", matchingvenues);
+                vendorVenue.VendorMasterId = vendorMaster.Id;
+                vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
+            }
+            if (vendorMaster.ServicType.Split(',').Contains("Catering"))
+            {
+                VendorsCatering vendorsCatering = new VendorsCatering();
+                vendorsCatering.VendorMasterId = vendorMaster.Id;
+                vendorsCatering.CuisineType = string.Join<string>(",", matchingcatering);
+                vendorsCatering = vendorVenueSignUpService.AddVendorCatering(vendorsCatering);
+            }
             //return RedirectToAction("Index", "VendorSignUp2",new { id=vendorMaster.Id,vid=vendorVenue.Id});
-            return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = vendorMaster.Id, vid = vendorVenue.Id }) + "'</script>"); 
+            return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = vendorMaster.Id}) + "'</script>"); 
         }
 
         private List<SelectListItem> CountryList()
