@@ -32,8 +32,8 @@ namespace MaaAahwanam.Web.Controllers
             string StrContent = reader.ReadToEnd();
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             //emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Registration Confirmation");
-            emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Registration Confirmation");
-            emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Registration Confirmation");
+            emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Test Mail");
+            emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Test Mail");
             //return RedirectToAction("Index", "VendorSeccessReg");
             return Content("<script language='javascript' type='text/javascript'>alert('Registration successful. Please click on Activation link which has been sent to your Email to enable your Login Access.');location.href='" + @Url.Action("Index", "VendorSeccessReg") + "'</script>");
         }
