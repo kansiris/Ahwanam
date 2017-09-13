@@ -32,7 +32,7 @@ namespace MaaAahwanam.Web.Controllers
             vendorsCatering = venorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, masterid, long.Parse(vid));
             //return RedirectToAction("Index", "VendorSignUp4", new { id = id, vid = vid });
             //return Content("<script language='javascript' type='text/javascript'>alert('FAQ's Updated');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = id, vid = vid }) + "'</script>");
-            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = id, vid = vid }) + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vid }) + "'</script>");
         }
     }
 }
