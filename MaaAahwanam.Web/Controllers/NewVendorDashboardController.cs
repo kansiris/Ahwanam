@@ -16,6 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NewVendorDashboard
         public ActionResult Index(string id)
         {
+            ViewBag.id = id;
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             return View();
         }
