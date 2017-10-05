@@ -18,6 +18,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             ViewBag.id = id;
             ViewBag.vid = vid;
+            ViewBag.catering = vendorCateringService.GetVendorCatering(long.Parse(id), long.Parse(vid));
             return View();
         }
 
@@ -25,14 +26,11 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string id, string vid, VendorsCatering vendorsCatering)
         {
             var data = vendorCateringService.GetVendorCatering(long.Parse(id), long.Parse(vid));
-            vendorsCatering.UpdatedBy = 2;
-            vendorMaster.UpdatedBy = 2;
+            vendorsCatering.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorsCatering.CuisineType = data.CuisineType;
             long masterid = vendorsCatering.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorsCatering = venorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, masterid, long.Parse(vid));
-            //return RedirectToAction("Index", "VendorSignUp4", new { id = id, vid = vid });
-            //return Content("<script language='javascript' type='text/javascript'>alert('FAQ's Updated');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = id, vid = vid }) + "'</script>");
-            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='" + @Url.Action("Index", "AvailableServices", new { id = id }) + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
         }
     }
 }

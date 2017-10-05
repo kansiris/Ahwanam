@@ -8,10 +8,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>:: Vendor Sign Up 3 ::</title>
+    <title>:: Venue FAQ'S :::</title>
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/customstyles.css">
+    <!--------- Lato Font ---------->
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/latofonts.css">
 </head>
 <body>
     <div class="container">
@@ -73,7 +75,7 @@
                             <label class="col-xs-12 col-sm-6 col-md-6">Rental fee (event space only)<br><small class="grey">Total price per day</small></label>
                             <div class="form-group-1 col-xs-12 col-sm-6 col-md-6">
                                 <i class="fa fa-inr fa-lg" aria-hidden="true" style="left:25px; bottom:10px"></i>
-                                <input type="text" class="form-control1" placeholder="" id="ServiceCost" name="ServiceCost">
+                                <input type="text" class="form-control1" placeholder="" id="ServiceCost" name="ServiceCost" value="@ViewBag.venue.ServiceCost">
                             </div>
                         </div>
                         @*<div class="row margin-top margin-bottom-30">
@@ -101,14 +103,14 @@
                             <label class="col-xs-12 col-sm-6 col-md-6">Minimum number of guests</label>
                             <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                 @*<input type="text" class="form-control" placeholder="">*@
-                                @Html.TextBoxFor(model => model.Minimumseatingcapacity, new { @class = "form-control", placeholder = "" })
+                                @Html.TextBoxFor(model => model.Minimumseatingcapacity, new { @class = "form-control", placeholder = "", Value = @ViewBag.venue.Minimumseatingcapacity })
                             </div>
                         </div>
                         <div class="row margin-top margin-bottom-30">
                             <label class="col-xs-12 col-sm-6 col-md-6">Maximum number of guests</label>
                             <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                 @*<input type="text" class="form-control" placeholder="">*@
-                                @Html.TextBoxFor(model => model.Maximumcapacity, new { @class = "form-control", placeholder = "" })
+                                @Html.TextBoxFor(model => model.Maximumcapacity, new { @class = "form-control", placeholder = "", Value = @ViewBag.venue.Maximumcapacity })
                             </div>
                         </div>
                     </div>
@@ -130,7 +132,7 @@
                             <label class="col-xs-12 col-sm-6 col-md-6">Seating Capacity</label>
                             <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                 @*<input type="text" class="form-control" placeholder="">*@
-                                @Html.TextBoxFor(model => model.SeatingCapacity, new { @class = "form-control", placeholder = "" })
+                                @Html.TextBoxFor(model => model.SeatingCapacity, new { @class = "form-control", placeholder = "", Value = @ViewBag.venue.SeatingCapacity })
                             </div>
                         </div>
                     </div>
@@ -144,12 +146,33 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
+                        @if (ViewBag.venue.Rooms == null)
+                        {
                         <div class="radio col-xs-6 col-sm-4 col-md-3">
                             <label><input type="radio" name="Rooms" id="Rooms" value="Yes"><span></span>Yes</label>
                         </div>
                         <div class="radio col-xs-6 col-sm-4 col-md-3">
                             <label><input type="radio" name="Rooms" id="Rooms" value="No"><span></span>No</label>
                         </div>
+                        }
+                        else if (ViewBag.venue.Rooms == "Yes")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Rooms" id="Rooms" value="Yes" checked><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Rooms" id="Rooms" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.Rooms == "No")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Rooms" id="Rooms" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Rooms" id="Rooms" value="No" checked><span></span>No</label>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -161,13 +184,43 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <input type="hidden" id="Food" name="Food" />
-                        <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="checkbox" value="Veg"><span></span> Veg </label>
-                        </div>
-                        <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="checkbox" value="Non-Veg"><span></span> Non-Veg </label>
-                        </div>
+                        <input type="hidden" id="Food" name="Food" value="@ViewBag.venue.Food"/>
+                        @if (ViewBag.venue.Food == null)
+                        {
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Veg"><span></span> Veg </label>
+                            </div>
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Non-Veg"><span></span> Non-Veg </label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.Food == "Veg")
+                        {
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Veg" checked><span></span> Veg </label>
+                            </div>
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Non-Veg"><span></span> Non-Veg </label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.Food == "Non-Veg")
+                        {
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Veg"><span></span> Veg </label>
+                            </div>
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Non-Veg" checked><span></span> Non-Veg </label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.Food == " Veg , Non-Veg ")
+                        {
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Veg" checked><span></span> Veg </label>
+                            </div>
+                            <div class="Foodtype col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="checkbox" value="Non-Veg" checked><span></span> Non-Veg </label>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -179,12 +232,33 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="LiveCookingStation" id="LiveCookingStation" value="Yes"><span></span>Yes</label>
-                        </div>
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="LiveCookingStation"  id="LiveCookingStation" value="No"><span></span>No</label>
-                        </div>
+                        @if (ViewBag.venue.LiveCookingStation == null)
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="LiveCookingStation" id="LiveCookingStation" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="LiveCookingStation" id="LiveCookingStation" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.LiveCookingStation == "Yes")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="LiveCookingStation" id="LiveCookingStation" value="Yes" checked><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="LiveCookingStation" id="LiveCookingStation" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.LiveCookingStation == "No")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="LiveCookingStation" id="LiveCookingStation" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="LiveCookingStation" id="LiveCookingStation" value="No" checked><span></span>No</label>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -196,12 +270,34 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="CockTails" id="CockTails" value="Yes"><span></span>Yes</label>
-                        </div>
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="CockTails" id="CockTails" value="No"><span></span>No</label>
-                        </div>
+                        @if (ViewBag.venue.CockTails == null)
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="CockTails" id="CockTails" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="CockTails" id="CockTails" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.CockTails == "Yes")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="CockTails" id="CockTails" value="Yes" checked><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="CockTails" id="CockTails" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.CockTails == "No")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="CockTails" id="CockTails" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="CockTails" id="CockTails" value="No" checked><span></span>No</label>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -213,12 +309,33 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="Yes"><span></span>Yes</label>
-                        </div>
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="No"><span></span>No</label>
-                        </div>
+                        @if (ViewBag.venue.DecorationAllowed == null)
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.DecorationAllowed == "Yes")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="Yes" checked><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.DecorationAllowed == "No")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="DecorationAllowed" id="DecorationAllowed" value="No" checked><span></span>No</label>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -230,9 +347,27 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <input type="hidden" name="HallType" id="HallType" />
-                        <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="AC"><span></span> AC </label></div>
-                        <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="Non_AC"><span></span> Non_AC </label></div>
+                        <input type="hidden" name="HallType" id="HallType" value="@ViewBag.venue.HallType"/>
+                        @if (ViewBag.venue.HallType == null)
+                        {
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="AC"><span></span> AC </label></div>
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="Non_AC"><span></span> Non_AC </label></div>
+                        }
+                        else if (ViewBag.venue.HallType == "AC")
+                        {
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="AC" checked><span></span> AC </label></div>
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="Non_AC"><span></span> Non_AC </label></div>
+                        }
+                        else if (ViewBag.venue.HallType == "Non_AC")
+                        {
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="AC"><span></span> AC </label></div>
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="Non_AC" checked><span></span> Non_AC </label></div>
+                        }
+                        else if (ViewBag.venue.HallType == " AC , Non_AC ")
+                        {
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="AC" checked><span></span> AC </label></div>
+                            <div class="HallType col-xs-6 col-sm-4 col-md-3"><label><input type="checkbox" value="Non_AC" checked><span></span> Non_AC </label></div>
+                        }
                     </div>
                 </div>
             </div>
@@ -244,12 +379,33 @@
                 </div>
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="Wifi" id="Wifi" value="Yes"><span></span>Yes</label>
-                        </div>
-                        <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="Wifi" id="Wifi" value="No"><span></span>No</label>
-                        </div>
+                        @if (ViewBag.venue.Wifi == null)
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Wifi" id="Wifi" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Wifi" id="Wifi" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.Wifi == "Yes")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Wifi" id="Wifi" value="Yes" checked><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Wifi" id="Wifi" value="No"><span></span>No</label>
+                            </div>
+                        }
+                        else if (ViewBag.venue.Wifi == "No")
+                        {
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Wifi" id="Wifi" value="Yes"><span></span>Yes</label>
+                            </div>
+                            <div class="radio col-xs-6 col-sm-4 col-md-3">
+                                <label><input type="radio" name="Wifi" id="Wifi" value="No" checked><span></span>No</label>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -262,19 +418,34 @@
                 <div class="row margin-top margin-bottom margin-left-0 margin-right-0">
                     <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0">
                         <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="Distancefrommainplaceslike" value="In the city" id="Distancefrommainplaceslike"><span></span>In the city</label>
+                            @if (ViewBag.venue.Distancefrommainplaceslike == "In the city")
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="In the city" id="Distancefrommainplaceslike" checked><span></span>In the city</label>}
+                            else
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="In the city" id="Distancefrommainplaceslike"><span></span>In the city</label>}
                         </div>
                         <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="Distancefrommainplaceslike" value="Outskirts of the city" id="Distancefrommainplaceslike"><span></span>Outskirts of the city</label>
+                            @if (ViewBag.venue.Distancefrommainplaceslike == "Outskirts of the city")
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Outskirts of the city" id="Distancefrommainplaceslike" checked><span></span>Outskirts of the city</label>}
+                            else
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Outskirts of the city" id="Distancefrommainplaceslike"><span></span>Outskirts of the cityy</label>}
                         </div>
                         <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="Distancefrommainplaceslike" value="Close to mountains" id="Distancefrommainplaceslike"><span></span>Close to mountains</label>
+                            @if (ViewBag.venue.Distancefrommainplaceslike == "Close to mountains")
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Close to mountains" id="Distancefrommainplaceslike" checked><span></span>Close to mountains</label>}
+                            else
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Close to mountains" id="Distancefrommainplaceslike"><span></span>Close to mountains</label>}
                         </div>
                         <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="Distancefrommainplaceslike" value="Close to beach" id="Distancefrommainplaceslike"><span></span>Close to beach</label>
+                            @if (ViewBag.venue.Distancefrommainplaceslike == "Close to beach")
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Close to beach" id="Distancefrommainplaceslike" checked><span></span>Close to beach</label>}
+                            else
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Close to beach" id="Distancefrommainplaceslike"><span></span>Close to beach</label>}
                         </div>
                         <div class="radio col-xs-6 col-sm-4 col-md-3">
-                            <label><input type="radio" name="Distancefrommainplaceslike" value="Countryside" id="Distancefrommainplaceslike"><span></span>Countryside</label>
+                            @if (ViewBag.venue.Distancefrommainplaceslike == "Countryside")
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Countryside" id="Distancefrommainplaceslike" checked><span></span>Countryside</label>}
+                            else
+                            {<label><input type="radio" name="Distancefrommainplaceslike" value="Countryside" id="Distancefrommainplaceslike"><span></span>Countryside</label>}
                         </div>
                     </div>
                 </div>
@@ -292,14 +463,14 @@
                                 <label class="col-xs-12 col-sm-6 col-md-6">Minimum Order</label>
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                     @*<input type="text" class="form-control" placeholder="">*@
-                                    @Html.TextBoxFor(model => model.MinOrder, new { @class = "form-control", placeholder = "" })
+                                    @Html.TextBoxFor(model => model.MinOrder, new { @class = "form-control", placeholder = "", Value = @ViewBag.venue.MinOrder })
                                 </div>
                             </div>
                             <div class="row margin-top margin-bottom-30">
                                 <label class="col-xs-12 col-sm-6 col-md-6">Maximum Order</label>
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                     @*<input type="text" class="form-control" placeholder="">*@
-                                    @Html.TextBoxFor(model => model.MaxOrder, new { @class = "form-control", placeholder = "" })
+                                    @Html.TextBoxFor(model => model.MaxOrder, new { @class = "form-control", placeholder = "", Value = @ViewBag.venue.MaxOrder })
                                 </div>
                             </div>
                         </div>
@@ -320,7 +491,7 @@
                             <label class="col-xs-12 col-sm-6 col-md-6">Dining Capacity</label>
                             <div class="form-group col-xs-12 col-sm-6 col-md-6">
                                 @*<input type="text" class="form-control" placeholder="">*@
-                                @Html.TextBoxFor(model => model.DiningCapacity, new { @class = "form-control", placeholder = "" })
+                                @Html.TextBoxFor(model => model.DiningCapacity, new { @class = "form-control", placeholder = "" , Value = @ViewBag.venue.DiningCapacity })
                             </div>
                         </div>
                     </div>
@@ -340,7 +511,7 @@
                             <div class="form-group-1 col-xs-12 col-sm-6 col-md-6">
                                 @*<input type="text" class="form-control" placeholder="">*@
                                 <i class="fa fa-inr fa-lg" aria-hidden="true" style="left:25px; bottom:10px"></i>
-                                @Html.TextBoxFor(model => model.VegLunchCost, new { @class = "form-control1", placeholder = "" })
+                                @Html.TextBoxFor(model => model.VegLunchCost, new { @class = "form-control1", placeholder = "", Value = @ViewBag.venue.VegLunchCost })
                             </div>
                         </div>
                         <div class="row margin-top margin-bottom-30">
@@ -348,7 +519,7 @@
                             <div class="form-group-1 col-xs-12 col-sm-6 col-md-6">
                                 @*<input type="text" class="form-control" placeholder="">*@
                                 <i class="fa fa-inr fa-lg" aria-hidden="true" style="left:25px; bottom:10px"></i>
-                                @Html.TextBoxFor(model => model.VegDinnerCost, new { @class = "form-control1", placeholder = "" })
+                                @Html.TextBoxFor(model => model.VegDinnerCost, new { @class = "form-control1", placeholder = "", Value = @ViewBag.venue.VegDinnerCost })
                             </div>
                         </div>
                     </div>
@@ -370,14 +541,14 @@
                             <label class="col-xs-12 col-sm-6 col-md-6">Non-Veg Lunch Price Starts At</label>
                             <div class="form-group-1 col-xs-12 col-sm-6 col-md-6">
                                 <i class="fa fa-inr fa-lg" aria-hidden="true" style="left:25px; bottom:10px"></i>
-                                @Html.TextBoxFor(model => model.NonVegLunchCost, new { @class = "form-control1", placeholder = "" })
+                                @Html.TextBoxFor(model => model.NonVegLunchCost, new { @class = "form-control1", placeholder = "", Value = @ViewBag.venue.NonVegLunchCost })
                             </div>
                         </div>
                         <div class="row margin-top margin-bottom-30">
                             <label class="col-xs-12 col-sm-6 col-md-6">Non-Veg Dinner Price Starts At</label>
                             <div class="form-group-1 col-xs-12 col-sm-6 col-md-6">
                                 <i class="fa fa-inr fa-lg" aria-hidden="true" style="left:25px; bottom:10px"></i>
-                                @Html.TextBoxFor(model => model.NonVegDinnerCost, new { @class = "form-control1", placeholder = "" })
+                                @Html.TextBoxFor(model => model.NonVegDinnerCost, new { @class = "form-control1", placeholder = "", Value = @ViewBag.venue.NonVegDinnerCost })
                             </div>
                         </div>
                     </div>
@@ -391,8 +562,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     @*<a href="/VendorSignUp4" class="btn btn-default red-bg white">Save</a>*@
-                    <input type="submit" value="Next" class="btn btn-default red-bg white margin-left" />
-                    <a href="/AvailableServices?id=@ViewBag.id" class="btn btn-default red-bg white margin-left">Skip</a>
+                    <input type="submit" value="Save" class="btn btn-default red-bg white margin-left" />
+                    <a href="/AvailableServices?id=@ViewBag.id&&vid=@ViewBag.vid" class="btn btn-default red-bg white margin-left">Skip</a>
                 </div>
             </div>
         </form>

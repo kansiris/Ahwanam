@@ -13,6 +13,7 @@ namespace MaaAahwanam.Service
         VendorVenueSignUpRepository vendorVenueSignUpRepository = new VendorVenueSignUpRepository();
         VendorVenueRepository vendorVenueRepository = new VendorVenueRepository();
         VendorCateringRepository vendorCateringRepository = new VendorCateringRepository();
+        VendorsPhotographyRepository vendorsPhotographyRepository = new VendorsPhotographyRepository();
         string updateddate = DateTime.UtcNow.ToShortDateString();
         public UserLogin AddUserLogin(UserLogin userLogin)
         {
@@ -98,6 +99,28 @@ namespace MaaAahwanam.Service
         public VendorsCatering GetVendorCatering(long id)
         {
             return vendorVenueSignUpRepository.GetVendorCatering(id);
+        }
+
+        //Photography Area
+
+        public VendorsPhotography AddVendorPhotography(VendorsPhotography vendorsPhotography)
+        {
+            return vendorVenueSignUpRepository.AddVendorPhotography(vendorsPhotography);
+        }
+
+        public VendorsPhotography UpdatePhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            vendorsPhotography.Status = "InActive";
+            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.Status = "InActive";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid, vid);
+            return vendorsPhotography;
+        }
+
+        public VendorsPhotography GetVendorPhotography(long id)
+        {
+            return vendorVenueSignUpRepository.GetVendorPhotography(id);
         }
     }
 }

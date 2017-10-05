@@ -60,5 +60,17 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendorsCatering.Where(p => p.VendorMasterId == id).FirstOrDefault();
         }
+
+        public VendorsPhotography AddVendorPhotography(VendorsPhotography vendorsPhotography)
+        {
+            _dbContext.VendorsPhotography.Add(vendorsPhotography);
+            _dbContext.SaveChanges();
+            return vendorsPhotography;
+        }
+
+        public VendorsPhotography GetVendorPhotography(long id)
+        {
+            return _dbContext.VendorsPhotography.Where(p => p.VendorMasterId == id).FirstOrDefault();
+        }
     }
 }
