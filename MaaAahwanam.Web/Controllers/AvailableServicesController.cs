@@ -51,6 +51,9 @@ namespace MaaAahwanam.Web.Controllers
                 List<string> matchingcatering = cateringservices.Intersect(categories.Split(',')).ToList();
                 List<string> matchingphotography = photographyservices.Intersect(categories.Split(',')).ToList();
 
+                vendorMaster.ServicType = services;
+                vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
+
                 if (services.Split(',').Contains("Venue"))
                 {
                     VendorVenue vendorVenue = new VendorVenue();

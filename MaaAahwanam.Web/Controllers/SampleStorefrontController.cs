@@ -8,6 +8,7 @@ using MaaAahwanam.Service;
 using Newtonsoft.Json;
 using MaaAahwanam.Utility;
 using MaaAahwanam.Web.Custom;
+using System.Web.Security;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -50,6 +51,12 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView("ProfileProgressPartial", vendorMaster);
             }
             return PartialView("ProfileProgressPartial", null);
+        }
+
+        public ActionResult SignOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "HomePage");
         }
     }
 }
