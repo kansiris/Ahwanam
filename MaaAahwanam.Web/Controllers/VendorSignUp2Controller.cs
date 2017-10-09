@@ -51,7 +51,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             //return RedirectToAction("Index", "VendorSignUp3", new { id = id, vid = vid });
             //return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vid, vid = id }) + "'</script>");
-            return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded'');location.href='AvailableServices/Index?id=" + vid + "&&vid=" + id + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
         }
     }
 }

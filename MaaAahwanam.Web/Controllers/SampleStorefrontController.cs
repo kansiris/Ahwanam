@@ -28,7 +28,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             userLogin.UserType = "Vendor";
             var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-            if (userResponse.UserLoginId != 0)
+            if (userResponse != null)
             {
                 vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
                 string userData = JsonConvert.SerializeObject(userLogin);

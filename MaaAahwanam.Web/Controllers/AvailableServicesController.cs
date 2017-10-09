@@ -36,6 +36,7 @@ namespace MaaAahwanam.Web.Controllers
             //ViewBag.services = new { type = vendorMaster.ServicType.Split(','), vendorid = vid.TrimStart(',').Split(',') };
             ViewBag.services = vendorMaster.ServicType.Split(',');
             ViewBag.vid = vid.TrimStart(',');
+            ViewBag.vendormasterid = id;
             return View();
         }
 
@@ -51,7 +52,9 @@ namespace MaaAahwanam.Web.Controllers
                 List<string> matchingcatering = cateringservices.Intersect(categories.Split(',')).ToList();
                 List<string> matchingphotography = photographyservices.Intersect(categories.Split(',')).ToList();
 
-                vendorMaster.ServicType = services;
+                vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
+                //vendorMaster.ServicType = string.Join(",", (services + "," + data.ServicType).Split(',').Distinct());
+                vendorMaster.ServicType = vendorMaster.ServicType+","+ services;
                 vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
 
                 if (services.Split(',').Contains("Venue"))
@@ -76,7 +79,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorsPhotography = vendorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
                 }
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = id }) + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('New Service Added Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = id }) + "'</script>");
         }
     }
 }
