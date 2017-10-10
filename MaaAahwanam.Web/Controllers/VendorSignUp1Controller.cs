@@ -24,9 +24,13 @@ namespace MaaAahwanam.Web.Controllers
             string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
             string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
             string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
-            List<string> matchingvenues = venueservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-            List<string> matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-            List<string> matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+            List<string> matchingvenues = null; List<string> matchingcatering = null; List<string> matchingphotography = null;
+            if (vendorMaster.ServicType.Split(',').Contains("Venue"))
+                matchingvenues = venueservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+            if (vendorMaster.ServicType.Split(',').Contains("Catering"))
+                matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+            if (vendorMaster.ServicType.Split(',').Contains("Photography"))
+                matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
             userLogin = vendorVenueSignUpService.AddUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
             userDetail = vendorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
@@ -52,7 +56,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsPhotography = vendorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
             }
             //return RedirectToAction("Index", "VendorSignUp2",new { id=vendorMaster.Id,vid=vendorVenue.Id});
-            return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = vendorMaster.Id}) + "'</script>"); 
+            return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = vendorMaster.Id }) + "'</script>");
         }
 
         private List<SelectListItem> CountryList()
