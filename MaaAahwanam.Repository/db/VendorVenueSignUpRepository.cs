@@ -72,5 +72,17 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendorsPhotography.Where(p => p.VendorMasterId == id).FirstOrDefault();
         }
+
+        public VendorsDecorator AddVendorDecorator(VendorsDecorator vendorsDecorator)
+        {
+            _dbContext.VendorsDecorator.Add(vendorsDecorator);
+            _dbContext.SaveChanges();
+            return vendorsDecorator;
+        }
+
+        public VendorsDecorator GetVendorDecorator(long id)
+        {
+            return _dbContext.VendorsDecorator.Where(p => p.VendorMasterId == id).FirstOrDefault();
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Models;
 using MaaAahwanam.Repository.db;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Service
 {
@@ -15,8 +16,11 @@ namespace MaaAahwanam.Service
         VendorCateringRepository vendorCateringRepository = new VendorCateringRepository();
         VendorsPhotographyRepository vendorsPhotographyRepository = new VendorsPhotographyRepository();
         string updateddate = DateTime.UtcNow.ToShortDateString();
+        RandomPassword randomPassword = new RandomPassword();
+
         public UserLogin AddUserLogin(UserLogin userLogin)
         {
+            userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
             userLogin.Status = "InActive";
@@ -121,6 +125,18 @@ namespace MaaAahwanam.Service
         public VendorsPhotography GetVendorPhotography(long id)
         {
             return vendorVenueSignUpRepository.GetVendorPhotography(id);
+        }
+
+        //Photography Area
+
+        public VendorsDecorator AddVendorDecorator(VendorsDecorator vendorsDecorator)
+        {
+            return vendorVenueSignUpRepository.AddVendorDecorator(vendorsDecorator);
+        }
+
+        public VendorsDecorator GetVendorDecorator(long id)
+        {
+            return vendorVenueSignUpRepository.GetVendorDecorator(id);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         Vendormaster vendorMaster = new Vendormaster();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        
         // GET: SampleStorefront
         public ActionResult Index()
         {
@@ -24,21 +26,39 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(UserLogin userLogin)
+        public ActionResult Index([Bind(Prefix = "Item1")]UserLogin userLogin, [Bind(Prefix = "Item2")] Vendormaster vendorMaster, string command)
         {
             userLogin.UserType = "Vendor";
-            var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-            if (userResponse != null)
+            if (command == "Login")
             {
-                vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-                string userData = JsonConvert.SerializeObject(userLogin);
-                ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
-                return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+                if (userResponse != null)
+                {
+                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
+                    return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                }
             }
-            else
+            if (command == "VendorReg")
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
+                userLogin.UserName = vendorMaster.EmailId;
+                userLogin = venorVenueSignUpService.AddUserLogin(userLogin);
+                UserDetail userDetail = new UserDetail();
+                userDetail.UserLoginId = userLogin.UserLoginId;
+                userDetail = venorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
+                if (vendorMaster.Id != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                }
             }
+            return View();
         }
 
         [HttpGet]
@@ -46,8 +66,9 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                //var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string email = userLoginDetailsService.Getusername(user.UserId);
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 return PartialView("ProfileProgressPartial", vendorMaster);
             }
             return PartialView("ProfileProgressPartial", null);

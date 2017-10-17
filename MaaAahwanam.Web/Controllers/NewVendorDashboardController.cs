@@ -17,7 +17,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string id)
         {
             ViewBag.id = id;
-            vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
+            //vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             return View();
         }
     }

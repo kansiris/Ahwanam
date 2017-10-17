@@ -12,74 +12,81 @@
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/jquery.bxslider.css" />
     @RenderSection("css", required: false)
 </head>
+@using MaaAahwanam.Web.Custom
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId+"");
+}
+else
+{
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="top-menu">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>
+                        @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
+                        <li><a href="/SampleStorefront">Sign In</a></li>
+                        <li><a href="/VendorSignUp1">Sign Up For Free</a></li>
+                        <li><a href="/SampleStorefront"><i class="fa fa-suitcase" aria-hidden="true"></i>ARE YOU A PARTNER?</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="row">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/Homepage"><img src="~/newdesign/images/logo.png" alt="Logo"></a>
+                        </div>
 
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="top-menu">
-                <ul>
-                    <li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>
-                    @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
-                    <li><a href="/SampleStorefront" >Sign In</a></li>
-                    <li><a href="/VendorSignUp1">Sign Up For Free</a></li>
-                    <li><a href="/SampleStorefront"><i class="fa fa-suitcase" aria-hidden="true"></i>ARE YOU A PARTNER?</a></li>
-                </ul>
-            </nav>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#">Wedding</a></li>
+                                <li><a href="#">Venues</a></li>
+                                <li><a href="#">Event Vendors</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Event Vendors 1</a></li>
+                                        <li><a href="#">Event Vendors 2</a></li>
+                                        <li><a href="#">Event Vendors 3</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Event Vendors 4</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Event Vendors 5</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Brides</a></li>
+                                <li><a href="#">Grooms</a></li>
+                                <li><a href="#">Event Ideas</a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </div>
+            <!--<div class="row gallery">
+              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-left"></div>
+              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-right"></div>
+            </div>-->
         </div>
-        <div class="row">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/Homepage"><img src="~/newdesign/images/logo.png" alt="Logo"></a>
-                    </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#">Wedding</a></li>
-                            <li><a href="#">Venues</a></li>
-                            <li><a href="#">Event Vendors</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Event Vendors 1</a></li>
-                                    <li><a href="#">Event Vendors 2</a></li>
-                                    <li><a href="#">Event Vendors 3</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Event Vendors 4</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Event Vendors 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Brides</a></li>
-                            <li><a href="#">Grooms</a></li>
-                            <li><a href="#">Event Ideas</a></li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
+        <div>
+            @RenderBody()
         </div>
-        <!--<div class="row gallery">
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-left"></div>
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-right"></div>
-        </div>-->
-    </div>
-    <div>
-        @RenderBody()
-    </div>
-    <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
-    <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.chained.js"></script>
-    <!-- BX Slider -->
-    <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.bxslider.min.js"></script>
-    @RenderSection("scripts", required: false)
-</body>
-
+        <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
+        <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.chained.js"></script>
+        <!-- BX Slider -->
+        <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.bxslider.min.js"></script>
+        @RenderSection("scripts", required: false)
+    </body>
+}
 </html>

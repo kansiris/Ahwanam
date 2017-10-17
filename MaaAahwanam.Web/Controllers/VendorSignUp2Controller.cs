@@ -17,11 +17,12 @@ namespace MaaAahwanam.Web.Controllers
         {
             ViewBag.id = id;
             ViewBag.vid = vid;
+            ViewBag.images = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string vid, HttpPostedFileBase file,string removedimages)
+        public ActionResult Index(string id, string vid, HttpPostedFileBase file,string removedimages,string type)
         {
             string fileName = string.Empty;
             VendorImage vendorImage = new VendorImage();
@@ -40,7 +41,7 @@ namespace MaaAahwanam.Web.Controllers
                         if (file1 != null && file1.ContentLength > 0)
                         {
                             string path = System.IO.Path.GetExtension(file.FileName);
-                            var filename = "Venue_" + id + "_" + vid + "_" + j + path;
+                            var filename = type +"_" + id + "_" + vid + "_" + j + path;
                             fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
                             file1.SaveAs(fileName);
                             vendorImage.ImageName = filename;

@@ -13,6 +13,7 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         Vendormaster vendorMaster = new Vendormaster();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
@@ -80,6 +81,18 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return Content("<script language='javascript' type='text/javascript'>alert('New Service Added Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = id }) + "'</script>");
+        }
+
+        public ActionResult changeid(string id)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                string email = userLoginDetailsService.Getusername(long.Parse(id));
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                //return View("AvailableServices", vendorMaster.Id);
+                return RedirectToAction("Index", "AvailableServices", new { id = vendorMaster.Id });
+            }
+            return RedirectToAction("SignOut", "SampleStorefront");
         }
     }
 }
