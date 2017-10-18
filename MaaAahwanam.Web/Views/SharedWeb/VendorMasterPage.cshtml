@@ -11,6 +11,9 @@
     <!-- BX Slider -->
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/jquery.bxslider.css" />
 </head>
+@using MaaAahwanam.Web.Custom
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
 <body class="dashboard">
     @{ Html.RenderAction("ProfileProgressPartial", "SampleStorefront");}
     <div>
@@ -30,4 +33,9 @@
         });
     </script>
 </body>
+        }
+        else
+        {
+            Response.Redirect("/Homepage");
+        }
 </html>

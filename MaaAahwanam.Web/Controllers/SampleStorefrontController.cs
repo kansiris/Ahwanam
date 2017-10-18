@@ -18,7 +18,8 @@ namespace MaaAahwanam.Web.Controllers
         Vendormaster vendorMaster = new Vendormaster();
         VendorMasterService vendorMasterService = new VendorMasterService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        
+        RandomPassword randomPassword = new RandomPassword();
+
         // GET: SampleStorefront
         public ActionResult Index()
         {
@@ -49,6 +50,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
                 userLogin.UserName = vendorMaster.EmailId;
+                userLogin.Password = randomPassword.GenerateString();
                 userLogin = venorVenueSignUpService.AddUserLogin(userLogin);
                 UserDetail userDetail = new UserDetail();
                 userDetail.UserLoginId = userLogin.UserLoginId;

@@ -16,11 +16,10 @@ namespace MaaAahwanam.Service
         VendorCateringRepository vendorCateringRepository = new VendorCateringRepository();
         VendorsPhotographyRepository vendorsPhotographyRepository = new VendorsPhotographyRepository();
         string updateddate = DateTime.UtcNow.ToShortDateString();
-        RandomPassword randomPassword = new RandomPassword();
-
+        
         public UserLogin AddUserLogin(UserLogin userLogin)
         {
-            userLogin.Password = randomPassword.GenerateString();
+            //userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
             userLogin.Status = "InActive";
