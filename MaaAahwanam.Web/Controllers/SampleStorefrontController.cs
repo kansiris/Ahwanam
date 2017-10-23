@@ -55,6 +55,7 @@ namespace MaaAahwanam.Web.Controllers
                 UserDetail userDetail = new UserDetail();
                 userDetail.UserLoginId = userLogin.UserLoginId;
                 userDetail = venorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
+                addservice(vendorMaster);
                 if (vendorMaster.Id != 0)
                 {
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
@@ -80,6 +81,51 @@ namespace MaaAahwanam.Web.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "HomePage");
+        }
+
+        public JsonResult checkemail(string emailid)
+        {
+            VendorMasterService vendorMasterService = new VendorMasterService();
+            int query = vendorMasterService.checkemail(emailid);
+            if (query != 0)
+            {
+                return Json("exists", JsonRequestBehavior.AllowGet);
+            }
+            return Json("valid", JsonRequestBehavior.AllowGet);
+        }
+
+        public int addservice(Vendormaster vendorMaster)
+        {
+            int count = 0;
+            if (vendorMaster.ServicType == "Venue")
+            {
+                VendorVenue vendorVenue = new VendorVenue();
+                vendorVenue.VendorMasterId = vendorMaster.Id;
+                vendorVenue = venorVenueSignUpService.AddVendorVenue(vendorVenue);
+                if (vendorVenue.Id != 0) count++;
+            }
+            if (vendorMaster.ServicType == "Catering")
+            {
+                VendorsCatering vendorsCatering = new VendorsCatering();
+                vendorsCatering.VendorMasterId = vendorMaster.Id;
+                vendorsCatering = venorVenueSignUpService.AddVendorCatering(vendorsCatering);
+                if (vendorsCatering.Id != 0) count++;
+            }
+            if (vendorMaster.ServicType == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                vendorsPhotography.VendorMasterId = vendorMaster.Id;
+                vendorsPhotography = venorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
+                if (vendorsPhotography.Id != 0) count++;
+            }
+            if (vendorMaster.ServicType == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                vendorsDecorator.VendorMasterId = vendorMaster.Id;
+                vendorsDecorator = venorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
+                if (vendorsDecorator.Id != 0) count++;
+            }
+            return count;
         }
     }
 }

@@ -16,7 +16,7 @@
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId+"");
+    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
 }
 else
 {
@@ -88,5 +88,33 @@ else
         <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.bxslider.min.js"></script>
         @RenderSection("scripts", required: false)
     </body>
+
+
+<script src="~/newdesign/js/jquery-3.2.1.min.js"></script>
+
+        <script>
+            //<!-------- Body Scroll Top ----------->
+            $("#topicon").click(function () {
+                $("html, body").animate({
+                    scrollTop: $("#body-top").offset().top
+                }, "slow");
+            });
+            $("#topicon").hover(function () {
+                $(this).css("opacity", "1");
+            });
+            $("#topicon").mouseleave(function () {
+                $(this).css("opacity", ".7");
+            });
+            $(window).on("scroll ready", function () {
+                var ScrollTop = $(this).scrollTop();
+                if (ScrollTop > 500) {
+                    $("#topicon").css("opacity", ".7");
+                } else {
+                    $("#topicon").css("opacity", "0");
+                }
+            });
+            //<!-------- Body Scroll Top ----------->
+        </script>
+    
 }
 </html>

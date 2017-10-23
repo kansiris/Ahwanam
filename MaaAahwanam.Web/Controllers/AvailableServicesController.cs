@@ -34,6 +34,11 @@ namespace MaaAahwanam.Web.Controllers
                 VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
                 vid = vid + "," + vendorsPhotography.Id.ToString();
             }
+            if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
+            {
+                VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
+                vid = vid + "," + vendorsDecorator.Id.ToString();
+            }
             //ViewBag.services = new { type = vendorMaster.ServicType.Split(','), vendorid = vid.TrimStart(',').Split(',') };
             ViewBag.services = vendorMaster.ServicType.Split(',');
             ViewBag.vid = vid.TrimStart(',');
@@ -90,7 +95,7 @@ namespace MaaAahwanam.Web.Controllers
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 //return View("AvailableServices", vendorMaster.Id);
-                return RedirectToAction("Index", "AvailableServices", new { id = vendorMaster.Id });
+                return RedirectToAction("Index", "AvailableServices", new { id = vendorMaster.Id});
             }
             return RedirectToAction("SignOut", "SampleStorefront");
         }

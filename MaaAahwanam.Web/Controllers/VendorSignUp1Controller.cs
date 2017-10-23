@@ -12,9 +12,19 @@ namespace MaaAahwanam.Web.Controllers
     public class VendorSignUp1Controller : Controller
     {
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
         // GET: VendorSignUp1
-        public ActionResult Index()
+        public ActionResult Index(string id, string vid, string type)
         {
+            //if (type == "Venue")
+            //    ViewBag.data = vendorVenueSignUpService.GetVendorVenue(long.Parse(id));
+            //if (type == "Catering")
+            //    ViewBag.data = vendorVenueSignUpService.GetVendorCatering(long.Parse(id));
+            //if (type == "Photography")
+            //    ViewBag.data = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
+            //if (type == "Decorator")
+            //    ViewBag.data = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
+            ViewBag.data = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.country = new SelectList(CountryList(), "Value", "Text");
             return View();
         }
@@ -62,7 +72,8 @@ namespace MaaAahwanam.Web.Controllers
             {
                 VendorsDecorator vendorsDecorator = new VendorsDecorator();
                 vendorsDecorator.VendorMasterId = vendorMaster.Id;
-                vendorsDecorator.DecorationType= string.Join<string>(",", matchingdecorators);
+                vendorsDecorator.DecorationType = string.Join<string>(",", matchingdecorators);
+                vendorsDecorator = vendorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
             }
             //return RedirectToAction("Index", "VendorSignUp2",new { id=vendorMaster.Id,vid=vendorVenue.Id});
             return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "VendorSignUp4", new { id = vendorMaster.Id }) + "'</script>");
