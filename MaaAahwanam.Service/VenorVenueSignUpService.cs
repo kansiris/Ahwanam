@@ -67,9 +67,9 @@ namespace MaaAahwanam.Service
 
         public VendorVenue UpdateVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid, long vid)
         {
-            vendorVenue.Status = "InActive";
+            //vendorVenue.Status = "InActive";
             vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendorMaster.Status = "InActive";
+            //vendorMaster.Status = "InActive";
             vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             //vendorMaster.ServicType = "Venue";
             vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, masterid, vid);

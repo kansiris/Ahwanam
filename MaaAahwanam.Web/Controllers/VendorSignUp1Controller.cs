@@ -16,14 +16,6 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VendorSignUp1
         public ActionResult Index(string id, string vid, string type)
         {
-            //if (type == "Venue")
-            //    ViewBag.data = vendorVenueSignUpService.GetVendorVenue(long.Parse(id));
-            //if (type == "Catering")
-            //    ViewBag.data = vendorVenueSignUpService.GetVendorCatering(long.Parse(id));
-            //if (type == "Photography")
-            //    ViewBag.data = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
-            //if (type == "Decorator")
-            //    ViewBag.data = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
             ViewBag.data = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.country = new SelectList(CountryList(), "Value", "Text");
             return View();

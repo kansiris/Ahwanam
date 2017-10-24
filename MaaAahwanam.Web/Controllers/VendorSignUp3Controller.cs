@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
             vendorVenue.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorVenue.VenueType = data.VenueType;
             long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
+            vendorVenue.Status = vendorMaster.Status = "InActive";
             vendorVenue = venorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, masterid, long.Parse(vid));
             return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id="+id+"&&vid="+vid+"'</script>");
         }

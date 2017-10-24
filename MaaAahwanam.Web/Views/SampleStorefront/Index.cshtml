@@ -258,6 +258,8 @@
                 </div>
             </div>
         </div>
+       @using (Html.BeginForm("Index", "SampleStorefront", FormMethod.Post))
+       {
         <div class="row margin-top-30" id="registration">
             <div class="row margin-left-0 margin-right-0 selectbusiness margin-bottom-30">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -277,32 +279,33 @@
             <div class="row margin-left-0 margin-right-0">
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name"  name="Item2.ContactPerson" id="Item2_ContactPerson">
+                        <input type="text" class="form-control" placeholder="Name"  name="Item2.ContactPerson" id="Item2_ContactPerson" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="E-Mail" name="Item2.EmailId" id="Item2_EmailId" onchange = "check()">
+                        <input type="email" class="form-control" placeholder="E-Mail" name="Item2.EmailId" id="Item2_EmailId" onchange = "check()" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Company" name="Item2.BusinessName" id="Item2_BusinessName">
+                        <input type="text" class="form-control" placeholder="Company" name="Item2.BusinessName" id="Item2_BusinessName" required>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Mobile" name="Item2.ContactNumber" id="Item2_ContactNumber">
+                        <input type="number" class="form-control" placeholder="Mobile" name="Item2.ContactNumber" id="Item2_ContactNumber" required>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row margin-top-30 text-center">
            @* <a href="/VendorSignUp1" class="bottom-button">Join Now</a>*@
-            <button type="submit" class="btn btn-default bottom-button" name="command" value="VendorReg">
+            <button type="submit" class="btn btn-default bottom-button" name="command" value="VendorReg" onclick="this.form.submit();">
                 Join Now
             </button>
         </div>
+       }
         @*<div class="form-group">
             <label>Select Category</label>
             <select class="form-control">
@@ -339,7 +342,8 @@
         </div>
     </div>*@
 
-
+@using (Html.BeginForm("Index", "SampleStorefront", FormMethod.Post))
+{
     <div class="container-fluid login-popup">
         <div class="login-form">
             <div class="form-group">
@@ -359,7 +363,7 @@
             <i class="fa fa-times" aria-hidden="true"></i>
         </div>
     </div>
-
+}
 
     <footer class="container-fluid">
         <div class="row">© Ahwanam 2017. All right reserved.</div>
@@ -397,7 +401,7 @@ $("#joinnow").click(function(){
     return expr.test(email);
 };function check() {
     var emailId = $("#Item2_EmailId").val();
-    alert(emailId);
+    //alert(emailId);
     if (!ValidateEmail(emailId)) {
         alert("Invalid email address.");
     }
