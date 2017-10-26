@@ -17,16 +17,30 @@
                             <input type="file">
                         </div>
                         <p><span>@item</span></p>
-                        <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Update Info</a>
+
+                        @if (item == "Venue" )
+                        {<a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Update Info</a>
                         <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                        @if (item == "Venue")
-                        {<a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>}
+                        <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        }
                         @if (item == "Catering")
-                        { <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>}
+                        {
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        }
                         @if (item == "Photography")
-                        { <a href="/PhotographyFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>}
+                        {
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/PhotographyFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        }
                         @if (item == "Decorator")
-                        { <a href="/DecoratorFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>}
+                        {
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/DecoratorFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        }
                     </div>
                 </div>
                 @(++i)
@@ -264,70 +278,70 @@
                 <button type="submit" class="btn btn-primary red-bg"><i class="fa fa-plus-circle"></i>Add</button>
             </div>
         </div>
-        
+
     </div>
 </form>
 <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function(e) {
-	  //$(".selectblock .blocks:first-of-type").css("opacity","1");
-	  $(".selectblock .blocks").each(function(){
-		  $(this).css({"opacity":"1"});
-		  });
-  });
-  /*------- Add Blocks & close service area -------------*/
-  $(".selectblock .blocks:last-of-type > .block").click(function () {
-      $(".selectblock > .addservice").css("display", "block");
-  });
+    $(document).ready(function (e) {
+        //$(".selectblock .blocks:first-of-type").css("opacity","1");
+        $(".selectblock .blocks").each(function () {
+            $(this).css({ "opacity": "1" });
+        });
+    });
+    /*------- Add Blocks & close service area -------------*/
+    $(".selectblock .blocks:last-of-type > .block").click(function () {
+        $(".selectblock > .addservice").css("display", "block");
+    });
 
-  $(".selectblock > .addservice > i").click(function () {
-      $(this).parent(".addservice").css("display", "none");
-  });
-  /*------- Add Blocks & close service area -------------*/
+    $(".selectblock > .addservice > i").click(function () {
+        $(this).parent(".addservice").css("display", "none");
+    });
+    /*------- Add Blocks & close service area -------------*/
 
-  /*------- Select Business Category -------------*/
-  var listval, catgId;
-  $(".selectcategory div.checkbox1 input[type='checkbox']").change(function () {
-      if ($(this).is(':checked')) {
-          listval = $(this).parent("label").text();
-          $("#businesscategory div").each(function () {
-              catgId = $(this).attr("id");
-              if (listval == catgId) {
-                  $(this).css("display", "block");
-              }
-          });
-      } else {
-          listval = $(this).parent("label").text();
-          $("#businesscategory div").each(function () {
-              catgId = $(this).attr("id");
-              if (listval == catgId) {
-                  $(this).css("display", "none");
-              }
-          });
-      }
-  });
+    /*------- Select Business Category -------------*/
+    var listval, catgId;
+    $(".selectcategory div.checkbox1 input[type='checkbox']").change(function () {
+        if ($(this).is(':checked')) {
+            listval = $(this).parent("label").text();
+            $("#businesscategory div").each(function () {
+                catgId = $(this).attr("id");
+                if (listval == catgId) {
+                    $(this).css("display", "block");
+                }
+            });
+        } else {
+            listval = $(this).parent("label").text();
+            $("#businesscategory div").each(function () {
+                catgId = $(this).attr("id");
+                if (listval == catgId) {
+                    $(this).css("display", "none");
+                }
+            });
+        }
+    });
     /*------- Select Business Category -------------*/
 
-  $(".checkbox1 input[type='checkbox']").change(function () {
-      var arr = [], i = 0;
-      $(".checkbox1 input[type='checkbox']:checked").each(function () {
-          arr[i++] = $(this).parent("label").text();
-      });
-      //alert(arr);
-      $('#services').val(arr);
-      //alert($('#services').val());
-      //console.log(arr);
-  });
+    $(".checkbox1 input[type='checkbox']").change(function () {
+        var arr = [], i = 0;
+        $(".checkbox1 input[type='checkbox']:checked").each(function () {
+            arr[i++] = $(this).parent("label").text();
+        });
+        //alert(arr);
+        $('#services').val(arr);
+        //alert($('#services').val());
+        //console.log(arr);
+    });
 
-  $(".checkbox input[type='checkbox']").change(function () {
-      var arr = [], i = 0;
-      $(".checkbox input[type='checkbox']:checked").each(function () {
-          arr[i++] = $(this).parent("label").text();
-      });
-      //alert(arr);
-      $('#categories').val(arr);
-      //alert($('#categories').val());
-      //console.log(arr);
-  });
+    $(".checkbox input[type='checkbox']").change(function () {
+        var arr = [], i = 0;
+        $(".checkbox input[type='checkbox']:checked").each(function () {
+            arr[i++] = $(this).parent("label").text();
+        });
+        //alert(arr);
+        $('#categories').val(arr);
+        //alert($('#categories').val());
+        //console.log(arr);
+    });
 </script>

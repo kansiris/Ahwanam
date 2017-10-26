@@ -17,6 +17,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
+            string[] services = { "Venue", "Catering", "Photography", "Decorator", "Open Lawn", "Roof Top", "Hotel", "Resort" };
             string vid = "";
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Venue"))
@@ -40,7 +41,7 @@ namespace MaaAahwanam.Web.Controllers
                 vid = vid + "," + vendorsDecorator.Id.ToString();
             }
             //ViewBag.services = new { type = vendorMaster.ServicType.Split(','), vendorid = vid.TrimStart(',').Split(',') };
-            ViewBag.services = vendorMaster.ServicType.Split(',');
+            ViewBag.services = services.Intersect(vendorMaster.ServicType.Split(',')).ToList();//vendorMaster.ServicType.Split(',');
             ViewBag.vid = vid.TrimStart(',');
             ViewBag.vendormasterid = id;
             return View();
