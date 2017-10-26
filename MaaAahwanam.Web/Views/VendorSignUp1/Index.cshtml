@@ -58,11 +58,11 @@
     <form method="post">
         <div class="block">
             @*<div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 form-headding border-default-top border-default-bottom">
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> Log In Information</h4>
-                </div>
-            </div>*@
-            
+                    <div class="col-xs-12 col-sm-12 col-md-12 form-headding border-default-top border-default-bottom">
+                        <h4><i class="fa fa-user" aria-hidden="true"></i> Log In Information</h4>
+                    </div>
+                </div>*@
+
         </div>
         <div class="block">
             <div class="row">
@@ -213,17 +213,48 @@
                 @Html.HiddenFor(model => model.Item1.ServicType)
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
                     <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Venue</label>
+                            @if (ViewBag.data.ServicType == "Venue")
+                            {
+                                <label><input type="checkbox" value="" checked><span></span>Venue</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox" value=""><span></span>Venue</label>
+                            }
                     </div>
 
                     <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Catering</label>
+                            @if (ViewBag.data.ServicType == "Catering")
+                            {
+                                <label><input type="checkbox" value="" checked><span></span>Catering</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox" value=""><span></span>Catering</label>
+                            }
+                            
                     </div>
                     <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Photography</label>
+                        @if (ViewBag.data.ServicType == "Photography")
+                        {
+                            <label><input type="checkbox" value="" checked><span></span>Photography</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox" value=""><span></span>Photography</label>
+                        }
                     </div>
                     <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Decorator</label>
+
+                        @if (ViewBag.data.ServicType == "Decorator")
+                        {
+                            <label><input type="checkbox" value="" checked><span></span>Decorator</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox" value=""><span></span>Decorator </label>
+                        }
+
                     </div>
                     @*<div class="checkbox1">
                             <label><input type="checkbox" value=""><span></span>Entertainments</label>
@@ -428,7 +459,7 @@
     var listval, catgId;
     $(".selectcategory div.checkbox1 input[type='checkbox']").change(function () {
         if ($(this).is(':checked')) {
-            listval = $(this).parent("label").text();
+            listval = $(this).parent("label").text().replace(' ', '');
             $("#businesscategory div").each(function () {
                 catgId = $(this).attr("id");
                 if (listval == catgId) {
@@ -448,18 +479,45 @@
             });
         }
     });
-    /*------- Select Business Category -------------*/
-    /*------- Next anchor click condition Function -------------*/
-    $("#firstnextbtn").click(function () {
-        var CatgBox = $(".selectcategory input[type='checkbox']:checked").length;
-        var BusCatbox = $("#businesscategory input[type='checkbox']:checked").length;
-        if (CatgBox > 0 && BusCatbox > 0) {
-            window.location.replace("file:///E:/vamsi/Maa-Aahwanam/Maa-Aahwanam-All/signup2.html");
-        } else {
-            alert("Please select atleast one Main and Sub Categories");
-        }
-    });
-    /*------- Next anchor click condition Function -------------*/
+
+    //window.load =function(){
+    //$(".selectcategory div.checkbox1 input[type='checkbox']").on('load',function () {
+    //    alert("hi");
+    //    if ($(this).is(':checked')) {
+    //        listval = $(this).parent("label").text().replace(' ', '');
+    //        alert(listval);
+    //        $("#businesscategory div").each(function () {
+    //            catgId = $(this).attr("id");
+    //            if (listval == catgId) {
+    //                $(this).css("display", "block");
+    //            }
+    //        });
+    //    } else {
+    //        listval = $(this).parent("label").text();
+    //        $("#businesscategory div").each(function () {
+    //            catgId = $(this).attr("id");
+    //            if (listval == catgId) {
+    //                $(this).css("display", "none");
+    //                $(this).children(".checkbox").children("label").children("input").each(function () {
+    //                    $(this).prop("checked", false);
+    //                });
+    //            }
+    //        });
+    //    }
+    //})
+    //};
+        /*------- Select Business Category -------------*/
+        /*------- Next anchor click condition Function -------------*/
+        $("#firstnextbtn").click(function () {
+            var CatgBox = $(".selectcategory input[type='checkbox']:checked").length;
+            var BusCatbox = $("#businesscategory input[type='checkbox']:checked").length;
+            if (CatgBox > 0 && BusCatbox > 0) {
+                window.location.replace("file:///E:/vamsi/Maa-Aahwanam/Maa-Aahwanam-All/signup2.html");
+            } else {
+                alert("Please select atleast one Main and Sub Categories");
+            }
+        });
+        /*------- Next anchor click condition Function -------------*/
 
 </script>
 @*E-Mail ID check*@
