@@ -29,9 +29,9 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index([Bind(Prefix = "Item1")]UserLogin userLogin, [Bind(Prefix = "Item2")] Vendormaster vendorMaster, string command)
         {
-            userLogin.UserType = "Vendor";
             if (command == "Login")
             {
+                userLogin.UserType = "Vendor";
                 var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
                 if (userResponse != null)
                 {
@@ -48,12 +48,14 @@ namespace MaaAahwanam.Web.Controllers
             }
             if (command == "VendorReg")
             {
+                UserLogin userLogin1 = new UserLogin();
+                userLogin1.UserType = "Vendor";
                 vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
-                userLogin.UserName = vendorMaster.EmailId;
-                userLogin.Password = randomPassword.GenerateString();
-                userLogin = venorVenueSignUpService.AddUserLogin(userLogin);
+                userLogin1.UserName = vendorMaster.EmailId;
+                userLogin1.Password = "Temp1234";//randomPassword.GenerateString();
+                userLogin1 = venorVenueSignUpService.AddUserLogin(userLogin1);
                 UserDetail userDetail = new UserDetail();
-                userDetail.UserLoginId = userLogin.UserLoginId;
+                userDetail.UserLoginId = userLogin1.UserLoginId;
                 userDetail = venorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
                 addservice(vendorMaster);
                 if (vendorMaster.Id != 0)
