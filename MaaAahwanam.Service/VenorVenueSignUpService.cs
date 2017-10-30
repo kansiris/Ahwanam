@@ -92,9 +92,9 @@ namespace MaaAahwanam.Service
 
         public VendorsCatering UpdateCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
         {
-            vendorsCatering.Status = "InActive";
+            //vendorsCatering.Status = "InActive";
             vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendorMaster.Status = "InActive";
+            //vendorMaster.Status = "InActive";
             vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             //vendorMaster.ServicType = "Venue";
             vendorsCatering = vendorCateringRepository.UpdatesCatering(vendorsCatering, masterid, vid);
@@ -115,9 +115,9 @@ namespace MaaAahwanam.Service
 
         public VendorsPhotography UpdatePhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid, long vid)
         {
-            vendorsPhotography.Status = "InActive";
+            //vendorsPhotography.Status = "InActive";
             vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendorMaster.Status = "InActive";
+            //vendorMaster.Status = "InActive";
             vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid, vid);
             return vendorsPhotography;
@@ -143,7 +143,7 @@ namespace MaaAahwanam.Service
         public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster, long masterid, long vid)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();
-            vendorsDecorator.Status = "InActive";
+            //vendorsDecorator.Status = "InActive";
             vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, masterid, vid);
             return vendorsDecorator;

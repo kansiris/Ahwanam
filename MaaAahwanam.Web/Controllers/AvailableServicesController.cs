@@ -55,9 +55,12 @@ namespace MaaAahwanam.Web.Controllers
                 string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
                 string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
                 string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
+                string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
+
                 List<string> matchingvenues = venueservices.Intersect(categories.Split(',')).ToList();
                 List<string> matchingcatering = cateringservices.Intersect(categories.Split(',')).ToList();
                 List<string> matchingphotography = photographyservices.Intersect(categories.Split(',')).ToList();
+                List<string> matchingdecorators = decoratorservices.Intersect(categories.Split(',')).ToList();
 
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 //vendorMaster.ServicType = string.Join(",", (services + "," + data.ServicType).Split(',').Distinct());
@@ -84,6 +87,13 @@ namespace MaaAahwanam.Web.Controllers
                     vendorsPhotography.VendorMasterId = long.Parse(id);
                     vendorsPhotography.PhotographyType = string.Join<string>(",", matchingphotography);
                     vendorsPhotography = vendorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
+                }
+                if (services.Split(',').Contains("Decorator"))
+                {
+                    VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                    vendorsDecorator.VendorMasterId = vendorMaster.Id;
+                    vendorsDecorator.DecorationType = string.Join<string>(",", matchingdecorators);
+                    vendorsDecorator = vendorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
                 }
             }
             return Content("<script language='javascript' type='text/javascript'>alert('New Service Added Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = id }) + "'</script>");
