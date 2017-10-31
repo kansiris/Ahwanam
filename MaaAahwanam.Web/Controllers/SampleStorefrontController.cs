@@ -48,6 +48,8 @@ namespace MaaAahwanam.Web.Controllers
             }
             if (command == "VendorReg")
             {
+                if (vendorMaster.ServicType == "Mehendi")
+                    vendorMaster.ServicType = "Other";
                 UserLogin userLogin1 = new UserLogin();
                 userLogin1.UserType = "Vendor";
                 vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
@@ -126,6 +128,18 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsDecorator.VendorMasterId = vendorMaster.Id;
                 vendorsDecorator = venorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
                 if (vendorsDecorator.Id != 0) count++;
+            }
+            if (vendorMaster.ServicType == "Other")
+            {
+                VendorsOther vendorsOther = new VendorsOther();
+                vendorsOther.VendorMasterId = vendorMaster.Id;
+                vendorsOther.MinOrder = "0";
+                vendorsOther.MaxOrder = "0";
+                vendorsOther.Status = "InActive";
+                vendorsOther.UpdatedBy = 2;
+                vendorsOther.UpdatedDate = Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther = venorVenueSignUpService.AddVendorOther(vendorsOther);
+                if (vendorsOther.Id != 0) count++;
             }
             return count;
         }

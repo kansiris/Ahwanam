@@ -210,7 +210,7 @@
                 </div>
             </div>
             <div class="row">
-                @Html.HiddenFor(model => model.Item1.ServicType)
+                @Html.HiddenFor(model => model.Item1.ServicType,new { Value= ViewBag.service })
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
                     @*<div class="checkbox1">
                         @foreach (var item in ViewBag.data.ServicType.Split(","))
@@ -224,9 +224,9 @@
 
 
                     <div class="checkbox1">
-                            @if (ViewBag.data.ServicType == "Venue")
+                            @if (ViewBag.service == "Venue")
                             {
-                                <label><input type="checkbox" value="" ><span></span>Venue</label>
+                                <label><input type="checkbox" value="" checked><span></span>Venue</label>
                             }
                             @*else
                             {
@@ -235,9 +235,9 @@
                     </div>
 
                     <div class="checkbox1">
-                            @if (ViewBag.data.ServicType == "Catering")
+                            @if (ViewBag.service == "Catering")
                             {
-                                <label><input type="checkbox" value="" ><span></span>Catering</label>
+                                <label><input type="checkbox" value="" checked><span></span>Catering</label>
                             }
                             @*else
                             {
@@ -246,9 +246,9 @@
                             
                     </div>
                     <div class="checkbox1">
-                        @if (ViewBag.data.ServicType == "Photography")
+                        @if (ViewBag.service == "Photography")
                         {
-                            <label><input type="checkbox" value="" ><span></span>Photography</label>
+                            <label><input type="checkbox" value="" checked><span></span>Photography</label>
                         }
                         @*else
                         {
@@ -257,13 +257,13 @@
                     </div>
                     <div class="checkbox1">
 
-                        @if (ViewBag.data.ServicType == "Decorator")
+                        @if (ViewBag.service == "Decorator")
                         {
-                            <label><input type="checkbox" value="" ><span></span>Decorator</label>
+                            <label><input type="checkbox" value="" checked><span></span>Decorator</label>
                         }
                         @*else
                         {
-                            <label><input type="checkbox" value=""><span></span>Decorator </label>
+                            <label><input type="checkbox" value=""><span></span>Decorator</label>
                         }*@
 
                     </div>
@@ -396,11 +396,11 @@
 <script src="~/newdesign/js/hideShowPassword.min.js"></script>
 <script>
     /*------- Toggle Password Hide / Show -------------*/
-    $(window).ready(function () {
-        $('#Item2_Password').hideShowPassword({
-            innerToggle: true,
-        });
-    });
+    //$(window).ready(function () {
+    //    $('#Item2_Password').hideShowPassword({
+    //        innerToggle: true,
+    //    });
+    //});
     /*------- Toggle Password Hide / Show -------------*/
 
     /*------- Check Box value -------------*/
@@ -489,6 +489,20 @@
                 }
             });
         }
+    });
+
+    $(document).ready(function () {
+        $(".selectcategory div.checkbox1 input[type='checkbox']").each(function () {
+            if ($(this).is(':checked')) {
+                listval = $(this).parent("label").text();
+                $("#businesscategory div").each(function () {
+                    catgId = $(this).attr("id");
+                    if (listval == catgId) {
+                        $(this).css("display", "block");
+                    }
+                });
+            }
+        });
     });
 
     //window.load =function(){

@@ -18,7 +18,7 @@
                         </div>
                         <p><span>@item</span></p>
 
-                        @if (item == "Venue" )
+                        @if (item == "Venue")
                         {<a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Update Info</a>
                         <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
                         <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
@@ -55,21 +55,58 @@
             <i class="fa fa-times" aria-hidden="true"></i>
             <div class="row">
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Venue</label>
-                    </div>
+                    @if (ViewBag.services.Contains("Venue"))
+                    {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Venue</label> 
+                        </div>
+                    }
+                    else
+                        {
+                            <div class="checkbox1">
+                                <label><input type="checkbox" value=""><span></span>Venue</label>
+                            </div>
+                        }
+
                     @*<div class="checkbox">
                             <label><input type="checkbox" value=""><span></span>Decorator</label>
                         </div>*@
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Catering</label>
-                    </div>
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Photography</label>
-                    </div>
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Decorator</label>
-                    </div>
+                    @if (ViewBag.services.Contains("Catering"))
+                    {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Catering</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value=""><span></span>Catering</label>
+                        </div>
+                    }
+                    @if (ViewBag.services.Contains("Photography"))
+                    {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Photography</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value=""><span></span>Photography</label>
+                        </div>
+                    }
+                    @if (ViewBag.services.Contains("Decorator"))
+                    {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Decorator</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value=""><span></span>Decorator</label>
+                        </div>
+                    }
                     @*<div class="checkbox">
                             <label><input type="checkbox" value=""><span></span>Entertainments</label>
                         </div>
@@ -108,7 +145,7 @@
                         <label><input type="checkbox"><span></span>Resort</label>
                     </div>
                 </div>
-                
+
                 <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Catering">
                     <h4>Catering</h4>
                     <div class="checkbox">

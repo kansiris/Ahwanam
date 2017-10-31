@@ -16,6 +16,7 @@ namespace MaaAahwanam.Service
         VendorCateringRepository vendorCateringRepository = new VendorCateringRepository();
         VendorsPhotographyRepository vendorsPhotographyRepository = new VendorsPhotographyRepository();
         VendorsDecoratorRepository vendorsDecoratorRepository = new VendorsDecoratorRepository();
+        VendorOthersRepository vendorOthersRepository = new VendorOthersRepository();
 
         string updateddate = DateTime.UtcNow.ToShortDateString();
         
@@ -147,6 +148,27 @@ namespace MaaAahwanam.Service
             vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, masterid, vid);
             return vendorsDecorator;
+        }
+
+        //Others Area
+
+        public VendorsOther AddVendorOther(VendorsOther vendorsOther)
+        {
+            return vendorVenueSignUpRepository.AddVendorOther(vendorsOther);
+        }
+
+        public VendorsOther GetVendorOther(long id)
+        {
+            return vendorVenueSignUpRepository.GetVendorOther(id);
+        }
+
+        public VendorsOther UpdateOther(VendorsOther vendorsOther, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorsDecorator.Status = "InActive";
+            vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsOther = vendorOthersRepository.UpdateOthers(vendorsOther, masterid, vid);
+            return vendorsOther;
         }
     }
 }
