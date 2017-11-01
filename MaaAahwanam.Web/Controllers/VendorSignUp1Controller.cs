@@ -13,12 +13,37 @@ namespace MaaAahwanam.Web.Controllers
     {
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        
         // GET: VendorSignUp1
         public ActionResult Index(string id, string vid, string type)
         {
             ViewBag.data = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.service = type;
             ViewBag.country = new SelectList(CountryList(), "Value", "Text");
+            if (type=="Venue")
+            {
+                VendorVenueService vendorVenueService = new VendorVenueService();
+                ViewBag.service = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid)).VenueType;
+                return View();
+            }
+            if (type == "Catering")
+            {
+                VendorCateringService vendorCateringService = new VendorCateringService();
+                ViewBag.service = vendorCateringService.GetVendorCatering(long.Parse(id), long.Parse(vid)).CuisineType;
+                return View();
+            }
+            if (type == "Photography")
+            {
+                VendorPhotographyService vendorPhotographyService = new VendorPhotographyService();
+                ViewBag.service = vendorPhotographyService.GetVendorPhotography(long.Parse(id), long.Parse(vid)).PhotographyType;
+                return View();
+            }
+            if (type == "Decorator")
+            {
+                VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
+                ViewBag.service = vendorDecoratorService.GetVendorDecorator(long.Parse(id), long.Parse(vid)).DecorationType;
+                return View();
+            }
             return View();
         }
         [HttpPost]
@@ -100,5 +125,6 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json("valid", JsonRequestBehavior.AllowGet);
         }
+
     }
 }

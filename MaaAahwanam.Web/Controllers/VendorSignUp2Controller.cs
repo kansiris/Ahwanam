@@ -29,7 +29,7 @@ namespace MaaAahwanam.Web.Controllers
             Vendormaster vendorMaster = new Vendormaster();
             vendorMaster.Id = long.Parse(id);
             vendorImage.VendorId = long.Parse(vid);
-            if (Request.Files.Count <= 4)
+            if (Request.Files.Count <= 6)
             {
                 for (int i = 0; i < Request.Files.Count; i++)
                 {
@@ -49,10 +49,40 @@ namespace MaaAahwanam.Web.Controllers
                         }
                     }
                 }
+                return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
             }
             //return RedirectToAction("Index", "VendorSignUp3", new { id = id, vid = vid });
             //return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vid, vid = id }) + "'</script>");
-            return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+            return View();
+        }
+
+        //public JsonResult Removeimage(string src, string id,string vid)
+        //{
+        //    VendorImageService vendorImageService = new VendorImageService();
+        //    var vendorImage = vendorImageService.GetImageId(src, long.Parse(vid));
+        //    string delete = vendorImageService.DeleteImage(vendorImage);
+        //    if (delete == "success")
+        //    {
+        //        string fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + src));
+        //        System.IO.File.Delete(fileName);
+        //    }
+        //    return Json(delete, JsonRequestBehavior.AllowGet);
+        //}
+
+        public ActionResult Removeimage(string src, string id, string vid)
+        {
+            var vendorImage = vendorImageService.GetImageId(src, long.Parse(vid));
+            string delete = vendorImageService.DeleteImage(vendorImage);
+            if (delete == "success")
+            {
+                string fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + src));
+                System.IO.File.Delete(fileName);
+                return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid }) + "'</script>");
+            }
+            else
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid }) + "'</script>");
+            }
         }
     }
 }
