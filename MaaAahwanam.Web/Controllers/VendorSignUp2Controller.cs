@@ -13,7 +13,7 @@ namespace MaaAahwanam.Web.Controllers
         const string imagepath = @"/vendorimages/";
         VendorImageService vendorImageService = new VendorImageService();
         // GET: VendorSignUp2
-        public ActionResult Index(string id,string vid)
+        public ActionResult Index(string id, string vid)
         {
             ViewBag.id = id;
             ViewBag.vid = vid;
@@ -22,38 +22,66 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string vid, HttpPostedFileBase file,string removedimages,string type)
+        public ActionResult Index(string id, string vid, HttpPostedFileBase file, string removedimages, string type)
         {
             string fileName = string.Empty;
+            string path = System.IO.Path.GetExtension(file.FileName);
             VendorImage vendorImage = new VendorImage();
             Vendormaster vendorMaster = new Vendormaster();
             vendorMaster.Id = long.Parse(id);
             vendorImage.VendorId = long.Parse(vid);
-            if (Request.Files.Count <= 6)
+            if (file != null)
             {
-                for (int i = 0; i < Request.Files.Count; i++)
+                int imageno = 0;
+                int imagecount = 6;
+                var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
+
+                if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
-                    int j = i + 1;
-                    var file1 = Request.Files[i];
-                    if (removedimages.Contains(file1.FileName)) { }
-                    else
+                    //getting max imageno
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        if (file1 != null && file1.ContentLength > 0)
+                        string x = list[i].ToString();
+                        string[] y = x.Split('_', '.');
+                        if (y[3] == "jpg")
                         {
-                            string path = System.IO.Path.GetExtension(file.FileName);
-                            var filename = type +"_" + id + "_" + vid + "_" + j + path;
-                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
-                            file1.SaveAs(fileName);
-                            vendorImage.ImageName = filename;
-                            vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
                         }
                     }
+
+                    //Uploading images in db & folder
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        int j = imageno + i + 1;
+                        var file1 = Request.Files[i];
+                        if (removedimages.Contains(file1.FileName)) { j = j - 1; }
+                        else
+                        {
+                            if (file1 != null && file1.ContentLength > 0 && path.Contains(".jpg"))
+                            {
+                                var filename = type + "_" + id + "_" + vid + "_" + j + path;
+                                fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                                file1.SaveAs(fileName);
+                                vendorImage.ImageName = filename;
+                                vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                            }
+                        }
+                    }
+                    return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='/AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
                 }
-                return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Image Upload Limit Reached u can upload only " + (6 - list.Count) + " photos');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
+                }
             }
-            //return RedirectToAction("Index", "VendorSignUp3", new { id = id, vid = vid });
-            //return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vid, vid = id }) + "'</script>");
-            return View();
+            else
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Upload Image');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
+            }
         }
 
         //public JsonResult Removeimage(string src, string id,string vid)
@@ -69,19 +97,20 @@ namespace MaaAahwanam.Web.Controllers
         //    return Json(delete, JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult Removeimage(string src, string id, string vid)
+        public ActionResult Removeimage(string src, string id, string vid, string type)
         {
+            string delete = "";
             var vendorImage = vendorImageService.GetImageId(src, long.Parse(vid));
-            string delete = vendorImageService.DeleteImage(vendorImage);
+            delete = vendorImageService.DeleteImage(vendorImage);
             if (delete == "success")
             {
                 string fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + src));
                 System.IO.File.Delete(fileName);
-                return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid }) + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid, type = type }) + "'</script>");
             }
             else
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid }) + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid, type = type }) + "'</script>");
             }
         }
     }

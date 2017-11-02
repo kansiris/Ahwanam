@@ -101,7 +101,7 @@
                                 <div class='hr-line border-default-bottom'></div>
                                 <div class='row'>
                                     <div class='col-xs-12 col-md-12'>
-                                        <a href="/VendorSignUp2/Removeimage?src=@item&&id=@ViewBag.id&&vid=@ViewBag.vid">
+                                        <a href="/VendorSignUp2/Removeimage?src=@item&&id=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["type"]">
                                             <p class='red'>
                                                 <small>
                                                     <i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo
@@ -155,7 +155,7 @@
                             reader.readAsDataURL(file[0]);
                         } else {
                             alert(file[0].name + " is not a valid image file.");
-                            dvPreview.html("");
+                            //dvPreview.html("");
                             return false;
                         }
                         //i++;
@@ -177,7 +177,7 @@
         var removed;
         var x = $(this).parents(".blocks").css({ "transform": "translateX(1000px)", "opacity": "0" });
         setTimeout(function () { x.remove(); }, 200);
-        var imgname = $(this).parents("div.row").parents("div.thumbnail").find("div.thumb-img").children("img").attr('src');
+        var imgname = $(this).parents("div.row").parents("div.thumbnail").find("div.thumb-img").children("img").attr('alt');
         var value = $('#removedimages').val();
         if (value == "")
             removed = imgname;
