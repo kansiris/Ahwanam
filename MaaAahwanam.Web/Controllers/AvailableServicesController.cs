@@ -101,7 +101,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorsDecorator = vendorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
                 }
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('New Service Added Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = id }) + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('New Service(s) Added Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = id }) + "'</script>");
         }
 
         public ActionResult changeid(string id)

@@ -25,13 +25,16 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string id, string vid, HttpPostedFileBase file, string removedimages, string type)
         {
             string fileName = string.Empty;
-            string path = System.IO.Path.GetExtension(file.FileName);
+            
             VendorImage vendorImage = new VendorImage();
             Vendormaster vendorMaster = new Vendormaster();
             vendorMaster.Id = long.Parse(id);
             vendorImage.VendorId = long.Parse(vid);
             if (file != null)
             {
+                string path = System.IO.Path.GetExtension(file.FileName);
+                if (path.Contains(".jpg") == false)
+                    return Content("<script language='javascript' type='text/javascript'>alert('Invalid File Format uploaded');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
                 int imageno = 0;
                 int imagecount = 6;
                 var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
@@ -83,19 +86,6 @@ namespace MaaAahwanam.Web.Controllers
                 return Content("<script language='javascript' type='text/javascript'>alert('Upload Image');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
             }
         }
-
-        //public JsonResult Removeimage(string src, string id,string vid)
-        //{
-        //    VendorImageService vendorImageService = new VendorImageService();
-        //    var vendorImage = vendorImageService.GetImageId(src, long.Parse(vid));
-        //    string delete = vendorImageService.DeleteImage(vendorImage);
-        //    if (delete == "success")
-        //    {
-        //        string fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + src));
-        //        System.IO.File.Delete(fileName);
-        //    }
-        //    return Json(delete, JsonRequestBehavior.AllowGet);
-        //}
 
         public ActionResult Removeimage(string src, string id, string vid, string type)
         {

@@ -48,22 +48,28 @@ namespace MaaAahwanam.Web.Controllers
             }
             if (command == "VendorReg")
             {
-                if (vendorMaster.ServicType == "Mehendi")
-                    vendorMaster.ServicType = "Other";
-                UserLogin userLogin1 = new UserLogin();
-                userLogin1.UserType = "Vendor";
-                vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
-                userLogin1.UserName = vendorMaster.EmailId;
-                userLogin1.Password = "Temp1234";//randomPassword.GenerateString();
-                userLogin1 = venorVenueSignUpService.AddUserLogin(userLogin1);
-                UserDetail userDetail = new UserDetail();
-                userDetail.UserLoginId = userLogin1.UserLoginId;
-                userDetail = venorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
-                addservice(vendorMaster);
-                if (vendorMaster.Id != 0)
+                int query = vendorMasterService.checkemail(vendorMaster.EmailId);
+                if (query == 0)
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                    if (vendorMaster.ServicType == "Mehendi")
+                        vendorMaster.ServicType = "Other";
+                    UserLogin userLogin1 = new UserLogin();
+                    userLogin1.UserType = "Vendor";
+                    vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
+                    userLogin1.UserName = vendorMaster.EmailId;
+                    userLogin1.Password = "Temp1234";//randomPassword.GenerateString();
+                    userLogin1 = venorVenueSignUpService.AddUserLogin(userLogin1);
+                    UserDetail userDetail = new UserDetail();
+                    userDetail.UserLoginId = userLogin1.UserLoginId;
+                    userDetail = venorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
+                    addservice(vendorMaster);
+                    if (vendorMaster.Id != 0)
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                    }
                 }
+                else
+                    return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
             }
             return View();
         }
@@ -89,7 +95,6 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult checkemail(string emailid)
         {
-            VendorMasterService vendorMasterService = new VendorMasterService();
             int query = vendorMasterService.checkemail(emailid);
             if (query != 0)
             {

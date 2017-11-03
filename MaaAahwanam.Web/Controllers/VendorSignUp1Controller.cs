@@ -18,7 +18,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string id, string vid, string type)
         {
             ViewBag.data = vendorMasterService.GetVendor(long.Parse(id));
-            ViewBag.service = type;
+            ViewBag.type = type;
             ViewBag.country = new SelectList(CountryList(), "Value", "Text");
             if (type=="Venue")
             {

@@ -189,8 +189,8 @@
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         <label>Describe your business and services offered (in third person)</label>
-                        @*<textarea class="form-control" rows="10"></textarea>*@
-                        @Html.TextAreaFor(model => this.Model.Item1.Description, new { @class = "form-control", rows = "10", Value = @ViewBag.data.Description })
+                        <textarea class="form-control" rows="10" id="Item1_Description" name="Item1.Description">@ViewBag.data.Description</textarea>
+                        @*@Html.TextAreaFor(model => this.Model.Item1.Description, new { @class = "form-control", rows = "10", Value = @ViewBag.data.Description })*@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3 col-md-offset-1 hidden-xs">
@@ -210,74 +210,74 @@
                 </div>
             </div>
             <div class="row">
-                @Html.HiddenFor(model => model.Item1.ServicType,new { Value= ViewBag.service })
+                @Html.HiddenFor(model => model.Item1.ServicType, new { Value = ViewBag.service })
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
                     @*<div class="checkbox1">
-                        @foreach (var item in ViewBag.data.ServicType.Split(","))
-                        {
-                            <label><input type="checkbox" value="" checked><span></span>@item</label>
-                        }
-                    </div>*@
+                            @foreach (var item in ViewBag.data.ServicType.Split(","))
+                            {
+                                <label><input type="checkbox" value="" checked><span></span>@item</label>
+                            }
+                        </div>*@
 
 
 
 
 
                     <div class="checkbox1">
-                            @if (ViewBag.service == "Venue")
-                            {
-                                <label><input type="checkbox" value="" checked><span></span>Venue</label>
-                            }
-                            @*else
+                        @if (ViewBag.type == "Venue")
+                        {
+                            <label><input type="checkbox" value="" checked><span></span>Venue</label>
+                        }
+                        @*else
                             {
                                 <label><input type="checkbox" value=""><span></span>Venue</label>
                             }*@
                     </div>
 
                     <div class="checkbox1">
-                            @if (ViewBag.service == "Catering")
-                            {
-                                <label><input type="checkbox" value="" checked><span></span>Catering</label>
-                            }
-                            @*else
+                        @if (ViewBag.type == "Catering")
+                        {
+                            <label><input type="checkbox" value="" checked><span></span>Catering</label>
+                        }
+                        @*else
                             {
                                 <label><input type="checkbox" value=""><span></span>Catering</label>
                             }*@
-                            
+
                     </div>
                     <div class="checkbox1">
-                        @if (ViewBag.service == "Photography")
+                        @if (ViewBag.type == "Photography")
                         {
                             <label><input type="checkbox" value="" checked><span></span>Photography</label>
                         }
                         @*else
-                        {
-                            <label><input type="checkbox" value=""><span></span>Photography</label>
-                        }*@
+                            {
+                                <label><input type="checkbox" value=""><span></span>Photography</label>
+                            }*@
                     </div>
                     <div class="checkbox1">
 
-                        @if (ViewBag.service == "Decorator")
+                        @if (ViewBag.type == "Decorator")
                         {
                             <label><input type="checkbox" value="" checked><span></span>Decorator</label>
                         }
                         @*else
-                        {
-                            <label><input type="checkbox" value=""><span></span>Decorator</label>
-                        }*@
+                            {
+                                <label><input type="checkbox" value=""><span></span>Decorator</label>
+                            }*@
 
                     </div>
 
                     <div class="checkbox1">
 
-                        @if (ViewBag.service == "Other")
+                        @if (ViewBag.type == "Other")
                         {
                             <label><input type="checkbox" value="" checked><span></span>Other</label>
                         }
                         @*else
-            {
-                <label><input type="checkbox" value=""><span></span>Decorator</label>
-            }*@
+                            {
+                                <label><input type="checkbox" value=""><span></span>Decorator</label>
+                            }*@
 
                     </div>
                     @*<div class="checkbox1">
@@ -290,117 +290,343 @@
             </div>
 
             <div class="row margin-top margin-bottom" id="businesscategory">
-                <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Venue">
-                    <h4>Venues</h4> <input type="hidden" name="Item4.VenueType" id="Item1_VenueType" />
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Convention Hall</label>
+                <input type="hidden" name="Item4.VenueType" id="Item1_VenueType" value="@ViewBag.service"/>
+                @if (ViewBag.type == "Venue")
+                {
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Venue">
+                        <h4>Venues</h4>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Convention Hall"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Convention Hall</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Convention Hall</label>
+                            }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Function Hall"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Function Hall</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Function Hall</label>
+                            }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Banquet Hall"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Banquet Hall</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Banquet Hall</label>
+                            }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Meeting Room"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Meeting Room</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Meeting Rooml</label>
+                            }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Open Lawn"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Open Lawn</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Open Lawn</label>
+                            }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Roof Top"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Roof Topl</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Roof Top</label>
+                            }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Hotel"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Hotel</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Hotel</label>
+                            }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Resort"))
+                            {
+                                <label><input type="checkbox" checked><span></span>Resort</label>
+                            }
+                            else
+                            {
+                                <label><input type="checkbox"><span></span>Resort</label>
+                            }
+                        </div>
                     </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Function Hall</label>
+                }
+                @if (ViewBag.type == "Catering")
+                {
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Catering">
+                        <h4>Catering</h4>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Indian"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Indian</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Indian</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Chinese"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Chinese</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Chinese</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Mexican"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Mexican</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Mexican</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("South Indian"))
+                        {
+                            <label><input type="checkbox" checked><span></span>South Indian</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>South Indian</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Continental"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Continental</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Continental</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Multi Cuisine"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Multi Cuisine</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Multi Cuisine</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Chaat"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Chaat</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Chaat</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Fast Food"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Fast Food</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Fast Food</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Others"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Others</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Others</label>
+                        }
+                        </div>
                     </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Banquet Hall</label>
+                }
+                @if (ViewBag.type == "Photography")
+                {
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Photography">
+                        <h4>Photography</h4>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Wedding"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Wedding</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Wedding</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Candid"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Candid</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Candid</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Portfolio"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Portfolio</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Portfolio</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Fashion"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Fashion</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Fashion</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Toddler"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Toddler</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Toddler</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Videography"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Videography</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Videography</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Conventional"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Conventional</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Conventional</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Cinematography"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Cinematography</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Cinematography</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Others"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Others</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Others</label>
+                        }
+                        </div>
                     </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Meeting Room</label>
+                }
+                @if (ViewBag.type == "Decorator")
+                {
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Decorator">
+                        <h4>Decorator</h4>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Florists"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Florists</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Florists</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("TentHouse Decorators"))
+                        {
+                            <label><input type="checkbox" checked><span></span>TentHouse Decorators</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>TentHouse Decorators</label>
+                        }
+                        </div>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Others"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Others</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Others</label>
+                        }
+                        </div>
                     </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Open Lawn</label>
+                }
+                @if (ViewBag.type == "Other")
+                {
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Other">
+                        <h4>Other</h4>
+                        <div class="checkbox">
+                            @if (ViewBag.service.Contains("Mehendi"))
+                        {
+                            <label><input type="checkbox" checked><span></span>Mehendi</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox"><span></span>Mehendi</label>
+                        }
+                        </div>
+                        @*<div class="checkbox">
+                                <label><input type="checkbox" value="">TentHouse Decorators<span></span></label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Others<span></span></label>
+                            </div>*@
                     </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Roof Top</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Hotel</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Resort</label>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Catering">
-                    <h4>Catering</h4>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Indian</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Chinese</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Mexican</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>South Indian</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Continental</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Multi Cuisine</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Chaat</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Fast Food</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"><span></span>Others</label>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Photography">
-                    <h4>Photography</h4>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value=""><span></span>Wedding</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Candid<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Portfolio<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Fashion<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Toddler<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Videography<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Conventional<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Cinematography<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Others<span></span></label>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Decorator">
-                    <h4>Decorator</h4>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value=""><span></span>Florists</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">TentHouse Decorators<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Others<span></span></label>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Decorator">
-                    <h4>Other</h4>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value=""><span></span>Mehendi</label>
-                    </div>
-                    @*<div class="checkbox">
-                        <label><input type="checkbox" value="">TentHouse Decorators<span></span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Others<span></span></label>
-                    </div>*@
-                </div>
+                }
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0 border-default-bottom hr-line"></div>
@@ -556,18 +782,18 @@
     //    }
     //})
     //};
-        /*------- Select Business Category -------------*/
-        /*------- Next anchor click condition Function -------------*/
-        $("#firstnextbtn").click(function () {
-            var CatgBox = $(".selectcategory input[type='checkbox']:checked").length;
-            var BusCatbox = $("#businesscategory input[type='checkbox']:checked").length;
-            if (CatgBox > 0 && BusCatbox > 0) {
-                window.location.replace("file:///E:/vamsi/Maa-Aahwanam/Maa-Aahwanam-All/signup2.html");
-            } else {
-                alert("Please select atleast one Main and Sub Categories");
-            }
-        });
-        /*------- Next anchor click condition Function -------------*/
+    /*------- Select Business Category -------------*/
+    /*------- Next anchor click condition Function -------------*/
+    $("#firstnextbtn").click(function () {
+        var CatgBox = $(".selectcategory input[type='checkbox']:checked").length;
+        var BusCatbox = $("#businesscategory input[type='checkbox']:checked").length;
+        if (CatgBox > 0 && BusCatbox > 0) {
+            window.location.replace("file:///E:/vamsi/Maa-Aahwanam/Maa-Aahwanam-All/signup2.html");
+        } else {
+            alert("Please select atleast one Main and Sub Categories");
+        }
+    });
+    /*------- Next anchor click condition Function -------------*/
 
 </script>
 @*E-Mail ID check*@
