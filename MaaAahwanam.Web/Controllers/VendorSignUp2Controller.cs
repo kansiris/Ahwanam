@@ -36,7 +36,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
                     return Content("<script language='javascript' type='text/javascript'>alert('Invalid File Format uploaded');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
                 int imageno = 0;
-                int imagecount = 6;
+                int imagecount = 8;
                 var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
 
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
@@ -78,7 +78,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Image Upload Limit Reached you can upload only " + (6 - list.Count) + " photos');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Image Upload Limit Reached you can upload only " + (imagecount - list.Count) + " photos');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
                 }
             }
             else
