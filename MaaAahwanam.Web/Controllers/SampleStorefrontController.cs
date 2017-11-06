@@ -31,6 +31,9 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (command == "Login")
             {
+                int query = vendorMasterService.checkemail(userLogin.UserName);
+                if (query == 0)
+                    return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
                 userLogin.UserType = "Vendor";
                 var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
                 if (userResponse != null)

@@ -33,7 +33,7 @@ namespace MaaAahwanam.Web.Controllers
             if (file != null)
             {
                 string path = System.IO.Path.GetExtension(file.FileName);
-                if (path.Contains(".jpg") == false)
+                if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
                     return Content("<script language='javascript' type='text/javascript'>alert('Invalid File Format uploaded');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
                 int imageno = 0;
                 int imagecount = 6;
@@ -64,7 +64,7 @@ namespace MaaAahwanam.Web.Controllers
                         if (removedimages.Contains(file1.FileName)) { j = j - 1; }
                         else
                         {
-                            if (file1 != null && file1.ContentLength > 0 && path.Contains(".jpg"))
+                            if (file1 != null && file1.ContentLength > 0)
                             {
                                 var filename = type + "_" + id + "_" + vid + "_" + j + path;
                                 fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
@@ -78,7 +78,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Image Upload Limit Reached u can upload only " + (6 - list.Count) + " photos');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Image Upload Limit Reached you can upload only " + (6 - list.Count) + " photos');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
                 }
             }
             else

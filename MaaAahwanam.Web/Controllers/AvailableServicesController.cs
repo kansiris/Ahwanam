@@ -17,7 +17,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
-            string[] services = { "Venue", "Catering", "Photography", "Decorator", "Open Lawn", "Roof Top", "Hotel", "Resort","Other" };
+            string[] services = { "Venue", "Catering", "Photography", "Decorator", "Other"};
             string vid = "";
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Venue"))

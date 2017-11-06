@@ -54,14 +54,19 @@ namespace MaaAahwanam.Web.Controllers
             string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
             string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
             List<string> matchingvenues = null; List<string> matchingcatering = null; List<string> matchingphotography = null; List<string> matchingdecorators = null;
-            if(type == "Venue") //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
-                matchingvenues = venueservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-            if (type == "Catering") //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
-                matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-            if (type == "Photography") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
-                matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-            if (type == "Decorator") //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
-                matchingdecorators = decoratorservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+            if (vendorVenue.VenueType != null)
+            {
+                if (type == "Venue") //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
+                    matchingvenues = venueservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                if (type == "Catering") //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
+                    matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                if (type == "Photography") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
+                    matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                if (type == "Decorator") //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
+                    matchingdecorators = decoratorservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+            }
+            else
+                return Content("<script language='javascript' type='text/javascript'>alert('Select Atleat One Sub Category');location.href='/VendorSignUp1/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
             //userLogin = vendorVenueSignUpService.AddUserLogin(userLogin);
             //userDetail.UserLoginId = userLogin.UserLoginId;
             //userDetail = vendorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
