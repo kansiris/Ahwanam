@@ -14,6 +14,9 @@ namespace MaaAahwanam.Models
         public long VendorId { get; set; }
         public long VendorMasterId { get; set; }
         public string ImageName { get; set; }
+        public string Imagedescription { get; set; }
+        public string ImageType { get; set; }
+        public string ImageLimit { get; set; }
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string Status { get; set; }

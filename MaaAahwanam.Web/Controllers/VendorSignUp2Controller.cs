@@ -38,7 +38,7 @@ namespace MaaAahwanam.Web.Controllers
                 int imageno = 0;
                 int imagecount = 8;
                 var list = vendorImageService.GetVendorImagesService(long.Parse(id), long.Parse(vid));
-
+                //int imagecount1 = vendorImageService.GetImageId(;
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     //getting max imageno

@@ -53,9 +53,9 @@ namespace Portal
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "152565978688349",
+               appSecret: "e94b2cf9672b78b7ef552d2097d3c605");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

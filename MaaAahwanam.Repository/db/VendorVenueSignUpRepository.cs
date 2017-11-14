@@ -19,7 +19,7 @@ namespace MaaAahwanam.Repository.db
 
         public UserLogin GetUserLogin(UserLogin userLogin)
         {
-           var data= _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password && p.UserType == userLogin.UserType).FirstOrDefault();
+           var data= _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault(); // && p.UserType == userLogin.UserType
             return data;
         }
 

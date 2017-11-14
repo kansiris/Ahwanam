@@ -31,10 +31,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (command == "Login")
             {
-                int query = vendorMasterService.checkemail(userLogin.UserName);
-                if (query == 0)
-                    return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
-                userLogin.UserType = "Vendor";
+                //userLogin.UserType = "Vendor";
                 var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
                 if (userResponse != null)
                 {
@@ -42,11 +39,18 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
-                    return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                    if (userResponse.UserType == "Vendor")
+                        return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                    else
+                        return RedirectToAction("Index", "HomePage");
                 }
                 else
                 {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                    int query = vendorMasterService.checkemail(userLogin.UserName);
+                    if (query == 0)
+                        return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                    else
+                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
                 }
             }
             if (command == "VendorReg")

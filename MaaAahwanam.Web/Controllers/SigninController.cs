@@ -143,14 +143,17 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView("SigninPartial", userDetail);
             }
         }
+
         public JsonResult RegularExpressionPattern_Password()
         {
             return Json(ValidationsUtility.PatternforPassword(), JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult ResetPassword()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult ResetPassword(string sample)
         {
