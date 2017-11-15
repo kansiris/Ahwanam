@@ -21,6 +21,7 @@ namespace MaaAahwanam.Web.Controllers
         RandomPassword randomPassword = new RandomPassword();
 
         // GET: SampleStorefront
+        string type = "";
         public ActionResult Index()
         {
             return View();
@@ -56,10 +57,14 @@ namespace MaaAahwanam.Web.Controllers
             if (command == "VendorReg")
             {
                 int query = vendorMasterService.checkemail(vendorMaster.EmailId);
+                
                 if (query == 0)
                 {
                     if (vendorMaster.ServicType == "Mehendi")
+                    {
+                        type = vendorMaster.ServicType;
                         vendorMaster.ServicType = "Other";
+                    }
                     UserLogin userLogin1 = new UserLogin();
                     userLogin1.UserType = "Vendor";
                     vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
@@ -150,6 +155,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsOther.Status = "InActive";
                 vendorsOther.UpdatedBy = 2;
                 vendorsOther.UpdatedDate = Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther.type = type;
                 vendorsOther = venorVenueSignUpService.AddVendorOther(vendorsOther);
                 if (vendorsOther.Id != 0) count++;
             }

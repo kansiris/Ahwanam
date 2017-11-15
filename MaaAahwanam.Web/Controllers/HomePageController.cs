@@ -12,8 +12,12 @@ namespace MaaAahwanam.Web.Controllers
     {
         // GET: HomePage
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index()
         {
+            ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
+            ViewBag.Catering = vendorProductsService.Getvendorproducts_Result("Catering").Take(6);
+            ViewBag.Photography = vendorProductsService.Getvendorproducts_Result("Photography").Take(6);
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;

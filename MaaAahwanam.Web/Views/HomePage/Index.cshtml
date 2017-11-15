@@ -220,16 +220,22 @@
         <div class="row gallery">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0 gallery-right">
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0" id="cateres">
-                    <img src="~/newdesign/images/caterer.jpg" alt="Catrers">
-                    <h5>Cateres</h5>
+                    <a href="/VendorProducts/index?service=Catering">
+                        <img src="~/newdesign/images/caterer.jpg" alt="Catrers">
+                        <h5>Cateres</h5>
+                    </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0" id="venues">
-                    <img src="~/newdesign/images/Venues.jpg" alt="Venues" />
-                    <h5>Venues</h5>
+                    <a href="/VendorProducts/index?service=Venue">
+                        <img src="~/newdesign/images/Venues.jpg" alt="Venues" />
+                        <h5>Venues</h5>
+                    </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0" id="Photographers">
-                    <img src="~/newdesign/images/photographer.jpg" alt="Photographer" />
-                    <h5>Photographers</h5>
+                    <a href="/VendorProducts/index?service=Photography">
+                        <img src="~/newdesign/images/photographer.jpg" alt="Photographer" />
+                        <h5>Photographers</h5>
+                    </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0">
                     <img src="~/newdesign/images/invitation.jpg" alt="invitation" />
@@ -497,56 +503,100 @@
             <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Venues</h3>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/nconvention.jpg" alt="N Convention">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>N Convention</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:80%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>500 - 3000</p>
-                                        <span>Guests</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>N/A <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Price Per Plate</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-            @*<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            @foreach (var item in ViewBag.Venue)
+            {
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                     <div class="venue-details">
                         <a href="#">
-                            <img src="~/newdesign/images/palladium.jpg" alt="Palladium">
+                            @if (item.image != null && item.image != "")
+                            {<img src="~/vendorimages/@item.image" alt="@item.image">}
+                            else
+                            { <img src="~/noimages.png" alt="No Image Available">}
                         </a>
                         <div class="venue-footer">
                             <div class="venue-info">
                                 <div class="card-title">
-                                    <a href="#"><h4>Palladium</h4></a>
+                                    <a href="#"><h4>@item.businessname</h4></a>
                                     <div class="venue-score">
                                         <div class="star-rating">
                                             <div class="bg"></div>
-                                            <div class="score" style="width:86%;"></div>
+                                            <div class="score" style="width:80%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>500 - 3000</p>
+                                            <span>Guests</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>@item.cost <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Price Per Plate</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @*<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <div class="venue-details">
+                            <a href="#">
+                                <img src="~/newdesign/images/palladium.jpg" alt="Palladium">
+                            </a>
+                            <div class="venue-footer">
+                                <div class="venue-info">
+                                    <div class="card-title">
+                                        <a href="#"><h4>Palladium</h4></a>
+                                        <div class="venue-score">
+                                            <div class="star-rating">
+                                                <div class="bg"></div>
+                                                <div class="score" style="width:86%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bottom-content text-center">
+                                        <div class="content">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <div class="count">
+                                                <p>N/A</p>
+                                                <span>Guests</span>
+                                            </div>
+                                        </div>
+                                        <div class="content">
+                                            <div class="count">
+                                                <p>N/A <i class="fa fa-check" aria-hidden="true"></i></p>
+                                                <span>Price Per Plate</span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            <img src="~/newdesign/images/shreeimpex.jpg" alt="Shree Impex">
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>Shree Impex</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -561,7 +611,297 @@
                                     <div class="content">
                                         <div class="count">
                                             <p>N/A <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Price Per SFT</span>
+                                            <!--<span class="dropdown">Price Per Plate <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                                            <ul>
+                                              <li></li>
+                                            </ul>-->
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+            *@
+        </div>
+        <div class="row" id="catereslist">
+            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Catering</h3>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewBag.Catering)
+            {
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            @if (item.image != null && item.image != "")
+                            {<img src="~/vendorimages/@item.image" alt="@item.image">}
+                            else
+                            { <img src="~/noimages.png" alt="No Image Available">}
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>@item.businessname</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>N/A</p>
+                                            <span>Guests</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>@item.cost<i class="fa fa-check" aria-hidden="true"></i></p>
                                             <span>Price Per Plate</span>
+                                            <!--<span class="dropdown">Price Per Plate <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                                            <ul>
+                                              <li></li>
+                                            </ul>-->
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row" id="Photographers-list">
+            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Photographers</h3>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewBag.Photography)
+            {
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            @if (item.image != null && item.image != "")
+                            {<img src="~/vendorimages/@item.image" alt="@item.image">}
+                            else
+                            { <img src="~/noimages.png" alt="No Image Available">}
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>@item.businessname</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>N/A</p>
+                                            <span>Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>Rs @item.cost <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Package Starts from</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @*<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            <img src="~/newdesign/images/FotobuddhaPhotography.jpg" alt="Adithya Photography">
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>Fotobuddha Photography</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>N/A</p>
+                                            <span>Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>Rs 1,50,000 <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Package Starts from</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            <img src="~/newdesign/images/LeafTheStudio.jpg" alt="Leaf The Studio">
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>Leaf The Studio</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>N/A</p>
+                                            <span>Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>Rs 1,00,000 <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Package Starts from</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            <img src="~/newdesign/images/LightLockCreations.jpg" alt="Light Lock Creations">
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>Light Lock Creations</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>N/A</p>
+                                            <span>Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>Rs 1,00,000 <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Package Starts from</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            <img src="~/newdesign/images/Raapsstudio.jpg" alt="Raaps studio">
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>Raaps studio</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>N/A</p>
+                                            <span>Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>Rs 45,000 <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Package Starts from</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="#">
+                            <img src="~/newdesign/images/TrickyPixels.jpg" alt="Tricky Pixels">
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="#"><h4>Tricky Pixels</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:90%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>N/A</p>
+                                            <span>Days</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>Rs 1,50,000 <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Package Starts from</span>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -571,320 +911,6 @@
                         </div>
                     </div>
                 </div>*@
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/shreeimpex.jpg" alt="Shree Impex">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Shree Impex</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Guests</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>N/A <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Price Per SFT</span>
-                                        <!--<span class="dropdown">Price Per Plate <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-                                        <ul>
-                                          <li></li>
-                                        </ul>-->
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="catereslist">
-            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Catering</h3>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/ankapur.jpg" alt="Ankapur">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Ankapur</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Guests</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>N/A <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Price Per Plate</span>
-                                        <!--<span class="dropdown">Price Per Plate <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-                                        <ul>
-                                          <li></li>
-                                        </ul>-->
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="Photographers-list">
-            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Photographers</h3>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/AdithyaPhotography.jpg" alt="Adithya Photography">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Adithya Photography</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Days</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>Rs 1,50,000 <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Package Starts from</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/FotobuddhaPhotography.jpg" alt="Adithya Photography">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Fotobuddha Photography</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Days</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>Rs 1,50,000 <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Package Starts from</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/LeafTheStudio.jpg" alt="Leaf The Studio">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Leaf The Studio</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Days</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>Rs 1,00,000 <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Package Starts from</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/LightLockCreations.jpg" alt="Light Lock Creations">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Light Lock Creations</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Days</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>Rs 1,00,000 <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Package Starts from</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/Raapsstudio.jpg" alt="Raaps studio">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Raaps studio</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Days</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>Rs 45,000 <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Package Starts from</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <div class="venue-details">
-                    <a href="#">
-                        <img src="~/newdesign/images/TrickyPixels.jpg" alt="Tricky Pixels">
-                    </a>
-                    <div class="venue-footer">
-                        <div class="venue-info">
-                            <div class="card-title">
-                                <a href="#"><h4>Tricky Pixels</h4></a>
-                                <div class="venue-score">
-                                    <div class="star-rating">
-                                        <div class="bg"></div>
-                                        <div class="score" style="width:90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bottom-content text-center">
-                                <div class="content">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>N/A</p>
-                                        <span>Days</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <div class="count">
-                                        <p>Rs 1,50,000 <i class="fa fa-check" aria-hidden="true"></i></p>
-                                        <span>Package Starts from</span>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row margin-top-100">
             <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30 text-center">Photos</h3>
