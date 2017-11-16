@@ -25,7 +25,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string id, string vid, HttpPostedFileBase file, string removedimages, string type)
         {
             string fileName = string.Empty;
-            
+
             VendorImage vendorImage = new VendorImage();
             Vendormaster vendorMaster = new Vendormaster();
             vendorMaster.Id = long.Parse(id);
@@ -74,7 +74,10 @@ namespace MaaAahwanam.Web.Controllers
                             }
                         }
                     }
-                    return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='/AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+                    if (vendorImage.ImageId != 0)
+                        return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='/AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+                    else
+                        return Content("<script language='javascript' type='text/javascript'>alert('Failed !!!');location.href='/AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
                 }
                 else
                 {

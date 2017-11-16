@@ -139,10 +139,10 @@
             //$("#fileUpload1").change(function () {
                 if (typeof (FileReader) != "undefined") {
                     var dvPreview = $("#dvPreview");
-                    var no = 1;
+                    //var no = 1;
                     //dvPreview.html("");
                     var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-                    //var i = 0;
+                    var i = 0;
                     $($(this)[0].files).each(function () {
                         var file = $(this);
                         if (regex.test(file[0].name.toLowerCase())) {
@@ -153,15 +153,16 @@
                                 img.attr("src", e.target.result);
                                 img.addClass();
                                 //dvPreview.append(img);
-                                dvPreview.prepend("<div class='col-xs-6 col-sm-4 col-md-2 col-lg-2 blocks'><div class='block thumbnail'><div class='ow thumb-img'><img style='height:120px;width:120px' src=" + e.target.result + " alt = " + file[0].name + "></img></div><div class='row margin-top'><div class='form-group-1 col-xs-12 col-sm-12 col-md-12'><input type='text' class='form-control' placeholder='Description:' required></div></div><div class='row'><div class='col-xs-12'><div class='radio'><label><input type='radio' name='optradio" + no + "' required><span></span>Logo</label></div><div class='radio'><label><input type='radio' name='optradio" + no + "' required><span></span>Photo</label></div></div></div><div class='hr-line border-default-bottom'></div><div class='row'><div class='col-xs-12 col-md-12'><p class='red'><small><i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo</small></p></div></div></div></div>");
+                                dvPreview.prepend("<div class='col-xs-6 col-sm-4 col-md-2 col-lg-2 blocks'><div class='block thumbnail'><div class='ow thumb-img'><img style='height:120px;width:120px' src=" + e.target.result + " alt = " + file[0].name + "></img></div><div class='row margin-top'><div class='form-group-1 col-xs-12 col-sm-12 col-md-12'><input type='text' class='form-control' placeholder='Description:' required></div></div><div class='row'><div class='col-xs-12'><div class='radio'><label><input type='radio' name='optradio" + i + "' required><span></span>Logo</label></div><div class='radio'><label><input type='radio' name='optradio" + i + "' required><span></span>Photo</label></div></div></div><div class='hr-line border-default-bottom'></div><div class='row'><div class='col-xs-12 col-md-12'><p class='red'><small><i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo</small></p></div></div></div></div>");
+                                i++;
                             }
                             reader.readAsDataURL(file[0]);
                         } else {
                             alert(file[0].name + " is not a valid image file.");
                             //dvPreview.html("");
                             return false;
-                        }
-                        //i++;
+                        } //no++;
+                        
                         //document.getElementById("fileUpload1").value = "";
                     });
                 } else {

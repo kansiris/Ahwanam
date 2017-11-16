@@ -18,6 +18,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VendorSignUp4
         public ActionResult Index(string id)
         {
+            ViewBag.data = vendorMasterService.GetVendor(long.Parse(id)).discount;
             return View();
         }
 
