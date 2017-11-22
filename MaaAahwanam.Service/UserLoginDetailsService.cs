@@ -15,7 +15,7 @@ namespace MaaAahwanam.Service
             userLogin.Status = "Active";
             string updateddate = DateTime.UtcNow.ToShortDateString();
             userLogin.RegDate = Convert.ToDateTime(updateddate);
-            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
+            userLogin.UpdatedDate = userDetails.UpdatedDate = Convert.ToDateTime(updateddate);
             try
             {
                 UserLogin l1 = userLoginRepository.AddLoginCredentials(userLogin);

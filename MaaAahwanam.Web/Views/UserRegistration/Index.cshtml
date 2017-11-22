@@ -1,4 +1,5 @@
-﻿@model Tuple<MaaAahwanam.Models.UserLogin, MaaAahwanam.Models.UserDetail>
+﻿@using MaaAahwanam.Web.Models
+@model Tuple<MaaAahwanam.Models.UserLogin, MaaAahwanam.Models.UserDetail>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/MasterPage.cshtml";
@@ -40,10 +41,12 @@
         <tr>
             <td>
                 @*<input type="button" class="btn btn-block" value="SignIn With Facebook" formaction="/UserRegistration/FacebookLogin"/>*@
-                <a href="/UserRegistration/FacebookLogin" class="btn btn-block">SignIn With Facebook</a>
+                @*<a href="/UserRegistration/FacebookLogin" class="btn btn-block">SignIn With Facebook</a>*@
+                <input type="submit" class="btn btn-block" value="facebook login" onclick="location.href='@Url.Action("FacebookAuthentication", "UserRegistration")'" />
             </td>
             <td>
                 <input type="button" class="btn btn-block btn-default" value="SignIn With Google" />
+                @*@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
             </td>
         </tr>
     </table>

@@ -84,6 +84,11 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.GetVendorVenue(id);
         }
 
+        public VendorVenue GetParticularVendorVenue(long id, long vid)
+        {
+            return vendorVenueRepository.GetVendorVenue(id, vid);
+        }
+
         //Catering Area
 
         public VendorsCatering AddVendorCatering(VendorsCatering vendorsCatering)
@@ -105,6 +110,11 @@ namespace MaaAahwanam.Service
         public VendorsCatering GetVendorCatering(long id)
         {
             return vendorVenueSignUpRepository.GetVendorCatering(id);
+        }
+
+        public VendorsCatering GetParticularVendorCatering(long id, long vid)
+        {
+            return vendorCateringRepository.GetVendorsCatering(id, vid);
         }
 
         //Photography Area
@@ -129,6 +139,11 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.GetVendorPhotography(id);
         }
 
+        public VendorsPhotography GetParticularVendorPhotography(long id, long vid)
+        {
+            return vendorsPhotographyRepository.GetVendorsPhotography(id, vid);
+        }
+
         //Decorator Area
 
         public VendorsDecorator AddVendorDecorator(VendorsDecorator vendorsDecorator)
@@ -150,6 +165,11 @@ namespace MaaAahwanam.Service
             return vendorsDecorator;
         }
 
+        public VendorsDecorator GetParticularVendorDecorator(long id, long vid)
+        {
+            return vendorsDecoratorRepository.GetVendorDecorator(id, vid);
+        }
+
         //Others Area
 
         public VendorsOther AddVendorOther(VendorsOther vendorsOther)
@@ -169,6 +189,11 @@ namespace MaaAahwanam.Service
             vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsOther = vendorOthersRepository.UpdateOthers(vendorsOther, masterid, vid);
             return vendorsOther;
+        }
+
+        public VendorsOther GetParticularVendorOther(long id, long vid)
+        {
+            return vendorOthersRepository.GetVendorOthers(id, vid);
         }
     }
 }
