@@ -13,17 +13,32 @@
     @RenderSection("css", required: false)
 </head>
 @using MaaAahwanam.Web.Custom
+@using MaaAahwanam.Repository.db
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
+    if (user.UserType == "Vendor")
+    { Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + ""); }
 }
-else
-{
+
     <body id="body-top">
         <div class="container-fluid">
             <div class="row">
                 <nav class="top-menu">
+                   @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                       {
+                           ApiContext _dbContext = new ApiContext();
+                           var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                           var userResponse = _dbContext.UserDetail.Where(m => m.UserLoginId == user.UserId).FirstOrDefault();
+                    <ul>
+                        <li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>
+                        @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
+                        <li><a href="#">Hi @userResponse.FirstName @userResponse.LastName</a></li>
+                        <li onclick="window.location.href = '/SampleStorefront/SignOut';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Sign out</li>
+                    </ul>
+                   }
+                   else
+                   {
                     <ul>
                         <li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>
                         @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
@@ -31,6 +46,8 @@ else
                         <li><a href="/UserRegistration">Sign Up For Free</a></li>
                         <li><a href="/SampleStorefront"><i class="fa fa-suitcase" aria-hidden="true"></i>ARE YOU A PARTNER?</a></li>
                     </ul>
+                   }
+                    
                 </nav>
             </div>
             <div class="row">
@@ -116,5 +133,5 @@ else
         //<!-------- Body Scroll Top ----------->
     </script>
 
-}
+
 </html>

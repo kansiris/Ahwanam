@@ -74,8 +74,13 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail)
         {
+            var response = "";
             userLogin.UserType = "User";
-            var response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+            userLogin = venorVenueSignUpService.GetUserLogin(userLogin);
+            if (userLogin != null)
+                response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+            else
+                response = "sucess";
             if (response == "sucess")
                 return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
             else
@@ -147,7 +152,12 @@ namespace MaaAahwanam.Web.Controllers
             userLogin.UserName = email;
             userLogin.Password = "Facebook";
             userLogin.UserType = "User";
-            var response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
+            userLogin = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
+            var response = "";
+            if (userLogin == null)
+                response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
+            else
+                response = "sucess";
             if (response == "sucess")
             {
                 var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
