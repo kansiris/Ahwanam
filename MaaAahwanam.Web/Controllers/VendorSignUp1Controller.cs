@@ -49,69 +49,76 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index([Bind(Prefix = "Item1")] Vendormaster vendorMaster, [Bind(Prefix = "Item2")] UserLogin userLogin, [Bind(Prefix = "Item3")]UserDetail userDetail, [Bind(Prefix = "Item4")]VendorVenue vendorVenue, string id, string vid, string type)
         {
-            string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
-            string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
-            string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
-            string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
-            List<string> matchingvenues = null; List<string> matchingcatering = null; List<string> matchingphotography = null; List<string> matchingdecorators = null;
-            if (vendorVenue.VenueType != null)
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                if (type == "Venue") //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
-                    matchingvenues = venueservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-                if (type == "Catering") //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
-                    matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-                if (type == "Photography") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
-                    matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-                if (type == "Decorator") //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
-                    matchingdecorators = decoratorservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
+                string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
+                string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
+                string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
+                List<string> matchingvenues = null; List<string> matchingcatering = null; List<string> matchingphotography = null; List<string> matchingdecorators = null;
+                if (vendorVenue.VenueType != null)
+                {
+                    if (type == "Venue") //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
+                        matchingvenues = venueservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                    if (type == "Catering") //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
+                        matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                    if (type == "Photography") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
+                        matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                    if (type == "Decorator") //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
+                        matchingdecorators = decoratorservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                }
+                else
+                    return Content("<script language='javascript' type='text/javascript'>alert('Select Atleat One Sub Category');location.href='/VendorSignUp1/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
+                //userLogin = vendorVenueSignUpService.AddUserLogin(userLogin);
+                //userDetail.UserLoginId = userLogin.UserLoginId;
+                //userDetail = vendorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
+                //vendorMaster = vendorVenueSignUpService.AddvendorMaster(vendorMaster);
+                vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
+                if (matchingvenues != null)  //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
+                {
+                    VendorVenueService vendorVenueService = new VendorVenueService();
+                    vendorVenue.VendorMasterId = vendorMaster.Id;
+                    for (int i = 0; i < matchingvenues.Count; i++)
+                    {
+                        string subtype = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid)).VenueType;
+                        vendorVenue.VenueType = matchingvenues[i];
+                        if (subtype.Contains(vendorVenue.VenueType) == false)
+                            vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
+                        else
+                            vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
+                    }
+                    //vendorVenue.VenueType = string.Join<string>(",", matchingvenues);
+                    //vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
+                    //vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue,vendorMaster,long.Parse(id), long.Parse(vid));
+                }
+                if (matchingcatering != null)  //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
+                {
+                    VendorsCatering vendorsCatering = new VendorsCatering();
+                    vendorsCatering.VendorMasterId = vendorMaster.Id;
+                    vendorsCatering.CuisineType = string.Join<string>(",", matchingcatering);
+                    vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
+                }
+                if (matchingphotography != null)  //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
+                {
+                    VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                    vendorsPhotography.VendorMasterId = vendorMaster.Id;
+                    vendorsPhotography.PhotographyType = string.Join<string>(",", matchingphotography);
+                    vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendorMaster, long.Parse(id), long.Parse(vid));
+                }
+                if (matchingdecorators != null)  //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
+                {
+                    VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                    vendorsDecorator.VendorMasterId = vendorMaster.Id;
+                    vendorsDecorator.DecorationType = string.Join<string>(",", matchingdecorators);
+                    vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendorMaster, long.Parse(id), long.Parse(vid));
+                }
+                //return RedirectToAction("Index", "VendorSignUp2",new { id=vendorMaster.Id,vid=vendorVenue.Id});
+                return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vendorMaster.Id }) + "'</script>");
             }
             else
-                return Content("<script language='javascript' type='text/javascript'>alert('Select Atleat One Sub Category');location.href='/VendorSignUp1/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
-            //userLogin = vendorVenueSignUpService.AddUserLogin(userLogin);
-            //userDetail.UserLoginId = userLogin.UserLoginId;
-            //userDetail = vendorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
-            //vendorMaster = vendorVenueSignUpService.AddvendorMaster(vendorMaster);
-            vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster,long.Parse(id));
-            if(matchingvenues != null)  //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
             {
-                VendorVenueService vendorVenueService = new VendorVenueService();
-                vendorVenue.VendorMasterId = vendorMaster.Id;
-                for (int i = 0; i < matchingvenues.Count; i++)
-                {
-                    string subtype = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid)).VenueType;
-                    vendorVenue.VenueType = matchingvenues[i];
-                    if (subtype.Contains(vendorVenue.VenueType) == false)
-                        vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
-                    else
-                        vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
-                }
-                //vendorVenue.VenueType = string.Join<string>(",", matchingvenues);
-                //vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
-                //vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue,vendorMaster,long.Parse(id), long.Parse(vid));
+                return RedirectToAction("Index", "HomePage");
             }
-            if (matchingcatering != null)  //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
-            {
-                VendorsCatering vendorsCatering = new VendorsCatering();
-                vendorsCatering.VendorMasterId = vendorMaster.Id;
-                vendorsCatering.CuisineType = string.Join<string>(",", matchingcatering);
-                vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
-            }
-            if (matchingphotography != null)  //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
-            {
-                VendorsPhotography vendorsPhotography = new VendorsPhotography();
-                vendorsPhotography.VendorMasterId = vendorMaster.Id;
-                vendorsPhotography.PhotographyType = string.Join<string>(",", matchingphotography);
-                vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendorMaster, long.Parse(id), long.Parse(vid));
-            }
-            if (matchingdecorators != null)  //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
-            {
-                VendorsDecorator vendorsDecorator = new VendorsDecorator();
-                vendorsDecorator.VendorMasterId = vendorMaster.Id;
-                vendorsDecorator.DecorationType = string.Join<string>(",", matchingdecorators);
-                vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendorMaster, long.Parse(id), long.Parse(vid));
-            }
-            //return RedirectToAction("Index", "VendorSignUp2",new { id=vendorMaster.Id,vid=vendorVenue.Id});
-            return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vendorMaster.Id }) + "'</script>");
         }
 
         private List<SelectListItem> CountryList()

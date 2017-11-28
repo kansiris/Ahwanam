@@ -23,15 +23,22 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string vid,VendorVenue vendorVenue)
+        public ActionResult Index(string id, string vid, VendorVenue vendorVenue)
         {
-            var data = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid));
-            vendorVenue.UpdatedBy = vendorMaster.UpdatedBy = 2;
-            vendorVenue.VenueType = data.VenueType;
-            long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
-            vendorVenue.Status = vendorMaster.Status = "InActive";
-            vendorVenue = venorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, masterid, long.Parse(vid));
-            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id="+id+"&&vid="+vid+"'</script>");
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var data = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid));
+                vendorVenue.UpdatedBy = vendorMaster.UpdatedBy = 2;
+                vendorVenue.VenueType = data.VenueType;
+                long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
+                vendorVenue.Status = vendorMaster.Status = "InActive";
+                vendorVenue = venorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, masterid, long.Parse(vid));
+                return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+            }
+            else
+            {
+                return RedirectToAction("Index", "HomePage");
+            }
         }
     }
 }

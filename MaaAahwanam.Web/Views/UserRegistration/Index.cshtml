@@ -5,49 +5,100 @@
     Layout = "~/Views/SharedWeb/MasterPage.cshtml";
 }
 
-<h2>User Registration</h2>
+<div class="container" id="user-registration">
+    <!--<div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <a href="#"><img src="images/logo.png" alt="Logo" /></a>
+      </div>
+    </div>-->
+    <div class="row login-block">
+        <h3 class="col-xs-12 col-sm-12 col-md-12 text-center margin-top margin-bottom">Login With</h3>
+        <div class="col-xs-12 col-sm-6 col-md-6 left-side">
+            <div class="row margin-bottom">
+                <div class="socialicons facebook">
+                    <i class="fa fa-facebook" aria-hidden="true"></i><span onclick="location.href='@Url.Action("FacebookAuthentication", "UserRegistration")'">Facebook</span>
+                </div>
+            </div>
+            <div class="row margin-bottom">
+                <div class="socialicons google">
+                    <i class="fa fa-google" aria-hidden="true"></i><span>Google</span>
+                </div>
+            </div>
+        </div>
+        <div class="hidden-xs middle">
+            <div class="text">OR</div>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-5 right-side">
 
-<form method="post">
-    <table class="table table-bordered table-responsive" style="width:50%" align="center">
-        <tr>
-            <td>Enter First Name</td>
-            <td><input type="text" class="form-control" placeholder="First Name" name="Item2.FirstName" id="Item2_FirstName" required/></td>
-        </tr>
-        <tr>
-            <td>Enter Last Name</td>
-            <td><input type="text" class="form-control" placeholder="Last Name" name="Item2.LastName" id="Item2_LastName" required /></td>
-        </tr>
-        <tr>
-            <td>Enter Email ID</td>
-            <td><input type="text" class="form-control" placeholder="Email ID" name="Item1.UserName" id="Item1_UserName" required/></td>
-        </tr>
-        <tr>
-            <td>Enter Password</td>
-            <td><input type="password" class="form-control" placeholder="Password" name="Item1.Password" id="Item1_Password" required/></td>
-        </tr>
-        <tr>
-            <td>Enter Mobile Number</td>
-            <td><input type="tel" class="form-control" placeholder="Mobile Number" name="Item2.UserPhone" id="Item2_UserPhone" required/></td>
-        </tr>
-        <tr>
-            <td>
-                @*<input type="submit" class="btn btn-block btn-success" value="SignIn" />*@
-                <button type="submit" class="btn btn-block btn-success" value="UserReg" name="command">Sign Up</button>
-            </td>
-            <td>
-                <input type="submit" class="btn btn-block btn-danger" value="Cancel" formaction="/HomePage"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @*<input type="button" class="btn btn-block" value="SignIn With Facebook" formaction="/UserRegistration/FacebookLogin"/>*@
-                @*<a href="/UserRegistration/FacebookLogin" class="btn btn-block">SignIn With Facebook</a>*@
-                <input type="submit" class="btn btn-block" value="facebook login" onclick="location.href='@Url.Action("FacebookAuthentication", "UserRegistration")'" />
-            </td>
-            <td>
-                <input type="button" class="btn btn-block btn-default" value="SignIn With Google" />
-                @*@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
-            </td>
-        </tr>
-    </table>
-</form>
+            <div class="row sign-in">
+                @using (Html.BeginForm("Index", "UserRegistration", FormMethod.Post))
+                {
+                    <div class="col-xs-12 col-sm-11 col-md-11">
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input type="text" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" value="@Request["Item1_UserName"]"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" placeholder="Password" name="Item1.Password" id="Item1_Password" />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default pull-right" value="Login" name="command">LogIn</button>
+                        </div>
+                        <div class="form-group new-customer-link"><b>Are you a new Customer ?</b></div>
+                    </div>
+                }
+            </div>
+
+
+            <div class="row sign-up">
+                @using (Html.BeginForm("Index", "UserRegistration", FormMethod.Post))
+                {
+                    <div class="col-xs-12 col-sm-11 col-md-11">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" placeholder="First Name" name="Item2.FirstName" id="Item2_FirstName" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" placeholder="Last Name" name="Item2.LastName" id="Item2_LastName" required />
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input type="email" class="form-control" placeholder="E-mail" name="Item1.UserName" id="Item1_UserName" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" placeholder="Password" name="Item1.Password" id="Item1_Password" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <input type="text" class="form-control" placeholder="Mobile Number" name="Item2.UserPhone" id="Item2_UserPhone" required />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default pull-right" value="UserReg" name="command">Save</button>
+                        </div>
+                        <div class="form-group existing-customer-link"><b>Are you a existing Customer ?</b></div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    var newCustomer = $("#user-registration .right-side > .sign-in .new-customer-link");
+    var existingCustomer = $("#user-registration .right-side > .sign-up .existing-customer-link");;
+    $(newCustomer).click(function () {
+        $(this).parents(".sign-in").css({ "opacity": "0", "right": "-272px" });
+        $(this).parents(".sign-in").next(".sign-up").css({ "opacity": "1", "right": "0" });
+        var minHeight = $("#user-registration > div.row.login-block");
+        $(minHeight).css("min-height", "464px");
+    });
+    $(existingCustomer).click(function () {
+        $(this).parents(".sign-up").css({ "opacity": "0", "right": "-272px" });
+        $(this).parents(".sign-up").prev(".sign-in").css({ "opacity": "1", "right": "0" });
+    });
+</script>

@@ -74,17 +74,44 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail)
         {
-            var response = "";
-            userLogin.UserType = "User";
-            userLogin = venorVenueSignUpService.GetUserLogin(userLogin);
-            if (userLogin != null)
-                response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
-            else
-                response = "sucess";
-            if (response == "sucess")
-                return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
-            else
-                return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+            if (command == "UserReg")
+            {
+                var response = "";
+                userLogin.UserType = "User";
+                long data = userLoginDetailsService.GetLoginDetailsByEmail(userLogin.UserName);
+                if (data == 0)
+                    response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+                else
+                    return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Registered!!! Try Logging with your Password');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+                if (response == "sucess")
+                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+                else
+                    return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+            }
+            if (command == "Login")
+            {
+                var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+                if (userResponse != null)
+                {
+                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
+                    if (userResponse.UserType == "Vendor")
+                        return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                    else
+                        return RedirectToAction("Index", "HomePage");
+                }
+                else
+                {
+                    int query = vendorMasterService.checkemail(userLogin.UserName);
+                    if (query == 0)
+                        return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                    else
+                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                }
+            }
+            return View();
         }
 
         //public ActionResult FacebookLogin()

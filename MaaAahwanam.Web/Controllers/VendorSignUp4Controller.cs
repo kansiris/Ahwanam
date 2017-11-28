@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
         // GET: VendorSignUp4
-        public ActionResult Index(string id,string vid, string type)
+        public ActionResult Index(string id, string vid, string type)
         {
             //ViewBag.data = vendorMasterService.GetVendor(long.Parse(id)).discount;
             ViewBag.data = "";
@@ -24,21 +24,28 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id,string vid,string type,string discount)
+        public ActionResult Index(string id, string vid, string type, string discount)
         {
-            vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
-            //vendorMaster.discount = discount;
-            //vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
-            long count = venorVenueSignUpService.DiscountUpdate(type, id, vid, discount);
-            string Username = vendorMaster.EmailId;
-            StreamReader reader = new StreamReader(Server.MapPath("~/newdesign/mailtemplates/thankyou.html"));
-            string StrContent = reader.ReadToEnd();
-            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            //emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Registration Confirmation");
-            emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Test Mail");
-            emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Test Mail");
-            //return RedirectToAction("Index", "VendorSeccessReg");
-            return Content("<script language='javascript' type='text/javascript'>alert('Registration successful. Please click on Activation link which has been sent to your Email to enable your Login Access.');location.href='" + @Url.Action("Index", "VendorSeccessReg") + "'</script>");
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
+                //vendorMaster.discount = discount;
+                //vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
+                long count = venorVenueSignUpService.DiscountUpdate(type, id, vid, discount);
+                string Username = vendorMaster.EmailId;
+                StreamReader reader = new StreamReader(Server.MapPath("~/newdesign/mailtemplates/thankyou.html"));
+                string StrContent = reader.ReadToEnd();
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                //emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Registration Confirmation");
+                emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Test Mail");
+                emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Test Mail");
+                //return RedirectToAction("Index", "VendorSeccessReg");
+                return Content("<script language='javascript' type='text/javascript'>alert('Registration successful. Please click on Activation link which has been sent to your Email to enable your Login Access.');location.href='" + @Url.Action("Index", "VendorSeccessReg") + "'</script>");
+            }
+            else
+            {
+                return RedirectToAction("Index", "HomePage");
+            }
         }
     }
 }
