@@ -33,6 +33,6 @@ namespace MaaAahwanam.Models
         public bool Quotation { get; set; }
         public bool Bidding { get; set; }
         public bool ReverseBidding { get; set; }
-        public string discount { get; set; }
+        //public string discount { get; set; }
     }
 }

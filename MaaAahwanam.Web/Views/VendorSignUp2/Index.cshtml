@@ -74,7 +74,11 @@
         </div>
         <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
         <div class="block margin-top-30">
-            <div class="row margin-top margin-bottom" id="dvPreview">
+            <div class="row margin-top margin-bottom" id="dvPreview"></div>
+        </div>
+        <div class="block margin-top-30">
+            <h2>Database images</h2>
+            <div class="row margin-top margin-bottom" id="dbPreview">
                 @if (ViewBag.images != null)
                 {
                     foreach (var item in ViewBag.images)
@@ -216,5 +220,42 @@
        $('#removedimages').val(removed);
     });
     /*=============== Image Block remove =============*/
+
+    /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
+
+    //$(document).on('click','div.radio:first-of-type',function(){
+    $('#dvPreview .blocks').find('div.radio').click(function () {
+        alert("hi");
+        $(this).next("div.radio").find("input[type='radio']").prop('checked', false);
+        $("#dvPreview .blocks div.radio:last-of-type input[type='radio']").each(function () {
+            $(this).attr('checked', 'checked');
+        });
+    });
+
+    $(".next").click(function (e) {
+        $('.radioName').empty();
+        $('.blockDescrption').empty();
+        e.preventDefault();
+        var arr;
+        var BlockLen = $("#dvPreview .blocks").length;
+        $('div.radio').find('input[type="radio"]').each(function () {
+            if ($(this).is(':checked')) {
+                $(".radioName").append($(this).attr('name') + ',');
+            }
+        });
+        $("#dvPreview .blocks").find('input[type="text"]').each(function () {
+            var v = $.trim($(this).val());
+            if (v != "") {
+                $(".blockDescrption").append($(this).val() + ',');
+            }
+        });
+        var blockDescrption = $('.blockDescrption').text();
+        alert(blockDescrption);
+        var radioName = $('.radioName').text();
+        alert(radioName);
+
+    });
+
+    /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
 </script>
 

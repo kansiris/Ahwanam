@@ -71,15 +71,15 @@ namespace MaaAahwanam.Service
         public VendorVenue UpdateVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid, long vid)
         {
             //vendorVenue.Status = "InActive";
-            vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
             //vendorMaster.Status = "InActive";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             //vendorMaster.ServicType = "Venue";
             vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, masterid, vid);
             return vendorVenue;
         }
 
-        public VendorVenue GetVendorVenue(long id)
+        public List<VendorVenue> GetVendorVenue(long id)
         {
             return vendorVenueSignUpRepository.GetVendorVenue(id);
         }
@@ -99,9 +99,9 @@ namespace MaaAahwanam.Service
         public VendorsCatering UpdateCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
         {
             //vendorsCatering.Status = "InActive";
-            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
             //vendorMaster.Status = "InActive";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             //vendorMaster.ServicType = "Venue";
             vendorsCatering = vendorCateringRepository.UpdatesCatering(vendorsCatering, masterid, vid);
             return vendorsCatering;
@@ -127,9 +127,9 @@ namespace MaaAahwanam.Service
         public VendorsPhotography UpdatePhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid, long vid)
         {
             //vendorsPhotography.Status = "InActive";
-            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
             //vendorMaster.Status = "InActive";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid, vid);
             return vendorsPhotography;
         }
@@ -158,9 +158,9 @@ namespace MaaAahwanam.Service
 
         public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //string updateddate = DateTime.UtcNow.ToShortDateString();
             //vendorsDecorator.Status = "InActive";
-            vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, masterid, vid);
             return vendorsDecorator;
         }
@@ -184,9 +184,9 @@ namespace MaaAahwanam.Service
 
         public VendorsOther UpdateOther(VendorsOther vendorsOther, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //string updateddate = DateTime.UtcNow.ToShortDateString();
             //vendorsDecorator.Status = "InActive";
-            vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorsOther = vendorOthersRepository.UpdateOthers(vendorsOther, masterid, vid);
             return vendorsOther;
         }
@@ -194,6 +194,48 @@ namespace MaaAahwanam.Service
         public VendorsOther GetParticularVendorOther(long id, long vid)
         {
             return vendorOthersRepository.GetVendorOthers(id, vid);
+        }
+
+        // Discount% updation in everry service
+        public long DiscountUpdate(string type,string id,string vid,string discount)
+        {
+            long masterid = 0;
+            if(type == "Venue")
+            {
+                VendorVenue vendorVenue = vendorVenueRepository.GetVendorVenue(long.Parse(id), long.Parse(vid));
+                vendorVenue.discount = discount;
+                vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, long.Parse(id), long.Parse(vid));
+                masterid = vendorVenue.Id;
+            }
+            if (type == "Catering")
+            {
+                VendorsCatering vendorsCatering = vendorCateringRepository.GetVendorsCatering(long.Parse(id), long.Parse(vid));
+                vendorsCatering.discount = discount;
+                vendorsCatering = vendorCateringRepository.UpdatesCatering(vendorsCatering, long.Parse(id), long.Parse(vid));
+                masterid = vendorsCatering.Id;
+            }
+            if (type == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = vendorsDecoratorRepository.GetVendorDecorator(long.Parse(id), long.Parse(vid));
+                vendorsDecorator.discount = discount;
+                vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, long.Parse(id), long.Parse(vid));
+                masterid = vendorsDecorator.Id;
+            }
+            if (type == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = vendorsPhotographyRepository.GetVendorsPhotography(long.Parse(id), long.Parse(vid));
+                vendorsPhotography.discount = discount;
+                vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, long.Parse(id), long.Parse(vid));
+                masterid = vendorsPhotography.Id;
+            }
+            if (type == "Other")
+            {
+                VendorsOther vendorsOther = vendorOthersRepository.GetVendorOthers(long.Parse(id), long.Parse(vid));
+                vendorsOther.discount = discount;
+                vendorsOther = vendorOthersRepository.UpdateOthers(vendorsOther, long.Parse(id), long.Parse(vid));
+                masterid = vendorsOther.Id;
+            }
+            return masterid;
         }
     }
 }

@@ -51,9 +51,9 @@ namespace MaaAahwanam.Repository.db
             return vendorsCatering;
         }
 
-        public VendorVenue GetVendorVenue(long id)
+        public List<VendorVenue> GetVendorVenue(long id)
         {
-            return _dbContext.VendorVenue.Where(p => p.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorVenue.Where(p => p.VendorMasterId == id).ToList();
         }
 
         public VendorsCatering GetVendorCatering(long id)

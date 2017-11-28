@@ -16,18 +16,20 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
         // GET: VendorSignUp4
-        public ActionResult Index(string id)
+        public ActionResult Index(string id,string vid, string type)
         {
-            ViewBag.data = vendorMasterService.GetVendor(long.Parse(id)).discount;
+            //ViewBag.data = vendorMasterService.GetVendor(long.Parse(id)).discount;
+            ViewBag.data = "";
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(string id,string discount)
+        public ActionResult Index(string id,string vid,string type,string discount)
         {
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
-            vendorMaster.discount = discount;
-            vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
+            //vendorMaster.discount = discount;
+            //vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
+            long count = venorVenueSignUpService.DiscountUpdate(type, id, vid, discount);
             string Username = vendorMaster.EmailId;
             StreamReader reader = new StreamReader(Server.MapPath("~/newdesign/mailtemplates/thankyou.html"));
             string StrContent = reader.ReadToEnd();

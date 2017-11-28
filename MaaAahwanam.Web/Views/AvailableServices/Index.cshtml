@@ -7,73 +7,71 @@
 
 <form method="post">
     <div class="container margin-top-100 margin-bottom-100 selectblock">
-        <div class="row">
-            @foreach (var item in ViewBag.services)
-            {
+        
+
+        @if (ViewBag.services.Contains("Venue"))
+        {
+            <h1>Venues</h1>
+            <br/><br /><br />
+            <div class="row">
+                @for (int j = 0; j < ViewBag.venuescount; j++)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+
+                            <p><span>@ViewBag.venuetype.Split(',')[j]</span></p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        </div>
+                    </div>
+                }
+                @*@foreach (var item in ViewBag.venuetype.Split(','))
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+
+                            <p><span>@item</span></p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[i]&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[i]&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        </div>
+                    </div>
+                    @(++i)
+                }*@
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
-                        <div class="pic">
-                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
-                            <input type="file">
-                        </div>
-                        <p><span>@item</span></p>
-
-                        @if (item == "Venue")
-                        {
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                        }
-                        @if (item == "Catering")
-                        {
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                        }
-                        @if (item == "Photography")
-                        {
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/PhotographyFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                        }
-                        @if (item == "Decorator")
-                        {
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/DecoratorFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                        }
-                        @if (item == "Other")
-                        {
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]&&type=@item"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            @*<a href="/DecoratorFAQ?id=@ViewBag.vendormasterid&&vid=@ViewBag.vid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>*@
-                        }
-                        <a href="/VendorSignUp4?id=@ViewBag.vendormasterid"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </div>
                 </div>
-                @(++i)
-            }
-            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
-                <div class="block">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                </div>
             </div>
-        </div>
+        }
+
         <div class="addservice">
             <i class="fa fa-times" aria-hidden="true"></i>
             <div class="row">
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
                     @if (ViewBag.services.Contains("Venue"))
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value="" checked disabled><span></span>Venue</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value="" checked disabled><span></span>Venue</label>
+                    </div>
                     }
                     else
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value=""><span></span>Venue</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value=""><span></span>Venue</label>
+                    </div>
                     }
 
                     @*<div class="checkbox">
@@ -81,39 +79,39 @@
                         </div>*@
                     @if (ViewBag.services.Contains("Catering"))
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value="" checked disabled><span></span>Catering</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value="" checked disabled><span></span>Catering</label>
+                    </div>
                     }
                     else
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value=""><span></span>Catering</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value=""><span></span>Catering</label>
+                    </div>
                     }
                     @if (ViewBag.services.Contains("Photography"))
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value="" checked disabled><span></span>Photography</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value="" checked disabled><span></span>Photography</label>
+                    </div>
                     }
                     else
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value=""><span></span>Photography</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value=""><span></span>Photography</label>
+                    </div>
                     }
                     @if (ViewBag.services.Contains("Decorator"))
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value="" checked disabled><span></span>Decorator</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value="" checked disabled><span></span>Decorator</label>
+                    </div>
                     }
                     else
                     {
-                        <div class="checkbox1">
-                            <label><input type="checkbox" value=""><span></span>Decorator</label>
-                        </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value=""><span></span>Decorator</label>
+                    </div>
                     }
                     @*<div class="checkbox">
                             <label><input type="checkbox" value=""><span></span>Entertainments</label>

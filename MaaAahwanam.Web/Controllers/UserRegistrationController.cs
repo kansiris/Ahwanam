@@ -87,11 +87,11 @@ namespace MaaAahwanam.Web.Controllers
                 return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
         }
 
-        public ActionResult FacebookLogin()
-        {
-            Response.Redirect("https://www.facebook.com/v2.4/dialog/oauth/?client_id=" + ConfigurationManager.AppSettings["FacebookAppId"] + "&redirect_uri=http://" + Request.ServerVariables["SERVER_NAME"] + ":" + Request.ServerVariables["SERVER_PORT"] + "/UserRegistration/FacebookAuthentication?response_type=code&state=1");
-            return View();
-        }
+        //public ActionResult FacebookLogin()
+        //{
+        //    Response.Redirect("https://www.facebook.com/v2.4/dialog/oauth/?client_id=" + ConfigurationManager.AppSettings["FacebookAppId"] + "&redirect_uri=http://" + Request.ServerVariables["SERVER_NAME"] + ":" + Request.ServerVariables["SERVER_PORT"] + "/UserRegistration/FacebookAuthentication?response_type=code&state=1");
+        //    return View();
+        //}
 
         public ActionResult FacebookAuthentication()
         {

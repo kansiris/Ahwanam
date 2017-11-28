@@ -74,10 +74,20 @@ namespace MaaAahwanam.Web.Controllers
             vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster,long.Parse(id));
             if(matchingvenues != null)  //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
             {
-                vendorVenue.VenueType = string.Join<string>(",", matchingvenues);
+                VendorVenueService vendorVenueService = new VendorVenueService();
                 vendorVenue.VendorMasterId = vendorMaster.Id;
+                for (int i = 0; i < matchingvenues.Count; i++)
+                {
+                    string subtype = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid)).VenueType;
+                    vendorVenue.VenueType = matchingvenues[i];
+                    if (subtype.Contains(vendorVenue.VenueType) == false)
+                        vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
+                    else
+                        vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
+                }
+                //vendorVenue.VenueType = string.Join<string>(",", matchingvenues);
                 //vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
-                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue,vendorMaster,long.Parse(id), long.Parse(vid));
+                //vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue,vendorMaster,long.Parse(id), long.Parse(vid));
             }
             if (matchingcatering != null)  //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
             {

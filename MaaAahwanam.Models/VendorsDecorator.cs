@@ -46,5 +46,6 @@ namespace MaaAahwanam.Models
         public string Boutonnieres { get; set; }
         public string Decora { get; set; }
         public string Justmarriedclings { get; set; }
+        public string discount { get; set; }
     }
 }

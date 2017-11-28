@@ -17,13 +17,16 @@ namespace MaaAahwanam.Web.Controllers
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
-            string[] services = { "Venue", "Catering", "Photography", "Decorator", "Other"};
+            string[] services = { "Venue", "Catering", "Photography", "Decorator", "Other" };
             string vid = "";
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Venue"))
             {
-                VendorVenue vendorVenue = vendorVenueSignUpService.GetVendorVenue(long.Parse(id));
-                vid = vid + "," + vendorVenue.Id.ToString();
+                var vendorVenue = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList();
+                ViewBag.venueid = string.Join(",", vendorVenue.Select(m => m.Id));
+                ViewBag.venuetype = string.Join(",", vendorVenue.Select(m => m.VenueType));
+                ViewBag.venuescount = vendorVenue.Count();
+                //vid = vid + "," + string.Join(",", vendorVenue.Select(m => m.Id));   //vid = vid + "," + vendorVenue.Id.ToString();
             }
             if (vendorMaster.ServicType.Split(',').Contains("Catering"))
             {
@@ -45,8 +48,8 @@ namespace MaaAahwanam.Web.Controllers
                 VendorsOther vendorsOther = vendorVenueSignUpService.GetVendorOther(long.Parse(id));
                 vid = vid + "," + vendorsOther.Id.ToString();
             }
-                //ViewBag.services = new { type = vendorMaster.ServicType.Split(','), vendorid = vid.TrimStart(',').Split(',') };
-                ViewBag.services = services.Intersect(vendorMaster.ServicType.Split(',')).ToList();//vendorMaster.ServicType.Split(',');
+            //ViewBag.services = new { type = vendorMaster.ServicType.Split(','), vendorid = vid.TrimStart(',').Split(',') };
+            ViewBag.services = services.Intersect(vendorMaster.ServicType.Split(',')).ToList();//vendorMaster.ServicType.Split(',');
             ViewBag.vid = vid.TrimStart(',');
             ViewBag.vendormasterid = id;
             return View();
@@ -69,7 +72,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 //vendorMaster.ServicType = string.Join(",", (services + "," + data.ServicType).Split(',').Distinct());
-                vendorMaster.ServicType = vendorMaster.ServicType+","+ services;
+                vendorMaster.ServicType = vendorMaster.ServicType + "," + services;
                 vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
 
                 if (services.Split(',').Contains("Venue"))
@@ -111,7 +114,7 @@ namespace MaaAahwanam.Web.Controllers
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 //return View("AvailableServices", vendorMaster.Id);
-                return RedirectToAction("Index", "AvailableServices", new { id = vendorMaster.Id});
+                return RedirectToAction("Index", "AvailableServices", new { id = vendorMaster.Id });
             }
             return RedirectToAction("SignOut", "SampleStorefront");
         }
