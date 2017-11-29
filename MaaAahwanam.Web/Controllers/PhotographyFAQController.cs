@@ -28,6 +28,7 @@ namespace MaaAahwanam.Web.Controllers
             var data = vendorPhotographyService.GetVendorPhotography(long.Parse(id), long.Parse(vid));
             vendorPhotography.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorPhotography.PhotographyType = data.PhotographyType;
+            vendorPhotography.discount = data.discount;
             long masterid = vendorPhotography.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorPhotography = venorVenueSignUpService.UpdatePhotography(vendorPhotography, vendorMaster, masterid, long.Parse(vid));
             return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");

@@ -8,13 +8,13 @@
 <form method="post">
     <div class="container margin-top-100 margin-bottom-100 selectblock">
         
-
+        @*Venue Div's*@
         @if (ViewBag.services.Contains("Venue"))
         {
-            <h1>Venues</h1>
+            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Venues</h3>
             <br/><br /><br />
             <div class="row">
-                @for (int j = 0; j < ViewBag.venuescount; j++)
+                @foreach (var item in ViewBag.venuerecord)
                 {
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                         <div class="block">
@@ -23,32 +23,14 @@
                                 <input type="file">
                             </div>
 
-                            <p><span>@ViewBag.venuetype.Split(',')[j]</span></p>
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[j]&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                            <p><span>@item.VenueType</span></p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
                         </div>
                     </div>
                 }
-                @*@foreach (var item in ViewBag.venuetype.Split(','))
-                {
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
-                        <div class="block">
-                            <div class="pic">
-                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
-                                <input type="file">
-                            </div>
-
-                            <p><span>@item</span></p>
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[i]&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[i]&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@ViewBag.venueid.Split(',')[i]"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
-                        </div>
-                    </div>
-                    @(++i)
-                }*@
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -57,38 +39,167 @@
             </div>
         }
 
+        @*Catering Div's*@
+        @if (ViewBag.services.Contains("Catering"))
+        {
+            <span>Catering</span>
+            <br /><br /><br />
+            <div class="row">
+                @foreach (var item in ViewBag.cateringrecord)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+
+                            <p><span>@item.CuisineType</span></p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        </div>
+                    </div>
+                }
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @*Photography Div's*@
+        @if (ViewBag.services.Contains("Photography"))
+        {
+            <span>Photography</span>
+            <br /><br /><br />
+            <div class="row">
+                @foreach (var item in ViewBag.Photographyrecord)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+
+                            <p><span>@item.PhotographyType</span></p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        </div>
+                    </div>
+                }
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @*Decorator Div's*@
+        @if (ViewBag.services.Contains("Decorator"))
+        {
+            <span>Decorator</span>
+            <br /><br /><br />
+            <div class="row">
+                @foreach (var item in ViewBag.Decoratorrecord)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+
+                            <p><span>@item.DecorationType</span></p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        </div>
+                    </div>
+                }
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @*Other Div's*@
+        @if (ViewBag.services.Contains("Other"))
+        {
+            <span>Other</span>
+            <br /><br /><br />
+            <div class="row">
+                @foreach (var item in ViewBag.Otherrecord)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+
+                            <p><span>@item.type</span></p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        </div>
+                    </div>
+                }
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+
         <div class="addservice">
             <i class="fa fa-times" aria-hidden="true"></i>
             <div class="row">
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
-                    @if (ViewBag.services.Contains("Venue"))
+                    @*@if (ViewBag.services.Contains("Venue"))
                     {
                     <div class="checkbox1">
                         <label><input type="checkbox" value="" checked disabled><span></span>Venue</label>
                     </div>
                     }
                     else
-                    {
+                    {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Venue</label>
                     </div>
-                    }
+                    @*}*@
 
                     @*<div class="checkbox">
                             <label><input type="checkbox" value=""><span></span>Decorator</label>
                         </div>*@
-                    @if (ViewBag.services.Contains("Catering"))
+                    @*@if (ViewBag.services.Contains("Catering"))
                     {
                     <div class="checkbox1">
                         <label><input type="checkbox" value="" checked disabled><span></span>Catering</label>
                     </div>
                     }
                     else
-                    {
+                    {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Catering</label>
                     </div>
-                    }
+                    @*}
                     @if (ViewBag.services.Contains("Photography"))
                     {
                     <div class="checkbox1">
@@ -96,11 +207,11 @@
                     </div>
                     }
                     else
-                    {
+                    {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Photography</label>
                     </div>
-                    }
+                    @*}
                     @if (ViewBag.services.Contains("Decorator"))
                     {
                     <div class="checkbox1">
@@ -108,11 +219,11 @@
                     </div>
                     }
                     else
-                    {
+                    {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Decorator</label>
                     </div>
-                    }
+                    @* } *@
                     @*<div class="checkbox">
                             <label><input type="checkbox" value=""><span></span>Entertainments</label>
                         </div>

@@ -56,9 +56,9 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.VendorVenue.Where(p => p.VendorMasterId == id).ToList();
         }
 
-        public VendorsCatering GetVendorCatering(long id)
+        public List<VendorsCatering> GetVendorCatering(long id)
         {
-            return _dbContext.VendorsCatering.Where(p => p.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsCatering.Where(p => p.VendorMasterId == id).ToList();
         }
 
         public VendorsPhotography AddVendorPhotography(VendorsPhotography vendorsPhotography)
@@ -68,9 +68,9 @@ namespace MaaAahwanam.Repository.db
             return vendorsPhotography;
         }
 
-        public VendorsPhotography GetVendorPhotography(long id)
+        public List<VendorsPhotography> GetVendorPhotography(long id)
         {
-            return _dbContext.VendorsPhotography.Where(p => p.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsPhotography.Where(p => p.VendorMasterId == id).ToList();
         }
 
         public VendorsDecorator AddVendorDecorator(VendorsDecorator vendorsDecorator)
@@ -80,9 +80,9 @@ namespace MaaAahwanam.Repository.db
             return vendorsDecorator;
         }
 
-        public VendorsDecorator GetVendorDecorator(long id)
+        public List<VendorsDecorator> GetVendorDecorator(long id)
         {
-            return _dbContext.VendorsDecorator.Where(p => p.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsDecorator.Where(p => p.VendorMasterId == id).ToList();
         }
 
         public VendorsOther AddVendorOther(VendorsOther vendorsOther)
@@ -92,9 +92,9 @@ namespace MaaAahwanam.Repository.db
             return vendorsOther;
         }
 
-        public VendorsOther GetVendorOther(long id)
+        public List<VendorsOther> GetVendorOther(long id)
         {
-            return _dbContext.VendorsOther.Where(p => p.VendorMasterId == id).FirstOrDefault();
+            return _dbContext.VendorsOther.Where(p => p.VendorMasterId == id).ToList();
         }
 
 

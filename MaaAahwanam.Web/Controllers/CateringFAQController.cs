@@ -28,6 +28,7 @@ namespace MaaAahwanam.Web.Controllers
             var data = vendorCateringService.GetVendorCatering(long.Parse(id), long.Parse(vid));
             vendorsCatering.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorsCatering.CuisineType = data.CuisineType;
+            vendorsCatering.discount = data.discount;
             long masterid = vendorsCatering.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorsCatering = venorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, masterid, long.Parse(vid));
             return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");

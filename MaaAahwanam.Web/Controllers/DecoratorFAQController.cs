@@ -28,6 +28,7 @@ namespace MaaAahwanam.Web.Controllers
             var data = vendorDecoratorService.GetVendorDecorator(long.Parse(id), long.Parse(vid));
             vendorsDecorator.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorsDecorator.DecorationType = data.DecorationType;
+            vendorsDecorator.discount = data.discount;
             long masterid = vendorsDecorator.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorsDecorator = venorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendorMaster, masterid, long.Parse(vid));
             return Content("<script language='javascript' type='text/javascript'>alert('Details Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");

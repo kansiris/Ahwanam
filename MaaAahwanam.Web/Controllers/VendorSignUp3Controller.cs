@@ -30,6 +30,7 @@ namespace MaaAahwanam.Web.Controllers
                 var data = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid));
                 vendorVenue.UpdatedBy = vendorMaster.UpdatedBy = 2;
                 vendorVenue.VenueType = data.VenueType;
+                vendorVenue.discount = data.discount;
                 long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
                 vendorVenue.Status = vendorMaster.Status = "InActive";
                 vendorVenue = venorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, masterid, long.Parse(vid));

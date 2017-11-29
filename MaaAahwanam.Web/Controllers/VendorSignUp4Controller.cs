@@ -18,8 +18,26 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VendorSignUp4
         public ActionResult Index(string id, string vid, string type)
         {
-            //ViewBag.data = vendorMasterService.GetVendor(long.Parse(id)).discount;
-            ViewBag.data = "";
+            if (type == "Venue")
+            {
+                VendorVenueService vendorVenueService = new VendorVenueService();
+                ViewBag.data = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid)).discount;
+            }
+            if (type == "Catering")
+            {
+                VendorCateringService vendorCateringService = new VendorCateringService();
+                ViewBag.data = vendorCateringService.GetVendorCatering(long.Parse(id), long.Parse(vid)).discount;
+            }
+            if (type == "Photography")
+            {
+                VendorPhotographyService vendorPhotographyService = new VendorPhotographyService();
+                ViewBag.data = vendorPhotographyService.GetVendorPhotography(long.Parse(id), long.Parse(vid)).discount;
+            }
+            if (type == "Decorator")
+            {
+                VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
+                ViewBag.data = vendorDecoratorService.GetVendorDecorator(long.Parse(id), long.Parse(vid)).discount;
+            }
             return View();
         }
 
@@ -37,8 +55,8 @@ namespace MaaAahwanam.Web.Controllers
                 string StrContent = reader.ReadToEnd();
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 //emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Registration Confirmation");
-                emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Test Mail");
-                emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Test Mail");
+                //emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Test Mail");
+                //emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Test Mail");
                 //return RedirectToAction("Index", "VendorSeccessReg");
                 return Content("<script language='javascript' type='text/javascript'>alert('Registration successful. Please click on Activation link which has been sent to your Email to enable your Login Access.');location.href='" + @Url.Action("Index", "VendorSeccessReg") + "'</script>");
             }
