@@ -77,7 +77,8 @@ namespace MaaAahwanam.Web.Controllers
                 if (matchingvenues != null)  //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
                 {
                     VendorVenueService vendorVenueService = new VendorVenueService();
-                    vendorVenue.VendorMasterId = vendorMaster.Id;
+                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid));
+                    //vendorVenue.VendorMasterId = vendorMaster.Id;
                     //for (int i = 0; i < matchingvenues.Count; i++)
                     //{
                     var subtype = vendorVenueService.GetVendorVenue(long.Parse(id), long.Parse(vid));
@@ -94,16 +95,45 @@ namespace MaaAahwanam.Web.Controllers
                 if (matchingcatering != null)  //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
                 {
                     VendorCateringService vendorCateringService = new VendorCateringService();
-                    VendorsCatering vendorsCatering = new VendorsCatering();
-                    vendorsCatering.VendorMasterId = vendorMaster.Id;
+                    //VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(long.Parse(id), long.Parse(vid));
+                    //string subcategories = vendorsCatering.CuisineType;
+                    //vendorsCatering.VendorMasterId = vendorMaster.Id;
                     //for (int i = 0; i < matchingcatering.Count; i++)
                     //{
-                    var subtype = vendorCateringService.GetVendorCatering(long.Parse(id), long.Parse(vid));
-                    vendorsCatering.CuisineType = string.Join<string>(",", matchingcatering);
-                    if (subtype == null)
+                    //var subtype = vendorCateringService.GetVendorCatering(long.Parse(id), long.Parse(vid));
+                    //vendorsCatering.CuisineType = string.Join<string>(",", matchingcatering);
+                    VendorsCatering vendorsCatering = new VendorsCatering();
+                    vendorsCatering.VendorMasterId = vendorMaster.Id;
+                    for (int a = 0; a < matchingcatering.Count(); a++)
+                    {
+                        vendorsCatering.CuisineType = matchingcatering[a];
                         vendorsCatering = vendorVenueSignUpService.AddVendorCatering(vendorsCatering);
-                    else
-                        vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
+                    }
+
+                    #region working code
+
+                    //if (vendorsCatering == null)
+                    //    vendorsCatering = vendorVenueSignUpService.AddVendorCatering(vendorsCatering);
+                    //else
+                    //{
+                    //    for (int a = 0; a < matchingcatering.Count; a++)
+                    //    {
+                    //        vendorsCatering.CuisineType = subcategories.Split(',')[a];
+                    //        if (a == 0) //subtype.CuisineType.Split(',')[a]
+                    //            vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
+                    //        else
+                    //        {
+                    //            vendorsCatering = new VendorsCatering();
+                    //            vendorsCatering.VendorMasterId = vendorMaster.Id;
+                    //            vendorsCatering.CuisineType = subcategories.Split(',')[a];
+                    //            vendorsCatering = vendorVenueSignUpService.AddVendorCatering(vendorsCatering);
+                    //        }
+                    //    }
+
+                    #endregion
+
+                    //vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
+                    //}
                     //}
                     //vendorsCatering.CuisineType = string.Join<string>(",", matchingcatering);
                     //vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
@@ -111,7 +141,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (matchingphotography != null)  //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                 {
                     VendorPhotographyService vendorPhotographyService = new VendorPhotographyService();
-                    VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                    VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
                     vendorsPhotography.VendorMasterId = vendorMaster.Id;
                     //for (int i = 0; i < matchingphotography.Count; i++)
                     //{
@@ -128,7 +158,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (matchingdecorators != null)  //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                 {
                     VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
-                    VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                    VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id), long.Parse(vid));
                     vendorsDecorator.VendorMasterId = vendorMaster.Id;
                     //for (int i = 0; i < matchingphotography.Count; i++)
                     //{

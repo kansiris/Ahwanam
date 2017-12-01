@@ -65,6 +65,7 @@ namespace MaaAahwanam.Service
 
         public VendorVenue AddVendorVenue(VendorVenue VendorVenue)
         {
+            VendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
             return vendorVenueSignUpRepository.AddVendorVenue(VendorVenue);
         }
 
@@ -93,6 +94,7 @@ namespace MaaAahwanam.Service
 
         public VendorsCatering AddVendorCatering(VendorsCatering vendorsCatering)
         {
+            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
             return vendorVenueSignUpRepository.AddVendorCatering(vendorsCatering);
         }
 
@@ -121,6 +123,7 @@ namespace MaaAahwanam.Service
 
         public VendorsPhotography AddVendorPhotography(VendorsPhotography vendorsPhotography)
         {
+            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
             return vendorVenueSignUpRepository.AddVendorPhotography(vendorsPhotography);
         }
 
@@ -148,6 +151,7 @@ namespace MaaAahwanam.Service
 
         public VendorsDecorator AddVendorDecorator(VendorsDecorator vendorsDecorator)
         {
+            vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
             return vendorVenueSignUpRepository.AddVendorDecorator(vendorsDecorator);
         }
 
@@ -174,6 +178,7 @@ namespace MaaAahwanam.Service
 
         public VendorsOther AddVendorOther(VendorsOther vendorsOther)
         {
+            vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
             return vendorVenueSignUpRepository.AddVendorOther(vendorsOther);
         }
 
