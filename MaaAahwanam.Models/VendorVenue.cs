@@ -36,5 +36,11 @@ namespace MaaAahwanam.Models
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string discount { get; set; }
+        public string name { get; set; }
+        public string Address { get; set; }
+        public string Landmark { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
     }
 }

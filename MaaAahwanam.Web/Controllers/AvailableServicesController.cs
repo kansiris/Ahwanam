@@ -14,6 +14,8 @@ namespace MaaAahwanam.Web.Controllers
         Vendormaster vendorMaster = new Vendormaster();
         VendorMasterService vendorMasterService = new VendorMasterService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        const string imagepath = @"/vendorimages/";
+        VendorImageService vendorImageService = new VendorImageService();
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
@@ -144,7 +146,32 @@ namespace MaaAahwanam.Web.Controllers
                 //return View("AvailableServices", vendorMaster.Id);
                 return RedirectToAction("Index", "AvailableServices", new { id = vendorMaster.Id });
             }
-            return RedirectToAction("SignOut", "SampleStorefront");
+            return RedirectToAction("SignOut", "UserRegistration");
+        }
+
+        [HttpPost]
+        public ActionResult UpdateServiceLogo(HttpPostedFileBase helpSectionImages, string id,string vid, string type)
+        {
+            string fileName = string.Empty;
+            VendorImage vendorImage = new VendorImage();
+            Vendormaster vendorMaster = new Vendormaster();
+            vendorMaster.Id = long.Parse(id);
+            vendorImage.VendorId = long.Parse(vid);
+            if (helpSectionImages != null)
+            {
+                string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+                var file1 = Request.Files[0];
+                if (file1 != null && file1.ContentLength > 0)
+                {
+                    var filename = type + "_" + id + "_" + vid + "_" + "Logo" + path;
+                    fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                    file1.SaveAs(fileName);
+                    vendorImage.ImageName = filename;
+                    vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                    return Json(vendorImage.ImageName);
+                }
+            }
+            return Json(JsonRequestBehavior.AllowGet);
         }
     }
 }

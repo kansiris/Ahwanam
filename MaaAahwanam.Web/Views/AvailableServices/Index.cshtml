@@ -7,7 +7,7 @@
 
 <form method="post">
     <div class="container margin-top-100 margin-bottom-100 selectblock">
-        
+
         @*Venue Div's*@
         @if (ViewBag.services.Contains("Venue"))
         {
@@ -19,16 +19,24 @@
                         <div class="block">
                             <div class="pic">
                                 <span><i class="fa fa-camera" aria-hidden="true"></i></span>
-                                <input type="file">
+                                @*<input type="file" id="fileupload" onchange="upload(@ViewBag.vendormasterid,@item.Id,venue)">*@
+                                <input type="file" />
                             </div>
 
-                            <p><span>@item.VenueType</span></p>
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
-                        </div>
+                            <p>
+                                <span>
+                                    @if (item.VenueType != null)
+                                { @item.VenueType }
+                                else
+                                { <text>-- No Category Selected --</text> }
+                            </span>
+                        </p>
+                        <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                        <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                        <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
                     </div>
+                </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
@@ -45,20 +53,28 @@
             <div class="row">
                 @foreach (var item in ViewBag.cateringrecord)
                 {
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
-                        <div class="block">
-                            <div class="pic">
-                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
-                                <input type="file">
-                            </div>
-
-                            <p><span>@item.CuisineType</span></p>
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <div class="pic">
+                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                            <input type="file">
                         </div>
+
+                        @*<p><span>@item.CuisineType</span></p>*@
+                        <p>
+                            <span>
+                                @if (item.CuisineType != null)
+                                { @item.CuisineType }
+                                else
+                                { <text>-- No Category Selected --</text> }
+                            </span>
+                        </p>
+                        <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                        <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                        <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
                     </div>
+                </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
@@ -76,20 +92,28 @@
             <div class="row">
                 @foreach (var item in ViewBag.Photographyrecord)
                 {
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
-                        <div class="block">
-                            <div class="pic">
-                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
-                                <input type="file">
-                            </div>
-
-                            <p><span>@item.PhotographyType</span></p>
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/PhotographyFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <div class="pic">
+                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                            <input type="file">
                         </div>
+
+                        @*<p><span>@item.PhotographyType</span></p>*@
+                        <p>
+                            <span>
+                                @if (item.PhotographyType != null)
+                                    { @item.PhotographyType }
+                                    else
+                                    { <text>-- No Category Selected --</text> }
+                            </span>
+                        </p>
+                        <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                        <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                        <a href="/PhotographyFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
                     </div>
+                </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
@@ -106,20 +130,28 @@
             <div class="row">
                 @foreach (var item in ViewBag.Decoratorrecord)
                 {
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
-                        <div class="block">
-                            <div class="pic">
-                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
-                                <input type="file">
-                            </div>
-
-                            <p><span>@item.DecorationType</span></p>
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="/DecoratorFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <div class="pic">
+                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                            <input type="file">
                         </div>
+
+                        @*<p><span>@item.DecorationType</span></p>*@
+                        <p>
+                            <span>
+                                @if (item.DecorationType != null)
+                                    { @item.DecorationType }
+                                    else
+                                    { <text>-- No Category Selected --</text> }
+                            </span>
+                        </p>
+                        <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                        <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                        <a href="/DecoratorFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
                     </div>
+                </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
@@ -136,20 +168,28 @@
             <div class="row">
                 @foreach (var item in ViewBag.Otherrecord)
                 {
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
-                        <div class="block">
-                            <div class="pic">
-                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
-                                <input type="file">
-                            </div>
-
-                            <p><span>@item.type</span></p>
-                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <div class="pic">
+                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                            <input type="file">
                         </div>
+
+                        @*<p><span>@item.type</span></p>*@
+                        <p>
+                            <span>
+                                @if (item.type != null)
+                                    { @item.type }
+                                    else
+                                    { <text>-- No Category Selected --</text> }
+                            </span>
+                        </p>
+                        <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                        <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                        <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
                     </div>
+                </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
@@ -164,13 +204,13 @@
             <div class="row">
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
                     @*@if (ViewBag.services.Contains("Venue"))
-                    {
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value="" checked disabled><span></span>Venue</label>
-                    </div>
-                    }
-                    else
-                    {*@
+                        {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Venue</label>
+                        </div>
+                        }
+                        else
+                        {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Venue</label>
                     </div>
@@ -180,37 +220,37 @@
                             <label><input type="checkbox" value=""><span></span>Decorator</label>
                         </div>*@
                     @*@if (ViewBag.services.Contains("Catering"))
-                    {
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value="" checked disabled><span></span>Catering</label>
-                    </div>
-                    }
-                    else
-                    {*@
+                        {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Catering</label>
+                        </div>
+                        }
+                        else
+                        {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Catering</label>
                     </div>
                     @*}
-                    @if (ViewBag.services.Contains("Photography"))
-                    {
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value="" checked disabled><span></span>Photography</label>
-                    </div>
-                    }
-                    else
-                    {*@
+                        @if (ViewBag.services.Contains("Photography"))
+                        {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Photography</label>
+                        </div>
+                        }
+                        else
+                        {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Photography</label>
                     </div>
                     @*}
-                    @if (ViewBag.services.Contains("Decorator"))
-                    {
-                    <div class="checkbox1">
-                        <label><input type="checkbox" value="" checked disabled><span></span>Decorator</label>
-                    </div>
-                    }
-                    else
-                    {*@
+                        @if (ViewBag.services.Contains("Decorator"))
+                        {
+                        <div class="checkbox1">
+                            <label><input type="checkbox" value="" checked disabled><span></span>Decorator</label>
+                        </div>
+                        }
+                        else
+                        {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Decorator</label>
                     </div>
@@ -467,4 +507,36 @@
         //alert($('#categories').val());
         //console.log(arr);
     });
+</script>
+
+<script>
+    function upload(id,vid,type) {
+        var ext = $('#fileupload').val().split('.').pop().toLowerCase();
+        if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+            alert('Invalid File Type');
+        }
+        else {
+            //$(".overlay").show();
+            //var id = location.search.split('id=')[1];
+            var data = new FormData();
+            var files = $("#fileupload").get(0).files;
+            if (files.length > 0) {
+                data.append("helpSectionImages", files[0]);
+            }
+            $.ajax({
+                url: '/AvailableServices/UpdateServiceLogo?id=' + id+'vid='+vid+'type='+type,
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (response) {
+                    
+                },
+                error: function (er) {
+                    $(".overlay").hide();
+                    errormsg("Failed To Upload Pic!!! Try Again");
+                }
+            });
+        }
+    }
 </script>

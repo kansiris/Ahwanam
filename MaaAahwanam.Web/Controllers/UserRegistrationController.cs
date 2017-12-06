@@ -106,9 +106,9 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     int query = vendorMasterService.checkemail(userLogin.UserName);
                     if (query == 0)
-                        return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
                     else
-                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "SampleStorefront") + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
                 }
             }
             return View();
