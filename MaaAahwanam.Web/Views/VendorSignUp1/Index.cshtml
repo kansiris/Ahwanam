@@ -160,27 +160,32 @@
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="City/Town *">*@
+                        @Html.TextBoxFor(model => this.Model.Item4.Landmark, new { @class = "form-control", placeholder = "Landmark *", Required = "Required", Value = @ViewBag.service.Landmark, style = "display :none", @readonly = "true" })
                         @Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Landmark *", Required = "Required", Value = @ViewBag.data.Landmark })
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="City/Town *">*@
+                        @Html.TextBoxFor(model => this.Model.Item4.City, new { @class = "form-control", placeholder = "City *", Required = "Required", Value = @ViewBag.service.City, style = "display :none", @readonly = "true" })
                         @Html.TextBoxFor(model => this.Model.Item1.City, new { @class = "form-control", placeholder = "City *", Required = "Required", Value = @ViewBag.data.City })
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="City/Town *">*@
+                        @Html.TextBoxFor(model => this.Model.Item4.State, new { @class = "form-control", placeholder = "State *", Required = "Required", Value = @ViewBag.service.State, style = "display :none", @readonly = "true" })
                         @Html.TextBoxFor(model => this.Model.Item1.State, new { @class = "form-control", placeholder = "State *", Required = "Required", Value = @ViewBag.data.State })
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="Postal Code *">*@
+                        @Html.TextBoxFor(model => this.Model.Item4.ZipCode, new { @class = "form-control", placeholder = "Zip Code *", Required = "Required", Value = @ViewBag.service.ZipCode, style = "display :none", @readonly = "true" })
                         @Html.TextBoxFor(model => this.Model.Item1.ZipCode, new { @class = "form-control", placeholder = "Zip Code *", Required = "Required", Value = @ViewBag.data.ZipCode })
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="Address *">*@
+                        @Html.TextBoxFor(model => this.Model.Item4.Address, new { @class = "form-control", placeholder = "Address *", Required = "Required", Value = @ViewBag.service.Address, style = "display :none", @readonly="true" })
                         @Html.TextBoxFor(model => this.Model.Item1.Address, new { @class = "form-control", placeholder = "Address *", Required = "Required", Value = @ViewBag.data.Address })
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="Address *">*@
-                        <label><input type="checkbox" value="" checked disabled><span></span>Venue</label>
+                        <label><input type="checkbox" id="newaddress" value=""><span></span>New Address ?</label>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3 col-md-offset-1 hidden-xs">
@@ -199,7 +204,7 @@
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         <i class="fa fa-suitcase fa-2x" aria-hidden="true"></i>
                         @*<input type="text" class="form-control1" placeholder="Name of your Business">*@
-                        @Html.TextBoxFor(model => this.Model.Item4.VenueType, new { @class = "form-control1", placeholder = "Business Type", Required = "Required", Value = @ViewBag.service })
+                        @Html.TextBoxFor(model => this.Model.Item4.name, new { @class = "form-control1", placeholder = "Business Type", Required = "Required", Value = @ViewBag.service.name })
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         <label>Describe your business and services offered (in third person)</label>
@@ -304,13 +309,14 @@
             </div>
 
             <div class="row margin-top margin-bottom" id="businesscategory">
-                <input type="hidden" name="Item4.VenueType" id="Item1_VenueType" value="@ViewBag.service" />
-                @if (ViewBag.type == "Venue" && ViewBag.service != null)
+                <input type="hidden" name="Item4.VenueType" id="Item4_VenueType" value="@ViewBag.categorytype"/>
+                @if (ViewBag.type == "Venue" && ViewBag.service.name != null)
                 {
+                    @*<input type="hidden" name="Item4.VenueType" id="Item1_VenueType" value="@ViewBag.service.VenueType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Venue">
                         <h4>Venues</h4>
                         <div class="checkbox">
-                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service</label>
+                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service.VenueType</label>
                         </div>
                     </div>
                 }
@@ -345,12 +351,13 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Catering" && ViewBag.service != null)
+                @if (ViewBag.type == "Catering" && ViewBag.service.name != null)
                 {
+                    @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.CuisineType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Catering">
                         <h4>Catering</h4>
                         <div class="checkbox">
-                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service</label>
+                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service.CuisineType</label>
                         </div>
                     </div>
                 }
@@ -388,12 +395,13 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Photography" && ViewBag.service != null)
+                @if (ViewBag.type == "Photography" && ViewBag.service.name != null)
                 {
+                    @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.PhotographyType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Photography">
                         <h4>Photography</h4>
                         <div class="checkbox">
-                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service</label>
+                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service.PhotographyType</label>
                         </div>
                     </div>
                 }
@@ -431,12 +439,13 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Decorator" && ViewBag.service != null)
+                @if (ViewBag.type == "Decorator" && ViewBag.service.name != null)
                 {
+                    @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.DecorationType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Decorator">
                         <h4>Decorator</h4>
                         <div class="checkbox">
-                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service</label>
+                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.service.DecorationType</label>
                         </div>
                     </div>
                 }
@@ -456,12 +465,13 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Other" && ViewBag.service != null)
+                @if (ViewBag.type == "Other" && ViewBag.service.name != null)
                 {
+                    @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.type" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Other">
                         <h4>Other</h4>
                         <div>
-                            <label><input type="checkbox" checked><span></span>@ViewBag.service</label>
+                            <label><input type="checkbox" checked><span></span>@ViewBag.service.type</label>
                         </div>
                         @*<div class="checkbox">
                                 <label><input type="checkbox" value="">TentHouse Decorators<span></span></label>
@@ -525,7 +535,8 @@
             arr[i++] = $(this).parent("label").text();
         });
         //alert(arr);
-        $('#Item1_VenueType').val(arr);
+        $('#Item4_VenueType').val(arr);
+        //alert($('#Item1_VenueType').val());
         //console.log(arr);
     });
     /*------- Check Box value -------------*/
@@ -535,6 +546,36 @@
     $('#Item1_EmailId').on('input', function () {
         $('#Item2_UserName').val(this.value);
     });
+    $('#newaddress').on('change', function () {
+        listval = $(this).is(':checked');
+        //alert(listval);
+        if (listval) {
+            $('#Item1_Landmark').hide().attr("readonly", "true");
+            $('#Item1_City').hide().attr("readonly", "true");
+            $('#Item1_State').hide().attr("readonly", "true");
+            $('#Item1_ZipCode').hide().attr("readonly", "true");
+            $('#Item1_Address').hide().attr("readonly", "true");
+            $('#Item4_Landmark').show().removeAttr('readonly');
+            $('#Item4_City').show().removeAttr('readonly');
+            $('#Item4_State').show().removeAttr('readonly');
+            $('#Item4_ZipCode').show().removeAttr('readonly');
+            $('#Item4_Address').show().removeAttr('readonly');
+            //$('#newaddress').prop('disabled','disabled');
+        }
+        else {
+            $('#Item1_Landmark').show().removeAttr('readonly');
+            $('#Item1_City').show().removeAttr('readonly');
+            $('#Item1_State').show().removeAttr('readonly');
+            $('#Item1_ZipCode').show().removeAttr('readonly');
+            $('#Item1_Address').show().removeAttr('readonly');
+            $('#Item4_Landmark').hide().attr("readonly", "true");
+            $('#Item4_City').hide().attr("readonly", "true");
+            $('#Item4_State').hide().attr("readonly", "true");
+            $('#Item4_ZipCode').hide().attr("readonly", "true");
+            $('#Item4_Address').hide().attr("readonly", "true");
+        }
+        });
+
     ///*------- Select Business Category -------------*/
     //var listval, idval;
     //$("#sel1").on('change', function () {

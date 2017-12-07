@@ -25,18 +25,19 @@
 
                             <p>
                                 <span>
-                                    @if (item.VenueType != null)
-                                { @item.VenueType }
-                                else
-                                { <text>-- No Category Selected --</text> }
-                            </span>
-                        </p>
-                        <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
-                        <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                        <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
-                        <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                                    @if (item.name != null)
+                                    { @item.name }
+                                    else
+                                    { @item.VenueType }
+                                </span>
+                            </p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                            <a>@item.VenueType</a>
+                        </div>
                     </div>
-                </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
@@ -63,10 +64,10 @@
                         @*<p><span>@item.CuisineType</span></p>*@
                         <p>
                             <span>
-                                @if (item.CuisineType != null)
-                                { @item.CuisineType }
+                                @if (item.name != null)
+                                { @item.name }
                                 else
-                                { <text>-- No Category Selected --</text> }
+                                { @item.CuisineType }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
@@ -102,10 +103,10 @@
                         @*<p><span>@item.PhotographyType</span></p>*@
                         <p>
                             <span>
-                                @if (item.PhotographyType != null)
-                                    { @item.PhotographyType }
-                                    else
-                                    { <text>-- No Category Selected --</text> }
+                                @if (item.name != null)
+                                { @item.name }
+                                else
+                                { @item.PhotographyType }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
@@ -140,10 +141,10 @@
                         @*<p><span>@item.DecorationType</span></p>*@
                         <p>
                             <span>
-                                @if (item.DecorationType != null)
-                                    { @item.DecorationType }
-                                    else
-                                    { <text>-- No Category Selected --</text> }
+                                @if (item.name != null)
+                                { @item.name }
+                                else
+                                { @item.DecorationType }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
@@ -178,10 +179,10 @@
                         @*<p><span>@item.type</span></p>*@
                         <p>
                             <span>
-                                @if (item.type != null)
-                                    { @item.type }
-                                    else
-                                    { <text>-- No Category Selected --</text> }
+                                @if (item.name != null)
+                                { @item.name }
+                                else
+                                { @item.type }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
@@ -510,7 +511,7 @@
 </script>
 
 <script>
-    function upload(id,vid,type) {
+    function upload(id, vid, type) {
         var ext = $('#fileupload').val().split('.').pop().toLowerCase();
         if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
             alert('Invalid File Type');
@@ -524,13 +525,13 @@
                 data.append("helpSectionImages", files[0]);
             }
             $.ajax({
-                url: '/AvailableServices/UpdateServiceLogo?id=' + id+'vid='+vid+'type='+type,
+                url: '/AvailableServices/UpdateServiceLogo?id=' + id + 'vid=' + vid + 'type=' + type,
                 type: "POST",
                 processData: false,
                 contentType: false,
                 data: data,
                 success: function (response) {
-                    
+
                 },
                 error: function (er) {
                     $(".overlay").hide();
