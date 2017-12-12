@@ -48,5 +48,18 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendorImage.Where(m => m.VendorMasterId == id).Select(m => m.ImageName).ToList();
         }
+
+        public List<VendorImage> GetImages(long id, long vid)
+        {
+            return _dbContext.VendorImage.Where(m => m.VendorMasterId == id && m.VendorId == vid).ToList();
+        }
+
+        public string UpdateVendorImage(VendorImage vendorImage, long id, long vid)
+        {
+            var Getimage = _dbContext.VendorImage.SingleOrDefault(m => m.ImageId == vendorImage.ImageId);
+            _dbContext.Entry(Getimage).CurrentValues.SetValues(vendorImage);
+            _dbContext.SaveChanges();
+            return "updated";
+        }
     }
 }
