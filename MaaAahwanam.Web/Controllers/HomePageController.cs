@@ -15,7 +15,11 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index()
         {
-            ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
+            //ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
+            var venuerecords = vendorProductsService.Getvendorproducts_Result("Venue");
+            ViewBag.Hotels = venuerecords.Where(m => m.subtype == "Hotel").Take(6); // Hotel records
+            ViewBag.Resorts = venuerecords.Where(m => m.subtype == "Resort").Take(6); // Resort records
+            ViewBag.Conventions = venuerecords.Where(m => m.subtype == "Convention Hall").Take(6); // Convention records
             ViewBag.Catering = vendorProductsService.Getvendorproducts_Result("Catering").Take(6);
             ViewBag.Photography = vendorProductsService.Getvendorproducts_Result("Photography").Take(6);
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

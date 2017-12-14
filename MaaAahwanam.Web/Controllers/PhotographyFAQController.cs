@@ -29,6 +29,13 @@ namespace MaaAahwanam.Web.Controllers
             vendorPhotography.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorPhotography.PhotographyType = data.PhotographyType;
             vendorPhotography.discount = data.discount;
+            vendorPhotography.Address = data.Address;
+            vendorPhotography.City = data.City;
+            vendorPhotography.State = data.State;
+            vendorPhotography.Landmark = data.Landmark;
+            vendorPhotography.ZipCode = data.ZipCode;
+            vendorPhotography.name = data.name;
+            vendorPhotography.Status = data.Status;
             long masterid = vendorPhotography.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorPhotography = venorVenueSignUpService.UpdatePhotography(vendorPhotography, vendorMaster, masterid, long.Parse(vid));
             return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");

@@ -29,6 +29,13 @@ namespace MaaAahwanam.Web.Controllers
             vendorsCatering.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorsCatering.CuisineType = data.CuisineType;
             vendorsCatering.discount = data.discount;
+            vendorsCatering.Address = data.Address;
+            vendorsCatering.City = data.City;
+            vendorsCatering.State = data.State;
+            vendorsCatering.Landmark = data.Landmark;
+            vendorsCatering.ZipCode = data.ZipCode;
+            vendorsCatering.name = data.name;
+            vendorsCatering.Status = data.Status;
             long masterid = vendorsCatering.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorsCatering = venorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, masterid, long.Parse(vid));
             return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");

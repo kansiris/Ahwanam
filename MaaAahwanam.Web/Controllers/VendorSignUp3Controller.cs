@@ -31,8 +31,15 @@ namespace MaaAahwanam.Web.Controllers
                 vendorVenue.UpdatedBy = vendorMaster.UpdatedBy = 2;
                 vendorVenue.VenueType = data.VenueType;
                 vendorVenue.discount = data.discount;
+                vendorVenue.Address = data.Address;
+                vendorVenue.City = data.City;
+                vendorVenue.State = data.State;
+                vendorVenue.Landmark = data.Landmark;
+                vendorVenue.ZipCode = data.ZipCode;
+                vendorVenue.name = data.name;
                 long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
-                vendorVenue.Status = vendorMaster.Status = "InActive";
+                //vendorVenue.Status = vendorMaster.Status = "InActive";
+                vendorVenue.Status = data.Status;
                 vendorVenue = venorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, masterid, long.Parse(vid));
                 return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
             }

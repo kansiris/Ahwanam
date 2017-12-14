@@ -226,9 +226,9 @@
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0" id="venues">
-                    <a href="/VendorProducts/index?service=Venue">
+                    <a href="/VendorProducts/index?service=Conventions">
                         <img src="~/newdesign/images/Venues.jpg" alt="Venues" />
-                        <h5>Venues</h5>
+                        <h5>Conventions</h5> @*Venues*@
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0" id="Photographers">
@@ -239,7 +239,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0">
                     <img src="~/newdesign/images/invitation.jpg" alt="invitation" />
-                    <h5>Invitation</h5>
+                    <h5>Decorators</h5> @*Invitation*@
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0">
                     <img src="~/newdesign/images/makeup.jpg" alt="Makeup Artist" />
@@ -250,8 +250,10 @@
                     <h5>Wedding Planner</h5>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0">
-                    <img src="~/newdesign/images/wedding-decor.jpg" alt="Wedding-Decor" />
-                    <h5>Wedding Decor</h5>
+                    <a href="/VendorProducts/index?service=Hotels">
+                        <img src="~/newdesign/images/wedding-decor.jpg" alt="Hotels" />
+                        <h5>Hotels</h5>
+                    </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0">
                     <a href="/VendorProducts/index?service=Mehendi">
@@ -260,8 +262,10 @@
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 padding-left-0 padding-right-0">
-                    <img src="~/newdesign/images/beautynwellness.jpg" alt="Beauty &and; Wellness" />
-                    <h5>Beauty & Wellness</h5>
+                    <a href="/VendorProducts/index?service=Resorts">
+                        <img src="~/newdesign/images/beautynwellness.jpg" alt="Resorts" />
+                        <h5>Resorts</h5>
+                    </a>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 gallery-left">
@@ -502,10 +506,10 @@
             <a href="#" class="more-btn">More Hotels and Resorts</a>
         </div>
         <div class="row" id="venueslist">
-            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Venues</h3>
+            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Hotels</h3>
         </div>
         <div class="row">
-            @foreach (var item in ViewBag.Venue)
+            @foreach (var item in ViewBag.Hotels)
             {
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                     <div class="venue-details">
@@ -549,6 +553,106 @@
                 </div>
             }
         </div>
+
+
+        <div class="row" id="venueslist">
+            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Resorts</h3>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewBag.Resorts)
+            {
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="/VendorParticularService/Index?type=Venue&&id=@item.id&&vid=@item.subid">
+                            @if (item.image != null && item.image != "")
+                            {<img src="~/vendorimages/@item.image" alt="@item.image">}
+                            else
+                            { <img src="~/noimages.png" alt="No Image Available">}
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="/VendorParticularService/Index?type=Venue&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:80%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>500 - 3000</p>
+                                            <span>Guests</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>@item.cost <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Price Per Plate</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row" id="venueslist">
+            <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Conventions</h3>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewBag.Conventions)
+            {
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="venue-details">
+                        <a href="/VendorParticularService/Index?type=Venue&&id=@item.id&&vid=@item.subid">
+                            @if (item.image != null && item.image != "")
+                            {<img src="~/vendorimages/@item.image" alt="@item.image">}
+                            else
+                            { <img src="~/noimages.png" alt="No Image Available">}
+                        </a>
+                        <div class="venue-footer">
+                            <div class="venue-info">
+                                <div class="card-title">
+                                    <a href="/VendorParticularService/Index?type=Venue&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:80%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-content text-center">
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>500 - 3000</p>
+                                            <span>Guests</span>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="count">
+                                            <p>@item.cost <i class="fa fa-check" aria-hidden="true"></i></p>
+                                            <span>Price Per Plate</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
         <div class="row" id="catereslist">
             <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Catering</h3>
         </div>
