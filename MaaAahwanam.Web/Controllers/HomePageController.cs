@@ -24,9 +24,17 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Photography = vendorProductsService.Getvendorproducts_Result("Photography").Take(6);
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                ViewBag.username = ""+userdata.FirstName+" "+userdata.LastName+"";
+                try
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                    ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("SignOut", "SampleStorefront");
+                }
+                
             }
                 return View();
         }
