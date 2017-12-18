@@ -85,6 +85,8 @@ namespace MaaAahwanam.Web.Controllers
                 else
                     return Content("<script language='javascript' type='text/javascript'>alert('Select Atleat One Sub Category');location.href='/VendorSignUp1/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
                 vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id)); //Updating ServicType in Vendormaster Table
+
+                #region Venue
                 if (matchingvenues != null)  //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
                 {
                     var venuedata = vendorVenue;
@@ -133,6 +135,9 @@ namespace MaaAahwanam.Web.Controllers
                         }
                     }
                 }
+                #endregion
+
+                #region Catering
 
                 if (matchingcatering != null)  //if (vendorMaster.ServicType.Split(',').Contains("Catering"))
                 {
@@ -182,6 +187,10 @@ namespace MaaAahwanam.Web.Controllers
                     }
                 }
 
+                #endregion
+
+                #region Photography
+
                 if (matchingphotography != null)  //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                 {
                     VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
@@ -230,6 +239,10 @@ namespace MaaAahwanam.Web.Controllers
                     }
                 }
 
+                #endregion
+
+                #region Decorator
+
                 if (matchingdecorators != null)  //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                 {
                     VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id), long.Parse(vid));
@@ -264,6 +277,7 @@ namespace MaaAahwanam.Web.Controllers
                             if (i == 0)
                             {
                                 vendorsDecorator.DecorationType = matchingdecorators[i];
+                                vendorsDecorator.name = vendorVenue.name;
                                 vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendorMaster, long.Parse(id), long.Parse(vid));
                             }
                             else
@@ -275,6 +289,10 @@ namespace MaaAahwanam.Web.Controllers
                         }
                     }
                 }
+
+                #endregion
+
+                #region Other
 
                 if (matchingothers != null)  //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                 {
@@ -322,6 +340,8 @@ namespace MaaAahwanam.Web.Controllers
                         }
                     }
                 }
+
+                #endregion
 
                 return Content("<script language='javascript' type='text/javascript'>alert('General Information Registered Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vendorMaster.Id }) + "'</script>");
             }

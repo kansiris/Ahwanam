@@ -118,6 +118,10 @@ namespace MaaAahwanam.Web.Controllers
                     if (services.Split(',').Contains("Other"))
                     {
                         VendorsOther vendorsOther = new VendorsOther();
+                        vendorsOther.MinOrder = "0.0";
+                        vendorsOther.MaxOrder = "0.0";
+                        vendorsOther.ItemCost = 0;
+                        vendorsOther.UpdatedBy = 0;
                         //vendorsDecorator.VendorMasterId = vendorMaster.Id;
                         //vendorsDecorator.DecorationType = string.Join<string>(",", matchingdecorators);
                         //vendorsDecorator = vendorVenueSignUpService.AddVendorDecorator(vendorsDecorator);

@@ -122,7 +122,7 @@ namespace MaaAahwanam.Web.Controllers
                     else
                         return Content("<script language='javascript' type='text/javascript'>alert('Upload Image');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
                 }
-                }
+            }
             return RedirectToAction("Index", "HomePage");
         }
 
@@ -170,11 +170,13 @@ namespace MaaAahwanam.Web.Controllers
             {
                 string fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + src));
                 System.IO.File.Delete(fileName);
-                return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid, type = type }) + "'</script>");
+                //return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid, type = type }) + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Image deleted successfully!');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
             }
             else
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid, type = type }) + "'</script>");
+                //return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='" + @Url.Action("Index", "VendorSignUp2", new { id = id, vid = vid, type = type }) + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
             }
         }
     }
