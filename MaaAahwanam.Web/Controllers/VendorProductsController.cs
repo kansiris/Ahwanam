@@ -13,12 +13,12 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string service)
         {
-            if (service == "Hotels")
+            if (service == "Hotels" || service == "Resorts" || service == "Conventions")
                 ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m=>m.subtype == "Hotel");
-            else if (service == "Resorts")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Resort");
-            else if (service == "Conventions")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Convention Hall");
+            //else if (service == "Mehendi")
+            //    ViewBag.records = vendorProductsService.Getvendorproducts_Result("Other").Where(m => m.subtype == "Resort");
+            //else if (service == "Conventions")
+            //    ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Convention Hall");
             else
                 ViewBag.records = vendorProductsService.Getvendorproducts_Result(service);
             return View();

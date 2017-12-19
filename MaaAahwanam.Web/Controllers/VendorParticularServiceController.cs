@@ -19,6 +19,8 @@ namespace MaaAahwanam.Web.Controllers
             int imagescount = 0;
             if (type == "Conventions" || type == "Resorts" || type == "Hotels")
                 type = "Venue";
+            if (type == "Mehendi")
+                type = "Other";
             var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid)); //GetProductsInfo_Result Productinfo
             ViewBag.Productinfo = data;
             ViewBag.vendor = null;
@@ -34,9 +36,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Other = venorVenueSignUpService.GetParticularVendorOther(long.Parse(id), long.Parse(vid));
             if(ViewBag.Productinfo != null)
             imagescount = (data.image != null) ? data.image.Split(',').Count() : 0;
-            ViewBag.image1 = (imagescount > 0) ? data.image.Split(',')[0] : null;
-            ViewBag.image2 = (imagescount > 1) ? data.image.Split(',')[1] : null;
-            ViewBag.image3 = (imagescount > 2) ? data.image.Split(',')[2] : null;
+            ViewBag.image1 = (imagescount > 0) ? data.image.Split(',')[0].Replace(" ","") : null;
+            ViewBag.image2 = (imagescount > 1) ? data.image.Split(',')[1].Replace(" ", "") : null;
+            ViewBag.image3 = (imagescount > 2) ? data.image.Split(',')[2].Replace(" ", "") : null;
             return View();
         }
     }
