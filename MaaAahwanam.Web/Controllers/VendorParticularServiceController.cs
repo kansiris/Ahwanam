@@ -16,9 +16,11 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VendorParticularService
         public ActionResult Index(string type, string id, string vid)
         {
+            int imagescount = 0;
             if (type == "Conventions" || type == "Resorts" || type == "Hotels")
                 type = "Venue";
-            ViewBag.Productinfo = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid)); //GetProductsInfo_Result Productinfo
+            var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid)); //GetProductsInfo_Result Productinfo
+            ViewBag.Productinfo = data;
             ViewBag.vendor = null;
             if (type == "Venue")
                 ViewBag.Venue = venorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid));
@@ -30,10 +32,11 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Photography = venorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
             else if (type == "Other")
                 ViewBag.Other = venorVenueSignUpService.GetParticularVendorOther(long.Parse(id), long.Parse(vid));
-            int imagescount = (ViewBag.Productinfo.image != null) ? ViewBag.Productinfo.image.Split(",").Count() : 0;
-            ViewBag.image1 = (imagescount > 0) ? ViewBag.Productinfo.image.Split(",")[0] : null;
-            ViewBag.image2 = (imagescount > 1) ? ViewBag.Productinfo.image.Split(",")[1] : null;
-            ViewBag.image3 = (imagescount > 2) ? ViewBag.Productinfo.image.Split(",")[2] : null;
+            if(ViewBag.Productinfo != null)
+            imagescount = (data.image != null) ? data.image.Split(',').Count() : 0;
+            ViewBag.image1 = (imagescount > 0) ? data.image.Split(',')[0] : null;
+            ViewBag.image2 = (imagescount > 1) ? data.image.Split(',')[1] : null;
+            ViewBag.image3 = (imagescount > 2) ? data.image.Split(',')[2] : null;
             return View();
         }
     }
