@@ -131,14 +131,14 @@
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0 selectcategory">
                         @*@Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Landmark *", Required = "Required" })*@
                         @*@Html.DropDownListFor(Model => Model.Item3.Country, (SelectList)ViewBag.country, "Select country", new { @class = "form-control", required = "required" })*@
-                        <select class="form-control" id="sel1">
+                        @*<select class="form-control" id="sel1">
                                 <option>Venues</option>
                                 <option>Decoration</option>
                                 <option>Catering</option>
                                 <option>Photography</option>
                                 <option>Entertainments</option>
                                 <option>Beauty Services</option>
-                            </select>
+                            </select>*@
                         @*<div class="checkbox1">
                                 <label><input type="checkbox" value=""><span></span>Venue</label>
                             </div>*@
@@ -213,6 +213,16 @@
                         <i class="fa fa-suitcase fa-2x" aria-hidden="true"></i>
                         @*<input type="text" class="form-control1" placeholder="Name of your Business">*@
                         @Html.TextBoxFor(model => this.Model.Item4.name, new { @class = "form-control1", placeholder = "Business Type", Required = "Required", Value = @ViewBag.service.name })
+                    </div>
+                    <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0 selectcategory">
+                        <select class="form-control1" id="Item4_tier" name="Item4.tier">
+                            <option value="1">Tier 1</option>
+                            <option value="2">Tier 2</option>
+                            <option value="3">Tier 3</option>
+                        </select>
+                        @*@Html.DropDownListFor(model=>model.Item4.tier, new List<SelectListItem>
+                   { new SelectListItem{Text="Tier 1", Value="1"},
+                     new SelectListItem{Text="Tier 2", Value="2"},new SelectListItem{Text="Tier 3", Value="3"}}, new { @class = "form-control1",@Selected= @ViewBag.service.tier })*@
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         <label>Describe your business and services offered (in third person)</label>
@@ -664,7 +674,11 @@
                 });
             }
         });
-    });
+
+        
+            $('#Item4_tier option[value="@ViewBag.service.tier"]').attr("selected", "selected");
+        
+        });
 
     //window.load =function(){
     //$(".selectcategory div.checkbox1 input[type='checkbox']").on('load',function () {

@@ -37,6 +37,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorVenue.Landmark = data.Landmark;
                 vendorVenue.ZipCode = data.ZipCode;
                 vendorVenue.name = data.name;
+                vendorVenue.tier = data.tier;
                 long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
                 //vendorVenue.Status = vendorMaster.Status = "InActive";
                 vendorVenue.Status = data.Status;

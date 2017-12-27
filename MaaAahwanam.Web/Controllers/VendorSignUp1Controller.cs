@@ -97,6 +97,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorVenue.Landmark = venuedata.Landmark;
                     vendorVenue.ZipCode = venuedata.ZipCode;
                     vendorVenue.VendorMasterId = vendorMaster.Id;
+                    vendorVenue.tier = venuedata.tier;
                     if (command == "Save Info")
                     {
                         for (int a = 0; a < matchingvenues.Count(); a++)
@@ -149,6 +150,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorsCatering.Landmark = vendorVenue.Landmark;
                     vendorsCatering.ZipCode = vendorVenue.ZipCode;
                     vendorsCatering.VendorMasterId = vendorMaster.Id;
+                    vendorsCatering.tier = vendorVenue.tier;
                     if (command == "Save Info")
                     {
                         for (int a = 0; a < matchingcatering.Count(); a++)
@@ -200,6 +202,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorsPhotography.Landmark = vendorVenue.Landmark;
                     vendorsPhotography.ZipCode = vendorVenue.ZipCode;
                     vendorsPhotography.VendorMasterId = vendorMaster.Id;
+                    vendorsPhotography.tier = vendorVenue.tier;
                     if (command == "Save Info")
                     {
                         for (int a = 0; a < matchingphotography.Count(); a++)
@@ -252,6 +255,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorsDecorator.Landmark = vendorVenue.Landmark;
                     vendorsDecorator.ZipCode = vendorVenue.ZipCode;
                     vendorsDecorator.VendorMasterId = vendorMaster.Id;
+                    vendorsDecorator.tier = vendorVenue.tier;
                     if (command == "Save Info")
                     {
                         for (int a = 0; a < matchingdecorators.Count(); a++)
@@ -303,6 +307,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorsOther.Landmark = vendorVenue.Landmark;
                     vendorsOther.ZipCode = vendorVenue.ZipCode;
                     vendorsOther.VendorMasterId = vendorMaster.Id;
+                    vendorsOther.tier = vendorVenue.tier;
                     if (command == "Save Info")
                     {
                         for (int a = 0; a < matchingothers.Count(); a++)
