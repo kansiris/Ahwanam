@@ -22,6 +22,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Conventions = venuerecords.Where(m => m.subtype == "Convention Hall").Take(6); // Convention records
             ViewBag.Catering = vendorProductsService.Getvendorproducts_Result("Catering").Take(6);
             ViewBag.Photography = vendorProductsService.Getvendorproducts_Result("Photography").Take(6);
+            ViewBag.Decorator = vendorProductsService.Getvendorproducts_Result("Decorator").Take(6);
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 try

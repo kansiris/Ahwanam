@@ -33,6 +33,7 @@
                     <h4><i class="fa fa-picture-o" aria-hidden="true"></i> Photo Gallery</h4>
                     <input type="hidden" id="ImageType" name="ImageType" />
                     <input type="hidden" id="Imagedescription" name="Imagedescription" />
+                    <input type="hidden" id="ImageName" name="ImageName" />
                 </div>
             </div>
             <div class="row margin-top margin-bottom">
@@ -159,6 +160,7 @@
             </div>
             <div class="blockDescrption" style="display:none"></div>
             <div class="radioName" style="display:none"></div>
+            <div class="imagename" style="display:none"></div>
         </div>
     </form>
 </div>
@@ -186,7 +188,7 @@
                             img.attr("src", e.target.result);
                             img.addClass();
                             //dvPreview.append(img);
-                            dvPreview.prepend("<div class='col-xs-6 col-sm-4 col-md-2 col-lg-2 blocks'><div class='block thumbnail'><div class='row thumb-img'><img style='height:120px;width:120px' src=" + e.target.result + " alt = " + file[0].name + "></img></div><div class='row margin-top'><div class='form-group-1 col-xs-12 col-sm-12 col-md-12'><input type='text' class='form-control' placeholder='Description:' required></div></div><div class='row'><div class='col-xs-12'><div class='radio'><label><input type='radio' name='optradio" + i + "' required value='Logo'>Logo<span></span></label></div><div class='radio'><label><input type='radio' name='optradio" + i + "' required value='Photo'>Photo<span></span></label></div></div></div><div class='hr-line border-default-bottom'></div><div class='row'><div class='col-xs-12 col-md-12'><p class='red'><small><i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo</small></p></div></div></div></div>");
+                            dvPreview.prepend("<div class='col-xs-6 col-sm-4 col-md-2 col-lg-2 blocks'><div class='block thumbnail'><div class='row thumb-img'><img style='height:120px;width:120px' src=" + e.target.result + " alt = " + file[0].name + "></img></div><div class='row margin-top'><div class='form-group-1 col-xs-12 col-sm-12 col-md-12'><input type='text' class='form-control' placeholder='Description:' required></div></div><div class='row'><div class='col-xs-12'><div class='radio'><label><input type='radio' name='optradio" + file[0].name + "' required value='Logo'>Logo<span></span></label></div><div class='radio'><label><input type='radio' name='optradio" + file[0].name + "' required value='Photo'>Photo<span></span></label></div></div></div><div class='hr-line border-default-bottom'></div><div class='row'><div class='col-xs-12 col-md-12'><p class='red'><small><i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo</small></p></div></div></div></div>");
                             //dvPreview.prepend("<div class='col-xs-6 col-sm-4 col-md-2 col-lg-2 blocks'><div class='block thumbnail'><div class='row thumb-img'><img style='height:120px;width:120px' src=" + e.target.result + " alt = " + file[0].name + "></img></div><div class='row margin-top'><div class='form-group-1 col-xs-12 col-sm-12 col-md-12'><input type='text' class='form-control' placeholder='Description:' required></div></div><div class='row'><div class='col-xs-12'><div class='radio'><label><input type='radio' name='optradio" + i + "' requried>Logo<span></span></label></div><div class='radio'><label><input type='radio' name='optradio" + i + "' requried>Photo<span></span></label></div></div></div><div class='hr-line border-default-bottom'></div><div class='row'><div class='col-xs-12 col-md-12'><p class='red'><small><i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo</small></p></div></div></div></div>");
                             i++;
                         }
@@ -270,8 +272,15 @@
     $("#uploadBtn").click(function (e) {
         $('.radioName').empty();
         $('.blockDescrption').empty();
+        $(".imagename").empty();
         e.preventDefault();
         var BlockLen = $("#dvPreview .blocks").length;
+        $('#dvPreview .blocks').find('img').each(function () {
+            var v = $.trim($(this).attr('alt'));
+            if (v != "") {
+                $(".imagename").append(v + ',');
+            }
+        });
         $('#dvPreview div.radio').find('input[type="radio"]').each(function () {
             if ($(this).is(':checked')) {
                 $(".radioName").append($(this).val() + ',');
@@ -291,9 +300,8 @@
         });
         $('#Imagedescription').val($('.blockDescrption').text().slice(0, -1));
         $('#ImageType').val($('.radioName').text().slice(0, -1));
-        //var url = window.location.href.replace(window.location.protocol + '//', '').replace(window.location.host + '/', '') + '&&command=Save';
-        //alert(url);
-        //var url = 'VendorSignUp2/Index?id=@Request.QueryString["id"]&vid=@Request.QueryString["vid"]&type=@Request.QueryString["type"]&command=Save';
+        $('#ImageName').val($('.imagename').text().slice(0, -1));
+        alert($('#ImageName').val());
         var url = '/VendorSignUp2/Index?id=@Request.QueryString["id"]&vid=@Request.QueryString["vid"]&type=@Request.QueryString["type"]&command=Save';
         $("#uploadimageform").attr("action", url);
         var imagetype = $('#ImageType').val();
@@ -322,6 +330,8 @@
             var v = $.trim($(this).val());
             if (v != "") {
                 $(".blockDescrption").append($(this).val() + ',');;
+            } else {
+                $(".blockDescrption").append($(this).val() + ',null');
             }
         });
         $('#Imagedescription').val($('.blockDescrption').text().slice(0, -1));
@@ -329,7 +339,9 @@
         //var url = window.location.href.replace(window.location.protocol + '//', '').replace(window.location.host + '/', '') + '&&command=update';
         var url = '/VendorSignUp2/Index?id=@Request.QueryString["id"]&vid=@Request.QueryString["vid"]&type=@Request.QueryString["type"]&command=update';
         $("#uploadimageform").attr("action", url); //"/VendorSignUp2/index?command=update"
-        if ($('#ImageType').val().includes(' ') == true && $('#Imagedescription').val().includes(' ') == true)
+        var imagetype = $('#ImageType').val();
+        var imagedescription = $('.blockDescrption').text();
+        if (imagetype.split(',').length != BlockLen || imagedescription.split(',').includes("null") == true)
         { alert("Description & Logo/Photo option is Mandatory for Every Image"); }
         else {
             this.form.submit();

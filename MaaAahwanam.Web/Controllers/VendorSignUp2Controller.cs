@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
                 string fileName = string.Empty;
                 string imagetype = vendorImage.ImageType;
                 string imgdesc = vendorImage.Imagedescription;
+                string altimages = vendorImage.ImageName;
                 //VendorImage vendorImage = new VendorImage();
                 Vendormaster vendorMaster = new Vendormaster();
                 vendorMaster.Id = long.Parse(id);
@@ -179,5 +180,7 @@ namespace MaaAahwanam.Web.Controllers
                 return Content("<script language='javascript' type='text/javascript'>alert('Failed!');location.href='/VendorSignUp2/Index?id=" + id + "&&vid=" + vid + "&&type=" + type + "'</script>");
             }
         }
+
+
     }
 }

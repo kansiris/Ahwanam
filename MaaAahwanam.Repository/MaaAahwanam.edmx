@@ -267,13 +267,13 @@
             <Parameter Name="type" Mode="In" Type="String" />
             <Parameter Name="id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="vendorproducts" ReturnType="Collection(MaaAahwanamModel.vendorproducts_Result)">
-          <Parameter Name="type" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetProductsInfo" ReturnType="Collection(MaaAahwanamModel.GetProductsInfo_Result)">
             <Parameter Name="vid" Mode="In" Type="Int32" />
             <Parameter Name="nType" Mode="In" Type="String" />
             <Parameter Name="Vid2" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="vendorproducts" ReturnType="Collection(MaaAahwanamModel.vendorproducts_Result)">
+            <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -751,18 +751,6 @@
           <Property Type="String" Name="type" Nullable="true" />
           <Property Type="Int64" Name="Id" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="vendorproducts_Result">
-          <Property Type="Int64" Name="id" Nullable="false" />
-          <Property Type="String" Name="businessname" Nullable="true" />
-          <Property Type="Int64" Name="subid" Nullable="false" />
-          <Property Type="Decimal" Name="cost" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="landmark" Nullable="true" />
-          <Property Type="String" Name="description" Nullable="true" />
-          <Property Type="String" Name="servictype" Nullable="true" />
-          <Property Type="String" Name="subtype" Nullable="true" />
-          <Property Type="String" Name="EmailId" Nullable="true" />
-          <Property Type="String" Name="image" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetProductsInfo_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="Address" Nullable="true" />
@@ -783,6 +771,20 @@
           <Property Type="String" Name="MaxOrder" Nullable="true" />
           <Property Type="String" Name="MinOrder" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="vendorproducts_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="businessname" Nullable="true" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="Decimal" Name="cost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="landmark" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="true" />
+          <Property Type="String" Name="servictype" Nullable="true" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="String" Name="EmailId" Nullable="true" />
+          <Property Type="String" Name="logo" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="Int32" Name="tier" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1418,22 +1420,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="vendorproducts" FunctionName="MaaAahwanamModel.Store.vendorproducts">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.vendorproducts_Result">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="businessname" ColumnName="businessname" />
-                <ScalarProperty Name="subid" ColumnName="subid" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="landmark" ColumnName="landmark" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="servictype" ColumnName="servictype" />
-                <ScalarProperty Name="subtype" ColumnName="subtype" />
-                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-                <ScalarProperty Name="image" ColumnName="image" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetProductsInfo" FunctionName="MaaAahwanamModel.Store.GetProductsInfo">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.GetProductsInfo_Result">
@@ -1456,6 +1442,24 @@
                 <ScalarProperty Name="MaxOrder" ColumnName="MaxOrder" />
                 <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
                 <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="vendorproducts" FunctionName="MaaAahwanamModel.Store.vendorproducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.vendorproducts_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="businessname" ColumnName="businessname" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="landmark" ColumnName="landmark" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="servictype" ColumnName="servictype" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="tier" ColumnName="tier" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

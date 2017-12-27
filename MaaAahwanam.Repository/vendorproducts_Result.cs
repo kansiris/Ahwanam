@@ -22,6 +22,8 @@ namespace MaaAahwanam.Repository
         public string servictype { get; set; }
         public string subtype { get; set; }
         public string EmailId { get; set; }
+        public string logo { get; set; }
         public string image { get; set; }
+        public int tier { get; set; }
     }
 }
