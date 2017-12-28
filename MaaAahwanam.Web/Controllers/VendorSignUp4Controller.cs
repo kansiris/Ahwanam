@@ -38,6 +38,11 @@ namespace MaaAahwanam.Web.Controllers
                 VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
                 ViewBag.data = vendorDecoratorService.GetVendorDecorator(long.Parse(id), long.Parse(vid)).discount;
             }
+            if (type == "Other")
+            {
+                VendorOthersService vendorOthersService = new VendorOthersService();
+                ViewBag.data = vendorOthersService.GetVendorOther(long.Parse(id), long.Parse(vid)).discount;
+            }
             return View();
         }
 

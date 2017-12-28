@@ -17,9 +17,12 @@ namespace MaaAahwanam.Web.Controllers
         {
             //ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
             var venuerecords = vendorProductsService.Getvendorproducts_Result("Venue");
-            ViewBag.Hotels = venuerecords.Where(m => m.subtype == "Hotel").Take(6); // Hotel records
-            ViewBag.Resorts = venuerecords.Where(m => m.subtype == "Resort").Take(6); // Resort records
-            ViewBag.Conventions = venuerecords.Where(m => m.subtype == "Convention Hall").Take(6); // Convention records
+            //ViewBag.Hotels = venuerecords.Where(m => m.subtype == "Hotel").Take(6); // Hotel records
+            //ViewBag.Resorts = venuerecords.Where(m => m.subtype == "Resort").Take(6); // Resort records
+            //ViewBag.Conventions = venuerecords.Where(m => m.subtype == "Convention Hall").Take(6); // Convention records
+            ViewBag.Hotels = vendorProductsService.Getvendorproducts_Result("Hotel").Take(6); // Hotel records
+            ViewBag.Resorts = vendorProductsService.Getvendorproducts_Result("Resort").Take(6); // Resort records
+            ViewBag.Conventions = vendorProductsService.Getvendorproducts_Result("Convention Hall").Take(6); // Convention records
             ViewBag.Catering = vendorProductsService.Getvendorproducts_Result("Catering").Take(6);
             ViewBag.Photography = vendorProductsService.Getvendorproducts_Result("Photography").Take(6);
             ViewBag.Decorator = vendorProductsService.Getvendorproducts_Result("Decorator").Take(6);
