@@ -100,8 +100,8 @@ namespace MaaAahwanam.Repository.db
         public string RemoveVendorService(string id, string type)
         {
             long vid = long.Parse(id);
-            //try
-            //{
+            try
+            {
                 if (type == "Venue")
                 {
                     var list = _dbContext.VendorVenue.FirstOrDefault(m => m.Id == vid);
@@ -129,11 +129,11 @@ namespace MaaAahwanam.Repository.db
                 }
                 _dbContext.SaveChanges();
                 return "Removed";
-            //}
-            //catch
-            //{
-            //    return "Failed!!!";
-            //}
+            }
+            catch
+            {
+                return "Failed!!!";
+            }
         }
     }
 }
