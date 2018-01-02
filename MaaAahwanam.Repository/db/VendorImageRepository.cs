@@ -61,5 +61,13 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return "updated";
         }
+
+        public string DeleteAllImages(long id, long vid)
+        {
+            var vendorImage = _dbContext.VendorImage.Where(m => m.VendorMasterId == id && m.VendorId == vid).ToList();
+            _dbContext.VendorImage.RemoveRange(vendorImage);
+            _dbContext.SaveChanges();
+            return "success";
+        }
     }
 }

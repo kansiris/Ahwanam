@@ -49,6 +49,10 @@ namespace MaaAahwanam.Service
         {
             return vendorImageRepository.UpdateVendorImage(vendorImage, id, vid);
         }
+        public string DeleteAllImages(long id, long vid)
+        {
+            return vendorImageRepository.DeleteAllImages(id,vid);
+        }
     }
 }
 

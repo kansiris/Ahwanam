@@ -195,11 +195,13 @@ namespace MaaAahwanam.Web.Controllers
             if (count > 1)
             {
                 string msg = vendorVenueSignUpService.RemoveVendorService(vid,type);
+                string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
                 return Json(msg);
             }
             else
             {
                 long value = vendorVenueSignUpService.UpdateVendorService(id, vid, type);
+                string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
                 if (value > 0)
                     return Json("Removed");
                 else
