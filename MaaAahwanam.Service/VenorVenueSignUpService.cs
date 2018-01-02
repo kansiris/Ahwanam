@@ -89,6 +89,7 @@ namespace MaaAahwanam.Service
         {
             return vendorVenueRepository.GetVendorVenue(id, vid);
         }
+        
 
         //Catering Area
 
@@ -201,7 +202,7 @@ namespace MaaAahwanam.Service
             return vendorOthersRepository.GetVendorOthers(id, vid);
         }
 
-        // Discount% updation in everry service
+        // Discount% updation in every service
         public long DiscountUpdate(string type,string id,string vid,string discount)
         {
             long masterid = 0;
@@ -237,6 +238,54 @@ namespace MaaAahwanam.Service
             {
                 VendorsOther vendorsOther = vendorOthersRepository.GetVendorOthers(long.Parse(id), long.Parse(vid));
                 vendorsOther.discount = discount;
+                vendorsOther = vendorOthersRepository.UpdateOthers(vendorsOther, long.Parse(id), long.Parse(vid));
+                masterid = vendorsOther.Id;
+            }
+            return masterid;
+        }
+
+        // Removing Vendor Service Record
+        public string RemoveVendorService(string id,string type)
+        {
+            return vendorVenueSignUpRepository.RemoveVendorService(id,type);
+        }
+
+        //updating vendor Service Record
+        public long UpdateVendorService(string id, string vid, string type)
+        {
+            long masterid = 0;
+            if (type == "Venue")
+            {
+                VendorVenue vendorVenue = vendorVenueRepository.GetVendorVenue(long.Parse(id), long.Parse(vid));
+                vendorVenue.VenueType = "";
+                vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, long.Parse(id), long.Parse(vid));
+                masterid = vendorVenue.Id;
+            }
+            if (type == "Catering")
+            {
+                VendorsCatering vendorsCatering = vendorCateringRepository.GetVendorsCatering(long.Parse(id), long.Parse(vid));
+                vendorsCatering.CuisineType = "";
+                vendorsCatering = vendorCateringRepository.UpdatesCatering(vendorsCatering, long.Parse(id), long.Parse(vid));
+                masterid = vendorsCatering.Id;
+            }
+            if (type == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = vendorsDecoratorRepository.GetVendorDecorator(long.Parse(id), long.Parse(vid));
+                vendorsDecorator.DecorationType = "";
+                vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, long.Parse(id), long.Parse(vid));
+                masterid = vendorsDecorator.Id;
+            }
+            if (type == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = vendorsPhotographyRepository.GetVendorsPhotography(long.Parse(id), long.Parse(vid));
+                vendorsPhotography.PhotographyType = "";
+                vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, long.Parse(id), long.Parse(vid));
+                masterid = vendorsPhotography.Id;
+            }
+            if (type == "Other")
+            {
+                VendorsOther vendorsOther = vendorOthersRepository.GetVendorOthers(long.Parse(id), long.Parse(vid));
+                vendorsOther.type = "";
                 vendorsOther = vendorOthersRepository.UpdateOthers(vendorsOther, long.Parse(id), long.Parse(vid));
                 masterid = vendorsOther.Id;
             }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -13,12 +14,12 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string service)
         {
-            if (service == "Hotels" || service == "Resorts" || service == "Conventions")
+            if (service == "Hotels")
                 ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m=>m.subtype == "Hotel");
-            //else if (service == "Mehendi")
-            //    ViewBag.records = vendorProductsService.Getvendorproducts_Result("Other").Where(m => m.subtype == "Resort");
-            //else if (service == "Conventions")
-            //    ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Convention Hall");
+            else if (service == "Resorts")
+                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Resort");
+            else if (service == "Conventions")
+                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Convention Hall");
             else
                 ViewBag.records = vendorProductsService.Getvendorproducts_Result(service);
             return View();

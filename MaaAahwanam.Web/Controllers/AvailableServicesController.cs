@@ -177,5 +177,34 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult deleteservice(string id, string vid, string type)
+        {
+            int count = 0;
+            if (type =="Venue")
+                count = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList().Count;
+            if (type == "Catering")
+                count = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList().Count;
+            if (type == "Photography")
+                count = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id)).Count;
+            if (type == "Decorator")
+                count = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id)).Count;
+            if (type == "Other")
+                count = vendorVenueSignUpService.GetVendorOther(long.Parse(id)).Count;
+            if (count > 1)
+            {
+                string msg = vendorVenueSignUpService.RemoveVendorService(vid,type);
+                return Json(msg);
+            }
+            else
+            {
+                long value = vendorVenueSignUpService.UpdateVendorService(id, vid, type);
+                if (value > 0)
+                    return Json("Removed");
+                else
+                    return Json("Failed!!!");
+            }
+        }
     }
 }

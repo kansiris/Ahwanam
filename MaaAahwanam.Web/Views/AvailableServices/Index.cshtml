@@ -23,6 +23,7 @@
                                 <input type="file" />
                             </div>
                             <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                            <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue" />
                             <p>
                                 <span>
                                     @if (item.name != null)
@@ -60,7 +61,8 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering" />
                         @*<p><span>@item.CuisineType</span></p>*@
                         <p>
                             <span>
@@ -99,7 +101,8 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography" />
                         @*<p><span>@item.PhotographyType</span></p>*@
                         <p>
                             <span>
@@ -137,7 +140,8 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator" />
                         @*<p><span>@item.DecorationType</span></p>*@
                         <p>
                             <span>
@@ -175,7 +179,8 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other" />
                         @*<p><span>@item.type</span></p>*@
                         <p>
                             <span>
@@ -467,23 +472,30 @@
     });
 
     $(".delete-block").click(function () {
-        /*$("body").overhang({
-        type: "confirm",
-        primary: "#40D47E",
-        accent: "#27AE60",
-        yesColor: "#3498DB",
-        message: "Do you want to delete this block?",
-        overlay: true,
-        callback: function (value) {
-          var response = value ? $(this).css({"display":"none"}) : "No";
-          //alert("You made your selection of: " + response);
-        }
-      });*/
+        var data = $(this).next("input#removediv").attr("value");
         var conFirm = confirm("Do you want to delete this block?");
         if (conFirm == true) {
+            removeservice(data);
             $(this).parents(".blocks").css({ "display": "none" })
         }
+        //alert($(this).next("input#removediv").attr("value"));
     });
+
+    function removeservice(value) {
+        $.ajax({
+            url: "/AvailableServices/deleteservice",
+            type: "POST",
+            data: value,
+            success: function (data) {
+                if (data == "Removed") {
+                    alert("Service Removed");
+                }
+            },
+            error: function (data) {
+                alert("Try Again After Some Time");
+            }
+        });
+    }
     /*------- Add Blocks & close service area -------------*/
 
     /*------- Select Business Category -------------*/

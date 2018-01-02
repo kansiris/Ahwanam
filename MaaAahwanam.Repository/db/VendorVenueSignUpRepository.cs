@@ -97,6 +97,43 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.VendorsOther.Where(p => p.VendorMasterId == id).ToList();
         }
 
-
+        public string RemoveVendorService(string id, string type)
+        {
+            long vid = long.Parse(id);
+            //try
+            //{
+                if (type == "Venue")
+                {
+                    var list = _dbContext.VendorVenue.FirstOrDefault(m => m.Id == vid);
+                    _dbContext.VendorVenue.Remove(list);
+                }
+                if (type == "Catering")
+                {
+                    var list = _dbContext.VendorsCatering.FirstOrDefault(m => m.Id == vid);
+                    _dbContext.VendorsCatering.Remove(list);
+                }
+                if (type == "Photography")
+                {
+                    var list = _dbContext.VendorsPhotography.FirstOrDefault(m => m.Id == vid);
+                    _dbContext.VendorsPhotography.Remove(list);
+                }
+                if (type == "Decorator")
+                {
+                    var list = _dbContext.VendorsDecorator.FirstOrDefault(m => m.Id == vid);
+                    _dbContext.VendorsDecorator.Remove(list);
+                }
+                if (type == "Other")
+                {
+                    var list = _dbContext.VendorsOther.FirstOrDefault(m => m.Id == vid);
+                    _dbContext.VendorsOther.Remove(list);
+                }
+                _dbContext.SaveChanges();
+                return "Removed";
+            //}
+            //catch
+            //{
+            //    return "Failed!!!";
+            //}
+        }
     }
 }
