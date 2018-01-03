@@ -61,7 +61,7 @@ namespace MaaAahwanam.Web.Controllers
                                     imageno = int.Parse(y[3]);
                                 }
                             }
-
+                            int k = Request.Files.Count - 1;
                             //Uploading images in db & folder
                             for (int i = 0; i < Request.Files.Count; i++)
                             {
@@ -76,12 +76,14 @@ namespace MaaAahwanam.Web.Controllers
                                         fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
                                         file1.SaveAs(fileName);
                                         vendorImage.ImageName = filename;
-                                        vendorImage.ImageType = imagetype.Split(',')[i];
-                                        vendorImage.Imagedescription = imgdesc.Split(',')[i];
+                                        vendorImage.ImageType = imagetype.Split(',')[k];
+                                        vendorImage.Imagedescription = imgdesc.Split(',')[k];
                                         vendorImage.ImageLimit = "6";
                                         vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
                                     }
+                                    
                                 }
+                                k--;
                             }
                             if (vendorImage.ImageId != 0)
                                 return Content("<script language='javascript' type='text/javascript'>alert('Photo gallery Uploaded');location.href='/AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
