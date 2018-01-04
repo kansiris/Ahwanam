@@ -39,7 +39,7 @@ namespace MaaAahwanam.Web.Controllers
             vendorsCatering.tier = data.tier;
             long masterid = vendorsCatering.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorsCatering = venorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, masterid, long.Parse(vid));
-            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('Details Saved Successfully');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
         }
     }
 }

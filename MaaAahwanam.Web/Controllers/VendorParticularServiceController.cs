@@ -25,20 +25,21 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Productinfo = data;
             ViewBag.vendor = null;
             if (type == "Venue")
-                ViewBag.Venue = venorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid));
+                ViewBag.Venue = venorVenueSignUpService.GetVendorVenue(long.Parse(id)); //, long.Parse(vid)
             else if (type == "Catering")
-                ViewBag.Catering = venorVenueSignUpService.GetParticularVendorCatering(long.Parse(id), long.Parse(vid));
+                ViewBag.Catering = venorVenueSignUpService.GetVendorCatering(long.Parse(id)); //, long.Parse(vid)
             else if (type == "Decorator")
-                ViewBag.Decorator = venorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id), long.Parse(vid));
+                ViewBag.Decorator = venorVenueSignUpService.GetVendorDecorator(long.Parse(id)); //, long.Parse(vid)
             else if (type == "Photography")
-                ViewBag.Photography = venorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
+                ViewBag.Photography = venorVenueSignUpService.GetVendorPhotography(long.Parse(id)); //, long.Parse(vid)
             else if (type == "Other")
-                ViewBag.Other = venorVenueSignUpService.GetParticularVendorOther(long.Parse(id), long.Parse(vid));
-            if(ViewBag.Productinfo != null)
+                ViewBag.Other = venorVenueSignUpService.GetVendorOther(long.Parse(id)); //, long.Parse(vid)
+            if (ViewBag.Productinfo != null)
             imagescount = (data.image != null) ? data.image.Split(',').Count() : 0;
             ViewBag.image1 = (imagescount > 0) ? data.image.Split(',')[0].Replace(" ","") : null;
             ViewBag.image2 = (imagescount > 1) ? data.image.Split(',')[1].Replace(" ", "") : null;
             ViewBag.image3 = (imagescount > 2) ? data.image.Split(',')[2].Replace(" ", "") : null;
+            ViewBag.imagecount = imagescount - 3;
             return View();
         }
     }

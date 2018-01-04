@@ -30,10 +30,12 @@ namespace MaaAahwanam.Web.Controllers
                 string imagetype = vendorImage.ImageType;
                 string imgdesc = vendorImage.Imagedescription;
                 string altimages = vendorImage.ImageName;
+                Array imagesarray = altimages.Split(',');
                 //VendorImage vendorImage = new VendorImage();
                 Vendormaster vendorMaster = new Vendormaster();
                 vendorMaster.Id = long.Parse(id);
                 vendorImage.VendorId = long.Parse(vid);
+                //int index = altimages.Split(',').IndexOf(altimages.Split(','),file.FileName);
                 if (command == "Save")
                 {
                     if (file != null)
@@ -81,7 +83,7 @@ namespace MaaAahwanam.Web.Controllers
                                         vendorImage.ImageLimit = "6";
                                         vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
                                     }
-                                    
+
                                 }
                                 k--;
                             }

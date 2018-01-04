@@ -39,7 +39,7 @@ namespace MaaAahwanam.Web.Controllers
             vendorPhotography.tier = data.tier;
             long masterid = vendorPhotography.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorPhotography = venorVenueSignUpService.UpdatePhotography(vendorPhotography, vendorMaster, masterid, long.Parse(vid));
-            return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('Details Saved Successfully');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
         }
     }
 }

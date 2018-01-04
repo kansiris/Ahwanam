@@ -298,10 +298,15 @@
                 $(".blockDescrption").append($(this).val() + ',null');
             }
         });
+        var data=1;
+        for (var i = 0; i < BlockLen; i++) {
+            data = data+','+ $(".imagename").text().split(',')[i] + '-' + $(".radioName").text().split(',')[i] + '-' + $(".blockDescrption").text().split(',')[i];
+        }
+        alert(data);
         $('#Imagedescription').val($('.blockDescrption').text().slice(0, -1));
         $('#ImageType').val($('.radioName').text().slice(0, -1));
-        $('#ImageName').val($('.imagename').text().slice(0, -1));
-        alert($('#ImageName').val());
+        $('#ImageName').val(data.slice(0, -1));
+        //alert($('#ImageName').val());
         var url = '/VendorSignUp2/Index?id=@Request.QueryString["id"]&vid=@Request.QueryString["vid"]&type=@Request.QueryString["type"]&command=Save';
         $("#uploadimageform").attr("action", url);
         var imagetype = $('#ImageType').val();
@@ -309,7 +314,7 @@
         if (imagetype.split(',').length != BlockLen || imagedescription.split(',').includes("null") == true) @* || $('#ImageType').val() == '' || $('#Imagedescription').val() == ''*@
         { alert("Description & Logo/Photo option is Mandatory for Every Image"); }
         else {
-            this.form.submit();
+            //this.form.submit();
         }
     });
 
