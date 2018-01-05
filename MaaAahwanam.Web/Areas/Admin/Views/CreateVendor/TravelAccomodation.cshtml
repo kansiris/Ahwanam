@@ -316,6 +316,15 @@
 
                                                 </div>
                                                 <div style="text-align:center" class="form-actions no-margin-bottom">
+
+                                                    @if (ViewBag.confirm == 1)
+                                                    {
+                                                        @*<input type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active"/>*@
+                                                        <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate vendor</button>
+                                                        <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
+                                                        <button type="submit" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline vendor</button>
+                                                    }
+
                                                     @if (ViewBag.operation != null)
                                                     {
                                                         <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
@@ -359,6 +368,28 @@ else
 
             </div>
         </div>
+    </div>
+</div>
+
+@*Query POPUP*@
+<div class="modal fade" id="querymodal" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        @*@using (Html.BeginForm("submitquery", "createvendor", FormMethod.Post))
+            {*@
+        <div class="modal-content">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+            <div class="modal-body">
+                @*<input id="Text1" type="text" name="txtOne"rows="5"  placeholder="Query.....?" style="width:100%;background-color:#eeeeee" />*@
+                <textarea rows="5" name="txtOne" id="txtone" type="text" placeholder="Query.....?" style="width:100%;background-color:#eeeeee"></textarea>
+            </div>
+            <div class="modal-footer" align="center">
+
+                <button type="submit" id="btnSubmitquery" class="btn text-muted text-center btn-success" value="submit">Submit Query</button>
+
+                <button type="button" name="Command" class="btn text-muted text-center btn-danger" id="cancelquery" value="cancel">Cancel</button>
+            </div>
+        </div>
+        @*}*@
     </div>
 </div>
 
@@ -453,4 +484,43 @@ else
                }
            });
 </script>
+<script>
+            //hide modal popup
+            $('#cancelquery').click(function () {
+
+                $('#querymodal').css('display', 'none').css('aria-hidden', 'true');
+            });
+
+            //Submit Query Script
+            $('#btnSubmitquery').click(function () {
+
+                //$('#form1').submit();
+
+
+                var txtone = $("#txtone").val();
+                var emailId = $("#Item1_EmailId").val();
+
+                $.ajax({
+                    url: '/CreateVendor/submitquery',
+                    type: "post",
+                    data: JSON.stringify({ emailid: emailId, txtone: txtone }),
+                    cache: false,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        //if (data == "exists") {
+                            alert("E-Mail  Sent!!!");
+                        //}
+                    },
+                    //failure: function (data) {
+                    //    alert("E-Mail ID not sent!!! Try Another");
+                    //},
+                    error: function (data)
+                    { alert("E-Mail not sent!!! Try again"); }
+                });
+
+            });
+
+</script>
+
                 }

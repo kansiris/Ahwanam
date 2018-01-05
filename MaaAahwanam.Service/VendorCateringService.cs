@@ -67,6 +67,33 @@ namespace MaaAahwanam.Service
             return vendorCateringRespository.GetVendorsCatering(id,vid);
         }
 
+        public VendorsCatering activeCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorsCatering.Status = "Active";
+            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Catering";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsCatering = vendorCateringRespository.UpdatesCatering(vendorsCatering, masterid, vid);
+            return vendorsCatering;
+        }
+
+        public VendorsCatering InactiveCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorsCatering.Status = "InActive";
+            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.Status = "InActive";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Catering";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsCatering = vendorCateringRespository.UpdatesCatering(vendorsCatering, masterid, vid);
+            return vendorsCatering;
+        }
+
+
         public VendorsCatering UpdatesCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid,long vid)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

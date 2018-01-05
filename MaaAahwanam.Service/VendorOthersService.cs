@@ -79,6 +79,19 @@ namespace MaaAahwanam.Service
             vendorOther = vendorOthersRepository.UpdateOthers(vendorOther, masterid,vid);
             return vendorOther;
         }
+
+        public VendorsOther activationOther(VendorsOther vendorOther, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorOther.Status = "Active";
+            vendorOther.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Other";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorOther = vendorOthersRepository.UpdateOthers(vendorOther, masterid, vid);
+            return vendorOther;
+        }
         public VendorsOther AddNewOther(VendorsOther vendorsOther, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

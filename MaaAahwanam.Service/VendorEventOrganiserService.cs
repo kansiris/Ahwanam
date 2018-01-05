@@ -79,6 +79,19 @@ namespace MaaAahwanam.Service
             return vendorsEventOrganiser;
         }
 
+        public VendorsEventOrganiser activationOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorsEventOrganiser.Status = "Active";
+            vendorsEventOrganiser.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "EventOrganiser";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, masterid, vid);
+            return vendorsEventOrganiser;
+        }
+
         public VendorsEventOrganiser AddNewEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

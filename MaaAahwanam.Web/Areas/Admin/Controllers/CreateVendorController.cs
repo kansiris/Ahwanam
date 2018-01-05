@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
         public ActionResult BeautyServices(string id, [Bind(Prefix = "Item2")] VendorsBeautyService vendorsBeautyService, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorBeautyServicesService vendorBeautyServicesService = new VendorBeautyServicesService();
             if (vid != null)
             {
@@ -214,6 +215,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsBeautyService.Status = vendorMaster.Status = Command;
+                vendorsBeautyService = vendorBeautyServicesService.ActivationBeautyService(vendorsBeautyService, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsBeautyService.Status = vendorMaster.Status = Command;
+                vendorsBeautyService = vendorBeautyServicesService.ActivationBeautyService(vendorsBeautyService, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
             if (Command == "add")
             {
                 vendorsBeautyService.UpdatedBy = user.UserId;
@@ -271,6 +289,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult Catering(string id, [Bind(Prefix = "Item2")] VendorsCatering vendorsCatering, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorCateringService vendorCateringService = new VendorCateringService();
             if (vid != null)
             {
@@ -455,6 +475,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsCatering.Status = vendorMaster.Status = Command;
+                vendorsCatering = vendorCateringService.activeCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsCatering.Status = vendorMaster.Status = Command;
+                vendorsCatering = vendorCateringService.InactiveCatering(vendorsCatering, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
             if (Command == "add")
             {
                 vendorsCatering.UpdatedBy = user.UserId;
@@ -512,6 +549,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult Decorator(string id, [Bind(Prefix = "Item2")] VendorsDecorator vendorsDecorator, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
             if (vid != null)
             {
@@ -613,6 +651,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Decorator", "CreateVendor") + "'</script>");
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsDecorator.Status = vendorMaster.Status = Command;
+                vendorsDecorator = vendorDecoratorService.activeDecorator(vendorsDecorator, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsDecorator.Status = vendorMaster.Status = Command;
+                vendorsDecorator = vendorDecoratorService.InactiveDecorator(vendorsDecorator, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
             if (Command == "update")
             {
                 if (d != null)
@@ -754,6 +809,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult Entertainment(string id, [Bind(Prefix = "Item2")] VendorsEntertainment vendorsEntertainment, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorEntertainmentService vendorEntertainmentService = new VendorEntertainmentService();
             if (vid != null)
             {
@@ -854,6 +910,24 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Entertainment", "CreateVendor") + "'</script>");
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsEntertainment.Status = vendorMaster.Status = Command;
+                vendorsEntertainment = vendorEntertainmentService.activationEntertainment(vendorsEntertainment, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsEntertainment.Status = vendorMaster.Status = Command;
+                vendorsEntertainment = vendorEntertainmentService.activationEntertainment(vendorsEntertainment, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+
             if (Command == "update")
             {
                 if (d != null)
@@ -995,6 +1069,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult EventOrganisers(string id, [Bind(Prefix = "Item2")] VendorsEventOrganiser vendorsEventOrganiser, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorEventOrganiserService vendorEventOrganiserService = new VendorEventOrganiserService();
             if (vid != null)
             {
@@ -1180,6 +1255,21 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                 }
             }
+            if (Command == "Active")
+            {
+                vendorsEventOrganisers.Status = vendorMaster.Status = Command;
+                vendorsEventOrganisers = vendorEventOrganiserService.activationOrganiser(vendorsEventOrganisers, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsEventOrganisers.Status = vendorMaster.Status = Command;
+                vendorsEventOrganisers = vendorEventOrganiserService.activationOrganiser(vendorsEventOrganisers, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
             if (Command == "add")
             {
                 vendorsEventOrganisers.UpdatedBy = user.UserId;
@@ -1237,6 +1327,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult Gifts(string id, [Bind(Prefix = "Item2")] VendorsGift vendorsGift, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorGiftService vendorGiftService = new VendorGiftService();
             if (vid != null)
             {
@@ -1337,6 +1428,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Gifts", "CreateVendor") + "'</script>");
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsGift.Status = vendorMaster.Status = Command;
+                vendorsGift = vendorGiftService.activationGift(vendorsGift, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsGift.Status = vendorMaster.Status = Command;
+                vendorsGift = vendorGiftService.activationGift(vendorsGift, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
             if (Command == "update")
             {
                 if (d != null)
@@ -1478,6 +1586,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult InvitationCards(string id, [Bind(Prefix = "Item2")] VendorsInvitationCard vendorsInvitationCard, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorInvitationCardsService vendorInvitationCardsService = new VendorInvitationCardsService();
             if (vid != null)
             {
@@ -1695,6 +1804,22 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsInvitationCard.Status = vendorsInvitationCard.Status = Command;
+                vendorsInvitationCard = vendorInvitationCardsService.activationInvitationCard(vendorsInvitationCard, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsInvitationCard.Status = vendorMaster.Status = Command;
+                vendorsInvitationCard = vendorInvitationCardsService.activationInvitationCard(vendorsInvitationCard, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
             if (Command == "Add Deal")
             {
                 deal.VendorType = "InvitationCards";
@@ -1714,6 +1839,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult Photography(string id, [Bind(Prefix = "Item2")] VendorsPhotography vendorsPhotography, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorPhotographyService vendorPhotographyService = new VendorPhotographyService();
             if (vid != null)
             {
@@ -1943,6 +2070,22 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
                 }
             }
+            if (Command == "Active")
+            {
+                vendorsPhotography.Status = vendorMaster.Status = Command;
+                vendorsPhotography = vendorPhotographyService.ActivePhotography(vendorsPhotography, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsPhotography.Status = vendorMaster.Status = Command;
+                vendorsPhotography = vendorPhotographyService.InActivePhotography(vendorsPhotography, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
             if (Command == "Add Deal")
             {
                 deal.VendorType = "Photography";
@@ -1962,6 +2105,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult TravelAccomodation(string id, [Bind(Prefix = "Item2")] VendorsTravelandAccomodation vendorsTravelandAccomodation, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorTravelAndAccomadationService vendorTravelandAccomodationsService = new VendorTravelAndAccomadationService();
             if (vid != null)
             {
@@ -2070,6 +2214,24 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("TravelAccomodation", "CreateVendor") + "'</script>");
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsTravelandAccomodation.Status = vendorMaster.Status = Command;
+                vendorsTravelandAccomodation = vendorTravelAndAccomadationService.activationTravelandAccomodation(vendorsTravelandAccomodation, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsTravelandAccomodation.Status = vendorMaster.Status = Command;
+                vendorsTravelandAccomodation = vendorTravelAndAccomadationService.activationTravelandAccomodation(vendorsTravelandAccomodation, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+
             if (Command == "update")
             {
                 if (d != null)
@@ -2218,6 +2380,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult WeddingCollection(string id, [Bind(Prefix = "Item2")] VendorsWeddingCollection vendorsWeddingCollection, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, string src, string op, string vid)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorWeddingCollectionService vendorWeddingCollectionsService = new VendorWeddingCollectionService();
             if (vid != null)
             {
@@ -2378,6 +2541,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsWeddingCollection.Status = vendorMaster.Status = Command;
+                vendorsWeddingCollection = vendorWeddingCollectionService.activateWeddingCollection(vendorsWeddingCollection, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsWeddingCollection.Status = vendorMaster.Status = Command;
+                vendorsWeddingCollection = vendorWeddingCollectionService.activateWeddingCollection(vendorsWeddingCollection, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
             if (Command == "add")
             {
                 vendorMaster.Id = long.Parse(id);
@@ -2527,13 +2707,43 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Venue", "CreateVendor") + "'</script>");
                 }
             }
-            if (Command == "Active" || Command == "InActive")
+            //if (Command == "Active" || Command == "InActive")
+            //{
+            //    vendorVenue.Status = vendorMaster.Status = Command;
+            //    vendorVenue = vendorVenueService.UpdateVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
+            //    userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+            //    return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            //}
+
+            if (Command == "Active")
             {
                 vendorVenue.Status = vendorMaster.Status = Command;
-                vendorVenue = vendorVenueService.UpdateVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
-                userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                vendorVenue = vendorVenueService.activeVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
                 return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
             }
+
+            if (Command == "InActive")
+            {
+                vendorVenue.Status = vendorMaster.Status = Command;
+                vendorVenue = vendorVenueService.inactiveVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "Submit")
+            {
+                //vendorVenue.Status = vendorMaster.Status = Command;
+                //vendorVenue = vendorVenueService.inactiveVenue(vendorVenue, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                //return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+            if (Command == "cancel")
+            {
+
+                return Content("<script language='javascript' type='text/javascript'>location.href='" + @Url.Action("Venue", "CreateVendors") + "'</script>");
+            }
+
             if (Command == "update")
             {
                 if (d != null)
@@ -2675,8 +2885,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
+
         public ActionResult Others(string id, [Bind(Prefix = "Item2")] VendorsOther vendorsOther, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, [Bind(Prefix = "Item3")]Deal deal, string src, string op, string vid, string d)
         {
+            if (op == "confirm") { ViewBag.confirm = TempData["confirm"]; }
             VendorOthersService vendorOthersService = new VendorOthersService();
             if (vid != null)
             {
@@ -2874,6 +3086,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     }
                 }
             }
+
+            if (Command == "Active")
+            {
+                vendorsOther.Status = vendorMaster.Status = Command;
+                vendorsOther = vendorOthersService.activationOther(vendorsOther, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
+            if (Command == "InActive")
+            {
+                vendorsOther.Status = vendorMaster.Status = Command;
+                vendorsOther = vendorOthersService.activationOther(vendorsOther, vendorMaster, long.Parse(id), long.Parse(vid));
+                //userLoginDetailsService.Updatestatus(vendorMaster.EmailId, Command);
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + Command + "');location.href='" + @Url.Action("AllVendors", "Vendors") + "'</script>");
+            }
+
             if (Command == "add")
             {
                 vendorsOther.UpdatedBy = user.UserId;
@@ -2929,6 +3158,16 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
+
+
+        [HttpPost]
+        public ActionResult submitquery(string emailid, string txtone)
+        {
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Attention required");
+            return Json("success", JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult checkemail(string emailid)
         {
             int query = vendorMasterService.checkemail(emailid);
@@ -2938,6 +3177,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return Json("valid", JsonRequestBehavior.AllowGet);
         }
+
+
 
     }
 }
