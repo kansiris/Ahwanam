@@ -24,6 +24,6 @@ namespace MaaAahwanam.Repository
         public string subtype { get; set; }
         public string logo { get; set; }
         public string image { get; set; }
-        public string tier { get; set; }
+        public int tier { get; set; }
     }
 }
