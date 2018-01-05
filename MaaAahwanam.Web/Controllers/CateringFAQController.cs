@@ -36,7 +36,7 @@ namespace MaaAahwanam.Web.Controllers
             vendorsCatering.ZipCode = data.ZipCode;
             vendorsCatering.name = data.name;
             vendorsCatering.Status = data.Status;
-            vendorsCatering.tier = data.tier;
+            //vendorsCatering.tier = data.tier;
             long masterid = vendorsCatering.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorsCatering = venorVenueSignUpService.UpdateCatering(vendorsCatering, vendorMaster, masterid, long.Parse(vid));
             return Content("<script language='javascript' type='text/javascript'>alert('Details Saved Successfully');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
