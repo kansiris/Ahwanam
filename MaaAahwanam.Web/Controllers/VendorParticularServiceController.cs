@@ -12,6 +12,8 @@ namespace MaaAahwanam.Web.Controllers
     public class VendorParticularServiceController : Controller
     {
         ProductInfoService productInfoService = new ProductInfoService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
+        VendorImageService vendorImageService = new VendorImageService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         // GET: VendorParticularService
         public ActionResult Index(string type, string id, string vid)
@@ -21,7 +23,9 @@ namespace MaaAahwanam.Web.Controllers
                 type = "Venue";
             if (type == "Mehendi")
                 type = "Other";
-            var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid)); //GetProductsInfo_Result Productinfo
+            //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid)); //GetProductsInfo_Result Productinfo
+            var data = vendorMasterService.GetVendor(long.Parse(id)); //GetProductsInfo_Result Productinfo
+            var imageslist = vendorImageService.GetVendorAllImages(long.Parse(id));
             ViewBag.Productinfo = data;
             ViewBag.vendor = null;
             if (type == "Venue")
@@ -35,10 +39,10 @@ namespace MaaAahwanam.Web.Controllers
             else if (type == "Other")
                 ViewBag.Other = venorVenueSignUpService.GetVendorOther(long.Parse(id)); //, long.Parse(vid)
             if (ViewBag.Productinfo != null)
-            imagescount = (data.image != null) ? data.image.Split(',').Count() : 0;
-            ViewBag.image1 = (imagescount > 0) ? data.image.Split(',')[0].Replace(" ","") : null;
-            ViewBag.image2 = (imagescount > 1) ? data.image.Split(',')[1].Replace(" ", "") : null;
-            ViewBag.image3 = (imagescount > 2) ? data.image.Split(',')[2].Replace(" ", "") : null;
+            imagescount = (imageslist != null) ? imageslist.Count() : 0;
+            ViewBag.image1 = (imagescount > 0) ? imageslist[0].Replace(" ","") : null;
+            ViewBag.image2 = (imagescount > 1) ? imageslist[1].Replace(" ", "") : null;
+            ViewBag.image3 = (imagescount > 2) ? imageslist[2].Replace(" ", "") : null;
             ViewBag.imagecount = imagescount - 3;
             return View();
         }
