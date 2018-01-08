@@ -29,8 +29,8 @@ namespace MaaAahwanam.Web.Controllers
                 string fileName = string.Empty;
                 string imagetype = vendorImage.ImageType;
                 string imgdesc = vendorImage.Imagedescription;
-                string altimages = vendorImage.ImageName;
-                Array imagesarray = altimages.Split(',');
+                //string altimages = vendorImage.ImageName;
+                //Array imagesarray = altimages.Split(',');
                 //VendorImage vendorImage = new VendorImage();
                 Vendormaster vendorMaster = new Vendormaster();
                 vendorMaster.Id = long.Parse(id);
