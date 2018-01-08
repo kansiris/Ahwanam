@@ -14,6 +14,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string service)
         {
+            ViewBag.service = service;
             if (service == "Hotels")
                 ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m=>m.subtype == "Hotel");
             else if (service == "Resorts")

@@ -439,15 +439,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter, vid2Parameter);
         }
     
-        public virtual ObjectResult<vendorproducts_Result> vendorproducts(string type)
-        {
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vendorproducts_Result>("vendorproducts", typeParameter);
-        }
-    
         public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
         {
             var servicTypeParameter = servicType != null ?
@@ -455,6 +446,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("ServicType", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
+        }
+    
+        public virtual ObjectResult<vendorproducts_Result> vendorproducts(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vendorproducts_Result>("vendorproducts", typeParameter);
         }
     }
 }

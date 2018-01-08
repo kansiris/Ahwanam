@@ -34,5 +34,6 @@ namespace MaaAahwanam.Models
         public bool Bidding { get; set; }
         public bool ReverseBidding { get; set; }
         //public string discount { get; set; }
+        public int tier { get; set; }
     }
 }

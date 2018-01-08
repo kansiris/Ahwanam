@@ -37,12 +37,12 @@ namespace MaaAahwanam.Web.Controllers
                 vendorVenue.Landmark = data.Landmark;
                 vendorVenue.ZipCode = data.ZipCode;
                 vendorVenue.name = data.name;
-                vendorVenue.tier = data.tier;
+                //vendorVenue.tier = data.tier;
                 long masterid = vendorVenue.VendorMasterId = vendorMaster.Id = long.Parse(id);
                 //vendorVenue.Status = vendorMaster.Status = "InActive";
                 vendorVenue.Status = data.Status;
                 vendorVenue = venorVenueSignUpService.UpdateVenue(vendorVenue, vendorMaster, masterid, long.Parse(vid));
-                return Content("<script language='javascript' type='text/javascript'>alert('FAQs Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Details Saved Successfully');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
             }
             else
             {
