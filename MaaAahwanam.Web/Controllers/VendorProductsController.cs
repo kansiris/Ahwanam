@@ -16,11 +16,11 @@ namespace MaaAahwanam.Web.Controllers
         {
             ViewBag.service = service;
             if (service == "Hotels")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m=>m.subtype == "Hotel");
+                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Hotel");//.Where(m => m.subtype == "Hotel");
             else if (service == "Resorts")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Resort");
+                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Resort");//.Where(m => m.subtype == "Resort");
             else if (service == "Conventions")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.subtype == "Convention Hall");
+                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Convention Hall");//.Where(m => m.subtype == "Convention Hall");
             else
                 ViewBag.records = vendorProductsService.Getvendorproducts_Result(service);
             return View();

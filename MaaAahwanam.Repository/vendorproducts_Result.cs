@@ -25,5 +25,6 @@ namespace MaaAahwanam.Repository
         public string logo { get; set; }
         public string image { get; set; }
         public int tier { get; set; }
+        public int priority { get; set; }
     }
 }
