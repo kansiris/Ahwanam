@@ -19,7 +19,7 @@
             var servicetype = $("#type").val();
             if (servicetype != 'Venue' && servicetype != 'Others' && servicetype != 'InvitationCards' && servicetype != 'EventOrganisers' ) {
                 var hdn = $("#hdnservices").val();
-                if (hdn != '') {
+                if (hdn != '' && hdn != null) {
                     var valArr = hdn.split(","), i = 0, size = valArr.length,
                     $options = $('#ddlservice option');
 
