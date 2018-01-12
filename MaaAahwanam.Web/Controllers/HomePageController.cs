@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Service;
+using System.Net;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -15,6 +16,8 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index()
         {
+            string hostName = Dns.GetHostName();
+            string myIP = Dns.GetHostByName(hostName).AddressList[0].ToString();
             //ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
             var venuerecords = vendorProductsService.Getvendorproducts_Result("Venue");
             //ViewBag.Hotels = venuerecords.Where(m => m.subtype == "Hotel").Take(6); // Hotel records
