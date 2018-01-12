@@ -81,6 +81,19 @@ namespace MaaAahwanam.Service
             return vendorsEntertainment;
         }
 
+        public VendorsEntertainment activationEntertainment(VendorsEntertainment vendorsEntertainment, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+           
+            vendorsEntertainment.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Entertainment";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsEntertainment = vendorEntertainmentRespository.UpdateEntertainment(vendorsEntertainment, masterid, vid);
+            return vendorsEntertainment;
+        }
+
         public VendorsEntertainment AddNewEntertainment(VendorsEntertainment vendorsEntertainment, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

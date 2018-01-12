@@ -80,6 +80,19 @@ namespace MaaAahwanam.Service
             return vendorTravelandAccomodation;
         }
 
+        public VendorsTravelandAccomodation activationTravelandAccomodation(VendorsTravelandAccomodation vendorTravelandAccomodation, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorTravelandAccomodation.Status = "Active";
+            vendorTravelandAccomodation.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Travel&Accommodation";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorTravelandAccomodation = vendorsTravelandAccomodationRepository.UpdateTravelandAccomodation(vendorTravelandAccomodation, masterid, vid);
+            return vendorTravelandAccomodation;
+        }
+
         public VendorsTravelandAccomodation AddNewTravelandAccomodation(VendorsTravelandAccomodation vendorsTravelandAccomodation, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();
