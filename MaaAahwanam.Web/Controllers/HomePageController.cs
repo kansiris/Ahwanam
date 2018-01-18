@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Service;
+using System.Net;
+using MaaAahwanam.Models;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -13,6 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: HomePage
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        QuotationListsService quotationListsService = new QuotationListsService();
         public ActionResult Index()
         {
             //ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
@@ -41,6 +45,30 @@ namespace MaaAahwanam.Web.Controllers
                 
             }
                 return View();
+        }
+
+        [HttpPost]
+        public JsonResult GetQuote(QuotationsList quotationsList)
+        {
+            //string hostName = Dns.GetHostName();
+            quotationsList.IPaddress = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
+            quotationsList.UpdatedTime = DateTime.UtcNow;
+            quotationsList.Status = "Active";
+            int count = quotationListsService.GetVendorVenue(quotationsList.IPaddress).Count;
+            if (count <= 5)
+            {
+                int quotation = quotationListsService.AddQuotationList(quotationsList);
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", "Quotation Sent to Vendor", "Mail From Ahwanam");
+                emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", "Quotation Sent to Vendor", "Mail From Ahwanam");
+                emailSendingUtility.Email_maaaahwanam("krameshsai1@gmail.com", "Quotation Sent to Vendor", "Mail From Ahwanam");
+                if (quotation > 0)
+                    return Json("Success");
+                else
+                    return Json("Fail");
+            }
+            else
+                return Json("exceeded");
         }
     }
 }
