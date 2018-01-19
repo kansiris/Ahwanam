@@ -8,6 +8,7 @@ using MaaAahwanam.Service;
 using System.Net;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
+using System.Text.RegularExpressions;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -17,6 +18,16 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VendorProductsService vendorProductsService = new VendorProductsService();
         QuotationListsService quotationListsService = new QuotationListsService();
+
+        public string GetIp()
+        {
+            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+            return ip;
+        }
         public ActionResult Index()
         {
             //ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
@@ -42,9 +53,9 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     return RedirectToAction("SignOut", "SampleStorefront");
                 }
-                
+
             }
-                return View();
+            return View();
         }
 
         [HttpPost]
@@ -55,7 +66,7 @@ namespace MaaAahwanam.Web.Controllers
             quotationsList.UpdatedTime = DateTime.UtcNow;
             quotationsList.Status = "Active";
             int count = quotationListsService.GetVendorVenue(quotationsList.IPaddress).Count;
-            if (count <= 5)
+            if (count <= 50)
             {
                 int quotation = quotationListsService.AddQuotationList(quotationsList);
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();

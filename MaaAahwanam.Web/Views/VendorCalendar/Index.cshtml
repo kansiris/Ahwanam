@@ -1,5 +1,6 @@
-﻿
+﻿@model MaaAahwanam.Models.VendorDates
 <!DOCTYPE html>
+<html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>:: Calender ::</title>
@@ -8,376 +9,417 @@
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/customstyles.css">
     <!--------- Lato Font ---------->
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/latofonts.css">
+    <!-- BX Slider -->
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/jquery.bxslider.css" />
 
-    <link rel="stylesheet" type="text/css" href="~/newdesign/css/fullcalendar.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="~/newdesign/css/fullcalendar.print.css" rel="stylesheet" media="print">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
+    <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
 </head>
-<body id="body-top" class="vendor-details">
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="top-menu">
-                <ul>
-                    @*<li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>*@
-                    <li><a class="login-popup-display">Sign In</a></li>
-                    <li><a href="signup.html">Sign Up For Free</a></li>
-                    <li><a href="vendorpage.html"><i class="fa fa-suitcase" aria-hidden="true"></i>ARE YOU A PARTNER?</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="row">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="/Homepage"><img src="~/newdesign/images/logo.png" alt="Logo"></a>
-                    </div>
+@using MaaAahwanam.Web.Custom
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    <body class="dashboard">
+        @{ Html.RenderAction("ProfileProgressPartial", "SampleStorefront");}
+        <div class="clearfix margin-top-30"></div>
+        <div class="container body-content">
+            <div id='calendar'></div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#">Wedding</a></li>
-                            <li><a href="#">Venues</a></li>
-                            <li><a href="#">Event Vendors</a></li>
-                            <!--<li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Event Vendors 1</a></li>
-                                <li><a href="#">Event Vendors 2</a></li>
-                                <li><a href="#">Event Vendors 3</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Event Vendors 4</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Event Vendors 5</a></li>
-                              </ul>
-                            </li>-->
-                            <li><a href="#">Brides</a></li>
-                            <li><a href="#">Grooms</a></li>
-                            <li><a href="#">Event Ideas</a></li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="container margin-top-30">
-        <div class="right_col" role="main">
-            <div class="">
-                <!--<div class="page-title">
-                  <div class="title_left">
-                    <h3>Calendar <small>Click to add/edit events</small></h3>
-                  </div>
-
-                  <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>-->
-
-                <div class="clearfix"></div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="x_panel">
-                            <!--<div class="x_title">
-                              <h2>Calendar Events <small>Sessions</small></h2>
-                              <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                  <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Settings 1</a>
-                                    </li>
-                                    <li><a href="#">Settings 2</a>
-                                    </li>
-                                  </ul>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                              </ul>
-                              <div class="clearfix"></div>
-                            </div>-->
-                            <div class="x_content">
-
-                                <div id='calendar'></div>
-
-                            </div>
+            @*Details Display Modal*@
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"><span id="eventTitle"></span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                                <span class="glyphicon glyphicon-remove"></span> Remove
+                            </button>
+                            <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                                <span class="glyphicon glyphicon-pencil"></span> Edit
+                            </button>
+                            <p id="pDetails"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <footer class="container-fluid">
+                <div class="row">© Ahwanam 2017. All right reserved.</div>
+            </footer>
         </div>
-    </div>
-    <footer class="container-fluid">
-        <div class="row">© Ahwanam 2017. All right reserved.</div>
-    </footer>
+        <!-- calendar modal -->
+        <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-    <!-- calendar modal -->
-    <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="testmodal" style="padding: 5px 20px;">
-                        <form id="antoform" class="form-horizontal calender" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Title</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="title" name="title">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Description</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" style="height:55px;" id="descr" name="descr"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5 col-md-offset-1">
-                                    <div class="form-group">
-                                        <label class="inline-control-label">
-                                            Appointment
-                                            <input type="radio" class="form-control" name="selectBlock" id="appointment">
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group margin-bottom-0">
-                                        <label class="inline-control-label">
-                                            Price
-                                            <input type="radio" class="form-control" name="selectBlock" id="prices">
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                    <div class="prices">
-                                        <p class="margin-bottom-0">Regular Price : Rs <b>1000</b></p>
-                                        <p>Deal Price : Rs <input type="text" class="form-control" placeholder="Enter Deal Price" /></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary antosubmit">Save changes</button>
+                    <div class="modal-body">
+                        <div id="testmodal" style="padding: 5px 20px;">
+                            <form id="antoform" class="form-horizontal calender" role="form">
+                                <input type="hidden" id="hdEventID" value="0" />
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Subject</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="subject" name="title">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Start Date</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="startdate" name="title">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Is Full Day event</label>
+                                    <div class="col-sm-9">
+                                        @*<input type="checkbox" class="form-control">
+                                            <span></span>*@
+                                        <select class="form-control" id="chkIsFullDay">
+                                            <option>False</option>
+                                            <option>True</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="divEndDate">
+                                    <label class="col-sm-3 control-label">End Date</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="enddate" name="title">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Description</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" style="height:55px;" id="description" name="descr"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Color</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="color">
+                                            <option>Red</option>
+                                            <option>Green</option>
+                                            <option>Blue</option>
+                                            <option>Black</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Type</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="type">
+                                            <option>Appointment</option>
+                                            <option>Price</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @*<div class="row">
+                                        <div class="col-md-5 col-md-offset-1">
+                                            <div class="form-group">
+                                                <label class="inline-control-label">
+                                                    Appointment
+                                                    <input type="radio" class="form-control" name="selectBlock" id="appointment">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group margin-bottom-0">
+                                                <label class="inline-control-label">
+                                                    Price
+                                                    <input type="radio" class="form-control" name="selectBlock" id="prices">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <div class="prices">
+                                                <p class="margin-bottom-0">Regular Price : Rs <b>1000</b></p>
+                                                <p>Deal Price : Rs <input type="text" class="form-control" placeholder="Enter Deal Price" /></p>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary antosubmit" id="btnSave">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
-                </div>
-                <div class="modal-body">
-
-                    <div id="testmodal2" style="padding: 5px 20px;">
-                        <form id="antoform2" class="form-horizontal calender" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Title</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="title2" name="title2">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Description</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
+                    <div class="modal-body">
+
+                        <div id="testmodal2" style="padding: 5px 20px;">
+                            <form id="antoform2" class="form-horizontal calender" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="title2" name="title2">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Description</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
-    <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>
-    <!-- /calendar modal -->
-</body>
-<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" language="javascript" src="~/Scripts/jquery.min.js"></script>
-<script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
+        @*<div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
+            <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>*@
 
-<script type="text/javascript" language="javascript" src="~/newdesign/js/moment.min.js"></script>
-<script type="text/javascript" language="javascript" src="~/newdesign/js/fullcalendar.min.js"></script>
+        <!-- /calendar modal -->
+        @*<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
+            <script type="text/javascript" language="javascript" src="~/Scripts/jquery.min.js"></script>
+            <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>*@
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
-<!-- //FullCalendar -->
-      $(window).load(function() {
-        var date = new Date(),
-            d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear(),
-            started,
-            categoryClass;
+        @*<script type="text/javascript" language="javascript" src="~/newdesign/js/moment.min.js"></script>
+            <script type="text/javascript" language="javascript" src="~/newdesign/js/fullcalendar.min.js"></script>*@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+        @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>*@
+        <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
 
-        var calendar = $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-          },
-          selectable: true,
-          selectHelper: true,
-          select: function(start, end, allDay) {
-            $('#fc_create').click();
+        <script>
+        $(document).ready(function () {
+            var events = [];
+            var selectedEvent = null;
+            FetchEventAndRenderCalendar();
+            function FetchEventAndRenderCalendar() {
+                events = [];
+                $.ajax({
+                    type: "GET",
+                    url: "/VendorCalendar/GetDates?id=@Request.QueryString["id"]",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            events.push({
+                                eventID: v.Id,
+                                title: v.Title,
+                                description: v.Description,
+                                start: moment(v.StartDate),
+                                end: moment(v.EndDate),
+                                color: v.Color,
+                                allDay: v.IsFullDay,
+                                type:v.Type
+                            });
+                        })
 
-            started = start;
-            ended = end;
+                        GenerateCalender(events);
+                    },
+                    error: function (error) {
+                        alert('failed');
+                    }
+                })
+            }
 
-            $(".antosubmit").on("click", function() {
-              var title = $("#title").val();
-              if (end) {
-                ended = end;
-              }
+            function GenerateCalender(events) {
+                $('#calendar').fullCalendar('destroy');
+                $('#calendar').fullCalendar({
+                    contentHeight: 600,
+                    defaultDate: new Date(),
+                    timeFormat: 'h(:mm)a',
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
+                    },
+                    eventLimit: true,
+                    eventColor: '#378006',
+                    events: events,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        selectedEvent = calEvent;
+                        $('#myModal #eventTitle').text(calEvent.title);
+                        var $description = $('<div/>');
+                        $description.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
+                        if (calEvent.end != null) {
+                            $description.append($('<p/>').html('<b>End:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
+                        }
+                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.description));
+                        $('#myModal #pDetails').empty().html($description);
 
-	           // My Script
-               /*var checkAppointment = $(this).parent(".modal-footer").prev(".modal-body").find("#appointment");
-		     if($(checkAppointment).is(':checked')){
-			  alert("YES");
-			  element.css('color', '#000');
-			  }else{
-				  alert("NO");}*/
-			   // My Script
+                        $('#myModal').modal();
+                    },
+                    selectable: true,
+                    select: function (start, end) {
+                        selectedEvent = {
+                            eventID: 0,
+                            title: '',
+                            description: '',
+                            start: start,
+                            end: end,
+                            allDay: false,
+                            color: '',
+                            type:''
+                        };
+                        openAddEditForm();
+                        $('#calendar').fullCalendar('unselect');
+                    },
+                    editable: true,
+                    eventDrop: function (event) {
+                        var data = {
+                            EventID: event.eventID,
+                            Subject: event.title,
+                            Start: event.start.format('DD/MM/YYYY HH:mm A'),
+                            End: event.end.format('DD/MM/YYYY HH:mm A'),
+                            Description: event.description,
+                            ThemeColor: event.color,
+                            IsFullDay: event.allDay,
+                            type: event.type
+                        };
+                        SaveEvent(data);
+                    }
+                })
+            }
 
-              categoryClass = $("#event_type").val();
+            $('#btnEdit').click(function () {
+                //Open modal dialog for edit event
+                openAddEditForm();
+            })
+            $('#btnDelete').click(function () {
+                if (selectedEvent != null && confirm('Are you sure?')) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/home/DeleteEvent',
+                        data: { 'eventID': selectedEvent.eventID },
+                        success: function (data) {
+                            if (data.status) {
+                                //Refresh the calender
+                                FetchEventAndRenderCalendar();
+                                $('#myModal').modal('hide');
+                            }
+                        },
+                        error: function () {
+                            alert('Failed');
+                        }
+                    })
+                }
+            })
 
-              if (title) {
-                calendar.fullCalendar('renderEvent', {
-                    title: title,
-                    start: started,
-                    end: end,
-                    allDay: allDay
-                  },
-                  true // make the event "stick"
-                );
-              }
-
-              $('#title').val('');
-
-              calendar.fullCalendar('unselect');
-
-              $('.antoclose').click();
-
-              return false;
+            $('#startdate,#enddate').datetimepicker({
+                format: 'd/m/Y H:m'
             });
-          },
-          eventClick: function(calEvent, jsEvent, view) {
-            $('#fc_edit').click();
-            $('#title2').val(calEvent.title);
 
-            categoryClass = $("#event_type").val();
-
-            $(".antosubmit2").on("click", function() {
-              calEvent.title = $("#title2").val();
-
-              calendar.fullCalendar('updateEvent', calEvent);
-              $('.antoclose2').click();
+            $('#chkIsFullDay').change(function () {
+                if ($(this).val() == 'True') {
+                    $('#divEndDate').hide();
+                }
+                else {
+                    $('#divEndDate').show();
+                }
             });
 
-            calendar.fullCalendar('unselect');
-          },
+            function openAddEditForm() {
+                if (selectedEvent != null) {
+                    $('#hdEventID').val(selectedEvent.eventID);
+                    $('#subject').val(selectedEvent.title);
+                    $('#startdate').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+                    $('#chkIsFullDay').val(selectedEvent.allDay);
+                    //$('#chkIsFullDay').change();
+                    $('#enddate').val(selectedEvent.end.format('DD/MM/YYYY HH:mm A'));
+                    $('#description').val(selectedEvent.description);
+                    $('#color').val(selectedEvent.color);
+                    $('#type').val(selectedEvent.type);
+                }
+                $('#myModal').modal('hide');
+                $('#CalenderModalNew').modal();
+            }
 
-		  eventRender: function(event, element) {
-            element.append( "<span class='closeon'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></span>" );
-            element.find(".closeon").click(function() {
-               $('#calendar').fullCalendar('removeEvents',event._id);
-            });
-			$(".antosubmit").click(function(){
-			var checkAppointment = $('.antosubmit').parent(".modal-footer").prev(".modal-body").find("#appointment");
-		     if($(checkAppointment).is(':checked')){
-			  alert("YES");
-			  element.css({'background-color':'#000',"color":"#000"});
-			  }else{
-				  alert("NO");}
+            $('#btnSave').click(function () {
+                //Validation/
+                if ($('#subject').val().trim() == "") {
+                    alert('Subject required');
+                    return;
+                }
+                if ($('#startdate').val().trim() == "") {
+                    alert('Start date required');
+                    return;
+                }
+                if ($('#enddate').val().trim() == "") {
+                    alert('End date required');
+                    return;
+                }
+                else {
+                    var startDate = moment($('#enddate').val(), "DD/MM/YYYY HH:mm A").toDate();
+                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
+                    if (startDate > endDate) {
+                        alert('Invalid end date');
+                        return;
+                    }
+                }
 
-			});
+                var data = {
+                    Id: $('#hdEventID').val(),
+                    Title: $('#subject').val().trim(),
+                    StartDate: $('#startdate').val().trim(),
+                    EndDate: $('#enddate').val().trim(),
+                    Description: $('#description').val(),
+                    Color: $('#color').val(),
+                    IsFullDay: $('#chkIsFullDay').val(),
+                    Type: $('#type').val(),
+                    VendorId:@Request.QueryString["id"],
+                    Servicetype:'Venue',
+                }
+                SaveEvent(data);
+                // call function for submit data to the server
+            })
 
-			  // My Script
-			 /*if(event.title == "Long Event") {
-                    element.css('background-color', '#000');
-                }*/
-				// My Script
-
-        },
-		  weekNumbers: true, // allow "Week" Numbers
-          editable: true,
-	      eventLimit: true, // allow "more" link when too many events
-          events: [{
-            title: 'All Day Event',
-            start: new Date(y, m, 1)
-          }, {
-            title: 'Long Event',
-            start: new Date(y, m, d - 5),
-            end: new Date(y, m, d - 2),
-			//color: '#f00'
-          }, {
-            title: 'Meeting',
-            start: new Date(y, m, d, 10, 30),
-            allDay: false
-          }, {
-            title: 'Lunch',
-            start: new Date(y, m, d + 14, 12, 0),
-            end: new Date(y, m, d, 14, 0),
-            allDay: false
-          }, {
-            title: 'Birthday Party',
-            start: new Date(y, m, d + 1, 19, 0),
-            end: new Date(y, m, d + 1, 22, 30),
-            allDay: false
-          }, {
-            title: 'Click for Google',
-            start: new Date(y, m, 28),
-            end: new Date(y, m, 29),
-            url: 'http://google.com/'
-          }]
-        });
-      });
-
-	  //My Script
-	    var checkPrices = $(".form-group > label > input#prices");
-		var checkAppointment = $(".form-group > label > input#appointment");
-		var diffPrices = $("#testmodal .prices");
-		$(checkPrices).change(function(){
-			if($(this).is(':checked')){
-				$(diffPrices).css({"display":"block"});
-				}
-			});
-		$(checkAppointment).change(function(){
-			if($(this).is(':checked')){
-				$(diffPrices).css({"display":"none"});
-				}
-			});
-	  //My Script
-
-    //<!-- /FullCalendar -->
-</script>
+            function SaveEvent(data) {
+                $.ajax({
+                    type: "POST",
+                    url: "/VendorCalendar/SaveEvent",
+                    data: data,
+                    success: function (data) {
+                        if (data.status) {
+                            //Refresh the calender
+                            FetchEventAndRenderCalendar();
+                            $('#CalenderModalNew').modal('hide');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed');
+                    }
+                })
+            }
+        })
+        </script>
+    </body>
+}
+else
+{
+    Response.Redirect("/Homepage");
+}
 </html>

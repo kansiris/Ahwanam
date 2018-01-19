@@ -31,7 +31,6 @@ namespace MaaAahwanam.Repository.db
         {
             var GetMasterRecord = _dbContext.Vendormaster.SingleOrDefault(m => m.Id == id);
             vendorMaster.Id = GetMasterRecord.Id;
-
             vendorMaster.UpdatedDate = GetMasterRecord.UpdatedDate;
             vendorMaster.ServicType = string.Join(",", (GetMasterRecord.ServicType + "," + vendorMaster.ServicType).Split(',').Distinct());
             _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(vendorMaster);
