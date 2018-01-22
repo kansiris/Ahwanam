@@ -139,9 +139,8 @@ namespace MaaAahwanam.Web.Controllers
             return Redirect(loginUrl.AbsoluteUri);
         }
 
-        public ActionResult GoogleLogin(string email, string name, string gender, string lastname, string location)
-        {
-            //Write your code here to access these paramerters
+        public ActionResult GoogleLogin(string email, string name, string firstname, string lastname, string Picture)
+        {               //Write your code here to access these paramerters
             var response = "";
 
             FormsAuthentication.SetAuthCookie(email, false);
@@ -149,7 +148,8 @@ namespace MaaAahwanam.Web.Controllers
             UserDetail userDetail = new UserDetail();
             userDetail.FirstName = name;
             userDetail.LastName = lastname;
-            userDetail.UserImgName = gender;
+            userDetail.UserImgName = firstname;
+            userDetail.UserImgName = Picture;
             userLogin.UserName = email;
             userLogin.Password = "Google";
             userLogin.UserType = "User";
@@ -173,13 +173,16 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             else
-            { return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>"); }
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+            }
             return RedirectToAction("Index", "UserRegistration");
         }
 
 
 
-    
+
+
 
         //public ActionResult googleAuthentication()
         //{
