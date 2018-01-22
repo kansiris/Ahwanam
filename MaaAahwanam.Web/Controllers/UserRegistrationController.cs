@@ -192,7 +192,7 @@ namespace MaaAahwanam.Web.Controllers
             var authResult = OpenAuth.VerifyAuthentication(redirectUrl);
 
 
-            //string ProviderDisplayName = OpenAuth.GetProviderDisplayName(ProviderName);
+            string ProviderDisplayName = OpenAuth.GetProviderDisplayName(ProviderName);
 
             if (!authResult.IsSuccessful)
             {
@@ -219,7 +219,7 @@ namespace MaaAahwanam.Web.Controllers
             userDetail.FirstName = authResult.ExtraData["given_name"];
             userDetail.LastName = authResult.ExtraData["family_name"];
             userDetail.UserImgName = authResult.ExtraData["picture"];
-            userLogin.UserName = ProviderUserName;
+            userLogin.UserName = authResult.ExtraData["email"];
             userLogin.Password = "Google";
             userLogin.UserType = "User";
             UserLogin userlogin1 = new UserLogin();
