@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            AuthConfig.RegisterAuth();
+            //AuthConfig.RegisterAuth();
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)

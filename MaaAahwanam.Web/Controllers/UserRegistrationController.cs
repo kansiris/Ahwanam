@@ -139,87 +139,18 @@ namespace MaaAahwanam.Web.Controllers
             return Redirect(loginUrl.AbsoluteUri);
         }
 
-        public ActionResult googleAuthentication()
+        public ActionResult GoogleLogin(string email, string name, string gender, string lastname, string location)
         {
-            string provider = "google";
-            string returnUrl = "";
-            return new ExternalLoginResult(provider, Url.Action("googleLoginCallback", new { ReturnUrl = returnUrl }));
-        }
-
-
-        internal class ExternalLoginResult : ActionResult
-        {
-            public ExternalLoginResult(string provider, string returnUrl)
-            {
-                Provider = provider;
-                ReturnUrl = returnUrl;
-            }
-
-            public string Provider { get; private set; }
-            public string ReturnUrl { get; private set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                OpenAuth.RequestAuthentication(Provider, ReturnUrl);
-            }
-        }
-
-        [AllowAnonymous]
-        public ActionResult googleLoginCallback(string returnUrl)
-        {
-            string ProviderName = OpenAuth.GetProviderNameFromCurrentRequest();
-
-            if (ProviderName == null || ProviderName == "")
-            {
-                NameValueCollection nvs = Request.QueryString;
-                if (nvs.Count > 0)
-                {
-                    if (nvs["state"] != null)
-                    {
-                        NameValueCollection provideritem = HttpUtility.ParseQueryString(nvs["state"]);
-                        if (provideritem["__provider__"] != null)
-                        {
-                            ProviderName = provideritem["__provider__"];
-                        }
-                    }
-                }
-            }
-
-            GoogleOAuth2Client.RewriteRequest();
-
-            var redirectUrl = Url.Action("googleLoginCallback", "UserRegistration", new { ReturnUrl = returnUrl });
-            var retUrl = returnUrl;
-            var authResult = OpenAuth.VerifyAuthentication(redirectUrl);
-
-
-            string ProviderDisplayName = OpenAuth.GetProviderDisplayName(ProviderName);
-
-            if (!authResult.IsSuccessful)
-            {
-                return Redirect(Url.Action("UserRegistration", "Index"));
-            }
-
-            string ProviderUserName = authResult.UserName;
-            string name = authResult.ExtraData["given_name"];
-
-
-            string Email = null;
-            if (Email == null && authResult.ExtraData.ContainsKey("email"))
-            {
-                Email = authResult.ExtraData["email"];
-            }
-
-
-
+            //Write your code here to access these paramerters
             var response = "";
 
-            FormsAuthentication.SetAuthCookie(Email, false);
+            FormsAuthentication.SetAuthCookie(email, false);
             UserLogin userLogin = new UserLogin();
             UserDetail userDetail = new UserDetail();
-            userDetail.FirstName = authResult.ExtraData["given_name"];
-            userDetail.LastName = authResult.ExtraData["family_name"];
-            userDetail.UserImgName = authResult.ExtraData["picture"];
-            userLogin.UserName = authResult.ExtraData["email"];
+            userDetail.FirstName = name;
+            userDetail.LastName = lastname;
+            userDetail.UserImgName = gender;
+            userLogin.UserName = email;
             userLogin.Password = "Google";
             userLogin.UserType = "User";
             UserLogin userlogin1 = new UserLogin();
@@ -245,6 +176,117 @@ namespace MaaAahwanam.Web.Controllers
             { return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>"); }
             return RedirectToAction("Index", "UserRegistration");
         }
+
+
+
+    
+
+        //public ActionResult googleAuthentication()
+        //{
+        //    string provider = "google";
+        //    string returnUrl = "";
+        //    return new ExternalLoginResult(provider, Url.Action("googleLoginCallback", new { ReturnUrl = returnUrl }));
+        //}
+
+
+        //internal class ExternalLoginResult : ActionResult
+        //{
+        //    public ExternalLoginResult(string provider, string returnUrl)
+        //    {
+        //        Provider = provider;
+        //        ReturnUrl = returnUrl;
+        //    }
+
+        //    public string Provider { get; private set; }
+        //    public string ReturnUrl { get; private set; }
+
+        //    public override void ExecuteResult(ControllerContext context)
+        //    {
+        //        OpenAuth.RequestAuthentication(Provider, ReturnUrl);
+        //    }
+        //}
+
+        //[AllowAnonymous]
+        //public ActionResult googleLoginCallback(string returnUrl)
+        //{
+        //    string ProviderName = OpenAuth.GetProviderNameFromCurrentRequest();
+
+        //    if (ProviderName == null || ProviderName == "")
+        //    {
+        //        NameValueCollection nvs = Request.QueryString;
+        //        if (nvs.Count > 0)
+        //        {
+        //            if (nvs["state"] != null)
+        //            {
+        //                NameValueCollection provideritem = HttpUtility.ParseQueryString(nvs["state"]);
+        //                if (provideritem["__provider__"] != null)
+        //                {
+        //                    ProviderName = provideritem["__provider__"];
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    GoogleOAuth2Client.RewriteRequest();
+
+        //    var redirectUrl = Url.Action("googleLoginCallback", "UserRegistration", new { ReturnUrl = returnUrl });
+        //    var retUrl = returnUrl;
+        //    var authResult = OpenAuth.VerifyAuthentication(redirectUrl);
+
+
+        //    string ProviderDisplayName = OpenAuth.GetProviderDisplayName(ProviderName);
+
+        //    if (!authResult.IsSuccessful)
+        //    {
+        //        return Redirect(Url.Action("UserRegistration", "Index"));
+        //    }
+
+        //    string ProviderUserName = authResult.UserName;
+        //    string name = authResult.ExtraData["given_name"];
+
+
+        //    string Email = null;
+        //    if (Email == null && authResult.ExtraData.ContainsKey("email"))
+        //    {
+        //        Email = authResult.ExtraData["email"];
+        //    }
+
+
+
+        //    var response = "";
+
+        //    FormsAuthentication.SetAuthCookie(Email, false);
+        //    UserLogin userLogin = new UserLogin();
+        //    UserDetail userDetail = new UserDetail();
+        //    userDetail.FirstName = authResult.ExtraData["given_name"];
+        //    userDetail.LastName = authResult.ExtraData["family_name"];
+        //    userDetail.UserImgName = authResult.ExtraData["picture"];
+        //    userLogin.UserName = authResult.ExtraData["email"];
+        //    userLogin.Password = "Google";
+        //    userLogin.UserType = "User";
+        //    UserLogin userlogin1 = new UserLogin();
+
+        //    userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
+
+        //    if (userlogin1 == null)
+        //        response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
+        //    else
+        //        response = "sucess";
+        //    if (response == "sucess")
+        //    {
+        //        var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+        //        if (userResponse != null)
+        //        {
+        //            vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+        //            string userData = JsonConvert.SerializeObject(userResponse); //creating identity
+        //            ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+        //            return RedirectToAction("Index", "HomePage");
+        //        }
+        //    }
+        //    else
+        //    { return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>"); }
+        //    return RedirectToAction("Index", "UserRegistration");
+        //}
 
 
 
