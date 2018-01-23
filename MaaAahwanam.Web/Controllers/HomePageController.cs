@@ -19,15 +19,6 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         QuotationListsService quotationListsService = new QuotationListsService();
 
-        public string GetIp()
-        {
-            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (string.IsNullOrEmpty(ip))
-            {
-                ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-            }
-            return ip;
-        }
         public ActionResult Index()
         {
             //ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
@@ -61,12 +52,13 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public JsonResult GetQuote(QuotationsList quotationsList)
         {
+            string ip = HttpContext.Request.UserHostAddress;
             //string hostName = Dns.GetHostName();
-            quotationsList.IPaddress = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
+            quotationsList.IPaddress = ip;//Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
             quotationsList.UpdatedTime = DateTime.UtcNow;
             quotationsList.Status = "Active";
             int count = quotationListsService.GetVendorVenue(quotationsList.IPaddress).Count;
-            if (count <= 50)
+            if (count <= 5)
             {
                 int quotation = quotationListsService.AddQuotationList(quotationsList);
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
