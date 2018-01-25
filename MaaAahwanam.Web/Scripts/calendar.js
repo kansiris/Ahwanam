@@ -9,8 +9,8 @@
                     eventID: v.Id,
                     title: v.Title,
                     description: v.Description,
-                    start: moment(v.StartDate),
-                    end: moment(v.EndDate),
+                    start: v.StartDate,//moment(v.StartDate),
+                    end: v.EndDate, //v.EndDate != null ? moment(v.EndDate) : null,
                     color: v.Color,
                     allDay: v.IsFullDay,
                     type: v.Type
@@ -30,7 +30,7 @@ function GenerateCalender(events) {
     $('#calendar').fullCalendar({
         contentHeight: 600,
         defaultDate: new Date(),
-        timeFormat: 'h(:mm)a',
+        timeFormat: 'H(:mm)',
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -40,7 +40,11 @@ function GenerateCalender(events) {
         eventColor: '#378006',
         events: events,
         eventClick: function (calEvent, jsEvent, view) {
+            $('#startdate,#enddate').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm A'
+            });
             selectedEvent = calEvent;
+            alert('first'+calEvent.end.format("DD-MMM-YYYY HH:mm a"));
             $('#myModal #eventTitle').text(calEvent.title);
             var $description = $('<div/>');
             $description.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
@@ -110,7 +114,7 @@ $('#btnDelete').click(function () {
 })
 
 $('#startdate,#enddate').datetimepicker({
-    format: 'd/m/Y H:m'
+    format: 'DD/MM/YYYY HH:mm A'
 });
 
 $('#chkIsFullDay').change(function () {
@@ -124,12 +128,13 @@ $('#chkIsFullDay').change(function () {
 
 function openAddEditForm() {
     if (selectedEvent != null) {
+        alert(selectedEvent.end);
         $('#hdEventID').val(selectedEvent.eventID);
         $('#subject').val(selectedEvent.title);
         $('#startdate').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
         $('#chkIsFullDay').val(selectedEvent.allDay);
         //$('#chkIsFullDay').change();
-        $('#enddate').val(selectedEvent.end.format('DD/MM/YYYY HH:mm A'));
+        $('#enddate').val(selectedEvent.end != null ? selectedEvent.end.format('DD/MM/YYYY HH:mm A') : '');
         $('#description').val(selectedEvent.description);
         $('#color').val(selectedEvent.color);
         $('#type').val(selectedEvent.type);
@@ -153,8 +158,8 @@ $('#btnSave').click(function () {
         return;
     }
     else {
-        var startDate = moment($('#enddate').val(), "DD/MM/YYYY HH:mm A").toDate();
-        var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
+        var startDate = moment($('#enddate').val(), "DD/MM/YYYY HH:mm").toDate();
+        var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm").toDate();
         if (startDate > endDate) {
             alert('Invalid end date');
             return;

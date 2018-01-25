@@ -65,6 +65,7 @@ namespace MaaAahwanam.Web.Controllers
                 emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", "Quotation Sent to Vendor", "Mail From Ahwanam");
                 emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", "Quotation Sent to Vendor", "Mail From Ahwanam");
                 emailSendingUtility.Email_maaaahwanam("krameshsai1@gmail.com", "Quotation Sent to Vendor", "Mail From Ahwanam");
+                emailSendingUtility.Email_maaaahwanam("saroja.v@xsilica.com", "Quotation Sent to Vendor", "Mail From Ahwanam");
                 if (quotation > 0)
                     return Json("Success");
                 else

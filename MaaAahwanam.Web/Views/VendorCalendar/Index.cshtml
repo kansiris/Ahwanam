@@ -14,214 +14,283 @@
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
-    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
 </head>
 @using MaaAahwanam.Web.Custom
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
-    <body class="dashboard">
-        @{ Html.RenderAction("ProfileProgressPartial", "SampleStorefront");}
-        <div class="clearfix margin-top-30"></div>
-        <div class="container body-content">
-            <div id='calendar'></div>
+<body class="dashboard">
+    @{ Html.RenderAction("ProfileProgressPartial", "SampleStorefront");}
+    <div class="clearfix margin-top-30"></div>
+    <div class="container body-content">
+        <div id='calendar'></div>
 
-            @*Details Display Modal*@
-            <div id="myModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title"><span id="eventTitle"></span></h4>
-                        </div>
-                        <div class="modal-body">
-                            <button id="btnDelete" class="btn btn-default btn-sm pull-right">
-                                <span class="glyphicon glyphicon-remove"></span> Remove
-                            </button>
-                            <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
-                                <span class="glyphicon glyphicon-pencil"></span> Edit
-                            </button>
-                            <p id="pDetails"></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <footer class="container-fluid">
-                <div class="row">© Ahwanam 2017. All right reserved.</div>
-            </footer>
-        </div>
-        <!-- calendar modal -->
-        <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        @*Details Display Modal*@
+        <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><span id="eventTitle"></span></h4>
                     </div>
                     <div class="modal-body">
-                        <div id="testmodal" style="padding: 5px 20px;">
-                            <form id="antoform" class="form-horizontal calender" role="form">
-                                <input type="hidden" id="hdEventID" value="0" />
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Subject</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="subject" name="title">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Start Date</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="startdate" name="title">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Is Full Day event</label>
-                                    <div class="col-sm-9">
-                                        @*<input type="checkbox" class="form-control">
-                                            <span></span>*@
-                                        <select class="form-control" id="chkIsFullDay">
-                                            <option>False</option>
-                                            <option>True</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group" id="divEndDate">
-                                    <label class="col-sm-3 control-label">End Date</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="enddate" name="title">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Description</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" style="height:55px;" id="description" name="descr"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Color</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" id="color">
-                                            <option>Red</option>
-                                            <option>Green</option>
-                                            <option>Blue</option>
-                                            <option>Black</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Type</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" id="type">
-                                            <option>Appointment</option>
-                                            <option>Price</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                @*<div class="row">
-                                        <div class="col-md-5 col-md-offset-1">
-                                            <div class="form-group">
-                                                <label class="inline-control-label">
-                                                    Appointment
-                                                    <input type="radio" class="form-control" name="selectBlock" id="appointment">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="form-group margin-bottom-0">
-                                                <label class="inline-control-label">
-                                                    Price
-                                                    <input type="radio" class="form-control" name="selectBlock" id="prices">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                            <div class="prices">
-                                                <p class="margin-bottom-0">Regular Price : Rs <b>1000</b></p>
-                                                <p>Deal Price : Rs <input type="text" class="form-control" placeholder="Enter Deal Price" /></p>
-                                            </div>
-                                        </div>
-                                    </div>*@
-                            </form>
-                        </div>
+                        <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                            <span class="glyphicon glyphicon-remove"></span> Remove
+                        </button>
+                        <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>
+                        <p id="pDetails"></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary antosubmit" id="btnSave">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <div id="testmodal2" style="padding: 5px 20px;">
-                            <form id="antoform2" class="form-horizontal calender" role="form">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Title</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="title2" name="title2">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Description</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        @*<div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
-            <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>*@
 
-        <!-- /calendar modal -->
-        @*<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
-            <script type="text/javascript" language="javascript" src="~/Scripts/jquery.min.js"></script>
-            <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>*@
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <footer class="container-fluid">
+            <div class="row">© Ahwanam 2017. All right reserved.</div>
+        </footer>
+    </div>
 
-        @*<script type="text/javascript" language="javascript" src="~/newdesign/js/moment.min.js"></script>
-            <script type="text/javascript" language="javascript" src="~/newdesign/js/fullcalendar.min.js"></script>*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-        @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>*@
-        <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
-        <script src="~/Scripts/calendar.js"></script>
-        <script>
+    <div id="myModalSave" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Save Event</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="col-md-12 form-horizontal">
+                        <input type="hidden" id="hdEventID" value="0" />
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="txtSubject" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Start</label>
+                            <div class="input-group date" id="dtp1">
+                                <input type="text" id="txtStart" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="divEndDate" style="display:none">
+                            <label>End</label>
+                            <div class="input-group date" id="dtp2">
+                                <input type="text" id="txtEnd" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Theme Color</label>
+                            <select id="ddThemeColor" class="form-control">
+                                <option value="">Default</option>
+                                <option value="red">Red</option>
+                                <option value="blue">Blue</option>
+                                <option value="black">Black</option>
+                                <option value="green">Green</option>
+                            </select>
+                        </div>
+                        <button type="button" id="btnSave" class="btn btn-success">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- calendar modal -->
+    <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="testmodal" style="padding: 5px 20px;">
+                        <form id="antoform" class="form-horizontal calender" role="form">
+                            <input type="hidden" id="hdEventID" value="0" />
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Subject</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="subject" name="title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Start Date</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="startdate" name="title">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Is Full Day event</label>
+                                <div class="col-sm-9">
+                                    @*<input type="checkbox" class="form-control">
+                                        <span></span>*@
+                                    <select class="form-control" id="chkIsFullDay">
+                                        <option>False</option>
+                                        <option>True</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divEndDate">
+                                <label class="col-sm-3 control-label">End Date</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="enddate" name="title">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" style="height:55px;" id="description" name="descr"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Color</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="color">
+                                        <option>Red</option>
+                                        <option>Green</option>
+                                        <option>Blue</option>
+                                        <option>Black</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Type</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="type">
+                                        <option>Appointment</option>
+                                        <option>Price</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            @*<div class="row">
+                                    <div class="col-md-5 col-md-offset-1">
+                                        <div class="form-group">
+                                            <label class="inline-control-label">
+                                                Appointment
+                                                <input type="radio" class="form-control" name="selectBlock" id="appointment">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group margin-bottom-0">
+                                            <label class="inline-control-label">
+                                                Price
+                                                <input type="radio" class="form-control" name="selectBlock" id="prices">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="prices">
+                                            <p class="margin-bottom-0">Regular Price : Rs <b>1000</b></p>
+                                            <p>Deal Price : Rs <input type="text" class="form-control" placeholder="Enter Deal Price" /></p>
+                                        </div>
+                                    </div>
+                                </div>*@
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary antosubmit" id="btnSave">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="testmodal2" style="padding: 5px 20px;">
+                        <form id="antoform2" class="form-horizontal calender" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="title2" name="title2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
+        <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>*@
+
+    <!-- /calendar modal -->
+    @*<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" language="javascript" src="~/Scripts/jquery.min.js"></script>
+        <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>*@
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    @*<script type="text/javascript" language="javascript" src="~/newdesign/js/moment.min.js"></script>
+        <script type="text/javascript" language="javascript" src="~/newdesign/js/fullcalendar.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+    @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
+    <script src="~/Scripts/calendar.js"></script>
+    <script>
         $(document).ready(function () {
             var events = [];
             var selectedEvent = null;
             FetchEventAndRenderCalendar();
         })
-        </script>
-    </body>
+
+
+
+
+    </script>
+</body>
 }
 else
 {

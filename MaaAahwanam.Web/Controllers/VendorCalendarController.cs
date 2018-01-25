@@ -13,6 +13,7 @@ namespace MaaAahwanam.Web.Controllers
     {
         //AvailabledatesService availabledatesService = new AvailabledatesService();
         VendorDatesService vendorDatesService = new VendorDatesService();
+        VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         // GET: VendorCalendar
         public ActionResult Index(string id)
         {
@@ -21,7 +22,8 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult GetDates(string id)
         {
-            var data = vendorDatesService.GetDates(long.Parse(id), 30053);
+            long vendorsubid = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).FirstOrDefault().Id;
+            var data = vendorDatesService.GetDates(long.Parse(id), vendorsubid);
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -37,8 +39,12 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public JsonResult SaveEvent(VendorDates vendorDates)
         {
+            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            long vendorsubid = vendorVenueSignUpService.GetVendorVenue(long.Parse(vendorDates.VendorId.ToString())).FirstOrDefault().Id;
+            vendorDates.StartDate = TimeZoneInfo.ConvertTimeFromUtc(vendorDates.StartDate.ToUniversalTime(), tzi); 
+            vendorDates.EndDate = TimeZoneInfo.ConvertTimeFromUtc(vendorDates.EndDate.ToUniversalTime(), tzi);
             var status = false;
-            vendorDates.Vendorsubid = 30053;
+            vendorDates.Vendorsubid = vendorsubid;
             //using (MyDatabaseEntities dc = new MyDatabaseEntities())
             //{
                 if (vendorDates.Id > 0)
