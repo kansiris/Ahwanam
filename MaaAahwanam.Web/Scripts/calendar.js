@@ -132,14 +132,14 @@ $('#startdate,#enddate').datetimepicker({
 function openAddEditForm() {
     if (selectedEvent != null) {
         $('#hdEventID').val(selectedEvent.eventID);
-        $('#subject').val(selectedEvent.title);
+        $('#subject').val(selectedEvent.Title);
         $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MMM/YYYY hh:mm A"));
-        $('#chkIsFullDay').val(selectedEvent.allDay);
+        $('#chkIsFullDay').val(selectedEvent.IsFullDay);
         //$('#chkIsFullDay').change();
         $('#enddate').val(moment(selectedEvent.EndDate).format("DD/MMM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).format("DD/MMM/YYYY hh:mm A") : '');
-        $('#description').val(selectedEvent.description);
-        $('#color').val(selectedEvent.color);
-        $('#type').val(selectedEvent.type);
+        $('#description').val(selectedEvent.Description);
+        $('#color').val(selectedEvent.Color);
+        $('#type').val(selectedEvent.Type);
     }
     $('#myModal').modal('hide');
     $('#CalenderModalNew').modal();
