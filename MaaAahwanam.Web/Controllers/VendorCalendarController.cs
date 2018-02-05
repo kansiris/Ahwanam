@@ -31,7 +31,7 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult DeleteEvent(string id)
         {
             var status = false;
-           string msg = vendorDatesService.removedates(long.Parse(id));
+            string msg = vendorDatesService.removedates(long.Parse(id));
             if (msg == "Removed") status = true;
             return new JsonResult { Data = new { status = status } };
         }
@@ -39,30 +39,22 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public JsonResult SaveEvent(VendorDates vendorDates)
         {
-            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
             long vendorsubid = vendorVenueSignUpService.GetVendorVenue(long.Parse(vendorDates.VendorId.ToString())).FirstOrDefault().Id;
-            vendorDates.StartDate = TimeZoneInfo.ConvertTimeFromUtc(vendorDates.StartDate.ToUniversalTime(), tzi); 
-            vendorDates.EndDate = TimeZoneInfo.ConvertTimeFromUtc(vendorDates.EndDate.ToUniversalTime(), tzi);
             var status = false;
             vendorDates.Vendorsubid = vendorsubid;
-            //using (MyDatabaseEntities dc = new MyDatabaseEntities())
-            //{
-                if (vendorDates.Id > 0)
-                {
-                //Update the event
-                vendorDates = vendorDatesService.UpdatesVendorDates(vendorDates,vendorDates.Id);
-            }
-                else
-                {
+            if (vendorDates.Id > 0) //Update the event
+                vendorDates = vendorDatesService.UpdatesVendorDates(vendorDates, vendorDates.Id);
+            else //Save event
                 vendorDates = vendorDatesService.SaveVendorDates(vendorDates);
-                    //dc.Events.Add(e);
-                }
-
-                //dc.SaveChanges();
-                status = true;
-
-            //}
+            status = true;
             return new JsonResult { Data = new { status = status } };
+        }
+
+        [HttpGet]
+        public JsonResult GetParticularDate(long id)
+        {
+            VendorDates dates = vendorDatesService.GetParticularDate(id);
+            return new JsonResult { Data = dates, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }

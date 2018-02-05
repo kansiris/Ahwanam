@@ -32,5 +32,10 @@ namespace MaaAahwanam.Service
         {
             return vendorDatesRepository.UpdatesVendorDates(vendorDates, id);
         }
+
+        public VendorDates GetParticularDate(long id)
+        {
+            return vendorDatesRepository.GetParticularDate(id);
+        }
     }
 }

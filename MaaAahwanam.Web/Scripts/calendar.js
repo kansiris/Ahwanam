@@ -1,5 +1,10 @@
 ﻿function FetchEventAndRenderCalendar() {
     events = [];
+    var date = new Date(),
+        d = date.getDate(),
+        m = date.getMonth() + 1,
+        y = date.getFullYear()
+    //alert(date + ',date:' + d + ',month:' + m + ',year:' + y);
     $.ajax({
         type: "GET",
         url: '/VendorCalendar/GetDates?id=' + $('#vid').val(),
@@ -9,8 +14,8 @@
                     eventID: v.Id,
                     title: v.Title,
                     description: v.Description,
-                    start: v.StartDate,//moment(v.StartDate),
-                    end: v.EndDate, //v.EndDate != null ? moment(v.EndDate) : null,
+                    start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
+                    end: moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').add(1, 'day'),
                     color: v.Color,
                     allDay: v.IsFullDay,
                     type: v.Type
@@ -29,6 +34,7 @@ function GenerateCalender(events) {
     $('#calendar').fullCalendar('destroy');
     $('#calendar').fullCalendar({
         contentHeight: 600,
+        timezone: 'India Standard Time',
         defaultDate: new Date(),
         timeFormat: 'H(:mm)',
         header: {
@@ -40,21 +46,26 @@ function GenerateCalender(events) {
         eventColor: '#378006',
         events: events,
         eventClick: function (calEvent, jsEvent, view) {
-            $('#startdate,#enddate').datetimepicker({
-                format: 'DD/MM/YYYY HH:mm A'
-            });
             selectedEvent = calEvent;
-            alert('first'+calEvent.end.format("DD-MMM-YYYY HH:mm a"));
-            $('#myModal #eventTitle').text(calEvent.title);
-            var $description = $('<div/>');
-            $description.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
-            if (calEvent.end != null) {
-                $description.append($('<p/>').html('<b>End:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
-            }
-            $description.append($('<p/>').html('<b>Description:</b>' + calEvent.description));
-            $('#myModal #pDetails').empty().html($description);
-
-            $('#myModal').modal();
+            $.ajax({
+                type: "GET",
+                url: '/VendorCalendar/GetParticularDate?id=' + selectedEvent.eventID,
+                success: function (data) {
+                    selectedEvent = data;
+                    $('#myModal #eventTitle').text(data.Title);
+                    var $description = $('<div/>');
+                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).format("DD/MMM/YYYY hh:mm A")));
+                    if (calEvent.end != null) {
+                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).format("DD/MMM/YYYY hh:mm A")));
+                    }
+                    $description.append($('<p/>').html('<b>Description:</b>' + data.Description));
+                    $('#myModal #pDetails').empty().html($description);
+                    $('#myModal').modal();
+                },
+                error: function (error) {
+                    alert('Failed to Fetch data');
+                }
+            })
         },
         selectable: true,
         select: function (start, end) {
@@ -76,8 +87,8 @@ function GenerateCalender(events) {
             var data = {
                 EventID: event.eventID,
                 Subject: event.title,
-                Start: event.start.format('DD/MM/YYYY HH:mm A'),
-                End: event.end.format('DD/MM/YYYY HH:mm A'),
+                Start: event.start.format('DD/MMM/YYYY HH:mm'),
+                End: event.end.format('DD/MMM/YYYY HH:mm'),
                 Description: event.description,
                 ThemeColor: event.color,
                 IsFullDay: event.allDay,
@@ -114,27 +125,18 @@ $('#btnDelete').click(function () {
 })
 
 $('#startdate,#enddate').datetimepicker({
-    format: 'DD/MM/YYYY HH:mm A'
+    format: 'd/m/y H:m'
 });
 
-$('#chkIsFullDay').change(function () {
-    if ($(this).val() == 'True') {
-        $('#divEndDate').hide();
-    }
-    else {
-        $('#divEndDate').show();
-    }
-});
 
 function openAddEditForm() {
     if (selectedEvent != null) {
-        alert(selectedEvent.end);
         $('#hdEventID').val(selectedEvent.eventID);
         $('#subject').val(selectedEvent.title);
-        $('#startdate').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+        $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MMM/YYYY hh:mm A"));
         $('#chkIsFullDay').val(selectedEvent.allDay);
         //$('#chkIsFullDay').change();
-        $('#enddate').val(selectedEvent.end != null ? selectedEvent.end.format('DD/MM/YYYY HH:mm A') : '');
+        $('#enddate').val(moment(selectedEvent.EndDate).format("DD/MMM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).format("DD/MMM/YYYY hh:mm A") : '');
         $('#description').val(selectedEvent.description);
         $('#color').val(selectedEvent.color);
         $('#type').val(selectedEvent.type);
@@ -142,7 +144,6 @@ function openAddEditForm() {
     $('#myModal').modal('hide');
     $('#CalenderModalNew').modal();
 }
-
 $('#btnSave').click(function () {
     //Validation/
     if ($('#subject').val().trim() == "") {
@@ -158,8 +159,8 @@ $('#btnSave').click(function () {
         return;
     }
     else {
-        var startDate = moment($('#enddate').val(), "DD/MM/YYYY HH:mm").toDate();
-        var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm").toDate();
+        var startDate = moment($('#enddate').val(), "d/m/y H:m").toDate();
+        var endDate = moment($('#txtEnd').val(), "d/m/y H:m").toDate();
         if (startDate > endDate) {
             alert('Invalid end date');
             return;
@@ -176,11 +177,12 @@ $('#btnSave').click(function () {
         IsFullDay: $('#chkIsFullDay').val(),
         Type: $('#type').val(),
         VendorId: $('#vid').val(),
-        Servicetype:'Venue',
-                }
-                SaveEvent(data);
-                // call function for submit data to the server
-            })
+        Servicetype: 'Venue',
+    }
+    SaveEvent(data);
+    // call function for submit data to the server
+})
+
 
 function SaveEvent(data) {
     $.ajax({

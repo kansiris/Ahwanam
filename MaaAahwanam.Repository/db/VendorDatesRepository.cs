@@ -45,5 +45,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorDates;
         }
+
+        public VendorDates GetParticularDate(long id)
+        {
+            return _dbContext.VendorDates.Where(m => m.Id == id).FirstOrDefault();
+        }
     }
 }

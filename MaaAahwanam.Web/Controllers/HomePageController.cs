@@ -38,7 +38,12 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
+                    if (userdata.FirstName != "" && userdata.FirstName != null)
+                        ViewBag.username = userdata.FirstName;
+                    else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
+                        ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
+                    else
+                        ViewBag.username = userdata.AlternativeEmailID;
                 }
                 catch (Exception)
                 {
@@ -58,7 +63,7 @@ namespace MaaAahwanam.Web.Controllers
             quotationsList.UpdatedTime = DateTime.UtcNow;
             quotationsList.Status = "Active";
             int count = quotationListsService.GetVendorVenue(quotationsList.IPaddress).Count;
-            if (count <= 5)
+            if (count < 6)
             {
                 int quotation = quotationListsService.AddQuotationList(quotationsList);
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
