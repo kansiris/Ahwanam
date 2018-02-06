@@ -18,7 +18,8 @@
                     end: moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').add(1, 'day'),
                     color: v.Color,
                     allDay: v.IsFullDay,
-                    type: v.Type
+                    type: v.Type,
+                    servicetype: v.Servicetype
                 });
             })
 
@@ -77,7 +78,8 @@ function GenerateCalender(events) {
                 end: end,
                 allDay: false,
                 color: '',
-                type: ''
+                type: '',
+                servicetype: ''
             };
             openAddEditForm();
             $('#calendar').fullCalendar('unselect');
@@ -85,14 +87,16 @@ function GenerateCalender(events) {
         editable: true,
         eventDrop: function (event) {
             var data = {
-                EventID: event.eventID,
-                Subject: event.title,
-                Start: event.start.format('DD/MMM/YYYY HH:mm'),
-                End: event.end.format('DD/MMM/YYYY HH:mm'),
+                Id: event.eventID,
+                Title: event.title,
+                StartDate: event.start.format('DD/MMM/YYYY HH:mm'),
+                EndDate: event.end.format('DD/MMM/YYYY HH:mm'),
                 Description: event.description,
-                ThemeColor: event.color,
+                Color: event.color,
                 IsFullDay: event.allDay,
-                type: event.type
+                Type: event.type,
+                VendorId: $('#vid').val(),
+                Servicetype: event.servicetype
             };
             SaveEvent(data);
         }

@@ -1312,7 +1312,7 @@
                     <input type="text" class="form-control extra-persons" id="quote_extrapersons" />
                 </div>
                 <div class="form-group text-center">
-                    <button name="Submit" href="#" class="btn btn-sm btn-default book-now theme-bg white">Send Details</button>
+                    <button name="Submit" href="#" class="btn btn-sm btn-default book-now theme-bg white" id="SendQuote">Send Details</button>
                 </div>
             </div>
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -1358,13 +1358,13 @@
     /*-------- Popular Vendors slides --------*/
 
     //<!-------- Check in, Check out Calender ----------->
-        //$('.some_class').datetimepicker({
-        //minDate:'-1970/01/00', // yesterday is minimum date
-        //maxDate:'+1971/01/03' // and tommorow is maximum date calendar
-        //});
-        $('body').on('click', '.xdsoft_datetimepicker .xdsoft_calendar td > div', function () {
-            alert("Select");
-        });
+    //$('.some_class').datetimepicker({
+    //minDate:'-1970/01/00', // yesterday is minimum date
+    //maxDate:'+1971/01/03' // and tommorow is maximum date calendar
+    //});
+    $('body').on('click', '.xdsoft_datetimepicker .xdsoft_calendar td > div', function () {
+        alert("Select");
+    });
 
     $("#some_class_1").datetimepicker({
         timepicker: false,
@@ -1387,7 +1387,8 @@
         var days = (end - start) / (1000 * 60 * 60 * 24);
         alert(Math.round(days));
     }
-//<!-------- Check in, Check out Calender ----------->
+    //<!-------- Check in, Check out Calender ----------->
+
 
     /*-------- Chained Jquery --------*/
     $(function () {
@@ -1613,7 +1614,7 @@
     })
     /*-------- Get Quote Alert --------*/
 
-    $(".white").click(function () {
+    $("#SendQuote").click(function () {
         var url = $('#particularvendor').val();
         var servicetype = url.split('type=')[1].split('&&')[0];
         var vendorid = url.split('vid=')[1].split('&&')[0];
@@ -1678,12 +1679,19 @@
     /*------- Select Business Category -------------*/
 
     /*------- Search Area -------------*/
+   
+
+
     $(function () {
-        var availableTags = [
-            "Ameerpet", "Bibi Nagar", "Begumpet", "Chandanagar", "Dilsukhnagar", "Kukatpally", "Nizampet"
-        ];
-        $("#tags").autocomplete({
-            source: availableTags
+        $.ajax({
+            type: "GET",
+            url: '/HomePage/AutoCompleteCountry',
+            success: function (data) {
+                var availableTags = data.split(',');
+                $("#tags").autocomplete({
+                    source: availableTags
+                });
+            }
         });
     });
     $("#tags").click(function () {

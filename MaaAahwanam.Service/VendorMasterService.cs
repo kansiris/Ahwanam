@@ -35,5 +35,9 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.GetVendorByEmail(emailid);
         }
+        public List<dynamic> GetVendorLocations()
+        {
+            return vendormasterRepository.VendormasterList().Select(m => m.Landmark).ToList<dynamic>();
+        }
     }
 }

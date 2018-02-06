@@ -32,6 +32,9 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.Catering = vendorProductsService.Getvendorproducts_Result("Catering").Take(6);
             ViewBag.Photography = vendorProductsService.Getvendorproducts_Result("Photography").Take(6);
             ViewBag.Decorator = vendorProductsService.Getvendorproducts_Result("Decorator").Take(6);
+            //Location
+            //VendorMasterService allVendorsService = new VendorMasterService();
+            //ViewBag.Listoflocations = String.Join(",", allVendorsService.GetVendorLocations().Distinct());
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 try
@@ -78,6 +81,14 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
                 return Json("exceeded");
+        }
+
+        public JsonResult AutoCompleteCountry()
+        {
+            VendorMasterService allVendorsService = new VendorMasterService();
+            var Listoflocations = String.Join(",", allVendorsService.GetVendorLocations().Distinct());
+            //return Json(Listoflocations,JsonRequestBehavior.AllowGet);
+            return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }
