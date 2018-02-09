@@ -1229,8 +1229,13 @@
     });
 
     /*------- Select Business Category -------------*/
+
     var listval, catgId;
     $(".selectcategory div.checkbox input[type='checkbox']").change(function () {
+        var selected = [];
+        $('.selectcategory div.checkbox input[type="checkbox"]:checked').each(function () {
+            selected.push($(this).parent("label").text().trim());
+        });
         if ($(this).is(':checked')) {
             listval = $(this).parent("label").text();
             listval = listval.trim();
@@ -1241,10 +1246,25 @@
                 }
             });
 
-            $("#businesscategory div").each(function () {
-                catgId = $(this).attr("id");
-                if (listval == catgId) {
-                    $(this).css("display", "block");
+            var url = '/HomePage/SortVendorsBasedOnLocation?location=' + $('#tags').val();
+            //Sorting Vendors based on location
+            $.ajax({
+                type: 'get',
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'html',
+                data: $('#tags').val(),
+                success: function (result) {
+                    $('#businesscategory').empty().html(result);
+                    catgId = selected.toString().split(',');
+                    for (var i = 0; i < catgId.length; i++) {
+                        $("#businesscategory div").each(function () {
+                            $('#' + catgId[i] + '').show();
+                        });
+                    }
+                },
+                error: function (ex) {
+                    alert(ex);
                 }
             });
         } else {
@@ -1270,7 +1290,7 @@
     /*------- Select Business Category -------------*/
 
     /*------- Search Area -------------*/
-   
+
 
 
     $(function () {
@@ -1299,6 +1319,7 @@
         }
     }
 
+
     $(".steps ul.tab-content li #businesscategory div > div > div input[type='checkbox']").change(function () {
         if ($(this).is(':checked')) {
             var listvalId = $(this).parents(".checkbox").parent("div").parent("div").attr("id");
@@ -1308,11 +1329,6 @@
                 if (selectedListval == listvalId) {
                     $(this).next("ol").append("<li>" + listval + "</li>");
                 }
-                //$.get('/HomePage/SortVendors?location=' + $('#tags').val(), function (data) {
-                //    var venue, hotel, resort, convention, catering, photography, mehendi, decorator;
-                //    $.each(function(data.Venue))
-                //    $('#Venues').empty().load(data.Venue);
-                //})
             });
             tab2Display();
 
@@ -1333,11 +1349,17 @@
     $(".addArea-btn").click(function () {
         $(".customer-search-require").find(".selected-area").children("span").empty().append($(this).parents(".row").find("input[type='text']").val());
         $(".customer-search-require").find(".selected-category").css("display", "block");
+        $(".selectcategory div.checkbox input[type='checkbox']").prop("checked", false);
+        $(".selected-category").css("display", "none");
+        $("#businesscategory > div").css("display", "none");
         tab2Display();
     });
     $(".area-name-block").click(function () {
         $(".customer-search-require").find(".selected-area").children("span").empty().append($(this).find("span").text());
         $(".customer-search-require").find(".selected-category").css("display", "block");
+        $(".selectcategory div.checkbox input[type='checkbox']").prop("checked", false);
+        $(".selected-category").css("display", "none");
+        $("#businesscategory").css("display", "none");
         tab2Display();
     });
     /*------- Select Area -------------*/

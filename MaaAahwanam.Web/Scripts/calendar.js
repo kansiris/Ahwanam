@@ -90,7 +90,7 @@ function GenerateCalender(events) {
                 Id: event.eventID,
                 Title: event.title,
                 StartDate: event.start.format('DD/MMM/YYYY HH:mm'),
-                EndDate: event.end.format('DD/MMM/YYYY HH:mm'),
+                EndDate: event.end.subtract(12, 'hours').subtract(30, 'minutes').format('DD/MMM/YYYY HH:mm'),
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay,
@@ -98,6 +98,7 @@ function GenerateCalender(events) {
                 VendorId: $('#vid').val(),
                 Servicetype: event.servicetype
             };
+            //alert("Start Date:" + data.StartDate + "End Date:" + data.EndDate);
             SaveEvent(data);
         }
     })
@@ -113,7 +114,7 @@ $('#btnDelete').click(function () {
         $.ajax({
             type: "POST",
             url: '/VendorCalendar/DeleteEvent',
-            data: { 'id': selectedEvent.eventID },
+            data: { 'id': selectedEvent.Id },
             success: function (data) {
                 if (data.status) {
                     //Refresh the calender
@@ -135,7 +136,7 @@ $('#startdate,#enddate').datetimepicker({
 
 function openAddEditForm() {
     if (selectedEvent != null) {
-        $('#hdEventID').val(selectedEvent.eventID);
+        $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
         $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MMM/YYYY hh:mm A"));
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
