@@ -18,7 +18,8 @@
                     end: moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').add(1, 'day'),
                     color: v.Color,
                     allDay: v.IsFullDay,
-                    type: v.Type
+                    type: v.Type,
+                    servicetype: v.Servicetype
                 });
             })
 
@@ -77,7 +78,8 @@ function GenerateCalender(events) {
                 end: end,
                 allDay: false,
                 color: '',
-                type: ''
+                type: '',
+                servicetype: ''
             };
             openAddEditForm();
             $('#calendar').fullCalendar('unselect');
@@ -85,15 +87,18 @@ function GenerateCalender(events) {
         editable: true,
         eventDrop: function (event) {
             var data = {
-                EventID: event.eventID,
-                Subject: event.title,
-                Start: event.start.format('DD/MMM/YYYY HH:mm'),
-                End: event.end.format('DD/MMM/YYYY HH:mm'),
+                Id: event.eventID,
+                Title: event.title,
+                StartDate: event.start.format('DD/MMM/YYYY HH:mm'),
+                EndDate: event.end.subtract(12, 'hours').subtract(30, 'minutes').format('DD/MMM/YYYY HH:mm'),
                 Description: event.description,
-                ThemeColor: event.color,
+                Color: event.color,
                 IsFullDay: event.allDay,
-                type: event.type
+                Type: event.type,
+                VendorId: $('#vid').val(),
+                Servicetype: event.servicetype
             };
+            //alert("Start Date:" + data.StartDate + "End Date:" + data.EndDate);
             SaveEvent(data);
         }
     })
@@ -109,7 +114,7 @@ $('#btnDelete').click(function () {
         $.ajax({
             type: "POST",
             url: '/VendorCalendar/DeleteEvent',
-            data: { 'id': selectedEvent.eventID },
+            data: { 'id': selectedEvent.Id },
             success: function (data) {
                 if (data.status) {
                     //Refresh the calender
@@ -131,7 +136,7 @@ $('#startdate,#enddate').datetimepicker({
 
 function openAddEditForm() {
     if (selectedEvent != null) {
-        $('#hdEventID').val(selectedEvent.eventID);
+        $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
         $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MMM/YYYY hh:mm A"));
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
