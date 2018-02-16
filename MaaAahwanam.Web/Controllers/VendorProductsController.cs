@@ -36,6 +36,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 selectedvenues = selectedvenues +','+splittedsubcategories[int.Parse(selectedvenuescategories.Split(',')[i])].ToString();
             }
+            ViewBag.Venue = vendorProductsService.GetSearchedVendorRecords("Venue",selectedvenues+",").ToList();
             //for (int i = 0; i < subcategory.Split(',').Length; i++)
             //{
             //    ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.businessname == subcategory.Split(',')[i]).ToList();

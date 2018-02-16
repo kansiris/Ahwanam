@@ -75,6 +75,10 @@
           <Parameter Name="subid" Type="bigint" Mode="In" />
           <Parameter Name="type" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="searchvendors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="varchar" Mode="In" />
+          <Parameter Name="param" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="serviceconfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RequestID" Type="int" Mode="In" />
         </Function>
@@ -273,7 +277,11 @@
           <Parameter Name="ServicType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="vendorproducts" ReturnType="Collection(MaaAahwanamModel.vendorproducts_Result)">
+          <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="searchvendors" ReturnType="Collection(MaaAahwanamModel.searchvendors_Result)">
             <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="param" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -771,6 +779,21 @@
           <Property Type="String" Name="food" Nullable="true" />
         </ComplexType>
         <ComplexType Name="vendorproducts_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="businessname" Nullable="true" />
+          <Property Type="String" Name="subid" Nullable="true" />
+          <Property Type="String" Name="cost" Nullable="true" />
+          <Property Type="String" Name="landmark" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="true" />
+          <Property Type="String" Name="servictype" Nullable="true" />
+          <Property Type="String" Name="EmailId" Nullable="true" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="String" Name="logo" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="Int32" Name="tier" Nullable="false" />
+          <Property Type="Int32" Name="priority" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="searchvendors_Result">
           <Property Type="Int64" Name="id" Nullable="false" />
           <Property Type="String" Name="businessname" Nullable="true" />
           <Property Type="String" Name="subid" Nullable="true" />
@@ -1445,6 +1468,25 @@
           <FunctionImportMapping FunctionImportName="vendorproducts" FunctionName="MaaAahwanamModel.Store.vendorproducts">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.vendorproducts_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="businessname" ColumnName="businessname" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="landmark" ColumnName="landmark" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="servictype" ColumnName="servictype" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="tier" ColumnName="tier" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="searchvendors" FunctionName="MaaAahwanamModel.Store.searchvendors">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.searchvendors_Result">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="businessname" ColumnName="businessname" />
                 <ScalarProperty Name="subid" ColumnName="subid" />

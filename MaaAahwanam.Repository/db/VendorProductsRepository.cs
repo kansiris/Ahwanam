@@ -15,5 +15,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.vendorproducts(type).ToList();
         }
+
+        public List<searchvendors_Result> GetSearchedVendorRecords(string type,string param)
+        {
+            return maaAahwanamEntities.searchvendors(type,param).ToList();
+        }
     }
 }

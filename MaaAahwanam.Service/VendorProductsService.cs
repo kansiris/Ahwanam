@@ -15,5 +15,10 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.Getvendorproducts_Result(type);
         }
+
+        public List<searchvendors_Result> GetSearchedVendorRecords(string type,string param)
+        {
+            return vendorProductsRepository.GetSearchedVendorRecords(type,param);
+        }
     }
 }

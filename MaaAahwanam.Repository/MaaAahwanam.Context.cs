@@ -456,5 +456,18 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vendorproducts_Result>("vendorproducts", typeParameter);
         }
+    
+        public virtual ObjectResult<searchvendors_Result> searchvendors(string type, string param)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var paramParameter = param != null ?
+                new ObjectParameter("param", param) :
+                new ObjectParameter("param", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchvendors_Result>("searchvendors", typeParameter, paramParameter);
+        }
     }
 }
