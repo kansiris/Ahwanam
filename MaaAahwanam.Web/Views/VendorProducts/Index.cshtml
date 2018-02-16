@@ -4,6 +4,10 @@
     Layout = "~/Views/SharedWeb/MasterPage.cshtml";
 }
 
+<link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
+<link href="~/newdesign/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/newdesign/css/daterangepicker.css" rel="stylesheet" />
+
 <div class="container margin-top-100">
     <div class="row">
         <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Available @Request.QueryString["service"] Partners</h3>
@@ -21,9 +25,9 @@
                         else
                         { <img src="~/noimages.png" alt="No Image Available">}
                         @*@if (item.image != null && item.image != "")
-                        {<img src="~/vendorimages/@item.image" alt="@item.image">}
-                        else
-                        { <img src="~/noimages.png" alt="No Image Available">}*@
+                            {<img src="~/vendorimages/@item.image" alt="@item.image">}
+                            else
+                            { <img src="~/noimages.png" alt="No Image Available">}*@
                     </a>
                     <div class="venue-footer">
                         <div class="venue-info">
@@ -48,15 +52,15 @@
                                     <div class="count">
                                         @*<p>Rs @item.cost<i class="fa fa-check" aria-hidden="true"></i></p>*@
                                         @if (item.cost != null && item.cost != "")
-                                        { <p>Rs @item.cost <i class="fa fa-check" aria-hidden="true"></i></p>}
-                                        else
-                                        { <p>Rs 9999 <i class="fa fa-check" aria-hidden="true"></i></p>}
+                                        {<p>Rs @item.cost <i class="fa fa-check" aria-hidden="true"></i></p>}
+                                    else
+                                    { <p>Rs 9999 <i class="fa fa-check" aria-hidden="true"></i></p>}
                                         @if (ViewBag.service == "Venue" || ViewBag.service == "Hotels" || ViewBag.service == "Resorts" || ViewBag.service == "Conventions")
-                                        { <span>Service Cost</span>}
+                                        {<span>Service Cost</span>}
                                         @if (ViewBag.service == "Catering" || ViewBag.service == "Other")
-                                        { <span>Minimum Order</span>}
+                                        {<span>Minimum Order</span>}
                                         @if (ViewBag.service == "Decorator" || ViewBag.service == "Photography")
-                                        { <span>Starting Price</span>}
+                                        {<span>Starting Price</span>}
                                         @*<span>Price Per Plate</span>*@
                                     </div>
                                 </div>
@@ -74,4 +78,60 @@
     <i class="fa fa-arrow-up" aria-hidden="true"></i>
 </div>
 
+<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
+<script src="~/newdesign/js/jquery-ui-1.12.1.js"></script>
+<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
+<script src="~/newdesign/js/daterangepicker.js"></script>
+<script src="~/Scripts/Quote.js"></script>
+<script>
+    /*-------- Get Quote Alert --------*/
+    $("a.view-details").click(function () {
+        var url = $(this).parents(".venue-details").find("a").attr("href");
+        $('#particularvendor').val(url);
+        $(".view-details-alert").css("display", "block");
+        //alert($(this).parents(".venue-footer").find(".bottom-content.text-center").find(".content").length);
+        $(".view-details-alert > .content .default-details > h3").empty().append($(this).parents(".venue-footer").find(".card-title").find("h4").text());
+        var contentLen = $(this).parents(".venue-footer").find(".bottom-content.text-center").find(".content").length;
+        $(".view-details-alert > .content .default-details > ul").remove();
+        $(".view-details-alert > .content .default-details").append('<ul class="col-xs-12 col-sm-12 col-md-6 col-lg-6 w-100"></ul>');
+        for (var i = 0; i < contentLen; i++) {
+            $(".view-details-alert > .content .default-details > ul").append('<li>' + '<span style="font-weight:bold"></span>' + ' : ' + '<p style="display:inline-block"></p>' + '</li>');
+            $('.view-details-alert').find('li').eq(i).find('span').append($(this).parents(".venue-footer").find(".bottom-content").find(".count").eq(i).children("span").text());
+            $('.view-details-alert').find('li').eq(i).find('p').append($(this).parents(".venue-footer").find(".bottom-content").find(".count").eq(i).children("p").text());
+        }
 
+        //calender Text boxes Empty
+        $(".checkin-out").find("input.check-in").val("");
+        $(".checkin-out").find("input.check-out").val("");
+        $(".checkin-out").find("input.persons").val("");
+        $(".checkin-out").find("input.extra-persons").val("");
+        //calender Text boxes Empty
+    });
+    $(".view-details-alert > .content > i.fa-times").click(function () {
+        $(this).parents(".view-details-alert").css("display", "none");
+    })
+    /*-------- Get Quote Alert --------*/
+
+    $("#SendQuote").click(function () {
+        var url = $('#particularvendor').val();
+        var servicetype = url.split('type=')[1].split('&&')[0];
+        var vendorid = url.split('vid=')[1].split('&&')[0];
+        var vendormasterid = url.split('id=')[1].split('&&')[0];
+        var quotationsList = {
+            Name: $('#quote_name').val(),
+            EmailId: $('#quote_email').val(),
+            ServiceType: servicetype,
+            PhoneNo: $('#quote_phone').val(),
+            EventStartDate: $('#checkindate').val(),
+            EventStartTime: $('#checkintime').val(),
+            EventEnddate: $('#checkoutdate ').val(),
+            EventEndtime: $('#checkouttime').val(),
+            VendorId: vendorid,
+            VendorMasterId: vendormasterid,
+            Persons: $('#quote_persons').val(),
+            ExtraPersons: $('#quote_extrapersons').val(),
+        }
+        GetQuote(quotationsList);
+        //alert('servicetype:' + servicetype + ',vendorid:' + vendorid + ',vendormasterid:' + vendormasterid);
+    });
+</script>
