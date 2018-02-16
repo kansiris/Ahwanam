@@ -131,6 +131,9 @@
         <Function Name="SP_vendordatesbooked" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spsearchword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="vendorallservices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="type" Type="varchar" Mode="In" />
           <Parameter Name="id" Type="bigint" Mode="In" />
@@ -282,6 +285,9 @@
           <FunctionImport Name="searchvendors" ReturnType="Collection(MaaAahwanamModel.searchvendors_Result)">
             <Parameter Name="type" Mode="In" Type="String" />
             <Parameter Name="param" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spsearchword" ReturnType="Collection(MaaAahwanamModel.spsearchword_Result)">
+            <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -805,8 +811,10 @@
           <Property Type="String" Name="subtype" Nullable="true" />
           <Property Type="String" Name="logo" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
-          <Property Type="Int32" Name="tier" Nullable="false" />
-          <Property Type="Int32" Name="priority" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spsearchword_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1498,8 +1506,14 @@
                 <ScalarProperty Name="subtype" ColumnName="subtype" />
                 <ScalarProperty Name="logo" ColumnName="logo" />
                 <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="tier" ColumnName="tier" />
-                <ScalarProperty Name="priority" ColumnName="priority" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spsearchword" FunctionName="MaaAahwanamModel.Store.spsearchword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.spsearchword_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
