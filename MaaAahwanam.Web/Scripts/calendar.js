@@ -15,7 +15,7 @@
                     title: v.Title,
                     description: v.Description,
                     start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
-                    end: moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').add(1, 'day'),
+                    end: moment(v.EndDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
                     color: v.Color,
                     allDay: v.IsFullDay,
                     type: v.Type,
@@ -55,9 +55,9 @@ function GenerateCalender(events) {
                     selectedEvent = data;
                     $('#myModal #eventTitle').text(data.Title);
                     var $description = $('<div/>');
-                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).format("DD/MMM/YYYY hh:mm A")));
+                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
                     if (calEvent.end != null) {
-                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).format("DD/MMM/YYYY hh:mm A")));
+                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
                     }
                     $description.append($('<p/>').html('<b>Description:</b>' + data.Description));
                     $('#myModal #pDetails').empty().html($description);
@@ -138,10 +138,10 @@ function openAddEditForm() {
     if (selectedEvent != null) {
         $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
-        $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MMM/YYYY hh:mm A"));
+        $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A"));
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
         //$('#chkIsFullDay').change();
-        $('#enddate').val(moment(selectedEvent.EndDate).format("DD/MMM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).format("DD/MMM/YYYY hh:mm A") : '');
+        $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A") : '');
         $('#description').val(selectedEvent.Description);
         $('#color').val(selectedEvent.Color);
         $('#type').val(selectedEvent.Type);
