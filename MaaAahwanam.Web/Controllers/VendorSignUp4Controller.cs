@@ -47,10 +47,12 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string vid, string type, string discount)
+        public ActionResult Index(string id, string vid, string type, string discount,string txtdiscount)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                if (txtdiscount != "" && txtdiscount != null)
+                    discount = txtdiscount;
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 //vendorMaster.discount = discount;
                 //vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));

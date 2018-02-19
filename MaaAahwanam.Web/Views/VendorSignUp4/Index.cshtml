@@ -125,7 +125,26 @@
                         </div>
                     }
 
-
+                  @if (ViewBag.data != "10%" && ViewBag.data != "20%" && ViewBag.data != "30%" && ViewBag.data != "40%" && ViewBag.data != "" && ViewBag.data != null)
+                  {
+                    <div class="radio col-xs-6 col-sm-4 col-md-3">
+                        <label>
+                            <input type="radio" class="discount-radio padding-right-10"><span></span>
+                            <span>Discount Entered</span>
+                            <input type="text" id="txtdiscount" name="txtdiscount" class="form-control" value="@ViewBag.data%" />
+                        </label>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="radio col-xs-6 col-sm-4 col-md-3">
+                        <label>
+                            <input type="radio" class="discount-radio padding-right-10" id="manual"><span></span>
+                            <span>Enter Discount</span>
+                            <input type="text" id="txtdiscount" name="txtdiscount" class="form-control" style="display:none" />
+                        </label>
+                    </div>
+                  }
 
 
 
@@ -161,4 +180,14 @@
             </div>
         </div>
     </form>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script>
+        $('#manual').click(function () {
+            $('#txtdiscount').css('display', 'block');
+        });
+
+        //$('#txtdiscount').on('input',function () {
+        //    $('#discount').val($('#txtdiscount').val());
+        //});
+    </script>
 </div>

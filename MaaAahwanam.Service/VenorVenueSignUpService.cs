@@ -17,6 +17,7 @@ namespace MaaAahwanam.Service
         VendorsPhotographyRepository vendorsPhotographyRepository = new VendorsPhotographyRepository();
         VendorsDecoratorRepository vendorsDecoratorRepository = new VendorsDecoratorRepository();
         VendorOthersRepository vendorOthersRepository = new VendorOthersRepository();
+        VendorEventOrganiserRepository vendorEventOrganiserRepository = new VendorEventOrganiserRepository();
 
         string updateddate = DateTime.UtcNow.ToShortDateString();
         
@@ -173,6 +174,34 @@ namespace MaaAahwanam.Service
         public VendorsDecorator GetParticularVendorDecorator(long id, long vid)
         {
             return vendorsDecoratorRepository.GetVendorDecorator(id, vid);
+        }
+
+
+        //Event Organiser Area
+
+        public VendorsEventOrganiser AddVendorEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser)
+        {
+            vendorsEventOrganiser.UpdatedDate = Convert.ToDateTime(updateddate);
+            return vendorEventOrganiserRepository.AddEventOrganiser(vendorsEventOrganiser);
+        }
+
+        public List<VendorsEventOrganiser> GetVendorEventOrganiser(long id)
+        {
+            return vendorVenueSignUpRepository.GetVendorEventOrganiser(id);
+        }
+
+        public VendorsEventOrganiser UpdateEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorsDecorator.Status = "InActive";
+            vendorsEventOrganiser.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, masterid, vid);
+            return vendorsEventOrganiser;
+        }
+
+        public VendorsEventOrganiser GetParticularVendorEventOrganiser(long id, long vid)
+        {
+            return vendorEventOrganiserRepository.GetVendorEventOrganiser(id, vid);
         }
 
         //Others Area

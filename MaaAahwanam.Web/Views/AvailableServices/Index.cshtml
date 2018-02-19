@@ -135,6 +135,49 @@
             </div>
         }
 
+
+        @*Event Management Div's*@
+        @if (ViewBag.services.Contains("Event Management"))
+        {
+            <h3 class="row margin-left-0 margin-right-0">Photography</h3>
+            <div class="row">
+                @foreach (var item in ViewBag.Eventrecord)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+                            <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                            <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Event" />
+                            @*<p><span>@item.PhotographyType</span></p>*@
+                            <p>
+                                <span>
+                                    @if (item.name != null)
+                                    { @item.name }
+                                    else if (item.PhotographyType != null)
+                                    { @item.PhotographyType }
+                                    else
+                                    { <text> -- No Category Selected -- </text> }
+                                </span>
+                            </p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Event"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Event"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/EventManagementFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Event"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        </div>
+                        <div class="selected-block">@item.PhotographyType</div>
+                    </div>
+                }
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        }
+
         @*Decorator Div's*@
         @if (ViewBag.services.Contains("Decorator"))
         {
@@ -205,7 +248,7 @@
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
                         <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                        <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        <a href="/OthersFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
                         <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
                     </div>
                     <div class="selected-block">@item.type</div>
