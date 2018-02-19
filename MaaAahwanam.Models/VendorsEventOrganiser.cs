@@ -12,6 +12,7 @@ namespace MaaAahwanam.Models
         [Key]
         public long Id { get; set; }
         public long VendorMasterId { get; set; }
+        public string type { get; set; }
         public decimal StartingPrice { get; set; }
         public string MinOrder { get; set; }
         public string MaxOrder { get; set; }

@@ -28,6 +28,8 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cateringrecord = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
             if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                 ViewBag.Photographyrecord = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
+            if (vendorMaster.ServicType.Split(',').Contains("Event Management"))
+                ViewBag.Eventrecord = vendorVenueSignUpService.GetVendorEventOrganiser(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                 ViewBag.Decoratorrecord = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Other"))
