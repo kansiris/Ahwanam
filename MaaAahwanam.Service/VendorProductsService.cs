@@ -20,5 +20,9 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.GetSearchedVendorRecords(type,param);
         }
+        public List<spsearchword_Result> getwordsearch(string search, string type)
+        {
+            return vendorProductsRepository.spsearchword(search, type);
+        }
     }
 }
