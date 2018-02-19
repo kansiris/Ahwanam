@@ -198,7 +198,7 @@
                         {
                             <label><input type="checkbox" id="newaddress" value=""><span></span>New Address ?</label>
                         }
-                        
+
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3 col-md-offset-1 hidden-xs">
@@ -227,8 +227,8 @@
                             <option value="3">Tier 3</option>
                         </select>
                         @*@Html.DropDownListFor(model=>model.Item4.tier, new List<SelectListItem>
-                   { new SelectListItem{Text="Tier 1", Value="1"},
-                     new SelectListItem{Text="Tier 2", Value="2"},new SelectListItem{Text="Tier 3", Value="3"}}, new { @class = "form-control1",@Selected= @ViewBag.service.tier })*@
+                            { new SelectListItem{Text="Tier 1", Value="1"},
+                              new SelectListItem{Text="Tier 2", Value="2"},new SelectListItem{Text="Tier 3", Value="3"}}, new { @class = "form-control1",@Selected= @ViewBag.service.tier })*@
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         <label>Describe your business and services offered (in third person)</label>
@@ -254,7 +254,7 @@
             </div>
             <div class="row">
                 @Html.HiddenFor(model => model.Item1.ServicType, new { Value = ViewBag.type })
-                @Html.HiddenFor(model=>model.Item1.priority,new { Value= ViewBag.data.priority})
+                @Html.HiddenFor(model => model.Item1.priority, new { Value = ViewBag.data.priority })
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
                     @*<div class="checkbox1">
                             @foreach (var item in ViewBag.data.ServicType.Split(","))
@@ -299,6 +299,15 @@
                                 <label><input type="checkbox" value=""><span></span>Photography</label>
                             }*@
                     </div>
+
+                    <div class="checkbox1">
+                        @if (ViewBag.type == "Event")
+                        {
+                            <label><input type="checkbox" value="" checked disabled><span></span>EventManagement</label>
+                        }
+
+                    </div>
+
                     <div class="checkbox1">
 
                         @if (ViewBag.type == "Decorator")
@@ -490,6 +499,39 @@
                     </div>
                 }
 
+
+                @if (ViewBag.type == "Event" && ViewBag.categorytype != null && ViewBag.categorytype != "")
+                {
+                    @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.DecorationType" />*@
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="EventManagement">
+                        <h4>Event Management</h4>
+                        <div class="checkbox">
+                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.categorytype</label>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="EventManagement">
+                        <h4>Event Management</h4>
+                        <div class="checkbox">
+                            <label><input type="checkbox"><span></span>Private</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox"><span></span>Corporate</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox"><span></span>Charity</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox"><span></span>Fundraising</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox"><span></span>Others</label>
+                        </div>
+                    </div>
+                }
+
                 @if (ViewBag.type == "Other" && ViewBag.categorytype != null && ViewBag.categorytype != "")
                 {
                     @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.type" />*@
@@ -526,13 +568,13 @@
                 @*<a href="/VendorSignUp2" class="btn btn-default red-bg white">Next</a>*@
                 @if (ViewBag.categorytype == null || ViewBag.categorytype == "")
                 {
-                    <input type="submit" value="Save Info" class="btn btn-default red-bg white margin-left" id="firstnextbtn" name="command"/>
+                    <input type="submit" value="Save Info" class="btn btn-default red-bg white margin-left" id="firstnextbtn" name="command" />
                 }
                 else
                 {
-                    <input type="submit" value="Update Info" class="btn btn-default red-bg white margin-left" id="firstnextbtn" name="command"/>
+                    <input type="submit" value="Update Info" class="btn btn-default red-bg white margin-left" id="firstnextbtn" name="command" />
                 }
-                
+
                 <a href="/HomePage" class="btn btn-default red-bg white margin-left">Cancel</a>
             </div>
         </div>
@@ -682,10 +724,10 @@
             }
         });
 
-        
-            $('#Item1_tier option[value="@ViewBag.data.tier"]').attr("selected", "selected");
-        
-        });
+
+        $('#Item1_tier option[value="@ViewBag.data.tier"]').attr("selected", "selected");
+
+    });
 
     //window.load =function(){
     //$(".selectcategory div.checkbox1 input[type='checkbox']").on('load',function () {

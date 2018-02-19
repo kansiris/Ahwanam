@@ -28,6 +28,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             var data = vendorEventOrganiserService.GetVendorEventOrganiser(long.Parse(id), long.Parse(vid));
             vendorsEventOrganiser.UpdatedBy = vendorMaster.UpdatedBy = 2;
+            vendorsEventOrganiser.type = data.type;
             vendorsEventOrganiser.discount = data.discount;
             vendorsEventOrganiser.Address = data.Address;
             vendorsEventOrganiser.City = data.City;

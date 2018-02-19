@@ -19,7 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
-            string[] services = { "Venue", "Catering", "Photography", "Decorator", "Other" };
+            string[] services = { "Venue", "Catering", "Photography", "Event Management", "Decorator", "Other" };
             string vid = "";
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Venue"))
@@ -190,6 +190,8 @@ namespace MaaAahwanam.Web.Controllers
                 count = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList().Count;
             if (type == "Photography")
                 count = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id)).Count;
+            if (type == "Event")
+                count = vendorVenueSignUpService.GetVendorEventOrganiser(long.Parse(id)).Count;
             if (type == "Decorator")
                 count = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id)).Count;
             if (type == "Other")

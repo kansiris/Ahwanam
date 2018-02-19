@@ -41,6 +41,13 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.categorytype = ViewBag.service.PhotographyType;
                 return View();
             }
+            if (type == "Event")
+            {
+                VendorEventOrganiserService vendorEventOrganiserService = new VendorEventOrganiserService();
+                ViewBag.service = vendorEventOrganiserService.GetVendorEventOrganiser(long.Parse(id), long.Parse(vid));
+                ViewBag.categorytype = ViewBag.service.type;
+                return View();
+            }
             if (type == "Decorator")
             {
                 VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
@@ -65,10 +72,11 @@ namespace MaaAahwanam.Web.Controllers
                 string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
                 string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
                 string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
+                string[] eventservices = { "Private", "Corporate", "Charity","Fundraising", "Others" };
                 string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
                 string[] otherservices = { "Mehendi" };
                 List<string> matchingvenues = null; List<string> matchingcatering = null; List<string> matchingphotography = null; List<string> matchingdecorators = null;
-                List<string> matchingothers = null;
+                List<string> matchingothers = null; List<string> matchingevents = null; 
                 if (vendorVenue.VenueType != null)
                 {
                     if (type == "Venue") //if (vendorMaster.ServicType.Split(',').Contains("Venue"))
@@ -77,6 +85,8 @@ namespace MaaAahwanam.Web.Controllers
                         matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
                     if (type == "Photography") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                         matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
+                    if (type == "Event") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
+                        matchingevents = eventservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
                     if (type == "Decorator") //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                         matchingdecorators = decoratorservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
                     if (type == "Other") //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
@@ -237,6 +247,59 @@ namespace MaaAahwanam.Web.Controllers
                                 vendorsPhotography.PhotographyType = matchingphotography[i];
                                 vendorsPhotography.name = null;
                                 vendorsPhotography = vendorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
+                            }
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region Event Management
+
+                if (matchingevents != null)
+                {
+                    VendorsEventOrganiser vendorEventOrganiser = vendorVenueSignUpService.GetParticularVendorEventOrganiser(long.Parse(id), long.Parse(vid));
+                    vendorEventOrganiser.Address = vendorVenue.Address;
+                    vendorEventOrganiser.City = vendorVenue.City;
+                    vendorEventOrganiser.State = vendorVenue.State;
+                    vendorEventOrganiser.Landmark = vendorVenue.Landmark;
+                    vendorEventOrganiser.ZipCode = vendorVenue.ZipCode;
+                    vendorEventOrganiser.VendorMasterId = vendorMaster.Id;
+                    //vendorsPhotography.tier = vendorVenue.tier;
+                    if (command == "Save Info")
+                    {
+                        for (int a = 0; a < matchingevents.Count(); a++)
+                        {
+                            if (vendorEventOrganiser.type == "" || vendorEventOrganiser.type == null)
+                            {
+                                vendorEventOrganiser.type = matchingevents[a];
+                                vendorEventOrganiser.name = vendorVenue.name;
+                                vendorEventOrganiser = vendorVenueSignUpService.UpdateEventOrganiser(vendorEventOrganiser, vendorMaster, long.Parse(id), long.Parse(vid));
+                            }
+                            else
+                            {
+                                vendorEventOrganiser.type = matchingevents[a];
+                                vendorEventOrganiser.name = null;
+                                vendorEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorEventOrganiser);
+                            }
+                        }
+                    }
+
+                    if (command == "Update Info")
+                    {
+                        for (int i = 0; i < matchingevents.Count(); i++)
+                        {
+                            if (i == 0)
+                            {
+                                vendorEventOrganiser.type = matchingevents[i];
+                                vendorEventOrganiser.name = vendorVenue.name;
+                                vendorEventOrganiser = vendorVenueSignUpService.UpdateEventOrganiser(vendorEventOrganiser, vendorMaster, long.Parse(id), long.Parse(vid));
+                            }
+                            else
+                            {
+                                vendorEventOrganiser.type = matchingevents[i];
+                                vendorEventOrganiser.name = null;
+                                vendorEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorEventOrganiser);
                             }
                         }
                     }

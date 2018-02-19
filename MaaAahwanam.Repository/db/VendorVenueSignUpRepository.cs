@@ -122,6 +122,11 @@ namespace MaaAahwanam.Repository.db
                     var list = _dbContext.VendorsPhotography.FirstOrDefault(m => m.Id == vid);
                     _dbContext.VendorsPhotography.Remove(list);
                 }
+                if (type == "Event")
+                {
+                    var list = _dbContext.VendorsEventOrganiser.FirstOrDefault(m => m.Id == vid);
+                    _dbContext.VendorsEventOrganiser.Remove(list);
+                }
                 if (type == "Decorator")
                 {
                     var list = _dbContext.VendorsDecorator.FirstOrDefault(m => m.Id == vid);

@@ -263,6 +263,13 @@ namespace MaaAahwanam.Service
                 vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, long.Parse(id), long.Parse(vid));
                 masterid = vendorsPhotography.Id;
             }
+            if (type == "Event")
+            {
+                VendorsEventOrganiser vendorsEventOrganiser = vendorEventOrganiserRepository.GetVendorEventOrganiser(long.Parse(id), long.Parse(vid));
+                vendorsEventOrganiser.discount = discount;
+                vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, long.Parse(id), long.Parse(vid));
+                masterid = vendorsEventOrganiser.Id;
+            }
             if (type == "Other")
             {
                 VendorsOther vendorsOther = vendorOthersRepository.GetVendorOthers(long.Parse(id), long.Parse(vid));
@@ -310,6 +317,13 @@ namespace MaaAahwanam.Service
                 vendorsPhotography.PhotographyType = "";
                 vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, long.Parse(id), long.Parse(vid));
                 masterid = vendorsPhotography.Id;
+            }
+            if (type == "Event")
+            {
+                VendorsEventOrganiser vendorsEventOrganiser = vendorEventOrganiserRepository.GetVendorEventOrganiser(long.Parse(id), long.Parse(vid));
+                vendorsEventOrganiser.type = "";
+                vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, long.Parse(id), long.Parse(vid));
+                masterid = vendorsEventOrganiser.Id;
             }
             if (type == "Other")
             {
