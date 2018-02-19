@@ -85,6 +85,11 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.VendorsDecorator.Where(p => p.VendorMasterId == id).ToList();
         }
 
+        public List<VendorsEventOrganiser> GetVendorEventOrganiser(long id)
+        {
+            return _dbContext.VendorsEventOrganiser.Where(p => p.VendorMasterId == id).ToList();
+        }
+
         public VendorsOther AddVendorOther(VendorsOther vendorsOther)
         {
             _dbContext.VendorsOther.Add(vendorsOther);
