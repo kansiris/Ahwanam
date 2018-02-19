@@ -51,14 +51,16 @@ namespace MaaAahwanam.Web.Controllers
                     string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
                     string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
                     string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
+                    string[] eventservices = { "Private", "Corporate", "Charity", "Fundraising", "Others" };
                     string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
-                    string[] otherservices = { "Mehendi" };
+                    string[] otherservices = { "Mehendi", "Pandit" };
 
                     List<string> matchingvenues = venueservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingcatering = cateringservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingphotography = photographyservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingdecorators = decoratorservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingothers = otherservices.Intersect(categories.Split(',')).ToList();
+                    List<string> matchingevents = eventservices.Intersect(categories.Split(',')).ToList(); 
 
                     vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                     vendorMaster.ServicType = string.Join(",", (services + "," + vendorMaster.ServicType).Split(',').Distinct());
@@ -102,6 +104,16 @@ namespace MaaAahwanam.Web.Controllers
                             vendorsPhotography.VendorMasterId = long.Parse(id);
                             vendorsPhotography.PhotographyType = matchingphotography[a];
                             vendorsPhotography = vendorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
+                        }
+                    }
+                    if (services.Split(',').Contains("EventManagement"))
+                    {
+                        VendorsEventOrganiser vendorsEventOrganiser = new VendorsEventOrganiser();
+                        for (int a = 0; a < matchingevents.Count(); a++)
+                        {
+                            vendorsEventOrganiser.VendorMasterId = long.Parse(id);
+                            vendorsEventOrganiser.type = matchingphotography[a];
+                            vendorsEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorsEventOrganiser);
                         }
                     }
                     if (services.Split(',').Contains("Decorator"))

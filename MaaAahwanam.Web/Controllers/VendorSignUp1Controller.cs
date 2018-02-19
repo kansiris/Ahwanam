@@ -74,7 +74,7 @@ namespace MaaAahwanam.Web.Controllers
                 string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
                 string[] eventservices = { "Private", "Corporate", "Charity","Fundraising", "Others" };
                 string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
-                string[] otherservices = { "Mehendi" };
+                string[] otherservices = { "Mehendi","Pandit" };
                 List<string> matchingvenues = null; List<string> matchingcatering = null; List<string> matchingphotography = null; List<string> matchingdecorators = null;
                 List<string> matchingothers = null; List<string> matchingevents = null; 
                 if (vendorVenue.VenueType != null)
