@@ -1,0 +1,597 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>:: Live Deals ::</title>
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/customstyles.css">
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/latofonts.css">
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/jquery.datetimepicker.css">
+    <!--------- Lato Font ---------->
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/latofonts.css">
+
+    <!-- BX Slider -->
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/jquery.bxslider.css" />
+    <link rel="stylesheet" href="~/newdesign/css/jquery-ui.css">
+
+
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/newdesign/css/daterangepicker.css" rel="stylesheet">
+    <!-- Ion.RangeSlider -->
+    <link href="~/newdesign/css/normalize.css" rel="stylesheet">
+    <link href="~/newdesign/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="~/newdesign/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+
+
+</head>
+@using MaaAahwanam.Web.Custom
+<body id="body-top" style="min-height: 1000px;">
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="top-menu">
+                @*<ul>
+                    <li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>*@
+                @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = (CustomPrincipal)HttpContext.Current.User;
+                    if (user.UserType == "Vendor")
+                    { Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + ""); }
+                    if (user.UserType == "User")
+                    {
+                        <ul>
+                            @*<li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>*@
+                            @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
+                            <li><a href="#">Hi @ViewBag.username</a></li>
+                            <li onclick="window.location.href = '/SampleStorefront/SignOut';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Sign out</li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <ul>
+                        @*<li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>*@
+                        @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
+                        <li><a href="/SampleStorefront">Sign In</a></li>
+                        <li><a href="/UserRegistration">Sign Up For Free</a></li>
+                        <li><a href="/SampleStorefront"><i class="fa fa-suitcase" aria-hidden="true"></i>ARE YOU A PARTNER?</a></li>
+                    </ul>
+                }
+
+                @*</ul>*@
+            </nav>
+        </div>
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        <a class="navbar-brand" href="#"><img src="~/newdesign/images/logo.png" alt="Logo"></a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/CorporateEvents">Corporate Events</a></li>
+                            <li><a href="/VendorProducts/index?service=Venue">Venues</a></li>
+                            <li><a href="/VendorProducts/index?service=Hotels">Hotels</a></li>
+                            <li><a href="/VendorProducts/index?service=Resorts">Resorts</a></li>
+                            <li><a href="/VendorProducts/index?service=Conventions">Conventions</a></li>
+                            <li><a href="/VendorProducts/index?service=Catering">Caterers</a></li>
+                            <li><a href="/VendorProducts/index?service=Decorator">Decorators</a></li>
+                            <li><a href="/VendorProducts/index?service=Photography">Photographers</a></li>
+                            <li><a href="/VendorProducts/index?service=Mehendi">Mehendi Artists</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+        </div>
+        <!--<div class="row gallery">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-left"></div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-right"></div>
+        </div>-->
+    </div>
+    <!--<div class="container-fluid">
+      <div class="row" style="position: relative;">
+        <div class="carousel-area"> </div>
+      </div>
+    </div>-->
+    <div class="container-fluid">
+        <div class="row search-categories">
+            <ul>
+                <li id="venues">
+                    <span><img src="~/newdesign/images/venus_icn.png" alt="Venus" /></span>
+                    <p>Venues</p>
+                </li>
+                <li id="hotels">
+                    <span><img src="~/newdesign/images/hotels_icn.png" alt="Hotels" /></span>
+                    <p>Hotels</p>
+                </li>
+                <li id="resorts">
+                    <span><img src="~/newdesign/images/resorts_icn.png" alt="Resorts" /></span>
+                    <p>Resorts</p>
+                </li>
+                <li id="conventions">
+                    <span><img src="~/newdesign/images/conventions_icn.png" alt="Conventions" /></span>
+                    <p>Conventions</p>
+                </li>
+                <li id="caterers">
+                    <span><img src="~/newdesign/images/caterers_icn.png" alt="Caterers" /></span>
+                    <p>Caterers</p>
+                </li>
+                <li id="decorators">
+                    <span><img src="~/newdesign/images/decorators_icn.png" alt="Decorators" /></span>
+                    <p>Decorators</p>
+                </li>
+                <li id="photographers">
+                    <span><img src="~/newdesign/images/photographer_icn.png" alt="Photographer" /></span>
+                    <p>Photographers</p>
+                </li>
+                <li id="mehndiartists">
+                    <span><img src="~/newdesign/images/mehndi_icn.png" alt="Mehndi Artist" /></span>
+                    <p>Mehendi Artists</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container margin-top-30 live-deals-search-results">
+        <div class="col-xs-12 col-sm-3 col-md-3 filters">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 form-group margin-bottom-0">
+                    <label>Search</label>
+                    <input type="text" class="form-control" placeholder="Search Here" />
+                </div>
+            </div>
+            <div class="row margin-top-30">
+                <div class="col-xs-12 col-md-12">
+                    <div class="grid_slider">
+                        <div id="one">
+                            <label>Budget</label>
+                            <input type="text" id="range_26" value="" name="range" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-top-30">
+                <div class="col-xs-12 col-md-12 form-group margin-bottom-0">
+                    <label>Search Location</label>
+                    <input type="text" class="form-control" id="tags" placeholder="Search Location" />
+                </div>
+            </div>
+            <div class="row margin-top-30">
+                <div class="col-xs-12 col-md-12 form-group">
+                    <label>Sort</label>
+                    <select class="form-control">
+                        <option>Select</option>
+                        <option>Low - High</option>
+                        <option>High - Low</option>
+                        <option>Popular</option>
+                        <option>Relavent</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-sm-offset-4 col-md-offset-4">
+            <h3 class="col-xs-12 col-md-12 padding-left-0 margin-top-0 theme-font-color">Live Deals</h3>
+            <div id="venues">
+
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Venus</h3>
+                </div>
+
+                @foreach (var item in ViewBag.Venue)
+                {
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="hotels">
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Hotels</h3>
+                </div>
+                @foreach (var item in ViewBag.Hotels)
+                {
+
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="resorts">
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Resorts</h3>
+                </div>
+
+                @foreach (var item in ViewBag.Resorts)
+                {
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="conventions">
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Conventions</h3>
+                </div>
+                @foreach (var item in ViewBag.Conventions)
+                {
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="caterers">
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Caterers</h3>
+                </div>
+                @foreach (var item in ViewBag.Catering)
+                {
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="decorators">
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Decorators</h3>
+                </div>
+                @foreach (var item in ViewBag.Decorator)
+                {
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="photographers">
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Photographers</h3>
+                </div>
+                @foreach (var item in ViewBag.Photography)
+                {
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="mehndiartists">
+                <div class="row">
+                    <h3 class="col-xs-12 col-md-12 margin-top-0">Mehindi Artists</h3>
+                </div>
+                @foreach (var item in ViewBag.Mehendi)
+                {
+                    <div class="row block">
+                        <div class="col-xs-12 col-md-2">
+                            <img src=@item.image />
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <h3 class="col-xs-12 col-md-9 margin-top-0">@item.businessname</h3>
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="venue-score">
+                                        <div class="star-rating">
+                                            <div class="bg"></div>
+                                            <div class="score" style="width:68%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-xs-12 col-md-9">
+                                    <p>@item.description</p>
+                                </div>
+                                <div class="col-xs-12 col-md-3">
+                                    <button class="btn btn-default theme-bg white searchArea-btn float-right">View</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Guests : <b>4</b></span>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <span>Price : Rs <b>@item.cost</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="topicon"> <i class="fa fa-arrow-up" aria-hidden="true"></i> </div>
+    <div class="container-fluid" id="topicon2"> <i class="fa fa-arrow-up" aria-hidden="true"></i> </div>
+    <!--<footer class="container-fluid margin-top-30">
+      <div class="row">&copy;&nbsp;Ahwanam 2017. All right reserved.</div>
+    </footer>-->
+</body>
+<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
+<script src="~/newdesign/js/jquery-ui-1.12.1.js"></script>
+<script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.js"></script>
+<script src="~/newdesign/js/ion.rangeSlider.min.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="~/newdesign/js/custom.js"></script>
+
+<script type="text/javascript">
+
+<!--//------ Body Scroll Top ----------->
+$("#topicon").click(function(){
+	$("html, body").animate({
+		scrollTop: $(".gallery").offset().top}, "slow");
+		//$(this).css("display","none");
+		$("#topicon2").css("display","block");
+	});
+$("#topicon2").click(function(){
+	$('html,body').animate({
+		scrollTop:$("#body-top").offset().top},"slow");
+		$(this).css("display","none");
+	});
+$(document).ready(function(){
+	$("#topicon").css("display","none");
+	$("#topicon2").css("display","none");
+	$('html,body').animate({
+		scrollTop:$("#body-top").offset().top},"slow");
+	});
+$(window).on("scroll",function(){
+	var ScrollTop = $(this).scrollTop();
+	if(ScrollTop > 1226){
+		$("#topicon").css("display","block");
+		}else{
+			$("#topicon").css("display","none");}
+	});
+//<!-------- Body Scroll Top ----------->
+
+//<!-------- Category Scroll Top ----------->
+$(window).on("scroll",function(){
+	var scrollTop = $(this).scrollTop();
+	if(scrollTop > 150){
+		$('.search-categories').addClass(' fixed');
+		$('.filters').css({"top":"70px"});
+      } else {
+          $('.search-categories').removeClass('fixed');
+		  $('.filters').css({"top":"203px"});
+      }
+	  });
+//<!-------- Category Scroll Top ----------->
+
+/*------- Category Tabs -------------*/
+$(".search-categories > ul > li").click(function(){
+	var topId = $(this).attr("id").trim();
+	$(".live-deals-search-results > .filters + div > div").each(function(){
+		var rightId = $(this).attr("id").trim();
+		if(topId == rightId){
+			$(this).css({"display":"block"});
+			}else {
+				$(this).css({"display":"none"});}
+		});
+	});
+/*------- Category Tabs -------------*/
+
+/*------- Search Location -------------*/
+ $( function() {
+    var availableTags = [
+      "Ameerpet","Bibi Nagar","Begumpet","Chandanagar","Dilsukhnagar","Kukatpally","Nizampet"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  $("#tags").click(function(){
+	  $(".ui-helper-hidden").css("display","block");
+	  });
+/*------- Search Location -------------*/
+</script>
+</html>
