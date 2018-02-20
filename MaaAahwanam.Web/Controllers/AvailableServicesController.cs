@@ -202,7 +202,7 @@ namespace MaaAahwanam.Web.Controllers
                 count = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList().Count;
             if (type == "Photography")
                 count = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id)).Count;
-            if (type == "Event")
+            if (type == "EventManagement")
                 count = vendorVenueSignUpService.GetVendorEventOrganiser(long.Parse(id)).Count;
             if (type == "Decorator")
                 count = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id)).Count;

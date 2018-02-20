@@ -146,7 +146,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsDecorator = venorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
                 if (vendorsDecorator.Id != 0) count++;
             }
-            if (vendorMaster.ServicType == "Event Management")
+            if (vendorMaster.ServicType == "EventManagement")
             {
                 VendorsEventOrganiser vendorsEventOrganiser = new VendorsEventOrganiser();
                 vendorsEventOrganiser.VendorMasterId = vendorMaster.Id;

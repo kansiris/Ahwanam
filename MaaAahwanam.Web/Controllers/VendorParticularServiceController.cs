@@ -21,7 +21,7 @@ namespace MaaAahwanam.Web.Controllers
             int imagescount = 0;
             if (type == "Conventions" || type == "Resorts" || type == "Hotels")
                 type = "Venue";
-            if (type == "Mehendi")
+            if (type == "Mehendi" || type == "Pandit")
                 type = "Other";
             //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid)); //GetProductsInfo_Result Productinfo
             var data = vendorMasterService.GetVendor(long.Parse(id)); //GetProductsInfo_Result Productinfo

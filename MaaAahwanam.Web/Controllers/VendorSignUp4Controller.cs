@@ -38,7 +38,7 @@ namespace MaaAahwanam.Web.Controllers
                 VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
                 ViewBag.data = vendorDecoratorService.GetVendorDecorator(long.Parse(id), long.Parse(vid)).discount;
             }
-            if (type == "Event")
+            if (type == "EventManagement")
             {
                 VendorEventOrganiserService vendorEventOrganiserService = new VendorEventOrganiserService();
                 ViewBag.data = vendorEventOrganiserService.GetVendorEventOrganiser(long.Parse(id), long.Parse(vid)).discount;
@@ -57,7 +57,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 if (txtdiscount != "" && txtdiscount != null)
-                    discount = txtdiscount;
+                    discount = txtdiscount+"%";
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 //vendorMaster.discount = discount;
                 //vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));

@@ -41,7 +41,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.categorytype = ViewBag.service.PhotographyType;
                 return View();
             }
-            if (type == "Event")
+            if (type == "EventManagement")
             {
                 VendorEventOrganiserService vendorEventOrganiserService = new VendorEventOrganiserService();
                 ViewBag.service = vendorEventOrganiserService.GetVendorEventOrganiser(long.Parse(id), long.Parse(vid));
@@ -85,7 +85,7 @@ namespace MaaAahwanam.Web.Controllers
                         matchingcatering = cateringservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
                     if (type == "Photography") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                         matchingphotography = photographyservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
-                    if (type == "Event") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
+                    if (type == "EventManagement") //if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                         matchingevents = eventservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
                     if (type == "Decorator") //if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                         matchingdecorators = decoratorservices.Intersect(vendorVenue.VenueType.Split(',')).ToList();
