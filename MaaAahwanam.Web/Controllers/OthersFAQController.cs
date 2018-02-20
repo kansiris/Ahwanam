@@ -29,6 +29,8 @@ namespace MaaAahwanam.Web.Controllers
             var data = vendorOthersService.GetVendorOther(long.Parse(id), long.Parse(vid));
             vendorsOther.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorsOther.type = data.type;
+            vendorsOther.MinOrder = data.MinOrder;
+            vendorsOther.MaxOrder = data.MaxOrder;
             vendorsOther.discount = data.discount;
             vendorsOther.Address = data.Address;
             vendorsOther.City = data.City;

@@ -99,7 +99,6 @@ namespace MaaAahwanam.Web.Controllers
 
         public PartialViewResult SortVendorsBasedOnLocation(string location)
         {
-            location = (location == "" || location == null) ? "Hyderabad" : location; //if location value is null then by default Hyderbad location will be considered
             ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Where(m => m.landmark == location).Take(6).ToList();
             ViewBag.Hotels = vendorProductsService.Getvendorproducts_Result("Hotel").Where(m => m.landmark == location).Take(6).ToList(); // Hotel records
             ViewBag.Resorts = vendorProductsService.Getvendorproducts_Result("Resort").Where(m => m.landmark == location).Take(6).ToList(); // Resort records

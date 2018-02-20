@@ -72,7 +72,7 @@ namespace MaaAahwanam.Web.Controllers
                 string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
                 string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
                 string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
-                string[] eventservices = { "Private", "Corporate", "Charity","Fundraising", "Others" };
+                string[] eventservices = { "Corporate Events", "Brand Promotion", "Fashion Shows", "Exhibition", "Conference & Seminar", "Wedding Management", "Birthday Planning & Celebrations", "Live Concerts", "Musical Nights", "Celebrity Shows" };
                 string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
                 string[] otherservices = { "Mehendi","Pandit" };
                 List<string> matchingvenues = null; List<string> matchingcatering = null; List<string> matchingphotography = null; List<string> matchingdecorators = null;

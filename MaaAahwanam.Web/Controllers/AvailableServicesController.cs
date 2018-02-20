@@ -19,7 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
-            string[] services = { "Venue", "Catering", "Photography", "Event Management", "Decorator", "Other" };
+            string[] services = { "Venue", "Catering", "Photography", "EventManagement", "Decorator", "Other" };
             string vid = "";
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Venue"))
@@ -28,7 +28,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cateringrecord = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
             if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                 ViewBag.Photographyrecord = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
-            if (vendorMaster.ServicType.Split(',').Contains("Event Management"))
+            if (vendorMaster.ServicType.Split(',').Contains("EventManagement"))
                 ViewBag.Eventrecord = vendorVenueSignUpService.GetVendorEventOrganiser(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                 ViewBag.Decoratorrecord = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
@@ -51,7 +51,7 @@ namespace MaaAahwanam.Web.Controllers
                     string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
                     string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
                     string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
-                    string[] eventservices = { "Private", "Corporate", "Charity", "Fundraising", "Others" };
+                    string[] eventservices = { "Corporate Events", "Brand Promotion", "Fashion Shows", "Exhibition", "Conference & Seminar", "Wedding Management", "Birthday Planning & Celebrations", "Live Concerts","Musical Nights","Celebrity Shows" };
                     string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
                     string[] otherservices = { "Mehendi", "Pandit" };
 
@@ -112,7 +112,7 @@ namespace MaaAahwanam.Web.Controllers
                         for (int a = 0; a < matchingevents.Count(); a++)
                         {
                             vendorsEventOrganiser.VendorMasterId = long.Parse(id);
-                            vendorsEventOrganiser.type = matchingphotography[a];
+                            vendorsEventOrganiser.type = matchingevents[a];
                             vendorsEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorsEventOrganiser);
                         }
                     }
