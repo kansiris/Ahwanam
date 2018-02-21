@@ -24,5 +24,9 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.spsearchword(search, type);
         }
+        public List<spsearchdeal_Result> getdealsearch(string search, string type)
+        {
+            return vendorProductsRepository.spsearchdeal(search, type);
+        }
     }
 }
