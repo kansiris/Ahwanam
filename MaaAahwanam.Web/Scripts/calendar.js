@@ -71,7 +71,7 @@ function GenerateCalender(events) {
         },
         selectable: true,
         select: function (start, end) {
-            alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
+            //alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
             selectedEvent = {
                 eventID: 0,
                 title: '',
@@ -147,7 +147,7 @@ $('#chkIsFullDay').change(function () {
 
 function openAddEditForm() {
     if (selectedEvent != null) {
-        alert('Clicked date:' + moment(selectedEvent.start).format("DD/MMM/YYYY HH:mm A"));
+        //alert('Clicked date:' + moment(selectedEvent.start).format("DD/MMM/YYYY HH:mm A"));
         $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
         $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A"));
