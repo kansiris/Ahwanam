@@ -10,12 +10,16 @@
         url: '/VendorCalendar/GetDates?id=' + $('#vid').val(),
         success: function (data) {
             $.each(data, function (i, v) {
+                alert(typeof(moment(v.StartDate).format("HH")));
+                var start1, end1 = null;
+                start1 = (moment(v.StartDate).format("HH") > '12') ? moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes') : moment(v.StartDate).add(12, 'hours').add(30, 'minutes');
+                end1 = (moment(v.EndDate).format("HH") > '12') ? moment(v.EndDate) : moment(v.EndDate).add(12, 'hours').add(30, 'minutes');
                 events.push({
                     eventID: v.Id,
                     title: v.Title,
                     description: v.Description,
-                    start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
-                    end: moment(v.EndDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
+                    start: start1,//moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
+                    end: end1,//moment(v.EndDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
                     color: v.Color,
                     allDay: v.IsFullDay,
                     type: v.Type,
@@ -37,8 +41,7 @@ function GenerateCalender(events) {
         contentHeight: 600,
         timezone: 'India Standard Time',
         defaultDate: new Date(),
-        formatTime: 'g:i a',
-        step: 05,
+        timeFormat: 'h(:mm)a',
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -72,6 +75,7 @@ function GenerateCalender(events) {
         selectable: true,
         select: function (start, end) {
             //alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
+            $('#divEndDate').show();
             selectedEvent = {
                 eventID: 0,
                 title: '',
@@ -132,7 +136,8 @@ $('#btnDelete').click(function () {
 })
 
 $('#startdate,#enddate').datetimepicker({
-    format: 'd/m/y H:m'
+    format: 'DD/MM/YYYY HH:mm A'
+    //step: 15
 });
 
 
@@ -147,13 +152,17 @@ $('#chkIsFullDay').change(function () {
 
 function openAddEditForm() {
     if (selectedEvent != null) {
-        //alert('Clicked date:' + moment(selectedEvent.start).format("DD/MMM/YYYY HH:mm A"));
         $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
-        $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A"));
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
-        //$('#chkIsFullDay').change();
-        $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A") : '');
+        if (selectedEvent.eventID != 0) {
+            $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY HH:mm A"));
+            $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY HH:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY HH:mm A") : '');
+        }
+        else {
+            $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY HH:mm A"));
+            $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY HH:mm A") != null ? moment(selectedEvent.end).format("DD/MM/YYYY HH:mm A") : '');
+        }
         $('#description').val(selectedEvent.Description);
         $('#color').val(selectedEvent.Color);
         $('#type').val(selectedEvent.Type);
@@ -196,7 +205,7 @@ $('#btnSave').click(function () {
         VendorId: $('#vid').val(),
         Servicetype: 'Venue',
     }
-    //SaveEvent(data);
+    SaveEvent(data);
     // call function for submit data to the server
 })
 
