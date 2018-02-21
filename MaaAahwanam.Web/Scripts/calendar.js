@@ -37,7 +37,8 @@ function GenerateCalender(events) {
         contentHeight: 600,
         timezone: 'India Standard Time',
         defaultDate: new Date(),
-        timeFormat: 'H(:mm)',
+        formatTime: 'g:i a',
+        step: 05,
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -70,6 +71,7 @@ function GenerateCalender(events) {
         },
         selectable: true,
         select: function (start, end) {
+            //alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
             selectedEvent = {
                 eventID: 0,
                 title: '',
@@ -90,7 +92,7 @@ function GenerateCalender(events) {
                 Id: event.eventID,
                 Title: event.title,
                 StartDate: event.start.format('DD/MMM/YYYY HH:mm'),
-                EndDate: event.end.subtract(12, 'hours').subtract(30, 'minutes').format('DD/MMM/YYYY HH:mm'),
+                EndDate: event.end.subtract(12, 'hours').format('DD/MMM/YYYY HH:mm'),
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay,
@@ -134,8 +136,18 @@ $('#startdate,#enddate').datetimepicker({
 });
 
 
+$('#chkIsFullDay').change(function () {
+    if ($(this).val() == "True") {
+        $('#divEndDate').hide();
+    }
+    else {
+        $('#divEndDate').show();
+    }
+});
+
 function openAddEditForm() {
     if (selectedEvent != null) {
+        //alert('Clicked date:' + moment(selectedEvent.start).format("DD/MMM/YYYY HH:mm A"));
         $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
         $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY HH:mm A"));
@@ -164,8 +176,8 @@ $('#btnSave').click(function () {
         return;
     }
     else {
-        var startDate = moment($('#enddate').val(), "d/m/y H:m").toDate();
-        var endDate = moment($('#txtEnd').val(), "d/m/y H:m").toDate();
+        var startDate = moment($('#startdate').val(), "DD/MM/YYYY HH:mm A").toDate();
+        var endDate = moment($('#enddate').val(), "DD/MM/YYYY HH:mm A").toDate();
         if (startDate > endDate) {
             alert('Invalid end date');
             return;
@@ -184,7 +196,7 @@ $('#btnSave').click(function () {
         VendorId: $('#vid').val(),
         Servicetype: 'Venue',
     }
-    SaveEvent(data);
+    //SaveEvent(data);
     // call function for submit data to the server
 })
 
