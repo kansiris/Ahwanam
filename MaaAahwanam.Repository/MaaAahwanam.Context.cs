@@ -482,5 +482,18 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spsearchword_Result>("spsearchword", searchParameter, typeParameter);
         }
+    
+        public virtual ObjectResult<spsearchdeal_Result> spsearchdeal(string search, string type)
+        {
+            var searchParameter = search != null ?
+                new ObjectParameter("search", search) :
+                new ObjectParameter("search", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spsearchdeal_Result>("spsearchdeal", searchParameter, typeParameter);
+        }
     }
 }
