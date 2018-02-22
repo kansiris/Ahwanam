@@ -10,15 +10,22 @@
         url: '/VendorCalendar/GetDates?id=' + $('#vid').val(),
         success: function (data) {
             $.each(data, function (i, v) {
-                alert(typeof(moment(v.StartDate).format("HH")));
+                //alert((moment(v.EndDate).format("HH")));
                 var start1, end1 = null;
-                start1 = (moment(v.StartDate).format("HH") > '12') ? moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes') : moment(v.StartDate).add(12, 'hours').add(30, 'minutes');
-                end1 = (moment(v.EndDate).format("HH") > '12') ? moment(v.EndDate) : moment(v.EndDate).add(12, 'hours').add(30, 'minutes');
+                if (moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("A") == 'AM') {
+                    //alert(v.Title +":Success");
+                    end1 = moment(v.EndDate).add(12, 'hours').add(30, 'minutes')
+                }
+                else {
+                    end1 = moment(v.EndDate);
+                }
+                // start1 = (moment(v.StartDate).format("A") == 'AM') ? moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes') : moment(v.StartDate).add(12, 'hours').add(30, 'minutes');
+                //end1 = (moment(v.EndDate).format("A") == 'AM') ? moment(v.EndDate) : moment(v.EndDate).add(12, 'hours').add(30, 'minutes');
                 events.push({
                     eventID: v.Id,
                     title: v.Title,
                     description: v.Description,
-                    start: start1,//moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
+                    start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
                     end: end1,//moment(v.EndDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
                     color: v.Color,
                     allDay: v.IsFullDay,
@@ -92,11 +99,15 @@ function GenerateCalender(events) {
         },
         editable: true,
         eventDrop: function (event) {
+            //alert('Normal Start time:' + event.start.format('DD/MMM/YYYY hh:mm A'));
+            //alert('Normal End time:' + event.end.format('DD/MMM/YYYY hh:mm A'));
+            //alert('Moment Start time:' + moment(event.start).format('DD/MMM/YYYY hh:mm A'));
+            //alert('Moment End time:' + moment(event.end).format('DD/MMM/YYYY hh:mm A'));
             var data = {
                 Id: event.eventID,
                 Title: event.title,
-                StartDate: event.start.format('DD/MMM/YYYY HH:mm'),
-                EndDate: event.end.subtract(12, 'hours').format('DD/MMM/YYYY HH:mm'),
+                StartDate: event.start.format('DD/MMM/YYYY hh:mm A'),
+                EndDate: event.end.format('DD/MMM/YYYY hh:mm A'),
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay,
@@ -104,7 +115,7 @@ function GenerateCalender(events) {
                 VendorId: $('#vid').val(),
                 Servicetype: event.servicetype
             };
-            //alert("Start Date:" + data.StartDate + "End Date:" + data.EndDate);
+            //alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
             SaveEvent(data);
         }
     })
@@ -136,7 +147,7 @@ $('#btnDelete').click(function () {
 })
 
 $('#startdate,#enddate').datetimepicker({
-    format: 'DD/MM/YYYY HH:mm A'
+    format: 'DD/MM/YYYY hh:mm A'
     //step: 15
 });
 
@@ -144,6 +155,7 @@ $('#startdate,#enddate').datetimepicker({
 $('#chkIsFullDay').change(function () {
     if ($(this).val() == "True") {
         $('#divEndDate').hide();
+        $('#enddate').val($('#startdate').val());
     }
     else {
         $('#divEndDate').show();
@@ -156,12 +168,12 @@ function openAddEditForm() {
         $('#subject').val(selectedEvent.Title);
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
         if (selectedEvent.eventID != 0) {
-            $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY HH:mm A"));
-            $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY HH:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY HH:mm A") : '');
+            $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A"));
+            $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") : '');
         }
         else {
-            $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY HH:mm A"));
-            $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY HH:mm A") != null ? moment(selectedEvent.end).format("DD/MM/YYYY HH:mm A") : '');
+            $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY hh:mm A"));
+            $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") : '');
         }
         $('#description').val(selectedEvent.Description);
         $('#color').val(selectedEvent.Color);
@@ -185,8 +197,8 @@ $('#btnSave').click(function () {
         return;
     }
     else {
-        var startDate = moment($('#startdate').val(), "DD/MM/YYYY HH:mm A").toDate();
-        var endDate = moment($('#enddate').val(), "DD/MM/YYYY HH:mm A").toDate();
+        var startDate = moment($('#startdate').val(), "DD/MM/YYYY hh:mm A").toDate();
+        var endDate = moment($('#enddate').val(), "DD/MM/YYYY hh:mm A").toDate();
         if (startDate > endDate) {
             alert('Invalid end date');
             return;
@@ -220,10 +232,49 @@ function SaveEvent(data) {
                 //Refresh the calender
                 FetchEventAndRenderCalendar();
                 $('#CalenderModalNew').modal('hide');
+                //location.reload();
             }
         },
         error: function () {
             alert('Failed');
+        }
+    })
+}
+
+function EventDropRefreshCalendar() {
+    events = [];
+    $.ajax({
+        type: "GET",
+        url: '/VendorCalendar/GetDates?id=' + $('#vid').val(),
+        success: function (data) {
+            $.each(data, function (i, v) {
+                //var start1, end1 = null;
+                //if (moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("A") == 'AM') {
+                //    end1 = moment(v.EndDate).add(12, 'hours').add(30, 'minutes')
+                //}
+                //else {
+                //    end1 = moment(v.EndDate);
+                //}
+                //alert(end1);
+                // start1 = (moment(v.StartDate).format("A") == 'AM') ? moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes') : moment(v.StartDate).add(12, 'hours').add(30, 'minutes');
+                //end1 = (moment(v.EndDate).format("A") == 'AM') ? moment(v.EndDate) : moment(v.EndDate).add(12, 'hours').add(30, 'minutes');
+                events.push({
+                    eventID: v.Id,
+                    title: v.Title,
+                    description: v.Description,
+                    start: moment(v.StartDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
+                    end: moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes'),
+                    color: v.Color,
+                    allDay: v.IsFullDay,
+                    type: v.Type,
+                    servicetype: v.Servicetype
+                });
+            })
+
+            GenerateCalender(events);
+        },
+        error: function (error) {
+            alert('failed');
         }
     })
 }
