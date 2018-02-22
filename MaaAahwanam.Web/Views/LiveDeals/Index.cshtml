@@ -159,7 +159,7 @@
             <div class="row margin-top-30">
                 <div class="col-xs-12 col-md-12 form-group margin-bottom-0">
                     <label>Search Location</label>
-                    <input type="text" class="form-control" id="tags" placeholder="Search Location" />
+                    <input type="text" class="form-control" id="tags" placeholder="Search Location" name="txt" onkeypress="handle(event)">
                 </div>
             </div>
             <div class="row margin-top-30">
@@ -593,6 +593,15 @@ $(".search-categories > ul > li").click(function(){
   $("#tags").click(function(){
 	  $(".ui-helper-hidden").css("display","block");
 	  });
-/*------- Search Location -------------*/
+    /*------- Search Location -------------*/
+
+
+  function handle(e) {
+      if (e.keyCode === 13) {
+          e.preventDefault(); // Ensure it is only this code that rusn
+          var data = $('#tags').val();
+          location.href = '/livedeals/Index?search=' + data;
+      }
+  }
 </script>
 </html>
