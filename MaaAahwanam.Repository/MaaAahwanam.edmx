@@ -135,6 +135,10 @@
           <Parameter Name="search" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spsearchdealname" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="type" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spsearchword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="search" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="varchar" Mode="In" />
@@ -297,6 +301,10 @@
           </FunctionImport>
           <FunctionImport Name="spsearchdeal" ReturnType="Collection(MaaAahwanamModel.spsearchdeal_Result)">
             <Parameter Name="search" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spsearchdealname" ReturnType="Collection(MaaAahwanamModel.spsearchdealname_Result)">
+            <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -838,6 +846,24 @@
           <Property Type="Int32" Name="priority" Nullable="false" />
         </ComplexType>
         <ComplexType Name="spsearchdeal_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="Decimal" Name="vegCost" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="Decimal" Name="DealServicePrice" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="DealID" Nullable="false" />
+          <Property Type="Int64" Name="Servicecost" Nullable="false" />
+          <Property Type="Decimal" Name="cost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="cost1" Nullable="false" Precision="2" Scale="2" />
+          <Property Type="Decimal" Name="cost2" Nullable="false" Precision="2" Scale="2" />
+          <Property Type="Decimal" Name="cost3" Nullable="false" Precision="2" Scale="2" />
+          <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spsearchdealname_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="BusinessName" Nullable="true" />
           <Property Type="String" Name="City" Nullable="true" />
@@ -1570,6 +1596,28 @@
           <FunctionImportMapping FunctionImportName="spsearchdeal" FunctionName="MaaAahwanamModel.Store.spsearchdeal">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.spsearchdeal_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="vegCost" ColumnName="vegCost" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="DealServicePrice" ColumnName="DealServicePrice" />
+                <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="Servicecost" ColumnName="Servicecost" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="cost1" ColumnName="cost1" />
+                <ScalarProperty Name="cost2" ColumnName="cost2" />
+                <ScalarProperty Name="cost3" ColumnName="cost3" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spsearchdealname" FunctionName="MaaAahwanamModel.Store.spsearchdealname">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.spsearchdealname_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
                 <ScalarProperty Name="City" ColumnName="City" />
