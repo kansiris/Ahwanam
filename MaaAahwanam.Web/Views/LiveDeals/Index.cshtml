@@ -138,12 +138,13 @@
             </ul>
         </div>
     </div>
+
     <div class="container margin-top-30 live-deals-search-results">
         <div class="col-xs-12 col-sm-3 col-md-3 filters">
             <div class="row">
                 <div class="col-xs-12 col-md-12 form-group margin-bottom-0">
                     <label>Search</label>
-                    <input type="text" class="form-control" placeholder="@ViewBag.search" />
+                    <input type="text" class="form-control" id="name" placeholder="search here" name="txt1" onkeypress="handle(event)">
                 </div>
             </div>
             <div class="row margin-top-30">
@@ -152,6 +153,7 @@
                         <div id="one">
                             <label>Budget</label>
                             <input type="text" id="range_26" value="" name="range" />
+                            <input type="hidden" id="rmaxval" />
                         </div>
                     </div>
                 </div>
@@ -159,18 +161,20 @@
             <div class="row margin-top-30">
                 <div class="col-xs-12 col-md-12 form-group margin-bottom-0">
                     <label>Search Location</label>
-                    <input type="text" class="form-control" id="tags" placeholder="Search Location" name="txt" onkeypress="handle(event)">
+                    <input type="text" class="form-control" id="location" placeholder="Search Location" name="txt" onkeypress="handle1(event)">
                 </div>
             </div>
             <div class="row margin-top-30">
                 <div class="col-xs-12 col-md-12 form-group">
                     <label>Sort</label>
-                    <select class="form-control">
-                        <option>Select</option>
-                        <option>Low - High</option>
-                        <option>High - Low</option>
-                        <option>Popular</option>
-                        <option>Relavent</option>
+
+
+                    <select class="form-control" id="sort" name="sort">
+                        <option value="">Select</option>
+                        <option value="1">Low - High</option>
+                        <option value="2">High - Low</option>
+                        <option value="3">Popular</option>
+                        <option value="4">Relavent</option>
                     </select>
                 </div>
             </div>
@@ -187,7 +191,7 @@
                 {
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -230,7 +234,7 @@
 
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -272,7 +276,7 @@
                 {
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -313,7 +317,7 @@
                 {
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -354,7 +358,7 @@
                 {
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -395,7 +399,7 @@
                 {
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -436,7 +440,7 @@
                 {
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -477,7 +481,7 @@
                 {
                     <div class="row block">
                         <div class="col-xs-12 col-md-2">
-                            <img src="/vendorimages/@ViewBag.image" />
+                            <img src="/vendorimages/@item.image" />
                         </div>
                         <div class="col-xs-12 col-md-10">
                             <div class="row">
@@ -512,6 +516,7 @@
             </div>
         </div>
     </div>
+
     <div class="container-fluid" id="topicon"> <i class="fa fa-arrow-up" aria-hidden="true"></i> </div>
     <div class="container-fluid" id="topicon2"> <i class="fa fa-arrow-up" aria-hidden="true"></i> </div>
     <!--<footer class="container-fluid margin-top-30">
@@ -568,15 +573,28 @@ $(window).on("scroll",function(){
 	  });
 //<!-------- Category Scroll Top ----------->
 
+var venues = '@ViewBag.Venuemaxval';
+    var hotels = '@ViewBag.Hotelsmaxval';
+    var resorts = '@ViewBag.Resortsmaxval';
+    var conventions = '@ViewBag.Conventionsmaxval';
+    var caterers = '@ViewBag.Cateringmaxval';
+    var photographers = '@ViewBag.Photographymaxval';
+    var decorators = '@ViewBag.Decoratormaxval';
+    var mehndiartists = '@ViewBag.Mehendimaxval';
+    //var rmaxval = venue;
+    $('#rmaxval').val(venues);
 /*------- Category Tabs -------------*/
 $(".search-categories > ul > li").click(function(){
 	var topId = $(this).attr("id").trim();
 	$(".live-deals-search-results > .filters + div > div").each(function(){
 		var rightId = $(this).attr("id").trim();
-		if(topId == rightId){
-			$(this).css({"display":"block"});
+		if (topId == rightId) {
+		    $('#rmaxval').val(topId);
+		    $("#range_26").ionRangeSlider("destroy");
+		    $("#range_26").ionRangeSlider({ type: "double", min: 0, max: $('#rmaxval').val()});
+		    $(this).css({"display":"block"});
 			}else {
-				$(this).css({"display":"none"});}
+		    $(this).css({"display":"none"});}
 		});
 	});
 /*------- Category Tabs -------------*/
@@ -586,22 +604,68 @@ $(".search-categories > ul > li").click(function(){
     var availableTags = [
       "Ameerpet","Bibi Nagar","Begumpet","Chandanagar","Dilsukhnagar","Kukatpally","Nizampet"
     ];
-    $( "#tags" ).autocomplete({
+    $( "#location" ).autocomplete({
       source: availableTags
     });
   } );
-  $("#tags").click(function(){
+  $("#location").click(function(){
 	  $(".ui-helper-hidden").css("display","block");
 	  });
     /*------- Search Location -------------*/
 
 
-  function handle(e) {
+  $('#location').keydown(function (e) {
       if (e.keyCode === 13) {
           e.preventDefault(); // Ensure it is only this code that rusn
-          var data = $('#tags').val();
+          var data = $('#location').val();
           location.href = '/livedeals/Index?search=' + data;
       }
-  }
+  });
+  $("#name").click(function () {
+      $(".ui-helper-hidden").css("display", "block");
+  });
+
+
+  /*------- Search Location -------------*/
+
+  $('#name').keydown(function (e) {
+      if (e.keyCode === 13) {
+          e.preventDefault(); // Ensure it is only this code that rusn
+          var data = $('#name').val();
+          location.href = '/livedeals/Index?name=' + data;
+      }
+  });
+
+
+     $("#sort").on('change', function () {
+         var data = $('#sort').val();
+         var data1 = $('#location').val();
+         var data2 = $('#name').val();
+         //alert(data,data1,data2)
+         location.href = '/livedeals/Index?sort=' + data + '&search=' + data1 + '&name=' + data2;
+     });
+
+     var $range = $("#range_26");
+
+     $range.ionRangeSlider({
+         type: "double",
+         min: 500,
+         max: $('#rmaxval').val()
+         //from: 2000,
+         //to: 4000
+     });
+
+     $range.on("change", function () {
+         var $this = $(this),
+             from = $this.data("from"),
+             to = $this.data("to");
+         var data = $('#sort').val();
+         var data1 = $('#location').val();
+         var data2 = $('#name').val();
+         alert(from + " - " + to);
+         //console.log(from + " - " + to);
+         location.href = '/livedeals/Index?sort=' + data + '&search=' + data1 + '&name=' + data2 + '&minval=' + from + '&maxval=' + to;
+
+     });
 </script>
 </html>

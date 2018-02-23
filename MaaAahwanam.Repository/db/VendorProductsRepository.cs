@@ -28,6 +28,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.spsearchdeal(search, Type).ToList();
         }
+        public List<spsearchdealname_Result> spsearchdealname(string name, string Type)
+        {
+            return maaAahwanamEntities.spsearchdealname(name, Type).ToList();
+        }
     }
 
 }
