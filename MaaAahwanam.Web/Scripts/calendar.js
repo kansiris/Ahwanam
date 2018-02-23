@@ -99,10 +99,6 @@ function GenerateCalender(events) {
         },
         editable: true,
         eventDrop: function (event) {
-            //alert('Normal Start time:' + event.start.format('DD/MMM/YYYY hh:mm A'));
-            //alert('Normal End time:' + event.end.format('DD/MMM/YYYY hh:mm A'));
-            //alert('Moment Start time:' + moment(event.start).format('DD/MMM/YYYY hh:mm A'));
-            //alert('Moment End time:' + moment(event.end).format('DD/MMM/YYYY hh:mm A'));
             var data = {
                 Id: event.eventID,
                 Title: event.title,
@@ -167,6 +163,12 @@ function openAddEditForm() {
         $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
+        if (selectedEvent.IsFullDay == "True") {
+            $('#divEndDate').hide();
+        }
+        else {
+            $('#divEndDate').show();
+        }
         if (selectedEvent.eventID != 0) {
             $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A"));
             $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") : '');
