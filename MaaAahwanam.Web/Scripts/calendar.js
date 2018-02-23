@@ -4,23 +4,18 @@
         d = date.getDate(),
         m = date.getMonth() + 1,
         y = date.getFullYear()
-    //alert(date + ',date:' + d + ',month:' + m + ',year:' + y);
     $.ajax({
         type: "GET",
         url: '/VendorCalendar/GetDates?id=' + $('#vid').val(),
         success: function (data) {
             $.each(data, function (i, v) {
-                //alert((moment(v.EndDate).format("HH")));
                 var start1, end1 = null;
                 if (moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("A") == 'AM') {
-                    //alert(v.Title +":Success");
                     end1 = moment(v.EndDate).add(12, 'hours').add(30, 'minutes')
                 }
                 else {
                     end1 = moment(v.EndDate);
                 }
-                // start1 = (moment(v.StartDate).format("A") == 'AM') ? moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes') : moment(v.StartDate).add(12, 'hours').add(30, 'minutes');
-                //end1 = (moment(v.EndDate).format("A") == 'AM') ? moment(v.EndDate) : moment(v.EndDate).add(12, 'hours').add(30, 'minutes');
                 events.push({
                     eventID: v.Id,
                     title: v.Title,
@@ -103,7 +98,7 @@ function GenerateCalender(events) {
                 Id: event.eventID,
                 Title: event.title,
                 StartDate: event.start.format('DD/MMM/YYYY hh:mm A'),
-                EndDate: event.end.format('DD/MMM/YYYY hh:mm A'),
+                EndDate: event.end != null ? event.end.format('DD/MM/YYYY hh:mm A') : null,
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay,
@@ -111,7 +106,7 @@ function GenerateCalender(events) {
                 VendorId: $('#vid').val(),
                 Servicetype: event.servicetype
             };
-            //alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
+            alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
             SaveEvent(data);
         }
     })
@@ -151,7 +146,7 @@ $('#startdate,#enddate').datetimepicker({
 $('#chkIsFullDay').change(function () {
     if ($(this).val() == "True") {
         $('#divEndDate').hide();
-        $('#enddate').val($('#startdate').val());
+        $('#enddate').val('');
     }
     else {
         $('#divEndDate').show();
@@ -233,50 +228,13 @@ function SaveEvent(data) {
             if (data.status) {
                 //Refresh the calender
                 FetchEventAndRenderCalendar();
+                $('body.dashboard').css('padding-right', '-17px');
                 $('#CalenderModalNew').modal('hide');
                 //location.reload();
             }
         },
         error: function () {
             alert('Failed');
-        }
-    })
-}
-
-function EventDropRefreshCalendar() {
-    events = [];
-    $.ajax({
-        type: "GET",
-        url: '/VendorCalendar/GetDates?id=' + $('#vid').val(),
-        success: function (data) {
-            $.each(data, function (i, v) {
-                //var start1, end1 = null;
-                //if (moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("A") == 'AM') {
-                //    end1 = moment(v.EndDate).add(12, 'hours').add(30, 'minutes')
-                //}
-                //else {
-                //    end1 = moment(v.EndDate);
-                //}
-                //alert(end1);
-                // start1 = (moment(v.StartDate).format("A") == 'AM') ? moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes') : moment(v.StartDate).add(12, 'hours').add(30, 'minutes');
-                //end1 = (moment(v.EndDate).format("A") == 'AM') ? moment(v.EndDate) : moment(v.EndDate).add(12, 'hours').add(30, 'minutes');
-                events.push({
-                    eventID: v.Id,
-                    title: v.Title,
-                    description: v.Description,
-                    start: moment(v.StartDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
-                    end: moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes'),
-                    color: v.Color,
-                    allDay: v.IsFullDay,
-                    type: v.Type,
-                    servicetype: v.Servicetype
-                });
-            })
-
-            GenerateCalender(events);
-        },
-        error: function (error) {
-            alert('failed');
         }
     })
 }
