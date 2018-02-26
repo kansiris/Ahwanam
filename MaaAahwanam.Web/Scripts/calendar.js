@@ -62,7 +62,7 @@ function GenerateCalender(events) {
                     $('#myModal #eventTitle').text(data.Title);
                     var $description = $('<div/>');
                     $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
-                    if (calEvent.end != null) {
+                    if (data.IsFullDay == "False") {
                         $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
                     }
                     $description.append($('<p/>').html('<b>Description:</b>' + data.Description));
@@ -110,6 +110,7 @@ function GenerateCalender(events) {
             SaveEvent(data);
         }
     })
+    //$('body.dashboard').css('padding-right', '0px');
 }
 
 $('#btnEdit').click(function () {
@@ -158,12 +159,6 @@ function openAddEditForm() {
         $('#hdEventID').val(selectedEvent.Id);
         $('#subject').val(selectedEvent.Title);
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
-        if (selectedEvent.IsFullDay == "True") {
-            $('#divEndDate').hide();
-        }
-        else {
-            $('#divEndDate').show();
-        }
         if (selectedEvent.eventID != 0) {
             $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A"));
             $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") : '');
@@ -171,6 +166,13 @@ function openAddEditForm() {
         else {
             $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY hh:mm A"));
             $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") : '');
+        }
+        if (selectedEvent.IsFullDay == "True") {
+            $('#divEndDate').hide();
+            $('#enddate').val('');
+        }
+        else {
+            $('#divEndDate').show();
         }
         $('#description').val(selectedEvent.Description);
         $('#color').val(selectedEvent.Color);
@@ -188,6 +190,10 @@ $('#btnSave').click(function () {
     if ($('#startdate').val().trim() == "") {
         alert('Start date required');
         return;
+    }
+    
+    if ($('#chkIsFullDay').val() == "True") {
+        $('#enddate').val($('#startdate').val());
     }
     if ($('#enddate').val().trim() == "") {
         alert('End date required');
@@ -228,7 +234,6 @@ function SaveEvent(data) {
             if (data.status) {
                 //Refresh the calender
                 FetchEventAndRenderCalendar();
-                $('body.dashboard').css('padding-right', '-17px');
                 $('#CalenderModalNew').modal('hide');
                 //location.reload();
             }

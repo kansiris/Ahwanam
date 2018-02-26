@@ -6,6 +6,7 @@
 }
 
 <form method="post">
+    <div class="gallery"></div>
     <div class="container margin-top-100 margin-bottom-100 selectblock">
 
         @*Venue Div's*@
@@ -543,12 +544,18 @@
             </div>
         </div>
 
+        <div class="container-fluid" id="topicon">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            @*<i class="fa fa-arrow-up" aria-hidden="true" style="position:absolute;top: 8px;"></i>*@
+        </div>
+
     </div>
 </form>
 <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function (e) {
+        $("#topicon").css("display", "none");
         //$(".selectblock .blocks:first-of-type").css("opacity","1");
         $(".selectblock .blocks").each(function () {
             $(this).css({ "opacity": "1" });
@@ -640,6 +647,21 @@
     //$(".dashboard .top-right-menu > .logged-box").click(function () {
     //    $(".dashboard .top-right-menu > ul.dropdown").toggle();
     //});
+    //Scroll to TOP
+    $("#topicon").click(function () {
+        $("html, body").animate({
+            scrollTop: $(".gallery").offset().top
+        }, "slow");
+    });
+
+    $(window).on("scroll", function () {
+        var ScrollTop = $(this).scrollTop();
+        if (ScrollTop > 1226) {
+            $("#topicon").css("display", "block");
+        } else {
+            $("#topicon").css("display", "none");
+        }
+    });
 </script>
 
 <script>

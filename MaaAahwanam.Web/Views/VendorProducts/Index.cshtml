@@ -9,6 +9,7 @@
 <link href="~/newdesign/css/daterangepicker.css" rel="stylesheet" />
 
 <div class="container margin-top-100">
+    <input type="hidden" id="particularvendor" />
     <div class="row">
         <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Available @Request.QueryString["service"] Partners</h3>
     </div>
@@ -32,6 +33,16 @@
                     <div class="venue-footer">
                         <div class="venue-info">
                             <div class="card-title">
+                                @*@if (item.businessname.Contains("&amp;"))
+                                {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("&amp;", "")</h4></a> }
+                                else
+                                { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>}*@
+
+
+                                @*@if (item.businessname == "" || item.businessname != null)
+                                {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a> }
+                                else
+                                { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("&amp;", "")</h4></a>}*@
                                 <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>
                                 <div class="venue-score">
                                     <div class="star-rating">
@@ -67,11 +78,91 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="venue-quote-btn text-center"><a href="#">Get Quote</a></div>
+                        <div class="venue-quote-btn text-center"><a class="view-details">Get Quote</a></div>
                     </div>
                 </div>
             </div>
         }
+    </div>
+</div>
+<div class="container-fluid view-details-alert">
+    <div class="content">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0">
+            <div class="default-details w-100 float-left">
+                <h3 style="font-size:14px;font-weight:bold" class="margin-top-0"></h3>
+            </div>
+            @*<div class="more-details w-100 float-left">
+                    <h4 class="theme-font-color bold">More Services</h4>
+                    <div class="w-100 float-left">
+                        <h3 style="font-size:14px;font-weight:bold" class="margin-top-0">Category One</h3>
+                        <ul class="col-xs-12 col-sm-12 col-md-6 col-lg-6 w-100">
+                            <li>
+                                <span style="font-weight:bold">Guests</span> :
+                                <p style="display:inline-block">N/A</p>
+                            </li>
+                            <li>
+                                <span style="font-weight:bold">Price Per Plate</span> :
+                                <p style="display:inline-block">N/A </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w-100 float-left">
+                        <h3 style="font-size:14px;font-weight:bold" class="margin-top-0">Category Two</h3>
+                        <ul class="col-xs-12 col-sm-12 col-md-6 col-lg-6 w-100">
+                            <li>
+                                <span style="font-weight:bold">Guests</span> :
+                                <p style="display:inline-block">N/A</p>
+                            </li>
+                            <li>
+                                <span style="font-weight:bold">Price Per Plate</span> :
+                                <p style="display:inline-block">N/A </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>*@
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 checkin-out">
+            <div class="form-group">
+                <label for="check-in">Email Id</label>
+                <input type="email" class="some_class form-control" value="" id="quote_email" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                <label for="persons">Name</label>
+                <input type="text" class="form-control" id="quote_name" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                <label for="extra-persons">Phone</label>
+                <input type="text" class="form-control" id="quote_phone" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                <label for="check-in">Check In Date</label>
+                <input type="text" class="form-control" id="checkindate" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                <label for="extra-persons">Check In Time</label>
+                <input type="text" class="form-control" id="checkintime" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                <label for="check-in">Check Out Date</label>
+                <input type="text" class="form-control" id="checkoutdate" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                <label for="extra-persons">Check Out Time</label>
+                <input type="text" class="form-control" id="checkouttime" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                <label for="persons">Persons</label>
+                <input type="text" class="form-control persons" id="quote_persons" />
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                <label for="extra-persons">Extra Persons</label>
+                <input type="text" class="form-control extra-persons" id="quote_extrapersons" />
+            </div>
+            <div class="form-group text-center">
+                <button name="Submit" href="#" class="btn btn-sm btn-default book-now theme-bg white" id="SendQuote">Send Details</button>
+            </div>
+        </div>
+        <i class="fa fa-times" aria-hidden="true"></i>
     </div>
 </div>
 <div class="container-fluid" id="topicon">
@@ -133,5 +224,30 @@
         }
         GetQuote(quotationsList);
         //alert('servicetype:' + servicetype + ',vendorid:' + vendorid + ',vendormasterid:' + vendormasterid);
+    });
+
+    $("#checkindate").datetimepicker({
+        timepicker: false,
+        datepicker: true,
+        format: 'd/m/Y',
+        //formatDate:'Y/m/d',
+    });
+    $("#checkintime").datetimepicker({
+        datepicker: false,
+        timepicker: true,
+        format: 'H:i',
+        //formatDate:'Y/m/d',
+    });
+    $("#checkoutdate").datetimepicker({
+        timepicker: false,
+        datepicker: true,
+        format: 'd/m/Y',
+        //formatDate:'Y/m/d',
+    });
+    $("#checkouttime").datetimepicker({
+        datepicker: false,
+        timepicker: true,
+        format: 'H:i',
+        //formatDate:'Y/m/d',
     });
 </script>
