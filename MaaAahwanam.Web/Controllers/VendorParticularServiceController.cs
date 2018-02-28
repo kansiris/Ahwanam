@@ -27,6 +27,9 @@ namespace MaaAahwanam.Web.Controllers
             var data = vendorMasterService.GetVendor(long.Parse(id)); //GetProductsInfo_Result Productinfo
             var imageslist = vendorImageService.GetVendorAllImages(long.Parse(id));
             ViewBag.Productinfo = data;
+            //ViewBag.geolocation = data.GeoLocation + "&amp;wmode=transparent";
+            ViewBag.latitude = data.GeoLocation.Split(',')[0];
+            ViewBag.longitude = data.GeoLocation.Split(',')[1];
             ViewBag.vendor = null;
             if (type == "Venue")
                 ViewBag.Venue = venorVenueSignUpService.GetVendorVenue(long.Parse(id)); //, long.Parse(vid)
