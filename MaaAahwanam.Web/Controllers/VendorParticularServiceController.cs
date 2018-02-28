@@ -28,8 +28,8 @@ namespace MaaAahwanam.Web.Controllers
             var imageslist = vendorImageService.GetVendorAllImages(long.Parse(id));
             ViewBag.Productinfo = data;
             //ViewBag.geolocation = data.GeoLocation + "&amp;wmode=transparent";
-            ViewBag.latitude = (data.GeoLocation != null) ?  data.GeoLocation.Split(',')[0] : "17.385044";
-            ViewBag.longitude = (data.GeoLocation != null) ? data.GeoLocation.Split(',')[1] : "78.486671";
+            ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ?  data.GeoLocation.Split(',')[0] : "17.385044";
+            ViewBag.longitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[1] : "78.486671";
             ViewBag.vendor = null;
             if (type == "Venue")
                 ViewBag.Venue = venorVenueSignUpService.GetVendorVenue(long.Parse(id)); //, long.Parse(vid)
