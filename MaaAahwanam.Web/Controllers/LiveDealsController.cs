@@ -216,5 +216,19 @@ namespace MaaAahwanam.Web.Controllers
 
             return View();
         }
+        public JsonResult AutoCompletelocation()
+        {
+            VendorMasterService allVendorsService = new VendorMasterService();
+            var Listoflocations = String.Join(",", allVendorsService.GetVendorLocations().Distinct());
+            //return Json(Listoflocations,JsonRequestBehavior.AllowGet);
+            return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        public JsonResult AutoCompletename()
+        {
+            VendorMasterService allVendorsService = new VendorMasterService();
+            var Listoflocations = String.Join(",", allVendorsService.GetVendorname().Distinct());
+            //return Json(Listoflocations,JsonRequestBehavior.AllowGet);
+            return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }

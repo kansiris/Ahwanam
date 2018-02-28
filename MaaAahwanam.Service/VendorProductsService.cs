@@ -32,5 +32,6 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.spsearchdealname(name, type);
         }
+
     }
 }

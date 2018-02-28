@@ -39,5 +39,14 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.VendormasterList().Select(m => m.Landmark).ToList<dynamic>();
         }
+        public List<dynamic> GetVendorname()
+        {
+            return vendormasterRepository.VendormasterList().Select(m => m.BusinessName).ToList<dynamic>();
+        }
+        public List<dynamic> GetVendorword()
+        {
+            var l1 = vendormasterRepository.VendormasterList().Select(i => i.BusinessName + "," + i.Address +  "," + i.ServicType);
+           return l1.ToList<dynamic>();
+          }
     }
 }

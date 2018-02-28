@@ -144,7 +144,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12 form-group margin-bottom-0">
                     <label>Search</label>
-                    <input type="text" class="form-control" id="name" placeholder="search here" name="txt1" onkeypress="handle(event)">
+                    <input type="text" class="form-control" id="name" placeholder="Search Name" name="txt1" onkeypress="handle(event)">
                 </div>
             </div>
             <div class="row margin-top-30">
@@ -600,17 +600,37 @@ $(".search-categories > ul > li").click(function(){
 /*------- Category Tabs -------------*/
 
 /*------- Search Location -------------*/
- $( function() {
-    var availableTags = [
-      "Ameerpet","Bibi Nagar","Begumpet","Chandanagar","Dilsukhnagar","Kukatpally","Nizampet"
-    ];
-    $( "#location" ).autocomplete({
-      source: availableTags
+$(function () {
+    $.ajax({
+        type: "GET",
+        url: '/LiveDeals/AutoCompletelocation',
+        success: function (data) {
+            var availableTags = data.split(',');
+            $("#location").autocomplete({
+                source: availableTags
+            });
+        }
     });
-  } );
-  $("#location").click(function(){
-	  $(".ui-helper-hidden").css("display","block");
-	  });
+});
+$("#tags,#tags1").click(function () {
+    $(".ui-helper-hidden").css("display", "block");
+});
+
+$(function () {
+    $.ajax({
+        type: "GET",
+        url: '/LiveDeals/AutoCompletename',
+        success: function (data) {
+            var availableTags = data.split(',');
+            $("#name").autocomplete({
+                source: availableTags
+            });
+        }
+    });
+});
+$("#tags,#tags1").click(function () {
+    $(".ui-helper-hidden").css("display", "block");
+});
     /*------- Search Location -------------*/
 
 
