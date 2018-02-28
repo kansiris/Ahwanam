@@ -1367,7 +1367,21 @@
         }
     });
     /*------- Select Business Category -------------*/
-
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: '/searchword/AutoCompleteCountry',
+            success: function (data) {
+                var availableTags = data.split(',');
+                $("#searchword").autocomplete({
+                    source: availableTags
+                });
+            }
+        });
+    });
+    $("#searchword").click(function () {
+        $(".ui-helper-hidden").css("display", "block");
+    });
     /*------- Live Deals -------------*/
 
     /*------- Search Area -------------*/

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>:: Live Deals ::</title>
+    <title>:: Word Search ::</title>
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/customstyles.css">
@@ -143,7 +143,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12 form-group margin-bottom-0">
                     <label>Search</label>
-                    <input type="text" class="form-control" placeholder="@ViewBag.search" />
+                    <input type="text" class="form-control" id="name" placeholder="@ViewBag.search" />
                 </div>
             </div>
             <div class="row margin-top-30">
@@ -165,12 +165,14 @@
             <div class="row margin-top-30">
                 <div class="col-xs-12 col-md-12 form-group">
                     <label>Sort</label>
-                    <select class="form-control">
-                        <option>Select</option>
-                        <option>Low - High</option>
-                        <option>High - Low</option>
-                        <option>Popular</option>
-                        <option>Relavent</option>
+
+
+                    <select class="form-control" id="sort" name="sort">
+                        <option value="">Select</option>
+                        <option value="1">Low - High</option>
+                        <option value="2">High - Low</option>
+                        <option value="3">Popular</option>
+                        <option value="4">Relavent</option>
                     </select>
                 </div>
             </div>
@@ -528,6 +530,26 @@
 
 <script type="text/javascript">
 
+    $(function () {
+    $.ajax({
+        type: "GET",
+        url: '/searchword/AutoCompleteCountry',
+        success: function (data) {
+            var availableTags = data.split(',');
+            $("#name").autocomplete({
+                source: availableTags
+            });
+        }
+    });
+});
+$("#name").click(function () {
+    $(".ui-helper-hidden").css("display", "block");
+});
+
+
+
+
+
 <!--//------ Body Scroll Top ----------->
 $("#topicon").click(function(){
 	$("html, body").animate({
@@ -592,7 +614,46 @@ $(".search-categories > ul > li").click(function(){
   } );
   $("#tags").click(function(){
 	  $(".ui-helper-hidden").css("display","block");
-	  });
+  });
+
+  $('#name').keydown(function (e) {
+      if (e.keyCode === 13) {
+          e.preventDefault(); // Ensure it is only this code that rusn
+          var data = $('#name').val();
+          location.href = '/searchword/Index?search=' + data;
+      }
+  });
+
+
+  $("#sort").on('change', function () {
+      var data = $('#sort').val();
+
+      var data2 = $('#name').val();
+      //alert(data,data1,data2)
+      location.href = '/searchword/Index?sort=' + data + '&search=' + data2;
+  });
+  var $range = $("#range_26");
+
+  $range.ionRangeSlider({
+      type: "double",
+      min: 500,
+      max: $('#rmaxval').val()
+      //from: 2000,
+      //to: 4000
+  });
+
+  $range.on("change", function () {
+      var $this = $(this),
+          from = $this.data("from"),
+          to = $this.data("to");
+      var data = $('#sort').val();
+      var data1 = $('#location').val();
+      var data2 = $('#name').val();
+      alert(from + " - " + to);
+      //console.log(from + " - " + to);
+      location.href = '/searchword/Index?sort=' + data + '&search=' + data1 + '&minval=' + from + '&maxval=' + to;
+
+  });
 /*------- Search Location -------------*/
 </script>
 </html>
