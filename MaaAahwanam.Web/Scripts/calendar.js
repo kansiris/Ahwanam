@@ -1,4 +1,4 @@
-﻿function FetchEventAndRenderCalendar() {
+﻿function FetchEventAndRenderCalendar(subvid) {
     events = [];
     var date = new Date(),
         d = date.getDate(),
@@ -6,7 +6,7 @@
         y = date.getFullYear()
     $.ajax({
         type: "GET",
-        url: '/VendorCalendar/GetDates?id=' + $('#vid').val(),
+        url: '/VendorCalendar/GetDates?id=' + $('#vid').val()+'&&vid='+subvid,
         success: function (data) {
             $.each(data, function (i, v) {
                 var start1, end1 = null;
@@ -228,12 +228,12 @@ $('#btnSave').click(function () {
 function SaveEvent(data) {
     $.ajax({
         type: "POST",
-        url: "/VendorCalendar/SaveEvent",
+        url: "/VendorCalendar/SaveEvent?vid=" + $('#vendorsubcatids').val() + "",
         data: data,
         success: function (data) {
             if (data.status) {
                 //Refresh the calender
-                FetchEventAndRenderCalendar();
+                FetchEventAndRenderCalendar($('#vendorsubcatids').val());
                 $('#CalenderModalNew').modal('hide');
                 //location.reload();
             }

@@ -17,12 +17,15 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VendorCalendar
         public ActionResult Index(string id)
         {
+            //ViewBag.vendorsubcatids = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).Select(m => m.Id);
+            ViewBag.vendorsubcatids = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).Select(m => new SelectListItem { Text= m.VenueType ,Value= m.Id.ToString()}).ToList();
             return View();
         }
 
-        public JsonResult GetDates(string id)
+        public JsonResult GetDates(string id, string vid)
         {
-            long vendorsubid = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).FirstOrDefault().Id;
+            var vendorsubcatids = vendorVenueSignUpService.GetVendorVenue(long.Parse(id));
+            long vendorsubid = (vid == null || vid == "undefined" || vid == "") ? vendorsubcatids.FirstOrDefault().Id : long.Parse(vid); // if vid is null then automatically first Subcategory ID will be considered
             var data = vendorDatesService.GetDates(long.Parse(id), vendorsubid);
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -37,9 +40,9 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveEvent(VendorDates vendorDates)
+        public JsonResult SaveEvent(VendorDates vendorDates,string vid)
         {
-            long vendorsubid = vendorVenueSignUpService.GetVendorVenue(long.Parse(vendorDates.VendorId.ToString())).FirstOrDefault().Id;
+            long vendorsubid = (vid == null || vid=="undefined"||vid=="")? vendorVenueSignUpService.GetVendorVenue(long.Parse(vendorDates.VendorId.ToString())).FirstOrDefault().Id : long.Parse(vid);
             var status = false;
             vendorDates.Vendorsubid = vendorsubid;
             if (vendorDates.Id > 0) //Update the event
