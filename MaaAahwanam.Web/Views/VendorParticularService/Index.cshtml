@@ -40,16 +40,14 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" id="vendor-content">
             <div class="row vendor-descrption margin-left-0 margin-right-0">
-                @if (ViewBag.Productinfo != null)
-                {
-                    <h3>@ViewBag.Productinfo.BusinessName</h3>
-                    <p> @ViewBag.Productinfo.Description </p>
-                }
+                @if (ViewBag.Productinfo.BusinessName != null)
+                { <h3>@ViewBag.Productinfo.BusinessName</h3> }
                 else
-                {
-                    <h3> Business Name </h3>
-                    <p>No Description</p>
-                }
+                { <h3> Business Name </h3> }
+                @if (ViewBag.Productinfo.Description != null)
+                { <p> @ViewBag.Productinfo.Description </p> }
+                else
+                { <p>No Description</p> }
                 <span>More</span>
             </div>
         </div>
@@ -79,13 +77,13 @@
                         <div class="row margin-left-0 margin-right-0">
                             <div class="bottom-content text-center">
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
-                                    <div class="count"> Guests : <span>4</span> </div>
+                                    <div class="count"> Guests : <span>@item.Minimumseatingcapacity - @item.Maximumcapacity</span> </div>
                                 </div>
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
                                     <div class="count">
                                         Service Cost :
                                         @if (item.ServiceCost != null)
-                                        { <span>@item.ServiceCost</span>}
+                                        { <span>Rs.@item.ServiceCost</span>}
                                         else
                                         { <span>0</span> }
                                     </div>
@@ -126,17 +124,17 @@
                         <div class="row margin-left-0 margin-right-0">
                             <div class="bottom-content text-center">
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
-                                    <div class="count"> Guests : <span>4</span> </div>
+                                    <div class="count"> Guests : <span>@item.MinGuests - @item.MaxGuests</span> </div>
                                 </div>
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
                                     <div class="count">
                                         Minimum Order :
                                         @if (item.Veg != null)
-                                        { <span>@item.Veg</span>}
+                                        { <span>Rs.@item.Veg</span>}
                                         @if (item.Veg == null && item.NonVeg != null)
-                                        { <span>@item.NonVeg</span>}
+                                        { <span>Rs.@item.NonVeg</span>}
                                         @if (item.Veg == null && item.NonVeg == null)
-                                        { <span>0</span> }
+                                        { <span>Rs.0</span> }
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -175,15 +173,20 @@
                         <div class="row margin-left-0 margin-right-0">
                             <div class="bottom-content text-center">
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
-                                    <div class="count"> Guests : <span>4</span> </div>
+                                    <div class="count"> Prior Booking Days :
+                                    @if (item.PriorBookingsDays != "" && item.PriorBookingsDays != null)
+                                    { <span>@item.PriorBookingsDays</span> }
+                                    else
+                                    {  <span>N/A</span> }
+                                     </div>
                                 </div>
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
                                     <div class="count">
                                         Starting Price :
                                         @if (item.StartingPrice != null)
-                                        { <span>@item.StartingPrice</span>}
+                                        { <span>Rs.@item.StartingPrice</span>}
                                         else
-                                        { <span>0</span> }
+                                        { <span>Rs.0</span> }
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -222,13 +225,18 @@
                         <div class="row margin-left-0 margin-right-0">
                             <div class="bottom-content text-center">
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
-                                    <div class="count"> Guests : <span>4</span> </div>
+                                    <div class="count"> Prior Booking Days : 
+                                    @if (item.PriorBookingsDays != "" && item.PriorBookingsDays != null)
+                                    { <span>@item.PriorBookingsDays</span> }
+                                    else
+                                    {  <span>N/A</span> } 
+                                    </div>
                                 </div>
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
                                     <div class="count">
                                         Starting Price :
                                         @if (item.StartingPrice != null)
-                                        { <span>@item.StartingPrice</span>}
+                                        { <span>Rs.@item.StartingPrice</span>}
                                         else
                                         { <span>0</span> }
                                     </div>
@@ -269,13 +277,18 @@
                         <div class="row margin-left-0 margin-right-0">
                             <div class="bottom-content text-center">
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
-                                    <div class="count"> Guests : <span>4</span> </div>
+                                    <div class="count"> Prior Booking Days : 
+                                    @if (item.PriorBookingsDays != "" && item.PriorBookingsDays != null)
+                                    { <span>@item.PriorBookingsDays</span> }
+                                    else
+                                    {  <span>N/A</span> } 
+                                    </div>
                                 </div>
                                 <div class="content col-xs-12 col-sm-4 col-md-4 col-lg-4 padding-left-0">
                                     <div class="count">
                                         Minimum Order :
                                         @if (item.MinOrder != null)
-                                        { <span>@item.MinOrder</span>}
+                                        { <span>Rs.@item.MinOrder</span>}
                                         else
                                         { <span>0</span> }
                                     </div>

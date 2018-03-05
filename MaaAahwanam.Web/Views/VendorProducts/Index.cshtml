@@ -11,7 +11,7 @@
 <div class="container margin-top-100">
     <input type="hidden" id="particularvendor" />
     <div class="row">
-        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Available @Request.QueryString["service"] Partners</h3>
+        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Available @ViewBag.service Partners</h3>
     </div>
     <div class="row">
         @foreach (var item in ViewBag.records)
@@ -43,7 +43,11 @@
                                     {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a> }
                                     else
                                     { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("&amp;", "")</h4></a>}*@
-                                <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>
+                                @*<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>*@
+                                @if (item.businessname != "" && item.businessname != null)
+                                {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("amp;", "")</h4></a>}
+                                else
+                                { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>}
                                 <div class="venue-score">
                                     <div class="star-rating">
                                         <div class="bg"></div>
