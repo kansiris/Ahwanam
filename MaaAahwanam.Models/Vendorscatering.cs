@@ -32,6 +32,8 @@ namespace MaaAahwanam.Models
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public int MinGuests { get; set; }
+        public int MaxGuests { get; set; }
         //public int tier { get; set; }
     }
 }

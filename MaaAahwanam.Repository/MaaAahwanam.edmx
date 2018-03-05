@@ -288,9 +288,6 @@
           <FunctionImport Name="AllVendorList" ReturnType="Collection(MaaAahwanamModel.AllVendorList_Result)">
           <Parameter Name="ServicType" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="vendorproducts" ReturnType="Collection(MaaAahwanamModel.vendorproducts_Result)">
-          <Parameter Name="type" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="searchvendors" ReturnType="Collection(MaaAahwanamModel.searchvendors_Result)">
             <Parameter Name="type" Mode="In" Type="String" />
             <Parameter Name="param" Mode="In" Type="String" />
@@ -305,6 +302,9 @@
           </FunctionImport>
           <FunctionImport Name="spsearchdealname" ReturnType="Collection(MaaAahwanamModel.spsearchdealname_Result)">
             <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="vendorproducts" ReturnType="Collection(MaaAahwanamModel.vendorproducts_Result)">
             <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -802,21 +802,6 @@
           <Property Type="String" Name="VenueType" Nullable="true" />
           <Property Type="String" Name="food" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="vendorproducts_Result">
-          <Property Type="Int64" Name="id" Nullable="false" />
-          <Property Type="String" Name="businessname" Nullable="true" />
-          <Property Type="String" Name="subid" Nullable="true" />
-          <Property Type="String" Name="cost" Nullable="true" />
-          <Property Type="String" Name="landmark" Nullable="true" />
-          <Property Type="String" Name="description" Nullable="true" />
-          <Property Type="String" Name="servictype" Nullable="true" />
-          <Property Type="String" Name="EmailId" Nullable="true" />
-          <Property Type="String" Name="subtype" Nullable="true" />
-          <Property Type="String" Name="logo" Nullable="true" />
-          <Property Type="String" Name="image" Nullable="true" />
-          <Property Type="Int32" Name="tier" Nullable="false" />
-          <Property Type="Int32" Name="priority" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="searchvendors_Result">
           <Property Type="Int64" Name="id" Nullable="false" />
           <Property Type="String" Name="businessname" Nullable="true" />
@@ -880,6 +865,24 @@
           <Property Type="Decimal" Name="cost2" Nullable="false" Precision="2" Scale="2" />
           <Property Type="Decimal" Name="cost3" Nullable="false" Precision="2" Scale="2" />
           <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="vendorproducts_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="businessname" Nullable="true" />
+          <Property Type="String" Name="subid" Nullable="true" />
+          <Property Type="String" Name="cost" Nullable="true" />
+          <Property Type="String" Name="landmark" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="true" />
+          <Property Type="String" Name="servictype" Nullable="true" />
+          <Property Type="String" Name="EmailId" Nullable="true" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="String" Name="logo" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="MinGuest" Nullable="true" />
+          <Property Type="String" Name="MaxGuest" Nullable="true" />
+          <Property Type="String" Name="PriorBookingsDays" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="tier" Nullable="false" />
+          <Property Type="Int32" Name="priority" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1538,25 +1541,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="vendorproducts" FunctionName="MaaAahwanamModel.Store.vendorproducts">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.vendorproducts_Result">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="businessname" ColumnName="businessname" />
-                <ScalarProperty Name="subid" ColumnName="subid" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="landmark" ColumnName="landmark" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="servictype" ColumnName="servictype" />
-                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-                <ScalarProperty Name="subtype" ColumnName="subtype" />
-                <ScalarProperty Name="logo" ColumnName="logo" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="tier" ColumnName="tier" />
-                <ScalarProperty Name="priority" ColumnName="priority" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="searchvendors" FunctionName="MaaAahwanamModel.Store.searchvendors">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.searchvendors_Result">
@@ -1634,6 +1618,28 @@
                 <ScalarProperty Name="cost2" ColumnName="cost2" />
                 <ScalarProperty Name="cost3" ColumnName="cost3" />
                 <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="vendorproducts" FunctionName="MaaAahwanamModel.Store.vendorproducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.vendorproducts_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="businessname" ColumnName="businessname" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="landmark" ColumnName="landmark" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="servictype" ColumnName="servictype" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="MinGuest" ColumnName="MinGuest" />
+                <ScalarProperty Name="MaxGuest" ColumnName="MaxGuest" />
+                <ScalarProperty Name="PriorBookingsDays" ColumnName="PriorBookingsDays" />
+                <ScalarProperty Name="tier" ColumnName="tier" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

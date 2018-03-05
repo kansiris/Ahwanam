@@ -34,15 +34,15 @@
                         <div class="venue-info">
                             <div class="card-title">
                                 @*@if (item.businessname.Contains("&amp;"))
-                                {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("&amp;", "")</h4></a> }
-                                else
-                                { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>}*@
+                                    {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("&amp;", "")</h4></a> }
+                                    else
+                                    { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>}*@
 
 
                                 @*@if (item.businessname == "" || item.businessname != null)
-                                {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a> }
-                                else
-                                { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("&amp;", "")</h4></a>}*@
+                                    {<a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a> }
+                                    else
+                                    { <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname.Replace("&amp;", "")</h4></a>}*@
                                 <a href="/VendorParticularService/Index?type=@Request.QueryString["service"]&&id=@item.id&&vid=@item.subid"><h4>@item.businessname</h4></a>
                                 <div class="venue-score">
                                     <div class="star-rating">
@@ -52,20 +52,43 @@
                                 </div>
                             </div>
                             <div class="bottom-content text-center">
-                                <div class="content">
+                                @*<div class="content">
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    <div class="count">
-                                        <p>500 - 3000</p>
-                                        <span>Guests</span>
+                                    <div class="count">*@
+                                @*<p>500 - 3000</p>
+                                    <span>Guests</span>*@
+                                @if (ViewBag.service == "Decorator" || ViewBag.service == "Photography" || ViewBag.service == "Other")
+                                {
+                                    <div class="content">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        <div class="count">
+                                            @if (item.PriorBookingsDays != null && item.PriorBookingsDays != "")
+                                            {<p>@item.PriorBookingsDays</p>}
+                                            else
+                                            { <p>N/A</p>}
+                                            <span>Prior Booking Days</span>
+                                        </div>
                                     </div>
-                                </div>
+                                }
+                                @if (ViewBag.service == "Catering" || ViewBag.service == "Venue" || ViewBag.service == "Hotels" || ViewBag.service == "Resorts" || ViewBag.service == "Conventions")
+                                {
+                                    <div class="content">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <div class="count">
+                                            <p>@item.MinGuest - @item.MaxGuest</p>
+                                            <span>Guests</span>
+                                        </div>
+                                    </div>
+                                }
+                                @*</div>
+                                    </div>*@
                                 <div class="content">
                                     <div class="count">
                                         @*<p>Rs @item.cost<i class="fa fa-check" aria-hidden="true"></i></p>*@
                                         @if (item.cost != null && item.cost != "")
                                         {<p>Rs @item.cost <i class="fa fa-check" aria-hidden="true"></i></p>}
-                                    else
-                                    { <p>Rs 9999 <i class="fa fa-check" aria-hidden="true"></i></p>}
+                                        else
+                                        { <p>Rs 9999 <i class="fa fa-check" aria-hidden="true"></i></p>}
                                         @if (ViewBag.service == "Venue" || ViewBag.service == "Hotels" || ViewBag.service == "Resorts" || ViewBag.service == "Conventions")
                                         {<span>Service Cost</span>}
                                         @if (ViewBag.service == "Catering" || ViewBag.service == "Other")

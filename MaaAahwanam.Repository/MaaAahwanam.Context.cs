@@ -448,15 +448,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AllVendorList_Result>("AllVendorList", servicTypeParameter);
         }
     
-        public virtual ObjectResult<vendorproducts_Result> vendorproducts(string type)
-        {
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vendorproducts_Result>("vendorproducts", typeParameter);
-        }
-    
         public virtual ObjectResult<searchvendors_Result> searchvendors(string type, string param)
         {
             var typeParameter = type != null ?
@@ -507,6 +498,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("type", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spsearchdealname_Result>("spsearchdealname", nameParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<vendorproducts_Result> vendorproducts(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vendorproducts_Result>("vendorproducts", typeParameter);
         }
     }
 }

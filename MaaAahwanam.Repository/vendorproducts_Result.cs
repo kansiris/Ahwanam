@@ -24,6 +24,9 @@ namespace MaaAahwanam.Repository
         public string subtype { get; set; }
         public string logo { get; set; }
         public string image { get; set; }
+        public string MinGuest { get; set; }
+        public string MaxGuest { get; set; }
+        public string PriorBookingsDays { get; set; }
         public int tier { get; set; }
         public int priority { get; set; }
     }
