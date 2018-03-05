@@ -6,7 +6,7 @@
         y = date.getFullYear()
     $.ajax({
         type: "GET",
-        url: '/VendorCalendar/GetDates?id=' + $('#vid').val()+'&&vid='+subvid,
+        url: '/VendorCalendar/GetDates?id=' + $('#vid').val() + '&&vid=' + location.search.split('vid=')[1],
         success: function (data) {
             $.each(data, function (i, v) {
                 var start1, end1 = null;
@@ -62,7 +62,7 @@ function GenerateCalender(events) {
                     $('#myModal #eventTitle').text(data.Title);
                     var $description = $('<div/>');
                     $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
-                    if (data.IsFullDay == "False") {
+                    if (data.IsFullDay == "False" || data.IsFullDay == null) {
                         $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
                     }
                     $description.append($('<p/>').html('<b>Description:</b>' + data.Description));
@@ -106,7 +106,7 @@ function GenerateCalender(events) {
                 VendorId: $('#vid').val(),
                 Servicetype: event.servicetype
             };
-            alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
+            //alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
             SaveEvent(data);
         }
     })
@@ -192,9 +192,17 @@ $('#btnSave').click(function () {
         return;
     }
     
-    if ($('#chkIsFullDay').val() == "True") {
-        $('#enddate').val($('#startdate').val());
+    if ($('#chkIsFullDay').val() == "" || $('#chkIsFullDay').val() == null) {
+        alert('Is Full Day event required');
+        return;
     }
+    else {
+        if ($('#chkIsFullDay').val() == "True") {
+            $('#enddate').val($('#startdate').val());
+        }
+    }
+
+   
     if ($('#enddate').val().trim() == "") {
         alert('End date required');
         return;
@@ -226,9 +234,10 @@ $('#btnSave').click(function () {
 
 
 function SaveEvent(data) {
+    var vid = location.search.split('vid=')[1];
     $.ajax({
         type: "POST",
-        url: "/VendorCalendar/SaveEvent?vid=" + $('#vendorsubcatids').val() + "",
+        url: "/VendorCalendar/SaveEvent?vid=" + vid.toString() + "",
         data: data,
         success: function (data) {
             if (data.status) {

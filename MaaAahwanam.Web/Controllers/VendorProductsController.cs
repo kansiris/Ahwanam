@@ -30,7 +30,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             string[] splittedcategories = category.Split(',');
             string[] splittedsubcategories = subcategory.Split(',');
-            var selectedvenuescategories= ""; var selectedvenues = "";
+            var selectedvenuescategories = ""; var selectedvenues = "";
             var selectedhotelscategories = ""; var selectedhotels = "";
             var selectedresortscategories = ""; var selectedresorts = "";
             var selectedconventionscategories = ""; var selectedconventions = "";
@@ -44,7 +44,7 @@ namespace MaaAahwanam.Web.Controllers
             selectedconventionscategories = String.Join(",", Enumerable.Range(0, splittedcategories.Length).Where(i => splittedcategories[i] == "Conventions").ToList());
             selectedcateringscategories = String.Join(",", Enumerable.Range(0, splittedcategories.Length).Where(i => splittedcategories[i] == "Caterers").ToList());
             selectedPhotographycategories = String.Join(",", Enumerable.Range(0, splittedcategories.Length).Where(i => splittedcategories[i] == "Photographers").ToList());
-            selectedDecoratorcategories = String.Join(",", Enumerable.Range(0, splittedcategories.Length).Where(i => splittedcategories[i] == "Decorator").ToList());
+            selectedDecoratorcategories = String.Join(",", Enumerable.Range(0, splittedcategories.Length).Where(i => splittedcategories[i] == "Decorators").ToList());
             selectedMehendicategories = String.Join(",", Enumerable.Range(0, splittedcategories.Length).Where(i => splittedcategories[i] == "Mehendi").ToList());
             if (selectedvenuescategories != "")
             {
@@ -52,6 +52,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedvenues = selectedvenues + ',' + splittedsubcategories[int.Parse(selectedvenuescategories.Split(',')[i])].ToString();
                 }
+                selectedvenues = selectedvenues.TrimStart(',');
+                ViewBag.Venue = vendorProductsService.GetSearchedVendorRecords("Venue", selectedvenues+",").ToList();
             }
             if (selectedhotelscategories != "")
             {
@@ -59,6 +61,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedhotels = selectedhotels + ',' + splittedsubcategories[int.Parse(selectedhotelscategories.Split(',')[i])].ToString();
                 }
+                selectedhotels = selectedhotels.TrimStart(',');
+                ViewBag.Hotels = vendorProductsService.GetSearchedVendorRecords("Hotel", selectedhotels + ",").ToList(); // Hotel records
             }
             if (selectedresortscategories != "")
             {
@@ -66,6 +70,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedresorts = selectedresorts + ',' + splittedsubcategories[int.Parse(selectedresortscategories.Split(',')[i])].ToString();
                 }
+                selectedresorts = selectedresorts.TrimStart(',');
+                ViewBag.Resorts = vendorProductsService.GetSearchedVendorRecords("Resort", selectedresorts + ",").ToList();// Resort records
             }
             if (selectedconventionscategories != "")
             {
@@ -73,6 +79,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedconventions = selectedconventions + ',' + splittedsubcategories[int.Parse(selectedconventionscategories.Split(',')[i])].ToString();
                 }
+                selectedconventions = selectedconventions.TrimStart(',');
+                ViewBag.Conventions = vendorProductsService.GetSearchedVendorRecords("Convention Hall", selectedconventions + ",").ToList(); // Convention records
             }
             if (selectedcateringscategories != "")
             {
@@ -80,6 +88,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedcatering = selectedcatering + ',' + splittedsubcategories[int.Parse(selectedcateringscategories.Split(',')[i])].ToString();
                 }
+                selectedcatering = selectedcatering.TrimStart(',');
+                ViewBag.Catering = vendorProductsService.GetSearchedVendorRecords("Catering", selectedcatering + ",").ToList();
             }
             if (selectedPhotographycategories != "")
             {
@@ -87,6 +97,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedPhotography = selectedPhotography + ',' + splittedsubcategories[int.Parse(selectedPhotographycategories.Split(',')[i])].ToString();
                 }
+                selectedPhotography = selectedPhotography.TrimStart(',');
+                ViewBag.Photography = vendorProductsService.GetSearchedVendorRecords("Photography", selectedPhotography + ",").ToList();
             }
             if (selectedDecoratorcategories != "")
             {
@@ -94,6 +106,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedDecorator = selectedDecorator + ',' + splittedsubcategories[int.Parse(selectedDecoratorcategories.Split(',')[i])].ToString();
                 }
+                selectedDecorator = selectedDecorator.TrimStart(',');
+                ViewBag.Decorator = vendorProductsService.GetSearchedVendorRecords("Decorator", selectedDecorator + ",").ToList();
             }
             if (selectedMehendicategories != "")
             {
@@ -101,16 +115,9 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     selectedMehendi = selectedMehendi + ',' + splittedsubcategories[int.Parse(selectedMehendicategories.Split(',')[i])].ToString();
                 }
+                selectedMehendi = selectedMehendi.TrimStart(',');
+                ViewBag.Mehendi = vendorProductsService.GetSearchedVendorRecords("Mehendi", selectedMehendi + ",").ToList();
             }
-            
-            ViewBag.Venue = vendorProductsService.GetSearchedVendorRecords("Venue",selectedvenues+",").ToList();
-            ViewBag.Hotels = vendorProductsService.GetSearchedVendorRecords("Hotel", selectedhotels+",").ToList(); // Hotel records
-            ViewBag.Resorts = vendorProductsService.GetSearchedVendorRecords("Resort", selectedresorts+",").ToList();// Resort records
-            ViewBag.Conventions = vendorProductsService.GetSearchedVendorRecords("Convention Hall", selectedconventions+",").ToList(); // Convention records
-            ViewBag.Catering = vendorProductsService.GetSearchedVendorRecords("Catering", selectedcatering + ",").ToList();
-            ViewBag.Photography = vendorProductsService.GetSearchedVendorRecords("Photography", selectedPhotography + ",").ToList();
-            ViewBag.Decorator = vendorProductsService.GetSearchedVendorRecords("Decorator", selectedDecorator + ",").ToList();
-            ViewBag.Mehendi = vendorProductsService.GetSearchedVendorRecords("Mehendi", selectedMehendi + ",").ToList();
             return View("SearchResult");
         }
     }
