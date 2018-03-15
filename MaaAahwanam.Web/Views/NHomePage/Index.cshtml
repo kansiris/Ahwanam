@@ -1,9 +1,4 @@
 ﻿
-@{
-    Layout = null;
-}
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/Nbootstrap.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="~/newdesign/css/Ncustomstyles.css">    
-
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/Ncustomstyles.css">
+    <link href="~/newdesign/css/datepicker.css" rel="stylesheet" />
     <!------ Owl Thumb Slider ---------->
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.theme.default.css">
@@ -67,7 +62,10 @@
                 <div class="row mx-0">
                     <div class="topSearchArea ml-auto d-flex">
                         <span class="themeBgColorSecondary d-flex"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                        <span class="themeBgColorPrimary d-flex align-items-center">Hyderabad</span>
+                        <span class="themeBgColorPrimary align-items-center">Hyderabad</span>
+                    </div>
+                    <div class="ui-widget">
+                        <input id="tags">
                     </div>
                 </div>
                 <div class="row mx-0 mt-3 topServiceType">
@@ -78,9 +76,20 @@
                         <option>Others</option>
                     </select>
                 </div>
-                <div class="row mx-0 mt-3 occasionDate">
+                @*<div class="row mx-0 mt-3 occasionDate">
                     <input type="text" class="border-0 ml-auto" placeholder="Occasion Date">
+                </div>*@
+                <div class="row mx-0 mt-3 occasionDate">
+                    <!--<input type="text" class="border-0 ml-auto" placeholder="Occasion Date">-->
+                    <div class="date-picker">
+                        <div class="input">
+                            <div class="result nexaBold">Occasion Date: <span></span></div>
+                            <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
+                        </div>
+                        <div class="calendar"></div>
+                    </div>
                 </div>
+
                 <div class="row mx-0 mt-3">
                     <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
                 </div>
@@ -131,16 +140,36 @@
     <div class="container normalSearch margin-top-50 margin-bottom-50">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-sm-6 col-md-4 offset-md-1 mb-2">
-                <input type="text" class="w-100" placeholder="Search Here" />
+                <input type="text" class="w-100" placeholder="Search Here" id="searchvendors">
             </div>
-            <div class="col-12 col-sm-3 col-md-2 venueSearch d-flex mb-2 pr-sm-0 pr-md-0">
-                <span class="themeBgColorPrimary d-flex align-items-center justify-content-center text-white w-100">Venue</span>
+            <div class="col-12 col-sm-3 col-md-2 categorySearch d-flex mb-2 pr-sm-0 pr-md-0">
+                <span class="themeBgColorPrimary d-flex align-items-center justify-content-center text-white w-100" id="searchvendortype">Venue</span>
                 <span class="themeBgColorSecondary d-flex text-white"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                <div class="categoryResults">
+                    <ul>
+                        <li> <label for="Venue"> Venues </label> </li>
+                        <li> <label for="Hotel"> Hotels </label> </li>
+                        <li> <label for="Resort"> Resorts </label> </li>
+                        <li> <label for="Convention Hall"> Convention Halls </label> </li>
+                        <li> <label for="Catering"> Caterers </label> </li>
+                        <li> <label for="Photography"> Photographers </label> </li>
+                        <li> <label for="Decorator"> Decorators </label> </li>
+                        <li> <label for="Mehendi"> Mehendi Artists </label></li>
+                        <li> <label for="Pandit"> Pandits </label></li>
+                        <li> <label for="EventManagement"> Event Management </label> </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-12 col-sm-6 col-md-3 venueSearch d-flex mb-2">
-                <span class="themeBgColorPrimary d-flex align-items-center justify-content-center text-white w-100">Hyderabad</span>
+                <div class="ui-widget">
+                    <input id="tags1" class="ui-autocomplete-input" autocomplete="off">
+                </div>
+                <span class="themeBgColorPrimary align-items-center justify-content-center text-white w-100">Hyderabad</span>
                 <span class="themeBgColorSecondary d-flex text-white"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
             </div>
+        </div>
+        <div class="row d-flex justify-content-center normalSearchResult" id="sortedvendorlist">
+            @{ Html.RenderAction("SortVendorsBasedOnLocation", "NHomePage");}
         </div>
     </div>
     <div class="container">
@@ -201,8 +230,9 @@
                             <span class="d-block mt-2 text-center themeFontColor">Choreographer</span>
                         </a>
                         <a href="#" class="item">
-                            <img src="~/newdesign/images/band&dhol.png" alt="Band and Dhol" />
-                            <span class="d-block mt-2 text-center themeFontColor">Band &amp Dhol</span>
+                            <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
+                            @*<img src="~/newdesign/images/band&dhol.png" alt="Band and Dhol" />*@
+                            <span class="d-block mt-2 text-center themeFontColor">Band & Dhol</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/orchestra-bg.png" alt="orchestra" />
@@ -519,32 +549,123 @@
             </div>
         </div>
     </footer>
-</body>
-<script type="text/javascript" src="~/newdesign/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
 
-@*<!------ Owl Thumb Slider ---------->*@
-<script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/newdesign/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
 
-<script>
-            $(document).ready(function() {
-              var owl = $('.owl-carousel');
-              owl.owlCarousel({
+    @*<!------ Owl Thumb Slider ---------->*@
+    <script src="~/newdesign/js/jquery-ui.min.js"></script>
+    <script src="~/newdesign/js/datepicker.js"></script>
+    <script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var owl = $('.owl-carousel');
+            owl.owlCarousel({
                 margin: 10,
                 nav: true,
                 loop: true,
                 responsive: {
-                  0: {
-                    items: 1
-                  },
-                  600: {
-                    items: 3
-                  },
-                  1000: {
-                    items: 5
-                  }
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
+                    }
                 }
-              })
             })
-</script>
+        })
+    </script>
+    <!------ Auto Complete ---------->
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            var availableTags = '';
+            $.ajax({
+                type: "GET",
+                url: '/NHomePage/AutoCompleteCountry',
+                success: function (data) {
+                    availableTags = data.split(',');
+                    $("#tags,#tags1").autocomplete({
+                        source: availableTags
+                    });
+                }
+            });
+            $("#tags, #tags1").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+
+    <script>
+        $('#searchvendors').on('change', function () {
+            var location = $('#tags1').val();
+            if (location == '') { location = 'Hyderabad';}
+            var url = '/NHomePage/SortVendorsBasedOnLocation?search=' + $('#searchvendors').val() + '&&type=' + $('#searchvendortype').html() + '&&location=' + location;
+            //alert($('#searchvendortype').html());
+            //Sorting Vendors based on location
+            $.ajax({
+                type: 'get',
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'html',
+                data: $('#tags').val(),
+                success: function (result) {
+                    $('#sortedvendorlist').empty().html(result);
+                    //catgId = selected.toString().split(',');
+                    //for (var i = 0; i < catgId.length; i++) {
+                    //    $("#businesscategory div").each(function () {
+                    //        $('#' + catgId[i] + '').show();
+                    //    });
+                    //}
+                },
+                error: function (ex) {
+                    alert("Failed To Fetch data");
+                }
+            });
+        });
+    </script>
+
+    <script>
+        <!--//---- Top Section Area Search ---------->
+            var areaSpan = $(".topSearchArea").find("span:last-child"), 
+                topThisUiWidget = $(".topSearchArea").next(".ui-widget");
+        $(".topSearchArea").click(function(event){
+            $(areaSpan).css({"display":"none"});
+            $(topThisUiWidget).css({"display":"block"});
+            $(topThisUiWidget).find("input").focus();
+        });
+    //    <!------ Top Section Area Search ---------->
+	
+	//<!------ Venue Area Search ---------->
+	  var venueSearch = $(".venueSearch").find("span"),
+	      venueSearchSpan = $(".venueSearch").find("span:first-of-type"),
+	      venueUiWidge = $(".venueSearch").find(".ui-widget");
+        $(venueSearch).click(function(){
+            $(venueSearchSpan).css({"display":"none"});
+            $(venueUiWidge).css({"display":"block"});
+            $(venueUiWidge).find("input").focus();
+        });
+        //<!------ Venue Area Search ---------->
+
+		  //<!------ Category Select ---------->
+      var catgSearch = $(".categorySearch > span"),
+          catgSearchSpanFirst = $(".categorySearch > span:first-child"),
+          catResults = $(".categorySearch .categoryResults")
+		  $(catgSearch).click(function(){
+		      $(catResults).css("display","block");
+		  });
+		  $(catResults).find('li').click(function () {
+		      //alert($(this).children('label').prop("for"));
+		      var catResultsText = $(this).children('label').prop("for");
+		      $(catgSearchSpanFirst).empty().append(catResultsText);
+		      $(catResults).css("display","none");
+		  });
+		  //<!------ Category Select ---------->
+    </script>
+</body>
 </html>
