@@ -28,7 +28,7 @@ namespace MaaAahwanam.Service
 
         public Vendormaster UpdateVendorMaster(Vendormaster vendorMaster, long id)
         {
-            return vendormasterRepository.UpdateVendorMaster(vendorMaster,id);
+            return vendormasterRepository.UpdateVendorMaster(vendorMaster, id);
         }
 
         public Vendormaster GetVendorByEmail(string emailid)
@@ -45,8 +45,12 @@ namespace MaaAahwanam.Service
         }
         public List<dynamic> GetVendorword()
         {
-            var l1 = vendormasterRepository.VendormasterList().Select(i => i.BusinessName + "," + i.Address +  "," + i.ServicType);
-           return l1.ToList<dynamic>();
-          }
+            var l1 = vendormasterRepository.VendormasterList().Select(i => i.BusinessName + "," + i.Address + "," + i.ServicType);
+            return l1.ToList<dynamic>();
+        }
+        public List<dynamic> GetVendorCities()
+        {
+            return vendormasterRepository.VendormasterList().Select(m => m.City).ToList<dynamic>();
+        }
     }
 }

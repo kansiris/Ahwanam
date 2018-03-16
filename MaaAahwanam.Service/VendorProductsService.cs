@@ -11,6 +11,11 @@ namespace MaaAahwanam.Service
     public class VendorProductsService
     {
         VendorProductsRepository vendorProductsRepository = new VendorProductsRepository();
+
+        public List<searchvendorproducts_Result> Getsearchvendorproducts_Result(string search,string type)
+        {
+            return vendorProductsRepository.Getsearchvendorproducts_Result(search,type);
+        }
         public List<vendorproducts_Result> Getvendorproducts_Result(string type)
         {
             return vendorProductsRepository.Getvendorproducts_Result(type);
