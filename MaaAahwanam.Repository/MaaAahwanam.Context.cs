@@ -521,5 +521,17 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchvendorproducts_Result>("searchvendorproducts", searchitemParameter, typeParameter);
         }
+
+        public virtual ObjectResult<Spgetalldeals_Result> getalldeal()
+        {
+
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
+        }
+
+        public virtual ObjectResult<Spgetalldeals_Result> Spgetalldeals()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
+        }
     }
 }
