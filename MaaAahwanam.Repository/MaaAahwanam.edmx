@@ -135,6 +135,7 @@
         <Function Name="SP_vendordatesbooked" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
+        <Function Name="Spgetalldeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spsearchdeal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="search" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="varchar" Mode="In" />
@@ -315,6 +316,7 @@
             <Parameter Name="searchitem" Mode="In" Type="String" />
             <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="Spgetalldeals" ReturnType="Collection(MaaAahwanamModel.Spgetalldeals_Result)" />
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -909,6 +911,14 @@
           <Property Type="String" Name="PriorBookingsDays" Nullable="false" MaxLength="1" />
           <Property Type="Int32" Name="tier" Nullable="false" />
           <Property Type="Int32" Name="priority" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Spgetalldeals_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="Decimal" Name="DealServicePrice" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="DealID" Nullable="false" />
+          <Property Type="Decimal" Name="cost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1688,6 +1698,18 @@
                 <ScalarProperty Name="PriorBookingsDays" ColumnName="PriorBookingsDays" />
                 <ScalarProperty Name="tier" ColumnName="tier" />
                 <ScalarProperty Name="priority" ColumnName="priority" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Spgetalldeals" FunctionName="MaaAahwanamModel.Store.Spgetalldeals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Spgetalldeals_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="DealServicePrice" ColumnName="DealServicePrice" />
+                <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -37,6 +37,10 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.spsearchdealname(name, type);
         }
+        public List<Spgetalldeals_Result> getalldeal()
+        {
+            return vendorProductsRepository.getalldeal();
+        }
 
     }
 }

@@ -37,6 +37,11 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.spsearchdealname(name, Type).ToList();
         }
+
+        public List<Spgetalldeals_Result> getalldeal()
+        {
+            return maaAahwanamEntities.getalldeal().ToList();
+        }
     }
 
 }
