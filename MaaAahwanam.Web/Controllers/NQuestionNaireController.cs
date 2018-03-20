@@ -9,7 +9,7 @@ namespace MaaAahwanam.Web.Controllers
     public class NQuestionNaireController : Controller
     {
         // GET: NQuestionNaire
-        public ActionResult Index()
+        public ActionResult Index(string location,string servicetype,string occasiondate)
         {
             return View();
         }

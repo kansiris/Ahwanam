@@ -69,11 +69,18 @@
                     </div>
                 </div>
                 <div class="row mx-0 mt-3 topServiceType">
-                    <select class="border-0 ml-auto">
-                        <option>Service Type</option>
-                        <option>Wedding</option>
-                        <option>Birthday</option>
-                        <option>Others</option>
+                    <select class="border-0 ml-auto" id="selectedservice">
+                        <option value="">Service Type</option>
+                        <option value="Venue">Venue</option>
+                        <option value="Hotel">Hotel</option>
+                        <option value="Resort">Resort</option>
+                        <option value="Convetion">Convetion Hall</option>
+                        <option value="Catering">Catering</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Decorator">Decorator</option>
+                        <option value="Mehendi">Mehendi Artists</option>
+                        <option value="Pandits">Pandits</option>
+                        <option value="EventManagement">Event Management</option>
                     </select>
                 </div>
                 @*<div class="row mx-0 mt-3 occasionDate">
@@ -83,7 +90,7 @@
                     <!--<input type="text" class="border-0 ml-auto" placeholder="Occasion Date">-->
                     <div class="date-picker">
                         <div class="input">
-                            <div class="result nexaBold">Occasion Date: <span></span></div>
+                            <div class="result nexaBold">Occasion Date: <span id="selecteddate"></span></div>
                             <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
                         </div>
                         <div class="calendar"></div>
@@ -91,7 +98,7 @@
                 </div>
 
                 <div class="row mx-0 mt-3">
-                    <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
+                    <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white" onclick="planning()">Start Planing</button>
                 </div>
             </div>
         </div>
@@ -243,8 +250,8 @@
                             <span class="d-block mt-2 text-center themeFontColor">Performing Artist</span>
                         </a>
                         <a href="#" class="item">
-                            <img src="~/newdesign/images/band&dhol.png" alt="Band and Dhol" />
-                            <span class="d-block mt-2 text-center themeFontColor">Band &amp Dhol</span>
+                            <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
+                            <span class="d-block mt-2 text-center themeFontColor">Band & Dhol</span>
                         </a>
                     </div>
                 </div>
@@ -666,6 +673,17 @@
 		      $(catResults).css("display","none");
 		  });
 		  //<!------ Category Select ---------->
+    </script>
+
+    <script>
+        function planning() {
+            var location = $('#tags').val();
+            var servicetype = $('#selectedservice').val();
+            var occasiondate = $('#selecteddate').html();
+            if (location == '') { location = 'Hyderabad' }
+            //alert("location=" + location + ",servicetype=" + servicetype + ",occasiondate=" + occasiondate + "");
+            window.location.href = '/NQuestionNaire?location=' + location + '&&servicetype=' + servicetype + '&&occasiondate=' + occasiondate;
+        }
     </script>
 </body>
 </html>
