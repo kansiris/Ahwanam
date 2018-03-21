@@ -29,6 +29,7 @@ namespace MaaAahwanam.Models
         public decimal CardCostWithPrint { get; set; }
         public long VendorId { get; set; }
         public long VendorSubId { get; set; }
+        public string DealDescription { get; set; }
         //public decimal VegPricePerPlate { get; set; }
         //public decimal NonVegPricePerPlate { get; set; }
         //public decimal BridalMakeupStartsFrom { get; set; }
