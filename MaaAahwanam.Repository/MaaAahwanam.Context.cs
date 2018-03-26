@@ -541,6 +541,11 @@ namespace MaaAahwanam.Repository
     
         public virtual ObjectResult<Spgetalldeals_Result> Spgetalldeals()
         {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
+        }
+    
+        public virtual ObjectResult<filtervendors_Result> filtervendors(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        {
             var typeParameter = type != null ?
                 new ObjectParameter("type", type) :
                 new ObjectParameter("type", typeof(string));
