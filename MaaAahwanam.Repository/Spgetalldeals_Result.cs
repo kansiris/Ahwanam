@@ -17,6 +17,8 @@ namespace MaaAahwanam.Repository
         public string BusinessName { get; set; }
         public Nullable<decimal> DealServicePrice { get; set; }
         public long DealID { get; set; }
+        public long VendorId { get; set; }
+        public string VendorType { get; set; }
         public Nullable<decimal> cost { get; set; }
         public string image { get; set; }
     }

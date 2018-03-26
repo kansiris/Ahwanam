@@ -147,6 +147,11 @@
         <Function Name="SP_vendordatesbooked" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
+        <Function Name="Spalldeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="vid" Type="int" Mode="In" />
+          <Parameter Name="type" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="Spgetalldeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spsearchdeal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="search" Type="varchar" Mode="In" />
@@ -326,6 +331,11 @@
           </FunctionImport>
           <FunctionImport Name="searchvendorproducts" ReturnType="Collection(MaaAahwanamModel.searchvendorproducts_Result)">
             <Parameter Name="searchitem" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Spalldeals" ReturnType="Collection(MaaAahwanamModel.Spalldeals_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="vid" Mode="In" Type="Int32" />
             <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Spgetalldeals" ReturnType="Collection(MaaAahwanamModel.Spgetalldeals_Result)" />
@@ -936,11 +946,76 @@
           <Property Type="Int32" Name="tier" Nullable="false" />
           <Property Type="Int32" Name="priority" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="Spalldeals_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="TermsConditions" Nullable="true" />
+          <Property Type="String" Name="DealDescription" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="State" Nullable="true" />
+          <Property Type="Int64" Name="DealID" Nullable="false" />
+          <Property Type="Decimal" Name="cost" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="VenueType" Nullable="true" />
+          <Property Type="String" Name="Food" Nullable="true" />
+          <Property Type="String" Name="CockTails" Nullable="true" />
+          <Property Type="String" Name="Rooms" Nullable="true" />
+          <Property Type="Int32" Name="SeatingCapacity" Nullable="false" />
+          <Property Type="String" Name="DecorationAllowed" Nullable="true" />
+          <Property Type="String" Name="HallType" Nullable="true" />
+          <Property Type="String" Name="Wifi" Nullable="true" />
+          <Property Type="String" Name="LiveCookingStation" Nullable="true" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="Decimal" Name="DealServicePrice" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="CuisineType" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="MineralWaterIncluded" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Menuitems" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="TransportIncluded" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="PhotographyType" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="PreWeddingShoot" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="DestinationPhotography" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="DecorationType" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Archway" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Altararrangements" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Pewbows" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Aislerunner" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Headpieces" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Centerpieces" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Chaircovers" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Headtabledecor" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Backdrops" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Ceilingcanopies" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Mandaps" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Mehendi" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Sangeet" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Chuppas" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Lighting" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Giftsforguests" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Gifttable" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="BasketorBoxforgifts" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Placeorseatingcards" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Cardecoration" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Bridesbouquet" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Bridesmaidsbouquets" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Maidofhonorbouquet" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Throwawaybouquet" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Corsages" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Boutonnieres" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Decora" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Justmarriedclings" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="type" Nullable="false" MaxLength="1" />
+        </ComplexType>
         <ComplexType Name="Spgetalldeals_Result">
           <Property Type="Int64" Name="ID" Nullable="false" />
           <Property Type="String" Name="BusinessName" Nullable="true" />
           <Property Type="Decimal" Name="DealServicePrice" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Int64" Name="DealID" Nullable="false" />
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
           <Property Type="Decimal" Name="cost" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
@@ -1756,6 +1831,73 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Spalldeals" FunctionName="MaaAahwanamModel.Store.Spalldeals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Spalldeals_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="TermsConditions" ColumnName="TermsConditions" />
+                <ScalarProperty Name="DealDescription" ColumnName="DealDescription" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="VenueType" ColumnName="VenueType" />
+                <ScalarProperty Name="Food" ColumnName="Food" />
+                <ScalarProperty Name="CockTails" ColumnName="CockTails" />
+                <ScalarProperty Name="Rooms" ColumnName="Rooms" />
+                <ScalarProperty Name="SeatingCapacity" ColumnName="SeatingCapacity" />
+                <ScalarProperty Name="DecorationAllowed" ColumnName="DecorationAllowed" />
+                <ScalarProperty Name="HallType" ColumnName="HallType" />
+                <ScalarProperty Name="Wifi" ColumnName="Wifi" />
+                <ScalarProperty Name="LiveCookingStation" ColumnName="LiveCookingStation" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="DealServicePrice" ColumnName="DealServicePrice" />
+                <ScalarProperty Name="CuisineType" ColumnName="CuisineType" />
+                <ScalarProperty Name="MineralWaterIncluded" ColumnName="MineralWaterIncluded" />
+                <ScalarProperty Name="Menuitems" ColumnName="Menuitems" />
+                <ScalarProperty Name="TransportIncluded" ColumnName="TransportIncluded" />
+                <ScalarProperty Name="PhotographyType" ColumnName="PhotographyType" />
+                <ScalarProperty Name="PreWeddingShoot" ColumnName="PreWeddingShoot" />
+                <ScalarProperty Name="DestinationPhotography" ColumnName="DestinationPhotography" />
+                <ScalarProperty Name="DecorationType" ColumnName="DecorationType" />
+                <ScalarProperty Name="Archway" ColumnName="Archway" />
+                <ScalarProperty Name="Altararrangements" ColumnName="Altararrangements" />
+                <ScalarProperty Name="Pewbows" ColumnName="Pewbows" />
+                <ScalarProperty Name="Aislerunner" ColumnName="Aislerunner" />
+                <ScalarProperty Name="Headpieces" ColumnName="Headpieces" />
+                <ScalarProperty Name="Centerpieces" ColumnName="Centerpieces" />
+                <ScalarProperty Name="Chaircovers" ColumnName="Chaircovers" />
+                <ScalarProperty Name="Headtabledecor" ColumnName="Headtabledecor" />
+                <ScalarProperty Name="Backdrops" ColumnName="Backdrops" />
+                <ScalarProperty Name="Ceilingcanopies" ColumnName="Ceilingcanopies" />
+                <ScalarProperty Name="Mandaps" ColumnName="Mandaps" />
+                <ScalarProperty Name="Mehendi" ColumnName="Mehendi" />
+                <ScalarProperty Name="Sangeet" ColumnName="Sangeet" />
+                <ScalarProperty Name="Chuppas" ColumnName="Chuppas" />
+                <ScalarProperty Name="Lighting" ColumnName="Lighting" />
+                <ScalarProperty Name="Giftsforguests" ColumnName="Giftsforguests" />
+                <ScalarProperty Name="Gifttable" ColumnName="Gifttable" />
+                <ScalarProperty Name="BasketorBoxforgifts" ColumnName="BasketorBoxforgifts" />
+                <ScalarProperty Name="Placeorseatingcards" ColumnName="Placeorseatingcards" />
+                <ScalarProperty Name="Cardecoration" ColumnName="Cardecoration" />
+                <ScalarProperty Name="Bridesbouquet" ColumnName="Bridesbouquet" />
+                <ScalarProperty Name="Bridesmaidsbouquets" ColumnName="Bridesmaidsbouquets" />
+                <ScalarProperty Name="Maidofhonorbouquet" ColumnName="Maidofhonorbouquet" />
+                <ScalarProperty Name="Throwawaybouquet" ColumnName="Throwawaybouquet" />
+                <ScalarProperty Name="Corsages" ColumnName="Corsages" />
+                <ScalarProperty Name="Boutonnieres" ColumnName="Boutonnieres" />
+                <ScalarProperty Name="Decora" ColumnName="Decora" />
+                <ScalarProperty Name="Justmarriedclings" ColumnName="Justmarriedclings" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Spgetalldeals" FunctionName="MaaAahwanamModel.Store.Spgetalldeals">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.Spgetalldeals_Result">
@@ -1763,6 +1905,8 @@
                 <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
                 <ScalarProperty Name="DealServicePrice" ColumnName="DealServicePrice" />
                 <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>

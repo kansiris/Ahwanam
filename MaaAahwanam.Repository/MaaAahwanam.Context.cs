@@ -522,12 +522,24 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchvendorproducts_Result>("searchvendorproducts", searchitemParameter, typeParameter);
         }
     
-        public virtual ObjectResult<Spgetalldeals_Result> Spgetalldeals()
+        public virtual ObjectResult<Spalldeals_Result> Spalldeals(Nullable<int> id, Nullable<int> vid, string type)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var vidParameter = vid.HasValue ?
+                new ObjectParameter("vid", vid) :
+                new ObjectParameter("vid", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spalldeals_Result>("Spalldeals", idParameter, vidParameter, typeParameter);
         }
     
-        public virtual ObjectResult<filtervendors_Result> filtervendors(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        public virtual ObjectResult<Spgetalldeals_Result> Spgetalldeals()
         {
             var typeParameter = type != null ?
                 new ObjectParameter("type", type) :
