@@ -15,6 +15,18 @@
         <Function Name="Deal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="type" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="filtervendors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="varchar" Mode="In" />
+          <Parameter Name="f1" Type="varchar" Mode="In" />
+          <Parameter Name="f2" Type="varchar" Mode="In" />
+          <Parameter Name="f3" Type="varchar" Mode="In" />
+          <Parameter Name="f4" Type="varchar" Mode="In" />
+          <Parameter Name="f5" Type="varchar" Mode="In" />
+          <Parameter Name="f6" Type="varchar" Mode="In" />
+          <Parameter Name="f7" Type="varchar" Mode="In" />
+          <Parameter Name="f8" Type="varchar" Mode="In" />
+          <Parameter Name="f9" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetCartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
@@ -317,6 +329,18 @@
             <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Spgetalldeals" ReturnType="Collection(MaaAahwanamModel.Spgetalldeals_Result)" />
+          <FunctionImport Name="filtervendors" ReturnType="Collection(MaaAahwanamModel.filtervendors_Result)">
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="f1" Mode="In" Type="String" />
+            <Parameter Name="f2" Mode="In" Type="String" />
+            <Parameter Name="f3" Mode="In" Type="String" />
+            <Parameter Name="f4" Mode="In" Type="String" />
+            <Parameter Name="f5" Mode="In" Type="String" />
+            <Parameter Name="f6" Mode="In" Type="String" />
+            <Parameter Name="f7" Mode="In" Type="String" />
+            <Parameter Name="f8" Mode="In" Type="String" />
+            <Parameter Name="f9" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -919,6 +943,37 @@
           <Property Type="Int64" Name="DealID" Nullable="false" />
           <Property Type="Decimal" Name="cost" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="filtervendors_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="String" Name="businessname" Nullable="true" />
+          <Property Type="String" Name="subid" Nullable="true" />
+          <Property Type="String" Name="cost" Nullable="true" />
+          <Property Type="String" Name="landmark" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="true" />
+          <Property Type="String" Name="servictype" Nullable="true" />
+          <Property Type="String" Name="EmailId" Nullable="true" />
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="String" Name="logo" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="MinGuest" Nullable="true" />
+          <Property Type="String" Name="MaxGuest" Nullable="true" />
+          <Property Type="String" Name="Food" Nullable="true" />
+          <Property Type="String" Name="Cocktail" Nullable="true" />
+          <Property Type="String" Name="Rooms" Nullable="true" />
+          <Property Type="String" Name="Minorder" Nullable="true" />
+          <Property Type="String" Name="Maxorder" Nullable="true" />
+          <Property Type="String" Name="Decoration" Nullable="true" />
+          <Property Type="String" Name="Halltype" Nullable="true" />
+          <Property Type="String" Name="Wifi" Nullable="true" />
+          <Property Type="String" Name="Livecooking" Nullable="true" />
+          <Property Type="String" Name="PriorBookingsDays" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Mineralwater" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Transport" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Preweddingshoot" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="DestinationPhotography" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="tier" Nullable="false" />
+          <Property Type="Int32" Name="priority" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1710,6 +1765,41 @@
                 <ScalarProperty Name="DealID" ColumnName="DealID" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="filtervendors" FunctionName="MaaAahwanamModel.Store.filtervendors">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.filtervendors_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="businessname" ColumnName="businessname" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="landmark" ColumnName="landmark" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="servictype" ColumnName="servictype" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="MinGuest" ColumnName="MinGuest" />
+                <ScalarProperty Name="MaxGuest" ColumnName="MaxGuest" />
+                <ScalarProperty Name="Food" ColumnName="Food" />
+                <ScalarProperty Name="Cocktail" ColumnName="Cocktail" />
+                <ScalarProperty Name="Rooms" ColumnName="Rooms" />
+                <ScalarProperty Name="Minorder" ColumnName="Minorder" />
+                <ScalarProperty Name="Maxorder" ColumnName="Maxorder" />
+                <ScalarProperty Name="Decoration" ColumnName="Decoration" />
+                <ScalarProperty Name="Halltype" ColumnName="Halltype" />
+                <ScalarProperty Name="Wifi" ColumnName="Wifi" />
+                <ScalarProperty Name="Livecooking" ColumnName="Livecooking" />
+                <ScalarProperty Name="PriorBookingsDays" ColumnName="PriorBookingsDays" />
+                <ScalarProperty Name="Mineralwater" ColumnName="Mineralwater" />
+                <ScalarProperty Name="Transport" ColumnName="Transport" />
+                <ScalarProperty Name="Preweddingshoot" ColumnName="Preweddingshoot" />
+                <ScalarProperty Name="DestinationPhotography" ColumnName="DestinationPhotography" />
+                <ScalarProperty Name="tier" ColumnName="tier" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

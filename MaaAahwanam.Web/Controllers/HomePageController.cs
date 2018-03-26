@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web.Controllers
         QuotationListsService quotationListsService = new QuotationListsService();
         [HttpGet]
         public ActionResult Index()
-         {
+        {
             //ViewBag.Venue = vendorProductsService.Getvendorproducts_Result("Venue").Take(6);
             var venuerecords = vendorProductsService.Getvendorproducts_Result("Venue");
             //ViewBag.Hotels = venuerecords.Where(m => m.subtype == "Hotel").Take(6); // Hotel records
@@ -110,7 +110,7 @@ namespace MaaAahwanam.Web.Controllers
             //var result = new { Venue = Venue, Hotels = Hotels, Resorts = Resorts, Conventions = Conventions, Catering = Catering, Photography = Photography, Decorator = Decorator };
             return PartialView();
         }
-        
-        
+
+
     }
 }

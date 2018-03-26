@@ -521,17 +521,55 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchvendorproducts_Result>("searchvendorproducts", searchitemParameter, typeParameter);
         }
-
-        public virtual ObjectResult<Spgetalldeals_Result> getalldeal()
-        {
-
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
-        }
-
+    
         public virtual ObjectResult<Spgetalldeals_Result> Spgetalldeals()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
+        }
+    
+        public virtual ObjectResult<filtervendors_Result> filtervendors(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var f1Parameter = f1 != null ?
+                new ObjectParameter("f1", f1) :
+                new ObjectParameter("f1", typeof(string));
+    
+            var f2Parameter = f2 != null ?
+                new ObjectParameter("f2", f2) :
+                new ObjectParameter("f2", typeof(string));
+    
+            var f3Parameter = f3 != null ?
+                new ObjectParameter("f3", f3) :
+                new ObjectParameter("f3", typeof(string));
+    
+            var f4Parameter = f4 != null ?
+                new ObjectParameter("f4", f4) :
+                new ObjectParameter("f4", typeof(string));
+    
+            var f5Parameter = f5 != null ?
+                new ObjectParameter("f5", f5) :
+                new ObjectParameter("f5", typeof(string));
+    
+            var f6Parameter = f6 != null ?
+                new ObjectParameter("f6", f6) :
+                new ObjectParameter("f6", typeof(string));
+    
+            var f7Parameter = f7 != null ?
+                new ObjectParameter("f7", f7) :
+                new ObjectParameter("f7", typeof(string));
+    
+            var f8Parameter = f8 != null ?
+                new ObjectParameter("f8", f8) :
+                new ObjectParameter("f8", typeof(string));
+    
+            var f9Parameter = f9 != null ?
+                new ObjectParameter("f9", f9) :
+                new ObjectParameter("f9", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendors_Result>("filtervendors", typeParameter, f1Parameter, f2Parameter, f3Parameter, f4Parameter, f5Parameter, f6Parameter, f7Parameter, f8Parameter, f9Parameter);
         }
     }
 }
