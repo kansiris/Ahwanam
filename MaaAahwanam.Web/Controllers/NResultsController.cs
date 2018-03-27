@@ -23,11 +23,18 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-        public ActionResult BlockOnePartial(string type,string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,string count)
+        public ActionResult BlockOnePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string count)
         {
-            if (new string[] { "Venue", "Hotel", "Resort", "Convetion" }.Contains(type))
+            ViewBag.type = type;
+            if (new string[] { "Mehendi", "Pandit" }.Contains(type))
             {
-                f1 = (f1 == "undefined" && f1 == "") ? f1 : "Yes";
+                f4 = (f4 == "undefined" && f4 == "" && int.Parse(f4) > 0) ? f4 : "1";
+
+                if (f5 != "") f5 = f5.Split('-')[1].Trim(); else f5 = "100";
+                ViewBag.venues = vendorProductsService.Getfiltervendors_Result(type, "", "", "", f4, f5, "", "", "", "").Take(6);
+                return PartialView();
+            }
+            f1 = (f1 == "undefined" && f1 == "") ? f1 : "Yes";
                 f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
                 f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
                 f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
@@ -36,9 +43,12 @@ namespace MaaAahwanam.Web.Controllers
                 f7 = (f7 == "undefined" && f7 == "") ? f7 : "Yes";
                 f8 = (f8 == "undefined" && f8 == "") ? f8 : "Yes";
                 f9 = (f9 == "undefined" && f9 == "") ? f9 : "Yes";
-                //count = 
+            //count = 
+            if (new string[] { "Hotel", "Resort", "Convetion" }.Contains(type))
                 ViewBag.venues = vendorProductsService.Getfiltervendors_Result(type, f1, f2, f3, f4, f5, f6, f7, f8, f9).Take(6);
-            }
+            else
+                ViewBag.venues = vendorProductsService.Getfiltervendors_Result("Venue", f1, f2, f3, f4, f5, f6, f7, f8, f9).Take(6);
+            
             return PartialView();
         }
 
@@ -50,7 +60,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult BlockThreePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
         {
-            //ViewBag.Catering = vendorProductsService.Getfiltervendors_Result("Catering", f1, f2, f3, f4, "", "", "", "", "");
+            ViewBag.Decorator = vendorProductsService.Getfiltervendors_Result("Decorator", "", f2, f3, f4, f5, f6, "", "", "");
             return PartialView();
         }
 
