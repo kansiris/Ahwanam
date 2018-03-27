@@ -24,24 +24,27 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         public ActionResult BlockOnePartial(string type,string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,string count)
-        { 
-            f1 = (f1 == "undefined" && f1 == "") ? f1 : "Yes";
-            f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
-            f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
-            f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
-            f5 = (f5 == "undefined" && f5 == "") ? f5.Split('-')[1].Trim() : "100";
-            f6 = (f6 == "undefined" && f6 == "") ? f6 : "Yes";
-            f7 = (f7 == "undefined" && f7 == "") ? f7 : "Yes";
-            f8 = (f8 == "undefined" && f8 == "") ? f8 : "Yes";
-            f9 = (f9 == "undefined" && f9 == "") ? f9 : "Yes";
-            //count = 
-            ViewBag.venues = vendorProductsService.Getfiltervendors_Result(type, f1, f2, f3, f4, f5, f6, f7, f8, f9).Take(6);
+        {
+            if (new string[] { "Venue", "Hotel", "Resort", "Convetion" }.Contains(type))
+            {
+                f1 = (f1 == "undefined" && f1 == "") ? f1 : "Yes";
+                f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
+                f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
+                f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
+                f5 = (f5 == "undefined" && f5 == "") ? f5.Split('-')[1].Trim() : "100";
+                f6 = (f6 == "undefined" && f6 == "") ? f6 : "Yes";
+                f7 = (f7 == "undefined" && f7 == "") ? f7 : "Yes";
+                f8 = (f8 == "undefined" && f8 == "") ? f8 : "Yes";
+                f9 = (f9 == "undefined" && f9 == "") ? f9 : "Yes";
+                //count = 
+                ViewBag.venues = vendorProductsService.Getfiltervendors_Result(type, f1, f2, f3, f4, f5, f6, f7, f8, f9).Take(6);
+            }
             return PartialView();
         }
 
         public ActionResult BlockTwoPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
         {
-            ViewBag.Catering = vendorProductsService.Getfiltervendors_Result(type, "", f2, f3, "", f5, f6, "", "", "");
+            ViewBag.Catering = vendorProductsService.Getfiltervendors_Result("Catering", "", f2, f3, "", f5, f6, "", "", "");
             return PartialView();
         }
 
@@ -53,7 +56,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult BlockFourPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
         {
-            ViewBag.Photography = vendorProductsService.Getfiltervendors_Result(type, "", f2, f3, f4, "", "", "", "", "");
+            ViewBag.Photography = vendorProductsService.Getfiltervendors_Result("Photography", "", f2, f3, f4, "", "", "", "", "");
             return PartialView();
         }
 
@@ -86,16 +89,22 @@ namespace MaaAahwanam.Web.Controllers
 
             //------------------ Decorator ------------------------------
 
-            //f1 ---> Mandap
-            //f2 ---> Mehendi
-            //f3 ---> Sangeet
-            //f4 ---> Lighting
-            //f5 ---> Prior Booking Days
+            //f2 ---> Mandap
+            //f3 ---> Mehendi
+            //f5 ---> Sangeet
+            //f6 ---> Lighting
+            //f4 ---> Prior Booking Days
 
             //------------------ Other  ------------------------------
 
             //f1 ---> Maximum Order
             //f2 --->  Prior Booking Days
+
+            //------------------ Event Management ------------------------------
+
+            //f2 ---> Maximum Order
+            //f3 ---> Type
+            //f4 ---> Prior Booking Days
 
         }
     }
