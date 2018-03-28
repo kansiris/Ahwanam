@@ -16,73 +16,119 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
         {
-            //ViewBag.venues = vendorProductsService.Getfiltervendors_Result("Venue", f1, f2, f3, f4, f5.Split('-')[1].Trim(), f6, f7, f8, f9);//.Where(m=> (m.Food.Contains(f1) || m.Cocktail.Contains(f2) || m.Rooms.Contains(f3) || int.Parse(m.MaxGuest) <= int.Parse(f4) || int.Parse(m.Maxorder) <= int.Parse(f5) || m.Decoration.Contains(f6) || m.Halltype.Contains(f7) ||m.Wifi.Contains(f8)|| m.Livecooking.Contains(f9) ));
-            //var hotelrecords = vendorProductsService.Getfiltervendors_Result("Hotel").Where(m => (m.Food == f1 || m.Cocktail == f2 || m.Rooms == f3 || int.Parse(m.MaxGuest) <= int.Parse(f4) || int.Parse(m.Maxorder) <= int.Parse(f5) || m.Decoration == f6 || m.Halltype == f7 || m.Wifi == f8 || m.Livecooking == f9));
-            //var resortrecords = vendorProductsService.Getfiltervendors_Result("Resort").Where(m => (m.Food == f1 || m.Cocktail == f2 || m.Rooms == f3 || int.Parse(m.MaxGuest) <= int.Parse(f4) || int.Parse(m.Maxorder) <= int.Parse(f5) || m.Decoration == f6 || m.Halltype == f7 || m.Wifi == f8 || m.Livecooking == f9));
-            //var conventionrecords = vendorProductsService.Getfiltervendors_Result("Convention Hall").Where(m => (m.Food == f1 || m.Cocktail == f2 || m.Rooms == f3 || int.Parse(m.MaxGuest) <= int.Parse(f4) || int.Parse(m.Maxorder) <= int.Parse(f5) || m.Decoration == f6 || m.Halltype == f7 || m.Wifi == f8 || m.Livecooking == f9));
+            ViewBag.count = 6;
             return View();
         }
 
-        public ActionResult BlockOnePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string count)
+        public ActionResult BlockOnePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L1)
         {
-            ViewBag.type = type;
+            int takecount = (L1 != null) ? int.Parse(L1) : 6;
             if (new string[] { "Mehendi", "Pandit" }.Contains(type))
             {
                 f4 = (f4 == "undefined" && f4 == "" && int.Parse(f4) > 0) ? f4 : "1";
-
+                ViewBag.type = type;
                 if (f5 != "") f5 = f5.Split('-')[1].Trim(); else f5 = "100";
-                ViewBag.venues = vendorProductsService.Getfiltervendors_Result(type, "", "", "", f4, f5, "", "", "", "").Take(6);
+                var data = vendorProductsService.Getfiltervendors_Result(type, "", "", "", f4, f5, "", "", "", "");
+                ViewBag.others = data.Take(takecount);
+                int count = data.Count();
+                ViewBag.count = (count >= takecount) ? "1" : "0";
                 return PartialView();
             }
             f1 = (f1 == "undefined" && f1 == "") ? f1 : "Yes";
-                f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
-                f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
-                f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
-                f5 = (f5 == "undefined" && f5 == "") ? f5.Split('-')[1].Trim() : "100";
-                f6 = (f6 == "undefined" && f6 == "") ? f6 : "Yes";
-                f7 = (f7 == "undefined" && f7 == "") ? f7 : "Yes";
-                f8 = (f8 == "undefined" && f8 == "") ? f8 : "Yes";
-                f9 = (f9 == "undefined" && f9 == "") ? f9 : "Yes";
+            f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
+            f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
+            f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
+            f5 = (f5 == "undefined" && f5 == "") ? f5.Split('-')[1].Trim() : "100";
+            f6 = (f6 == "undefined" && f6 == "") ? f6 : "Yes";
+            f7 = (f7 == "undefined" && f7 == "") ? f7 : "Yes";
+            f8 = (f8 == "undefined" && f8 == "") ? f8 : "Yes";
+            f9 = (f9 == "undefined" && f9 == "") ? f9 : "Yes";
             //count = 
             if (new string[] { "Hotel", "Resort", "Convetion" }.Contains(type))
-                ViewBag.venues = vendorProductsService.Getfiltervendors_Result(type, f1, f2, f3, f4, f5, f6, f7, f8, f9).Take(6);
+            {
+                var data = vendorProductsService.Getfiltervendors_Result(type, f1, f2, f3, f4, f5, f6, f7, f8, f9);
+                ViewBag.venues = data.Take(takecount);
+                ViewBag.type = type;
+                int count = data.Count();
+                ViewBag.count = (count >= takecount) ? "1" : "0";
+            }
             else
-                ViewBag.venues = vendorProductsService.Getfiltervendors_Result("Venue", f1, f2, f3, f4, f5, f6, f7, f8, f9).Take(6);
-            
+            {
+                var data = vendorProductsService.Getfiltervendors_Result("Venue", f1, f2, f3, f4, f5, f6, f7, f8, f9);
+                ViewBag.venues = data.Take(takecount);
+                ViewBag.type = "Venues";
+                int count = data.Count();
+                ViewBag.count = (count >= takecount) ? "1" : "0";
+            }
+
             return PartialView();
         }
 
-        public ActionResult BlockTwoPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        public ActionResult BlockTwoPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,string L2)
         {
-            ViewBag.Catering = vendorProductsService.Getfiltervendors_Result("Catering", "", f2, f3, "", f5, f6, "", "", "");
+            int takecount = (L2 != null) ? int.Parse(L2) : 6;
+            f2 = (f2 == "undefined" && f2 == "") ? f2.Split('-')[1].Trim() : "100";
+            f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
+            f5 = (f5 == "undefined" && f5 == "") ? f5 : "Yes";
+            f6 = (f6 == "undefined" && f6 == "") ? f6 : "Yes";
+            var data = vendorProductsService.Getfiltervendors_Result("Catering", "", f2, f3, "", f5, f6, "", "", "");
+            ViewBag.Catering = data.Take(takecount);
+            int count = data.Count();
+            ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
         }
 
-        public ActionResult BlockThreePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        public ActionResult BlockThreePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L3)
         {
-            ViewBag.Decorator = vendorProductsService.Getfiltervendors_Result("Decorator", "", f2, f3, f4, f5, f6, "", "", "");
+            int takecount = (L3 != null) ? int.Parse(L3) : 6;
+            f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
+            f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
+            f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
+            f5 = (f5 == "undefined" && f5 == "") ? f5 : "Yes";
+            f6 = (f6 == "undefined" && f6 == "") ? f6 : "Yes";
+            var data = vendorProductsService.Getfiltervendors_Result("Decorator", "", f2, f3, f4, f5, f6, "", "", "");
+            ViewBag.Decorator = data.Take(takecount);
+            int count = data.Count();
+            ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
         }
 
-        public ActionResult BlockFourPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        public ActionResult BlockFourPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L4)
         {
-            ViewBag.Photography = vendorProductsService.Getfiltervendors_Result("Photography", "", f2, f3, f4, "", "", "", "", "");
+            int takecount = (L4 != null) ? int.Parse(L4) : 6;
+            f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
+            f3 = (f3 == "undefined" && f3 == "") ? f3 : "Yes";
+            f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
+            var data = vendorProductsService.Getfiltervendors_Result("Photography", "", f2, f3, f4, "", "", "", "", "");
+            ViewBag.Photography = data.Take(takecount);
+            int count = data.Count();
+            ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
         }
+
+        //public PartialViewResult Loadmore(string lastrecord)
+        //{
+        //    int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
+        //    ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+        //    var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+        //    ViewBag.dealLastRecord = id;
+        //    ViewBag.dealcount = vendorProductsService.getalldeal().Count();
+        //    return PartialView("Loadmore");
+        //}
 
         public void parameterdescription()
         {
             //------------------ Venues ------------------------------
 
-            //f1 ---> Food
-            //f2 ---> CockTail
-            //f3 ---> Rooms
-            //f4 ---> Seating Capacity
-            //f5 ---> Maximum Order
-            //f6 ---> Decoration Allowed
-            //f7 ---> Hall Type
-            //f8 ---> Wi-Fi
-            //f9 ---> Live Cooking Station
+            //f1 ---> Food               checkbox
+            //f2 ---> CockTail           radio
+            //f3 ---> Rooms              radio
+            //f4 ---> Seating Capacity   textbox
+            //f5 ---> Maximum Order      radio
+            //f6 ---> Decoration Allowed radio
+            //f7 ---> Hall Type          checkbox
+            //f8 ---> Wi-Fi              radio
+            //f9 ---> Live Cooking Station            radio
 
             //------------------ Catering ------------------------------
 
