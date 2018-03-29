@@ -522,23 +522,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<searchvendorproducts_Result>("searchvendorproducts", searchitemParameter, typeParameter);
         }
     
-        public virtual ObjectResult<Spalldeals_Result> Spalldeals(Nullable<int> id, Nullable<int> vid, string type)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var vidParameter = vid.HasValue ?
-                new ObjectParameter("vid", vid) :
-                new ObjectParameter("vid", typeof(int));
-    
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spalldeals_Result>("Spalldeals", idParameter, vidParameter, typeParameter);
-        }
-    
         public virtual ObjectResult<Spgetalldeals_Result> Spgetalldeals()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
@@ -596,6 +579,19 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItemsnew_Result>("GetCartItemsnew", vIDParameter);
+        }
+    
+        public virtual ObjectResult<Spalldeals_Result> Spalldeals(Nullable<int> id, string type)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spalldeals_Result>("Spalldeals", idParameter, typeParameter);
         }
     }
 }

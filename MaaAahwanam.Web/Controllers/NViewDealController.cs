@@ -14,7 +14,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         // GET: NViewDeal
-        public ActionResult Index(string id, string vid, string type)
+        public ActionResult Index(string id, string type)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -27,7 +27,7 @@ namespace MaaAahwanam.Web.Controllers
                 else
                     ViewBag.username = userdata.AlternativeEmailID;
             }
-            ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), Int32.Parse(vid), type).FirstOrDefault();
+            ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id),  type).FirstOrDefault();
 
             return View();
         }
