@@ -30,6 +30,9 @@
         <Function Name="GetCartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetCartItemsnew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetDealServiceType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ntype" Type="varchar" Mode="In" />
         </Function>
@@ -350,6 +353,9 @@
             <Parameter Name="f7" Mode="In" Type="String" />
             <Parameter Name="f8" Mode="In" Type="String" />
             <Parameter Name="f9" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCartItemsnew" ReturnType="Collection(MaaAahwanamModel.GetCartItemsnew_Result)">
+            <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -1049,6 +1055,32 @@
           <Property Type="String" Name="DestinationPhotography" Nullable="false" MaxLength="1" />
           <Property Type="Int32" Name="tier" Nullable="false" />
           <Property Type="Int32" Name="priority" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetCartItemsnew_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+          <Property Type="Int64" Name="CartId" Nullable="false" />
+          <Property Type="Boolean" Name="Isdeal" Nullable="false" />
+          <Property Type="Int64" Name="DealId" Nullable="false" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="attribute" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="Decimal" Name="Perunitprice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="Decimal" Name="ServicePrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Discount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="DiscountPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="eventstartdate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="eventid" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1944,6 +1976,36 @@
                 <ScalarProperty Name="DestinationPhotography" ColumnName="DestinationPhotography" />
                 <ScalarProperty Name="tier" ColumnName="tier" />
                 <ScalarProperty Name="priority" ColumnName="priority" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCartItemsnew" FunctionName="MaaAahwanamModel.Store.GetCartItemsnew">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetCartItemsnew_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="Isdeal" ColumnName="Isdeal" />
+                <ScalarProperty Name="DealId" ColumnName="DealId" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="attribute" ColumnName="attribute" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Perunitprice" ColumnName="Perunitprice" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="DiscountPrice" ColumnName="DiscountPrice" />
+                <ScalarProperty Name="eventstartdate" ColumnName="eventstartdate" />
+                <ScalarProperty Name="eventenddate" ColumnName="eventenddate" />
+                <ScalarProperty Name="eventid" ColumnName="eventid" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

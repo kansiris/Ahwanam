@@ -17,6 +17,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.GetCartItems(vid).ToList();
         }
+        public List<GetCartItemsnew_Result> CartItemListnew(int vid)
+        {
+            return maaAahwanamEntities.GetCartItemsnew(vid).ToList();
+        }
         public int Updatecartitem(CartItem cartitemjson)
         {
             int updatestatus;

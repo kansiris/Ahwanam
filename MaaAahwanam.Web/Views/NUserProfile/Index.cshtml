@@ -1,4 +1,5 @@
-﻿
+﻿@model MaaAahwanam.Models.UserLogin
+
 @{
     ViewBag.Title = ":: Ahwanam ::";
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
@@ -10,9 +11,11 @@
             <a class="navbar-brand hidden-xs-down" href="/NHomePage"> <img src="~/newdesign/images/logo.png" alt="Logo"> </a>
             <ul>
                 <li> <a href="#">Dashboard</a> </li>
-                <li> <a href="#">Profile</a> </li>
-                <li> <a href="#">Settings</a> </li>
-                <li> <a href="#">Logout</a> </li>
+                <li> <a href="#profileDetails">Profile</a> </li>
+                <li> <a href="#profileSettings">Settings</a> </li>
+                <li>
+                    <a onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'">Logout</a>
+                </li>
             </ul>
         </div>
         <div class="col-12 col-sm-7 col-md-8 col-lg-9 offset-sm-5 offset-md-4 offset-lg-3">
@@ -43,44 +46,74 @@
                             </div>
                         </div>
                         <div class="row mx-0 mt-2 tableData">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Event/Services</th>
-                                        <th>Service List</th>
-                                        <th>Budget</th>
-                                        <th>Status</th>
-                                        <th>Manage</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mary</td>
-                                        <td>Moe</td>
-                                        <td>mary@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>July</td>
-                                        <td>Dooley</td>
-                                        <td>july@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+                            @if (ViewBag.Cartlist.Count != 0)
+                            {
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+
+                                            <th>Event/Services</th>
+                                            <th>Vendor details</th>
+                                            <th>Event start & End Date</th>
+                                            <th>Status</th>
+                                            <th>Price</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int j = 0;
+                                            foreach (var item in ViewBag.Cartlist)
+                                            {
+                                                j++;
+                                                <tr>
+
+                                                    <td>@item.Description</td>
+                                                    <td>
+                                                        <h4>@item.BusinessName</h4>
+                                                        <p>
+                                                            @item.Landmark<br>
+                                                            @item.Address, @item.City,<br>
+                                                            @item.ContactNumber
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="event-date-time">
+                                                            <div class="event-dates">
+
+                                                                @if (item.eventstartdate != null && item.eventenddate != null)
+                                                                {
+                                                                    <p>
+                                                                        Event Start Date : @item.eventstartdate.ToString("dd MMM yyyy")<br /> Event End Date&nbsp;&nbsp;:&nbsp;@item.eventenddate.ToString("dd MMM yyyy")
+                                                                    </p>}
+                                                                @if (item.eventstartdate == null && item.eventenddate == null)
+                                                                {
+                                                                    <p> Event Start Date : Not Available<br /> Event End Date&nbsp;&nbsp;:&nbsp;Not Available </p>
+                                                                }
+                                                            </div>
+                                                    </td>
+                                                    <td>@item.Status</td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            @if (item.Isdeal == false)
+                                                            {
+                                                                <p>Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p>Original Price:Rs.@item.ServicePrice</p>
+                                                                <p>Deal Price:Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
+                                                            }
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                            }
                         </div>
                     </div>
                     <div id="profileDetails">
@@ -92,23 +125,22 @@
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name">
+                                <input type="text" class="form-control" placeholder="Name" id="username">
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="E-Mail">
+                                <input type="email" class="form-control" placeholder="email" value="@ViewBag.emailid" disabled>
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Number">
+                                <input type="text" class="form-control" placeholder="phoneno" id="phoneno">
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
-                            <span class="themeBgColorPrimary btnSecondary text-white">
-                                Save Changes
-                            </span>
+                            <span class="themeBgColorPrimary btnSecondary text-white" onclick="load('userdetails')">Save Changes</span>
+
                         </div>
                     </div>
                     <div id="profileSettings">
@@ -120,7 +152,7 @@
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="New Password">
+                                <input type="text" class="form-control" placeholder="New Password" id="Password">
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
@@ -129,7 +161,7 @@
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
-                            <span class="themeBgColorPrimary btnSecondary text-white">
+                            <span class="themeBgColorPrimary btnSecondary text-white" onclick="load1('password')">
                                 Save Changes
                             </span>
                         </div>
@@ -145,6 +177,56 @@
         $(document).ready(function () {
             $('.userProfile').nextAll('.container, footer').css("display","none");
         });
+
     </script>
+    <script>
+    function load(userdetails) {
+        alert('sireesh');
+        var userdet = {
+
+            FirstName: document.getElementById("username").value,
+            UserPhone: document.getElementById("phoneno").value,
+        }
+
+        $.ajax({
+            url: '/NUserProfile/updatedetails',
+            type: "POST",
+            datatype: "json",
+            data: { userdetail: userdet },
+            success: function (response) {
+                if (response == 'success') {
+                    alert('userdetails Updated Successfully');
+                    //var url = '/NUserProfile/changepassword';
+                    //$('#profileSettings').empty().load(url);
+                    //successmsg(response.msg);
+                }
+            }})
+    }
+
+
+
+    function load1(password) {
+
+        var userLogin = {
+            Password :document.getElementById("Password").value
+
+        }
+        alert(document.getElementById("Password").value),
+        $.ajax({
+           url: '/NUserProfile/changepassword',
+            type: "POST",
+            datatype: "json",
+            data: { userLogin: userLogin },
+            success: function (response) {
+                if (response == 'success') {
+                    alert('Password Updated Successfully');
+                    //var url = '/NUserProfile/changepassword';
+                    //$('#profileSettings').empty().load(url);
+                    //successmsg(response.msg);
+                }
+            }})
+        }
+    </script>
+}
 }
 

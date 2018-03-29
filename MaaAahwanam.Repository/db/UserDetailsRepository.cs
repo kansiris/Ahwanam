@@ -21,6 +21,14 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return userDetails;
         }
+
+        public UserLogin GetLoginDetails(int userId)
+        {
+            UserLogin list1 = new UserLogin();
+            if (userId != 0)
+                list1 = _dbContext.UserLogin.SingleOrDefault(p => p.UserLoginId == userId);
+            return list1;
+        }
         //To Show the login user details in all pages at the top
         public UserDetail GetLoginDetailsByUsername(int userId)
         {
@@ -67,7 +75,34 @@ namespace MaaAahwanam.Repository.db
             }
             return userDetail;
         }
+        public UserDetail UpdateUserdetailsnew(UserDetail userDetail, Int64 UserloginID)
+        {
+            // Query the database for the row to be updated.
+            var query =
+                from ord in _dbContext.UserDetail
+                where ord.UserLoginId == UserloginID
+                select ord;
 
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (UserDetail ord in query)
+            {
+                ord.FirstName = userDetail.FirstName;
+                ord.UserPhone = userDetail.UserPhone;
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception Ex)
+            {
+
+            }
+            return userDetail;
+        }
         public void UpdateDP(int UserloginsID,string imagename)
         {
             var list = _dbContext.UserDetail.SingleOrDefault(o=>o.UserLoginId==UserloginsID);
