@@ -56,6 +56,6 @@ namespace MaaAahwanam.Repository.db
         public DbSet<Notification> Notification { get; set; }
         public DbSet<QuotationsList> QuotationsList { get; set; }
         public DbSet<VendorDates> VendorDates { get; set; }
-        public DbSet<AvailableWhishLists> AvailableWhishList { get; set; }
+        public DbSet<AvailableWhishLists> AvailableWhishLists { get; set; }
     }
 }
