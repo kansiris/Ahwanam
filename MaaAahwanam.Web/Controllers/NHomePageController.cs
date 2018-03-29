@@ -14,8 +14,20 @@ namespace MaaAahwanam.Web.Controllers
     {
         // GET: NHomePage
         VendorProductsService vendorProductsService = new VendorProductsService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         public ActionResult Index()
         {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                if (userdata.FirstName != "" && userdata.FirstName != null)
+                    ViewBag.username = userdata.FirstName;
+                else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
+                    ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
+                else
+                    ViewBag.username = userdata.AlternativeEmailID;
+            }
             return View();
         }
 

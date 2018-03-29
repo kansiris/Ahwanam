@@ -36,6 +36,12 @@ namespace MaaAahwanam.Service
             var userResponse = userMapper.MapUserDetailToUserResponse(userDetail);
             return userResponse;
         }
+        public UserLogin GetUserId(int userid)
+        {
+            string response = string.Empty;
+            UserLogin list = userDetailsRepository.GetLoginDetails(userid);
+            return list;
+        }
         public UserDetail GetUser(int userid)
         {
             string response = string.Empty;
@@ -45,6 +51,11 @@ namespace MaaAahwanam.Service
         public UserDetail UpdateUserdetails(UserDetail userDetail, Int64 UserloginID)
         {
             var userdetail = userDetailsRepository.UpdateUserdetails(userDetail, UserloginID);
+            return userdetail;
+        }
+        public UserDetail UpdateUserdetailsnew(UserDetail userDetail, Int64 UserloginID)
+        {
+            var userdetail = userDetailsRepository.UpdateUserdetailsnew(userDetail, UserloginID);
             return userdetail;
         }
         public UserLogin changepassword(UserLogin userLogin, int UserLoginId)

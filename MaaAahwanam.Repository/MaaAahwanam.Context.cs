@@ -588,5 +588,14 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendors_Result>("filtervendors", typeParameter, f1Parameter, f2Parameter, f3Parameter, f4Parameter, f5Parameter, f6Parameter, f7Parameter, f8Parameter, f9Parameter);
         }
+    
+        public virtual ObjectResult<GetCartItemsnew_Result> GetCartItemsnew(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItemsnew_Result>("GetCartItemsnew", vIDParameter);
+        }
     }
 }
