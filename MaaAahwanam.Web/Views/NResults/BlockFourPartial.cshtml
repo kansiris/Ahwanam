@@ -1,48 +1,59 @@
-﻿@if (ViewBag.Photography != null)
-{
-    foreach (var item in ViewBag.Photography)
-    {
-        <div class="row mx-0 my-4">
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 productBlock">
-                <div class="w-100">
-                    @if (item.logo != null && item.logo != "")
-                    {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
-                    else if (item.image != null && item.image != "")
-                    {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
-                    else
-                    { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
-                </div>
-                <div class="w-100">
-                    <div class="row mx-0 my-2 px-2 d-flex align-items-center">
-                        <p class="productName mb-0">@item.businessname</p>
-                        <span class="ml-auto"><i class="fa fa-plus addCartIcn" aria-hidden="true"></i></span>
+﻿<div class="row bgWhite mb-3" id="BlockFourPartial">
+    <div class="w-100 px-4 py-3">
+        <div class="row mx-0">
+            <h3 class="noteWorthybold">
+                Photography
+                <div class="blackBorder"></div>
+            </h3>
+        </div>
+        @if (ViewBag.Photography != null)
+        {
+            <div class="row mx-0 mt-4">
+                @foreach (var item in ViewBag.Photography)
+                {
+                <div class="row block w-100">
+                    <div class="col-6 col-sm-6 col-md-12 col-lg-12 col-xl-6 topVenueBlockImg">
+                        @if (item.logo != null && item.logo != "")
+                        {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
+                        else if (item.image != null && item.image != "")
+                        {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
+                        else
+                        { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
                     </div>
-                </div>
-                <div class="w-100">
-                    <div class="row px-2 d-flex align-items-center">
-                        
-                        <div class="col-6 col-md-6">
-                            <div class="starRating">
-                                <div class="emptyStar"></div>
-                                <div class="scoreStar yellowFont" style="width:51%"></div>
+                    <div class="col-6 col-sm-6 col-md-12 col-lg-12 col-xl-6 px-xl-0 topVenueDetails">
+                        <p class="mb-0">@item.businessname</p>
+                        <div class="w-100">
+                            <p class="productMinPrice mb-0 themeColor d-inline"> <span>@item.cost</span></p>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-12 col-md-12 col-lg-12 col-xl-8 pr-xl-0 pl-0">
+                                <div class="starRating pl-0">
+                                    <div class="emptyStar"></div>
+                                    <div class="scoreStar yellowFont" style="width:51%"></div>
+                                </div>
                             </div>
+                            <div class="col-12 col-md-12 col-lg-12 col-xl-4 pr-xl-0 pl-0">
+                                <div class="d-inline float-left yellowFont pr-xl-0 pr-2 totalReviewCount"> (<span>162</span>) </div>
+                            </div>
+                        </div>
+                        <div class="row mx-0 d-block float-right">
+                            <i class="fa fa-plus addCartIcn" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
-                <div class="w-100 d-inline-block">
-                    <div class="d-inline float-right yellowFont pr-2 totalReviewCount"> (<span>162</span>) </div>
+                }
+            </div>
+
+            if (ViewBag.count == "1")
+            {
+            <div class="row mx-0 my-4">
+                <div class="mx-auto d-inline-flex">
+                    <span class="themeBgColorPrimary btnSecondary text-white" onclick="Partialfour()">
+                        <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
+                    </span>
                 </div>
             </div>
-        </div>
-    }
-}
-
-
-
-<div class="row mx-0 my-4">
-    <div class="mx-auto d-inline-flex">
-        <span class="themeBgColorPrimary btnSecondary text-white">
-            <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
-        </span>
+                }
+            }
     </div>
 </div>

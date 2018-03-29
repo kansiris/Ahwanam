@@ -12,14 +12,13 @@
     <!------ Owl Thumb Slider ---------->
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.theme.default.css">
-
     <style>
-        .nav-item.dropdown.open .dropdown-menu{
-  display: block;
-}
+        .nav-item.dropdown.open .dropdown-menu {
+            display: block;
+        }
     </style>
 </head>
-@using MaaAahwanam.Web.Custom
+
 <body>
     <div class="container-fluid mainBg">
         <nav class="navbar navbar-toggleable-md navbar-light">
@@ -27,66 +26,30 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="#">Best Deals <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Login/Signup</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Username
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
 
-            @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)HttpContext.Current.User;
-                if (user.UserType == "Vendor")
-                { Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + ""); }
-                if (user.UserType == "User")
-                {
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto">
-
-                            <li class="nav-item active">
-                                <a class="nav-link text-white" href="#">Best Deals <span class="sr-only">(current)</span></a>
-                            </li>
-
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Login/Signup
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                   
-                                    <input type="hidden"id="id" value="@ViewBag.userid" />
-                                    <a class="dropdown-item" onclick="location.href='@Url.Action("Index", "NUserProfile", new { id = @ViewBag.userid })'">Profile</a>
-                                    <a class="dropdown-item" onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'">Sign out</a>
-                                </div>
-                            </li>
-
-                            @*<li class="nav-item">
-                            <a href="#">Hi @ViewBag.username</a></li>
-                            @*<li onclick="window.location.href = "><a class="nav-link text-white">Profile</a></li>
-
-                            <li  onclick="location.href='@Url.Action("LogOff", "NUserRegistration")'"><a  class="nav-link text-white">Sign out</a></li>*@
-
-                            
-                           
-                        </ul>
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link text-white" href="#">Best Deals <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" onclick="location.href='@Url.Action("Index", "NUserRegistration")'">Login/Signup</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Vendor/Service Provider</a>
-                        </li>
-                    </ul>
-                </div>
-            }
-
-
-           
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Vendor/Service Provider</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
         <div class="row">
             <div class="col-12 col-sm-5 col-md-5 offset-sm-1 offset-md-1">
@@ -133,7 +96,7 @@
                         <option value="Decorator">Decorator</option>
                         <option value="Mehendi">Mehendi Artists</option>
                         <option value="Pandit">Pandits</option>
-                        <option value="EventManagement">Event Management</option>
+                        @*<option value="EventManagement">Event Management</option>*@
                     </select>
                 </div>
                 @*<div class="row mx-0 mt-3 occasionDate">
