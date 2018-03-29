@@ -20,8 +20,8 @@ namespace MaaAahwanam.Web.Controllers
                 type = "Venue";
             if (type == "Mehendi" || type == "Pandit")
                 type = "Other";
-            var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
-            //var data = vendorMasterService.get //GetVendor(long.Parse(id)); //
+            //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
+            var data = vendorMasterService.GetVendor(long.Parse(id)); //
             ViewBag.image = vendorImageService.GetVendorAllImages(long.Parse(id)).FirstOrDefault().Replace(" ", "");
             ViewBag.Productinfo = data;
             ViewBag.type = type;

@@ -268,7 +268,7 @@
                                 <span class="btnSecondary">Back</span>
                             </div>
                             <div class="d-inline-flex">
-                                <span class="themeBgColorPrimary btnSecondary text-white nextQues"  onclick="redirect()">Next</span>
+                                <span class="themeBgColorPrimary btnSecondary text-white nextQues">Next</span>
                             </div>
                         </div>
 
@@ -976,4 +976,49 @@
         window.location.href = '/NResults?type=' + type + '&&f1=' + f1 + '&&f2=' + f2 + '&&f3=' + f3 + '&&f4=' + f4 + '&&f5=' + f5 + '&&f6=' + f6 + '&&f7=' + f7 + '&&f8=' + f8 + '&&f9=' + f9;
         //alert('/NResults?f1=' + f1 + '&&f2=' + f2 + '&&f3=' + f3 + '&&f4=' + f4 + '&&f5=' + f5 + '&&f6=' + f6 + '&&f7=' + f7 + '&&f8=' + f8 + '&&f9=' + f9);
     }
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var questions = $(".filteredQuestions > .questions");
+    var questionsLen = $(".filteredQuestions > .questions").length;
+    var questionMin = $(".questionsCount > span:first-child");
+    var questionMinCount = parseInt($(".questionsCount > span:first-child").text());
+    var questionMax = $(".questionsCount > span:last-child");
+    $(questionMax).empty().append(questionsLen);
+    $(".prevNext .backQues").css("visibility","hidden");
+    $(".filteredQuestions").children().css("display","none");
+    $(".filteredQuestions").children().eq(questionMinCount - 1).css("display","block");
+
+    $(".prevNext .backQues").click(function(){
+      questionMinCount--;
+      if(questionMinCount > 1){
+        $(questionMin).empty().append(questionMinCount);
+        $(".filteredQuestions").children().css("display","none");
+        $(".filteredQuestions").children().eq(questionMinCount - 1).css("display","block");
+        $(".prevNext .nextQues").css("visibility","visible");
+      }else if(questionMinCount == 1){
+        $(questionMin).empty().append(questionMinCount);
+        $(".filteredQuestions").children().css("display","none");
+        $(".filteredQuestions").children().eq(questionMinCount - 1).css("display","block");
+        $(this).css("visibility","hidden");
+      }
+    });
+
+    $(".prevNext .nextQues").click(function(){
+      questionMinCount++;
+      if(questionMinCount < questionsLen){
+        $(questionMin).empty().append(questionMinCount);
+        $(".filteredQuestions").children().css("display","none");
+        $(".filteredQuestions").children().eq(questionMinCount - 1).css("display","block");
+        $(".prevNext .backQues").css("visibility","visible");
+      }else if(questionMinCount == questionsLen){
+        $(questionMin).empty().append(questionMinCount);
+        $(".filteredQuestions").children().css("display","none");
+        $(".filteredQuestions").children().eq(questionMinCount - 1).css("display","block");
+        $(this).css("visibility", "hidden");
+        redirect();
+      }
+    });
+  });
 </script>
