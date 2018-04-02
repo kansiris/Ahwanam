@@ -46,6 +46,7 @@ namespace MaaAahwanam.Web.Controllers
             //count = 
             if (new string[] { "Hotel", "Resort", "Convetion" }.Contains(type))
             {
+                type = (type == "Convetion") ? "Convention Hall" : type;
                 var data = vendorProductsService.Getfiltervendors_Result(type, f1, f2, f3, f4, f5, f6, f7, f8, f9);
                 ViewBag.venues = data.Take(takecount);
                 ViewBag.type = type;

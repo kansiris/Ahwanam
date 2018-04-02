@@ -225,10 +225,11 @@
                 <span class="themeBgColorSecondary d-flex text-white"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
             </div>
         </div>
-        <div class="row d-flex justify-content-center normalSearchResult" id="sortedvendorlist">
+        <div class="row justify-content-center normalSearchResult" id="sortedvendorlist">
             @{ Html.RenderAction("SortVendorsBasedOnLocation", "NHomePage");}
         </div>
     </div>
+
     <div class="container">
         <div>
             <div class="row mx-0">
@@ -417,9 +418,30 @@
                 </div>
             </div>
         </div>
+
+        
+
+        <div class="row margin-top-50 oneStopSolution align-items-center">
+            <div class="col-12 col-sm-12 col-md-6">
+                <h3 class="noteWorthybold">One Stop Solutions</h3>
+                <p class="mt-3">
+                    The days of heavy headachs are no more now, We are are announcing the most innovative & Intelligent solution that helps to manage your celebration with deep emotion.
+                </p>
+                <div class="row mx-0 mt-3">
+                    <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+                <img src="~/newdesign/images/main-image.png" class="mw-100" alt="Main Image" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid px-0">
         <div class="margin-top-50 margin-bottom-50 themeBgColor text-white deals">
             <div class="row mx-0">
-                <h3 class="col-12 col-md-6 noteWorthybold">
+                <h3 class="col-12 col-md-4 offset-md-1 noteWorthybold">
                     Trending Deals
                     <div class="whiteBorder"></div>
                 </h3>
@@ -428,7 +450,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-12">
+                <div class="col-12 col-md-8 offset-md-2">
                     <div class="owl-carousel owl-theme mt-3">
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
@@ -458,23 +480,9 @@
                 </div>
             </div>
         </div>
-
-        <div class="row margin-top-50 oneStopSolution align-items-center">
-            <div class="col-12 col-sm-12 col-md-6">
-                <h3 class="noteWorthybold">One Stop Solutions</h3>
-                <p class="mt-3">
-                    The days of heavy headachs are no more now, We are are announcing the most innovative & Intelligent solution that helps to manage your celebration with deep emotion.
-                </p>
-                <div class="row mx-0 mt-3">
-                    <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-6">
-                <img src="~/newdesign/images/main-image.png" class="mw-100" alt="Main Image" />
-            </div>
-        </div>
-
     </div>
+
+
     <footer class="footerBg text-white py-4 margin-top-50">
         <div class="row mx-0">
             <div class="col-12 col-sm-4 col-md-2 offset-md-1">
@@ -624,7 +632,7 @@
                 loop: true,
                 responsive: {
                     0: {
-                        items: 1
+                        items: 3
                     },
                     600: {
                         items: 3
@@ -659,9 +667,54 @@
     </script>
 
     <script>
+        @*<!------ Top Section Area Search ---------->*@
+        var areaSpan = $(".topSearchArea").find("span:last-child"),
+            topThisUiWidget = $(".topSearchArea").next(".ui-widget");
+        $(".topSearchArea").click(function (event) {
+            $(areaSpan).css({ "display": "none" });
+            $(topThisUiWidget).css({ "display": "block" });
+            $(topThisUiWidget).find("input").focus();
+        });
+        //      <!------ Top Section Area Search ---------->
+
+        //<!------ Index Search Block ---------->
+
+        $(".normalSearch input[type='text']").on('input', function () {
+            if ($(this).val().length >= 2) {
+                $(".normalSearch > .normalSearchResult").css("display", "block");
+            } else {
+                $(".normalSearch > .normalSearchResult").css("display", "none");
+            }
+        });
+
+        //<!------ Index Search Block ---------->
+
+        @*<!------ Venue Area Search ---------->*@
+        var venueSearch = $(".venueSearch").find("span"),
+        venueSearchSpan = $(".venueSearch").find("span:first-of-type"),
+        venueUiWidge = $(".venueSearch").find(".ui-widget");
+        $(venueSearch).click(function () {
+            $(venueSearchSpan).css({ "display": "none" });
+            $(venueUiWidge).css({ "display": "block" });
+            $(venueUiWidge).find("input").focus();
+        });
+        $(document).on('click keydown', 'ul#ui-id-2 li.ui-menu-item', function () {
+            $(".normalSearch > .normalSearchResult").css("display", "block");
+        });
+
+        /*$(document).on('keydown', 'ul#ui-id-2 li.ui-menu-item', function(){
+        $(".normalSearch > .normalSearchResult").css("display","block");
+        });*/
+        @*<!------ Venue Area Search ---------->*@
+
+    </script>
+
+
+    <script>
+
         $('#searchvendors').on('change', function () {
             var location = $('#tags1').val();
-            if (location == '') { location = 'Hyderabad';}
+            if (location == '') { location = 'Hyderabad'; }
             var url = '/NHomePage/SortVendorsBasedOnLocation?search=' + $('#searchvendors').val() + '&&type=' + $('#searchvendortype').html() + '&&location=' + location;
             //alert($('#searchvendortype').html());
             //Sorting Vendors based on location
@@ -688,7 +741,7 @@
     </script>
 
     <script>
-        <!--//---- Top Section Area Search ---------->
+        @*<!--//---- Top Section Area Search ---------->
             var areaSpan = $(".topSearchArea").find("span:last-child"),
                 topThisUiWidget = $(".topSearchArea").next(".ui-widget");
         $(".topSearchArea").click(function(event){
@@ -707,7 +760,7 @@
             $(venueUiWidge).css({"display":"block"});
             $(venueUiWidge).find("input").focus();
         });
-        //<!------ Venue Area Search ---------->
+        //<!------ Venue Area Search ---------->*@
 
 
 		  //<!------ Category Select ---------->
@@ -736,7 +789,7 @@
             if (servicetype == '') { alert("Select Service Type"); }
             if (occasiondate == '') { alert("Select Occasion Date"); }
             //alert("location=" + location + ",servicetype=" + servicetype + ",occasiondate=" + occasiondate + "");
-            if (servicetype != '' && occasiondate != ''){
+            if (servicetype != '' && occasiondate != '') {
                 window.location.href = '/NQuestionNaire?location=' + location + '&&servicetype=' + servicetype + '&&occasiondate=' + occasiondate;
             }
 
