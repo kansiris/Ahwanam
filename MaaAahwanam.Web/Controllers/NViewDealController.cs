@@ -16,10 +16,13 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NViewDeal
         public ActionResult Index(string id, string type)
         {
-           
+            try { 
             ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id),  type).FirstOrDefault();
 
             return View();
+            }
+            catch(Exception)
+            { return RedirectToAction("Index", "Nhomepage"); }
         }
 
         public PartialViewResult Loadmoredeals(string lastrecord)

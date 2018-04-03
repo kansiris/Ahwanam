@@ -22,28 +22,42 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NUserProfile
         public ActionResult Index()
         {
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-            if (userdata.FirstName != "" && userdata.FirstName != null)
-                ViewBag.username = userdata.FirstName;
-            else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
-                ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
-            else
-                ViewBag.username = userdata.AlternativeEmailID;
-            ViewBag.phoneno = userdata.UserPhone;
-            var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
-            ViewBag.emailid = userdata1.UserName;
 
-            List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
-            decimal total = cartlist.Sum(s => s.TotalPrice);
-            ViewBag.Cartlist = cartlist;
-            ViewBag.Total = total;
+            if(System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+                var user1 = (CustomPrincipal)System.Web.HttpContext.Current.User;
 
+                if (user1.UserType == "Vendor")
+                {
+                    Response.Redirect("/AvailableServices/changeid?id=" + user1.UserId + "");
+                }
+                if (user1.UserType == "User")
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (userdata.FirstName != "" && userdata.FirstName != null)
+                        ViewBag.username = userdata.FirstName;
+                    else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
+                        ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
+                    else
+                        ViewBag.username = userdata.AlternativeEmailID;
+                    ViewBag.phoneno = userdata.UserPhone;
+                    var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
+                    ViewBag.emailid = userdata1.UserName;
 
+                    List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
+                    decimal total = cartlist.Sum(s => s.TotalPrice);
+                    ViewBag.Cartlist = cartlist;
+                    ViewBag.Total = total;
 
+                    return View();
 
+                }
 
-            return View();
+                return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+
+            }
+            return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
         }
 
         public ActionResult changepassword(UserLogin userLogin)

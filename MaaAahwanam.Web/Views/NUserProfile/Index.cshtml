@@ -125,7 +125,7 @@
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name" id="username">
+                                <input type="text" class="form-control" placeholder="Name" id="username" value="@ViewBag.username">
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
@@ -135,7 +135,7 @@
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="phoneno" id="phoneno">
+                                <input type="number" class="form-control" placeholder="phoneno" id="phoneno" value="@ViewBag.phoneno">
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
@@ -152,12 +152,12 @@
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="New Password" id="Password">
+                                <input type="password" class="form-control" placeholder="New Password" id="Password">
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Confirm Password">
+                                <input type="password" class="form-control" placeholder="Confirm Password" id="Password1">
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
@@ -181,7 +181,7 @@
     </script>
     <script>
     function load(userdetails) {
-        alert('sireesh');
+    
         var userdet = {
 
             FirstName: document.getElementById("username").value,
@@ -206,26 +206,32 @@
 
 
     function load1(password) {
+        Password = document.getElementById("Password").value
+        Password1 = document.getElementById("Password1").value
 
-        var userLogin = {
-            Password :document.getElementById("Password").value
+        if (Password != Password1)
+        {
+            alert("password doesnot match")
+        }
+        else{
+            var userLogin = {
+                Password :document.getElementById("Password").value
 
-        }
-        alert(document.getElementById("Password").value),
-        $.ajax({
-           url: '/NUserProfile/changepassword',
-            type: "POST",
-            datatype: "json",
-            data: { userLogin: userLogin },
-            success: function (response) {
-                if (response == 'success') {
-                    alert('Password Updated Successfully');
-                    //var url = '/NUserProfile/changepassword';
-                    //$('#profileSettings').empty().load(url);
-                    //successmsg(response.msg);
-                }
-            }})
-        }
+            }
+            $.ajax({
+                url: '/NUserProfile/changepassword',
+                type: "POST",
+                datatype: "json",
+                data: { userLogin: userLogin },
+                success: function (response) {
+                    if (response == 'success') {
+                        alert('Password Updated Successfully');
+                        //var url = '/NUserProfile/changepassword';
+                        //$('#profileSettings').empty().load(url);
+                        //successmsg(response.msg);
+                    }
+                }})
+        }}
     </script>
 }
 }

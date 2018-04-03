@@ -102,7 +102,9 @@ namespace MaaAahwanam.Web.Controllers
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
                     if (userResponse.UserType == "Vendor")
-                        return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                        //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                        return RedirectToAction("Index", "NHomePage");
+
                     else
                         ViewBag.userid = userResponse.UserLoginId;
                         return RedirectToAction("Index", "NHomePage");
@@ -111,29 +113,15 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     int query = vendorMasterService.checkemail(userLogin.UserName);
                     if (query == 0)
-                        return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     else
-                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                 }
             }
             return View();
         }
 
-        public ActionResult FacebookAuthentication()
-        {
-            var fb = new FacebookClient();
-            var loginUrl = fb.GetLoginUrl(new
-            {
-
-                client_id = "152565978688349",
-                client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
-                redirect_uri = RediredtUri.AbsoluteUri,
-                response_type = "code",
-                scope = "email"
-
-            });
-            return Redirect(loginUrl.AbsoluteUri);
-        }
+       
 
         public ActionResult GoogleLogin(string email, string name, string firstname, string lastname, string Picture)
         {               //Write your code here to access these paramerters
@@ -170,85 +158,115 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             }
-            return RedirectToAction("Index", "UserRegistration");
+            return RedirectToAction("Index", "NUserRegistration");
         }
 
-        private Uri RediredtUri
-        {
-            get
+
+
+        public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)
+        {               //Write your code here to access these paramerters
+            var response = "";
+
+            FormsAuthentication.SetAuthCookie(email, false);
+            UserLogin userLogin = new UserLogin();
+            UserDetail userDetail = new UserDetail();
+            userDetail.FirstName = name;
+            userDetail.LastName = lastname;
+            userDetail.UserImgName = firstname;
+            userDetail.UserImgName = picture;
+            userLogin.UserName = email;
+            userLogin.Password = "Facebook";
+            userLogin.UserType = "User";
+            UserLogin userlogin1 = new UserLogin();
+
+            userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
+
+            if (userlogin1 == null)
+                response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
+            else
+                response = "sucess";
+            if (response == "sucess")
             {
-                var uriBuilder = new UriBuilder(Request.Url);
-                uriBuilder.Query = null;
-                uriBuilder.Fragment = null;
-                uriBuilder.Path = Url.Action("FacebookCallback");
-                return uriBuilder.Uri;
-            }
-        }
-
-        public ActionResult FacebookCallback(string code)
-        {
-            try
-            {
-                var fb = new FacebookClient();
-                dynamic result = fb.Post("oauth/access_token", new
+                var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+                if (userResponse != null)
                 {
-                    client_id = "152565978688349",
-                    client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
-                    redirect_uri = RediredtUri.AbsoluteUri,
-                    code = code
-
-                });
-                var accessToken = result.access_token;
-                Session["AccessToken"] = accessToken;
-                fb.AccessToken = accessToken;
-                dynamic me = fb.Get("me?fields=link,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
-                string email = me.email;
-                TempData["email"] = me.email;
-                TempData["first_name"] = me.first_name;
-                TempData["lastname"] = me.last_name;
-                TempData["picture"] = me.picture.data.url;
-                FormsAuthentication.SetAuthCookie(email, false);
-                UserLogin userLogin = new UserLogin();
-                UserDetail userDetail = new UserDetail();
-                userDetail.FirstName = me.first_name;
-                userDetail.LastName = me.last_name;
-                userDetail.UserImgName = me.picture.data.url;
-                userDetail.Url = me.link;
-                userDetail.Gender = me.gender;
-                userLogin.UserName = email;
-                userLogin.Password = "Facebook";
-                userLogin.UserType = "User";
-
-                UserLogin userlogin1 = new UserLogin();
-
-                userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
-                var response = "";
-                if (userlogin1 == null)
-                    response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
-                else
-                    response = "sucess";
-                if (response == "sucess")
-                {
-                    var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-                    if (userResponse != null)
-                    {
-                        vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-                        string userData = JsonConvert.SerializeObject(userResponse); //creating identity
-                        ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                        return RedirectToAction("Index", "NHomePage");
-                    }
+                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                    string userData = JsonConvert.SerializeObject(userResponse); //creating identity
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    return RedirectToAction("Index", "NHomePage");
                 }
-                else
-                { return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>"); }
-                return RedirectToAction("Index", "UserRegistration");
             }
-            catch (Exception)
+            else
             {
-                return RedirectToAction("Index", "UserRegistration");
+                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             }
+            return RedirectToAction("Index", "NUserRegistration");
         }
+
+        //public ActionResult FacebookCallback(string code)
+        //{
+        //    try
+        //    {
+        //        var fb = new FacebookClient();
+        //        dynamic result = fb.Post("oauth/access_token", new
+        //        {
+        //            client_id = "152565978688349",
+        //            client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
+        //            redirect_uri = RediredtUri.AbsoluteUri,
+        //            code = code
+
+        //        });
+        //        var accessToken = result.access_token;
+        //        Session["AccessToken"] = accessToken;
+        //        fb.AccessToken = accessToken;
+        //        dynamic me = fb.Get("me?fields=link,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
+        //        string email = me.email;
+        //        TempData["email"] = me.email;
+        //        TempData["first_name"] = me.first_name;
+        //        TempData["lastname"] = me.last_name;
+        //        TempData["picture"] = me.picture.data.url;
+        //        FormsAuthentication.SetAuthCookie(email, false);
+        //        UserLogin userLogin = new UserLogin();
+        //        UserDetail userDetail = new UserDetail();
+        //        userDetail.FirstName = me.first_name;
+        //        userDetail.LastName = me.last_name;
+        //        userDetail.UserImgName = me.picture.data.url;
+        //        userDetail.Url = me.link;
+        //        userDetail.Gender = me.gender;
+        //        userLogin.UserName = email;
+        //        userLogin.Password = "Facebook";
+        //        userLogin.UserType = "User";
+
+        //        UserLogin userlogin1 = new UserLogin();
+
+        //        userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
+        //        var response = "";
+        //        if (userlogin1 == null)
+        //            response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
+        //        else
+        //            response = "sucess";
+        //        if (response == "sucess")
+        //        {
+        //            var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+        //            if (userResponse != null)
+        //            {
+        //                vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+        //                string userData = JsonConvert.SerializeObject(userResponse); //creating identity
+        //                ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+        //                return RedirectToAction("Index", "NHomePage");
+        //            }
+        //        }
+        //        else
+        //        { return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>"); }
+        //        return RedirectToAction("Index", "NUserRegistration");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return RedirectToAction("Index", "NUserRegistration");
+        //    }
+        //}
 
 
         [HttpPost]
@@ -257,7 +275,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "UserRegistration", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "NUserRegistration", new { ReturnUrl = returnUrl }));
         }
 
         //

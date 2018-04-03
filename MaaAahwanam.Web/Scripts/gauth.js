@@ -3,8 +3,8 @@ var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
 var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
 var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
 var CLIENTID = '940368706527-qu2oqpfn1ad533kr1bpclh3qbleau1ug.apps.googleusercontent.com';
-var REDIRECT = 'http://www.ahwanam.com/';
-var LOGOUT = 'http://www.ahwanam.com/';
+var REDIRECT = 'http://www.ahwanam.com/Nhomepage';
+var LOGOUT = 'http://www.ahwanam.com/Nhomepage';
 var TYPE = 'token';
 var _url = OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
 var acToken;
@@ -64,11 +64,11 @@ function validateToken(token) {
                       Picture: responseText.picture
                   }
                   $.ajax({
-                      url: '/UserRegistration/GoogleLogin/',
+                      url: '/NUserRegistration/GoogleLogin/',
                       type: 'POST',
                       data: data,
                       success: function () {
-                          window.location.href = "/HomePage/Index/";
+                          window.location.href = "/NHomePage/Index/";
                       },
 
                   });
