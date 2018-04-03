@@ -24,14 +24,14 @@
                         <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div>
                         <div class="w-100 tags my-15">
                             <div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">300 <span>Guests</span></p>
-                                </div>
-                                <div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">300 <span>Guests</span></p>
-                                </div>
-                                <div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">300 <span>Guests</span></p>
-                                </div>
+                                <p class="mb-0">300 <span>Guests</span></p>
+                            </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0">300 <span>Guests</span></p>
+                            </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0">300 <span>Guests</span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,41 +39,45 @@
             <div class="row my-2 vendorProfileTotalDescrption">
                 <div class="hrResponsiveTabs col-12 col-md-12">
                     <dl class="responsiveTabs bgWhite mb-2">
-                        <dt class="active">About Us</dt>
+                        <dt>About Us</dt>
+                        <dd>
+                            <div class="w-100 vrResponsiveTabs">
+                                <p>Description</p>
+                                <span>@ViewBag.Productinfo.Description</span>
+                                <p>Amenities</p>
+                                <span>Amenities Content</span>
+                                <p>Hall Details</p>
+                                <span>Hall Details Content</span>
+                                <p>Terms & Conditions</p>
+                                <span>Terms and Conditions content</span>
+                            </div>
+                            <div class="appendedData"></div>
+                        </dd>
+                        <dt>Packages / Deals</dt>
                         <dd>
                             <div class="w-100 vrResponsiveTabs">
                                 <p>Descrption</p>
                                 <span>Descrption Content</span>
                                 <p>Amenities</p>
                                 <span>Amenities Content</span>
-                                <p>Hall Details</p>
-                                <span>Hall Details Content</span>
-                                <p>Terms &amp; Conditions</p>
-                                <span>Terms and Conditions content</span>
                             </div>
+                            <div class="appendedData"></div>
                         </dd>
-                        <dt>Packages / Deals</dt>
-                        <dd>Packages COntent is here</dd>
-                        <!-- <dt>Gallery / Portfolio</dt>
-                        <dd>Gallery COntent is here</dd>
+                        <dt>Gallery / Portfolio</dt>
+                        <dd>
+                            @*Gallery COntent is here*@
+                            @foreach (var item in ViewBag.allimages)
+                            {
+                                <img src="~/vendorimages/@item" class="img-fluid" alt="@ViewBag.image">
+                            }
+                        </dd>
                         <dt>Reviews</dt>
                         <dd>Reviews COntent is here</dd>
                         <dt>Address</dt>
                         <dd>Address COntent is here</dd>
                         <dt>Other</dt>
-                        <dd>Other COntent is here</dd>-->
-                    </dl><div class="responsive-tabs-placeholder bgWhite">
-                        <div class="w-100 vrResponsiveTabs">
-                            <p>Descrption</p>
-                            <span>Descrption Content</span>
-                            <p>Amenities</p>
-                            <span>Amenities Content</span>
-                            <p>Hall Details</p>
-                            <span>Hall Details Content</span>
-                            <p>Terms &amp; Conditions</p>
-                            <span>Terms and Conditions content</span>
-                        </div>
-                    </div>
+                        <dd>Other COntent is here</dd>
+                    </dl>
                 </div>
             </div>
         </div>
@@ -139,7 +143,8 @@
                         </div>
                         <div class="w-100 mt-3 totalAmount d-inline-block fontSize-16">
                             <div class="float-left">
-                                <p class="mb-0">Add to wishlist</p>
+                                <p class="mb-0" onclick="wl('add')">Add To WishList</p>
+                                <p class="mb-0" onclick="wl('remove')">Remove From WishList</p>
                             </div>
                             <div class="float-right themeColor textUnderline">
                                 <p class="mb-0">Reviews (<span>100</span>)</p>
@@ -240,30 +245,78 @@
             </div>
         </div>
     </div>
+</div>
 
 
 
-    @section scripts{
-        @*<script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>*@
-        <script>
-            $(document).ready(function () {
-                var owl = $('.owl-carousel');
-                owl.owlCarousel({
-                    margin: 10,
-                    nav: true,
-                    loop: true,
-                    responsive: {
-                        0: {
-                            items: 1
-                        },
-                        600: {
-                            items: 3
-                        },
-                        1000: {
-                            items: 5
-                        }
+@section scripts{
+    @*<script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            var owl = $('.owl-carousel');
+            owl.owlCarousel({
+                margin: 10,
+                nav: true,
+                loop: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
                     }
-                })
+                }
             })
-        </script>
-    }
+        })
+
+        //<!-- hr Responsive Tabs -->
+        $(document).ready(function () {
+            $.fn.responseTabs = function () {
+                var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
+                placeholder = $('<div class="responsive-tabs-placeholder bgWhite"></div>').insertAfter(el);
+                tabs.on('click', function () {
+                    var tab = $(this);
+
+                    tabs.not(tab).removeClass('active');
+                    tab.addClass(' active');
+
+                    placeholder.html(tab.next().html());
+
+                    $(".vrResponsiveTabs p").click(function () {
+                        $('.vrResponsiveTabs p').removeClass('active');
+                        $(this).addClass(' active');
+                        var subContent = $(this).next('span');
+                        $(this).parents('.vrResponsiveTabs').next('.appendedData').empty().html(subContent.html());
+                    });
+                });
+                tabs.filter(':first').trigger('click');
+            }
+            $(".responsiveTabs").responseTabs();
+
+            $(".vrResponsiveTabs p").click(function () {
+                $('.vrResponsiveTabs p').removeClass('active');
+                $(this).addClass(' active');
+                var subContent = $(this).next('span');
+                $(this).parents('.vrResponsiveTabs').next('.appendedData').empty().html(subContent.html());
+            });
+        });
+
+        //<!-- hr Responsive Tabs -->
+    </script>
+    <script>
+        function wl(val) {
+            var type = location.search.split('type=')[1];
+            var id = location.search.split('id=')[1];
+            var vid = location.search.split('vid=')[1];
+            $.ajax({
+                url: '/NParticularVendor/WhishList?type=' + type + '&&id=' + id + '&&vid=' + vid+'&&command='+val,
+                success: function (data) {
+                    alert("sucess");
+                }
+            });
+        }
+    </script>
+}
