@@ -27,7 +27,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NUserRegistrationController : Controller
     {
-
+        static string perfecturl = "";
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         Vendormaster vendorMaster = new Vendormaster();
@@ -76,7 +76,8 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail)
+        [AllowAnonymous]
+        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
             if (command == "UserReg")
             {
@@ -101,6 +102,8 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
+                    if (perfecturl != null)
+                        return Redirect(perfecturl+"&&m=AWL");
                     if (userResponse.UserType == "Vendor")
                         return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
                     else
@@ -117,6 +120,12 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return View();
+        }
+
+        public JsonResult assignreturnurl(string ReturnUrl)
+        {
+            perfecturl = ReturnUrl;
+            return Json(JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult FacebookAuthentication()

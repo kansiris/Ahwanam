@@ -16,7 +16,7 @@ namespace MaaAahwanam.Models
         public string BusinessName { get; set; }
         public string ServiceType { get; set; }
         public string UserID { get; set; }
-        public string WhishListedDate { get; set; }
+        public DateTime WhishListedDate { get; set; }
         public string IPAddress { get; set; }
         public string Status { get; set; }
     }

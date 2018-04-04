@@ -44,9 +44,9 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return "updated";
         }
-        public List<string> GetVendorAllImages(long id)
+        public List<VendorImage> GetVendorAllImages(long id)
         {
-            return _dbContext.VendorImage.Where(m => m.VendorMasterId == id).Select(m => m.ImageName).ToList();
+            return _dbContext.VendorImage.Where(m => m.VendorMasterId == id).ToList();
         }
 
         public List<VendorImage> GetImages(long id, long vid)

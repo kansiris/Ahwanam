@@ -34,7 +34,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string id)
         {
             //id = ViewBag.Vendormaster.Id;
-            ViewBag.images = vendorImageService.GetVendorAllImages(long.Parse(id));
+            ViewBag.images = vendorImageService.GetVendorAllImages(long.Parse(id)).Select(m=>m.ImageName);
             var data = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.ServicType = data.ServicType.Split(',');
             ViewBag.data = data;

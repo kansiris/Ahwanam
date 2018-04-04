@@ -1,7 +1,12 @@
-﻿
+﻿@using MaaAahwanam.Web.Custom
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
+    CustomPrincipal user = null;
+    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        user = (CustomPrincipal)HttpContext.Current.User;
+    }
 }
 
 <div class="container-fluid dealProfile">
@@ -15,7 +20,7 @@
                     }
                     else
                     {
-                        <img src="~/newdesign/images/defaultimg.jpg" class="img-fluid" alt="Default Image">
+                        <img src="~/noimages.png" class="img-fluid" alt="Default Image">
                     }
 
                 </div>
@@ -56,27 +61,127 @@
                         <dt>Packages / Deals</dt>
                         <dd>
                             <div class="w-100 vrResponsiveTabs">
-                                <p>Descrption</p>
-                                <span>Descrption Content</span>
-                                <p>Amenities</p>
-                                <span>Amenities Content</span>
+                                <p>Packages</p>
+                                <span>
+                                    <div class="row packages">
+                                        <div class="col-12 colmd-12 packageDetails">
+                                            <div class="w-100 float-left">
+                                                <div class="float-left"><p class="mb-0 packageName">Package One</p></div>
+                                                <div class="float-right packageCheckbox">
+                                                    <label>
+                                                        <input type="checkbox" name="">
+                                                        <p>Select</p>
+                                                    </label>
+                                                </div>
+                                                <div class="float-right">
+                                                    <p class="mb-0 mr-2">INR <span>50,000</span></p>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <hr />
+                                            <div class="w-100">
+                                                <p class="packageContent">
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries...
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                                <p>Deals</p>
+                                <span>Deals Content</span>
+                            </div>
+                            <div class="appendedData"></div>
+
+                        </dd>
+                        <dt>Gallery / Portfolio</dt>
+                        <dd class="p-2">
+                            <div class="row justify-content-center gallery">
+                                @*Gallery COntent is here*@
+
+                                @foreach (var item in ViewBag.allimages)
+                                {
+                                    <div class="text-center block">
+                                        <img src="~/vendorimages/@item.ImageName" class="img-fluid" alt="@item.ImageName">
+                                        <span class="themeColor mt-1 d-block">
+                                            @if (item.Imagedescription != null)
+                                            { @item.Imagedescription }
+                                            else
+                                            { <p>No Description</p>}
+                                        </span>
+                                    </div>
+                                }
+
+                                @if (ViewBag.allimages.Count == 0)
+                                {
+                                    <p>No Images Available</p>
+                                }
+                            </div>
+                        </dd>
+                        <dt>Reviews</dt>
+                        <dd></dd>
+                        <dt>Address</dt>
+                        <dd>
+                            <div class="w-100 vrResponsiveTabs">
+                                <p>Address</p>
+                                <span>
+                                    <div class="row mx-0 mb-3">
+                                        <h3 class="nexaBold">
+                                            Contact Details
+                                            <div class="blackBorder"></div>
+                                        </h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-md-6 address">
+                                            <h6 class="themeColor">Address</h6>
+                                            <p>@ViewBag.Productinfo.Address,</p>
+                                            <p>@ViewBag.Productinfo.Landmark,</p>
+                                            <p>@ViewBag.Productinfo.City, @ViewBag.Productinfo.State</p>
+                                            <p>@ViewBag.Productinfo.ZipCode.</p>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-6 contact">
+                                            <h6 class="themeColor">Contact</h6>
+                                            <p>+91-@ViewBag.Productinfo.ContactNumber</p>
+                                            <p>@ViewBag.Productinfo.EmailId</p>
+                                        </div>
+                                    </div>
+                                </span>
+                                <p>Map</p>
+                                <span>
+                                    Map Content
+                                    <!--<div class="map" style="height: 150px;">
+                                      <div id="google-map" data-latitude="17.425218" data-longitude="78.421246" style="height: 150px;"></div>
+                                    </div>-->
+                                </span>
                             </div>
                             <div class="appendedData"></div>
                         </dd>
-                        <dt>Gallery / Portfolio</dt>
+
+                        <dt>Other</dt>
                         <dd>
-                            @*Gallery COntent is here*@
-                            @foreach (var item in ViewBag.allimages)
+                            @foreach (var item in ViewBag.Venue)
                             {
-                                <img src="~/vendorimages/@item" class="img-fluid" alt="@ViewBag.image">
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                {
+                                    <div class="row packages">
+                                        <div class="col-12 colmd-12 packageDetails">
+                                            <div class="w-100 float-left">
+                                                <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=@Request.QueryString["type"]&&id=@Request.QueryString["id"]&&vid=@Request.QueryString["vid"]">@item.VenueType</a></p></div>
+                                                <div class="float-right">
+                                                    <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <hr />
+                                            <div class="w-100">
+                                                <p class="packageContent">
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries...
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             }
                         </dd>
-                        <dt>Reviews</dt>
-                        <dd>Reviews COntent is here</dd>
-                        <dt>Address</dt>
-                        <dd>Address COntent is here</dd>
-                        <dt>Other</dt>
-                        <dd>Other COntent is here</dd>
                     </dl>
                 </div>
             </div>
@@ -95,9 +200,14 @@
                             <div class="w-100">
                                 <select class="w-100 p-2 ml-auto">
                                     <option>Event type</option>
-                                    <option>Wedding</option>
-                                    <option>Birthday</option>
-                                    <option>Others</option>
+                                    @foreach (var item in ViewBag.venuetypes)
+                                    {
+                                        <option>@item</option>
+                                    }
+                                    @*<option>Event type</option>
+                                        <option>Wedding</option>
+                                        <option>Birthday</option>
+                                        <option>Others</option>*@
                                 </select>
                             </div>
                             <div class="w-100 mt-3 noOfPeoples">
@@ -108,10 +218,11 @@
                             <div class="w-100 mt-3 eventDate">
                                 <div class="date-picker">
                                     <div class="input">
-                                        <div class="result nexaBold">Occasion Date: <span></span></div>
+                                        <div class="result nexaBold">Occasion Date: <span id="occasiondate"></span></div>
                                         <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
                                     </div>
-                                    <div class="calendar hasDatepicker" id="dp1522145187717"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">March</span>&nbsp;<span class="ui-datepicker-year">2018</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col"><span title="Monday">Mo</span></th><th scope="col"><span title="Tuesday">Tu</span></th><th scope="col"><span title="Wednesday">We</span></th><th scope="col"><span title="Thursday">Th</span></th><th scope="col"><span title="Friday">Fr</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">2</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">3</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">4</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">8</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">9</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">10</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">11</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">16</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">17</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">18</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">23</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">24</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">25</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">26</a></td><td class=" ui-datepicker-days-cell-over ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">30</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>
+                                    <div class="calendar"></div>
+                                    @*<div class="calendar hasDatepicker"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">March</span>&nbsp;<span class="ui-datepicker-year">2018</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col"><span title="Monday">Mo</span></th><th scope="col"><span title="Tuesday">Tu</span></th><th scope="col"><span title="Wednesday">We</span></th><th scope="col"><span title="Thursday">Th</span></th><th scope="col"><span title="Friday">Fr</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">2</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">3</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">4</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">8</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">9</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">10</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">11</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">16</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">17</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">18</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">23</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">24</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">25</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">26</a></td><td class=" ui-datepicker-days-cell-over ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">30</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>*@
                                 </div>
                             </div>
                             <div class="w-100 mt-3 slotTime">
@@ -143,8 +254,20 @@
                         </div>
                         <div class="w-100 mt-3 totalAmount d-inline-block fontSize-16">
                             <div class="float-left">
-                                <p class="mb-0" onclick="wl('add')">Add To WishList</p>
-                                <p class="mb-0" onclick="wl('remove')">Remove From WishList</p>
+                                <input type="hidden" id="whishlistid" value="@ViewBag.whishlistid" />
+                                @if (user != null)
+                                {
+                                    if (ViewBag.whishlistmsg == 0)
+                                    { <p class="mb-0" onclick="wl('add')">Add To WishList</p> }
+                                    else if (ViewBag.whishlistmsg == 1)
+                                    { <p class="mb-0" onclick="wl('remove')">Remove From WishList</p> }
+                                    @*{ <p class="mb-0"><a href="/NParticularVendor/WhishList?type='@Request.QueryString["type"]'&&id='@Request.QueryString["id"]'&&vid='@Request.QueryString["vid"]'&&command=remove&&wid=@ViewBag.whishlistid">Remove From WishList</a></p> }*@
+                                }
+                                else
+                                {
+                                    <p class="mb-0"><a href="/NUserRegistration/Index">Add To WishList</a></p>
+                                }
+                                @*<p class="mb-0" onclick="wl('remove')">Remove From WishList</p>*@
                             </div>
                             <div class="float-right themeColor textUnderline">
                                 <p class="mb-0">Reviews (<span>100</span>)</p>
@@ -251,6 +374,7 @@
 
 @section scripts{
     @*<script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>*@
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
     <script>
         $(document).ready(function () {
             var owl = $('.owl-carousel');
@@ -274,9 +398,23 @@
 
         //<!-- hr Responsive Tabs -->
         $(document).ready(function () {
+
+            // Function releated to Package select
+            function checkSelect() {
+
+                $(".packageCheckbox label").click(function () {
+                    if ($(this).find("input[type='checkbox']").is(':checked')) {
+                        $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
+                    } else {
+                        $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
+                    }
+                });
+            }
+
             $.fn.responseTabs = function () {
                 var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
                 placeholder = $('<div class="responsive-tabs-placeholder bgWhite"></div>').insertAfter(el);
+
                 tabs.on('click', function () {
                     var tab = $(this);
 
@@ -285,38 +423,56 @@
 
                     placeholder.html(tab.next().html());
 
-                    $(".vrResponsiveTabs p").click(function () {
-                        $('.vrResponsiveTabs p').removeClass('active');
+                    $(".vrResponsiveTabs > p").click(function () {
+                        $('.vrResponsiveTabs > p').removeClass('active');
                         $(this).addClass(' active');
                         var subContent = $(this).next('span');
                         $(this).parents('.vrResponsiveTabs').next('.appendedData').empty().html(subContent.html());
+
+                        checkSelect();  // Function releated to Package select
                     });
+                    checkSelect();  // Function releated to Package select
+
                 });
                 tabs.filter(':first').trigger('click');
             }
             $(".responsiveTabs").responseTabs();
 
-            $(".vrResponsiveTabs p").click(function () {
-                $('.vrResponsiveTabs p').removeClass('active');
-                $(this).addClass(' active');
-                var subContent = $(this).next('span');
-                $(this).parents('.vrResponsiveTabs').next('.appendedData').empty().html(subContent.html());
-            });
+            $('.vrResponsiveTabs p:first-child').trigger('click');
+
         });
+
+
 
         //<!-- hr Responsive Tabs -->
     </script>
     <script>
         function wl(val) {
-            var type = location.search.split('type=')[1];
-            var id = location.search.split('id=')[1];
-            var vid = location.search.split('vid=')[1];
+            var type = '@Request.QueryString["type"]'; //location.search.split('type=')[1];
+            var id = '@Request.QueryString["id"]'; //location.search.split('id=')[1];
+            var vid = '@Request.QueryString["vid"]'; //location.search.split('vid=')[1];
+            var url1 = null;
+            if (val == 'add')
+                url1 = '/NParticularVendor/WhishList?type=' + type + '&&id=' + id + '&&vid=' + vid + '&&command=' + val;
+            else if (val == 'remove')
+                url1 = '/NParticularVendor/WhishList?type=' + type + '&&id=' + id + '&&vid=' + vid + '&&command=' + val + '&&wid=' + $('#whishlistid').val();
             $.ajax({
-                url: '/NParticularVendor/WhishList?type=' + type + '&&id=' + id + '&&vid=' + vid+'&&command='+val,
+                url: url1,
                 success: function (data) {
-                    alert("sucess");
+                    if (data == "Success") {
+                        alert("Sucessfully Added to Whishlist")
+                    }
+                    else if (data == "removed") {
+                        alert("Removed From Whishlist");
+                    }
+                    location.href = '/NParticularVendor/Index?type=' + type + '&&id=' + id + '&&vid=' + vid;
                 }
             });
         }
+
+        $(document).ready(function () {
+            var getvalue = $.cookie("url");
+            $('#occasiondate').html(getvalue.split('occasiondate=')[1]);
+        });
     </script>
 }
