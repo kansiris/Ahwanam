@@ -27,7 +27,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NUserRegistrationController : Controller
     {
-
+        static string perfecturl = "";
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         Vendormaster vendorMaster = new Vendormaster();
@@ -76,7 +76,8 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail)
+        [AllowAnonymous]
+        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
             if (command == "UserReg")
             {
@@ -101,6 +102,8 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
+                    if (perfecturl != null)
+                        return Redirect(perfecturl+"&&m=AWL");
                     if (userResponse.UserType == "Vendor")
                         //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
                         return RedirectToAction("Index", "NHomePage");
@@ -121,7 +124,27 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-       
+        public JsonResult assignreturnurl(string ReturnUrl)
+        {
+            perfecturl = ReturnUrl;
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+
+        //public ActionResult FacebookAuthentication()
+        //{
+        //    var fb = new FacebookClient();
+        //    var loginUrl = fb.GetLoginUrl(new
+        //    {
+
+        //        client_id = "152565978688349",
+        //        client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
+        //        redirect_uri = RediredtUri.AbsoluteUri,
+        //        response_type = "code",
+        //        scope = "email"
+
+        //    });
+        //    return Redirect(loginUrl.AbsoluteUri);
+        //}
 
         public ActionResult GoogleLogin(string email, string name, string firstname, string lastname, string Picture)
         {               //Write your code here to access these paramerters
