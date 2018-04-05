@@ -29,7 +29,7 @@ namespace MaaAahwanam.Web.Controllers
                 type = "Other";
             //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
             var data = vendorMasterService.GetVendor(long.Parse(id)); //
-            var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)).Where(a=>a.VendorId == long.Parse(vid)).ToList();
+            var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)).Where(a => a.VendorId == long.Parse(vid)).ToList();
             ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
             ViewBag.allimages = allimages;
             ViewBag.Productinfo = data;
@@ -47,16 +47,11 @@ namespace MaaAahwanam.Web.Controllers
             //var records = venorVenueSignUpService.GetVendorVenue(long.Parse(id));
             //ViewBag.Venue = records;
             //ViewBag.venuetypes = records.Select(v => v.VenueType).Distinct();
-            //if (type == "Venue")
-                ViewBag.Venue = venorVenueSignUpService.GetVendorVenue(long.Parse(id)); //, long.Parse(vid)
-            //else if (type == "Catering")
-                ViewBag.Catering = venorVenueSignUpService.GetVendorCatering(long.Parse(id)); //, long.Parse(vid)
-            //else if (type == "Decorator")
-                ViewBag.Decorator = venorVenueSignUpService.GetVendorDecorator(long.Parse(id)); //, long.Parse(vid)
-            //else if (type == "Photography")
-                ViewBag.Photography = venorVenueSignUpService.GetVendorPhotography(long.Parse(id)); //, long.Parse(vid)
-            //else if (type == "Other")
-                ViewBag.Other = venorVenueSignUpService.GetVendorOther(long.Parse(id)); //, long.Parse(vid)
+            ViewBag.Venue = venorVenueSignUpService.GetVendorVenue(long.Parse(id)); //, long.Parse(vid)
+            ViewBag.Catering = venorVenueSignUpService.GetVendorCatering(long.Parse(id)); //, long.Parse(vid)
+            ViewBag.Decorator = venorVenueSignUpService.GetVendorDecorator(long.Parse(id)); //, long.Parse(vid)
+            ViewBag.Photography = venorVenueSignUpService.GetVendorPhotography(long.Parse(id)); //, long.Parse(vid)
+            ViewBag.Other = venorVenueSignUpService.GetVendorOther(long.Parse(id)); //, long.Parse(vid)
             return View();
         }
 
