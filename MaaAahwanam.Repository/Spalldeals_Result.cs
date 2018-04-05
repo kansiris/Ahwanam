@@ -26,6 +26,7 @@ namespace MaaAahwanam.Repository
         public long DealID { get; set; }
         public Nullable<decimal> cost { get; set; }
         public string VenueType { get; set; }
+        public string dtype { get; set; }
         public string Food { get; set; }
         public string CockTails { get; set; }
         public string Rooms { get; set; }
