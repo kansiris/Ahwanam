@@ -14,13 +14,14 @@ namespace MaaAahwanam.Web.Controllers
     {
         // GET: NResults
         VendorProductsService vendorProductsService = new VendorProductsService();
-        public ActionResult Index(string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        public ActionResult Index(string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,string loc)
         {
+            string location = Request.Cookies["eventlocation"].Value;
             ViewBag.count = 6;
             return View();
         }
 
-        public ActionResult BlockOnePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L1)
+        public ActionResult BlockOnePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L1, string loc)
         {
             int takecount = (L1 != null) ? int.Parse(L1) : 6;
             if (new string[] { "Mehendi", "Pandit" }.Contains(type))
@@ -28,7 +29,7 @@ namespace MaaAahwanam.Web.Controllers
                 f4 = (f4 == "undefined" && f4 == "" && int.Parse(f4) > 0) ? f4 : "1";
                 ViewBag.type = type;
                 if (f5 != "") f5 = f5.Split('-')[1].Trim(); else f5 = "100";
-                var data = vendorProductsService.Getfiltervendors_Result(type, "", "", "", f4, f5, "", "", "", "");
+                var data = vendorProductsService.Getfiltervendors_Result(type, "", "", "", f4, f5, "", "", "", "");//.Where(m=>m.cit);
                 ViewBag.others = data.Take(takecount);
                 int count = data.Count();
                 ViewBag.count = (count >= takecount) ? "1" : "0";
@@ -65,7 +66,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView();
         }
 
-        public ActionResult BlockTwoPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,string L2)
+        public ActionResult BlockTwoPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,string L2, string loc)
         {
             int takecount = (L2 != null) ? int.Parse(L2) : 6;
             f2 = (f2 == "undefined" && f2 == "") ? f2.Split('-')[1].Trim() : "100";
@@ -79,7 +80,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView();
         }
 
-        public ActionResult BlockThreePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L3)
+        public ActionResult BlockThreePartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L3, string loc)
         {
             int takecount = (L3 != null) ? int.Parse(L3) : 6;
             f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
@@ -94,7 +95,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView();
         }
 
-        public ActionResult BlockFourPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L4)
+        public ActionResult BlockFourPartial(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9, string L4, string loc)
         {
             int takecount = (L4 != null) ? int.Parse(L4) : 6;
             f2 = (f2 == "undefined" && f2 == "") ? f2 : "Yes";
