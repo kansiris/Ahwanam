@@ -130,17 +130,21 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult FacebookAuthentication()
-        {
-            var fb = new FacebookClient();
-            var loginUrl = fb.GetLoginUrl(new
-            {
+        //public ActionResult FacebookAuthentication()
+        //{
+        //    var fb = new FacebookClient();
+        //    var loginUrl = fb.GetLoginUrl(new
+        //    {
 
-                client_id = "152565978688349",
-                client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
-                redirect_uri = RediredtUri.AbsoluteUri,
-                response_type = "code",
-                scope = "email"
+        //        client_id = "152565978688349",
+        //        client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
+        //        redirect_uri = RediredtUri.AbsoluteUri,
+        //        response_type = "code",
+        //        scope = "email"
+
+        //    });
+        //    return Redirect(loginUrl.AbsoluteUri);
+        //}
 
         public ActionResult GoogleLogin(string email, string name, string firstname, string lastname, string Picture)
         {               //Write your code here to access these paramerters

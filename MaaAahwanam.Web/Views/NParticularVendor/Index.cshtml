@@ -7,6 +7,7 @@
     {
         user = (CustomPrincipal)HttpContext.Current.User;
     }
+    var i = 0;
 }
 
 <div class="container-fluid dealProfile">
@@ -160,8 +161,8 @@
                         <dd>
                             @foreach (var item in ViewBag.Venue)
                             {
-                                if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                {
+                                //if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                //{
                                     <div class="row packages">
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
@@ -179,7 +180,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                //}
                             }
                         </dd>
                     </dl>
@@ -200,9 +201,9 @@
                             <div class="w-100">
                                 <select class="w-100 p-2 ml-auto">
                                     <option>Event type</option>
-                                    @foreach (var item in ViewBag.venuetypes)
+                                    @foreach (var item in ViewBag.Venue)
                                     {
-                                        <option>@item</option>
+                                        <option>@item.VenueType @(++i)</option>
                                     }
                                     @*<option>Event type</option>
                                         <option>Wedding</option>
