@@ -527,6 +527,28 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalldeals_Result>("Spgetalldeals");
         }
     
+        public virtual ObjectResult<GetCartItemsnew_Result> GetCartItemsnew(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItemsnew_Result>("GetCartItemsnew", vIDParameter);
+        }
+    
+        public virtual ObjectResult<Spalldeals_Result> Spalldeals(Nullable<int> id, string type)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spalldeals_Result>("Spalldeals", idParameter, typeParameter);
+        }
+    
         public virtual ObjectResult<filtervendors_Result> filtervendors(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
         {
             var typeParameter = type != null ?
@@ -570,28 +592,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("f9", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendors_Result>("filtervendors", typeParameter, f1Parameter, f2Parameter, f3Parameter, f4Parameter, f5Parameter, f6Parameter, f7Parameter, f8Parameter, f9Parameter);
-        }
-    
-        public virtual ObjectResult<GetCartItemsnew_Result> GetCartItemsnew(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItemsnew_Result>("GetCartItemsnew", vIDParameter);
-        }
-    
-        public virtual ObjectResult<Spalldeals_Result> Spalldeals(Nullable<int> id, string type)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spalldeals_Result>("Spalldeals", idParameter, typeParameter);
         }
     }
 }
