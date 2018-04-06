@@ -21,6 +21,10 @@ namespace MaaAahwanam.Repository
         public string description { get; set; }
         public string servictype { get; set; }
         public string EmailId { get; set; }
+        public string address { get; set; }
+        public string city { get; set; }
+        public string state { get; set; }
+        public string zipcode { get; set; }
         public string subtype { get; set; }
         public string logo { get; set; }
         public string image { get; set; }
