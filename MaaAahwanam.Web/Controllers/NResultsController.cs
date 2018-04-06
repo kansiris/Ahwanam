@@ -16,7 +16,6 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,string loc)
         {
-            string location = Request.Cookies["eventlocation"].Value;
             ViewBag.count = 6;
             return View();
         }
@@ -26,11 +25,14 @@ namespace MaaAahwanam.Web.Controllers
             int takecount = (L1 != null) ? int.Parse(L1) : 6;
             if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement" }.Contains(type))
             {
+                f4 = (f4 == "undefined" && f4 == "") ? f4 : "100";
+                f5 = (f5 == "undefined" && f5 == "") ? f5 : "10";
                 var data = vendorProductsService.Getfiltervendors_Result(type, "", "", "", f4, f5, "", "", "", "");
                 ViewBag.venues = data.Take(takecount);//.Where(m=>m.city == f1);
                 ViewBag.type = type;
                 int count = data.Count();
                 ViewBag.count = (count >= takecount) ? "1" : "0";
+                return PartialView();
             }
             
             if (new string[] { "Mehendi", "Pandit" }.Contains(type))

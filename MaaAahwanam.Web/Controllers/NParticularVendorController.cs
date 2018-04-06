@@ -16,10 +16,13 @@ namespace MaaAahwanam.Web.Controllers
         VendorImageService vendorImageService = new VendorImageService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         WhishListService whishListService = new WhishListService();
+        VendorProductsService vendorProductsService = new VendorProductsService();
+
         //static int count = 0;
         // GET: NParticularVendor
         public ActionResult Index(string type, string id, string vid, string m)
         {
+            ViewBag.count = 2;
             if (m != null)
                 WhishList(type, id, vid, "add", ""); //count++;
 
@@ -44,9 +47,6 @@ namespace MaaAahwanam.Web.Controllers
                 { ViewBag.whishlistmsg = 0; ViewBag.whishlistid = 0; }
 
             }
-            //var records = venorVenueSignUpService.GetVendorVenue(long.Parse(id));
-            //ViewBag.Venue = records;
-            //ViewBag.venuetypes = records.Select(v => v.VenueType).Distinct();
             ViewBag.Venue = venorVenueSignUpService.GetVendorVenue(long.Parse(id)); //, long.Parse(vid)
             ViewBag.Catering = venorVenueSignUpService.GetVendorCatering(long.Parse(id)); //, long.Parse(vid)
             ViewBag.Decorator = venorVenueSignUpService.GetVendorDecorator(long.Parse(id)); //, long.Parse(vid)
@@ -84,6 +84,15 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
+        public PartialViewResult DealsSection(string type,string L1)
+        {
+            int takecount = (L1 != null) ? int.Parse(L1) : 2;
+            var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
+            ViewBag.deal = deals.Take(takecount);
+            int count = deals.Count();
+            ViewBag.count = (count >= takecount) ? "1" : "0";
+            return PartialView();
+        }
 
     }
 }

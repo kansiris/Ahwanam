@@ -7,11 +7,11 @@
     {
         user = (CustomPrincipal)HttpContext.Current.User;
     }
-    var i = 0;
 }
 
 <div class="container-fluid dealProfile">
     <div class="row innerPagesBg py-2">
+        <input type="hidden" id="L1" name="L1" value="@ViewBag.count" />
         <div class="col-12 col-sm-12 col-md-8 col-lg-8 mb-2 mb-sm-0 mb-md-0">
             <div class="row mx-0 bgWhite p-2">
                 <div class="w-100 bannerImg">
@@ -175,7 +175,7 @@
                                         <hr />
                                         <div class="w-100">
                                             <p class="packageContent">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries...
+                                                Food : @item.Food , CockTails: @item.CockTails , Rooms : @item.Rooms , DecorationAllowed : @item.DecorationAllowed , HallType : @item.HallType , Wifi : @item.Wifi , LiveCookingStation : @item.LiveCookingStation
                                             </p>
                                         </div>
                                     </div>
@@ -296,18 +296,20 @@
                         </div>
                         <div class="row mx-0 mt-4 dealProfileForm">
                             <div class="w-100">
+                                <div class="form-group mb-0">
+                                    <input type="text" class="form-control nexaBold" placeholder="Event Type">
+                                </div>
+                            </div>
+                            
+                            @*<div class="w-100">
                                 <select class="w-100 p-2 ml-auto">
                                     <option>Event type</option>
                                     @foreach (var item in ViewBag.Venue)
                                     {
-                                        <option>@item.VenueType @(++i)</option>
+                                        <option>@item.VenueType</option>
                                     }
-                                    @*<option>Event type</option>
-                                        <option>Wedding</option>
-                                        <option>Birthday</option>
-                                        <option>Others</option>*@
                                 </select>
-                            </div>
+                            </div>*@
                             <div class="w-100 mt-3 noOfPeoples">
                                 <div class="form-group mb-0">
                                     <input type="text" class="form-control nexaBold" placeholder="Members">
@@ -373,54 +375,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row bgWhite mb-3">
-                    <div class="w-100 px-4 py-3">
-                        <div class="row mx-0">
-                            <h3 class="noteWorthybold">
-                                More Deals
-                                <div class="blackBorder"></div>
-                            </h3>
-                        </div>
-                        <div class="row mx-0 mt-4">
-                            <div class="row block w-100">
-                                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-5 topVenueBlockImg">
-                                    <img src="~/newdesign/images/makeup-artist-bg.png" class="img-fluid" alt="Top Venue">
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-7 px-xl-0 topVenueDetails">
-                                    <p class="mb-0">Taj Banjara</p>
-                                    <div class="w-100">
-                                        <p class="productMinPrice mb-0 themeColor d-block"> <span>99000</span> <small>k</small> </p>
-                                        <p class="productMaxPrice mb-0 greyColor d-block"> ( <span>1,24,000</span> <small>k</small> ) </p>
-                                    </div>
-                                    <div class="row mx-0 d-block float-right">
-                                        <a href="#" class="mb-0 themeColor">Profile</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row block w-100">
-                                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-5 topVenueBlockImg">
-                                    <img src="~/newdesign/images/makeup-artist-bg.png" class="img-fluid" alt="Top Venue">
-                                </div>
-                                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-7 px-xl-0 topVenueDetails">
-                                    <p class="mb-0">Taj Banjara</p>
-                                    <div class="w-100">
-                                        <p class="productMinPrice mb-0 themeColor d-block"> <span>99000</span> <small>k</small> </p>
-                                        <p class="productMaxPrice mb-0 greyColor d-block"> ( <span>1,24,000</span> <small>k</small> ) </p>
-                                    </div>
-                                    <div class="row mx-0 d-block float-right">
-                                        <a href="#" class="mb-0 themeColor">Profile</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mx-0 my-4">
-                            <div class="mx-auto d-inline-flex">
-                                <span class="themeBgColorPrimary btnSecondary text-white">
-                                    <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row bgWhite mb-3" id="dealspartial">
+                    @{Html.RenderAction("DealsSection", "NParticularVendor"); }
                 </div>
             </div>
         </div>
@@ -572,5 +528,12 @@
             var getvalue = $.cookie("url");
             $('#occasiondate').html(getvalue.split('occasiondate=')[1]);
         });
+
+        function DealsPartial() {
+            var lastrecord = parseInt($('#L1').val()) + parseInt(2);
+            var url = '/NParticularVendor/DealsSection?type=' + '@Request.QueryString["type"]' + '&&L1=' + lastrecord;
+            $("#dealspartial").empty().load(url);
+            $('#L1').val(lastrecord);
+        }
     </script>
 }
