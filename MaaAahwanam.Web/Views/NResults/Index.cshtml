@@ -148,10 +148,11 @@
     </script>
 
     <script>
-        var parameters = 'type=' + '@Request.QueryString["type"]' + '&&loc=' + '@Request.QueryString["loc"]' + '&&date=' + '@Request.QueryString["date"]' + '&&budget=' + '@Request.QueryString["budget"]' + '&&count=' + '@Request.QueryString["count"]' + '&&stype=' + '@Request.QueryString["stype"]';
+        var parameters = 'type=@Request.QueryString["type"]&&loc=@Request.QueryString["loc"]&&budget=@Request.QueryString["budget"]&&stype=@Request.QueryString["stype"].TrimEnd(',').Replace(' ','-')&&date=@Request.QueryString["date"]&&count=@Request.QueryString["count"]';
         function PartialOne() {
             var lastrecord = parseInt($('#L1').val()) + parseInt(6);
-            var url = '/NResults/BlockOnePartial?'+parameters+'&&L1=' + lastrecord;
+            var url = '/NResults/BlockOnePartial?' + parameters + '&&L1=' + lastrecord;
+            //alert(url);
             $("#BlockOnePartial").empty().load(url);
             $('#L1').val(lastrecord);
         }
