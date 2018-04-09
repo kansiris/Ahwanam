@@ -359,21 +359,18 @@
                         <div class="row mx-0 mt-4 dealProfileForm">
                             <div class="w-100">@ViewBag.singledeal.dtype
                                 <select class="w-100 p-2 ml-auto">
-                                    <option>Type</option>
+                                    <option id="type">Type</option>
                                     @foreach (var item in ViewBag.singledeal.dtype)
                                     {
                                         <option>@ViewBag.singledeal.dtype @(++i)</option>
                                     }
-                                    <option>Event type</option>
-                                    <option>Wedding</option>
-                                    <option>Birthday</option>
-                                    <option>Others</option>
+                                   
                                 </select>
                             </div>
                             <div class="w-100 mt-3 eventDate">
                                 <div class="date-picker">
                                     <div class="input">
-                                        <div class="result nexaBold">Occasion Date: <span></span></div>
+                                        <div class="result nexaBold">Occasion Date: <span id="date"></span></div>
                                         <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
                                     </div>
                                     <div class="calendar"></div>
@@ -381,27 +378,27 @@
                             </div>
                             <div class="w-100 mt-3">
                                 <select class="w-100 p-2 ml-auto pricePerPlate">
-                                    <option value="">Prices</option>
-                                    <option value="@ViewBag.singledeal.cost">Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>
+                                    <option id="price">Prices</option>
+                                    <option value="@ViewBag.singledeal.cost" >Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>
                                    // <option value="1100">Veg (<span>1100</span>/p)</option>
                                 </select>
                             </div>
                             <div class="w-100 mt-3 noOfPeoples">
                                 <div class="form-group">
-                                    <input type="number" class="form-control nexaBold" placeholder="Members" />
+                                    <input type="number" class="form-control nexaBold" id="nop" placeholder="Members" />
                                 </div>
                             </div>
                             <div class="w-100 mt-3 slotTime">
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox" />
+                                        <input type="checkbox"  id="ch1" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Morning</p>
                                     </label>
                                 </div>
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox" />
+                                        <input type="checkbox" id="ch2" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Evening</p>
                                     </label>
@@ -409,7 +406,7 @@
                             </div>
                             <div class="w-100 mt-3 text-center totalAmount">
                                 <div class="themeColor">
-                                    <p class="mb-0"><span>000</span>INR</p>
+                                    <p class="mb-0"><span id="tp">000</span>INR</p>
                                 </div>
                             </div>
                         </div>
@@ -422,8 +419,8 @@
                                 }
                                 else
                                 {
-                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 ">
-                                        <a href="/NUserRegistration/Index">Book Now</a></span>
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow1">
+                                      Book Now</span>
                                     
                                 }
 </div>
@@ -545,36 +542,52 @@
 
 @section scripts{
     <script>
-            $(document).ready(function() {
-              var owl = $('.owl-carousel');
-              owl.owlCarousel({
+        $(document).ready(function() {
+            var owl = $('.owl-carousel');
+            owl.owlCarousel({
                 margin: 10,
                 nav: true,
                 loop: true,
                 responsive: {
-                  0: {
-                    items: 1
-                  },
-                  600: {
-                    items: 3
-                  },
-                  1000: {
-                    items: 5
-                  }
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
+                    }
                 }
-              })
             })
 
-      //  <!------------- dealProfile Accoding ----------->
-	 $(".dealProfileTotalDescrption > .block:first-child .content").css("display","block");
-        var link = $(".dealProfileTotalDescrption > .block > h6 > a");
+            $("#type").text(window.localStorage.getItem("TYPE"));
+            // window.localStorage.getItem("id")
+            $("#date").text(window.localStorage.getItem("date"));
+            $("#price").text(window.localStorage.getItem("PRICE"));
+            //$("#nop").text(window.localStorage.getItem("nop"));
+            document.getElementById("nop").value = localStorage.getItem("nop");
+            var inputs = JSON.parse(localStorage.getItem('inputs'));
+            // For each inputs...
+            inputs.forEach(function(input)
+            {
+                // Set the 'checked' value
+                document.getElementById(input.id).checked = input.checked;
+                // $("#tp").text(window.localStorage.getItem("tp"));
+       
+              
+            })
 
-        link.on('click', function(event){
-            event.preventDefault();
-            var anchorVal = $(this).attr("href");
-            $(anchorVal).slideDown('fast');
-            $(".dealProfileTotalDescrption > .block .content").not(anchorVal).slideUp('fast');
-        })
+            //  <!------------- dealProfile Accoding ----------->
+            $(".dealProfileTotalDescrption > .block:first-child .content").css("display","block");
+            var link = $(".dealProfileTotalDescrption > .block > h6 > a");
+
+            link.on('click', function(event){
+                event.preventDefault();
+                var anchorVal = $(this).attr("href");
+                $(anchorVal).slideDown('fast');
+                $(".dealProfileTotalDescrption > .block .content").not(anchorVal).slideUp('fast');
+            })})
      // <!------------- dealProfile Accoding ----------->
     </script>
 
@@ -622,7 +635,8 @@
     } else if ($("select.pricePerPlate").find("option:selected").val() == '')
     {
       alert("Please select Menu type");
-    }else if($(".noOfPeoples input[type='number']").val() ==''){
+    } else if ($(".noOfPeoples input[type='number']").val() == '')
+    {
       alert("Please Mention No Of Guests");
     } else if ($(".slotTime input[type='checkbox']").is(':checked'))
     {
@@ -632,28 +646,94 @@
         var price = $("select.pricePerPlate").find("option:selected").val();
         var nop = $(".noOfPeoples input[type='number']").val();
         var totalprice = price * nop;
-        alert(nop);
-        alert(totalprice);
         url1 = '/NViewDeal/booknow?type=' + type + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price + '&&guest=' + nop;
+   
         $.ajax({
             url: url1,
             success: function (data) {
                 if (data == "Success") {
                     alert("Sucessfully Added to cart")
+                    localStorage.removeItem("TYPE");
+                   // localstorage.removeItem("id");
+                    localStorage.removeItem("date");
+                    localstorage.removeItem("PRICE");
+                    localStorage.removeItem("nop");
+                    localStorage.removeItem("tp");
                 }
                 else if (data == "failed") {
                     alert("login to the cart");
                 }
-                location.href = '/NUserRegistration/Index';
+                location.href = '/NUserProfile/Index';
             }
         });
-    //    alert("Continue");
+        //    alert("Continue");
+        
+        
     }else{
       alert("Please select time slot");
     }
+      
   });
 
-  
+    $(".bookNow1").click(function () {
+        if ($("select.eventType").find("option:selected").val() == '') {
+            alert("Please select Event type");
+        } else if ($(".date-picker .result span").text() == '') {
+            alert("Please select event date");
+        } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
+            alert("Please select Menu type");
+        } else if ($(".noOfPeoples input[type='number']").val() == '') 
+        {
+            alert("Please Mention No Of Guests");
+        } else if ($(".slotTime input[type='checkbox']").is(':checked')) 
+        {
+            var type = '@Request.QueryString["type"]';
+            var id = '@Request.QueryString["id"]';
+            var date = $(".date-picker .result span").text();
+            var price = $("select.pricePerPlate").find("option:selected").val();
+            var nop = $(".noOfPeoples input[type='number']").val();
+            var totalprice = price * nop;
+            window.localStorage.setItem("TYPE", type);
+            window.localStorage.setItem("id", id);
+            window.localStorage.setItem("date", date);
+            window.localStorage.setItem("PRICE", price);
+            window.localStorage.setItem("nop", nop);
+            window.localStorage.setItem("tp", totalprice);
+            // Get all checkbox inputs
+            var inputs = document.querySelectorAll('input[type="checkbox"]');
+            var arrData = [];
+            // For each inputs...
+            inputs.forEach(function (input) {
+                // ... save what you want (but 'ID' and 'checked' values are necessary)
+                arrData.push({ id: input.id, checked: input.checked });
+            });
+            // Save in localStorage
+            localStorage.setItem('inputs', JSON.stringify(arrData));
+
+             location.href = '/NUserRegistration/Index';
+            //alert(nop);
+            //alert(totalprice);
+            //url1 = '/NViewDeal/booknow?type=' + type + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price + '&&guest=' + nop;
+            //$.ajax({
+            //    url: url1,
+            //    success: function (data) {
+            //        if (data == "Success") {
+            //            alert("Sucessfully Added to cart")
+            //        }
+            //        else if (data == "failed") {
+            //            alert("login to the cart");
+            //        }
+            //        location.href = '/NUserRegistration/Index';
+            //    }
+            //});
+            ////    alert("Continue");
+        //} else {
+        //    alert("Please select time slot");
+       }
+    });
+
+
+
 </script>
 }
 
