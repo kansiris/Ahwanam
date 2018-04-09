@@ -70,14 +70,15 @@ namespace MaaAahwanam.Web.Controllers
                 _userManager = value;
             }
         }
-        public ActionResult Index()
+        public ActionResult Index(string m)
         {
+            perfecturl = "";
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
+        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl,string m)
         {
             if (command == "UserReg")
             {
@@ -102,8 +103,8 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse);
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
-                    if (perfecturl != null)
-                        return Redirect(perfecturl+"&&m=AWL");
+                    if (perfecturl != null && perfecturl != "")
+                        return Redirect(perfecturl);
                     if (userResponse.UserType == "Vendor")
                         //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
                         return RedirectToAction("Index", "NHomePage");
