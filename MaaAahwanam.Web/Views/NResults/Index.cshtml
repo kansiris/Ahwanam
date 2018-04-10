@@ -6,10 +6,11 @@
 
 <div class="container-fluid">
     <div class="row innerPagesBg py-2">
-        <input type="hidden" id="L1" name="L1" value="@ViewBag.count"/>
-        <input type="hidden" id="L2" name="L2" value="@ViewBag.count"/>
-        <input type="hidden" id="L3" name="L3" value="@ViewBag.count"/>
-        <input type="hidden" id="L4" name="L4" value="@ViewBag.count"/>
+        <input type="hidden" id="L1" name="L1" value="@ViewBag.count" />
+        <input type="hidden" id="L2" name="L2" value="@ViewBag.count" />
+        <input type="hidden" id="L3" name="L3" value="@ViewBag.count" />
+        <input type="hidden" id="L4" name="L4" value="@ViewBag.count" />
+        <input type="hidden" id="L5" name="L5" value="@ViewBag.count" />
         <div class="col-12 col-sm-12 col-md-9 mb-2 mb-sm-0 mb-md-0">
             @{Html.RenderAction("BlockOnePartial", "NResults"); } @*Venue Records partial View*@
 
@@ -24,6 +25,11 @@
         </div>
     </div>
 </div>
+
+@if (new string[] { "Mehendi", "Pandit" }.Contains(Request.QueryString["type"]))
+{
+    { Html.RenderAction("BlockFivePartial", "NResults"); } @*Mehendi/Pandit Records partial View*@
+}
 <div class="container">
     <div class="margin-top-50">
         <div class="row mx-0">
@@ -176,6 +182,13 @@
             var url = '/NResults/BlockFourPartial?' + parameters + '&&L4=' + lastrecord;
             $("#BlockFourPartial").empty().load(url);
             $('#L4').val(lastrecord);
+        }
+
+        function PartialFive() {
+            var lastrecord = parseInt($('#L5').val()) + parseInt(6);
+            var url = '/NResults/BlockFivePartial?' + parameters + '&&L5=' + lastrecord;
+            $("#BlockFivePartial").empty().load(url);
+            $('#L5').val(lastrecord);
         }
     </script>
 }

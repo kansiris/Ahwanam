@@ -53,17 +53,7 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView();
             }
 
-            if (new string[] { "Mehendi", "Pandit" }.Contains(type))
-            {
-                ViewBag.type = type;
-                //if (budget != "") budget = budget; else budget = "100";
-                budget = (budget != "undefined" && budget != "") ? budget : "100";
-                var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, "").Where(m => m.subtype == type);//.Where(m=>m.cit);
-                ViewBag.others = data.Take(takecount);
-                int recordcount = data.Count();
-                ViewBag.count = (recordcount >= takecount) ? "1" : "0";
-                return PartialView();
-            }
+            
             loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             count = (count != "undefined" && count != "") ? count : "10";
@@ -137,6 +127,23 @@ namespace MaaAahwanam.Web.Controllers
             int recordcount = data.Count();
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             return PartialView();
+        }
+
+        public ActionResult BlockFivePartial(string type, string loc, string budget, string stype, string date, string count, string L5)
+        {
+            int takecount = (L5 != null) ? int.Parse(L5) : 6;
+            //if (new string[] { "Mehendi", "Pandit" }.Contains(type))
+            //{
+                ViewBag.type = type;
+                //if (budget != "") budget = budget; else budget = "100";
+                budget = (budget != "undefined" && budget != "") ? budget : "100";
+                var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, "").Where(m => m.subtype == type);//.Where(m=>m.cit);
+                ViewBag.others = data.Take(takecount);
+                int recordcount = data.Count();
+                ViewBag.count = (recordcount >= takecount) ? "1" : "0";
+                return PartialView();
+            //}
+            //return PartialView();
         }
 
 
