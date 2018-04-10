@@ -29,25 +29,25 @@ namespace MaaAahwanam.Web.Controllers
                 budget = (budget == "undefined" && budget == "") ? budget : "100";
                 count = (count == "undefined" && count == "") ? count : "10";
                 var data = vendorProductsService.Getfiltervendors_Result("Venue", loc, budget, count);
-                string[] venuetypes = { "Convention-Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Hotel", "Resort","Convention Hall" };
+                string[] venuetypes = { "Convention-Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Hotel", "Resort", "Convention Hall" };
                 List<string> matchingvenues = venuetypes.Intersect(stype.Split(',')).ToList();//String.Join(",", venuetypes.Intersect(stype.Split(',')).ToList());
                 if (stype.Split(',').Contains("Hotel") || stype.Split(',').Contains("Resort") || stype.Split(',').Contains("Convetion-Hall") || stype.Split(',').Contains("Convetion Hall"))
                 {
                     var sortedlist = new List<filtervendors_Result>();
                     for (int i = 0; i < matchingvenues.Count; i++)
                     {
-                        sortedlist.AddRange(data.Where(m => m.subtype.Contains(matchingvenues[i])).ToList());
+                        sortedlist.AddRange(data.Where(m => m.subtype == matchingvenues[i]).ToList());
                     }
                     data = sortedlist;
                 }
-                    //data = vendorProductsService.Getfiltervendors_Result(matchingvenues, loc, budget, count);
+                //data = vendorProductsService.Getfiltervendors_Result(matchingvenues, loc, budget, count);
 
                 //else if (stype.Split(',').Contains("Resort"))
                 //    data = vendorProductsService.Getfiltervendors_Result("Resort", loc, budget, count);
                 //else if (stype.Split(',').Contains("Convetion Hall"))
                 //    data = vendorProductsService.Getfiltervendors_Result("Convetion Hall", loc, budget, count);
                 ViewBag.venues = data.Take(takecount);//.Where(m=>m.city == f1);
-                ViewBag.type = type;
+                ViewBag.type = "Venues";
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
                 return PartialView();
@@ -56,8 +56,9 @@ namespace MaaAahwanam.Web.Controllers
             if (new string[] { "Mehendi", "Pandit" }.Contains(type))
             {
                 ViewBag.type = type;
-                if (budget != "") budget = budget.Split('-')[1].Trim(); else budget = "100";
-                var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, "");//.Where(m=>m.cit);
+                //if (budget != "") budget = budget; else budget = "100";
+                budget = (budget != "undefined" && budget != "") ? budget : "100";
+                var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, "").Where(m => m.subtype == type);//.Where(m=>m.cit);
                 ViewBag.others = data.Take(takecount);
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
@@ -99,7 +100,7 @@ namespace MaaAahwanam.Web.Controllers
             //{
             //    data = vendorProductsService.Getfiltervendors_Result("Catering", loc, budget, count);
             //}
-               
+
             ViewBag.Catering = data.Take(takecount);
             int recordcount = data.Count();
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
