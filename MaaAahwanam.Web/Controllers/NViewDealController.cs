@@ -38,8 +38,8 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView("Loadmoredeals");
         }
 
-        public ActionResult booknow(string type, string date, string totalprice, string id,string price, string guest)
-        {
+        public ActionResult booknow(string type, string etype1, string date, string totalprice, string id,string price, string guest)
+     {
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -48,7 +48,7 @@ namespace MaaAahwanam.Web.Controllers
                 string updateddate = DateTime.UtcNow.ToShortDateString();
                 CartItem cartItem = new CartItem();
                 cartItem.VendorId = vendor.Id;
-                cartItem.ServiceType = type;
+                cartItem.ServiceType = etype1;
                 cartItem.TotalPrice = decimal.Parse(totalprice);
                 cartItem.Orderedby = user.UserId;
                 cartItem.UpdatedDate = Convert.ToDateTime(updateddate);

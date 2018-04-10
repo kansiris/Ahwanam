@@ -359,7 +359,7 @@
                         <div class="row mx-0 mt-4 dealProfileForm">
                             <div class="w-100">@ViewBag.singledeal.dtype
                                 <select class="w-100 p-2 ml-auto">
-                                    <option id="type">Type</option>
+                                    <option id="etype1">Type</option>
                                     @foreach (var item in ViewBag.singledeal.dtype)
                                     {
                                         <option>@ViewBag.singledeal.dtype @(++i)</option>
@@ -380,7 +380,7 @@
                                 <select class="w-100 p-2 ml-auto pricePerPlate">
                                     <option id="price">Prices</option>
                                     <option value="@ViewBag.singledeal.cost" >Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>
-                                   // <option value="1100">Veg (<span>1100</span>/p)</option>
+                                   @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
                                 </select>
                             </div>
                             <div class="w-100 mt-3 noOfPeoples">
@@ -561,7 +561,7 @@
                 }
             })
 
-            $("#type").text(window.localStorage.getItem("TYPE"));
+            $("#etype1").text(window.localStorage.getItem("etype1"));
             // window.localStorage.getItem("id")
             $("#date").text(window.localStorage.getItem("date"));
             $("#price").text(window.localStorage.getItem("PRICE"));
@@ -640,23 +640,23 @@
       alert("Please Mention No Of Guests");
     } else if ($(".slotTime input[type='checkbox']").is(':checked'))
     {
+        var etype1 = $("select.eventType").find("option:selected").val();
         var type = '@Request.QueryString["type"]';
         var id = '@Request.QueryString["id"]';
         var date = $(".date-picker .result span").text();
         var price = $("select.pricePerPlate").find("option:selected").val();
         var nop = $(".noOfPeoples input[type='number']").val();
         var totalprice = price * nop;
-        url1 = '/NViewDeal/booknow?type=' + type + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price + '&&guest=' + nop;
-   
+        url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price + '&&guest=' + nop;
+
         $.ajax({
             url: url1,
             success: function (data) {
                 if (data == "Success") {
                     alert("Sucessfully Added to cart")
-                    localStorage.removeItem("TYPE");
-                   // localstorage.removeItem("id");
+                    localStorage.removeItem("etype1");
                     localStorage.removeItem("date");
-                    localstorage.removeItem("PRICE");
+                //    localstorage.removeItem("PRICE");
                     localStorage.removeItem("nop");
                     localStorage.removeItem("tp");
                 }
@@ -667,12 +667,12 @@
             }
         });
         //    alert("Continue");
-        
-        
+
+
     }else{
       alert("Please select time slot");
     }
-      
+
   });
 
     $(".bookNow1").click(function () {
@@ -682,19 +682,18 @@
             alert("Please select event date");
         } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
             alert("Please select Menu type");
-        } else if ($(".noOfPeoples input[type='number']").val() == '') 
+        } else if ($(".noOfPeoples input[type='number']").val() == '')
         {
             alert("Please Mention No Of Guests");
-        } else if ($(".slotTime input[type='checkbox']").is(':checked')) 
+        } else if ($(".slotTime input[type='checkbox']").is(':checked'))
         {
-            var type = '@Request.QueryString["type"]';
-            var id = '@Request.QueryString["id"]';
+            var etype1 = $("select.eventType").find("option:selected").val();
+
             var date = $(".date-picker .result span").text();
             var price = $("select.pricePerPlate").find("option:selected").val();
             var nop = $(".noOfPeoples input[type='number']").val();
             var totalprice = price * nop;
-            window.localStorage.setItem("TYPE", type);
-            window.localStorage.setItem("id", id);
+            window.localStorage.setItem("etype1", etype1);
             window.localStorage.setItem("date", date);
             window.localStorage.setItem("PRICE", price);
             window.localStorage.setItem("nop", nop);
