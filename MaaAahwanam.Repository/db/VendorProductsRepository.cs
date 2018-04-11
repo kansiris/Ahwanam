@@ -47,9 +47,17 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.Spgetalldeals().ToList();
         }
+        public List<Spgetalleventdeals_Result> getalleventdeal()
+        {
+            return maaAahwanamEntities.Spgetalleventdeals().ToList();
+        }
         public List<Spalldeals_Result> getparticulardeal(int id, string type)
         {
             return maaAahwanamEntities.Spalldeals(id, type).ToList();
+        }
+        public List<speventvdeals_Result> getpartvendordeal(string id, string type)
+        {
+            return maaAahwanamEntities.speventvdeals(id, type).ToList();
         }
     }
 

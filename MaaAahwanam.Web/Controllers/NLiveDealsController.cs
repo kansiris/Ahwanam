@@ -27,10 +27,15 @@ namespace MaaAahwanam.Web.Controllers
         {
 
             int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
-            ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
-            var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+            //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+            //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+            var deals = vendorProductsService.getalleventdeal().OrderBy(m => m.DealID).Take(id);
+            ViewBag.deal = deals;
+
+
             ViewBag.dealLastRecord = id;
-            ViewBag.dealcount = vendorProductsService.getalldeal().Count();
+
+            ViewBag.dealcount = vendorProductsService.getalleventdeal().Count();
             return PartialView("Loadmore");
         }
 

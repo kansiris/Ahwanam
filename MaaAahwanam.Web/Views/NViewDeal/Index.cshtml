@@ -28,9 +28,9 @@
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.singledeal.BusinessName</div>
+                        <div class="w-100 title">@ViewBag.singledeal.businessname</div>
                         <div class="w-100 tags my-15">
-                            @if (@ViewBag.singledeal.CockTails != null && @ViewBag.singledeal.CockTails == "Yes" && @ViewBag.singledeal.CockTails != "")
+                            @if (@ViewBag.singledeal.Cocktail != null && @ViewBag.singledeal.Cocktail == "Yes" && @ViewBag.singledeal.Cocktail != "")
                             {
                                 <div class="d-inline-block p-2 mr-4 greyBg">
                                     <p class="mb-0"><span>CockTails</span></p>
@@ -42,12 +42,18 @@
                                     <p class="mb-0"><span>Rooms</span></p>
                                 </div>
                             }
-                            @if (@ViewBag.singledeal.SeatingCapacity != null && @ViewBag.singledeal.SeatingCapacity != 0)
-                            {
-                                <div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">@ViewBag.singledeal.SeatingCapacity<span>SeatingCapacity</span></p>
-                                </div>
-                            }
+                           @* @if (@ViewBag.singledeal.MinGuest != null && @ViewBag.singledeal.MinGuest != 0)
+    {
+        <div class="d-inline-block p-2 mr-4 greyBg">
+            <p class="mb-0">@ViewBag.singledeal.MinGuest<span>SeatingCapacity</span></p>
+        </div>
+    }
+    @if (@ViewBag.singledeal.MaxGuest != null && @ViewBag.singledeal.MaxGuest != 0)
+    {
+        <div class="d-inline-block p-2 mr-4 greyBg">
+            <p class="mb-0">@ViewBag.singledeal.MaxGuest<span>SeatingCapacity</span></p>
+        </div>
+    }
                             @if (@ViewBag.singledeal.DecorationAllowed != null && @ViewBag.singledeal.DecorationAllowed == "Yes" && @ViewBag.singledeal.DecorationAllowed != "")
                             {
                                 <div class="d-inline-block p-2 mr-4 greyBg">
@@ -287,17 +293,26 @@
                                 <div class="d-inline-block p-2 mr-4 greyBg">
                                     <p class="mb-0"><span>@ViewBag.singledeal.type</span></p>
                                 </div>
-                            }
+                            }*@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption">
+@if (ViewBag.singledeal1 != null)
+{
+    foreach (var item in ViewBag.singledeal1)
+    {
                     <div class="block px-2 w-100">
                         <h6 class="d-inline-block">
                             <a href="#dealDescrption" class="themeColor">Available Deals</a>
                             <div class="blackBorder"></div>
                         </h6>
-                        <div class="row mx-0 content" id="dealDescrption" style="display: block;">
+               <p>  @item.Category</p>
+                        <p>@item.FoodType</p>
+                        
+                            <div class="row mx-0 content" id="dealDescrption" style="display: block;">
                             @*<div class="w-100">
                                     <h6>Veg Deal (1400/p)</h6>
                                     <p>
@@ -313,36 +328,44 @@
                                     </p>
                                 </div>*@
                             <p>
-                                @ViewBag.singledeal.cost
-                                @ViewBag.singledeal.DealDescription
+                                @item.DealPrice</p><p>
+                                @item.DealDescription
+                                @*@ViewBag.singledeal.cost
+    @ViewBag.singledeal.DealDescription*@
                             </p>
 </div>
                     </div>
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
-                            <a href="#termsCondition" class="themeColor">Tearms &amp; Conditions</a>
+                            <a href="#termsCondition" class="themeColor">Terms &amp; Conditions</a>
                             <div class="blackBorder"></div>
                         </h6>
                         <div class="row mx-0 content" id="termsCondition">
                             <p>
-                                @ViewBag.singledeal.TermsConditions
+                                @item.TermsConditions
+                               @* @ViewBag.singledeal.TermsConditions*@
                             </p>
                         </div>
                     </div>
+
+                    }
+                    }
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
                             <a href="#location" class="themeColor">Location</a>
                             <div class="blackBorder"></div>
                         </h6>
+
                         <div class="row mx-0 content" id="location">
                             <p>
 
-                                @ViewBag.singledeal.Address,@ViewBag.singledeal.Landmark,@ViewBag.singledeal.City,@ViewBag.singledeal.State
-
+                               @* @ViewBag.singledeal.Address,@ViewBag.singledeal.Landmark,@ViewBag.singledeal.City,@ViewBag.singledeal.State*@
+                                 @ViewBag.singledeal.address,@ViewBag.singledeal.landmark,@ViewBag.singledeal.city,@ViewBag.singledeal.state
                             </p>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -357,16 +380,25 @@
                             </h3>
                         </div>
                         <div class="row mx-0 mt-4 dealProfileForm">
-                            <div class="w-100">@ViewBag.singledeal.dtype
-                                <select class="w-100 p-2 ml-auto">
-                                    <option id="etype1">Type</option>
-                                    @foreach (var item in ViewBag.singledeal.dtype)
-                                    {
-                                        <option>@ViewBag.singledeal.dtype @(++i)</option>
-                                    }
-                                   
-                                </select>
-                            </div>
+                         @*    <div class="w-100">@ViewBag.singledeal.dtype
+                               <select class="w-100 p-2 ml-auto">
+        <option id="etype1">Type</option>
+        @foreach (var item in ViewBag.singledeal.dtype)
+        {
+            <option>@ViewBag.singledeal.dtype @(++i)</option>
+        }
+
+    </select>
+
+                            </div>*@
+                            <div class="w-100">
+                              
+                            <select class="w-100 p-2 ml-auto">
+                                    <option>@ViewBag.singledeal.VendorType</option>
+                               
+                            </select>
+
+                        </div>
                             <div class="w-100 mt-3 eventDate">
                                 <div class="date-picker">
                                     <div class="input">
