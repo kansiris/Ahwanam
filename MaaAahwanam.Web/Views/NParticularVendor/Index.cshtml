@@ -31,9 +31,50 @@
                         <div class="w-100 tags my-15">
                             @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
                             {
-                                
+                                if (ViewBag.particularVenue.HallType != null && ViewBag.particularVenue.HallType != "")
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0"><span>@ViewBag.particularVenue.HallType</span></p>
+                                    </div>
+                                }
+                                if (ViewBag.particularVenue.Wifi != null && ViewBag.particularVenue.Wifi == "Yes" && ViewBag.particularVenue.Wifi != "")
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0"><span>Wifi</span></p>
+                                    </div>
+                                }
+                                if (ViewBag.particularVenue.Rooms != null && ViewBag.particularVenue.Rooms == "Yes" && ViewBag.particularVenue.Rooms != "")
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0"><span>Rooms</span></p>
+                                    </div>
+                                }
+                                if (ViewBag.particularVenue.Food != null && ViewBag.particularVenue.Food != "")
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0"><span>@ViewBag.particularVenue.Food</span></p>
+                                    </div>
+                                }
                             }
-                            <div class="d-inline-block p-2 mr-4 greyBg">
+                            @if (Request.QueryString["type"] == "Catering")
+                            {
+                                if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0"><span>LiveCookingStation : @ViewBag.particularCatering.LiveCookingStation</span></p>
+                                    </div>
+                                }
+                            }
+                            @if (Request.QueryString["type"] == "Photography")
+                            {
+                                if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0"><span>Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot</span></p>
+                                    </div>
+                                }
+                            }
+                            @*<div class="d-inline-block p-2 mr-4 greyBg">
                                 <p class="mb-0">300 <span>Guests</span></p>
                             </div>
                             <div class="d-inline-block p-2 mr-4 greyBg">
@@ -41,7 +82,7 @@
                             </div>
                             <div class="d-inline-block p-2 mr-4 greyBg">
                                 <p class="mb-0">300 <span>Guests</span></p>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -316,7 +357,7 @@
                                 </div>*@
                             <div class="w-100 mt-3 noOfPeoples">
                                 <div class="form-group mb-0">
-                                    <input type="text" class="form-control nexaBold" placeholder="Members">
+                                    <input type="text" class="form-control nexaBold" placeholder="Members" id="members" name="members">
                                 </div>
                             </div>
                             <div class="w-100 mt-3 eventDate">
@@ -348,7 +389,15 @@
                         </div>
                         <div class="row mx-0">
                             <div class="w-100 d-flex my-2">
-                                <span class="themeBgColorPrimary btnSecondary text-white text-center w-100">Book Now</span>
+                                @*<span class="themeBgColorPrimary btnSecondary text-white text-center w-100">Book Now</span>*@
+                                @if (user != null)
+                                {
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100">Book Now</span>
+                                }
+                                else
+                                {
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100" onclick="window.location.href = '/NUserRegistration/Index'">Book Now</span> // /NUserRegistration/Index onclick="@Url.Action("Index","NUserRegistration")"
+                                }
                             </div>
                             <div class="w-100 d-flex my-2">
                                 <span class="themeBgColorPrimary btnSecondary text-white text-center w-100">
@@ -529,8 +578,10 @@
         }
 
         $(document).ready(function () {
-            var getvalue = $.cookie("url");
-            $('#occasiondate').html(getvalue.split('occasiondate=')[1]);
+            var getdate = $.cookie("url");
+            var getcount = $.cookie("qurl");
+            $('#occasiondate').html(getdate.split('occasiondate=')[1]);
+            $('#members').val(getcount.split('count=')[1].split('&&')[0]);
         });
 
         function DealsPartial() {
