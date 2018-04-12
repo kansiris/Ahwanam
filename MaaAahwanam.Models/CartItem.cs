@@ -28,5 +28,6 @@ namespace MaaAahwanam.Models
         public long subid { get; set; }
         public bool Isdeal { get; set; }
         public long DealId { get; set; }
+        public string EventType { get; set; }
     }
 }
