@@ -458,9 +458,9 @@
 
 
                             <div class="w-100 mt-3">
-                                <select class="w-100 p-2 ml-auto pricePerPlate"id="selectbox2">
-                                    <option id="price">Prices</option>
-                                    <option value="@ViewBag.singledeal.cost">Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>
+                                <select class="w-100 p-2 ml-auto pricePerPlate" id="selectbox2">
+                                   @* <option id="price">Prices</option>
+    <option value="@ViewBag.singledeal.cost">Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>*@
                                     @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
                                 </select>
                             </div>
@@ -736,14 +736,19 @@
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
                 alert("Please Mention No Of Guests");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                var etype1 = $("select.eventType").find("option:selected").val();
+                //   var etype1 = $("select.eventType").find("option:selected").text();
+                var etype1 = $('#selectbox1').val();
+                alert(etype1);
                 var type = '@Request.QueryString["type"]';
+                var vid = '@Request.QueryString["vid"]';
                 var id = '@Request.QueryString["id"]';
                 var date = $(".date-picker .result span").text();
-                var price = $("select.pricePerPlate").find("option:selected").val();
+                var price = $("select.pricePerPlate").find("option:selected").text();
+                var price1 = price.split('~')[0];
                 var nop = $(".noOfPeoples input[type='number']").val();
-                var totalprice = price * nop;
-                url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price + '&&guest=' + nop;
+                var totalprice = price1 * nop;
+                var timeslot = document.querySelectorAll('input[type="checkbox"]');
+                url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot='+timeslot;
 
                 $.ajax({
                     url: url1,
@@ -781,15 +786,18 @@
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
                 alert("Please Mention No Of Guests");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                var etype1 = $("select.eventType").find("option:selected").val();
-
+               // var etype1 = $("select.eventType").find("option:selected").val();
+                var etype1 = $('#selectbox1').val();
                 var date = $(".date-picker .result span").text();
-                var price = $("select.pricePerPlate").find("option:selected").val();
+                var price = $("select.pricePerPlate").find("option:selected").text();
+                alert(price);
+                var price1 = price.split('~')[0];
+                alert(price1);
                 var nop = $(".noOfPeoples input[type='number']").val();
-                var totalprice = price * nop;
+                var totalprice = price1 * nop;
                 window.localStorage.setItem("etype1", etype1);
                 window.localStorage.setItem("date", date);
-                window.localStorage.setItem("PRICE", price);
+                window.localStorage.setItem("PRICE", price1);
                 window.localStorage.setItem("nop", nop);
                 window.localStorage.setItem("tp", totalprice);
                 // Get all checkbox inputs
@@ -827,29 +835,44 @@
 
         $('#selectbox1').change(function () {
             var data = "";
+            var type = '@Request.QueryString["type"]';
+            var id = '@Request.QueryString["id"]';
+            
+            //alert($(this).val());
             $.ajax({
                 type: "GET",
-                url: "controller mapping",
-                data: "selectbox1_selectedvalue=" + $(this).val(),
-                async: false,
+                url: "/NViewDeal/sort?eve=" + $(this).val() + '&&type=' + type + '&&id=' + id,
+                data:  id,
                 success: function (response) {
                     data = response;
-                    return response;
+                    //return response;
+                    var string = data.split("~");
+                    var array1 = string;
+                    //alert(array1);
+                    var select = $('selectbox2');
+                    select.empty();
+                    //$.each(array1, function (index, value) {
+                     //   alert(value);
+                        //select.append($('<option></option>').val(value).html(value));
+                        //   select.append('<option>'+value+'</option>');
+                    $.each(array1, function (index, value) {
+                        var dealprice = value.split(',')[0].split('{ DealPrice =')[1];
+                        var itemtype = value.split(',')[1].split('FoodType =')[1].replace('}','');
+                        var finalvalue = dealprice + '~' + itemtype;
+                        alert(dealprice +',' +itemtype);
+                            $('#selectbox2')
+                                .append($("<option></option>")
+                                .attr("value", index)
+                                .text(finalvalue));
+                    });
+                    //alert(select);
+                    //$('#selectbox2').show();
                 },
                 error: function () {
                     alert('Error occured');
                 }
             });
-            var string = data.message.split(",");
-            var array = string.filter(function (e) { return e; });
-            var select = $('selectbox2');
-            select.empty();
-            $.each(array, function (index, value) {
-                select.append(
-                        $('<option></option>').val(value).html(value)
-                    );
-            });
-            $('#selectbox2').show();
+            
         });
 
     </script>
