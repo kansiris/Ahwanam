@@ -16,13 +16,19 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
 
         // GET: NViewDeal
-        public ActionResult Index(string id, string type)
+        public ActionResult Index(string id, string type, string eve)
         {
             try
             {
+
                 //                ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
                 ViewBag.singledeal = vendorProductsService.getpartvendordeal(id, type).FirstOrDefault();
-                ViewBag.singledeal1 = vendorProductsService.getpartvendordeal(id, type);
+                if (eve != "")
+                {
+
+                    ViewBag.singledeal1 = vendorProductsService.getpartvendordeal(id, type).Where(m => m.Category == eve) ;
+                }
+                else { ViewBag.singledeal1 = vendorProductsService.getpartvendordeal(id, type); }
 
                 return View();
             }

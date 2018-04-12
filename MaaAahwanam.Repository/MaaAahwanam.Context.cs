@@ -583,9 +583,13 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<speventvdeals_Result>("speventvdeals", vidParameter, typeParameter);
         }
     
-        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals()
+        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals(string eve)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals");
+            var eveParameter = eve != null ?
+                new ObjectParameter("eve", eve) :
+                new ObjectParameter("eve", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter);
         }
     }
 }

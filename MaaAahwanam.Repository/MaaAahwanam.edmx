@@ -153,7 +153,9 @@
           <Parameter Name="type" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="Spgetalldeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="Spgetalleventdeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Spgetalleventdeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eve" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="spsearchdeal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="search" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="varchar" Mode="In" />
@@ -352,7 +354,9 @@
             <Parameter Name="vid" Mode="In" Type="String" />
             <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Spgetalleventdeals" ReturnType="Collection(MaaAahwanamModel.Spgetalleventdeals_Result)" />
+          <FunctionImport Name="Spgetalleventdeals" ReturnType="Collection(MaaAahwanamModel.Spgetalleventdeals_Result)">
+            <Parameter Name="eve" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -1141,6 +1145,7 @@
           <Property Type="String" Name="VendorType" Nullable="true" />
           <Property Type="String" Name="cost" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="category" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2138,6 +2143,7 @@
                 <ScalarProperty Name="VendorType" ColumnName="VendorType" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="category" ColumnName="category" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

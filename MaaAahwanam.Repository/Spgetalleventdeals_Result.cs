@@ -20,5 +20,6 @@ namespace MaaAahwanam.Repository
         public string VendorType { get; set; }
         public string cost { get; set; }
         public string image { get; set; }
+        public string category { get; set; }
     }
 }

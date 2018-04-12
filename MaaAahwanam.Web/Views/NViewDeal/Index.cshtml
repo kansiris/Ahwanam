@@ -300,17 +300,19 @@
 
 
                 <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption">
-@if (ViewBag.singledeal1 != null)
-{
-    foreach (var item in ViewBag.singledeal1)
-    {
+
                     <div class="block px-2 w-100">
                         <h6 class="d-inline-block">
                             <a href="#dealDescrption" class="themeColor">Available Deals</a>
                             <div class="blackBorder"></div>
                         </h6>
-               <p>  @item.Category</p>
-                        <p>@item.FoodType</p>
+                              @if (ViewBag.singledeal1 != null)
+                              {
+                                  foreach (var item in ViewBag.singledeal1)
+                                  {
+                                    <p>  @item.Category - @item.FoodType (
+                                        @item.DealPrice
+                                    )</p>
                         
                             <div class="row mx-0 content" id="dealDescrption" style="display: block;">
                             @*<div class="w-100">
@@ -328,12 +330,13 @@
                                     </p>
                                 </div>*@
                             <p>
-                                @item.DealPrice</p><p>
                                 @item.DealDescription
                                 @*@ViewBag.singledeal.cost
     @ViewBag.singledeal.DealDescription*@
                             </p>
 </div>
+          }
+      }
                     </div>
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
@@ -342,14 +345,13 @@
                         </h6>
                         <div class="row mx-0 content" id="termsCondition">
                             <p>
-                                @item.TermsConditions
-                               @* @ViewBag.singledeal.TermsConditions*@
+                               @*  @item.TermsConditions*@
+    @ViewBag.singledeal.TermsConditions
                             </p>
                         </div>
                     </div>
 
-                    }
-                    }
+                   
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
                             <a href="#location" class="themeColor">Location</a>
