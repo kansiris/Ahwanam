@@ -25,10 +25,17 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.singledeal = vendorProductsService.getpartvendordeal(id, type).FirstOrDefault();
                 if (eve != "")
                 {
+                    var data = vendorProductsService.getpartvendordeal(id, type).Where(m => m.Category == eve);
+                    ViewBag.singledeal1 = data ;
+                    ViewBag.events = data.Select(m => m.Category).Distinct();
 
-                    ViewBag.singledeal1 = vendorProductsService.getpartvendordeal(id, type).Where(m => m.Category == eve) ;
                 }
-                else { ViewBag.singledeal1 = vendorProductsService.getpartvendordeal(id, type); }
+                else
+                {
+                    var data = vendorProductsService.getpartvendordeal(id, type);
+                    ViewBag.singledeal1 = data;
+                    ViewBag.events = data.Select(m => m.Category).Distinct();
+                }
 
                 return View();
             }
