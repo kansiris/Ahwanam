@@ -46,9 +46,17 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.getalldeal();
         }
+        public List<Spgetalleventdeals_Result> getalleventdeal()
+        {
+            return vendorProductsRepository.getalleventdeal();
+        }
         public List<Spalldeals_Result> getparticulardeal(int id,  string type)
         {
             return vendorProductsRepository.getparticulardeal(id,  type);
+        }
+        public List<speventvdeals_Result> getpartvendordeal(string id, string type)
+        {
+            return vendorProductsRepository.getpartvendordeal(id, type);
         }
     }
 }

@@ -20,7 +20,9 @@ namespace MaaAahwanam.Web.Controllers
         {
             try
             {
-                ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
+                //                ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
+                ViewBag.singledeal = vendorProductsService.getpartvendordeal(id, type).FirstOrDefault();
+                ViewBag.singledeal1 = vendorProductsService.getpartvendordeal(id, type);
 
                 return View();
             }
