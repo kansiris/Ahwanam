@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-6 bgWhite my-4">
+        <div class="col-12 col-sm-10 col-md-6 bgWhite my-4 authenticationBlocks">
             <div class="login p-5">
                 <div class="row mx-0 margin">
                     <h4>
@@ -16,7 +16,7 @@
                     </h4>
                 </div>
                 <div class="row mx-0 fontSize-18 my-2">
-                    <p class="mb-0">Are you a new user ? <span class="themeColor cursorPointer">Register</span></p>
+                    <p class="mb-0">Are you a new user ? <span class="themeColor cursorPointer registerBtn">Register</span></p>
                 </div>
                 @using (Html.BeginForm("Index", "NUserRegistration", FormMethod.Post))
                 {
@@ -33,9 +33,9 @@
                         </div>
                     </div>
                     <div class="row mx-0 align-items-center">
-                        <button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center" value="Login" name="command" onclick="testlogin()">Login</button>
+                        <button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center loginBtn" value="Login" name="command" onclick="testlogin()">Login</button>
                         @*<span class="themeBgColorPrimary btnSecondary text-white text-center">Login</span>*@
-                        <span class="themeColor ml-3 fontSize-18"> Forgot Password</span>
+                        <span class="themeColor ml-3 fontSize-18 forgotPasswordBtn"> Forgot Password</span>
                     </div>
                 }
                 <div class="row mx-0 align-items-center my-4">
@@ -53,7 +53,7 @@
                     </h4>
                 </div>
                 <div class="row mx-0 fontSize-18 my-2">
-                    <p class="mb-0">Already have an Account ? <span class="themeColor cursorPointer">Login</span></p>
+                    <p class="mb-0">Already have an Account ? <span class="themeColor cursorPointer loginBtn">Login</span></p>
                 </div>
                 @using (Html.BeginForm("Index", "NUserRegistration", FormMethod.Post))
                 {
@@ -89,6 +89,24 @@
                 }
             </div>
 
+            <div class="forgotPassword p-5">
+                <div class="row mx-0 margin">
+                    <h4>
+                        Forgot Password
+                        <div class="blackBorder"></div>
+                    </h4>
+                </div>
+                <div class="row mx-0 my-2">
+                    <div class="form-group w-100">
+                        <input type="text" class="form-control" name="" placeholder="Enter Mail Id">
+                    </div>
+                </div>
+                <div class="row mx-0 align-items-center">
+                    <span class="themeBgColorPrimary btnSecondary text-white text-center">Click</span>
+                    <span class="themeColor ml-3 fontSize-18 loginBtn"> Login</span>
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -101,6 +119,28 @@
         });
         $('.container').hide();
 
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').attr("id", "userAuthentication");
+        });
+        var regClick = $(".registerBtn"), loginClick = $(".loginBtn"), forgotClick = $(".forgotPasswordBtn"),
+            loginBlock = $(".login"), regBlock = $(".register"), forgotBlock = $(".forgotPassword");
+        $(regClick).click(function () {
+            $(".authenticationBlocks > div").css("display", "none");
+            $(regBlock).css("display", "block");
+        });
+
+        $(loginClick).click(function () {
+            $(".authenticationBlocks > div").css("display", "none");
+            $(loginBlock).css("display", "block");
+        });
+
+        $(forgotClick).click(function () {
+            $(".authenticationBlocks > div").css("display", "none");
+            $(forgotBlock).css("display", "block");
+        });
     </script>
 
     <script>

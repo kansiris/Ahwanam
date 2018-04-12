@@ -51,6 +51,7 @@ namespace MaaAahwanam.Service
         public CartItem AddCartItem(CartItem cartItem)
         {
             string message = "";
+            cartItem.Status = "Active";
             cartItem = cartItemRepoitory.AddCartItem(cartItem);
             //if (cartItem != null)
             //{
