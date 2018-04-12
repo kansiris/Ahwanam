@@ -73,9 +73,16 @@ nav.navbar + div{
 	display: inline-block;
 	margin: 0 5% 25px;
 	text-align: center;}
-.celebrateToday ul > li > img{
+.celebrateToday ul > li > a{
+	display: block;
+	color: #fff;
+}
+.celebrateToday ul > li > a:hover{
+	text-decoration: none;
+}
+.celebrateToday ul > li > a > img{
 	height: 85px;}
-.celebrateToday ul > li > img + span{
+.celebrateToday ul > li > a > img + span{
 	display: block;
 	color: #fff;
 	margin-top: 10px;
@@ -113,16 +120,21 @@ ul.ui-menu > li.ui-menu-item{
 ul.ui-menu > li.ui-menu-item:hover{
 	background: #2e3192;
 	color: #fff;}
-.normalSearch > .normalSearchResult{
+.normalSearch > .normalSearchResult,
+.commonSearchResults > div{
 	display: none;
 }
 .normalSearch > .normalSearchResult ul{
 	overflow-x: scroll;
 	margin: 10px 10% 0 17%;}
-.normalSearch > .normalSearchResult li{
+.commonSearchResults ul{
+	overflow-x: scroll;}
+.normalSearch > .normalSearchResult li,
+.commonSearchResults ul > li{
 	list-style-type: none;
 	display: inline-block;}
-.normalSearch > .normalSearchResult li > div > img{
+.normalSearch > .normalSearchResult li > a > div > img,
+.commonSearchResults ul > li > a > div > img{
 	height: 50px;}
 .normalSearch > .normalSearchResult li > div > p{
 	font-size: 16px;}
@@ -220,6 +232,9 @@ ul.ui-menu > li.ui-menu-item:hover{
 	margin-bottom: 15px;}
 .options ul{
 	padding-left: 10px;}
+.options ul + p{
+	display: none;
+}
 .options ul > li{
 	list-style-type: none;
 	margin-bottom: 15px;}
@@ -296,6 +311,23 @@ ul.ui-menu > li.ui-menu-item:hover{
 .userTotalInfo .form-group > .form-control:placeholder{
 	color: #dadada;}
     /*-------- User Profile Page --------*/
+
+    /*-------- Common Search Block --------*/
+.commonSearch .form-group{
+	position: relative;
+}
+.commonSearch .form-group > span > i{
+	position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-10px);
+    font-size: 20px;
+}
+.commonSearch .form-group > select{
+	border-radius: 0;
+}
+    /*-------- Common Search Block --------*/
+
 	
 	/*--------- Deal Profile Page -------*/
 .dealProfile .bannerImg{
@@ -355,6 +387,72 @@ ul.ui-menu > li.ui-menu-item:hover{
 .vendorProfileTotalDescrption .hrTabs > ul > li > a:focus{
 	text-decoration: none;
 }
+.gallery > .block{
+	width: 150px;
+	margin: 5px;
+}
+.gallery > .block > img{
+	height: 150px;
+}
+.gallery > .block > img + span{
+	font-size: 18px;
+}
+.address,
+.contact{
+	text-align: center;
+}
+.address{
+	border-right: 1px solid #cecece;
+}
+.address p,
+.contact p{
+	display: block;
+	margin-bottom: 5px;
+	font-size: 16px;
+}
+.packages > .packageDetails{
+	background-color: #ececec;
+	border-radius: 5px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+}
+.appendedData .packages{
+	max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+}
+.packages > .packageDetails > div:first-of-type{
+	line-height: 30px;
+}
+.packages .packageName{
+	font-size: 16px;
+}
+.packages .packageContent{
+	font-size: 15px;
+	line-height: 25px;
+}
+.packages .packageCheckbox{
+	width: 100px;
+	height: 30px;
+	background: #cecece;
+	margin-right: 15px;
+}
+.packages .packageCheckbox > label{
+	width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.packages .packageCheckbox > label > p{
+	font-size: 16px;
+	margin-bottom: 0;
+	color: #000;
+}
 
     /*--------- Vendor Profile Page -------*/
 
@@ -363,6 +461,15 @@ ul.ui-menu > li.ui-menu-item:hover{
 	background-image: url("../images/defaultimg.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+.authenticationBlocks > div{
+	display: none;
+}
+.authenticationBlocks > div.login{
+	display: block;
+}
+.registerBtn, .loginBtn, .forgotPasswordBtn{
+	cursor: pointer;
 }
     /*---------- userAuthentication Page -------*/
 
@@ -480,11 +587,28 @@ ul.ui-menu > li.ui-menu-item:hover{
 	display: none;
 	padding: 10px 15px;
 	position: relative;
+	/*height: -webkit-fill-available;*/
+	height: 310px;
+	max-height: 310px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.responsive-tabs-placeholder:empty::before{
+	content: 'No Content Available';
+    color: #cecece;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 30px;
+    transform: translate(-100px, -22px);
 }
 .responsive-tabs-placeholder .appendedData{
 	position: absolute;
 	left: 200px;
 	top: 10px;
+	max-height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 .vrResponsiveTabs > p{
 	max-width: 152px;
@@ -499,8 +623,15 @@ ul.ui-menu > li.ui-menu-item:hover{
 .vrResponsiveTabs > p + span{
 	display: none;
 }
+.vrResponsiveTabs > p.active{
+	background: #2e3192;
+	color: #fff;
+}
 .vrResponsiveTabs > p.active + span{
 	display: none;
+}
+.vrResponsiveTabs + .appendedData{
+	width: calc(100% - 215px);
 }
 .navbar{
 	z-index: 1;}

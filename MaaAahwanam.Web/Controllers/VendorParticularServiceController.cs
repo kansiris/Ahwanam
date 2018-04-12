@@ -25,7 +25,7 @@ namespace MaaAahwanam.Web.Controllers
                 type = "Other";
             //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid)); //GetProductsInfo_Result Productinfo
             var data = vendorMasterService.GetVendor(long.Parse(id)); //GetProductsInfo_Result Productinfo
-            var imageslist = vendorImageService.GetVendorAllImages(long.Parse(id));
+            var imageslist = vendorImageService.GetVendorAllImages(long.Parse(id));//.Select(m => m.ImageName);
             ViewBag.Productinfo = data;
             //ViewBag.geolocation = data.GeoLocation + "&amp;wmode=transparent";
             ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ?  data.GeoLocation.Split(',')[0] : "17.385044";
@@ -43,9 +43,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Other = venorVenueSignUpService.GetVendorOther(long.Parse(id)); //, long.Parse(vid)
             if (ViewBag.Productinfo != null)
             imagescount = (imageslist != null) ? imageslist.Count() : 0;
-            ViewBag.image1 = (imagescount > 0) ? imageslist[0].Replace(" ","") : null;
-            ViewBag.image2 = (imagescount > 1) ? imageslist[1].Replace(" ", "") : null;
-            ViewBag.image3 = (imagescount > 2) ? imageslist[2].Replace(" ", "") : null;
+            ViewBag.image1 = (imagescount > 0) ? imageslist[0].ImageName.Replace(" ","") : null;
+            ViewBag.image2 = (imagescount > 1) ? imageslist[1].ImageName.Replace(" ", "") : null;
+            ViewBag.image3 = (imagescount > 2) ? imageslist[2].ImageName.Replace(" ", "") : null;
             ViewBag.imagecount = imagescount - 3;
             return View();
         }

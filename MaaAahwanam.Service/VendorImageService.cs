@@ -37,7 +37,7 @@ namespace MaaAahwanam.Service
         {
             return vendorImageRepository.UpdateVendorVenue(vendorImage);
         }
-        public List<string> GetVendorAllImages(long id)
+        public List<VendorImage> GetVendorAllImages(long id)
         {
             return vendorImageRepository.GetVendorAllImages(id);
         }

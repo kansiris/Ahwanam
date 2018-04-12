@@ -12,9 +12,9 @@ namespace MaaAahwanam.Service
     {
         VendorProductsRepository vendorProductsRepository = new VendorProductsRepository();
 
-        public List<filtervendors_Result> Getfiltervendors_Result(string type, string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9)
+        public List<filtervendors_Result> Getfiltervendors_Result(string type, string f1, string f2, string f3)
         {
-            return vendorProductsRepository.filtervendors_Result(type, f1, f2, f3, f4, f5, f6, f7, f8, f9);
+            return vendorProductsRepository.filtervendors_Result(type, f1, f2, f3);
         }
 
         public List<searchvendorproducts_Result> Getsearchvendorproducts_Result(string search,string type)
@@ -46,9 +46,17 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.getalldeal();
         }
+        public List<Spgetalleventdeals_Result> getalleventdeal(string eve)
+        {
+            return vendorProductsRepository.getalleventdeal(eve);
+        }
         public List<Spalldeals_Result> getparticulardeal(int id,  string type)
         {
             return vendorProductsRepository.getparticulardeal(id,  type);
+        }
+        public List<speventvdeals_Result> getpartvendordeal(string id, string type)
+        {
+            return vendorProductsRepository.getpartvendordeal(id, type);
         }
     }
 }

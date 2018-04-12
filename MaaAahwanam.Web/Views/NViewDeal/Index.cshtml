@@ -1,7 +1,13 @@
-﻿
+﻿@using MaaAahwanam.Web.Custom
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
+    CustomPrincipal user = null;
+    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        user = (CustomPrincipal)HttpContext.Current.User;
+    }
+    var i = 0;
 }
 
 <div class="container-fluid dealProfile">
@@ -22,9 +28,9 @@
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.singledeal.BusinessName</div>
+                        <div class="w-100 title">@ViewBag.singledeal.businessname</div>
                         <div class="w-100 tags my-15">
-                            @if (@ViewBag.singledeal.CockTails != null && @ViewBag.singledeal.CockTails == "Yes" && @ViewBag.singledeal.CockTails != "")
+                            @if (@ViewBag.singledeal.Cocktail != null && @ViewBag.singledeal.Cocktail == "Yes" && @ViewBag.singledeal.Cocktail != "")
                             {
                                 <div class="d-inline-block p-2 mr-4 greyBg">
                                     <p class="mb-0"><span>CockTails</span></p>
@@ -36,12 +42,18 @@
                                     <p class="mb-0"><span>Rooms</span></p>
                                 </div>
                             }
-                            @if (@ViewBag.singledeal.SeatingCapacity != null && @ViewBag.singledeal.SeatingCapacity != 0)
-                            {
-                                <div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">@ViewBag.singledeal.SeatingCapacity<span>SeatingCapacity</span></p>
-                                </div>
-                            }
+                           @* @if (@ViewBag.singledeal.MinGuest != null && @ViewBag.singledeal.MinGuest != 0)
+    {
+        <div class="d-inline-block p-2 mr-4 greyBg">
+            <p class="mb-0">@ViewBag.singledeal.MinGuest<span>SeatingCapacity</span></p>
+        </div>
+    }
+    @if (@ViewBag.singledeal.MaxGuest != null && @ViewBag.singledeal.MaxGuest != 0)
+    {
+        <div class="d-inline-block p-2 mr-4 greyBg">
+            <p class="mb-0">@ViewBag.singledeal.MaxGuest<span>SeatingCapacity</span></p>
+        </div>
+    }
                             @if (@ViewBag.singledeal.DecorationAllowed != null && @ViewBag.singledeal.DecorationAllowed == "Yes" && @ViewBag.singledeal.DecorationAllowed != "")
                             {
                                 <div class="d-inline-block p-2 mr-4 greyBg">
@@ -281,17 +293,28 @@
                                 <div class="d-inline-block p-2 mr-4 greyBg">
                                     <p class="mb-0"><span>@ViewBag.singledeal.type</span></p>
                                 </div>
-                            }
+                            }*@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption">
+
                     <div class="block px-2 w-100">
                         <h6 class="d-inline-block">
                             <a href="#dealDescrption" class="themeColor">Available Deals</a>
                             <div class="blackBorder"></div>
                         </h6>
-                        <div class="row mx-0 content" id="dealDescrption" style="display: block;">
+                              @if (ViewBag.singledeal1 != null)
+                              {
+                                  foreach (var item in ViewBag.singledeal1)
+                                  {
+                                    <p>  @item.Category - @item.FoodType (
+                                        @item.DealPrice
+                                    )</p>
+                        
+                            <div class="row mx-0 content" id="dealDescrption" style="display: block;">
                             @*<div class="w-100">
                                     <h6>Veg Deal (1400/p)</h6>
                                     <p>
@@ -306,34 +329,45 @@
                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
                                     </p>
                                 </div>*@
-                            @ViewBag.singledeal.DealDescription
-                        </div>
+                            <p>
+                                @item.DealDescription
+                                @*@ViewBag.singledeal.cost
+    @ViewBag.singledeal.DealDescription*@
+                            </p>
+</div>
+          }
+      }
                     </div>
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
-                            <a href="#termsCondition" class="themeColor">Tearms &amp; Conditions</a>
+                            <a href="#termsCondition" class="themeColor">Terms &amp; Conditions</a>
                             <div class="blackBorder"></div>
                         </h6>
                         <div class="row mx-0 content" id="termsCondition">
                             <p>
-                                @ViewBag.singledeal.TermsConditions
+                               @*  @item.TermsConditions*@
+    @ViewBag.singledeal.TermsConditions
                             </p>
                         </div>
                     </div>
+
+                   
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
                             <a href="#location" class="themeColor">Location</a>
                             <div class="blackBorder"></div>
                         </h6>
+
                         <div class="row mx-0 content" id="location">
                             <p>
 
-                                @ViewBag.singledeal.Address,@ViewBag.singledeal.Landmark,@ViewBag.singledeal.City,@ViewBag.singledeal.State
-
+                               @* @ViewBag.singledeal.Address,@ViewBag.singledeal.Landmark,@ViewBag.singledeal.City,@ViewBag.singledeal.State*@
+                                 @ViewBag.singledeal.address,@ViewBag.singledeal.landmark,@ViewBag.singledeal.city,@ViewBag.singledeal.state
                             </p>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -348,46 +382,57 @@
                             </h3>
                         </div>
                         <div class="row mx-0 mt-4 dealProfileForm">
+                         @*    <div class="w-100">@ViewBag.singledeal.dtype
+                               <select class="w-100 p-2 ml-auto">
+        <option id="etype1">Type</option>
+        @foreach (var item in ViewBag.singledeal.dtype)
+        {
+            <option>@ViewBag.singledeal.dtype @(++i)</option>
+        }
+
+    </select>
+
+                            </div>*@
                             <div class="w-100">
-                                <select class="w-100 p-2 ml-auto">
-                                    <option>Event type</option>
-                                    <option>Wedding</option>
-                                    <option>Birthday</option>
-                                    <option>Others</option>
-                                </select>
-                            </div>
+                              
+                            <select class="w-100 p-2 ml-auto">
+                                    <option>@ViewBag.singledeal.VendorType</option>
+                               
+                            </select>
+
+                        </div>
                             <div class="w-100 mt-3 eventDate">
                                 <div class="date-picker">
                                     <div class="input">
-                                        <div class="result nexaBold">Occasion Date: <span></span></div>
+                                        <div class="result nexaBold">Occasion Date: <span id="date"></span></div>
                                         <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
                                     </div>
-                                    <div class="calendar hasDatepicker" id="dp1521626898202"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">March</span>&nbsp;<span class="ui-datepicker-year">2018</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col"><span title="Monday">Mo</span></th><th scope="col"><span title="Tuesday">Tu</span></th><th scope="col"><span title="Wednesday">We</span></th><th scope="col"><span title="Thursday">Th</span></th><th scope="col"><span title="Friday">Fr</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">1</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">2</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">3</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">4</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">8</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">9</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">10</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">11</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">15</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">16</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">17</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">18</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">20</a></td><td class=" ui-datepicker-days-cell-over ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">23</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">24</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">25</a></td></tr><tr><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">30</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="2" data-year="2018"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>
+                                    <div class="calendar"></div>
                                 </div>
                             </div>
                             <div class="w-100 mt-3">
-                                <select class="w-100 p-2 ml-auto">
-                                    <option>Prices</option>
-                                    <option>Non veg (1400/p)</option>
-                                    <option>Non veg (1100/p)</option>
+                                <select class="w-100 p-2 ml-auto pricePerPlate">
+                                    <option id="price">Prices</option>
+                                    <option value="@ViewBag.singledeal.cost" >Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>
+                                   @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
                                 </select>
                             </div>
                             <div class="w-100 mt-3 noOfPeoples">
                                 <div class="form-group">
-                                    <input type="text" class="form-control nexaBold" placeholder="Members">
+                                    <input type="number" class="form-control nexaBold" id="nop" placeholder="Members" />
                                 </div>
                             </div>
                             <div class="w-100 mt-3 slotTime">
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox">
+                                        <input type="checkbox"  id="ch1" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Morning</p>
                                     </label>
                                 </div>
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox">
+                                        <input type="checkbox" id="ch2" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Evening</p>
                                     </label>
@@ -395,14 +440,24 @@
                             </div>
                             <div class="w-100 mt-3 text-center totalAmount">
                                 <div class="themeColor">
-                                    <p class="mb-0"><span>28,000</span>INR</p>
+                                    <p class="mb-0"><span id="tp">000</span>INR</p>
                                 </div>
                             </div>
                         </div>
                         <div class="row mx-0">
                             <div class="w-100 d-flex my-2">
-                                <span class="themeBgColorPrimary btnSecondary text-white text-center w-100">Book Now</span>
-                            </div>
+
+                                @if (user != null)
+                                {
+                                                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow">Book Now</span>
+                                }
+                                else
+                                {
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow1">
+                                      Book Now</span>
+                                    
+                                }
+</div>
                             <div class="w-100 d-flex my-2">
                                 <span class="themeBgColorPrimary btnSecondary text-white text-center w-100">
                                     Need any help ?
@@ -521,38 +576,198 @@
 
 @section scripts{
     <script>
-            $(document).ready(function() {
-              var owl = $('.owl-carousel');
-              owl.owlCarousel({
+        $(document).ready(function() {
+            var owl = $('.owl-carousel');
+            owl.owlCarousel({
                 margin: 10,
                 nav: true,
                 loop: true,
                 responsive: {
-                  0: {
-                    items: 1
-                  },
-                  600: {
-                    items: 3
-                  },
-                  1000: {
-                    items: 5
-                  }
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
+                    }
                 }
-              })
             })
 
-      //  <!------------- dealProfile Accoding ----------->
-	 $(".dealProfileTotalDescrption > .block:first-child .content").css("display","block");
-        var link = $(".dealProfileTotalDescrption > .block > h6 > a");
+            $("#etype1").text(window.localStorage.getItem("etype1"));
+            // window.localStorage.getItem("id")
+            $("#date").text(window.localStorage.getItem("date"));
+            $("#price").text(window.localStorage.getItem("PRICE"));
+            //$("#nop").text(window.localStorage.getItem("nop"));
+            document.getElementById("nop").value = localStorage.getItem("nop");
+            var inputs = JSON.parse(localStorage.getItem('inputs'));
+            // For each inputs...
+            inputs.forEach(function(input)
+            {
+                // Set the 'checked' value
+                document.getElementById(input.id).checked = input.checked;
+                // $("#tp").text(window.localStorage.getItem("tp"));
+       
+              
+            })
 
-        link.on('click', function(event){
-            event.preventDefault();
-            var anchorVal = $(this).attr("href");
-            $(anchorVal).slideDown('fast');
-            $(".dealProfileTotalDescrption > .block .content").not(anchorVal).slideUp('fast');
-        })
+            //  <!------------- dealProfile Accoding ----------->
+            $(".dealProfileTotalDescrption > .block:first-child .content").css("display","block");
+            var link = $(".dealProfileTotalDescrption > .block > h6 > a");
+
+            link.on('click', function(event){
+                event.preventDefault();
+                var anchorVal = $(this).attr("href");
+                $(anchorVal).slideDown('fast');
+                $(".dealProfileTotalDescrption > .block .content").not(anchorVal).slideUp('fast');
+            })})
      // <!------------- dealProfile Accoding ----------->
     </script>
+
+<script type="text/javascript">
+  function checkedBox(){
+        var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
+       total = checkLen * totalVal;
+       $(".totalAmount span").empty().append(total);
+  }
+
+  $(".dealProfileForm select.pricePerPlate").on('change', function(){
+    var val = $(this).find('option:selected').val(), el= $(this), placeholder = $("<div class='selectAppended'></div>").insertAfter(el);
+    $('.selectAppended:not(:eq(0))').remove();
+    $(placeholder).append(val).css('display','none');
+    $(".slotTime input[type='checkbox']").prop("checked",false);
+    $(".totalAmount span").empty();
+    $(".noOfPeoples input[type='number']").val('');
+  });
+
+  $(".noOfPeoples input[type='number']").on('change', function(){
+    var costPerplate = parseInt($('.selectAppended').text()), el = $(this), members = parseInt($(this).val());
+    total = costPerplate * members, placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+    $(".totalVal:not(:eq(0))").remove();
+    $(placeholder).append(total).css('display','none');
+    $(".slotTime input[type='checkbox']").prop("checked",false);
+    $(".totalAmount span").empty();
+  });
+
+  $(".slotTime input[type='checkbox']").each(function(){
+    $(this).on('change', function(){
+      if($(this).is(':checked')){
+        checkedBox();
+      }else{
+        checkedBox();
+      }
+    });
+  });
+
+  $(".bookNow").click(function(){
+    if($("select.eventType").find("option:selected").val() == ''){
+        alert("Please select Event type");
+    } else if ($(".date-picker .result span").text() == '')
+    {
+      alert("Please select event date");
+    } else if ($("select.pricePerPlate").find("option:selected").val() == '')
+    {
+      alert("Please select Menu type");
+    } else if ($(".noOfPeoples input[type='number']").val() == '')
+    {
+      alert("Please Mention No Of Guests");
+    } else if ($(".slotTime input[type='checkbox']").is(':checked'))
+    {
+        var etype1 = $("select.eventType").find("option:selected").val();
+        var type = '@Request.QueryString["type"]';
+        var id = '@Request.QueryString["id"]';
+        var date = $(".date-picker .result span").text();
+        var price = $("select.pricePerPlate").find("option:selected").val();
+        var nop = $(".noOfPeoples input[type='number']").val();
+        var totalprice = price * nop;
+        url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price + '&&guest=' + nop;
+
+        $.ajax({
+            url: url1,
+            success: function (data) {
+                if (data == "Success") {
+                    alert("Sucessfully Added to cart")
+                    localStorage.removeItem("etype1");
+                    localStorage.removeItem("date");
+                //    localstorage.removeItem("PRICE");
+                    localStorage.removeItem("nop");
+                    localStorage.removeItem("tp");
+                }
+                else if (data == "failed") {
+                    alert("login to the cart");
+                }
+                location.href = '/NUserProfile/Index';
+            }
+        });
+        //    alert("Continue");
+
+
+    }else{
+      alert("Please select time slot");
+    }
+
+  });
+
+    $(".bookNow1").click(function () {
+        if ($("select.eventType").find("option:selected").val() == '') {
+            alert("Please select Event type");
+        } else if ($(".date-picker .result span").text() == '') {
+            alert("Please select event date");
+        } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
+            alert("Please select Menu type");
+        } else if ($(".noOfPeoples input[type='number']").val() == '')
+        {
+            alert("Please Mention No Of Guests");
+        } else if ($(".slotTime input[type='checkbox']").is(':checked'))
+        {
+            var etype1 = $("select.eventType").find("option:selected").val();
+
+            var date = $(".date-picker .result span").text();
+            var price = $("select.pricePerPlate").find("option:selected").val();
+            var nop = $(".noOfPeoples input[type='number']").val();
+            var totalprice = price * nop;
+            window.localStorage.setItem("etype1", etype1);
+            window.localStorage.setItem("date", date);
+            window.localStorage.setItem("PRICE", price);
+            window.localStorage.setItem("nop", nop);
+            window.localStorage.setItem("tp", totalprice);
+            // Get all checkbox inputs
+            var inputs = document.querySelectorAll('input[type="checkbox"]');
+            var arrData = [];
+            // For each inputs...
+            inputs.forEach(function (input) {
+                // ... save what you want (but 'ID' and 'checked' values are necessary)
+                arrData.push({ id: input.id, checked: input.checked });
+            });
+            // Save in localStorage
+            localStorage.setItem('inputs', JSON.stringify(arrData));
+
+             location.href = '/NUserRegistration/Index';
+            //alert(nop);
+            //alert(totalprice);
+            //url1 = '/NViewDeal/booknow?type=' + type + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price + '&&guest=' + nop;
+            //$.ajax({
+            //    url: url1,
+            //    success: function (data) {
+            //        if (data == "Success") {
+            //            alert("Sucessfully Added to cart")
+            //        }
+            //        else if (data == "failed") {
+            //            alert("login to the cart");
+            //        }
+            //        location.href = '/NUserRegistration/Index';
+            //    }
+            //});
+            ////    alert("Continue");
+        //} else {
+        //    alert("Please select time slot");
+       }
+    });
+
+
+
+</script>
 }
 
                        

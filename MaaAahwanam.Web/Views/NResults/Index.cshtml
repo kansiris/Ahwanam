@@ -6,10 +6,11 @@
 
 <div class="container-fluid">
     <div class="row innerPagesBg py-2">
-        <input type="hidden" id="L1" name="L1" value="@ViewBag.count"/>
-        <input type="hidden" id="L2" name="L2" value="@ViewBag.count"/>
-        <input type="hidden" id="L3" name="L3" value="@ViewBag.count"/>
-        <input type="hidden" id="L4" name="L4" value="@ViewBag.count"/>
+        <input type="hidden" id="L1" name="L1" value="@ViewBag.count" />
+        <input type="hidden" id="L2" name="L2" value="@ViewBag.count" />
+        <input type="hidden" id="L3" name="L3" value="@ViewBag.count" />
+        <input type="hidden" id="L4" name="L4" value="@ViewBag.count" />
+        <input type="hidden" id="L5" name="L5" value="@ViewBag.count" />
         <div class="col-12 col-sm-12 col-md-9 mb-2 mb-sm-0 mb-md-0">
             @{Html.RenderAction("BlockOnePartial", "NResults"); } @*Venue Records partial View*@
 
@@ -24,6 +25,11 @@
         </div>
     </div>
 </div>
+
+@if (new string[] { "Mehendi", "Pandit" }.Contains(Request.QueryString["type"]))
+{
+    { Html.RenderAction("BlockFivePartial", "NResults"); } @*Mehendi/Pandit Records partial View*@
+}
 <div class="container">
     <div class="margin-top-50">
         <div class="row mx-0">
@@ -125,8 +131,13 @@
 </div>
 
 @section scripts{
+<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
+
+
     <script>
         $(document).ready(function () {
+            $.cookie("qurl", document.URL);
+           // alert($.cookie("qurl"));
             var owl = $('.owl-carousel');
             owl.owlCarousel({
                 margin: 10,
@@ -148,10 +159,11 @@
     </script>
 
     <script>
-        var parameters = 'type=' + location.search.split('type=')[1] + '&&f1=' + location.search.split('f1=')[1] + '&&f2=' + location.search.split('f2=')[1] + '&&f3=' + location.search.split('f3=')[1] + '&&f4=' + location.search.split('f4=')[1] + '&&f5=' + location.search.split('f5=')[1] + '&&f6=' + location.search.split('f6=')[1] + '&&f7=' + location.search.split('f7=')[1] + '&&f8=' + location.search.split('f8=')[1] + '&&f9=' + location.search.split('f9=')[1] + '';
+        var parameters = 'type=@Request.QueryString["type"]&&loc=@Request.QueryString["loc"]&&budget=@Request.QueryString["budget"]&&stype=@Request.QueryString["stype"].TrimEnd(',').Replace(' ','-')&&date=@Request.QueryString["date"]&&count=@Request.QueryString["count"]';
         function PartialOne() {
             var lastrecord = parseInt($('#L1').val()) + parseInt(6);
-            var url = '/NResults/BlockOnePartial?'+parameters+'&&L1=' + lastrecord;
+            var url = '/NResults/BlockOnePartial?' + parameters + '&&L1=' + lastrecord;
+            //alert(url);
             $("#BlockOnePartial").empty().load(url);
             $('#L1').val(lastrecord);
         }
@@ -175,6 +187,13 @@
             var url = '/NResults/BlockFourPartial?' + parameters + '&&L4=' + lastrecord;
             $("#BlockFourPartial").empty().load(url);
             $('#L4').val(lastrecord);
+        }
+
+        function PartialFive() {
+            var lastrecord = parseInt($('#L5').val()) + parseInt(6);
+            var url = '/NResults/BlockFivePartial?' + parameters + '&&L5=' + lastrecord;
+            $("#BlockFivePartial").empty().load(url);
+            $('#L5').val(lastrecord);
         }
     </script>
 }

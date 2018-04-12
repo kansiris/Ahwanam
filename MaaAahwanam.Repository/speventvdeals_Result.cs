@@ -11,7 +11,7 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class filtervendors_Result
+    public partial class speventvdeals_Result
     {
         public long id { get; set; }
         public string businessname { get; set; }
@@ -46,5 +46,20 @@ namespace MaaAahwanam.Repository
         public string DestinationPhotography { get; set; }
         public int tier { get; set; }
         public int priority { get; set; }
+        public long DealID { get; set; }
+        public long VendorId { get; set; }
+        public long VendorSubId { get; set; }
+        public string VendorType { get; set; }
+        public string VendorSubType { get; set; }
+        public string Category { get; set; }
+        public Nullable<System.DateTime> DealStartDate { get; set; }
+        public Nullable<System.DateTime> DealEndDate { get; set; }
+        public decimal DealPrice { get; set; }
+        public decimal OriginalPrice { get; set; }
+        public string DealDescription { get; set; }
+        public string FoodType { get; set; }
+        public string MinMemberCount { get; set; }
+        public string MaxMemberCount { get; set; }
+        public string TermsConditions { get; set; }
     }
 }
