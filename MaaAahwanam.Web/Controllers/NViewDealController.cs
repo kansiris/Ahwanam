@@ -80,7 +80,7 @@ namespace MaaAahwanam.Web.Controllers
                 //Saving Record in order Table
                 OrderService orderService = new OrderService();
                 Order order = new Order();
-                order.TotalPrice = Convert.ToDecimal(price);
+                order.TotalPrice = Convert.ToDecimal(totalprice);
                 order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
                 order.UpdatedBy = (Int64)user.UserId;
                 order.OrderedBy = (Int64)user.UserId;

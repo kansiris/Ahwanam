@@ -350,14 +350,9 @@
                                 <div class="row mx-0 packages">
                                     <div class="col-12 colmd-12 packageDetails">
                                         <div class="w-100 float-left">
-                                            <div class="float-left"><p class="mb-0 packageName">@item.Category - @item.FoodType</p></div>
-                                            <div class="float-right packageCheckbox">
-                                                <label>
-                                                    <input type="radio" name="radioName">
-
-                                                    @*<input type="radiobutton" name="">*@
-                                                    <p>Select</p>
-                                                </label>
+                                            <div class="float-left"><p class="mb-0 packageName">@item.Category ( @item.FoodType )</p></div>
+                                            <div class="float-right">
+                                                <p class="productMaxPrice mb-0 greyColor d-block"> ( <span>@item.OriginalPrice</span> <small>INR</small> ) </p>
                                             </div>
                                             <div class="float-right">
                                                 <p class="mb-0 mr-2">INR <span>@item.DealPrice</span></p>
@@ -474,14 +469,14 @@
                             <div class="w-100 mt-3 slotTime">
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox" id="ch1" />
+                                        <input type="checkbox" id="ch1" value="Morning" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Morning</p>
                                     </label>
                                 </div>
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox" id="ch2" />
+                                        <input type="checkbox" id="ch2" value="Evening" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Evening</p>
                                     </label>
@@ -648,16 +643,12 @@
             // Function releated to Package select
 
 
-            $(".packageCheckbox label").click(function () {
-                if ($(this).find("input[name=radioName]:checked")) {
-                    $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
-                } else {
-                    $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
-                }
-            });
+         
 
 
-
+            //$('input[type=checkbox]').on('change', function () {
+            //    alert($(this).val());
+            //});
 
 
 
@@ -694,10 +685,13 @@
 
     <script type="text/javascript">
         function checkedBox() {
+          
             var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
+                
            total = checkLen * totalVal;
             $(".totalAmount span").empty().append(total);
         }
+      
 
         $(".dealProfileForm select.pricePerPlate").on('change', function () {
             var val = $(this).find('option:selected').val(), el = $(this), placeholder = $("<div class='selectAppended'></div>").insertAfter(el);
@@ -709,8 +703,13 @@
         });
 
         $(".noOfPeoples input[type='number']").on('change', function () {
-            var costPerplate = parseInt($('.selectAppended').text()), el = $(this), members = parseInt($(this).val());
-            total = costPerplate * members, placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+            // var costPerplate = parseInt($('.selectAppended').text()), 
+            el = $(this),
+            members = parseInt($(this).val());
+            var price = $("select.pricePerPlate").find("option:selected").text();
+            var price1 = price.split('~')[0];
+            total = price1 * members,
+            placeholder = $("<div class='totalVal'></div>").insertAfter(el);
             $(".totalVal:not(:eq(0))").remove();
             $(placeholder).append(total).css('display', 'none');
             $(".slotTime input[type='checkbox']").prop("checked", false);
@@ -737,7 +736,7 @@
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
                 alert("Please Mention No Of Guests");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                //   var etype1 = $("select.eventType").find("option:selected").text();
+                var timeslot = ($('input[type=checkbox]').val());
                 var etype1 = $('#selectbox1').val();
                 alert(etype1);
                 var type = '@Request.QueryString["type"]';
@@ -748,14 +747,10 @@
                 var price1 = price.split('~')[0];
                 var nop = $(".noOfPeoples input[type='number']").val();
                 var totalprice = price1 * nop;
-                $(".slotTime input[type='checkbox']").each(function () {
-                    if ($(this).find("input[type='checkbox']").is(':checked')) {
-                        var checkText = $(this).find('p').text();
-                    }
-                });
+                
 
 
-               var timeslot = '';
+              
               //  var checkText = $(this).find('p').text();
                // alert(checkText);
                 url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid;
