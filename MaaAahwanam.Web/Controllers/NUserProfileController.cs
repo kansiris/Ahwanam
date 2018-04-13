@@ -23,8 +23,8 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index()
         {
 
-            if(System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-{
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
                 var user1 = (CustomPrincipal)System.Web.HttpContext.Current.User;
 
                 if (user1.UserType == "Vendor")
@@ -44,8 +44,8 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.phoneno = userdata.UserPhone;
                     var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
                     ViewBag.emailid = userdata1.UserName;
-                   var  orders = ViewBag.orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                     ViewBag.order = orders;
+                    var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
+                    ViewBag.order = orders;
                     // OrderByDescending(m => m.OrderId).Take(10);
 
                     //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
