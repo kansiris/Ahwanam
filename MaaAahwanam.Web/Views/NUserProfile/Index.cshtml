@@ -47,15 +47,15 @@
                         </div>
                         <div class="row mx-0 mt-2 tableData">
 
-                            @if (ViewBag.Cartlist.Count != 0)
+                            @if (ViewBag.order != null)
                             {
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
 
-                                            <th>Event/Services</th>
-                                            <th>Vendor details</th>
-                                            <th>Event start & End Date</th>
+                                            <th>OrderID</th>
+                                            <th>Vendor Details</th>
+                                            <th>Order Date</th>
                                             <th>Status</th>
                                             <th>Price</th>
 
@@ -64,12 +64,12 @@
                                     <tbody>
                                         @{
                                             int j = 0;
-                                            foreach (var item in ViewBag.Cartlist)
+                                            foreach (var item in ViewBag.orders)
                                             {
                                                 j++;
                                                 <tr>
 
-                                                    <td>@item.Description</td>
+                                                    <td>@item.OrderId</td>
                                                     <td>
                                                         <h4>@item.BusinessName</h4>
                                                         <p>
@@ -81,8 +81,8 @@
                                                     <td>
                                                         <div class="event-date-time">
                                                             <div class="event-dates">
-
-                                                                @if (item.eventstartdate != null && item.eventenddate != null)
+                                                                @item.OrderDate
+                                                                @*@if (item.eventstartdate != null && item.eventenddate != null)
                                                                 {
                                                                     <p>
                                                                         Event Start Date : @item.eventstartdate.ToString("dd MMM yyyy")<br /> Event End Date&nbsp;&nbsp;:&nbsp;@item.eventenddate.ToString("dd MMM yyyy")
@@ -90,21 +90,21 @@
                                                                 @if (item.eventstartdate == null && item.eventenddate == null)
                                                                 {
                                                                     <p> Event Start Date : Not Available<br /> Event End Date&nbsp;&nbsp;:&nbsp;Not Available </p>
-                                                                }
+                                                                }*@
                                                             </div>
                                                     </td>
                                                     <td>@item.Status</td>
                                                     <td>
                                                         <div class="item-price">
-                                                            @if (item.Isdeal == false)
-                                                            {
+                                                            @*@if (item.Isdeal == false)
+                                                            {*@
                                                                 <p>Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
-                                                            }
+                                                            @*}
                                                             else
                                                             {
                                                                 <p>Original Price:Rs.@item.ServicePrice</p>
                                                                 <p>Deal Price:Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
-                                                            }
+                                                            }*@
                                                         </div>
 
                                                     </td>
