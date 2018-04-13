@@ -11,19 +11,22 @@ namespace MaaAahwanam.Service
 {
    public class OrderService
     {
+        OrderRepository orderRepository = new OrderRepository();
+
         public List<sp_ordersdisplay_Result> OrderList()
         {
-            OrderRepository orderRepository = new OrderRepository();
             return orderRepository.OrderList();
+        }
+        public List<sp_userorddisplay_Result> userOrderList()
+        {
+            return orderRepository.userOrderList();
         }
         public List<MaaAahwanam_Orders_OrderDetails_Result> OrderDetailServivce(long id)
         {
-            OrderRepository orderRepository = new OrderRepository();
             return orderRepository.GetOrderDetailsList(id);
         }
         public Order SaveOrder(Order order)
         {
-            OrderRepository orderRepository = new OrderRepository();
             order = orderRepository.PostOrderDetails(order);
             return order;
         }

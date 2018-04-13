@@ -417,6 +417,7 @@
                                 <div class="blackBorder"></div>
                             </h3>
                         </div>
+                        <input type="hidden" id="vid" name="vid" value="@ViewBag.singledeal.VendorSubId">
                         <div class="row mx-0 mt-4 dealProfileForm">
                             @*    <div class="w-100">@ViewBag.singledeal.dtype
                                                            <select class="w-100 p-2 ml-auto">
@@ -740,15 +741,24 @@
                 var etype1 = $('#selectbox1').val();
                 alert(etype1);
                 var type = '@Request.QueryString["type"]';
-                var vid = '@Request.QueryString["vid"]';
+                var vid = $('input#vid').val();
                 var id = '@Request.QueryString["id"]';
                 var date = $(".date-picker .result span").text();
                 var price = $("select.pricePerPlate").find("option:selected").text();
                 var price1 = price.split('~')[0];
                 var nop = $(".noOfPeoples input[type='number']").val();
                 var totalprice = price1 * nop;
-                var timeslot = document.querySelectorAll('input[type="checkbox"]');
-                url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot='+timeslot;
+                $(".slotTime input[type='checkbox']").each(function () {
+                    if ($(this).find("input[type='checkbox']").is(':checked')) {
+                        var checkText = $(this).find('p').text();
+                    }
+                });
+
+
+               var timeslot = '';
+              //  var checkText = $(this).find('p').text();
+               // alert(checkText);
+                url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid;
 
                 $.ajax({
                     url: url1,

@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
 
         // GET: NViewDeal
-        public ActionResult Index(string id, string type, string eve)
+        public ActionResult Index(string id, string type, string eve,string vid)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 //  var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                  var vendor = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
+                //  var vendor = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
                 //  string updateddate = DateTime.UtcNow.ToShortDateString();
                 //  CartItem cartItem = new CartItem();
                 //  cartItem.VendorId = vendor.Id;
@@ -93,7 +93,7 @@ namespace MaaAahwanam.Web.Controllers
                 Payment_Orders payment_Orders = new Payment_Orders();
                 payment_Orders.cardnumber = "4222222222222";
                 payment_Orders.CVV = "214";
-                payment_Orders.paidamount = decimal.Parse(price);
+                payment_Orders.paidamount = decimal.Parse(totalprice);
                 //payment_Orders.PaymentID = orderRequest.PaymentId;
                 payment_Orders.Paiddate = Convert.ToDateTime(updateddate);
                 payment_Orders.OrderID = order.OrderId;
@@ -107,8 +107,8 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.PaymentId = payment_Orders.PaymentID;
                 orderDetail.ServiceType = type;
                 orderDetail.ServicePrice = decimal.Parse(price);
-               orderDetail.attribute = timeslot;
-                orderDetail.TotalPrice = decimal.Parse(price);
+                orderDetail.attribute = timeslot;
+                orderDetail.TotalPrice = decimal.Parse(totalprice);
                 orderDetail.PerunitPrice = decimal.Parse(price);
                 orderDetail.Quantity = int.Parse(guest);
                 orderDetail.OrderId = order.OrderId;
@@ -116,8 +116,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.Status = "Pending";
                 orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                 orderDetail.UpdatedBy = user.UserId;
-                //orderDetail.subid = long.Parse(vid);
-                //orderDetail.subid = vendor.subid;
+                orderDetail.subid = long.Parse(vid);
                 orderDetail.BookedDate = Convert.ToDateTime(date);
                 orderDetail.EventType = etype1;
                 orderdetailsServices.SaveOrderDetail(orderDetail);

@@ -17,8 +17,8 @@ namespace MaaAahwanam.Web.Controllers
     {
 
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        CartService cartService = new CartService();
-
+        //CartService cartService = new CartService();
+        OrderService orderService = new OrderService();
         // GET: NUserProfile
         public ActionResult Index()
         {
@@ -44,11 +44,14 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.phoneno = userdata.UserPhone;
                     var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
                     ViewBag.emailid = userdata1.UserName;
+                   var  orders = ViewBag.orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
+                     ViewBag.order = orders;
+                    // OrderByDescending(m => m.OrderId).Take(10);
 
-                    List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
-                    decimal total = cartlist.Sum(s => s.TotalPrice);
-                    ViewBag.Cartlist = cartlist;
-                    ViewBag.Total = total;
+                    //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
+                    //decimal total = cartlist.Sum(s => s.TotalPrice);
+                    //ViewBag.Cartlist = cartlist;
+                    // ViewBag.Total = total;
 
                     return View();
 

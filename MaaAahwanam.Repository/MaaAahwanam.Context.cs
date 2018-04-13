@@ -591,5 +591,10 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter);
         }
+    
+        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
+        }
     }
 }
