@@ -33,45 +33,45 @@
                             {
                                 if (ViewBag.particularVenue.HallType != null && ViewBag.particularVenue.HallType != "")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>@ViewBag.particularVenue.HallType</span></p>
-                                    </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>@ViewBag.particularVenue.HallType</span></p>
+                            </div>
                                 }
                                 if (ViewBag.particularVenue.Wifi != null && ViewBag.particularVenue.Wifi == "Yes" && ViewBag.particularVenue.Wifi != "")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>Wifi</span></p>
-                                    </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>Wifi</span></p>
+                            </div>
                                 }
                                 if (ViewBag.particularVenue.Rooms != null && ViewBag.particularVenue.Rooms == "Yes" && ViewBag.particularVenue.Rooms != "")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>Rooms</span></p>
-                                    </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>Rooms</span></p>
+                            </div>
                                 }
                                 if (ViewBag.particularVenue.Food != null && ViewBag.particularVenue.Food != "")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>@ViewBag.particularVenue.Food</span></p>
-                                    </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>@ViewBag.particularVenue.Food</span></p>
+                            </div>
                                 }
                             }
                             @if (Request.QueryString["type"] == "Catering")
                             {
                                 if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>LiveCookingStation : @ViewBag.particularCatering.LiveCookingStation</span></p>
-                                    </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>LiveCookingStation : @ViewBag.particularCatering.LiveCookingStation</span></p>
+                            </div>
                                 }
                             }
                             @if (Request.QueryString["type"] == "Photography")
                             {
                                 if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot</span></p>
-                                    </div>
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot</span></p>
+                            </div>
                                 }
                             }
                             @*<div class="d-inline-block p-2 mr-4 greyBg">
@@ -96,7 +96,43 @@
                                 <p>Description</p>
                                 <span>@ViewBag.Productinfo.Description</span>
                                 <p>Amenities</p>
-                                <span>Amenities Content</span>
+                                <span>
+                                    @if (Request.QueryString["type"] == "Venues" || Request.QueryString["type"] == "Hotel" || Request.QueryString["type"] == "Resort" || Request.QueryString["type"] == "Convention Hall")
+                                    {
+                                        <p class="packageContent">
+                                            Food : @ViewBag.particularVenue.Food <br/> CockTails: @ViewBag.particularVenue.CockTails <br /> Rooms : @ViewBag.particularVenue.Rooms <br /> DecorationAllowed : @ViewBag.particularVenue.DecorationAllowed <br /> HallType : @ViewBag.particularVenue.HallType <br /> Wifi : @ViewBag.particularVenue.Wifi <br /> LiveCookingStation : @ViewBag.particularVenue.LiveCookingStation
+                                        </p>
+                                    }
+
+                                    @if (Request.QueryString["type"] == "Catering")
+                                    {
+                                        <p class="packageContent">
+                                            Live Cooking Station Availability : @ViewBag.particularCatering.LiveCookingStation <br /> Transport Included : @ViewBag.particularCatering.TransportIncluded
+                                        </p>
+                                    }
+
+                                    @if (Request.QueryString["type"] == "Decorator")
+                                    {
+                                        <p class="packageContent">
+                                            Mandap Design : @ViewBag.particularDecorator.Mandaps <br /> Mehendi : @ViewBag.particularDecorator.Mehendi <br /> Sangeet : @ViewBag.particularDecorator.Sangeet <br /> Lighting : @ViewBag.particularDecorator.Lighting
+                                        </p>
+                                    }
+
+                                    @if (Request.QueryString["type"] == "Photography")
+                                    {
+                                        <p class="packageContent">
+                                            Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot 
+                                        </p>
+                                    }
+
+                                    @if (Request.QueryString["type"] == "Mehendi" || Request.QueryString["type"] == "Pandit")
+                                    {
+                                        <p class="packageContent">
+                                            Prior Bookings Days : @ViewBag.particularOther.PriorBookingsDays
+                                        </p>
+                                    }
+
+                                </span>
                                 <p>Hall Details</p>
                                 <span>Hall Details Content</span>
                                 <p>Terms & Conditions</p>
@@ -163,6 +199,10 @@
                                                 </div>
                                             </div>
                                         }
+                                    }
+                                    @if (ViewBag.availabledeals.Count == 0)
+                                    {
+                                        <p>No Deals Available</p>
                                     }
                                 </span>
                             </div>
@@ -236,122 +276,122 @@
                         <dd>
                             @foreach (var item in ViewBag.Venue)
                             {
-                                //if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                //{
-                            <div class="row packages">
-                                <div class="col-12 colmd-12 packageDetails">
-                                    <div class="w-100 float-left">
-                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
-                                        <div class="float-right">
-                                            <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                {
+                                <div class="row packages">
+                                    <div class="col-12 colmd-12 packageDetails">
+                                        <div class="w-100 float-left">
+                                            <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
+                                            <div class="float-right">
+                                                <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="w-100">
+                                            <p class="packageContent">
+                                                Food : @item.Food ; CockTails: @item.CockTails ; Rooms : @item.Rooms ; DecorationAllowed : @item.DecorationAllowed ; HallType : @item.HallType ; Wifi : @item.Wifi ; LiveCookingStation : @item.LiveCookingStation
+                                            </p>
                                         </div>
                                     </div>
-                                    <br />
-                                    <hr />
-                                    <div class="w-100">
-                                        <p class="packageContent">
-                                            Food : @item.Food ; CockTails: @item.CockTails ; Rooms : @item.Rooms ; DecorationAllowed : @item.DecorationAllowed ; HallType : @item.HallType ; Wifi : @item.Wifi ; LiveCookingStation : @item.LiveCookingStation
-                                        </p>
-                                    </div>
                                 </div>
-                            </div>
-                                //}
+                                }
                             }
 
                             @foreach (var item in ViewBag.Catering)
                             {
-                                //if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                //{
-                            <div class="row packages">
-                                <div class="col-12 colmd-12 packageDetails">
-                                    <div class="w-100 float-left">
-                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
-                                        <div class="float-right">
-                                            <p class="mb-0 mr-2">INR <span>@item.Veg</span></p>
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                {
+                                <div class="row packages">
+                                    <div class="col-12 colmd-12 packageDetails">
+                                        <div class="w-100 float-left">
+                                            <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
+                                            <div class="float-right">
+                                                <p class="mb-0 mr-2">INR <span>@item.Veg</span></p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="w-100">
+                                            <p class="packageContent">
+                                                Live Cooking Station Availability : @item.LiveCookingStation ; Transport Included : @item.TransportIncluded
+                                            </p>
                                         </div>
                                     </div>
-                                    <br />
-                                    <hr />
-                                    <div class="w-100">
-                                        <p class="packageContent">
-                                            Live Cooking Station Availability : @item.LiveCookingStation ; Transport Included : @item.TransportIncluded
-                                        </p>
-                                    </div>
                                 </div>
-                            </div>
-                                //}
+                                }
                             }
 
                             @foreach (var item in ViewBag.Decorator)
                             {
-                                //if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                //{
-                            <div class="row packages">
-                                <div class="col-12 colmd-12 packageDetails">
-                                    <div class="w-100 float-left">
-                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
-                                        <div class="float-right">
-                                            <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                {
+                                <div class="row packages">
+                                    <div class="col-12 colmd-12 packageDetails">
+                                        <div class="w-100 float-left">
+                                            <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
+                                            <div class="float-right">
+                                                <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="w-100">
+                                            <p class="packageContent">
+                                                Mandap Design : @item.Mandaps ; Mehendi : @item.Mehendi ; Sangeet : @item.Sangeet ; Lighting : @item.Lighting
+                                            </p>
                                         </div>
                                     </div>
-                                    <br />
-                                    <hr />
-                                    <div class="w-100">
-                                        <p class="packageContent">
-                                            Mandap Design : @item.Mandaps ; Mehendi : @item.Mehendi ; Sangeet : @item.Sangeet ; Lighting : @item.Lighting
-                                        </p>
-                                    </div>
                                 </div>
-                            </div>
-                                //}
+                                }
                             }
 
                             @foreach (var item in ViewBag.Photography)
                             {
-                                //if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                //{
-                            <div class="row packages">
-                                <div class="col-12 colmd-12 packageDetails">
-                                    <div class="w-100 float-left">
-                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
-                                        <div class="float-right">
-                                            <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                {
+                                <div class="row packages">
+                                    <div class="col-12 colmd-12 packageDetails">
+                                        <div class="w-100 float-left">
+                                            <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
+                                            <div class="float-right">
+                                                <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="w-100">
+                                            <p class="packageContent">
+                                                Pre-Wedding Shoot : @item.PreWeddingShoot ;
+                                            </p>
                                         </div>
                                     </div>
-                                    <br />
-                                    <hr />
-                                    <div class="w-100">
-                                        <p class="packageContent">
-                                            Pre-Wedding Shoot : @item.PreWeddingShoot ;
-                                        </p>
-                                    </div>
                                 </div>
-                            </div>
-                                //}
+                                }
                             }
 
                             @foreach (var item in ViewBag.Other)
                             {
-                                //if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                //{
-                            <div class="row packages">
-                                <div class="col-12 colmd-12 packageDetails">
-                                    <div class="w-100 float-left">
-                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
-                                        <div class="float-right">
-                                            <p class="mb-0 mr-2">INR <span>@item.ItemCost</span></p>
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                {
+                                <div class="row packages">
+                                    <div class="col-12 colmd-12 packageDetails">
+                                        <div class="w-100 float-left">
+                                            <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
+                                            <div class="float-right">
+                                                <p class="mb-0 mr-2">INR <span>@item.ItemCost</span></p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="w-100">
+                                            <p class="packageContent">
+                                                Prior Bookings Days : @item.PriorBookingsDays
+                                            </p>
                                         </div>
                                     </div>
-                                    <br />
-                                    <hr />
-                                    <div class="w-100">
-                                        <p class="packageContent">
-                                            Prior Bookings Days : @item.PriorBookingsDays
-                                        </p>
-                                    </div>
                                 </div>
-                            </div>
-                                //}
+                                }
                             }
 
                         </dd>
@@ -421,11 +461,11 @@
                                 @*<span class="themeBgColorPrimary btnSecondary text-white text-center w-100">Book Now</span>*@
                                 @if (user != null)
                                 {
-                                <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow">Book Now</span>
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow">Book Now</span>
                                 }
                                 else
                                 {
-                                <span class="themeBgColorPrimary btnSecondary text-white text-center w-100" onclick="window.location.href = '/NUserRegistration/Index'">Book Now</span> // /NUserRegistration/Index onclick="@Url.Action("Index","NUserRegistration")"
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100" onclick="window.location.href = '/NUserRegistration/Index'">Book Now</span> // /NUserRegistration/Index onclick="@Url.Action("Index","NUserRegistration")"
                                 }
                             </div>
                             <div class="w-100 d-flex my-2">
@@ -443,11 +483,11 @@
                                     { <p class="mb-0" onclick="wl('add')">Add To WishList</p> }
                                     else if (ViewBag.whishlistmsg == 1)
                                     { <p class="mb-0" onclick="wl('remove')">Remove From WishList</p> }
-                                @*{ <p class="mb-0"><a href="/NParticularVendor/WhishList?type='@Request.QueryString["type"]'&&id='@Request.QueryString["id"]'&&vid='@Request.QueryString["vid"]'&&command=remove&&wid=@ViewBag.whishlistid">Remove From WishList</a></p> }*@
+                                    @*{ <p class="mb-0"><a href="/NParticularVendor/WhishList?type='@Request.QueryString["type"]'&&id='@Request.QueryString["id"]'&&vid='@Request.QueryString["vid"]'&&command=remove&&wid=@ViewBag.whishlistid">Remove From WishList</a></p> }*@
                                 }
                                 else
                                 {
-                                <p class="mb-0"><a href="/NUserRegistration/Index?m=AWL">Add To WishList</a></p>
+                                    <p class="mb-0"><a href="/NUserRegistration/Index?m=AWL">Add To WishList</a></p>
                                 }
                                 @*<p class="mb-0" onclick="wl('remove')">Remove From WishList</p>*@
                             </div>
@@ -476,27 +516,27 @@
         <div class="row">
             <div class="col-12 col-md-12">
                 <div class="owl-carousel owl-theme mt-3">
-                    <a href="#" class="item">
+                    <a href="/NQuestionNaire?servicetype=Hotel" class="item">
                         <img src="~/newdesign/images/hotels-bg.png" alt="Hotels" />
                         <span class="d-block mt-2 text-center themeFontColor">Hotels</span>
                     </a>
-                    <a href="#" class="item">
+                    <a href="/NQuestionNaire?servicetype=Function Hall" class="item">
                         <img src="~/newdesign/images/functionhalls-bg.png" alt="Function Halls" />
                         <span class="d-block mt-2 text-center themeFontColor">Function Halls</span>
                     </a>
-                    <a href="#" class="item">
+                    <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
                         <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
                         <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
                     </a>
-                    <a href="#" class="item">
+                    <a href="/NQuestionNaire?servicetype=Convention Hall" class="item">
                         <img src="~/newdesign/images/convention-bg.png" alt="Convention Halls" />
                         <span class="d-block mt-2 text-center themeFontColor">Convention Halls</span>
                     </a>
-                    <a href="#" class="item">
+                    <a href="/NQuestionNaire?servicetype=Resort" class="item">
                         <img src="~/newdesign/images/resort-bg.png" alt="Resort" />
                         <span class="d-block mt-2 text-center themeFontColor">Resort</span>
                     </a>
-                    <a href="#" class="item">
+                    <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
                         <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
                         <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
                     </a>
@@ -623,31 +663,20 @@
 
     <script>
         $(".bookNow").click(function () {
-            var price = 0;
-            if (Request.QueryString["type"] == 'Venues' || Request.QueryString["type"] == 'Hotel' || Request.QueryString["type"] == 'Resort' || Request.QueryString["type"] == 'Convention Hall') {
-                price = if (@ViewBag.particularVenue != null) {'@ViewBag.particularVenue.ServiceCost' };
-            }
-            @*else if (Request.QueryString["type"] == "Catering") {
-                price = if (@ViewBag.particularCatering != null) { '@ViewBag.particularCatering.Veg'};
-            }
-            else if (Request.QueryString["type"] == "Photography") {
-                price = if (@ViewBag.particularPhotography != null) {'@ViewBag.particularPhotography.StartingPrice'};
-            }
-            else if (Request.QueryString["type"] == "Decorator") {
-                price = if (@ViewBag.particularDecorator != null) { '@ViewBag.particularDecorator.StartingPrice' };
-            }
-            else if (Request.QueryString["type"] == "Mehendi" || Request.QueryString["type"] == "Pandit") {
-                price = if (@ViewBag.particularOther != null) {'@ViewBag.particularOther.ItemCost'};
-            }*@
+            var type = '@Request.QueryString["type"]';
             if ($("#eventtype").val() == '') {
                 alert("Please Enter Event type");
-            } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                var type = '@Request.QueryString["type"]';
+            }
+            else if ($("#members").val() == '') {
+                alert("Please Enter Members Count");
+            }
+            else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+
                 var eventtype = $("#eventtype").val();
                 var id = '@Request.QueryString["id"]';
                 var vid = '@Request.QueryString["vid"]';
                 var date = $("#occasiondate").html();
-                var price = price;
+                var price = '@ViewBag.servicetypeprice';
                 var nop = $("#members").val();
                 var timeslot = 'Morning';
                 var totalprice = price * nop;

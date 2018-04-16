@@ -70,7 +70,7 @@ namespace MaaAahwanam.Web.Controllers
                 _userManager = value;
             }
         }
-        public ActionResult Index(string m)
+        public ActionResult Index()
         {
             perfecturl = "";
             return View();
@@ -78,7 +78,7 @@ namespace MaaAahwanam.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl,string m)
+        public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
             if (command == "UserReg")
             {

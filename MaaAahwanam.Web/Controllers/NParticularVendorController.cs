@@ -59,11 +59,34 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.particularPhotography = Photographyrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
             ViewBag.particularOther = Otherrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
 
+            string price = "";
+            if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall")
+            {
+                if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.ServiceCost.ToString(); };
+            }
+            else if (type == "Catering")
+            {
+                if (ViewBag.particularCatering != null) { price = ViewBag.particularCatering.Veg.ToString(); };
+            }
+            else if (type == "Photography")
+            {
+                if (ViewBag.particularPhotography != null) { price = ViewBag.particularPhotography.StartingPrice.ToString(); };
+            }
+            else if (type == "Decorator")
+            {
+                if (ViewBag.particularDecorator != null) { price = ViewBag.particularDecorator.StartingPrice.ToString(); };
+            }
+            else if (type == "Mehendi" || type == "Pandit")
+            {
+                if (ViewBag.particularOther != null) { price = ViewBag.particularOther.ItemCost.ToString(); };
+            }
+
             ViewBag.Venue = Venuerecords;
             ViewBag.Catering = Cateringrecords;
             ViewBag.Decorator = Decoratorrecords;
             ViewBag.Photography = Photographyrecords;
             ViewBag.Other = Otherrecords;
+            ViewBag.servicetypeprice = price;
 
             //Loading Vendor deals
             if (type == "Venues") type = "Venue";
@@ -100,7 +123,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public PartialViewResult DealsSection(string type,string L1)
+        public PartialViewResult DealsSection(string type, string L1)
         {
             int takecount = (L1 != null) ? int.Parse(L1) : 2;
             var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
@@ -110,7 +133,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView();
         }
 
-        public ActionResult BookNow(string type,string eventtype,string timeslot, string date,string id,string vid,string price,string guest)
+        public ActionResult BookNow(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -139,7 +162,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.attribute = timeslot;
                 orderDetail.TotalPrice = decimal.Parse(price);
                 orderDetail.PerunitPrice = decimal.Parse(price);
-                orderDetail.Quantity = int.Parse(guest); 
+                orderDetail.Quantity = int.Parse(guest);
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.VendorId = long.Parse(id);
                 orderDetail.Status = "Pending";

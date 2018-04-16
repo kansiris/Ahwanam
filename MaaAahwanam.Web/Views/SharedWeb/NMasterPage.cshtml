@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-12 col-md-4 pr-0">
                         <div class="form-group mb-0">
-                            <input type="text" name="" class="form-control" placeholder="Search Here">
+                            <input type="text" name="" class="form-control" placeholder="Search Here" id="searchvendors">
                         </div>
                     </div>
                     <div class="col-12 col-md-4 px-0">
@@ -65,37 +65,20 @@
                     </div>
                     <div class="col-12 col-md-4 pl-0">
                         <div class="form-group mb-0">
-                            <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                            @*<span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
                             <div class="ui-widget" style="display: block;">
                                 <input id="tags1" class="ui-autocomplete-input" autocomplete="off">
-                            </div>
-                            @*<select class="form-control border-left-0" id="venuSearch" onchange="venueSearch()">
-                                <option>Hyderabad</option>
-                                <option>Secundrabad</option>
-                                <option>Vizag</option>
-                                <option>Warangal</option>
-                                <option>Annavaram</option>
-                            </select>*@
+                            </div>*@
+                            <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" id="tags1" name="" placeholder="Enter Location" style="border-left: none;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center commonSearchResults innerPagesBg py-0">
-            <div class="col-12 col-sm-8 col-md-6 bgWhite py-3">
-                <ul class="pl-0 mb-0 text-nowrap">
-                    <li class="mx-2">
-                        <a href="#">
-                            <div class="float-left">
-                                <img src="images/dummy_thumb.jpg" alt="Dummy">
-                            </div>
-                            <div class="float-left ml-2 text-center themeFontColor">
-                                <p class="mb-0">Taj Banjara</p>
-                                <span>Hyderabad</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+            <div class="col-12 col-sm-8 col-md-6 bgWhite py-3" id="sortedvendorlist">
+                @{ Html.RenderAction("SortVendorsBasedOnLocation", "NHomePage");}
             </div>
         </div>
     </div>
@@ -332,6 +315,7 @@
         $(".commonSearch input[type='text']").on('input', function () {
             if ($(this).val().length >= 2) {
                 $(".commonSearch + .commonSearchResults > div").css("display", "block");
+                sortvendors();
             } else {
                 $(".commonSearch + .commonSearchResults > div").css("display", "none");
             }
@@ -342,6 +326,7 @@
         /*------ Category Search Block --------*/
         function categorySearch() {
             $(".commonSearch + .commonSearchResults > div").css("display", "block");
+            sortvendors();
         }
         /*------ Category Search Block --------*/
 
@@ -350,7 +335,32 @@
             $(".commonSearch + .commonSearchResults > div").css("display", "block");
         }
         /*------ Venue Search Block --------*/
-
+        function sortvendors() {
+            var location = $('#tags1').val();
+            if (location == '') { location = 'Hyderabad'; }
+            var url = '/NHomePage/SortVendorsBasedOnLocation?search=' + $('#searchvendors').val() + '&&type=' + $('#categorySearch').val() + '&&location=' + location;
+            //alert($('#searchvendortype').html());
+            //Sorting Vendors based on location
+            $.ajax({
+                type: 'get',
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'html',
+                data: $('#tags').val(),
+                success: function (result) {
+                    $('#sortedvendorlist').empty().html(result);
+                    //catgId = selected.toString().split(',');
+                    //for (var i = 0; i < catgId.length; i++) {
+                    //    $("#businesscategory div").each(function () {
+                    //        $('#' + catgId[i] + '').show();
+                    //    });
+                    //}
+                },
+                error: function (ex) {
+                    alert("Failed To Fetch data");
+                }
+            });
+        }
     </script>
     @RenderSection("scripts", required: false)
 </body>
