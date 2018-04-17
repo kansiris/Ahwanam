@@ -6,25 +6,31 @@
     <title>:: Ahwanam ::</title>
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/Nbootstrap.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="~/newdesign/css/fonts.css">
+    @*<link rel="stylesheet" type="text/css" href="~/newdesign/css/fonts.css">*@
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/Ncustomstyles.css">
-    <link href="~/newdesign/css/datepicker.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Oswald:600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    @*<link href="~/newdesign/css/datepicker.css" rel="stylesheet" />*@
+    <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
     <!------ Owl Thumb Slider ---------->
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.theme.default.css">
-    <style>
-        .nav-item.dropdown.open .dropdown-menu {
-            display: block;
-        }
-    </style>
+    @*<style>
+            .nav-item.dropdown.open .dropdown-menu {
+                display: block;
+            }
+        </style>*@
 </head>
 @using MaaAahwanam.Web.Custom
 <body>
-    <div class="container-fluid mainBg">
-        <nav class="navbar navbar-toggleable-md navbar-light">
+    <div class="container-fluid px-0 mainBg">
+        <nav class="navbar navbar-toggleable-md navbar-light themeBgColorSecondaryYellow">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <a class="navbar-brand noteWorthybold text-uppercase logoText" href="/NHomePage">
+                Ahwanam
+            </a>
 
 
             @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -38,17 +44,17 @@
                         <ul class="navbar-nav ml-auto">
 
                             <li class="nav-item active">
-                                <a href="/NLiveDeals" class="nav-link text-white" >Deals <span class="sr-only">(current)</span></a>
+                                <a href="/NLiveDeals" class="nav-link"> Deals <span class="sr-only">(current)</span></a>
                             </li>
 
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @ViewBag.username
 
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a href="/NUserProfile/Index" class="dropdown-item" >Profile</a>
+                                    <a href="/NUserProfile/Index" class="dropdown-item">Profile</a>
                                     <a href="/NUserRegistration/SignOut" class="dropdown-item" id="auth-logoutlink">Sign out</a>
                                 </div>
                             </li>
@@ -59,7 +65,7 @@
 
                                 <li  onclick="location.href='@Url.Action("LogOff", "NUserRegistration")'"><a  class="nav-link text-white">Sign out</a></li>*@
                             <li class="nav-item">
-                                <a href="/NUserProfile/Index" class="nav-link text-white">Cart(@ViewBag.cartCount)</a>
+                                <a href="/NUserProfile/Index" class="nav-link">Cart(@ViewBag.cartCount)</a>
                             </li>
 
 
@@ -72,97 +78,92 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a href="/NLiveDeals/Index" class="nav-link text-white" >Deals <span class="sr-only">(current)</span></a>
+                            <a href="/NLiveDeals/Index" class="nav-link"> Deals <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="/NUserRegistration/Index" class="nav-link text-white" >Login/Signup</a>
+                            <a href="/NUserRegistration/Index" class="nav-link dropdown-toggle">Login/Signup</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Vendor/Service Provider</a>
+                            <a class="nav-link" href="#">Vendor/Service Provider</a>
                         </li>
                     </ul>
                 </div>
             }
 
         </nav>
-        <div class="row">
-            <div class="col-12 col-sm-5 col-md-5 offset-sm-1 offset-md-1">
-                <div class="row mx-0 logo-area">
-                    <a href="#" class="text-white">
-                        <img src="~/newdesign/images/logo-icn.png" alt="Logo" class="float-left" />
-                        <span class="ml-3 text-capitalize float-left mt-2">Ahwanam.</span>
-                    </a>
-                </div>
-                <div class="row mx-0 tagLine">
-                    <p>Make Every Event Special.</p>
-                </div>
-                <div class="row mx-0">
-                    <div class="d-flex mr-3">
-                        <span class="themeBgColorPrimary btnPrimary">Explore</span>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6">
+                    <div class="row mx-0 tagLine">
+                        <p>We are in a mission of spreading Happiness</p>
                     </div>
-                    <div class="d-flex">
-                        <span class="themeBgColorPrimary btnPrimary">Deals</span>
-                    </div>
-                </div>
-                <div class="row mx-0 extraLine">
-                    <p>We are launching soon...</p>
-                </div>
-            </div>
-            <div class="col-12 col-sm-4 col-md-4 offset-sm-1">
-                <div class="row mx-0">
-                    <div class="topSearchArea ml-auto d-flex">
-                        <span class="themeBgColorSecondary d-flex"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                        <span class="themeBgColorPrimary align-items-center">Hyderabad</span>
-                    </div>
-                    <div class="ui-widget">
-                        <input id="tags">
-                    </div>
-                </div>
-                <div class="row mx-0 mt-3 topServiceType">
-                    <select class="border-0 ml-auto" id="selectedservice">
-                        <option value="">Service Type</option>
-                        @*<option value="Venue">Venue</option>*@
-                        <option value="Hotel">Hotel</option>
-                        <option value="Resort">Resort</option>
-                        <option value="Convetion">Convetion Hall</option>
-                        <option value="Catering">Catering</option>
-                        <option value="Photography">Photography</option>
-                        <option value="Decorator">Decorator</option>
-                        <option value="Mehendi">Mehendi Artists</option>
-                        <option value="Pandit">Pandits</option>
-                        @*<option value="EventManagement">Event Management</option>*@
-                    </select>
-                </div>
-                @*<div class="row mx-0 mt-3 occasionDate">
-                        <input type="text" class="border-0 ml-auto" placeholder="Occasion Date">
-                    </div>*@
-                <div class="row mx-0 mt-3 occasionDate">
-                    <!--<input type="text" class="border-0 ml-auto" placeholder="Occasion Date">-->
-                    <div class="date-picker">
-                        <div class="input">
-                            <div class="result nexaBold">Occasion Date: <span id="selecteddate"></span></div>
-                            <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
+                    <div class="row mx-0">
+                        <div class="d-flex mr-3">
+                            <span class="themeBgColorPrimary btnPrimary">Explore</span>
                         </div>
-                        <div class="calendar"></div>
+                        <div class="d-flex">
+                            <span class="themeBgColorPrimary btnPrimary">Deals</span>
+                        </div>
                     </div>
                 </div>
+                <div class="col-12 col-sm-5 col-md-5 offset-sm-1 offset-md-1">
+                    <div class="row mx-0">
+                        <div class="topSearchArea ml-auto d-flex">
+                            <span class="themeBgColorSecondaryYellow d-flex"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                            <span class="themeBgColorPrimaryPurple align-items-center">Hyderabad</span>
+                        </div>
+                        <div class="ui-widget">
+                            <input id="tags">
+                        </div>
+                    </div>
+                    <div class="row mx-0 mt-3 topServiceType">
+                        <select class="border-0 ml-auto" id="selectedservice">
+                            <option value="">Service Type</option>
+                            @*<option value="Venue">Venue</option>*@
+                            <option value="Hotel">Hotel</option>
+                            <option value="Resort">Resort</option>
+                            <option value="Convetion">Convetion Hall</option>
+                            <option value="Catering">Catering</option>
+                            <option value="Photography">Photography</option>
+                            <option value="Decorator">Decorator</option>
+                            <option value="Mehendi">Mehendi Artists</option>
+                            <option value="Pandit">Pandits</option>
+                            @*<option value="EventManagement">Event Management</option>*@
+                        </select>
+                    </div>
+                    @*<div class="row mx-0 mt-3 occasionDate">
+                            <input type="text" class="border-0 ml-auto" placeholder="Occasion Date">
+                        </div>*@
+                    <div class="row mx-0 mt-3 occasionDate">
+                        <!--<input type="text" class="border-0 ml-auto" placeholder="Occasion Date">-->
+                        <div class="datentime w-100">
+                            <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Date Here" />
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
 
-                <div class="row mx-0 mt-3">
-                    <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white" onclick="planning()">Start Planing</button>
+                            @*<div class="input">
+                                    <div class="result nexaBold">Occasion Date: <span id="selecteddate"></span></div>
+                                    <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
+                                </div>
+                                <div class="calendar"></div>*@
+                        </div>
+                    </div>
+
+                    <div class="row mx-0 mt-3">
+                        <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white" onclick="planning()">Start Planing</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="container-fluid celebrateToday">
         <div class="row waves hidden-xs-down hidden-sm-down"></div>
-        <div class="row themeBgColor">
+        <div class="row themeBgColor pt-4">
             <div class="container">
                 <div class="row">
-                    <h2 class="text-center text-white w-100 noteWorthybold">What you want to celebrate today?</h2>
-                    <div class="mx-auto whiteBorder"></div>
+                    <h2 class="text-center text-white w-100 noteWorthybold">Celebration Begins Here.</h2>
                 </div>
-                <div class="row my-4">
-                    <div class="col-12 col-sm-12 col-md-8 offset-md-2 col-lg-8 offset-lg-2">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <ul class="pl-0">
                             <li>
                                 <a href="/NQuestionNaire?servicetype=Wedding">
@@ -212,8 +213,8 @@
                 <input type="text" class="w-100" placeholder="Search Here" id="searchvendors">
             </div>
             <div class="col-12 col-sm-3 col-md-2 categorySearch d-flex mb-2 pr-sm-0 pr-md-0">
-                <span class="themeBgColorPrimary d-flex align-items-center justify-content-center text-white w-100" id="searchvendortype">Venue</span>
-                <span class="themeBgColorSecondary d-flex text-white"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                <span class="themeBgColorPrimaryPurple d-flex align-items-center justify-content-center text-white w-100" id="searchvendortype">Venue</span>
+                <span class="themeBgColorSecondaryYellow d-flexs"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
                 <div class="categoryResults">
                     <ul>
                         <li> <label for="Venue"> Venues </label> </li>
@@ -231,10 +232,10 @@
             </div>
             <div class="col-12 col-sm-6 col-md-3 venueSearch d-flex mb-2">
                 <div class="ui-widget">
-                    <input id="tags1" class="ui-autocomplete-input" autocomplete="off">
+                    <input id="tags1"> @* class="ui-autocomplete-input" autocomplete="off"*@
                 </div>
-                <span class="themeBgColorPrimary align-items-center justify-content-center text-white w-100">Hyderabad</span>
-                <span class="themeBgColorSecondary d-flex text-white"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                <span class="themeBgColorPrimaryPurple align-items-center justify-content-center text-white w-100">Hyderabad</span>
+                <span class="themeBgColorSecondaryYellow d-flex"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
             </div>
         </div>
         <div class="row justify-content-center normalSearchResult" id="sortedvendorlist">
@@ -253,29 +254,29 @@
             <div class="row">
                 <div class="col-12 col-md-12">
                     <div class="owl-carousel owl-theme mt-3">
-                        <a href="#" class="item">
+                        <a href="/NQuestionNaire?servicetype=Hotel" class="item">
                             <img src="~/newdesign/images/hotels-bg.png" alt="Hotels" />
-                            <span class="d-block mt-2 text-center themeFontColor">Hotels</span>
+                            <span class="d-block mt-2 themeFontColor">Hotels</span>
                         </a>
-                        <a href="#" class="item">
+                        <a href="/NQuestionNaire?servicetype=Function Hall" class="item">
                             <img src="~/newdesign/images/functionhalls-bg.png" alt="Function Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Function Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Function Halls</span>
                         </a>
-                        <a href="#" class="item">
+                        <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
                             <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Banquet Halls</span>
                         </a>
-                        <a href="#" class="item">
+                        <a href="/NQuestionNaire?servicetype=Convention Hall" class="item">
                             <img src="~/newdesign/images/convention-bg.png" alt="Convention Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Convention Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Convention Halls</span>
                         </a>
-                        <a href="#" class="item">
+                        <a href="/NQuestionNaire?servicetype=Resort" class="item">
                             <img src="~/newdesign/images/resort-bg.png" alt="Resort" />
-                            <span class="d-block mt-2 text-center themeFontColor">Resort</span>
+                            <span class="d-block mt-2 themeFontColor">Resort</span>
                         </a>
-                        <a href="#" class="item">
+                        <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
                             <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Banquet Halls</span>
                         </a>
                     </div>
                 </div>
@@ -284,7 +285,7 @@
         <div class="margin-top-50">
             <div class="row mx-0">
                 <h3 class="noteWorthybold">
-                    Music &amp; Artists
+                    Music & Artists
                     <div class="blackBorder"></div>
                 </h3>
             </div>
@@ -293,28 +294,28 @@
                     <div class="owl-carousel owl-theme mt-3">
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dj.png" alt="DJ" />
-                            <span class="d-block mt-2 text-center themeFontColor">DJ</span>
+                            <span class="d-block mt-2 themeFontColor">DJ</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/choreographer-bg.png" alt="Choreographer" />
-                            <span class="d-block mt-2 text-center themeFontColor">Choreographer</span>
+                            <span class="d-block mt-2 themeFontColor">Choreographer</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
                             @*<img src="~/newdesign/images/band&dhol.png" alt="Band and Dhol" />*@
-                            <span class="d-block mt-2 text-center themeFontColor">Band & Dhol</span>
+                            <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/orchestra-bg.png" alt="orchestra" />
-                            <span class="d-block mt-2 text-center themeFontColor">Orchestra</span>
+                            <span class="d-block mt-2 themeFontColor">Orchestra</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/performing-artists-bg.png" alt="Performing Artist" />
-                            <span class="d-block mt-2 text-center themeFontColor">Performing Artist</span>
+                            <span class="d-block mt-2 themeFontColor">Performing Artist</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
-                            <span class="d-block mt-2 text-center themeFontColor">Band & Dhol</span>
+                            <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
                         </a>
                     </div>
                 </div>
@@ -332,36 +333,40 @@
                     <div class="owl-carousel owl-theme mt-3">
                         <a href="#" class="item">
                             <img src="~/newdesign/images/photography-bg.png" alt="Photography" />
-                            <span class="d-block mt-2 text-center themeFontColor">Photography</span>
+                            <span class="d-block mt-2 themeFontColor">Photography</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/makeup-artist-bg.png" alt="Makeup Artist" />
-                            <span class="d-block mt-2 text-center themeFontColor">Makeup Artist</span>
+                            <span class="d-block mt-2 themeFontColor">Makeup Artist</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/decorators-bg.png" alt="Decorators" />
-                            <span class="d-block mt-2 text-center themeFontColor">Decorators</span>
+                            <span class="d-block mt-2 themeFontColor">Decorators</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/pundit-bg.png" alt="Pandits" />
-                            <span class="d-block mt-2 text-center themeFontColor">Pandits</span>
+                            <span class="d-block mt-2 themeFontColor">Pandits</span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="container-fluid">
         <div class="row letsCelebrationBlock margin-top-50">
-            <div class="text-center w-100">
-                <h2 class="text-white noteWorthybold">Your Memories Should Travel Lifetime With You Frame Them.</h2>
+            <div class="w-100 text-center">
+                <h2 class="noteWorthybold">Frame your memories with us.</h2>
                 <br />
-                <a href="#" class="mt-3 d-inline-block">Let's Start Celebration</a>
+                <span class="themeBgColorPrimary btnPrimary text-white">Let's Celebrate with us</span>
             </div>
         </div>
+    </div>
+
+    <div class="container">
         <div class="margin-top-50">
             <div class="row mx-0">
                 <h3 class="noteWorthybold">
-                    Food &amp; Catering
+                    Food & Catering
                     <div class="blackBorder"></div>
                 </h3>
             </div>
@@ -370,27 +375,27 @@
                     <div class="owl-carousel owl-theme mt-3">
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Hotels</span>
+                            <span class="d-block mt-2 themeFontColor">Hotels</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Function Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Function Halls</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Banquet Halls</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Convention Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Convention Halls</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Meeting Halls</span>
+                            <span class="d-block mt-2 themeFontColor">Meeting Halls</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Others</span>
+                            <span class="d-block mt-2 themeFontColor">Others</span>
                         </a>
                     </div>
                 </div>
@@ -408,47 +413,48 @@
                     <div class="owl-carousel owl-theme mt-3">
                         <a href="#" class="item">
                             <img src="~/newdesign/images/event-organiser-bg.png" alt="Event Organizer" />
-                            <span class="d-block mt-2 text-center themeFontColor">Event Organizer</span>
+                            <span class="d-block mt-2 themeFontColor">Event Organizer</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Gift Stores" />
-                            <span class="d-block mt-2 text-center themeFontColor">Gift Stores</span>
+                            <span class="d-block mt-2 themeFontColor">Gift Stores</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/bouncer-bg.png" alt="Bouncers" />
-                            <span class="d-block mt-2 text-center themeFontColor">Bouncers</span>
+                            <span class="d-block mt-2 themeFontColor">Bouncers</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/travels-bg.png" alt="Travels" />
-                            <span class="d-block mt-2 text-center themeFontColor">Travels</span>
+                            <span class="d-block mt-2 themeFontColor">Travels</span>
                         </a>
                         <a href="#" class="item">
                             <img src="~/newdesign/images/dummy_thumb.jpg" alt="Others" />
-                            <span class="d-block mt-2 text-center themeFontColor">Others</span>
+                            <span class="d-block mt-2 themeFontColor">Others</span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
 
-        <div class="row margin-top-50 oneStopSolution align-items-center">
-            <div class="col-12 col-sm-12 col-md-6">
-                <h3 class="noteWorthybold">One Stop Solutions</h3>
-                <p class="mt-3">
-                    The days of heavy headachs are no more now, We are are announcing the most innovative & Intelligent solution that helps to manage your celebration with deep emotion.
-                </p>
-                <div class="row mx-0 mt-3">
-                    <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
+    @*<div class="row margin-top-50 oneStopSolution align-items-center">
+                <div class="col-12 col-sm-12 col-md-6">
+                    <h3 class="noteWorthybold">One Stop Solutions</h3>
+                    <p class="mt-3">
+                        The days of heavy headachs are no more now, We are are announcing the most innovative & Intelligent solution that helps to manage your celebration with deep emotion.
+                    </p>
+                    <div class="row mx-0 mt-3">
+                        <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6">
+                    <img src="~/newdesign/images/main-image.png" class="mw-100" alt="Main Image" />
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-6">
-                <img src="~/newdesign/images/main-image.png" class="mw-100" alt="Main Image" />
-            </div>
-        </div>
 
-    </div>
+        </div>*@
 
     <div class="container-fluid px-0">
         <div class="margin-top-50 margin-bottom-50 themeBgColor text-white deals">
@@ -461,47 +467,67 @@
                     <a href="/NLiveDeals/Index" class="float-right text-white">See All</a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-md-8 offset-md-2">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a href="/NLiveDeals/Index?eve=Engagement" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Engagement</span>
-                        </a>
-                        <a href="/NLiveDeals/Index?eve=Birthdays" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Birthdays</span>
-                        </a>
-                        <a href="/NLiveDeals/Index?eve=Kitty Cocktails Parties" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Kitty Cocktails Parties</span>
-                        </a>
-                        <a href="/NLiveDeals/Index?eve=Corporates Cocktail parties" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Corporates Cocktail parties</span>
-                        </a>
-                        <a href="/NLiveDeals/Index?eve=Annual Day Celebrations" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Annual Day Celebrations</span>
-                        </a>
-                        <a href="/NLiveDeals/Index?eve=Corporate Buffet Lunch // Dinner" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Corporate Buffet Lunch // Dinner</span>
-                        </a>
-                        <a href="/NLiveDeals/Index?eve=Honeymoon packages Rooms CP Plan" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 text-center themeFontColor">Honeymoon packages Rooms CP Plan</span>
-                        </a>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="owl-carousel owl-theme mt-3">
+                            <a href="/NLiveDeals/Index?eve=Engagement" class="item">
+                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Engagement</span>
+                            </a>
+                            <a href="/NLiveDeals/Index?eve=Birthdays" class="item">
+                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Birthdays</span>
+                            </a>
+                            <a href="/NLiveDeals/Index?eve=Kitty Cocktails Parties" class="item">
+                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Kitty Cocktails Parties</span>
+                            </a>
+                            <a href="/NLiveDeals/Index?eve=Corporates Cocktail parties" class="item">
+                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Corporates Cocktail parties</span>
+                            </a>
+                            <a href="/NLiveDeals/Index?eve=Annual Day Celebrations" class="item">
+                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Annual Day Celebrations</span>
+                            </a>
+                            <a href="/NLiveDeals/Index?eve=Corporate Buffet Lunch // Dinner" class="item">
+                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Corporate Buffet Lunch // Dinner</span>
+                            </a>
+                            <a href="/NLiveDeals/Index?eve=Honeymoon packages Rooms CP Plan" class="item">
+                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Honeymoon packages Rooms CP Plan</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="container">
+        <div class="row margin-top-50 oneStopSolution align-items-center">
+            <div class="col-12 col-sm-12 col-md-6">
+                <h2 class="noteWorthybold mb-5">One Stop Solutions</h2>
+                <p class="mt-3">
+                    The days of heavy headachs are no more now, We are are announcing the most innovative & Intelligent solution that helps to manage your celebration with deep emotion.
+                </p>
+                <div class="row mx-0 my-3">
+                    <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+                <img src="~/newdesign/images/onestopimage.png" class="mw-100" alt="Main Image" />
+            </div>
+        </div>
+    </div>
+
+
 
     <footer class="footerBg text-white py-4 margin-top-50">
         <div class="row mx-0">
-            <div class="col-12 col-sm-4 col-md-2 offset-md-1">
+            <div class="col-6 col-sm-4 col-md-2 offset-md-1">
                 <h4 class="noteWorthybold">
                     Main Links
                     <div class="whiteBorder"></div>
@@ -518,7 +544,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-sm-4 col-md-2">
+            <div class="col-6 col-sm-4 col-md-2">
                 <h4 class="noteWorthybold">
                     Celebrations
                     <div class="whiteBorder"></div>
@@ -544,7 +570,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-sm-4 col-md-2">
+            <div class="col-6 col-sm-4 col-md-2">
                 <h4 class="noteWorthybold">
                     Services
                     <div class="whiteBorder"></div>
@@ -554,7 +580,7 @@
                         <a href="#" class="text-white">Venues</a>
                     </li>
                     <li>
-                        <a href="#" class="text-white">Music &amp; Artists</a>
+                        <a href="#" class="text-white">Music & Artists</a>
                     </li>
                     <li>
                         <a href="#" class="text-white">Catering</a>
@@ -567,7 +593,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-sm-4 col-md-2">
+            <div class="col-6 col-sm-4 col-md-2">
                 <h4 class="noteWorthybold">
                     What's Trending
                     <div class="whiteBorder"></div>
@@ -593,7 +619,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-sm-4 col-md-2">
+            <div class="col-6 col-sm-4 col-md-2">
                 <h4 class="noteWorthybold">
                     Support System
                     <div class="whiteBorder"></div>
@@ -612,10 +638,7 @@
             </div>
         </div>
         <div class="row mx-0 secondFooter">
-            <div class="col-12 col-md-6">
-                <p class="mb-0">Copy Right 2018, All rights reserved.</p>
-            </div>
-            <div class="col-12 col-md-6 text-right">
+            <div class="w-100 text-center">
                 <ul class="pl-0 mb-0">
                     <li>
                         <a href="#" class="text-white">Privacy Policy</a>
@@ -628,14 +651,18 @@
                     </li>
                 </ul>
             </div>
+            <div class="w-100 text-center">
+                <p class="mb-0">Copy Right 2018, All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
     <script type="text/javascript" src="~/newdesign/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
     @*<!------ Owl Thumb Slider ---------->*@
-    <script src="~/newdesign/js/jquery-ui.min.js"></script>
-    <script src="~/newdesign/js/datepicker.js"></script>
+    @*<script src="~/newdesign/js/jquery-ui.min.js"></script>
+        <script src="~/newdesign/js/datepicker.js"></script>*@
+    <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
     <script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
 
     <script>
@@ -660,8 +687,21 @@
         })
     </script>
     <!------ Auto Complete ---------->
+    @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        /*--- Date and Time ----*/
+        $('#datetimepicker').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+            maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+        });
+        /*------------ Date and Time --------------*/
+    </script>
 
     <script>
         $(function () {
@@ -698,6 +738,7 @@
         $(".normalSearch input[type='text']").on('input', function () {
             if ($(this).val().length >= 2) {
                 $(".normalSearch > .normalSearchResult").css("display", "block");
+                sortvendors();
             } else {
                 $(".normalSearch > .normalSearchResult").css("display", "none");
             }
@@ -716,6 +757,7 @@
         });
         $(document).on('click keydown', 'ul#ui-id-2 li.ui-menu-item', function () {
             $(".normalSearch > .normalSearchResult").css("display", "block");
+            sortvendors();
         });
 
         /*$(document).on('keydown', 'ul#ui-id-2 li.ui-menu-item', function(){
@@ -727,8 +769,8 @@
 
 
     <script>
-
-        $('#searchvendors').on('change', function () {
+        function sortvendors() {
+            // $('#searchvendors').on('change', function () {
             var location = $('#tags1').val();
             if (location == '') { location = 'Hyderabad'; }
             var url = '/NHomePage/SortVendorsBasedOnLocation?search=' + $('#searchvendors').val() + '&&type=' + $('#searchvendortype').html() + '&&location=' + location;
@@ -753,7 +795,8 @@
                     alert("Failed To Fetch data");
                 }
             });
-        });
+            //});
+        }
     </script>
 
     <script>
@@ -791,8 +834,21 @@
             var catResultsText = $(this).children('label').prop("for");
             $(catgSearchSpanFirst).empty().append(catResultsText);
             $(catResults).css("display", "none");
+            sortvendors();
         });
         //<!------ Category Select ---------->
+        //<!------------- dealProfile Accoding ----------->
+
+        $(".dealProfileTotalDescrption > .block:first-child .content").css("display", "block");
+        var link = $(".dealProfileTotalDescrption > .block > h6 > a");
+
+        link.on('click', function (event) {
+            event.preventDefault();
+            var anchorVal = $(this).attr("href");
+            $(anchorVal).slideDown('fast');
+            $(".dealProfileTotalDescrption > .block .content").not(anchorVal).slideUp('fast');
+        })
+        // <!------------- dealProfile Accoding ----------->
 
     </script>
 

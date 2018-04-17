@@ -22,18 +22,16 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NUserProfile
         public ActionResult Index()
         {
-
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                var user1 = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
-                if (user1.UserType == "Vendor")
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                if (user.UserType == "Vendor")
                 {
-                    Response.Redirect("/AvailableServices/changeid?id=" + user1.UserId + "");
+                    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
                 }
-                if (user1.UserType == "User")
+                if (user.UserType == "User")
                 {
-                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    //var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                     if (userdata.FirstName != "" && userdata.FirstName != null)
                         ViewBag.username = userdata.FirstName;
@@ -47,14 +45,11 @@ namespace MaaAahwanam.Web.Controllers
                     var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
                     ViewBag.order = orders;
                     // OrderByDescending(m => m.OrderId).Take(10);
-
                     //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
                     //decimal total = cartlist.Sum(s => s.TotalPrice);
                     //ViewBag.Cartlist = cartlist;
                     // ViewBag.Total = total;
-
                     return View();
-
                 }
 
                 return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");

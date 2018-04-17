@@ -14,7 +14,7 @@
                 <li> <a href="#profileDetails">Profile</a> </li>
                 <li> <a href="#profileSettings">Settings</a> </li>
                 <li>
-                    <a onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'">Logout</a>
+                    <a href="/NUserRegistration/SignOut">Logout</a> @*onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'"*@
                 </li>
             </ul>
         </div>
@@ -83,28 +83,28 @@
                                                             <div class="event-dates">
                                                                 @item.OrderDate
                                                                 @*@if (item.eventstartdate != null && item.eventenddate != null)
-                                                                {
-                                                                    <p>
-                                                                        Event Start Date : @item.eventstartdate.ToString("dd MMM yyyy")<br /> Event End Date&nbsp;&nbsp;:&nbsp;@item.eventenddate.ToString("dd MMM yyyy")
-                                                                    </p>}
-                                                                @if (item.eventstartdate == null && item.eventenddate == null)
-                                                                {
-                                                                    <p> Event Start Date : Not Available<br /> Event End Date&nbsp;&nbsp;:&nbsp;Not Available </p>
-                                                                }*@
+                                                                    {
+                                                                        <p>
+                                                                            Event Start Date : @item.eventstartdate.ToString("dd MMM yyyy")<br /> Event End Date&nbsp;&nbsp;:&nbsp;@item.eventenddate.ToString("dd MMM yyyy")
+                                                                        </p>}
+                                                                    @if (item.eventstartdate == null && item.eventenddate == null)
+                                                                    {
+                                                                        <p> Event Start Date : Not Available<br /> Event End Date&nbsp;&nbsp;:&nbsp;Not Available </p>
+                                                                    }*@
                                                             </div>
                                                     </td>
                                                     <td>@item.Status</td>
                                                     <td>
                                                         <div class="item-price">
                                                             @*@if (item.Isdeal == false)
-                                                            {*@
-                                                                <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                                {*@
+                                                            <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
                                                             @*}
-                                                            else
-                                                            {
-                                                                <p>Original Price:Rs.@item.ServicePrice</p>
-                                                                <p>Deal Price:Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
-                                                            }*@
+                                                                else
+                                                                {
+                                                                    <p>Original Price:Rs.@item.ServicePrice</p>
+                                                                    <p>Deal Price:Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
+                                                                }*@
                                                         </div>
 
                                                     </td>
@@ -180,58 +180,58 @@
 
     </script>
     <script>
-    function load(userdetails) {
-    
-        var userdet = {
+        function load(userdetails) {
 
-            FirstName: document.getElementById("username").value,
-            UserPhone: document.getElementById("phoneno").value,
-        }
+            var userdet = {
 
-        $.ajax({
-            url: '/NUserProfile/updatedetails',
-            type: "POST",
-            datatype: "json",
-            data: { userdetail: userdet },
-            success: function (response) {
-                if (response == 'success') {
-                    alert('userdetails Updated Successfully');
-                    //var url = '/NUserProfile/changepassword';
-                    //$('#profileSettings').empty().load(url);
-                    //successmsg(response.msg);
-                }
-            }})
-    }
-
-
-
-    function load1(password) {
-        Password = document.getElementById("Password").value
-        Password1 = document.getElementById("Password1").value
-
-        if (Password != Password1)
-        {
-            alert("password doesnot match")
-        }
-        else{
-            var userLogin = {
-                Password :document.getElementById("Password").value
-
+                FirstName: document.getElementById("username").value,
+                UserPhone: document.getElementById("phoneno").value,
             }
+
             $.ajax({
-                url: '/NUserProfile/changepassword',
+                url: '/NUserProfile/updatedetails',
                 type: "POST",
                 datatype: "json",
-                data: { userLogin: userLogin },
+                data: { userdetail: userdet },
                 success: function (response) {
                     if (response == 'success') {
-                        alert('Password Updated Successfully');
+                        alert('userdetails Updated Successfully');
                         //var url = '/NUserProfile/changepassword';
                         //$('#profileSettings').empty().load(url);
                         //successmsg(response.msg);
                     }
                 }})
-        }}
+        }
+
+
+
+        function load1(password) {
+            Password = document.getElementById("Password").value
+            Password1 = document.getElementById("Password1").value
+
+            if (Password != Password1)
+            {
+                alert("password doesnot match")
+            }
+            else{
+                var userLogin = {
+                    Password :document.getElementById("Password").value
+
+                }
+                $.ajax({
+                    url: '/NUserProfile/changepassword',
+                    type: "POST",
+                    datatype: "json",
+                    data: { userLogin: userLogin },
+                    success: function (response) {
+                        if (response == 'success') {
+                            alert('Password Updated Successfully');
+                            //var url = '/NUserProfile/changepassword';
+                            //$('#profileSettings').empty().load(url);
+                            //successmsg(response.msg);
+                        }
+                    }})
+            }}
     </script>
 }
 }
