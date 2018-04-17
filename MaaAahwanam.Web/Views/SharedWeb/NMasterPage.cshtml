@@ -39,6 +39,66 @@
 
         </nav>
     </div>
+    <div class="search">
+        <div class="row justify-content-center commonSearch innerPagesBg py-4">
+            <div class="col-12 col-sm-8 col-md-6 bgWhite py-3">
+                <div class="row">
+                    <div class="col-12 col-md-4 pr-0">
+                        <div class="form-group mb-0">
+                            <input type="text" name="" class="form-control" placeholder="Search Here">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 px-0">
+                        <div class="form-group mb-0">
+                            <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                            <select class="form-control border-left-0" id="categorySearch" onchange="categorySearch()">
+                                <option value="Hotel">Hotels</option>
+                                <option value="Resort">Resorts</option>
+                                <option value="Convention Hall">Convention Halls</option>
+                                <option value="Catering">Caterers</option>
+                                <option value="Photography">Photographers</option>
+                                <option value="Decorator">Decorators</option>
+                                <option value="Mehendi">Mehendi Artists</option>
+                                <option value="Pandit">Pandits</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 pl-0">
+                        <div class="form-group mb-0">
+                            <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                            <div class="ui-widget" style="display: block;">
+                                <input id="tags1" class="ui-autocomplete-input" autocomplete="off">
+                            </div>
+                            @*<select class="form-control border-left-0" id="venuSearch" onchange="venueSearch()">
+                                <option>Hyderabad</option>
+                                <option>Secundrabad</option>
+                                <option>Vizag</option>
+                                <option>Warangal</option>
+                                <option>Annavaram</option>
+                            </select>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center commonSearchResults innerPagesBg py-0">
+            <div class="col-12 col-sm-8 col-md-6 bgWhite py-3">
+                <ul class="pl-0 mb-0 text-nowrap">
+                    <li class="mx-2">
+                        <a href="#">
+                            <div class="float-left">
+                                <img src="images/dummy_thumb.jpg" alt="Dummy">
+                            </div>
+                            <div class="float-left ml-2 text-center themeFontColor">
+                                <p class="mb-0">Taj Banjara</p>
+                                <span>Hyderabad</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     @*<div>*@
     @RenderBody()
@@ -246,6 +306,52 @@
 
     <!------ Owl Thumb Slider ---------->
     <script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
+    <script>
+        $(function () {
+            var availableTags = '';
+            $.ajax({
+                type: "GET",
+                url: '/NHomePage/AutoCompleteCountry',
+                success: function (data) {
+                    availableTags = data.split(',');
+                    $("#tags,#tags1").autocomplete({
+                        source: availableTags
+                    });
+                }
+            });
+            $("#tags, #tags1").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+    <script>
+        /*------- Common Search Block -------------*/
+
+        /*------ Index Search Block --------*/
+
+        $(".commonSearch input[type='text']").on('input', function () {
+            if ($(this).val().length >= 2) {
+                $(".commonSearch + .commonSearchResults > div").css("display", "block");
+            } else {
+                $(".commonSearch + .commonSearchResults > div").css("display", "none");
+            }
+        });
+
+        /*------ Index Search Block --------*/
+
+        /*------ Category Search Block --------*/
+        function categorySearch() {
+            $(".commonSearch + .commonSearchResults > div").css("display", "block");
+        }
+        /*------ Category Search Block --------*/
+
+        /*------ Venue Search Block --------*/
+        function venueSearch() {
+            $(".commonSearch + .commonSearchResults > div").css("display", "block");
+        }
+        /*------ Venue Search Block --------*/
+
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
