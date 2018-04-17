@@ -6,32 +6,35 @@
     <title>:: Ahwanam ::</title>
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/Nbootstrap.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="~/newdesign/css/fonts.css">
+    @*<link rel="stylesheet" type="text/css" href="~/newdesign/css/fonts.css">*@
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/Ncustomstyles.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
 
     <!------ Date Picker ---------->
-    <link rel="stylesheet" type="text/css" href="~/newdesign/css/datepicker.css">
+    @*<link rel="stylesheet" type="text/css" href="~/newdesign/css/datepicker.css">*@
+    <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
 
     <!------ Owl Thumb Slider ---------->
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.theme.default.css">
+
     @RenderSection("css", required: false)
-    <style>
+    @*<style>
         .nav-item.dropdown.open .dropdown-menu {
             display: block;
         }
-    </style>
+    </style>*@
 </head>
 
 <body>
-    <div class="container-fluid bgWhite">
-        <nav class="navbar navbar-toggleable-md navbar-light bgWhite">
+    <div class="container-fluid px-0 mainBg">
+        <nav class="navbar navbar-toggleable-md navbar-light themeBgColorSecondaryYellow">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <a class="navbar-brand" href="/NHomePage">
-                <img src="~/newdesign/images/logo.png" alt="Logo" />
+            <a class="navbar-brand noteWorthybold text-uppercase logoText" href="/NHomePage">
+                Ahwanam
             </a>
 
             @{Html.RenderAction("ItemsCartViewBindingLayout", "NHomePage");}
@@ -202,7 +205,7 @@
                         <a href="#" class="text-white">Venues</a>
                     </li>
                     <li>
-                        <a href="#" class="text-white">Music &amp; Artists</a>
+                        <a href="#" class="text-white">Music & Artists</a>
                     </li>
                     <li>
                         <a href="#" class="text-white">Catering</a>
@@ -285,7 +288,8 @@
 
     <!------ Date Picker ---------->
     <script type="text/javascript" src="~/newdesign/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="~/newdesign/js/datepicker.js"></script>
+    @*<script type="text/javascript" src="~/newdesign/js/datepicker.js"></script>*@
+    <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
 
     <!------ Owl Thumb Slider ---------->
     <script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
@@ -335,7 +339,8 @@
             $(".commonSearch + .commonSearchResults > div").css("display", "block");
         }
         /*------ Venue Search Block --------*/
-        function sortvendors() {
+
+        function sortvendors() {
             var location = $('#tags1').val();
             if (location == '') { location = 'Hyderabad'; }
             var url = '/NHomePage/SortVendorsBasedOnLocation?search=' + $('#searchvendors').val() + '&&type=' + $('#categorySearch').val() + '&&location=' + location;
@@ -360,7 +365,8 @@
                     alert("Failed To Fetch data");
                 }
             });
-        }
+        }
+
     </script>
     @RenderSection("scripts", required: false)
 </body>

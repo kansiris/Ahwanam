@@ -14,7 +14,8 @@
                 <li> <a href="#profileDetails">Profile</a> </li>
                 <li> <a href="#profileSettings">Settings</a> </li>
                 <li>
-                    <a href="/NUserRegistration/SignOut">Logout</a> @*onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'"*@
+                    @*<a href="/NUserRegistration/SignOut">Logout</a>*@ @*onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'"*@
+                    <a onclick="window.location.href = '/NUserRegistration/SignOut';">Logout</a>
                 </li>
             </ul>
         </div>
@@ -62,58 +63,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @{
-                                            //int j = 0;
-                                            foreach (var item in ViewBag.order)
-                                            {
-                                                //j++;
-                                                <tr>
+                                        @foreach (var item in ViewBag.order)
+                                        {
+                                            <tr>
 
-                                                    <td>@item.OrderId</td>
-                                                    <td>
-                                                        <h4>@item.BusinessName</h4>
-                                                        <p>
-                                                            @item.Landmark<br>
-                                                            @item.Address, @item.City,<br>
-                                                            @item.ContactNumber
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <div class="event-date-time">
-                                                            <div class="event-dates">
-                                                                @item.OrderDate
-                                                                @*@if (item.eventstartdate != null && item.eventenddate != null)
-                                                                    {
-                                                                        <p>
-                                                                            Event Start Date : @item.eventstartdate.ToString("dd MMM yyyy")<br /> Event End Date&nbsp;&nbsp;:&nbsp;@item.eventenddate.ToString("dd MMM yyyy")
-                                                                        </p>}
-                                                                    @if (item.eventstartdate == null && item.eventenddate == null)
-                                                                    {
-                                                                        <p> Event Start Date : Not Available<br /> Event End Date&nbsp;&nbsp;:&nbsp;Not Available </p>
-                                                                    }*@
-                                                            </div>
-                                                    </td>
-                                                    <td>@item.Status</td>
-                                                    <td>
-                                                        <div class="item-price">
-                                                            @*@if (item.Isdeal == false)
-                                                                {*@
-                                                            <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
-                                                            @*}
-                                                                else
-                                                                {
-                                                                    <p>Original Price:Rs.@item.ServicePrice</p>
-                                                                    <p>Deal Price:Rs.<span id="tprice @j" class="value">@item.TotalPrice</span></p>
-                                                                }*@
+                                                <td>@item.OrderId</td>
+                                                <td>
+                                                    <h4>@item.BusinessName</h4>
+                                                    <p>
+                                                        @item.Landmark<br>
+                                                        @item.Address, @item.City,<br>
+                                                        @item.ContactNumber
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            @item.OrderDate
                                                         </div>
+                                                </td>
+                                                <td>@item.Status</td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                    </div>
 
-                                                    </td>
-                                                </tr>
-                                            }
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
-                                            }
+                            }
                         </div>
                     </div>
                     <div id="profileDetails">
@@ -175,7 +155,7 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.userProfile').nextAll('.container, footer').css("display","none");
+            $('.userProfile').nextAll('.container, footer').css("display", "none");
         });
 
     </script>
@@ -196,11 +176,9 @@
                 success: function (response) {
                     if (response == 'success') {
                         alert('userdetails Updated Successfully');
-                        //var url = '/NUserProfile/changepassword';
-                        //$('#profileSettings').empty().load(url);
-                        //successmsg(response.msg);
                     }
-                }})
+                }
+            })
         }
 
 
@@ -209,13 +187,12 @@
             Password = document.getElementById("Password").value
             Password1 = document.getElementById("Password1").value
 
-            if (Password != Password1)
-            {
+            if (Password != Password1) {
                 alert("password doesnot match")
             }
-            else{
+            else {
                 var userLogin = {
-                    Password :document.getElementById("Password").value
+                    Password: document.getElementById("Password").value
 
                 }
                 $.ajax({
@@ -226,12 +203,11 @@
                     success: function (response) {
                         if (response == 'success') {
                             alert('Password Updated Successfully');
-                            //var url = '/NUserProfile/changepassword';
-                            //$('#profileSettings').empty().load(url);
-                            //successmsg(response.msg);
                         }
-                    }})
-            }}
+                    }
+                })
+            }
+        }
     </script>
 }
 }

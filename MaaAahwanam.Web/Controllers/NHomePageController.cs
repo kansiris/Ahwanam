@@ -30,7 +30,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
                 else
                     ViewBag.username = userdata.AlternativeEmailID;
-                
+
                 if (user.UserType == "Admin")
                 {
                     ViewBag.cartCount = cartService.CartItemsCount(0);
@@ -59,15 +59,17 @@ namespace MaaAahwanam.Web.Controllers
             return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public PartialViewResult SortVendorsBasedOnLocation(string search,string type, string location)
+        public PartialViewResult SortVendorsBasedOnLocation(string search, string type, string location)
         {
+            if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement" ,"Venues"}.Contains(type))
+            { type = "Venue"; }
             var value = (type == null) ? "Venue" : type;
-            ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V",value).Where(m => m.landmark == location).Take(6).ToList() : vendorProductsService.Getsearchvendorproducts_Result(search,value).Take(6).ToList(); //.Where(m => m.landmark == location)
+            ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V", value).Where(m => m.landmark == location).Take(6).ToList() : vendorProductsService.Getsearchvendorproducts_Result(search, value).Take(6).ToList(); //.Where(m => m.landmark == location)
             return PartialView();
         }
 
 
-       
+
         public ActionResult ItemsCartViewBindingLayout()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

@@ -1,0 +1,174 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>:: Ahwanam ::</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    <link href="~/newdesign/css/Timerdscountdown.css" rel="stylesheet" />
+    <link href="~/newdesign/css/TimerStyles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid sectionOne">
+        <div class="row logo">
+            <div class="col-12 col-md-12">
+                <a href="#" class="text-uppercase">Ahwanam</a>
+            </div>
+        </div>
+        <div class="row text-center content">
+            <div class="col-12 col-md-12">
+                <h3 class="w-100 themeFontColor text-uppercase">Spreading Happiness</h3>
+                <p class="text-capitalize">Let's Celebrate together &amp share happiness</p>
+            </div>
+        </div>
+        <div class="row timer">
+            <div class="container">
+                <div class="col-12 col-sm-12 col-md-12 m-auto d-flex justify-content-center">
+                    <div class="demo1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center sectionTwo">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12">
+                <h3 class="themeFontColor text-uppercase">Stay updated with us</h3>
+                <p>Follow us &amp get our latest updates on popular social media</p>
+                <p>Lorem Ipsum is simply dummy text <a onClick="displayForm()">Click</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid">
+        <div class="row">
+            <div class="col-6 col-sm-3 col-md-3">
+                <a href="#">
+                    <i class="fa fa-facebook w-100"></i>
+                    <span class="text-uppercase">Facebook</span>
+                </a>
+            </div>
+            <div class="col-6 col-sm-3 col-md-3">
+                <a href="#">
+                    <i class="fa fa-instagram w-100"></i>
+                    <span class="text-uppercase">Instagram</span>
+                </a>
+            </div>
+            <div class="col-6 col-sm-3 col-md-3">
+                <a href="#">
+                    <i class="fa fa-twitter w-100"></i>
+                    <span class="text-uppercase">Twitter</span>
+                </a>
+            </div>
+            <div class="col-6 col-sm-3 col-md-3">
+                <a href="#">
+                    <i class="fa fa-linkedin w-100"></i>
+                    <span class="text-uppercase">Linkedin</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="container-fluid hiddenForm">
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4 m-auto bgWhite form">
+                        <i class="fa fa-times" onClick="closeForm()"></i>
+                        <form class="py-5 px-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Name" name="" id="uname">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="E-Mail" name="" id="uemail">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Phone Number" name="" id="unumber">
+                            </div>
+                            <div class="form-group text-center mb-0">
+                                <input type="button" class="btn themeBgColor" name="" value="Submit" onclick="sendemail()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="~/newdesign/js/Timerdscountdown.js"></script>
+
+    <script type="text/javascript">
+        function displayForm() {
+            $('.hiddenForm').css('display', 'block');
+        }
+        function closeForm() {
+            $('.hiddenForm').css('display', 'none');
+        }
+
+        jQuery(document).ready(function ($) {
+            $('.demo1').dsCountDown({
+                endDate: new Date("May 05, 2018 23:59:00")
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script>
+        function sendemail() {
+            var name = $('#uname').val();
+            var email = $('#uemail').val();
+            var mobile = $('#unumber').val();
+            if (name == '') { alert("Please Enter Your Name"); $('#uname').focus(); }
+            else if (email == '') { alert("Please Enter Your Email-ID"); $('#uemail').focus(); }
+            else if (!IsEmail(email)) { alert('Invalid Email Address'); $('#uemail').focus(); }
+            else if (mobile == '') { alert("Please Enter Your Mobile Number"); $('#unumber').focus(); }
+            else if (!IsNumber(mobile)) { alert('Invalid Mobile Number'); $('#unumber').focus(); }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: "/PreLaunch/SendEmail?name=" + name + "&&email=" + email + "&&mobile=" + mobile,
+                    success: function (data) {
+                        alert("Response recorded");
+                        closeForm();
+                        $('#uname').val('');
+                        $('#uemail').val('');
+                        $('#unumber').val('');
+                    }
+                });
+            }
+        }
+
+        function IsEmail(email) {
+            var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+            var valid = emailReg.test(email);
+
+            if (!valid) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function IsNumber(mobile) {
+            var mobileReg = /^[1-9]{1}[0-9]{9}$/;
+            var valid = mobileReg.test(mobile);
+
+            if (!valid) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+</body>
+</html>
