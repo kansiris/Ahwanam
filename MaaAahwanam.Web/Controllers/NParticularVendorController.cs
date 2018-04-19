@@ -25,7 +25,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.count = 2;
             if (m == "AWC")
                 WhishList(type, id, vid, "add", ""); //count++;
-
+            if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
             if (type == "Conventions" || type == "Resorts" || type == "Hotels")
                 type = "Venue";
             if (type == "Mehendi" || type == "Pandit")
@@ -60,7 +60,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.particularOther = Otherrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
 
             string price = "";
-            if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall")
+            if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue")
             {
                 if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.ServiceCost.ToString(); };
             }
@@ -89,7 +89,9 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.servicetypeprice = price;
 
             //Loading Vendor deals
+            //if (type.Split(',').Count() > 1) type = type.Split(',')[0];
             if (type == "Venues") type = "Venue";
+            
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type);
             return View();
         }

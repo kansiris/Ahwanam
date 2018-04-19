@@ -26,7 +26,7 @@
                     }
 
                 </div>
-                <div class="row w-100 mx-0 my-15">
+                <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
                         <div class="w-100 title">@ViewBag.singledeal.businessname</div>
                         <div class="w-100 tags my-15">
@@ -340,7 +340,7 @@
                                             </div>*@
                     <div class="block px-2 w-100">
                         <h6 class="d-inline-block">
-                            <a href="#dealDescrption" class="themeColor">Available Deals</a>
+                            <a href="#dealDescrption" class="themeColor secondaryFont">Available Deals</a>
                             <div class="blackBorder"></div>
                         </h6>
                         @if (ViewBag.singledeal1 != null)
@@ -442,7 +442,7 @@
 
                             </div>
 
-                            <div class="w-100 mt-3 eventDate">
+                            @*<div class="w-100 mt-3 eventDate">
                                 <div class="date-picker">
                                     <div class="input">
                                         <div class="result nexaBold">Occasion Date: <span id="date"></span></div>
@@ -450,7 +450,15 @@
                                     </div>
                                     <div class="calendar"></div>
                                 </div>
+                            </div>*@
+
+                            <div class="w-100 mt-3 eventDate">
+                                <div class="datentime w-100">
+                                    <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Date Here" />
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </div>
                             </div>
+
 
 
 
@@ -621,6 +629,19 @@
 </div>
 
 @section scripts{
+<script type="text/javascript">
+  /*--- Date and Time ----*/
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en',
+timepicker:false,
+format:'d/m/Y',
+minDate:'-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+maxDate:'+1970/03/02'//tomorrow is maximum date calendar
+});
+/*------------ Date and Time --------------*/
+</script>
+
     <script>
         $(document).ready(function () {
             var owl = $('.owl-carousel');
@@ -730,7 +751,7 @@
         $(".bookNow").click(function () {
             if ($("select.eventType").find("option:selected").val() == '') {
                 alert("Please select Event type");
-            } else if ($(".date-picker .result span").text() == '') {
+            } else if ($("#datetimepicker").val() == '') {
                 alert("Please select event date");
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
                 alert("Please select Menu type");
@@ -743,7 +764,7 @@
                 var type = '@Request.QueryString["type"]';
                 var vid = $('input#vid').val();
                 var id = '@Request.QueryString["id"]';
-                var date = $(".date-picker .result span").text();
+                var date = $("#datetimepicker").val();
                 var price = $("select.pricePerPlate").find("option:selected").text();
                 var price1 = price.split('~')[0];
                 var nop = $(".noOfPeoples input[type='number']").val();
@@ -785,7 +806,7 @@
         $(".bookNow1").click(function () {
             if ($("select.eventType").find("option:selected").val() == '') {
                 alert("Please select Event type");
-            } else if ($(".date-picker .result span").text() == '') {
+            } else if ($("#datetimepicker").val() == '') {
                 alert("Please select event date");
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
                 alert("Please select Menu type");
@@ -794,7 +815,7 @@
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                // var etype1 = $("select.eventType").find("option:selected").val();
                 var etype1 = $('#selectbox1').val();
-                var date = $(".date-picker .result span").text();
+                var date = $("#datetimepicker").val();
                 var price = $("select.pricePerPlate").find("option:selected").text();
               //  alert(price);
                 var price1 = price.split('~')[0];

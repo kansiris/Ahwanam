@@ -61,9 +61,11 @@ namespace MaaAahwanam.Web.Controllers
 
         public PartialViewResult SortVendorsBasedOnLocation(string search, string type, string location)
         {
-            if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement" ,"Venues"}.Contains(type))
+            if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement", "Venues" }.Contains(type))
             { type = "Venue"; }
-            var value = (type == null) ? "Venue" : type;
+            if (type == "Convention") type = "Convention Hall";
+            if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
+            var value = (type == null || type == "Venues") ? "Venue" : type;
             ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V", value).Where(m => m.landmark == location).Take(6).ToList() : vendorProductsService.Getsearchvendorproducts_Result(search, value).Take(6).ToList(); //.Where(m => m.landmark == location)
             return PartialView();
         }

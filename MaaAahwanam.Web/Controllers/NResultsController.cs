@@ -53,7 +53,7 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView();
             }
 
-            
+
             loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             count = (count != "undefined" && count != "") ? count : "10";
@@ -134,14 +134,31 @@ namespace MaaAahwanam.Web.Controllers
             int takecount = (L5 != null) ? int.Parse(L5) : 6;
             //if (new string[] { "Mehendi", "Pandit" }.Contains(type))
             //{
-                ViewBag.type = type;
-                //if (budget != "") budget = budget; else budget = "100";
-                budget = (budget != "undefined" && budget != "") ? budget : "100";
-                var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, "").Where(m => m.subtype == type);//.Where(m=>m.cit);
-                ViewBag.others = data.Take(takecount);
-                int recordcount = data.Count();
-                ViewBag.count = (recordcount >= takecount) ? "1" : "0";
-                return PartialView();
+            //ViewBag.type = type;
+            //if (budget != "") budget = budget; else budget = "100";
+            budget = (budget != "undefined" && budget != "") ? budget : "100";
+            //var data = vendorProductsService.Getfiltervendors_Result(stype, loc, budget, "").Where(m => m.subtype == stype);//.Where(m=>m.cit);
+
+            var data = vendorProductsService.Getfiltervendors_Result("Other", loc, budget, count);
+            string[] venuetypes = { "Mehendi", "Pandit"};
+            List<string> matchingvenues = venuetypes.Intersect(stype.Split(',')).ToList();//String.Join(",", venuetypes.Intersect(stype.Split(',')).ToList());
+            if (stype.Split(',').Contains("Mehendi") || stype.Split(',').Contains("Pandit"))
+            {
+                var sortedlist = new List<filtervendors_Result>();
+                for (int i = 0; i < matchingvenues.Count; i++)
+                {
+                    sortedlist.AddRange(data.Where(m => m.subtype == matchingvenues[i]).ToList());
+                }
+                data = sortedlist;
+            }
+
+            ViewBag.type = String.Join(",", matchingvenues);
+
+
+            ViewBag.others = data.Take(takecount);
+            int recordcount = data.Count();
+            ViewBag.count = (recordcount >= takecount) ? "1" : "0";
+            return PartialView();
             //}
             //return PartialView();
         }

@@ -43,7 +43,7 @@ namespace MaaAahwanam.Web.Controllers
                     var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
                     ViewBag.emailid = userdata1.UserName;
                     var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                    ViewBag.order = orders;
+                    ViewBag.order = orders.OrderByDescending(m=>m.OrderId);
                     // OrderByDescending(m => m.OrderId).Take(10);
                     //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
                     //decimal total = cartlist.Sum(s => s.TotalPrice);
