@@ -138,23 +138,29 @@ namespace MaaAahwanam.Web.Controllers
             //if (budget != "") budget = budget; else budget = "100";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             //var data = vendorProductsService.Getfiltervendors_Result(stype, loc, budget, "").Where(m => m.subtype == stype);//.Where(m=>m.cit);
-
             var data = vendorProductsService.Getfiltervendors_Result("Other", loc, budget, count);
-            string[] venuetypes = { "Mehendi", "Pandit"};
-            List<string> matchingvenues = venuetypes.Intersect(stype.Split(',')).ToList();//String.Join(",", venuetypes.Intersect(stype.Split(',')).ToList());
-            if (stype.Split(',').Contains("Mehendi") || stype.Split(',').Contains("Pandit"))
+            if (stype != "")
             {
-                var sortedlist = new List<filtervendors_Result>();
-                for (int i = 0; i < matchingvenues.Count; i++)
+                string[] venuetypes = { "Mehendi", "Pandit" };
+                List<string> matchingvenues = venuetypes.Intersect(stype.Split(',')).ToList();//String.Join(",", venuetypes.Intersect(stype.Split(',')).ToList());
+                if (stype.Split(',').Contains("Mehendi") || stype.Split(',').Contains("Pandit"))
                 {
-                    sortedlist.AddRange(data.Where(m => m.subtype == matchingvenues[i]).ToList());
+                    var sortedlist = new List<filtervendors_Result>();
+                    for (int i = 0; i < matchingvenues.Count; i++)
+                    {
+                        sortedlist.AddRange(data.Where(m => m.subtype == matchingvenues[i]).ToList());
+                    }
+                    data = sortedlist;
                 }
-                data = sortedlist;
+
+                ViewBag.type = String.Join(",", matchingvenues);
+            
             }
-
-            ViewBag.type = String.Join(",", matchingvenues);
-
-
+            else
+            {
+                data = data.Where(m => m.subtype == type).ToList();
+                ViewBag.type = type;
+            }
             ViewBag.others = data.Take(takecount);
             int recordcount = data.Count();
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
