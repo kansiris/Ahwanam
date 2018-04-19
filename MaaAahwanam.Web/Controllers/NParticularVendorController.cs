@@ -76,7 +76,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 if (ViewBag.particularDecorator != null) { price = ViewBag.particularDecorator.StartingPrice.ToString(); };
             }
-            else if (type == "Mehendi" || type == "Pandit")
+            else if (type == "Mehendi" || type == "Pandit" || type == "Other")
             {
                 if (ViewBag.particularOther != null) { price = ViewBag.particularOther.ItemCost.ToString(); };
             }
