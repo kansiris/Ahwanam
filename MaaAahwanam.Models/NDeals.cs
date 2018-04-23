@@ -24,6 +24,7 @@ namespace MaaAahwanam.Models
         public string FoodType { get; set; }
         public string MinMemberCount { get; set; }
         public string MaxMemberCount { get; set; }
-        public string TermsConditions { get; set; }        
+        public string TermsConditions { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }
