@@ -61,7 +61,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public PartialViewResult SortVendorsBasedOnLocation(string search, string type, string location)
         {
-            if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement", "Venues" }.Contains(type))
+            if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement", "Venues", "Function Hall" , "Banquet Hall" }.Contains(type))
             { type = "Venue"; }
             if (type == "Convention") type = "Convention Hall";
             if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
