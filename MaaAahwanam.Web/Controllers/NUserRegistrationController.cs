@@ -107,7 +107,7 @@ namespace MaaAahwanam.Web.Controllers
                         return Redirect(perfecturl);
                     if (userResponse.UserType == "Vendor")
                         //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
-                        return RedirectToAction("Index", "NHomePage");
+                        return RedirectToAction("Index", "NVendorAddPackage", new { id = vendorMaster.Id });
 
                     else
                         ViewBag.userid = userResponse.UserLoginId;

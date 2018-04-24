@@ -5,6 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MaaAahwanamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="addvendorservices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="allnotifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AllVendorList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ServicType" Type="nvarchar" Mode="In" />
@@ -358,6 +361,9 @@
           <FunctionImport Name="speventvdeals" ReturnType="Collection(MaaAahwanamModel.speventvdeals_Result)">
             <Parameter Name="vid" Mode="In" Type="String" />
             <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="addvendorservices" ReturnType="Collection(MaaAahwanamModel.addvendorservices_Result)">
+            <Parameter Name="id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -1167,6 +1173,11 @@
           <Property Type="String" Name="MinMemberCount" Nullable="true" />
           <Property Type="String" Name="MaxMemberCount" Nullable="true" />
           <Property Type="String" Name="TermsConditions" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="addvendorservices_Result">
+          <Property Type="String" Name="subtype" Nullable="true" />
+          <Property Type="String" Name="type" Nullable="false" MaxLength="13" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2188,6 +2199,15 @@
                 <ScalarProperty Name="MinMemberCount" ColumnName="MinMemberCount" />
                 <ScalarProperty Name="MaxMemberCount" ColumnName="MaxMemberCount" />
                 <ScalarProperty Name="TermsConditions" ColumnName="TermsConditions" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="addvendorservices" FunctionName="MaaAahwanamModel.Store.addvendorservices">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.addvendorservices_Result">
+                <ScalarProperty Name="subtype" ColumnName="subtype" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

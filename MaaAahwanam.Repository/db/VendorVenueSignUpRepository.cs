@@ -50,11 +50,19 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorsCatering;
         }
+        public Package Addpackage(Package package)
+        {
+            _dbContext.Package.Add(package);
+            _dbContext.SaveChanges();
+            return package;
+        }
 
         public List<VendorVenue> GetVendorVenue(long id)
         {
             return _dbContext.VendorVenue.Where(p => p.VendorMasterId == id).ToList();
         }
+
+       
 
         public List<VendorsCatering> GetVendorCatering(long id)
         {

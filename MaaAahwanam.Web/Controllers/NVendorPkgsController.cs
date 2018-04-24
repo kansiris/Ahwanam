@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MaaAahwanam.Web.Controllers
 {
-    public class NVendorPackagesController : Controller
+    public class NVendorPkgsController : Controller
     {
         // GET: NVendorPackages
         public ActionResult Index()

@@ -596,5 +596,14 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<speventvdeals_Result>("speventvdeals", vidParameter, typeParameter);
         }
+    
+        public virtual ObjectResult<addvendorservices_Result> addvendorservices(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<addvendorservices_Result>("addvendorservices", idParameter);
+        }
     }
 }

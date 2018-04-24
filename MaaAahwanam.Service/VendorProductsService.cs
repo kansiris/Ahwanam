@@ -16,7 +16,10 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.filtervendors_Result(type, f1, f2, f3);
         }
-
+        public List<addvendorservices_Result> getvendorsubid(string id)
+        {
+            return vendorProductsRepository.getvendorsubid(id);
+        }
         public List<searchvendorproducts_Result> Getsearchvendorproducts_Result(string search,string type)
         {
             return vendorProductsRepository.Getsearchvendorproducts_Result(search,type);
