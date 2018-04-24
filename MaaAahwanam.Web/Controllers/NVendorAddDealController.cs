@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MaaAahwanam.Models;
+using MaaAahwanam.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +11,94 @@ namespace MaaAahwanam.Web.Controllers
     public class NVendorAddDealController : Controller
     {
         // GET: NVendorAddDeal
-        public ActionResult Index()
+        VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+        VendorProductsService vendorProductsService = new VendorProductsService();
+        public ActionResult Index(string id)
         {
+            var deals = vendorProductsService.getvendorsubid(id);
+            ViewBag.venuerecord = deals;
+            ViewBag.vendormasterid = id;
+            ViewBag.id = id;
             return View();
         }
-    }
+
+        public ActionResult adddeal(string id, string DealName, string OriginalPrice, string type, string foodtype, string DealPrice, string catogary,string minGuests,string maxGuests, string StartDate, string EndDate, string ddesc)
+        {
+            //if (type == null)
+            //{
+
+            //    return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+            //if (DealName == null)
+            //{
+
+            //    return Content("<script> alert('enter package name');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+            //if (OriginalPrice == null)
+            //{
+
+            //    return Content("<script> alert('enter package price');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+            //if (DealPrice == null)
+            //{
+
+            //    return Content("<script> alert('enter desciption');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+
+            //if (DealPrice == null)
+            //{
+
+            //    return Content("<script> alert('enter desciption');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+            //if (DealPrice == null)
+            //{
+
+            //    return Content("<script> alert('enter desciption');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+            //if (DealPrice == null)
+            //{
+
+            //    return Content("<script> alert('enter desciption');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+            //if (DealPrice == null)
+            //{
+
+            //    return Content("<script> alert('enter desciption');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+            //if (DealPrice == null)
+            //{
+
+            //    return Content("<script> alert('enter desciption');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+            //}
+
+
+            DateTime date = DateTime.Now;
+            string[] word = type.Split(',');
+            string subid = word[0];
+            string type1 = word[1];
+            string subtype = word[2];
+
+            NDeals deals = new NDeals();
+            deals.VendorId = Convert.ToInt64(id);
+            deals.VendorSubId = Convert.ToInt64(subid);
+            deals.VendorSubType = subtype;
+            deals.VendorType = type1;
+            deals.UpdatedDate = date;
+            deals.OriginalPrice = Decimal.Parse(OriginalPrice);
+            deals.MinMemberCount = minGuests;
+            deals.MaxMemberCount = maxGuests;
+            deals.FoodType = foodtype;
+            deals.DealPrice =  decimal.Parse(DealPrice);
+            deals.DealStartDate = Convert.ToDateTime(StartDate);
+            deals.DealEndDate = Convert.ToDateTime(EndDate);
+            deals.DealDescription = ddesc;
+            deals.Category = catogary;
+            deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";
+            deals = vendorVenueSignUpService.adddeal(deals);
+
+
+            return Content("<script> alert('alert');location.href='"+Url.Action("Index","NVendorAddDeal",new {id =id }) + "'</script>");
+        }
+
+        }
 }

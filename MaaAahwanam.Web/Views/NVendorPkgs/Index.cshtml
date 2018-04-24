@@ -3,12 +3,19 @@
     Layout = "~/Views/SharedWeb/NVendorMasterPage.cshtml";
 }
 
+@using MaaAahwanam.Web.Custom
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    var user = (CustomPrincipal)HttpContext.Current.User;
+    if (user.UserType == "Vendor")
+    {
+      
 <div class="page-content container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="row">
                 <div class="col-sm-6 col-md-3">
-                    <a class="btn btn-block btn-primary" href="/NVendorAddPackage">Add Package</a>
+                    <a class="btn btn-block btn-primary" href="/NVendorAddPackage?id=@ViewBag.id">Add Package</a>
                 </div>
             </div>
             <div class="row">
@@ -54,3 +61,5 @@
         </div>
     </div>
 </div>
+    }
+}

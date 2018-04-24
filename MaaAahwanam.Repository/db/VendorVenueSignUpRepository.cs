@@ -57,6 +57,13 @@ namespace MaaAahwanam.Repository.db
             return package;
         }
 
+        public NDeals Adddeals(NDeals deals)
+        {
+            _dbContext.NDeal.Add(deals);
+            _dbContext.SaveChanges();
+            return deals;
+        }
+
         public List<VendorVenue> GetVendorVenue(long id)
         {
             return _dbContext.VendorVenue.Where(p => p.VendorMasterId == id).ToList();

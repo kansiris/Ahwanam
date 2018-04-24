@@ -107,7 +107,7 @@ namespace MaaAahwanam.Web.Controllers
                         return Redirect(perfecturl);
                     if (userResponse.UserType == "Vendor")
                         //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
-                        return RedirectToAction("Index", "NVendorAddPackage", new { id = vendorMaster.Id });
+                        return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
 
                     else
                         ViewBag.userid = userResponse.UserLoginId;
@@ -336,7 +336,17 @@ namespace MaaAahwanam.Web.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
-
+        public ActionResult changeid(string id)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                string email = userLoginDetailsService.Getusername(long.Parse(id));
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                //return View("AvailableServices", vendorMaster.Id);
+                return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+            }
+            return RedirectToAction("SignOut", "NUserRegistration");
+        }
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]

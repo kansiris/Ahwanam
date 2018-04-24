@@ -97,6 +97,11 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.Addpackage(package);
         }
 
+
+        public NDeals adddeal(NDeals deals)
+        {
+            return vendorVenueSignUpRepository.Adddeals(deals);
+        }
         //Catering Area
 
         public VendorsCatering AddVendorCatering(VendorsCatering vendorsCatering)

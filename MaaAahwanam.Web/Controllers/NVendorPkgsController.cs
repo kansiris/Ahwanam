@@ -9,8 +9,10 @@ namespace MaaAahwanam.Web.Controllers
     public class NVendorPkgsController : Controller
     {
         // GET: NVendorPackages
-        public ActionResult Index()
+        public ActionResult Index(string id )
+
         {
+            ViewBag.id = id;
             return View();
         }
     }
