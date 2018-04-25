@@ -26,5 +26,6 @@ namespace MaaAahwanam.Models
         public string MaxMemberCount { get; set; }
         public string TermsConditions { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public string TimeSlot { get; set; }
     }
 }
