@@ -20,6 +20,14 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.getvendorsubid(id);
         }
+        public List<SPGETNpkg_Result> getvendorpkgs(string id)
+        {
+            return vendorProductsRepository.getvendorpkgs(id);
+        }
+        public List<SPGETNDeal_Result> getvendordeals(string id)
+        {
+            return vendorProductsRepository.getvendordeals(id);
+        }
         public List<searchvendorproducts_Result> Getsearchvendorproducts_Result(string search,string type)
         {
             return vendorProductsRepository.Getsearchvendorproducts_Result(search,type);
