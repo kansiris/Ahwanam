@@ -26,6 +26,20 @@ namespace MaaAahwanam.Repository.db
             return maaAahwanamEntities.vendorproducts(type).ToList();
         }
 
+        public List<addvendorservices_Result> getvendorsubid(string id)
+        {
+            return maaAahwanamEntities.addvendorservices(Convert.ToInt64(id)).ToList();
+        }
+
+        public List<SPGETNpkg_Result> getvendorpkgs(string id)
+        {
+            return maaAahwanamEntities.SPGETNpkg(Convert.ToInt64(id)).ToList();
+        }
+        public List<SPGETNDeal_Result> getvendordeals(string id)
+        {
+            return maaAahwanamEntities.SPGETNDeal(Convert.ToInt64(id)).ToList();
+        }
+
         public List<searchvendors_Result> GetSearchedVendorRecords(string type,string param)
         {
             return maaAahwanamEntities.searchvendors(type,param).ToList();

@@ -596,5 +596,32 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<speventvdeals_Result>("speventvdeals", vidParameter, typeParameter);
         }
+    
+        public virtual ObjectResult<addvendorservices_Result> addvendorservices(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<addvendorservices_Result>("addvendorservices", idParameter);
+        }
+    
+        public virtual ObjectResult<SPGETNDeal_Result> SPGETNDeal(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETNDeal_Result>("SPGETNDeal", idParameter);
+        }
+    
+        public virtual ObjectResult<SPGETNpkg_Result> SPGETNpkg(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETNpkg_Result>("SPGETNpkg", idParameter);
+        }
     }
 }

@@ -7,48 +7,86 @@
 <div class="page-content container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            <div class="nav-tabs-vertical">
-                <div class="tab-content padding-vertical-15">
-                    <form class="">
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="DealName" placeholder="Deal Name" autocomplete="off">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <input type="text" class="form-control" name="OriginalPrice" placeholder="Original Price" autocomplete="off">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <input type="text" class="form-control" name="DealPrice" placeholder="Deal Price" autocomplete="off">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <input type="text" class="form-control" name="Guests" placeholder="Minimum Number Of Guests" autocomplete="off">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <input type="text" class="form-control" name="StartDate" placeholder="Start Date" autocomplete="off">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <input type="text" class="form-control" name="EndDate" placeholder="End Date" autocomplete="off">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="inputUnchecked">
-                                    <label for="inputUnchecked">Morning</label>
+            @using (Html.BeginForm("adddeal", "NVendorAddDeal", FormMethod.Post))
+            {
+                <div class="nav-tabs-vertical">
+                    <div class="tab-content padding-vertical-15">
+                        <form class="">
+                            <input type="hidden" class="form-control" name="id" value="@ViewBag.vendormasterid" autocomplete="off">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" name="DealName" placeholder="Deal Name" autocomplete="off">
                                 </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="inputUnchecked">
-                                    <label for="inputUnchecked">Evening</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" name="OriginalPrice" placeholder="Original Price" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" name="DealPrice" placeholder="Deal Price" autocomplete="off">
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <select class="form-control form-control-lg" id="selectbox1" name="catogary">
+                                        <option> Select Catogery</option>
+                                        <option value="Engagement"><span>Engagement</span></option>
+                                        <option value="Birthdays"><span>Birthdays</span></option>
+                                        <option value="Kitty Cocktails Parties"><span>Kitty Cocktails Parties</span></option>
+                                        <option value="Corporates Cocktail parties"><span>Corporates Cocktail parties</span></option>
+                                        <option value="Annual Day Celebrations"><span>Annual Day Celebrations</span></option>
+                                        <option value="Corporate Buffet Lunch / Dinner"><span>Corporate Buffet Lunch / Dinner</span></option>
+                                        <option value="Honeymoon packages Rooms CP Plan"><span>Honeymoon packages Rooms CP Plan</span></option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <select class="form-control form-control-lg" id="selectbox2" name="type">
+                                        <option >Select Type</option>
+                                        @if (ViewBag.venuerecord != null)
+                                        {
+                                            foreach (var item in ViewBag.venuerecord)
+                                            {
+                                                <option value="@item.subid,@item.type,@item.subtype"><span>@item.type - @item.subtype</span></option>}
+                                        }
+                                        @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input class="icheckbox-primary" type="radio" name="foodtype" value="Veg" class="form-control" checked> Veg<br>
+                                    <input class="icheckbox-primary" type="radio" name="foodtype" value="Non-Veg" class="form-control"> Non-Veg<br>
+                                    
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" name="minGuests" placeholder="Minimum Number Of Guests" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" name="maxGuests" placeholder="Maximum Number Of Guests" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" name="StartDate" placeholder="Start Date" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" name="EndDate" placeholder="End Date" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="inputUnchecked">
+                                        <label for="inputUnchecked">Morning</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="inputUnchecked">
+                                        <label for="inputUnchecked">Evening</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" placeholder="Deal Description"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <textarea class="form-control" name="ddesc" placeholder="Deal Description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+
+            }
         </div>
     </div>
 </div>

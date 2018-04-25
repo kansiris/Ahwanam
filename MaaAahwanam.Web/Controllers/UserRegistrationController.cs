@@ -101,7 +101,9 @@ namespace MaaAahwanam.Web.Controllers
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
                     //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
                     if (userResponse.UserType == "Vendor")
-                        return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                         return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                       
+                    
                     else
                         return RedirectToAction("Index", "HomePage");
                 }

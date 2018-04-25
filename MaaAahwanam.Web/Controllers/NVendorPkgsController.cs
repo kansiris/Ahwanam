@@ -8,15 +8,15 @@ using System.Web.Mvc;
 
 namespace MaaAahwanam.Web.Controllers
 {
-    public class NVendorDealsController : Controller
+    public class NVendorPkgsController : Controller
     {
         VendorProductsService vendorProductsService = new VendorProductsService();
 
-        // GET: NVendorDeals
-        public ActionResult Index(string id)
+        // GET: NVendorPackages
+        public ActionResult Index(string id )
         {
-            var deals = vendorProductsService.getvendordeals(id);
-            ViewBag.dealrecord = deals;
+            var pkgs = vendorProductsService.getvendorpkgs(id);
+            ViewBag.pacakagerecord = pkgs;
             ViewBag.id = id;
             return View();
         }
