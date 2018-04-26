@@ -97,6 +97,10 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.Addpackage(package);
         }
 
+        public Package updatepack(string id ,Package package)
+        {
+            return vendorVenueSignUpRepository.updatepackage(long.Parse(id),package);
+        }
 
         public NDeals adddeal(NDeals deals)
         {
