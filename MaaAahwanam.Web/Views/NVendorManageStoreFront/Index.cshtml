@@ -8,6 +8,16 @@
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="nav-tabs-vertical">
+                <select id="serviceselection">
+                    <option>Select Service Type</option>
+                    <option value="Venue">Venue</option>
+                    <option value="Catering">Catering</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Decorator">Decorator</option>
+                    <option value="Other">Others</option>
+                    @*<option value="Pandit">Pandit</option>*@
+                </select>
+                <select id="subcategory"></select>
                 <ul class="nav nav-tabs margin-right-25" data-plugin="nav-tabs" role="tablist">
                     <li class="active" role="presentation"><a data-toggle="tab" href="#exampleTabsLeftOne" aria-controls="exampleTabsLeftOne" role="tab" aria-expanded="true">About Us</a></li>
                     <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftTwo" aria-controls="exampleTabsLeftTwo" role="tab" aria-expanded="false">Amenities</a></li>
@@ -17,31 +27,23 @@
                 <div class="tab-content padding-vertical-15">
                     <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
                         <h4 class="example-title">Business Name</h4>
-                        <input type="text" class="form-control" id="BusinessName" name="BusinessName" /><br>
+                        <input type="text" class="form-control" id="BusinessName" name="BusinessName" value="@ViewBag.Vendor.BusinessName" readonly/><br>
                         <h4 class="example-title">Mobile</h4>
-                        <input type="text" class="form-control" id="ContactNumber" name="ContactNumber" /><br>
+                        <input type="text" class="form-control" id="ContactNumber" name="ContactNumber" value="@ViewBag.Vendor.ContactNumber"/><br>
                         <h4 class="example-title">Email ID</h4>
-                        <input type="text" class="form-control" id="EmailId" name="EmailId" /><br>
+                        <input type="text" class="form-control" id="EmailId" name="EmailId" value="@ViewBag.Vendor.EmailId" readonly/><br>
                         <h4 class="example-title">Land Line</h4>
-                        <input type="text" class="form-control" id="LandlineNumber" name="LandlineNumber" /><br>
+                        <input type="text" class="form-control" id="LandlineNumber" name="LandlineNumber" value="@ViewBag.Vendor.LandlineNumber"/><br>
                         <h4 class="example-title">URL</h4>
-                        <input type="text" class="form-control" id="Url" name="Url" /><br>
+                        <input type="text" class="form-control" id="Url" name="Url" value="@ViewBag.Vendor.Url"/><br>
                         <h4 class="example-title">Description</h4>
-                        <textarea class="form-control" id="textareaDefault" rows="3"></textarea><br>
+                        <textarea class="form-control" id="mainDescription" name="mainDescription" rows="3" value="@ViewBag.Vendor.Description"></textarea><br>
                         <div class="col-md-4">
-                            <button type="button" class="btn btn-block btn-primary">Submit</button>
+                            <button type="button" class="btn btn-block btn-primary" onclick="updatedetails('one')">Submit</button>
                         </div>
                     </div>
                     <div class="tab-pane" id="exampleTabsLeftTwo" role="tabpanel">
-                        <select id="serviceselection">
-                            <option>Select Service Type</option>
-                            <option value="Venue">Venue</option>
-                            <option value="Catering">Catering</option>
-                            <option value="Photography">Photography</option>
-                            <option value="Decorator">Decorator</option>
-                            <option value="Mehendi">Mehendi Artist</option>
-                            <option value="Pandit">Pandit</option>
-                        </select>
+
                         <div id="VenueAmenities" style="display:none">
                             <h2>Venue</h2>
                             <div class="checkbox-custom checkbox-primary">
@@ -232,23 +234,23 @@
                         <form class="">
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <input type="text" class="form-control" name="Minimumseats" placeholder="Name of the Hall" autocomplete="off">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name of the Hall" autocomplete="off">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <input type="text" class="form-control" name="Sqft" placeholder="Hall Dimentions" autocomplete="off">
+                                    <input type="text" class="form-control" id="Dimentions" name="Dimentions" placeholder="Hall Dimentions" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <input type="text" class="form-control" name="Minimumseats" placeholder="Minimum Seats" autocomplete="off">
+                                    <input type="text" class="form-control" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Minimum Seats" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <input type="text" class="form-control" name="lastname" placeholder="Maximum Seats" autocomplete="off">
+                                    <input type="text" class="form-control" id="Maximumcapacity" name="Maximumcapacity" placeholder="Maximum Seats" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="Briefly Describe Yourself"></textarea>
+                                <textarea class="form-control" placeholder="Briefly Describe Yourself" id="Description" name="Description"></textarea>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="updatedetails('three')">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -256,30 +258,26 @@
                         <form class="">
                             <div class="row">
                                 <div class="form-group col-sm-12">
-                                    <input type="text" class="form-control" name="address" placeholder="Address" autocomplete="off">
+                                    <input type="text" class="form-control" id="Address" name="Address" placeholder="Address" autocomplete="off">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <input type="text" class="form-control" name="Landmark" placeholder="Landmark" autocomplete="off">
+                                    <input type="text" class="form-control" id="Landmark" name="Landmark" placeholder="Landmark" autocomplete="off">
                                 </div>
-
-                                @*<div class="form-group col-sm-6">
-                                        <input type="text" class="form-control" name="lastname" placeholder="Maximum Seats" autocomplete="off">
-                                    </div>*@
                                 <div class="form-group col-md-12">
-                                    <input type="text" class="form-control" name="City" placeholder="City" autocomplete="off">
+                                    <input type="text" class="form-control" id="City" name="City" placeholder="City" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm-12">
-                                    <input type="text" class="form-control" name="State" placeholder="State" autocomplete="off">
+                                    <input type="text" class="form-control" id="State" name="State" placeholder="State" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <input type="text" class="form-control" name="zipcode" placeholder="ZipCode" autocomplete="off">
+                                    <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="ZipCode" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <input type="text" class="form-control" name="GeoLocation" placeholder="GeoLocation" autocomplete="off">
+                                    <input type="text" class="form-control" id="GeoLocation" name="GeoLocation" placeholder="Geo Location" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="updatedetails('four')">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -294,8 +292,74 @@
         $('#serviceselection').on('change', function() {
             var selectedvalue = $(this).val();
             var id = '' + selectedvalue + 'Amenities';
-            $('#' + id + '').css('display','block');
-            //alert(id);
+            $('#' + id + '').css('display', 'block');
+            var subcat = [];
+            $.ajax({
+                url: "/NVendorManageStoreFront/filtercategories?type=" + selectedvalue,
+                success: function (result) {
+                    if (result == "Fail") {
+                        alert("Failed to Fetch data");
+                    }
+                    else {
+                        var selecttag = $('#subcategory').empty();
+                        $.each(result.split(','), function (i, option) {
+                            subcat[i] = "<option value='" + result.split(',')[i] + "'>" + result.split(',')[i] + "</option>";
+                        });
+                        $('#subcategory').empty().append(subcat);
+                    }
+                },
+                error: function (data)
+                { alert("Something Went Wrong Try Again Later"); }
+            });
         });
+    </script>
+
+    <script>
+        function updatedetails(val) {
+            var vendormaster = {
+                BusinessName: $('#BusinessName').val(),
+                ContactNumber: $('#ContactNumber').val(),
+                EmailId: $('#EmailId').val(),
+                LandlineNumber: $('#LandlineNumber').val(),
+                Url: $('#Url').val(),
+                Description: $('#mainDescription').val()
+            }
+
+            var vendorVenue = {
+                Address: $('#Address').val(),
+                Landmark: $('#Landmark').val(),
+                City: $('#City').val(),
+                State: $('#State').val(),
+                ZipCode: $('#ZipCode').val(),
+                GeoLocation: $('#GeoLocation').val(),
+                name: $('#name').val(),
+                Dimentions: $('#Dimentions').val(),
+                Minimumseatingcapacity: $('#Minimumseatingcapacity').val(),
+                Maximumcapacity: $('#Maximumcapacity').val(),
+                Description: $('#Description').val()
+            }
+            var category = $('#serviceselection').val();
+            var subcategory = $('#subcategory').val();
+            $.ajax({
+                url: '/NVendorManageStoreFront/UpdateStoreFront?command=' + val + 'category=' + category + '&&subcategory=' + subcategory,
+                type: "POST",
+                datatype: "json",
+                data: { vendormaster: vendormaster, vendorVenue: vendorVenue },
+                success: function (response) {
+                    if (response.Result == 'success') {
+
+                    }
+                    else if (response.Result == 'staffadded') {
+
+                    }
+                    else {
+                        errormsg("Failed To Update Profile");
+                    }
+                },
+                error: function (er) {
+                    errormsg("System Encountered Internal Error!!! Try Again After Some Time");
+                }
+            });
+        }
     </script>
 }
