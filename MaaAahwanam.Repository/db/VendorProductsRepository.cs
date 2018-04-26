@@ -35,6 +35,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.SPGETNpkg(Convert.ToInt64(id)).ToList();
         }
+        public List<SPGETpartpkg_Result> getpartpkgs(string id)
+        {
+            return maaAahwanamEntities.SPGETpartpkg(Convert.ToInt64(id)).ToList();
+        }
         public List<SPGETNDeal_Result> getvendordeals(string id)
         {
             return maaAahwanamEntities.SPGETNDeal(Convert.ToInt64(id)).ToList();

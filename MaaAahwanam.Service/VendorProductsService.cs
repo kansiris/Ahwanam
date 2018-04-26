@@ -24,6 +24,10 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.getvendorpkgs(id);
         }
+        public List<SPGETpartpkg_Result> getpartpkgs(string id)
+        {
+            return vendorProductsRepository.getpartpkgs(id);
+        }
         public List<SPGETNDeal_Result> getvendordeals(string id)
         {
             return vendorProductsRepository.getvendordeals(id);

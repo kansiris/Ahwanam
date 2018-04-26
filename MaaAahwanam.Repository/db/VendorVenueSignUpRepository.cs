@@ -56,6 +56,23 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return package;
         }
+        public Package updatepackage(long id,Package package)
+        {
+            var Getpackage = _dbContext.Package.Where(m => m.PackageID == id).FirstOrDefault();
+
+            package.PackageID = Getpackage.PackageID;
+            package.VendorId = Getpackage.VendorId;
+            package.VendorSubId = Getpackage.VendorSubId;
+            package.Category = Getpackage.Category;
+            package.VendorType = Getpackage.VendorType;
+            package.VendorSubType = Getpackage.VendorSubType;
+
+            _dbContext.Entry(Getpackage).CurrentValues.SetValues(package);
+            _dbContext.SaveChanges();
+
+            
+            return package;
+        }
 
         public NDeals Adddeals(NDeals deals)
         {
