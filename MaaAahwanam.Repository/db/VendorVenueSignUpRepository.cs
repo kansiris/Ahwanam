@@ -74,12 +74,50 @@ namespace MaaAahwanam.Repository.db
             return package;
         }
 
+
+        public string deletepackage(long id)
+        {
+            var list = _dbContext.Package.FirstOrDefault(m => m.PackageID == id);
+
+            _dbContext.Package.Remove(list);
+            _dbContext.SaveChanges();
+            return "success";
+
+        }
+        public string deletedeal(long id)
+        {
+            var list = _dbContext.NDeal.FirstOrDefault(m => m.DealID == id);
+
+            _dbContext.NDeal.Remove(list);
+            _dbContext.SaveChanges();
+            return "success";
+
+        }
+
         public NDeals Adddeals(NDeals deals)
         {
             _dbContext.NDeal.Add(deals);
             _dbContext.SaveChanges();
             return deals;
         }
+
+        public NDeals updatedeals(long id,NDeals deals)
+        {
+            var Getdeals = _dbContext.NDeal.Where(m => m.DealID == id).FirstOrDefault();
+
+            deals.DealID = Getdeals.DealID;
+            deals.VendorId = Getdeals.VendorId;
+            deals.VendorSubId = Getdeals.VendorSubId;
+            deals.Category = Getdeals.Category;
+            deals.VendorType = Getdeals.VendorType;
+            deals.VendorSubType = Getdeals.VendorSubType;
+            deals.FoodType = Getdeals.FoodType;
+            _dbContext.Entry(Getdeals).CurrentValues.SetValues(deals);
+            _dbContext.SaveChanges();
+            
+            return deals;
+        }
+
 
         public List<VendorVenue> GetVendorVenue(long id)
         {
