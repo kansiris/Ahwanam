@@ -44,5 +44,7 @@ namespace MaaAahwanam.Models
         public string ZipCode { get; set; }
         public string GeoLocation { get; set; }
         //public int tier { get; set; }
+        public string Dimentions { get; set; }
+        public string Description { get; set; }
     }
 }
