@@ -16,6 +16,7 @@ namespace MaaAahwanam.Models
         public string VendorType { get; set; }
         public string VendorSubType { get; set; }
         public string Category { get; set; }
+        public string DealName { get; set; }
         public DateTime? DealStartDate { get; set; }
         public DateTime? DealEndDate { get; set; }
         public decimal DealPrice { get; set; }
