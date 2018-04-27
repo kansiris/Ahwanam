@@ -1,18 +1,25 @@
 ﻿
 @{
-    ViewBag.Title = "Add Deal";
+    ViewBag.Title = "update Deal";
     Layout = "~/Views/SharedWeb/NVendorMasterPage.cshtml";
 }
 
 <div class="page-content container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            @using (Html.BeginForm("adddeal", "NVendorAddDeal", FormMethod.Post))
+            @using (Html.BeginForm("updatedeal", "NVendorDeals", FormMethod.Post))
             {
+
+                if (ViewBag.dealrecord1 != null)
+                {
+                    foreach (var item in ViewBag.dealrecord1)
+                    {
                 <div class="nav-tabs-vertical">
                     <div class="tab-content padding-vertical-15">
                         <form class="">
-                            <input type="hidden" class="form-control" name="id" value="@ViewBag.vendormasterid" autocomplete="off">
+                            <input type="hidden" class="form-control" name="vid" value="@item.VendorId" autocomplete="off">
+                            <input type="hidden" class="form-control" name="id" value="@item.DealID" autocomplete="off">
+
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <input type="text" class="form-control" name="DealName" placeholder="Deal Name" autocomplete="off">
@@ -25,38 +32,17 @@
                                 </div>
 
                                 <div class="form-group col-sm-6">
-                                    <select class="form-control form-control-lg" id="selectbox1" name="catogary">
-                                        <option> Select Catogery</option>
-                                        <option value="Engagement"><span>Engagement</span></option>
-                                        <option value="Birthdays"><span>Birthdays</span></option>
-                                        <option value="Kitty Cocktails Parties"><span>Kitty Cocktails Parties</span></option>
-                                        <option value="Corporates Cocktail parties"><span>Corporates Cocktail parties</span></option>
-                                        <option value="Annual Day Celebrations"><span>Annual Day Celebrations</span></option>
-                                        <option value="Corporate Buffet Lunch / Dinner"><span>Corporate Buffet Lunch / Dinner</span></option>
-                                        <option value="Honeymoon packages Rooms CP Plan"><span>Honeymoon packages Rooms CP Plan</span></option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <select class="form-control form-control-lg" id="selectbox2" name="type">
-                                        <option >Select Type</option>
-                                        @if (ViewBag.venuerecord != null)
-                                        {
-                                            foreach (var item in ViewBag.venuerecord)
-                                            {
-                                                <option value="@item.subid,@item.type,@item.subtype"><span>@item.type - @item.subtype</span></option>}
-                                        }
-                                        @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <input class="icheckbox-primary " type="radio" name="foodtype" value="Veg"  checked> Veg<br>
-                                                                        
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <input class="icheckbox-primary " type="radio" name="foodtype" value="Non-Veg"> Non-Veg<br>
+                                    <input type="text" class="form-control" name="Category" value="@item.Category" placeholder="@item.Category" autocomplete="off" disabled>
 
                                 </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" name="type" value="@item.VendorType - @item.VendorSubType" placeholder="@item.VendorType - @item.VendorSubType" autocomplete="off" disabled>
 
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" name="food type" value="@item.FoodType" placeholder="@item.FoodType" autocomplete="off" disabled>
+
+                                </div>
                                 <div class="form-group col-sm-6">
                                     <input type="number" class="form-control" name="minGuests" placeholder="Minimum Number Of Guests" autocomplete="off">
                                 </div>
@@ -64,12 +50,11 @@
                                     <input type="number" class="form-control" name="maxGuests" placeholder="Maximum Number Of Guests" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    @*<input type="date" class="form-control" name="StartDate" placeholder="Start Date (YYYY/MM/DD)" autocomplete="off">*@
-                                    <input placeholder="Start Date" name="StartDate" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
-
+                                    @*<input type="date" class="form-control" name="StartDate" placeholder="Start Date" autocomplete="off">*@
+                                    <input placeholder="Start Date" name="StartDate" class="textbox-n" type="text" onfocus="(this.type='date')" id="date"> 
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    @*<input type="date" class="form-control" name="EndDate" placeholder="End Date (YYYY/MM/DD)" autocomplete="off">*@
+                                    @*<input type="date" class="form-control" name="EndDate" placeholder="End Date" autocomplete="off">*@
                                     <input placeholder="End Date" name="EndDate" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">
 
                                 </div>
@@ -93,7 +78,8 @@
                         </form>
                     </div>
                 </div>
-
+                    }
+                }
             }
         </div>
     </div>

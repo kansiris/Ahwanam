@@ -632,5 +632,14 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETpartpkg_Result>("SPGETpartpkg", idParameter);
         }
+    
+        public virtual ObjectResult<SPgetpartdeal_Result> SPgetpartdeal(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPgetpartdeal_Result>("SPgetpartdeal", idParameter);
+        }
     }
 }

@@ -26,11 +26,15 @@ namespace MaaAahwanam.Service
         }
         public List<SPGETpartpkg_Result> getpartpkgs(string id)
         {
-            return vendorProductsRepository.getpartpkgs(id);
+            return vendorProductsRepository.getpartpkgs(Convert.ToInt64(id));
         }
         public List<SPGETNDeal_Result> getvendordeals(string id)
         {
             return vendorProductsRepository.getvendordeals(id);
+        }
+        public List<SPgetpartdeal_Result> getpartdeals(string id)
+        {
+            return vendorProductsRepository.getpartdeals(id);
         }
         public List<searchvendorproducts_Result> Getsearchvendorproducts_Result(string search,string type)
         {

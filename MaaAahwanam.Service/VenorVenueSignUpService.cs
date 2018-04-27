@@ -101,10 +101,22 @@ namespace MaaAahwanam.Service
         {
             return vendorVenueSignUpRepository.updatepackage(long.Parse(id),package);
         }
+        public string deletepack(string id)
+        {
+            return vendorVenueSignUpRepository.deletepackage(long.Parse(id));
+        }
+        public string deletedeal(string id)
+        {
+            return vendorVenueSignUpRepository.deletedeal(long.Parse(id));
+        }
 
         public NDeals adddeal(NDeals deals)
         {
             return vendorVenueSignUpRepository.Adddeals(deals);
+        }
+        public NDeals updatedeal(long id, NDeals deals)
+        {
+            return vendorVenueSignUpRepository.updatedeals(id,deals);
         }
         //Catering Area
 

@@ -106,7 +106,7 @@ namespace MaaAahwanam.Web.Controllers
             deals = vendorVenueSignUpService.adddeal(deals);
 
 
-            return Content("<script> alert('alert');location.href='"+Url.Action("Index","NVendorAddDeal",new {id =id }) + "'</script>");
+            return Content("<script> alert('deal is saved');location.href='"+Url.Action("Index", "NVendorDeals", new {id = id }) + "'</script>");
         }
 
         }

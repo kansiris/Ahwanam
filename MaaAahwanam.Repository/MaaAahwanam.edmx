@@ -166,6 +166,9 @@
         <Function Name="SPGETNpkg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="SPgetpartdeal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="SPGETpartpkg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="bigint" Mode="In" />
         </Function>
@@ -381,6 +384,9 @@
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SPGETpartpkg" ReturnType="Collection(MaaAahwanamModel.SPGETpartpkg_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SPgetpartdeal" ReturnType="Collection(MaaAahwanamModel.SPgetpartdeal_Result)">
             <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
@@ -1240,6 +1246,25 @@
           <Property Type="String" Name="PackageDescription" Nullable="true" />
           <Property Type="String" Name="Status" Nullable="true" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SPgetpartdeal_Result">
+          <Property Type="Int64" Name="DealID" Nullable="false" />
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="Int64" Name="VendorSubId" Nullable="false" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
+          <Property Type="String" Name="VendorSubType" Nullable="true" />
+          <Property Type="String" Name="Category" Nullable="true" />
+          <Property Type="DateTime" Name="DealStartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DealEndDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="DealPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="OriginalPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="DealDescription" Nullable="true" />
+          <Property Type="String" Name="FoodType" Nullable="true" />
+          <Property Type="String" Name="MinMemberCount" Nullable="true" />
+          <Property Type="String" Name="MaxMemberCount" Nullable="true" />
+          <Property Type="String" Name="TermsConditions" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TimeSlot" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2326,6 +2351,29 @@
                 <ScalarProperty Name="PackageDescription" ColumnName="PackageDescription" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPgetpartdeal" FunctionName="MaaAahwanamModel.Store.SPgetpartdeal">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.SPgetpartdeal_Result">
+                <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorSubId" ColumnName="VendorSubId" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="VendorSubType" ColumnName="VendorSubType" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="DealStartDate" ColumnName="DealStartDate" />
+                <ScalarProperty Name="DealEndDate" ColumnName="DealEndDate" />
+                <ScalarProperty Name="DealPrice" ColumnName="DealPrice" />
+                <ScalarProperty Name="OriginalPrice" ColumnName="OriginalPrice" />
+                <ScalarProperty Name="DealDescription" ColumnName="DealDescription" />
+                <ScalarProperty Name="FoodType" ColumnName="FoodType" />
+                <ScalarProperty Name="MinMemberCount" ColumnName="MinMemberCount" />
+                <ScalarProperty Name="MaxMemberCount" ColumnName="MaxMemberCount" />
+                <ScalarProperty Name="TermsConditions" ColumnName="TermsConditions" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TimeSlot" ColumnName="TimeSlot" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
