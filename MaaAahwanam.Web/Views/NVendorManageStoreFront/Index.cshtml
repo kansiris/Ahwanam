@@ -10,16 +10,20 @@
         <div class="col-sm-12 col-md-12">
             <div class="nav-tabs-vertical">
                 <form method="post">
-                    <select id="serviceselection" name="serviceselection">
-                        <option>Select Service Type</option>
-                        <option value="Venue">Venue</option>
-                        <option value="Catering">Catering</option>
-                        <option value="Photography">Photography</option>
-                        <option value="Decorator">Decorator</option>
-                        <option value="Other">Others</option>
-                        @*<option value="Pandit">Pandit</option>*@
-                    </select>
-                    <select id="subcategory" name="subcategory" style="display:none"></select>
+                    <div class="form-group">
+                        <select id="serviceselection" name="serviceselection" class="form-control">
+                            <option>Select Service Type</option>
+                            <option value="Venue">Venue</option>
+                            <option value="Catering">Catering</option>
+                            <option value="Photography">Photography</option>
+                            <option value="Decorator">Decorator</option>
+                            <option value="Other">Others</option>
+                            @*<option value="Pandit">Pandit</option>*@
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="subcategory" name="subcategory" style="display:none" class="form-control"></select>
+                    </div>
                     <button type="submit" name="command" value="add">Save</button>  @*class="btn btn-block btn-primary"*@
                 </form>
 
@@ -32,6 +36,7 @@
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftFour" aria-controls="exampleTabsLeftFour" role="tab" aria-expanded="false">Address</a></li>
                     </ul>
                     <div class="tab-content padding-vertical-15">
+
                         <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
                             <h4 class="example-title">Business Name</h4>
                             <input type="text" class="form-control" id="BusinessName" name="BusinessName" value="@ViewBag.Vendor.BusinessName" readonly /><br>
@@ -49,6 +54,8 @@
                                 <button type="button" class="btn btn-block btn-primary" onclick="updatedetails('one')">Submit</button>
                             </div>
                         </div>
+
+
                         <div class="tab-pane" id="exampleTabsLeftTwo" role="tabpanel">
 
                             <div id="VenueAmenities" style="display:none">
@@ -238,6 +245,8 @@
                         </div>
 
                         <div class="tab-pane" id="exampleTabsLeftThree" role="tabpanel">
+                            @if (Request.QueryString["category"] == "Venue")
+                            {
                             <form class="">
                                 <div class="row">
                                     <div class="form-group col-md-12">
@@ -260,6 +269,7 @@
                                     <button type="button" class="btn btn-primary" onclick="updatedetails('three')">Submit</button>
                                 </div>
                             </form>
+                            }
                         </div>
                         <div class="tab-pane" id="exampleTabsLeftFour" role="tabpanel">
                             <form class="">
@@ -279,9 +289,12 @@
                                     <div class="form-group col-sm-6">
                                         <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="ZipCode" autocomplete="off" value="@ViewBag.service.ZipCode">
                                     </div>
+                                    @if (Request.QueryString["category"] == "Venue")
+                                    {
                                     <div class="form-group col-sm-6">
                                         <input type="text" class="form-control" id="GeoLocation" name="GeoLocation" placeholder="Geo Location" autocomplete="off" value="@ViewBag.service.GeoLocation">
                                     </div>
+                                    }
                                 </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-primary" onclick="updatedetails('four')">Submit</button>
@@ -300,6 +313,10 @@
     <script>
         $('#serviceselection').on('change', function () {
             var selectedvalue = $(this).val();
+            filterdropdown(selectedvalue);
+        });
+
+        function filterdropdown(selectedvalue) {
             var id = '' + selectedvalue + 'Amenities';
             $('#' + id + '').css('display', 'block');
             var subcat = [];
@@ -321,7 +338,7 @@
                 error: function (data)
                 { alert("Something Went Wrong Try Again Later"); }
             });
-        });
+        }
     </script>
 
     <script>
@@ -375,4 +392,25 @@
             });
         }
     </script>
+
+    @if (ViewBag.display == "1")
+    {
+        <script>
+            var selectedcategory = '@Request.QueryString["category"]';//$('#serviceselection').val();
+            var selectedsubcategory = '@Request.QueryString["subcategory"]';//$('#subcategory').val();
+            $('#serviceselection > option').each(function () {
+                if ($(this).text() == selectedcategory) $(this).parent('select').val($(this).val())
+            })
+            filterdropdown(selectedcategory);
+            
+            alert("hi1");
+            $(document).on('load', function () {
+                $('#subcategory').css('display', 'block');
+                $('#subcategory > option').bind('click', function () {
+                    alert("hi");
+                    if ($(this).text() == selectedsubcategory) $(this).parent('select').val($(this).val())
+                })
+            });
+        </script>
+    }
 }
