@@ -30,5 +30,6 @@ namespace MaaAahwanam.Repository
         public string TermsConditions { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string TimeSlot { get; set; }
+        public string DealName { get; set; }
     }
 }
