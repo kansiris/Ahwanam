@@ -6,246 +6,302 @@
 
 
 <div class="page-content container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-md-12">
-            <div class="nav-tabs-vertical">
-                <form method="post">
-                    <div class="form-group">
-                        <select id="serviceselection" name="serviceselection" class="form-control">
-                            <option>Select Service Type</option>
-                            <option value="Venue">Venue</option>
-                            <option value="Catering">Catering</option>
-                            <option value="Photography">Photography</option>
-                            <option value="Decorator">Decorator</option>
-                            <option value="Other">Others</option>
-                            @*<option value="Pandit">Pandit</option>*@
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="subcategory" name="subcategory" style="display:none" class="form-control"></select>
-                    </div>
-                    <button type="submit" name="command" value="add">Save</button>  @*class="btn btn-block btn-primary"*@
-                </form>
+    <form method="post">
+        <div class="row my-30">
+            <div class="col-sm-12 col-md-3">
+                <select class="form-control" id="serviceselection" name="serviceselection">
+                    <option>Select Service Type</option>
+                    <option value="Venue">Venue</option>
+                    <option value="Catering">Catering</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Decorator">Decorator</option>
+                    <option value="Other">Others</option>
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>
+            </div>
+            <div class="col-sm-12 col-md-2"><button type="button" class="btn btn-block btn-primary" name="command" value="add">Save</button></div>
+        </div>
+        </form>
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="nav-tabs-vertical">
+                    
 
-                @if (ViewBag.display == "1")
-                {
-                    <ul class="nav nav-tabs margin-right-25" data-plugin="nav-tabs" role="tablist">
-                        <li class="active" role="presentation"><a data-toggle="tab" href="#exampleTabsLeftOne" aria-controls="exampleTabsLeftOne" role="tab" aria-expanded="true">About Us</a></li>
-                        <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftTwo" aria-controls="exampleTabsLeftTwo" role="tab" aria-expanded="false">Amenities</a></li>
-                        <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftThree" aria-controls="exampleTabsLeftThree" role="tab" aria-expanded="false">Hall Details</a></li>
-                        <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftFour" aria-controls="exampleTabsLeftFour" role="tab" aria-expanded="false">Address</a></li>
-                    </ul>
-                    <div class="tab-content padding-vertical-15">
+                    @if (ViewBag.display == "1")
+                    {
+                        <ul class="nav nav-tabs margin-right-25" data-plugin="nav-tabs" role="tablist">
+                            <li class="active" role="presentation"><a data-toggle="tab" href="#exampleTabsLeftOne" aria-controls="exampleTabsLeftOne" role="tab" aria-expanded="true">About Us</a></li>
+                            <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftTwo" aria-controls="exampleTabsLeftTwo" role="tab" aria-expanded="false">Amenities</a></li>
+                            <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftThree" aria-controls="exampleTabsLeftThree" role="tab" aria-expanded="false">Hall Details</a></li>
+                            <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftFour" aria-controls="exampleTabsLeftFour" role="tab" aria-expanded="false">Address</a></li>
+                        </ul>
+                        <div class="tab-content padding-vertical-15">
+                            <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicFirstName">Business Name</label>
+                                        <input type="text" class="form-control" id="BusinessName" name="BusinessName" value="@ViewBag.Vendor.BusinessName" readonly /><br>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicLastName">Mobile</label>
+                                        <input type="text" class="form-control" id="ContactNumber" name="ContactNumber" value="@ViewBag.Vendor.ContactNumber" /><br>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicFirstName">Email ID</label>
+                                        <input type="text" class="form-control" id="EmailId" name="EmailId" value="@ViewBag.Vendor.EmailId" readonly /><br>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicLastName">Landline</label>
+                                        <input type="text" class="form-control" id="LandlineNumber" name="LandlineNumber" value="@ViewBag.Vendor.LandlineNumber" /><br>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicFirstName">Url</label>
+                                        <input type="text" class="form-control" id="Url" name="Url" value="@ViewBag.Vendor.Url" /><br>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicLastName">Description</label>
+                                        <textarea class="form-control" id="mainDescription" name="mainDescription">@ViewBag.Vendor.Description</textarea><br>
+                                    </div>
+                                </div>
 
-                        <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
-                            <h4 class="example-title">Business Name</h4>
-                            <input type="text" class="form-control" id="BusinessName" name="BusinessName" value="@ViewBag.Vendor.BusinessName" readonly /><br>
-                            <h4 class="example-title">Mobile</h4>
-                            <input type="text" class="form-control" id="ContactNumber" name="ContactNumber" value="@ViewBag.Vendor.ContactNumber" /><br>
-                            <h4 class="example-title">Email ID</h4>
-                            <input type="text" class="form-control" id="EmailId" name="EmailId" value="@ViewBag.Vendor.EmailId" readonly /><br>
-                            <h4 class="example-title">Land Line</h4>
-                            <input type="text" class="form-control" id="LandlineNumber" name="LandlineNumber" value="@ViewBag.Vendor.LandlineNumber" /><br>
-                            <h4 class="example-title">URL</h4>
-                            <input type="text" class="form-control" id="Url" name="Url" value="@ViewBag.Vendor.Url" /><br>
-                            <h4 class="example-title">Description</h4>
-                            <textarea class="form-control" id="mainDescription" name="mainDescription" rows="3">@ViewBag.Vendor.Description</textarea><br>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-block btn-primary" onclick="updatedetails('one')">Submit</button>
-                            </div>
-                        </div>
-
-
-                        <div class="tab-pane" id="exampleTabsLeftTwo" role="tabpanel">
-
-                            <div id="VenueAmenities" style="display:none">
-                                <h2>Venue</h2>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="CockTails">
-                                    <label for="CockTails">CockTails</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Rooms">
-                                    <label for="Rooms">Rooms</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Wifi">
-                                    <label for="Wifi">Wifi</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="LiveCookingStation">
-                                    <label for="LiveCookingStation">Live Cooking Station</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="DecorationAllowed">
-                                    <label for="DecorationAllowed">Decoration Allowed</label>
-                                </div>
-                            </div>
-                            <div id="CateringAmenities" style="display:none">
-                                <h2>Catering</h2>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="MineralWaterIncluded">
-                                    <label for="MineralWaterIncluded">Mineral Water Included</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="TransportIncluded">
-                                    <label for="TransportIncluded">Transport Included</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="LiveCookingStation">
-                                    <label for="LiveCookingStation">Live Cooking Station</label>
+                                @*<h4 class="example-title">Business Name</h4>
+                                <input type="text" class="form-control" id="BusinessName" name="BusinessName" value="@ViewBag.Vendor.BusinessName" readonly /><br>
+                                <h4 class="example-title">Mobile</h4>
+                                <input type="text" class="form-control" id="ContactNumber" name="ContactNumber" value="@ViewBag.Vendor.ContactNumber" /><br>
+                                <h4 class="example-title">Email ID</h4>
+                                <input type="text" class="form-control" id="EmailId" name="EmailId" value="@ViewBag.Vendor.EmailId" readonly /><br>
+                                <h4 class="example-title">Land Line</h4>
+                                <input type="text" class="form-control" id="LandlineNumber" name="LandlineNumber" value="@ViewBag.Vendor.LandlineNumber" /><br>
+                                <h4 class="example-title">URL</h4>
+                                <input type="text" class="form-control" id="Url" name="Url" value="@ViewBag.Vendor.Url" /><br>
+                                <h4 class="example-title">Description</h4>
+                                <textarea class="form-control" id="mainDescription" name="mainDescription" rows="3">@ViewBag.Vendor.Description</textarea><br>*@
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-block btn-primary" onclick="updatedetails('one')">Submit</button>
                                 </div>
                             </div>
-                            <div id="PhotographyAmenities" style="display:none">
-                                <h2>Photography</h2>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="PreWeddingShoot">
-                                    <label for="PreWeddingShoot">Pre Wedding Shoot</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="DestinationPhotography">
-                                    <label for="DestinationPhotography">Destination Photography</label>
-                                </div>
-                            </div>
-                            <div id="DecoratorAmenities" style="display:none">
-                                <h2>Decorator</h2>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Archway">
-                                    <label for="Archway">Archway</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Altararrangements">
-                                    <label for="Altararrangements">Altar arrangements</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Pewbows">
-                                    <label for="Pewbows">Pew bows</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Aislerunner">
-                                    <label for="Aislerunner">Aisle runner</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Headpieces">
-                                    <label for="Headpieces">Head pieces</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Centerpieces">
-                                    <label for="Centerpieces">Center pieces</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Chaircovers">
-                                    <label for="Chaircovers">Chair covers</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Headtabledecor">
-                                    <label for="Headtabledecor">Head table decor</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Backdrops">
-                                    <label for="Backdrops">Backdrops</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Ceilingcanopies">
-                                    <label for="Ceilingcanopies">Ceiling canopies</label>
+
+
+                            <div class="tab-pane" id="exampleTabsLeftTwo" role="tabpanel">
+                                <div class="row mb-30" id="VenueAmenities" style="display:none">
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" id="CockTails">
+                                            <label for="CockTails">CockTails</label>
+                                        </div>
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" id="Rooms">
+                                            <label for="Rooms">Rooms</label>
+                                        </div>
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" id="Wifi">
+                                            <label for="Wifi">Wifi</label>
+                                        </div>
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" id="LiveCookingStation">
+                                            <label for="LiveCookingStation">Live Cooking Station</label>
+                                        </div>
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" id="DecorationAllowed">
+                                            <label for="DecorationAllowed">Decoration Allowed</label>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Mandaps">
-                                    <label for="Mandaps">Mandaps</label>
+                                @*<div id="VenueAmenities" style="display:none">
+                                    <h2>Venue</h2>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="CockTails">
+                                        <label for="CockTails">CockTails</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Rooms">
+                                        <label for="Rooms">Rooms</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Wifi">
+                                        <label for="Wifi">Wifi</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="LiveCookingStation">
+                                        <label for="LiveCookingStation">Live Cooking Station</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="DecorationAllowed">
+                                        <label for="DecorationAllowed">Decoration Allowed</label>
+                                    </div>
+                                </div>*@
+                                <div class="row mb-30" id="CateringAmenities" style="display:none">
+                                    <h2>Catering</h2>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="MineralWaterIncluded">
+                                        <label for="MineralWaterIncluded">Mineral Water Included</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="TransportIncluded">
+                                        <label for="TransportIncluded">Transport Included</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="LiveCookingStation">
+                                        <label for="LiveCookingStation">Live Cooking Station</label>
+                                    </div>
                                 </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Mehendi">
-                                    <label for="Mehendi">Mehendi</label>
+                                <div id="PhotographyAmenities" style="display:none">
+                                    <h2>Photography</h2>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="PreWeddingShoot">
+                                        <label for="PreWeddingShoot">Pre Wedding Shoot</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="DestinationPhotography">
+                                        <label for="DestinationPhotography">Destination Photography</label>
+                                    </div>
                                 </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Sangeet">
-                                    <label for="Sangeet">Sangeet</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Chuppas">
-                                    <label for="Chuppas">Chuppas</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Lighting">
-                                    <label for="Lighting">Lighting</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Giftsforguests">
-                                    <label for="Giftsforguests">Gifts for guests</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Gifttable">
-                                    <label for="Gifttable">Gift table</label>
-                                </div>
+                                <div id="DecoratorAmenities" style="display:none">
+                                    <h2>Decorator</h2>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Archway">
+                                        <label for="Archway">Archway</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Altararrangements">
+                                        <label for="Altararrangements">Altar arrangements</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Pewbows">
+                                        <label for="Pewbows">Pew bows</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Aislerunner">
+                                        <label for="Aislerunner">Aisle runner</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Headpieces">
+                                        <label for="Headpieces">Head pieces</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Centerpieces">
+                                        <label for="Centerpieces">Center pieces</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Chaircovers">
+                                        <label for="Chaircovers">Chair covers</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Headtabledecor">
+                                        <label for="Headtabledecor">Head table decor</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Backdrops">
+                                        <label for="Backdrops">Backdrops</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Ceilingcanopies">
+                                        <label for="Ceilingcanopies">Ceiling canopies</label>
+                                    </div>
 
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="BasketorBoxforgifts">
-                                    <label for="BasketorBoxforgifts">Basket or Box for gifts</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Placeorseatingcards">
-                                    <label for="Placeorseatingcards">Place or seating cards</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Cardecoration">
-                                    <label for="Cardecoration">Car decoration</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Bridesbouquet">
-                                    <label for="Bridesbouquet">Brides bouquet</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Bridesmaidsbouquets">
-                                    <label for="Bridesmaidsbouquets">Bridesmaids bouquets</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Maidofhonorbouquet">
-                                    <label for="Maidofhonorbouquet">Maid of honor bouquet</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Throwawaybouquet">
-                                    <label for="Throwawaybouquet">Throw away bouquet</label>
-                                </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Mandaps">
+                                        <label for="Mandaps">Mandaps</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Mehendi">
+                                        <label for="Mehendi">Mehendi</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Sangeet">
+                                        <label for="Sangeet">Sangeet</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Chuppas">
+                                        <label for="Chuppas">Chuppas</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Lighting">
+                                        <label for="Lighting">Lighting</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Giftsforguests">
+                                        <label for="Giftsforguests">Gifts for guests</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Gifttable">
+                                        <label for="Gifttable">Gift table</label>
+                                    </div>
 
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Corsages">
-                                    <label for="Corsages">Corsages</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Boutonnieres">
-                                    <label for="Boutonnieres">Boutonnieres (for groom, fathers, grandfathers, best man, groom’s men)</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Decora">
-                                    <label for="Decora">Decora</label>
-                                </div>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="Justmarriedclings">
-                                    <label for="Justmarriedclings">Just married clings</label>
-                                </div>
-                            </div>
-                            <div id="MehendiAmenities" style="display:none">
-                                <h2>Mehendi</h2>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="PriorBookingsDays">
-                                    <label for="PriorBookingsDays">Prior Booking Days</label>
-                                </div>
-                            </div>
-                            <div id="PanditAmenities" style="display:none">
-                                <h2>Pandit</h2>
-                                <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="PriorBookingsDays">
-                                    <label for="PriorBookingsDays">Prior Booking Days</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-block btn-primary">Submit</button>
-                            </div>
-                        </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="BasketorBoxforgifts">
+                                        <label for="BasketorBoxforgifts">Basket or Box for gifts</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Placeorseatingcards">
+                                        <label for="Placeorseatingcards">Place or seating cards</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Cardecoration">
+                                        <label for="Cardecoration">Car decoration</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Bridesbouquet">
+                                        <label for="Bridesbouquet">Brides bouquet</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Bridesmaidsbouquets">
+                                        <label for="Bridesmaidsbouquets">Bridesmaids bouquets</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Maidofhonorbouquet">
+                                        <label for="Maidofhonorbouquet">Maid of honor bouquet</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Throwawaybouquet">
+                                        <label for="Throwawaybouquet">Throw away bouquet</label>
+                                    </div>
 
-                        <div class="tab-pane" id="exampleTabsLeftThree" role="tabpanel">
-                            @if (Request.QueryString["category"] == "Venue")
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Corsages">
+                                        <label for="Corsages">Corsages</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Boutonnieres">
+                                        <label for="Boutonnieres">Boutonnieres (for groom, fathers, grandfathers, best man, groom’s men)</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Decora">
+                                        <label for="Decora">Decora</label>
+                                    </div>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="Justmarriedclings">
+                                        <label for="Justmarriedclings">Just married clings</label>
+                                    </div>
+                                </div>
+                                <div id="MehendiAmenities" style="display:none">
+                                    <h2>Mehendi</h2>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="PriorBookingsDays">
+                                        <label for="PriorBookingsDays">Prior Booking Days</label>
+                                    </div>
+                                </div>
+                                <div id="PanditAmenities" style="display:none">
+                                    <h2>Pandit</h2>
+                                    <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="PriorBookingsDays">
+                                        <label for="PriorBookingsDays">Prior Booking Days</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-block btn-primary">Submit</button>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="exampleTabsLeftThree" role="tabpanel">
+                                @if (Request.QueryString["category"] == "Venue")
                             {
                             <form class="">
                                 <div class="row">
@@ -270,42 +326,42 @@
                                 </div>
                             </form>
                             }
-                        </div>
-                        <div class="tab-pane" id="exampleTabsLeftFour" role="tabpanel">
-                            <form class="">
-                                <div class="row">
-                                    <div class="form-group col-sm-12">
-                                        <input type="text" class="form-control" id="Address" name="Address" placeholder="Address" autocomplete="off" value="@ViewBag.service.Address">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <input type="text" class="form-control" id="Landmark" name="Landmark" placeholder="Landmark" autocomplete="off" value="@ViewBag.service.Landmark">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <input type="text" class="form-control" id="City" name="City" placeholder="City" autocomplete="off" value="@ViewBag.service.City">
-                                    </div>
-                                    <div class="form-group col-sm-12">
-                                        <input type="text" class="form-control" id="State" name="State" placeholder="State" autocomplete="off" value="@ViewBag.service.State">
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="ZipCode" autocomplete="off" value="@ViewBag.service.ZipCode">
-                                    </div>
-                                    @if (Request.QueryString["category"] == "Venue")
+                            </div>
+                            <div class="tab-pane" id="exampleTabsLeftFour" role="tabpanel">
+                                <form class="">
+                                    <div class="row">
+                                        <div class="form-group col-sm-12">
+                                            <input type="text" class="form-control" id="Address" name="Address" placeholder="Address" autocomplete="off" value="@ViewBag.service.Address">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <input type="text" class="form-control" id="Landmark" name="Landmark" placeholder="Landmark" autocomplete="off" value="@ViewBag.service.Landmark">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <input type="text" class="form-control" id="City" name="City" placeholder="City" autocomplete="off" value="@ViewBag.service.City">
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                            <input type="text" class="form-control" id="State" name="State" placeholder="State" autocomplete="off" value="@ViewBag.service.State">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="ZipCode" autocomplete="off" value="@ViewBag.service.ZipCode">
+                                        </div>
+                                        @if (Request.QueryString["category"] == "Venue")
                                     {
                                     <div class="form-group col-sm-6">
                                         <input type="text" class="form-control" id="GeoLocation" name="GeoLocation" placeholder="Geo Location" autocomplete="off" value="@ViewBag.service.GeoLocation">
                                     </div>
                                     }
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-primary" onclick="updatedetails('four')">Submit</button>
-                                </div>
-                            </form>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" onclick="updatedetails('four')">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
-    </div>
 </div>
 
 

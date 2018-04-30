@@ -198,38 +198,59 @@
                             <div class="panel-actions"></div>
                         </header>
                         <div class="panel-body">
-                            <table class="table table-hover dataTable table-striped width-full" data-plugin="dataTable">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <tr>
-                                        <td>Damon</td>
-                                        <td>5516 Adolfo Green</td>
-                                        <td>Littelhaven</td>
-                                        <td>85</td>
-                                        <td>2014/06/13</td>
-                                        <td>$553,536</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            @if (ViewBag.order != null)
+                            {
+                                <table class="table table-hover dataTable table-striped width-full" data-plugin="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>OrderID</th>
+                                            <th>Vendor Details</th>
+                                            <th>Order Date</th>
+                                            <th>Status</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>OrderID</th>
+                                            <th>Vendor Details</th>
+                                            <th>Order Date</th>
+                                            <th>Status</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.order)
+                                        {
+                                            <tr>
+
+                                                <td>@item.OrderId</td>
+                                                <td>
+                                                    <h4>@item.BusinessName</h4>
+                                                    <p>
+                                                        @item.Landmark<br>
+                                                        @item.Address, @item.City,<br>
+                                                        @item.ContactNumber
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            @item.OrderDate
+                                                        </div>
+                                                </td>
+                                                <td>@item.Status</td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
                         </div>
                     </div>
                     <!-- End Panel Basic -->
@@ -239,5 +260,3 @@
         </div>
     </div>
 </div>
-    }
-}
