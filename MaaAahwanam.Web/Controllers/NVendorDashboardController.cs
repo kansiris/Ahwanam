@@ -25,6 +25,10 @@ namespace MaaAahwanam.Web.Controllers
                 var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
                 ViewBag.order = orders.OrderByDescending(m => m.OrderId);
             }
+            else
+            {
+                return RedirectToAction("Index", "NUserRegistration");
+            }
             return View();
         }
     }
