@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
 
         // GET: NViewDeal
-        public ActionResult Index(string id, string type, string eve,string vid)
+        public ActionResult Index(string id, string type, string eve)
         {
             try
             {
@@ -37,11 +37,12 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.events = data.Select(m => m.Category).Distinct();
                 }
 
-                return View();
-            }
-            catch (Exception ex)
-            { return RedirectToAction("Index", "Nhomepage"); }
+            return View();
         }
+            catch (Exception ex)
+            { return RedirectToAction("Index", "Nhomepage");
+    }
+}
 
         public PartialViewResult Loadmoredeals(string lastrecord)
         {

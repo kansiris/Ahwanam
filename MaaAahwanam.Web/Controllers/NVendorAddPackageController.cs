@@ -34,21 +34,7 @@ namespace MaaAahwanam.Web.Controllers
 
                     return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
                 }
-                if ( packagename == null )
-                {
-
-                    return Content("<script> alert('enter package name');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
-                }
-                if ( packageprice == null )
-                {
-
-                    return Content("<script> alert('enter package price');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
-                }
-                if (Packagedec == null)
-                {
-
-                    return Content("<script> alert('enter desciption');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
-                }
+              
                 DateTime updateddate = DateTime.Now;
                 string[] words = type.Split(',');
                 string subid = words[0];

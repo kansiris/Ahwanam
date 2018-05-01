@@ -36,6 +36,7 @@ namespace MaaAahwanam.Web.Controllers
 
 
             ViewBag.dealLastRecord = id;
+            ViewBag.dealLastRecordeve = eve;
 
             ViewBag.dealcount = vendorProductsService.getalleventdeal(eve).Count();
             return PartialView("Loadmore");
