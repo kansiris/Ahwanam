@@ -13,6 +13,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NResultsController : Controller
     {
+        string[] services = { };
         // GET: NResults
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string type, string loc, string budget, string stype, string date, string count) //string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Web.Controllers
                 //    data = vendorProductsService.Getfiltervendors_Result("Resort", loc, budget, count);
                 //else if (stype.Split(',').Contains("Convetion Hall"))
                 //    data = vendorProductsService.Getfiltervendors_Result("Convetion Hall", loc, budget, count);
-                ViewBag.venues = data.Take(takecount);//.Where(m=>m.city == f1);
+                ViewBag.venues = data.Take(takecount).ToList();//.Where(m=>m.city == f1);
                 ViewBag.type = "Venues";
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
@@ -62,7 +63,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 type = (type == "Convetion") ? "Convention Hall" : type;
                 var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, count);
-                ViewBag.venues = data.Take(takecount);
+                ViewBag.venues = data.Take(takecount).ToList();
                 ViewBag.type = type;
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
@@ -70,7 +71,7 @@ namespace MaaAahwanam.Web.Controllers
             else
             {
                 var data = vendorProductsService.Getfiltervendors_Result("Venue", loc, budget, count);
-                ViewBag.venues = data.Take(takecount);
+                ViewBag.venues = data.Take(takecount).ToList();
                 ViewBag.type = "Venues";
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
@@ -91,7 +92,7 @@ namespace MaaAahwanam.Web.Controllers
             //    data = vendorProductsService.Getfiltervendors_Result("Catering", loc, budget, count);
             //}
 
-            ViewBag.Catering = data.Take(takecount);
+            ViewBag.Catering = data.Take(takecount).ToList();
             int recordcount = data.Count();
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             return PartialView();
@@ -107,7 +108,7 @@ namespace MaaAahwanam.Web.Controllers
             //{
             //    data = vendorProductsService.Getfiltervendors_Result("Decorator", loc, budget, "");
             //}
-            ViewBag.Decorator = data.Take(takecount);
+            ViewBag.Decorator = data.Take(takecount).ToList();
             int recordcount = data.Count();
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             return PartialView();
@@ -123,7 +124,7 @@ namespace MaaAahwanam.Web.Controllers
             //{
             //    data = vendorProductsService.Getfiltervendors_Result("Photography", loc, budget, "");
             //}
-            ViewBag.Photography = data.Take(takecount);
+            ViewBag.Photography = data.Take(takecount).ToList();
             int recordcount = data.Count();
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             return PartialView();
@@ -161,7 +162,7 @@ namespace MaaAahwanam.Web.Controllers
                 data = data.Where(m => m.subtype == type).ToList();
                 ViewBag.type = type;
             }
-            ViewBag.others = data.Take(takecount);
+            ViewBag.others = data.Take(takecount).ToList();
             int recordcount = data.Count();
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             return PartialView();
