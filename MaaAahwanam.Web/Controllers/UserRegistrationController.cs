@@ -171,14 +171,15 @@ namespace MaaAahwanam.Web.Controllers
                     vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
                     string userData = JsonConvert.SerializeObject(userResponse); //creating identity
                     ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    return RedirectToAction("Index", "HomePage");
+                    // return Content("<script language='javascript' type='text/javascript'>alert('Thanks for login');location.href='" + @Url.Action("Index", "NHomePage") + "'</script>");
+                    return RedirectToAction("Index", "NHomePage");
                 }
             }
             else
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "UserRegistration") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             }
-            return RedirectToAction("Index", "UserRegistration");
+            return RedirectToAction("Index", "NUserRegistration");
         }
         
         private Uri RediredtUri
