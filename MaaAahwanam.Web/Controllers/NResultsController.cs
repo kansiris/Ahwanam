@@ -13,6 +13,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NResultsController : Controller
     {
+        string[] services = { };
         // GET: NResults
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string type, string loc, string budget, string stype, string date, string count) //string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,
