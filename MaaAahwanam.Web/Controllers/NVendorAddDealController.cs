@@ -27,38 +27,6 @@ namespace MaaAahwanam.Web.Controllers
             if (type == "Select Type")
             {     return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");       }
 
-            if (DealName == null || DealName == "")
-            {
-                return Content("<script> alert('enter dealname');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
-            if (OriginalPrice == null || OriginalPrice == "")
-            {
-                return Content("<script> alert('enter OriginalPrice');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
-            if (DealPrice == null || DealPrice == "")
-            {
-                return Content("<script> alert('enter DealPrice');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
-            if (minGuests == null || minGuests == "")
-            {
-                return Content("<script> alert('enter minGuests');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
-            if (maxGuests == null || maxGuests == "")
-            {
-                return Content("<script> alert('enter maxGuests');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
-            if (StartDate == null || StartDate == "")
-            {
-                return Content("<script> alert('enter StartDate');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
-            if (EndDate == null || EndDate == "")
-            {
-                return Content("<script> alert('enter EndDate');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
-            if (ddesc == null || ddesc == "")
-            {
-                return Content("<script> alert('enter ddesc');location.href='" + @Url.Action("edit", "NVendorDeals", new { id = id }) + "' </script>");
-            }
             if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
             { return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>"); }
 

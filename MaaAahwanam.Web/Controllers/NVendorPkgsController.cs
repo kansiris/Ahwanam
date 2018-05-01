@@ -35,21 +35,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult updatepkg(string id, string vid, string packagename, string packageprice, string Packagedec)
         {
            
-            if (packagename == null|| packagename == "")
-            {
-
-                return Content("<script> alert('enter package name');location.href='" + @Url.Action("editpkg", "NVendorPkgs", new { pid = id ,vid =vid}) + "' </script>");
-            }
-            if (packageprice == null || packageprice == "")
-            {
-
-                return Content("<script> alert('enter package price');location.href='" + @Url.Action("editpkg", "NVendorPkgs", new { pid = id, vid = vid }) + "' </script>");
-            }
-            if (Packagedec == null || Packagedec == "")
-            {
-
-                return Content("<script> alert('enter desciption');location.href='" + @Url.Action("editpkg", "NVendorPkgs", new { pid = id, vid = vid }) + "' </script>");
-            }
+            
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
 

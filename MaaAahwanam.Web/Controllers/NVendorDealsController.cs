@@ -33,40 +33,9 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult updatedeal(string id, string vid, string DealName, string OriginalPrice, string DealPrice,string minGuests, string maxGuests, string StartDate, string EndDate, string ddesc , string timeslot, string timeslot1)
         {
             
-            if (DealName == null || DealName =="")
-            {
-                return Content("<script> alert('enter dealname');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id ,vid = vid }) + "' </script>");
-            }
-            if (OriginalPrice == null || OriginalPrice == "")
-            {
-                return Content("<script> alert('enter OriginalPrice');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
-            }
-            if (DealPrice == null || DealPrice == "")
-            {
-                return Content("<script> alert('enter DealPrice');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
-            }
-            if (minGuests == null || minGuests == "")
-            {
-                return Content("<script> alert('enter minGuests');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
-            }
-            if (maxGuests == null || maxGuests == "")
-            {
-                return Content("<script> alert('enter maxGuests');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
-            }
-            if (StartDate == null || StartDate == "")
-            {
-                return Content("<script> alert('enter StartDate');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
-            }
-            if (EndDate == null || EndDate == "")
-            {
-                return Content("<script> alert('enter EndDate');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
-            }
-            if (ddesc == null || ddesc == "")
-            {
-                return Content("<script> alert('enter ddesc');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
-            }
+            
             if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
-            { return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { pid = id, vid = vid }) + "' </script>"); }
+            { return Content("<script> alert('select timeslot');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>"); }
 
             string time = null;
             if (timeslot == null || timeslot == "")
