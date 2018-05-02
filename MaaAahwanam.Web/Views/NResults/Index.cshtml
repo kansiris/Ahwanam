@@ -12,15 +12,21 @@
         <input type="hidden" id="L4" name="L4" value="@ViewBag.count" />
         <input type="hidden" id="L5" name="L5" value="@ViewBag.count" />
         <div class="col-12 col-sm-12 col-md-9 mb-2 mb-sm-0 mb-md-0">
-            @{Html.RenderAction("BlockOnePartial", "NResults"); } @*Venue Records partial View*@
-
-            @{Html.RenderAction("BlockTwoPartial", "NResults"); } @*Catering Records partial View*@
+            <div class="totalDealsBlock filteredResultsBlock  bgWhite py-3" id="BlockOnePartial">
+                @{Html.RenderAction("BlockOnePartial", "NResults"); } @*Venue Records partial View*@
+            </div>
+            <div class="totalDealsBlock filteredResultsBlock  bgWhite py-3 my-3" id="BlockTwoPartial">
+                @{Html.RenderAction("BlockTwoPartial", "NResults"); } @*Catering Records partial View*@
+            </div>
         </div>
         <div class="col-12 col-sm-12 col-md-3 pl-md-0 topVenus">
             <div class="px-15">
-                @{Html.RenderAction("BlockThreePartial", "NResults"); } @*Decorator Records partial View*@
-
-                @{Html.RenderAction("BlockFourPartial", "NResults"); } @*Photography Records partial View*@
+                <div class="row bgWhite filteredResultsBlock  mb-3" id="BlockThreePartial">
+                    @{Html.RenderAction("BlockThreePartial", "NResults"); } @*Decorator Records partial View*@
+                </div>
+                <div class="row bgWhite filteredResultsBlock  mb-3" id="BlockFourPartial">
+                    @{Html.RenderAction("BlockFourPartial", "NResults"); } @*Photography Records partial View*@
+                </div>
             </div>
         </div>
     </div>
@@ -28,7 +34,9 @@
 
 @if (new string[] { "Mehendi", "Pandit" }.Contains(Request.QueryString["type"]) || new string[] { "Mehendi", "Pandit", "Mehendi,Pandit" }.Contains(Request.QueryString["stype"]))
 {
-    { Html.RenderAction("BlockFivePartial", "NResults"); } @*Mehendi/Pandit Records partial View*@
+    <div class="container-fluid innerPagesBg" id="BlockFivePartial">
+        { Html.RenderAction("BlockFivePartial", "NResults"); } @*Mehendi/Pandit Records partial View*@
+    </div>
 }
 <div class="container">
     <div class="margin-top-50">
@@ -159,39 +167,43 @@
     </script>
 
     <script>
-        var parameters = 'type=@Request.QueryString["type"]&&loc=@Request.QueryString["loc"]&&budget=@Request.QueryString["budget"]&&stype=@Request.QueryString["stype"].TrimEnd(',').Replace(' ','-')&&date=@Request.QueryString["date"]&&count=@Request.QueryString["count"]';
+        var parameters = 'loc=@Request.QueryString["loc"]&&budget=@Request.QueryString["budget"]&&stype=@Request.QueryString["stype"].TrimEnd(',').Replace(' ','-')&&date=@Request.QueryString["date"]&&count=@Request.QueryString["count"]';
         function PartialOne() {
             var lastrecord = parseInt($('#L1').val()) + parseInt(6);
-            var url = '/NResults/BlockOnePartial?' + parameters + '&&L1=' + lastrecord;
-            //alert(url);
+            var category = $("#BlockFourCategory").text().trim();
+            var url = '/NResults/BlockOnePartial?type=' + category + '&&' + parameters + '&&L1=' + lastrecord;
             $("#BlockOnePartial").empty().load(url);
             $('#L1').val(lastrecord);
         }
 
         function PartialTwo() {
             var lastrecord = parseInt($('#L2').val()) + parseInt(6);
-            var url = '/NResults/BlockTwoPartial?' + parameters + '&&L2=' + lastrecord;
+            var category = $("#BlockFourCategory").text().trim();
+            var url = '/NResults/BlockTwoPartial?type=' + category + '&&' + parameters + '&&L2=' + lastrecord;
             $("#BlockTwoPartial").empty().load(url);
             $('#L2').val(lastrecord);
         }
 
         function Partialthree() {
             var lastrecord = parseInt($('#L3').val()) + parseInt(6);
-            var url = '/NResults/BlockThreePartial?' + parameters + '&&L3=' + lastrecord;
+            var category = $("#BlockFourCategory").text().trim();
+            var url = '/NResults/BlockThreePartial?type=' + category + '&&' + parameters + '&&L3=' + lastrecord;
             $("#BlockThreePartial").empty().load(url);
             $('#L3').val(lastrecord);
         }
 
         function Partialfour() {
             var lastrecord = parseInt($('#L4').val()) + parseInt(6);
-            var url = '/NResults/BlockFourPartial?' + parameters + '&&L4=' + lastrecord;
+            var category = $("#BlockFourCategory").text().trim();
+            var url = '/NResults/BlockFourPartial?type=' + category + '&&' + parameters + '&&L4=' + lastrecord;
             $("#BlockFourPartial").empty().load(url);
             $('#L4').val(lastrecord);
         }
 
         function PartialFive() {
             var lastrecord = parseInt($('#L5').val()) + parseInt(6);
-            var url = '/NResults/BlockFivePartial?' + parameters + '&&L5=' + lastrecord;
+            var category = $("#BlockFourCategory").text().trim();
+            var url = '/NResults/BlockFivePartial?type=' + category + '&&' + parameters + '&&L5=' + lastrecord;
             $("#BlockFivePartial").empty().load(url);
             $('#L5').val(lastrecord);
         }

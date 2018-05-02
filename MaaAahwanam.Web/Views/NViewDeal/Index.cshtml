@@ -42,29 +42,28 @@
                                     <p class="mb-0"><span>Rooms</span></p>
                                 </div>
                             }
-                             @*@if (@ViewBag.singledeal.MinGuest == null && @ViewBag.singledeal.MinGuest == 0)
-                             { }
-                             else
-                             { <div class="d-inline-block p-2 mr-4 greyBg">
-                                <p class="mb-0">@ViewBag.singledeal.MinGuest<span>SeatingCapacity</span></p>
-                            </div>
-                             }
-                                @if (@ViewBag.singledeal.MaxGuest == null && @ViewBag.singledeal.MaxGuest == 0)
-                                { }else { 
+                            @* @if (@ViewBag.singledeal.MinGuest != null && @ViewBag.singledeal.MinGuest != 0)
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0">@ViewBag.singledeal.MinGuest<span>SeatingCapacity</span></p>
+                                    </div>
+                                }
+                                @if (@ViewBag.singledeal.MaxGuest != null && @ViewBag.singledeal.MaxGuest != 0)
+                                {
                                     <div class="d-inline-block p-2 mr-4 greyBg">
                                         <p class="mb-0">@ViewBag.singledeal.MaxGuest<span>SeatingCapacity</span></p>
                                     </div>
-                                }*@
-                                                        @if (@ViewBag.singledeal.Decoration != null && @ViewBag.singledeal.Decoration == "Yes" && @ViewBag.singledeal.Decoration != "")
+                                }
+                                                        @if (@ViewBag.singledeal.DecorationAllowed != null && @ViewBag.singledeal.DecorationAllowed == "Yes" && @ViewBag.singledeal.DecorationAllowed != "")
                                                         {
                                                             <div class="d-inline-block p-2 mr-4 greyBg">
                                                                 <p class="mb-0"><span> DecorationAllowed</span></p>
                                                             </div>
                                                         }
-                                                        @if (@ViewBag.singledeal.Halltype != null && @ViewBag.singledeal.Halltype != "")
+                                                        @if (@ViewBag.singledeal.HallType != null && @ViewBag.singledeal.HallType != "")
                                                         {
                                                             <div class="d-inline-block p-2 mr-4 greyBg">
-                                                                <p class="mb-0"><span>@ViewBag.singledeal.Halltype</span></p>
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.HallType</span></p>
                                                             </div>
                                                         }
                                                         @if (@ViewBag.singledeal.Wifi != null && @ViewBag.singledeal.Wifi == "Yes" && @ViewBag.singledeal.Wifi != "")
@@ -73,13 +72,13 @@
                                                                 <p class="mb-0"><span>Wifi</span></p>
                                                             </div>
                                                         }
-                                                        @if (@ViewBag.singledeal.Livecooking != null && @ViewBag.singledeal.Livecooking == "Yes" && @ViewBag.singledeal.Livecooking != "")
+                                                        @if (@ViewBag.singledeal.LiveCookingStation != null && @ViewBag.singledeal.LiveCookingStation == "Yes" && @ViewBag.singledeal.LiveCookingStation != "")
                                                         {
                                                             <div class="d-inline-block p-2 mr-4 greyBg">
                                                                 <p class="mb-0"><span>LiveCookingStation</span></p>
                                                             </div>
                                                         }
-                                                        @*@if (@ViewBag.singledeal.CuisineType != null && @ViewBag.singledeal.CuisineType != "")
+                                                        @if (@ViewBag.singledeal.CuisineType != null && @ViewBag.singledeal.CuisineType != "")
                                                         {
                                                             <div class="d-inline-block p-2 mr-4 greyBg">
                                                                 <p class="mb-0"><span>@ViewBag.singledeal.CuisineType</span></p>
@@ -354,7 +353,6 @@
                                             <div class="float-left"><p class="mb-0 packageName">@item.Category ( @item.FoodType )</p></div>
                                             <div class="float-right">
                                                 <p class="productMaxPrice mb-0 d-block"> ( INR/Person : <span>@item.OriginalPrice</span> <small></small> ) </p>
-                                                @*<p class="productMaxPrice mb-0 greyColor d-block"> ( INR/Person : <span>@item.OriginalPrice</span> <small></small> ) </p>*@
                                             </div>
                                             <div class="float-right">
                                                 <p class="mb-0 mr-2">INR/Person : <span>@item.DealPrice</span> </p>
@@ -415,8 +413,6 @@
                             </h3>
                         </div>
                         <input type="hidden" id="vid" name="vid" value="@ViewBag.singledeal.VendorSubId">
-                        <input type="hidden" id="enddate" name="enddate" value="@ViewBag.singledeal.DealEndDate">
-
                         <div class="row mx-0 mt-4 dealProfileForm">
                             @*    <div class="w-100">@ViewBag.singledeal.dtype
                                                            <select class="w-100 p-2 ml-auto">
@@ -469,8 +465,8 @@
                             <div class="w-100 mt-3">
                                 <select class="w-100 p-2 ml-auto pricePerPlate" id="selectbox2">
                                    @* <option id="price">Prices</option>
-    <option value="@ViewBag.singledeal.cost">Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>
-                                   <option value="1100">Veg (<span>1100</span>/p)</option>*@
+    <option value="@ViewBag.singledeal.cost">Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>*@
+                                    @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
                                 </select>
                             </div>
 
@@ -517,7 +513,7 @@
                                 }
                             </div>
                             <div class="w-100 d-flex my-2">
-                                <span class="themeBgColorPrimary btnSecondary text-white text-center w-100">
+                                <span class="themeBgColorPrimary needHelpBtn btnSecondary text-white text-center w-100">
                                     Need any help ?
                                 </span>
                             </div>
@@ -630,6 +626,17 @@
                 </div>
             </div>
         </div>*@
+</div>
+<div class="container-fluid needHelpBlock">
+    <div class="row">
+        <div class="block bgWhite">
+            <div class="text-center">
+                <a class="col-md-12" href="mailto:info@ahwanam.com"><i class="fa fa-envelope fa-lg mr-3" aria-hidden="true"></i> info@ahwanam.com</a>
+                <p class="col-md-12"><i class="fa fa-phone fa-lg mr-3 themeColor" aria-hidden="true"></i> +91 - 9000090000</p>
+            </div>
+            <i class="fa fa-times closeBlock"></i>
+        </div>
+    </div>
 </div>
 
 @section scripts{
@@ -770,8 +777,6 @@ maxDate:'+1970/03/02'//tomorrow is maximum date calendar
                 var vid = $('input#vid').val();
                 var id = '@Request.QueryString["id"]';
                 var date = $("#datetimepicker").val();
-                var enddate = $('input#enddate').val();
-
                 var price = $("select.pricePerPlate").find("option:selected").text();
                 var price1 = price.split('~')[0];
                 var nop = $(".noOfPeoples input[type='number']").val();
@@ -811,9 +816,6 @@ maxDate:'+1970/03/02'//tomorrow is maximum date calendar
         });
 
         $(".bookNow1").click(function () {
-            var date1 = $("#datetimepicker").val();
-
-            var enddate = $('input#enddate').val();
             if ($("select.eventType").find("option:selected").val() == '') {
                 alert("Please select Event type");
             } else if ($("#datetimepicker").val() == '') {
@@ -822,14 +824,10 @@ maxDate:'+1970/03/02'//tomorrow is maximum date calendar
                 alert("Please select Menu type");
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
                 alert("Please Mention No Of Guests");
-            } else if(date1 <= enddate){
-                alert(" select valid date");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                // var etype1 = $("select.eventType").find("option:selected").val();
                 var etype1 = $('#selectbox1').val();
                 var date = $("#datetimepicker").val();
-
-
                 var price = $("select.pricePerPlate").find("option:selected").text();
               //  alert(price);
                 var price1 = price.split('~')[0];
@@ -909,7 +907,14 @@ maxDate:'+1970/03/02'//tomorrow is maximum date calendar
             });
             
         });
-
+        /*-- Need Help Block --*/
+        $('.needHelpBtn').click(function () {
+            $('.needHelpBlock').css('display', 'block');
+        });
+        $('.closeBlock').click(function () {
+            $('.needHelpBlock').css('display', 'none');
+        });
+        /*-- Need Help Block --*/
     </script>
 }
 
