@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Models;
+using System.Web;
 
 namespace MaaAahwanam.Repository.db
 {
@@ -22,7 +23,18 @@ namespace MaaAahwanam.Repository.db
            var data= _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault(); // && p.UserType == userLogin.UserType
             return data;
         }
+        public UserLogin GetUserLogdetails(UserLogin userLogin)
+        {
+            var data = _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName).FirstOrDefault(); // && p.UserType == userLogin.UserType
+            return data;
+        }
+   
 
+        public UserLogin GetUserdetails(string email)
+        {
+            var data = _dbContext.UserLogin.Where(p => p.UserName == email).FirstOrDefault(); // && p.UserType == userLogin.UserType
+            return data;
+        }
         public Vendormaster AddVendormaster(Vendormaster vendormaster)
         {
             _dbContext.Vendormaster.Add(vendormaster);

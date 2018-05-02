@@ -36,6 +36,16 @@ namespace MaaAahwanam.Service
         {
             return vendorVenueSignUpRepository.GetUserLogin(userLogin);
         }
+        public UserLogin GetUserLogdetails(UserLogin userLogin)
+        {
+            return vendorVenueSignUpRepository.GetUserLogdetails(userLogin);
+        }
+        public UserLogin GetUserdetails(string email)
+        {
+            return vendorVenueSignUpRepository.GetUserdetails(email);
+        }
+
+      
 
         public Vendormaster AddvendorMaster(Vendormaster vendormaster)
         {
