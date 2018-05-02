@@ -1,32 +1,33 @@
-﻿<div class="totalDealsBlock bgWhite py-3 my-3" id="BlockTwoPartial">
+﻿
     <div class="row mx-0">
-        <h3 class="noteWorthybold px-15">
-            Catering
+        <h3 class="noteWorthybold px-15" id="BlockTwoCategory">
+            @ViewBag.type
             <div class="blackBorder"></div>
         </h3>
     </div>
-    @if (ViewBag.Catering.Count != 0)
+    @if (ViewBag.results.Count != 0)
     {
         <div class="row mx-0 my-4">
-            @foreach (var item in ViewBag.Catering)
+            @foreach (var item in ViewBag.results)
             {
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 productBlock">
                     <a href="/NParticularVendor?type=Catering&&id=@item.id&&vid=@item.subid">
                         <div class="w-100">
                             @if (item.logo != null && item.logo != "")
-                        {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
-                        else if (item.image != null && item.image != "")
-                        {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
-                        else
-                        { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
+                            {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
+                            else if (item.image != null && item.image != "")
+                            {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
+                            else
+                            { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
                         </div>
+                    </a>
                         <div class="w-100">
                             <div class="row mx-0 my-2 px-2 d-flex align-items-center">
-                                <p class="productName mb-0">@item.businessname</p>
+                                <a href="/NParticularVendor?type=Catering&&id=@item.id&&vid=@item.subid" class="productName mb-0">@item.businessname</a>
                                 <span class="ml-auto"><i class="fa fa-plus addCartIcn" aria-hidden="true"></i></span>
                             </div>
                         </div>
-                        </a>
+                        
                         <div class="w-100">
                             <div class="row px-2 d-flex align-items-center">
                                 <div class="col-6 col-md-6">
@@ -58,8 +59,7 @@
 
 @if (ViewBag.count == "1")
 {
-    <div class="row mx-0 my-4">
+    <div class="row mx-0 my-4 moreButton">
         <div class="mx-auto d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white" onclick="PartialTwo()"><i class="fa fa-plus mr-1" aria-hidden="true"></i>More</span> </div>
     </div>
 }
-    </div>

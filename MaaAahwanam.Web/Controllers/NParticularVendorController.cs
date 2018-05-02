@@ -128,9 +128,10 @@ namespace MaaAahwanam.Web.Controllers
         public PartialViewResult DealsSection(string type, string L1)
         {
             int takecount = (L1 != null) ? int.Parse(L1) : 2;
-            ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);
+            //ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);
             //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
-            var records = vendorProductsService.Getvendorproducts_Result("Venue");
+
+            var records = vendorProductsService.Getvendorproducts_Result(type);
             ViewBag.deal = records.Take(takecount);
             int count = records.Count();
             if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
