@@ -27,6 +27,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NUserRegistrationController : Controller
     {
+
         static string perfecturl = "";
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
@@ -80,16 +81,17 @@ namespace MaaAahwanam.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
+
+
             if (command == "UserReg")
             {
+                userLogin.IPAddress = HttpContext.Request.UserHostAddress;
+                userLogin.ActivationCode = Guid.NewGuid().ToString();
                 var response = "";
                 userLogin.UserType = "User";
                 long data = userLoginDetailsService.GetLoginDetailsByEmail(userLogin.UserName);
                 if (data == 0)
-
-                 
-
-                    response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+                     response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
                 else
                     return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Registered!!! Try Logging with your Password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                 if (response == "sucess")
@@ -124,8 +126,63 @@ namespace MaaAahwanam.Web.Controllers
                     else
                         return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                 }
+               
             }
+            if (command == "forgotpassword")
+            {
+                var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
+
+                string activationcode =  userResponse.ActivationCode;
+                string txtto = userLogin.UserName;
+                string emailid = userLogin.UserName;
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Account Activation";
+
+
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+
+
+            }
+
             return View();
+        }
+
+        public ActionResult ActivateEmail(string ActivationCode, string Email)
+        {
+            if (ActivationCode == "")
+            { ActivationCode = null; }
+            var userResponse = venorVenueSignUpService.GetUserdetails(Email);
+
+            if (ActivationCode == userResponse.ActivationCode)
+            {
+               return RedirectToAction("updatepassword", "NUserRegistration", new { Email = Email });
+               
+            }
+            return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+
+        }
+        public ActionResult updatepassword(string Email)
+        {
+            ViewBag.email = Email;
+            return View();
+        }
+
+        public ActionResult changepassword(UserLogin userLogin)
+        {
+            string email = userLogin.UserName;
+            var userResponse = venorVenueSignUpService.GetUserdetails(email);
+            var userid = userResponse.UserLoginId;
+            userLoginDetailsService.changepassword(userLogin, (int)userid);
+
+            return Json("success");
+           // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
+
         }
 
         public JsonResult assignreturnurl(string ReturnUrl)
