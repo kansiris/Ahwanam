@@ -64,7 +64,7 @@ function validateToken(token) {
                       Picture: responseText.picture
                   }
                   $.ajax({
-                      url: '/NUserRegistration/GoogleLogin/',
+                      url: '/UserRegistration/GoogleLogin/',
                       type: 'POST',
                       data: data,
                       success: function () {

@@ -86,6 +86,9 @@ namespace MaaAahwanam.Web.Controllers
                 userLogin.UserType = "User";
                 long data = userLoginDetailsService.GetLoginDetailsByEmail(userLogin.UserName);
                 if (data == 0)
+
+                 
+
                     response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
                 else
                     return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Registered!!! Try Logging with your Password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
@@ -147,46 +150,7 @@ namespace MaaAahwanam.Web.Controllers
         //    return Redirect(loginUrl.AbsoluteUri);
         //}
 
-        public ActionResult GoogleLogin(string email, string name, string firstname, string lastname, string Picture)
-        {               //Write your code here to access these paramerters
-            var response = "";
-
-            FormsAuthentication.SetAuthCookie(email, false);
-            UserLogin userLogin = new UserLogin();
-            UserDetail userDetail = new UserDetail();
-            userDetail.FirstName = name;
-            userDetail.LastName = lastname;
-            userDetail.UserImgName = firstname;
-            userDetail.UserImgName = Picture;
-            userLogin.UserName = email;
-            userLogin.Password = "Google";
-            userLogin.UserType = "User";
-            UserLogin userlogin1 = new UserLogin();
-
-            userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
-
-            if (userlogin1 == null)
-                response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
-            else
-                response = "sucess";
-            if (response == "sucess")
-            {
-                var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-                if (userResponse != null)
-                {
-                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-                    string userData = JsonConvert.SerializeObject(userResponse); //creating identity
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    return RedirectToAction("Index", "NHomePage");
-                }
-            }
-            else
-            {
-                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-            }
-            return RedirectToAction("Index", "NUserRegistration");
-        }
-
+      
 
 
         public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)
