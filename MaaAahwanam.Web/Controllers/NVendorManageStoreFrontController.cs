@@ -11,12 +11,16 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NVendorManageStoreFrontController : Controller
     {
+        const string imagepath = @"/vendorimages/";
+        VendorImageService vendorImageService = new VendorImageService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
         // GET: NVendorManageStoreFront
         public ActionResult Index(string id, string vid, string category, string subcategory)
         {
             ViewBag.id = id;
+            ViewBag.vid = vid;
+            ViewBag.images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
             ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.display = "0";
             if (vid != "" && vid != null)
@@ -62,11 +66,11 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string command, string serviceselection, string subcategory,string vid)
+        public ActionResult Index(string id, string command, string serviceselection, string subcategory, string vid)
         {
             long count = addservice(serviceselection, subcategory, long.Parse(id));
             string msg = "";
-            if (count > 0)  msg = "Service Added Successfully";
+            if (count > 0) msg = "Service Added Successfully";
             else msg = "Failed To Add Sevice";
             return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "&&vid=" + count + "&&category=" + serviceselection + "&&subcategory=" + subcategory + "'</script>");
         }
@@ -87,7 +91,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json("Fail", JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateStoreFront(string command, string category, string subcategory, string id, string vid,Vendormaster vendormaster, VendorVenue vendorVenue)
+        public JsonResult UpdateStoreFront(string command, string category, string subcategory, string id, string vid, Vendormaster vendormaster, VendorVenue vendorVenue)
         {
             if (command == "one")
             {
@@ -182,7 +186,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorVenue.VendorMasterId = id;
                 vendorVenue.VenueType = subcategory;
                 vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
-                if (vendorVenue.Id != 0) count = vendorVenue.Id; 
+                if (vendorVenue.Id != 0) count = vendorVenue.Id;
             }
             else if (category == "Catering")
             {
@@ -231,9 +235,108 @@ namespace MaaAahwanam.Web.Controllers
             return count;
         }
 
-        public string updaterecord()
+        [HttpPost]
+        public JsonResult UploadImages(HttpPostedFileBase file, string id, string vid, string type)
         {
-            return "";
+            VendorImage vendorImage = new VendorImage();
+            Vendormaster vendorMaster = new Vendormaster();
+            vendorMaster.Id = long.Parse(id);
+            vendorImage.VendorId = long.Parse(vid);
+            string fileName = string.Empty;
+            if (file != null)
+            {
+                string path = System.IO.Path.GetExtension(file.FileName);
+                //if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
+                //    return Json("File");
+                int imageno = 0;
+                int imagecount = 8;
+                var list = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
+                if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
+                {
+                    //getting max imageno
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        string x = list[i].ImageName.ToString();
+                        string[] y = x.Split('_', '.');
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
+                    }
+
+                    //Uploading images in db & folder
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        int j = imageno + i + 1;
+                        var file1 = Request.Files[i];
+                        if (file1 != null && file1.ContentLength > 0)
+                        {
+                            var filename = type + "_" + id + "_" + vid + "_" + j + path;
+                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                            file1.SaveAs(fileName);
+                            vendorImage.ImageName = filename;
+                            vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                        }
+                    }
+                }
+            }
+            return Json("success");
+        }
+
+        public ActionResult Removeimage(string src, string id, string vid, string type)
+        {
+            string delete = "";
+            var vendorImage = vendorImageService.GetImageId(src, long.Parse(vid));
+            delete = vendorImageService.DeleteImage(vendorImage);
+            if (delete == "success")
+            {
+                string fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + src));
+                System.IO.File.Delete(fileName);
+                return Json("success");
+            }
+            else
+            {
+                return Json("Failed");
+            }
+        }
+
+        public JsonResult UpdateImageInfo(string id, string vid, string description)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                VendorImage vendorImage = new VendorImage();
+                string fileName = string.Empty;
+                string imgdesc = description;
+                Vendormaster vendorMaster = new Vendormaster();
+                vendorMaster.Id = long.Parse(id);
+                vendorImage.VendorId = long.Parse(vid);
+                string status = "";
+                var images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
+                if (images.Count != 0)
+                {
+                    //Updating images info
+                    for (int i = 0; i < images.Count; i++)
+                    {
+                        vendorImage.ImageType = images[i].ImageType;
+                        vendorImage.Imagedescription = imgdesc.Split(',')[i];
+                        vendorImage.ImageName = images[i].ImageName;
+                        vendorImage.ImageId = images[i].ImageId;
+                        vendorImage.VendorId = images[i].VendorId;
+                        vendorImage.VendorMasterId = images[i].VendorMasterId;
+                        vendorImage.UpdatedBy = images[i].UpdatedBy;
+                        vendorImage.UpdatedDate = images[i].UpdatedDate;
+                        vendorImage.Status = images[i].Status;
+                        vendorImage.ImageLimit = "6";
+                        status = vendorImageService.UpdateVendorImage(vendorImage, long.Parse(id), long.Parse(vid));
+                    }
+                }
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+            return Json(JsonRequestBehavior.AllowGet);
         }
     }
 }

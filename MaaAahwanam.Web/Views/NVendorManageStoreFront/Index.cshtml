@@ -36,6 +36,9 @@
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftTwo" aria-controls="exampleTabsLeftTwo" role="tab" aria-expanded="false">Amenities</a></li>
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftThree" aria-controls="exampleTabsLeftThree" role="tab" aria-expanded="false">Hall Details</a></li>
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftFour" aria-controls="exampleTabsLeftFour" role="tab" aria-expanded="false">Address</a></li>
+                        <li role="presentation">
+                            <a data-toggle="tab" href="#exampleTabsLeftFive" aria-controls="exampleTabsLeftFive" role="tab">Gallery</a>
+                        </li>
                     </ul>
                     <div class="tab-content padding-vertical-15">
                         <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
@@ -363,18 +366,61 @@
                                         <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="ZipCode" autocomplete="off" value="@ViewBag.service.ZipCode">
                                     </div>
                                     @if (Request.QueryString["category"] == "Venue")
-                                        {
+                                    {
                                         <div class="form-group col-sm-6">
                                             <label class="control-label" for="inputBasicFirstName">Geo Location</label>
                                             <input type="text" class="form-control" id="GeoLocation" name="GeoLocation" placeholder="Geo Location" autocomplete="off" value="@ViewBag.service.GeoLocation">
                                         </div>
-                                        }
+                                    }
                                 </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-primary" onclick="updatedetails('four')">Submit</button>
                                 </div>
                             </form>
                         </div>
+                        <div class="tab-pane" id="exampleTabsLeftFive" role="tabpanel">
+                            <input type="hidden" id="Imagedescription" name="Imagedescription" />
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 text-center upload-file padding-top-10 padding-bottom-10">
+                                    <h4>Select Below</h4>
+                                    <input type="file" class="opacity-0" name="vamsi" id="fileUpload1" multiple>
+                                    <button class="btn btn-secondary">Click Here</button>
+                                </div>
+                            </div>
+                            <div class="row my-30" id="dvPreview">
+                                @foreach (var item in ViewBag.images)
+                                {
+                                    <div class='col-xs-6 col-sm-4 col-md-3 blocks'>
+                                        <div class='block thumbnail'>
+                                            <div class='row thumb-img'>
+                                                <img style='height:110px;width:110px' src="~/vendorimages/@item.ImageName" alt="@item.ImageName" />
+                                            </div>
+                                            <div class='row my-30'>
+                                                <div class='form-group-1 col-xs-12 col-sm-12 col-md-12'>
+                                                    <input type='text' class='form-control' placeholder='Descrption:' value="@item.Imagedescription">
+                                                </div>
+                                            </div>
+                                            <div class='hr-line border-default-bottom'></div>
+                                            <div class='row text-center'>
+                                                <div class='col-xs-12 col-md-12'>
+                                                    <p class='red'>
+                                                        <small><i class='fa fa-times padding-right-5 primaryColor' aria-hidden='true'></i>Remove Photo</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <button type="submit" class="btn btn-primary next">Save</button>
+                                </div>
+                            </div>
+                            <div class="blockDescrption" style="display:none"></div>
+                        </div>
+
                     </div>
                 }
             </div>
@@ -496,6 +542,124 @@
             //$(document).on('load', '#subcategory', function () {
             //    alert("subcategory alert");
             //});
+        </script>
+        <script type="text/javascript">
+            /*=============== Image Block remove =============*/
+            $(document).on('click', "p.red", function () {
+                //$("p.red").click(function(){
+                var x = $(this).parents(".blocks").css({ "transform": "translateX(1000px)", "opacity": "0" });
+                setTimeout(function () { x.remove(); }, 200);
+                var imgname = $(this).parents("div.row").parents("div.thumbnail").find("div.thumb-img").children("img").attr('alt');
+                var id = '@ViewBag.id';
+                var vid = '@ViewBag.vid';
+                $.ajax({
+                    url: '/NVendorManageStoreFront/Removeimage',//?src=' + imgname.replace('/vendorimages/', '')+'id='+id+'vid='+vid,
+                    type: 'POST',
+                    data: JSON.stringify({ src: imgname.replace('/vendorimages/', ''), id: id, vid: vid }),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data == "success") {
+                            alert('Image deleted successfully!');
+                        }
+                        else {
+                            alert('Failed!');
+                        }
+                    },
+                    error: function (data)
+                    { errormsg("Failed!!!"); }
+                });
+            });
+            /*=============== Image Block remove =============*/
+
+            /*=============== Image upload and Placed =============*/
+
+            $("#fileUpload1").change(function () {
+                var filecount = $(this)[0].files.length;
+                if (filecount <= 8) {
+                    if (typeof (FileReader) != "undefined") {
+                        var dvPreview = $("#dvPreview");
+                        //dvPreview.html("");
+                        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                        var params = dvPreview.serializeArray();
+                        //Getting Files Collection
+                        var files = $("#fileUpload1")[0].files;
+
+                        //Declaring new Form Data Instance
+                        var formData = new FormData();
+
+                        //Looping through uploaded files collection in case there is a Multi File Upload. This also works for single i.e simply remove MULTIPLE attribute from file control in HTML.
+                        for (var i = 0; i < files.length; i++) {
+                            formData.append("file", files[i]);
+                        }
+
+                        $.ajax({
+                            url: "/VendorSignUp2/UploadImages?id=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["type"]",
+                            method: "post",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            enctype: 'multipart/form-data',
+                            processData: false,
+                            success: function (data) {
+                                //Firing event if File Upload is completed!
+                                alert("Upload Completed");
+                                $("#File1").val("");
+                                location.reload();
+                            },
+                            error: function (error) { alert("Try Again After Sometime"); }
+                        })
+                    } else {
+                        alert("This browser does not support HTML5 FileReader.");
+                    }
+                }
+                else {
+                    alert("Max 8 Photos Allowed at a time");
+                }
+            });
+            /*=============== Image upload and Placed =============*/
+
+            /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
+
+            //$(document).on('click','div.radio:first-of-type',function(){
+            $('#dvPreview .blocks').find('div.radio').change(function () {
+                $("#dvPreview .blocks div.radio:last-of-type input[type='radio']").each(function () {
+                    $(this).attr('checked', 'checked');
+                });
+                $(this).next("div.radio").find("input[type='radio']").prop('checked', false);
+            });
+
+            $(".next").click(function (e) {
+                $('.radioName').empty();
+                $('.blockDescrption').empty();
+                e.preventDefault();
+                var arr;
+                var BlockLen = $("#dvPreview .blocks").length;
+                $("#dvPreview .blocks").find('input[type="text"]').each(function () {
+                    var v = $.trim($(this).val());
+                    if (v != "") {
+                        $(".blockDescrption").append($(this).val() + ',');
+                    }
+                });
+                var blockDescrption = $('.blockDescrption').text();
+                $('#Imagedescription').val($('.blockDescrption').text().slice(0, -1));
+
+                $.ajax({
+                    url: "/NVendorManageStoreFront/UpdateImageInfo?id=@ViewBag.id&&vid=@ViewBag.vid&&description=" + $('#Imagedescription').val() + "",
+                    method: "post",
+                    data: $('#Imagedescription').val(),
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function (data) {
+                        alert("Image Description Updated");
+                    },
+                    error: function (error) { alert("Try Again After Sometime"); }
+                });
+            });
+
+            /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
         </script>
     }
 }
