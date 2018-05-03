@@ -29,6 +29,9 @@ namespace MaaAahwanam.Web.Controllers
     {
 
         static string perfecturl = "";
+
+        string activationcode = "";
+        string txtto = "";
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         Vendormaster vendorMaster = new Vendormaster();
@@ -91,13 +94,27 @@ namespace MaaAahwanam.Web.Controllers
                 userLogin.UserType = "User";
                 long data = userLoginDetailsService.GetLoginDetailsByEmail(userLogin.UserName);
                 if (data == 0)
-                     response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+                { response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); }
                 else
-                    return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Registered!!! Try Logging with your Password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                { return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Registered!!! Try Logging with your Password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>"); }
                 if (response == "sucess")
+                {
+                    activationcode = userLogin.ActivationCode;
+                    txtto = userLogin.UserName;
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    readFile = readFile.Replace("[ActivationLink]", url);
+
+                    string txtmessage = readFile;//readFile + body;
+                    string subj = "Account Activation";
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+
                     return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                }
                 else
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                { return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>"); }
             }
             if (command == "Login")
             {
@@ -132,8 +149,8 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
 
-                string activationcode =  userResponse.ActivationCode;
-                string txtto = userLogin.UserName;
+                 activationcode =  userResponse.ActivationCode;
+                txtto = userLogin.UserName;
                 string emailid = userLogin.UserName;
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
@@ -146,6 +163,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                return Content("<script language='javascript' type='text/javascript'>alert('A mail is sent to your email to change password Please check your email');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
 
 
             }

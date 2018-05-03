@@ -43,67 +43,53 @@
         </nav>
         
     </div>
-    <div class="container-fluid">
+    @{Html.RenderAction("ItemsCartdetails", "NHomePage");}
+
+
+
+
+    @*<div class="container-fluid">
             <div class="row">
                 <div class="cartBlock p-2">
                     <div class="arrow"></div>
+
+@if (ViewBag.cartCount != 0)
+{
                     <ul class="pl-0">
+@foreach (var item in ViewBag.cartitems)
+{
                         <li>
                             <div class="d-inline-block image">
-                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Dummy">
+                                @if (item.image != null)
+                                {
+                                    <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
+
+                                }
+                                else if (item.image == null)
+                                {
+                                    <img width="100" height="100" src="~/noimages.png" />
+                                }
                             </div>
                             <div class="d-inline-block title">
-                                <p>Taj Deccan</p>
+                                <p>@item.BusinessName</p>
                             </div>
                             <div class="d-inline-block price">
-                                <p>Rs <span class="themeColor">5000</span></p>
+                                <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
                             </div>
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                            <div class="d-inline-block image">
-                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Dummy">
-                            </div>
-                            <div class="d-inline-block title">
-                                <p>Taj Deccan</p>
-                            </div>
-                            <div class="d-inline-block price">
-                                <p>Rs <span class="themeColor">5000</span></p>
-                            </div>
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                            <div class="d-inline-block image">
-                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Dummy">
-                            </div>
-                            <div class="d-inline-block title">
-                                <p>Taj Deccan</p>
-                            </div>
-                            <div class="d-inline-block price">
-                                <p>Rs <span class="themeColor">5000</span></p>
-                            </div>
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </li>
-                        <li>
-                            <div class="d-inline-block image">
-                                <img src="~/newdesign/images/dummy_thumb.jpg" alt="Dummy">
-                            </div>
-                            <div class="d-inline-block title">
-                                <p>Taj Deccan</p>
-                            </div>
-                            <div class="d-inline-block price">
-                                <p>Rs <span class="themeColor">5000</span></p>
-                            </div>
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </li>
+                            <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i>
+</li>
+}
                     </ul>
+}
                     <div class="w-100 d-flex justify-content-center">
                         <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2">Checkout</span>
-                        <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs </span>10000</div>
+                        <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Total: Rs </span>@ViewBag.Total</div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
+
+
     <div class="search">
         <div class="row justify-content-center commonSearch innerPagesBg py-4">
             <div class="col-12 col-sm-8 col-md-6 bgWhite py-3">
@@ -356,6 +342,29 @@
     <!------ Owl Thumb Slider ---------->
     <script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
     <script>
+        function DeletecartItem(cartId)
+        {
+            var obj = {}
+            obj.cartId = cartId;
+            $.ajax({
+                type: "POST",
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/CartView/DeletecartItem',
+                data: {},
+                data: JSON.stringify(obj),
+                //data: sendInfo,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data != null) {
+                        window.location.reload();
+                    }
+                },
+                error: function (data) {
+                    alert('error')
+                }
+            });
+        }
+
         $(function () {
             var availableTags = '';
             $.ajax({

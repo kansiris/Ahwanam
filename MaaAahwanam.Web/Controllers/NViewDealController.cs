@@ -54,7 +54,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView("Loadmoredeals");
         }
 
-        public ActionResult booknow(string type, string etype1, string date, string totalprice, string id,string price, string guest, string timeslot,string vid)
+        public ActionResult booknow(string type, string etype1, string date, string totalprice, string id,string price, string guest, string timeslot,string vid, string did)
      {
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -120,7 +120,34 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.subid = long.Parse(vid);
                 orderDetail.BookedDate = Convert.ToDateTime(date);
                 orderDetail.EventType = etype1;
+                orderDetail.DealId = long.Parse(did);
                 orderdetailsServices.SaveOrderDetail(orderDetail);
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult addcnow(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did)
+        {
+
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var vendor = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
+                string updateddate = DateTime.UtcNow.ToShortDateString();
+                CartItem cartItem = new CartItem();
+                cartItem.VendorId = Int32.Parse(id);
+                cartItem.ServiceType = etype1;
+                cartItem.TotalPrice = decimal.Parse(totalprice);
+                cartItem.Orderedby = user.UserId;
+                cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                cartItem.Perunitprice = decimal.Parse(price);
+                cartItem.Quantity = Convert.ToInt16(guest);
+                cartItem.subid = Convert.ToInt64(vid);
+                //  cartItem.attribute = orderRequest.attribute;
+                cartItem.DealId = Convert.ToInt64(did);
+                CartService cartService = new CartService();
+                cartItem = cartService.AddCartItem(cartItem);
+
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);
@@ -129,7 +156,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult sort(string id, string type, string eve)
         {
             var data = vendorProductsService.getpartvendordeal(id, type).Where(m => m.Category == eve);
-            var message = String.Join("~", data.Select(m => new  {   m.DealPrice,  m.FoodType }));
+            var message = String.Join("~", data.Select(m => new  {   m.DealPrice,  m.FoodType, m.DealID }));
             return Json(message,JsonRequestBehavior.AllowGet);
         }
 

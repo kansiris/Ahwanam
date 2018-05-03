@@ -105,5 +105,37 @@ namespace MaaAahwanam.Web.Controllers
             }
             return PartialView("ItemsCartViewBindingLayout");
         }
-    }
+
+
+        public ActionResult ItemsCartdetails()
+        {
+
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                  if (user.UserType == "Admin")
+                {
+                    ViewBag.cartCount = cartService.CartItemsCount(0);
+                    return PartialView("ItemsCartdetails");
+                }
+                ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+
+                List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                //List<cartcount_Result> cartlist = cartService.cartcountservice(user.UserId);
+                decimal total = cartlist.Sum(s => s.TotalPrice);
+                ViewBag.cartitems = cartlist;
+                ViewBag.Total = total;
+                //ViewBag.cartcounttotal = cartService.cartcountservice(user.UserId).Count();
+                //ViewBag.cartitems = cartService.cartcountservice(user.UserId);
+            }
+            else
+            {
+                ViewBag.cartCount = cartService.CartItemsCount(0);
+            }
+           
+
+            return PartialView("ItemsCartdetails");
+        }
+        }
 }
