@@ -148,8 +148,9 @@ namespace MaaAahwanam.Web.Controllers
             if (command == "forgotpassword")
             {
                 var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
-
-                 activationcode =  userResponse.ActivationCode;
+                if (userResponse != null)
+                {
+                    activationcode =  userResponse.ActivationCode;
                 txtto = userLogin.UserName;
                 string emailid = userLogin.UserName;
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
@@ -164,7 +165,15 @@ namespace MaaAahwanam.Web.Controllers
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 return Content("<script language='javascript' type='text/javascript'>alert('A mail is sent to your email to change password Please check your email');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-
+                }
+                else
+                {
+                    int query = vendorMasterService.checkemail(userLogin.UserName);
+                    if (query == 0)
+                        return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                    else
+                        return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                }
 
             }
 
