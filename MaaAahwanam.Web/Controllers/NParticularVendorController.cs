@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Models;
+using MaaAahwanam.Utility;
+using System.Net;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -17,6 +20,8 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         WhishListService whishListService = new WhishListService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+
 
         //static int count = 0;
         // GET: NParticularVendor
@@ -151,6 +156,8 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string updateddate = DateTime.UtcNow.ToShortDateString();
+                int userid = Convert.ToInt32(user.UserId);
+
 
                 //Saving Record in order Table
                 OrderService orderService = new OrderService();
@@ -184,6 +191,28 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.BookedDate = Convert.ToDateTime(date);
                 orderDetail.EventType = eventtype;
                 orderdetailsServices.SaveOrderDetail(orderDetail);
+                var userlogdetails = userLoginDetailsService.GetUserId(userid);
+
+                string txtto = userlogdetails.UserName;
+                var userdetails = userLoginDetailsService.GetUser(userid);
+
+                string name = userdetails.FirstName;
+                string OrderId = Convert.ToString(order.OrderId);
+
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                readFile = readFile.Replace("[orderid]", OrderId);
+
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Thanks for your order";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+
+
+
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);

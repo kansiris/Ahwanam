@@ -90,6 +90,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 userLogin.IPAddress = HttpContext.Request.UserHostAddress;
                 userLogin.ActivationCode = Guid.NewGuid().ToString();
+                userLogin.Status = "InActive";
                 var response = "";
                 userLogin.UserType = "User";
                 long data = userLoginDetailsService.GetLoginDetailsByEmail(userLogin.UserName);
@@ -101,17 +102,19 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     activationcode = userLogin.ActivationCode;
                     txtto = userLogin.UserName;
-                    string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    string  username = userDetail.FirstName ;
+                    string emailid = userLogin.UserName;
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
                     string readFile = File.OpenText().ReadToEnd();
                     readFile = readFile.Replace("[ActivationLink]", url);
-
+                    readFile = readFile.Replace("[name]", username);
                     string txtmessage = readFile;//readFile + body;
                     string subj = "Account Activation";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
 
-                    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                 }
                 else
                 { return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>"); }
@@ -119,21 +122,29 @@ namespace MaaAahwanam.Web.Controllers
             if (command == "Login")
             {
                 var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+                var userResponse1 = venorVenueSignUpService.GetUserLogdetails(userLogin);
+
                 if (userResponse != null)
                 {
-                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-                    string userData = JsonConvert.SerializeObject(userResponse);
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
-                    if (perfecturl != null && perfecturl != "")
-                        return Redirect(perfecturl);
-                    if (userResponse.UserType == "Vendor")
-                        //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
-                        return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+                    if (userResponse1.Status == "Active"  )
+                    {
+                        vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                        string userData = JsonConvert.SerializeObject(userResponse);
+                        ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                        //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
+                        if (perfecturl != null && perfecturl != "")
+                            return Redirect(perfecturl);
+                        if (userResponse.UserType == "Vendor")
+                            //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
+                            return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
 
-                    else
-                        ViewBag.userid = userResponse.UserLoginId;
+                        else
+                            ViewBag.userid = userResponse.UserLoginId;
                         return RedirectToAction("Index", "NHomePage");
+                    }
+                    return Content("<script language='javascript' type='text/javascript'>alert('Please check Your email to verify Email ID');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+
+
                 }
                 else
                 {
@@ -151,15 +162,16 @@ namespace MaaAahwanam.Web.Controllers
                 if (userResponse != null)
                 {
                     activationcode =  userResponse.ActivationCode;
+                    string name = userDetail.FirstName;
                 txtto = userLogin.UserName;
                 string emailid = userLogin.UserName;
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
-                
+                readFile = readFile.Replace("[name]", name);
                 string txtmessage = readFile;//readFile + body;
-                string subj = "Account Activation";
+                string subj = "Password reset information";
 
 
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
@@ -194,6 +206,33 @@ namespace MaaAahwanam.Web.Controllers
             return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
 
         }
+
+
+        public ActionResult ActivateEmail1(string ActivationCode, string Email)
+        {
+            UserLogin userLogin = new UserLogin();
+
+            if (ActivationCode == "")
+            { ActivationCode = null; }
+            var userResponse = venorVenueSignUpService.GetUserdetails(Email);
+
+            if (ActivationCode == userResponse.ActivationCode)
+            {
+                userLogin.Status = "Active";
+
+                string email = userLogin.UserName;
+               
+                var userid = userResponse.UserLoginId;
+                userLoginDetailsService.changestatus(userLogin, (int)userid);
+
+                return RedirectToAction("Index", "NUserRegistration");
+
+            }
+            return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+
+        }
+
+
         public ActionResult updatepassword(string Email)
         {
             ViewBag.email = Email;

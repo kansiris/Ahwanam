@@ -65,6 +65,33 @@ namespace MaaAahwanam.Repository.db
             }
             return userLogin;
         }
+        public UserLogin Updatestatus(UserLogin userLogin, int UserloginID)
+        {
+            // Query the database for the row to be updated.
+            var query =
+                from ord in _dbContext.UserLogin
+                where ord.UserLoginId == UserloginID
+                select ord;
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (UserLogin ord in query)
+            {
+                ord.Status = userLogin.Status;
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception Ex)
+            {
+
+            }
+            return userLogin;
+        }
 
         public UserLogin AddVendorUserLogin(UserLogin userLogin)
         {
