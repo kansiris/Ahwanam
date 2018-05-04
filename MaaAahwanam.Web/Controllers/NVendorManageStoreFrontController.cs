@@ -20,6 +20,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             ViewBag.id = id;
             ViewBag.vid = vid;
+            if(vid != null)
             ViewBag.images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
             ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.display = "0";
