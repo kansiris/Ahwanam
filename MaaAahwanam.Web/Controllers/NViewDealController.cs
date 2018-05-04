@@ -8,13 +8,17 @@ using MaaAahwanam.Repository;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
+using System.Net;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
     public class NViewDealController : Controller
     {
         VendorProductsService vendorProductsService = new VendorProductsService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
 
+        
         // GET: NViewDeal
         public ActionResult Index(string id, string type, string eve)
         {
@@ -77,7 +81,7 @@ namespace MaaAahwanam.Web.Controllers
                 //  cartItem = cartService.AddCartItem(cartItem);
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string updateddate = DateTime.UtcNow.ToShortDateString();
-
+                int userid = Convert.ToInt32(user.UserId);
                 //Saving Record in order Table
                 OrderService orderService = new OrderService();
                 Order order = new Order();
@@ -122,6 +126,27 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.EventType = etype1;
                 orderDetail.DealId = long.Parse(did);
                 orderdetailsServices.SaveOrderDetail(orderDetail);
+
+               var userlogdetails = userLoginDetailsService.GetUserId(userid);
+
+                string   txtto = userlogdetails.UserName;
+                var userdetails = userLoginDetailsService.GetUser(userid);
+
+                string name = userdetails.FirstName;
+                 string OrderId = Convert.ToString(order.OrderId);
+
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                readFile = readFile.Replace("[orderid]", OrderId);
+
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Thanks for your order";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);

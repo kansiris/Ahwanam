@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Service;
 using MaaAahwanam.Utility;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -44,10 +45,29 @@ namespace MaaAahwanam.Web.Controllers
                     userDetail.UserLoginId = userLogin1.UserLoginId;
                     userDetail = venorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
                     addservice(vendorMaster);
-                    if (vendorMaster.Id != 0)
-                    {
-                        return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
-                    }
+
+                 string activationcode = userLogin1.ActivationCode;
+                    string txtto = userLogin1.UserName;
+                    string username = userDetail.FirstName;
+                    string emailid = userLogin1.UserName;
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    readFile = readFile.Replace("[ActivationLink]", url);
+                    readFile = readFile.Replace("[name]", username);
+                    string txtmessage = readFile;//readFile + body;
+                    string subj = "Account Activation";
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+
+                    return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+
+
+
+                    //if (vendorMaster.Id != 0)
+                    //{
+                    //    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
+                    //}
                 }
                 else
                     return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");

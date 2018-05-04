@@ -12,7 +12,7 @@ namespace MaaAahwanam.Service
         public string AddUserDetails(UserLogin userLogin, UserDetail userDetails)
         {
             string response;
-            userLogin.Status = "Active";
+            //userLogin.Status = "Active";
             string updateddate = DateTime.UtcNow.ToShortDateString();
             userLogin.RegDate = Convert.ToDateTime(updateddate);
             userLogin.UpdatedDate = userDetails.UpdatedDate = Convert.ToDateTime(updateddate);
@@ -61,6 +61,11 @@ namespace MaaAahwanam.Service
         public UserLogin changepassword(UserLogin userLogin, int UserLoginId)
         {
             var changes = userLoginRepository.UpdatePassword(userLogin, UserLoginId);
+            return changes;
+        }
+        public UserLogin changestatus(UserLogin userLogin, int UserLoginId)
+        {
+            var changes = userLoginRepository.Updatestatus(userLogin, UserLoginId);
             return changes;
         }
         public string SetUserDP(int userloginid)
