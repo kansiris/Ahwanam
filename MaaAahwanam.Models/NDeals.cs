@@ -28,5 +28,6 @@ namespace MaaAahwanam.Models
         public string TermsConditions { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string TimeSlot { get; set; }
+        public string Status { get; set; }
     }
 }
