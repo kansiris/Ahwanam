@@ -78,7 +78,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
 
-                if (user.UserType == "user")
+                if (user.UserType == "User")
                 {
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                     if (userdata.FirstName != "" && userdata.FirstName != null)
@@ -119,7 +119,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "user")
+                if (user.UserType == "User")
                 {
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                     if (user.UserType == "Admin")
