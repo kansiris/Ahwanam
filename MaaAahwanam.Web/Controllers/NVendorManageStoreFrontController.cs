@@ -20,8 +20,10 @@ namespace MaaAahwanam.Web.Controllers
         {
             ViewBag.id = id;
             ViewBag.vid = vid;
-            if(vid != null)
-            ViewBag.images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
+            ViewBag.category = category;
+            ViewBag.subcategory = subcategory;
+            if (vid != null)
+                ViewBag.images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
             ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.display = "0";
             if (vid != "" && vid != null)
@@ -69,7 +71,11 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(string id, string command, string serviceselection, string subcategory, string vid)
         {
-            long count = addservice(serviceselection, subcategory, long.Parse(id));
+            long count = 0;
+            if (command == "add")
+                count = addservice(serviceselection, subcategory, long.Parse(id));
+            else if (command == "update")
+                count = updateservice(serviceselection, subcategory, long.Parse(id), long.Parse(vid));
             string msg = "";
             if (count > 0) msg = "Service Added Successfully";
             else msg = "Failed To Add Sevice";
@@ -175,6 +181,11 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 return Json("Address Updated");
             }
+            else if (command == "six")
+            {
+                vendormaster = vendorMasterService.UpdateVendorMaster(vendormaster, long.Parse(id)); //updating Vendor Master
+                return Json("Your Address Updated");
+            }
             return Json(JsonRequestBehavior.AllowGet);
         }
 
@@ -231,6 +242,65 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsOther.UpdatedDate = Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
                 vendorsOther.type = subcategory;
                 vendorsOther = vendorVenueSignUpService.AddVendorOther(vendorsOther);
+                if (vendorsOther.Id != 0) count = vendorsOther.Id;
+            }
+            return count;
+        }
+
+        public long updateservice(string category, string subcategory, long id, long vid)
+        {
+            Vendormaster vendormaster = new Vendormaster();
+            long count = 0;
+            if (category == "Venue")
+            {
+                VendorVenue vendorVenue = new VendorVenue();
+                vendorVenue.VendorMasterId = id;
+                vendorVenue.VenueType = subcategory;
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, id, vid);
+                if (vendorVenue.Id != 0) count = vendorVenue.Id;
+            }
+            else if (category == "Catering")
+            {
+                VendorsCatering vendorsCatering = new VendorsCatering();
+                vendorsCatering.VendorMasterId = id;
+                vendorsCatering.CuisineType = subcategory;
+                vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, id, vid);
+                if (vendorsCatering.Id != 0) count = vendorsCatering.Id;
+            }
+            else if (category == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                vendorsPhotography.VendorMasterId = id;
+                vendorsPhotography.PhotographyType = subcategory;
+                vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, id, vid);
+                if (vendorsPhotography.Id != 0) count = vendorsPhotography.Id;
+            }
+            else if (category == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                vendorsDecorator.VendorMasterId = id;
+                vendorsDecorator.DecorationType = subcategory;
+                vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, id, vid);
+                if (vendorsDecorator.Id != 0) count = vendorsDecorator.Id;
+            }
+            //if (category == "EventManagement")
+            //{
+            //    VendorsEventOrganiser vendorsEventOrganiser = new VendorsEventOrganiser();
+            //    vendorsEventOrganiser.VendorMasterId = id;
+            //    vendorsEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorsEventOrganiser);
+            //    if (vendorsEventOrganiser.Id != 0) count = vendorsEventOrganiser.Id;
+            //}
+            else if (category == "Other")
+            {
+                VendorsOther vendorsOther = new VendorsOther();
+                vendorsOther.VendorMasterId = id;
+                vendorsOther.MinOrder = "0";
+                vendorsOther.MaxOrder = "0";
+                vendorsOther.Status = "InActive";
+                vendorsOther.UpdatedBy = 2;
+                vendorsOther.UpdatedDate = Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther.type = subcategory;
+                vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, id, vid);
                 if (vendorsOther.Id != 0) count = vendorsOther.Id;
             }
             return count;

@@ -84,9 +84,9 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView();
             }
 
-            if (new string[] { "Hotel", "Resort", "Convetion" }.Contains(type))
+            if (new string[] { "Hotel", "Resort", "Convetion", "Convention" }.Contains(type))
             {
-                type = (type == "Convetion") ? "Convention Hall" : type;
+                type = (type == "Convetion" || type == "Convention") ? "Convention Hall" : type;
                 var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, count);
                 if (data.Count > 0)
                     ViewBag.results = data.Take(takecount).ToList();

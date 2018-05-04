@@ -32,7 +32,7 @@ namespace MaaAahwanam.Web.Controllers
                 type = "Other";
             //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
             var data = vendorMasterService.GetVendor(long.Parse(id)); //
-            var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)).Where(a => a.VendorId == long.Parse(vid)).ToList();
+            var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)); //.Where(a => a.VendorId == long.Parse(vid)).ToList();
             ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
             ViewBag.allimages = allimages;
             ViewBag.Productinfo = data;
@@ -91,8 +91,9 @@ namespace MaaAahwanam.Web.Controllers
             //Loading Vendor deals
             //if (type.Split(',').Count() > 1) type = type.Split(',')[0];
             if (type == "Venues") type = "Venue";
-            
+
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type);
+            ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id);//.Where(p => p.VendorSubId == long.Parse(vid));
             return View();
         }
 

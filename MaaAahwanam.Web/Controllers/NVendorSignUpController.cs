@@ -46,7 +46,7 @@ namespace MaaAahwanam.Web.Controllers
                     addservice(vendorMaster);
                     if (vendorMaster.Id != 0)
                     {
-                        return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "NHomePage") + "'</script>");
                     }
                 }
                 else

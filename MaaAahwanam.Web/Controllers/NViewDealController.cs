@@ -38,11 +38,12 @@ namespace MaaAahwanam.Web.Controllers
                 }
 
             return View();
-        }
+            }
             catch (Exception ex)
-            { return RedirectToAction("Index", "Nhomepage");
-    }
-}
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
+        }
 
         public PartialViewResult Loadmoredeals(string lastrecord)
         {

@@ -9,19 +9,46 @@
     <form method="post">
         <div class="row my-30">
             <div class="col-sm-12 col-md-3">
-                <select class="form-control" id="serviceselection" name="serviceselection">
-                    <option>Select Service Type</option>
-                    <option value="Venue">Venue</option>
-                    <option value="Catering">Catering</option>
-                    <option value="Photography">Photography</option>
-                    <option value="Decorator">Decorator</option>
-                    <option value="Other">Others</option>
-                </select>
+                @if (ViewBag.vid != "" && ViewBag.vid != null)
+                {
+                    <select class="form-control" id="serviceselection1" name="serviceselection1" disabled>
+                        <option>Select Service Type</option>
+                        <option value="Venue">Venue</option>
+                        <option value="Catering">Catering</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Decorator">Decorator</option>
+                        <option value="Other">Others</option>
+                    </select>
+                    <input type="hidden" id="serviceselection" name="serviceselection" value="@ViewBag.category"/>
+                }
+                else
+                {
+                    <select class="form-control" id="serviceselection" name="serviceselection">
+                        <option>Select Service Type</option>
+                        <option value="Venue">Venue</option>
+                        <option value="Catering">Catering</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Decorator">Decorator</option>
+                        <option value="Other">Others</option>
+                    </select>
+                }
             </div>
-            <div class="col-sm-12 col-md-3">
-                <select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>
-            </div>
-            <div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="add">Save</button></div>
+            @if (ViewBag.subcategory == "")
+            {
+                <div class="col-sm-12 col-md-3">
+                    <select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>
+                </div>
+                <div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="update">Update</button></div>
+            }
+            else
+            {
+                <div class="col-sm-12 col-md-3">
+                    @*<select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>*@
+                    <input type="text" class="form-control" value="@ViewBag.subcategory" readonly />
+                </div>
+                @*<div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="add">Update</button></div>*@
+            }
+
         </div>
     </form>
     <div class="row">
@@ -33,8 +60,12 @@
                 {
                     <ul class="nav nav-tabs margin-right-25" data-plugin="nav-tabs" role="tablist">
                         <li class="active" role="presentation"><a data-toggle="tab" href="#exampleTabsLeftOne" aria-controls="exampleTabsLeftOne" role="tab" aria-expanded="true">About Us</a></li>
+                        <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLefSix" aria-controls="exampleTabsLefSix" role="tab" aria-expanded="false">Your Address</a></li>
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftTwo" aria-controls="exampleTabsLeftTwo" role="tab" aria-expanded="false">Amenities</a></li>
-                        <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftThree" aria-controls="exampleTabsLeftThree" role="tab" aria-expanded="false">Hall Details</a></li>
+                        @if (Request.QueryString["category"] == "Venue")
+                        {
+                            <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftThree" aria-controls="exampleTabsLeftThree" role="tab" aria-expanded="false">Hall Details</a></li>
+                        }
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftFour" aria-controls="exampleTabsLeftFour" role="tab" aria-expanded="false">Address</a></li>
                         <li role="presentation">
                             <a data-toggle="tab" href="#exampleTabsLeftFive" aria-controls="exampleTabsLeftFive" role="tab">Gallery</a>
@@ -64,7 +95,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label class="control-label" for="inputBasicFirstName">Url</label>
+                                    <label class="control-label" for="inputBasicFirstName">Website Link</label>
                                     <input type="text" class="form-control" id="Url" name="Url" value="@ViewBag.Vendor.Url" /><br>
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -342,6 +373,7 @@
                                 </form>
                             }
                         </div>
+
                         <div class="tab-pane" id="exampleTabsLeftFour" role="tabpanel">
                             <form class="">
                                 <div class="row">
@@ -375,6 +407,36 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-primary" onclick="updatedetails('four')">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane" id="exampleTabsLefSix" role="tabpanel">
+                            <form class="">
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label class="control-label" for="inputBasicFirstName">Address</label>
+                                        <input type="text" class="form-control" id="vAddress" name="vAddress" placeholder="Address" autocomplete="off" value="@ViewBag.Vendor.Address">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label" for="inputBasicFirstName">Landmark</label>
+                                        <input type="text" class="form-control" id="vLandmark" name="vLandmark" placeholder="Landmark" autocomplete="off" value="@ViewBag.Vendor.Landmark">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label" for="inputBasicFirstName">City</label>
+                                        <input type="text" class="form-control" id="vCity" name="vCity" placeholder="City" autocomplete="off" value="@ViewBag.Vendor.City">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicFirstName">State</label>
+                                        <input type="text" class="form-control" id="vState" name="vState" placeholder="State" autocomplete="off" value="@ViewBag.Vendor.State">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicFirstName">Zip Code</label>
+                                        <input type="text" class="form-control" id="vZipCode" name="vZipCode" placeholder="ZipCode" autocomplete="off" value="@ViewBag.Vendor.ZipCode">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" onclick="updatedetails('six')">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -469,7 +531,12 @@
                 EmailId: $('#EmailId').val(),
                 LandlineNumber: $('#LandlineNumber').val(),
                 Url: $('#Url').val(),
-                Description: $('#mainDescription').val()
+                Description: $('#mainDescription').val(),
+                Address: $('#vAddress').val(),
+                Landmark: $('#vLandmark').val(),
+                City: $('#vCity').val(),
+                State: $('#vState').val(),
+                ZipCode: $('#vZipCode').val()
             }
 
             var vendorVenue = {
@@ -516,20 +583,20 @@
     @if (ViewBag.display == "1")
     {
         <script>
-            var selectedcategory = '@Request.QueryString["category"]';//$('#serviceselection').val();
-            var selectedsubcategory = '@Request.QueryString["subcategory"]';//$('#subcategory').val();
-            $('#serviceselection > option').each(function () {
+            var selectedcategory = '@ViewBag.category';//$('#serviceselection').val();
+            var selectedsubcategory = '@ViewBag.subcategory';//$('#subcategory').val();
+            $('#serviceselection1 > option').each(function () {
                 if ($(this).text() == selectedcategory) $(this).parent('select').val($(this).val())
             })
             filterdropdown(selectedcategory);
             $('#subcategory').css('display', 'block');
-            $('#subcategory > option').bind('click', function () {
-                alert("hi");
-                if ($(this).text() == selectedsubcategory) $(this).parent('select').val($(this).val())
-            });
-            $(document).find('#subcategory > option').bind('click', function () {
-                alert("hi");
-            });
+            //$('#subcategory > option').bind('click', function () {
+            //    alert("hi");
+            //    if ($(this).text() == selectedsubcategory) $(this).parent('select').val($(this).val())
+            //});
+            //$(document).find('#subcategory > option').bind('click', function () {
+            //    alert("hi");
+            //});
             //alert("hi1");
             //$(document).on('load', function () {
             //    $('#subcategory').css('display', 'block');
