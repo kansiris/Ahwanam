@@ -19,7 +19,7 @@
                         <option value="Decorator">Decorator</option>
                         <option value="Other">Others</option>
                     </select>
-                    <input type="hidden" id="serviceselection" name="serviceselection" value="@ViewBag.category"/>
+                    <input type="hidden" id="serviceselection" name="serviceselection" value="@ViewBag.category" />
                 }
                 else
                 {
@@ -33,22 +33,31 @@
                     </select>
                 }
             </div>
-            @if (ViewBag.subcategory == "")
+            @if (ViewBag.display == "1")
+            {
+                if (ViewBag.subcategory == "")
+                {
+                    <div class="col-sm-12 col-md-3">
+                        <select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>
+                    </div>
+                    <div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="update">Update</button></div>
+                }
+                else
+                {
+                    <div class="col-sm-12 col-md-3">
+                        @*<select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>*@
+                        <input type="text" class="form-control" value="@ViewBag.subcategory" readonly />
+                    </div>
+                    @*<div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="add">Update</button></div>*@
+                }
+            }
+            @if (ViewBag.vid == "" || ViewBag.vid == null)
             {
                 <div class="col-sm-12 col-md-3">
                     <select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>
                 </div>
-                <div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="update">Update</button></div>
+                <div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="add">Save</button></div>
             }
-            else
-            {
-                <div class="col-sm-12 col-md-3">
-                    @*<select class="form-control" id="subcategory" name="subcategory" style="display:none"></select>*@
-                    <input type="text" class="form-control" value="@ViewBag.subcategory" readonly />
-                </div>
-                @*<div class="col-sm-12 col-md-2"><button type="submit" class="btn btn-block btn-primary" name="command" value="add">Update</button></div>*@
-            }
-
         </div>
     </form>
     <div class="row">
@@ -62,6 +71,7 @@
                         <li class="active" role="presentation"><a data-toggle="tab" href="#exampleTabsLeftOne" aria-controls="exampleTabsLeftOne" role="tab" aria-expanded="true">About Us</a></li>
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLefSix" aria-controls="exampleTabsLefSix" role="tab" aria-expanded="false">Your Address</a></li>
                         <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftTwo" aria-controls="exampleTabsLeftTwo" role="tab" aria-expanded="false">Amenities</a></li>
+                        <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftseven" aria-controls="exampleTabsLeftseven" role="tab" aria-expanded="false">Prices</a></li>
                         @if (Request.QueryString["category"] == "Venue")
                         {
                             <li role="presentation" class=""><a data-toggle="tab" href="#exampleTabsLeftThree" aria-controls="exampleTabsLeftThree" role="tab" aria-expanded="false">Hall Details</a></li>
@@ -381,15 +391,15 @@
                                         <label class="control-label" for="inputBasicFirstName">Address</label>
                                         <input type="text" class="form-control" id="Address" name="Address" placeholder="Address" autocomplete="off" value="@ViewBag.service.Address">
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-6">
                                         <label class="control-label" for="inputBasicFirstName">Landmark</label>
                                         <input type="text" class="form-control" id="Landmark" name="Landmark" placeholder="Landmark" autocomplete="off" value="@ViewBag.service.Landmark">
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-6">
                                         <label class="control-label" for="inputBasicFirstName">City</label>
                                         <input type="text" class="form-control" id="City" name="City" placeholder="City" autocomplete="off" value="@ViewBag.service.City">
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group col-sm-6">
                                         <label class="control-label" for="inputBasicFirstName">State</label>
                                         <input type="text" class="form-control" id="State" name="State" placeholder="State" autocomplete="off" value="@ViewBag.service.State">
                                     </div>
@@ -440,6 +450,7 @@
                                 </div>
                             </form>
                         </div>
+
                         <div class="tab-pane" id="exampleTabsLeftFive" role="tabpanel">
                             <input type="hidden" id="Imagedescription" name="Imagedescription" />
                             <div class="row">
@@ -483,6 +494,87 @@
                             <div class="blockDescrption" style="display:none"></div>
                         </div>
 
+                        <div class="tab-pane" id="exampleTabsLeftseven" role="tabpanel">
+                            <form class="">
+                                <div class="row">
+                                    @if (ViewBag.category == "Venue")
+                                    {
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Service Cost</label>
+                                            <input type="text" class="form-control" id="ServiceCost" name="ServiceCost" placeholder="Service Cost" autocomplete="off" value="@ViewBag.service.ServiceCost">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label" for="inputBasicFirstName">Veg Lunch Price Starts At?</label>
+                                            <input type="text" class="form-control" id="VegLunchCost" name="VegLunchCost" placeholder="Veg Lunch Price Starts At?" autocomplete="off" value="@ViewBag.service.VegLunchCost">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label" for="inputBasicFirstName">Non-Veg Lunch Price Starts At?</label>
+                                            <input type="text" class="form-control" id="NonVegLunchCost" name="NonVegLunchCost" placeholder="Non-Veg Lunch Price Starts At?" autocomplete="off" value="@ViewBag.service.NonVegLunchCost">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Veg Dinner Price Starts At?</label>
+                                            <input type="text" class="form-control" id="VegDinnerCost" name="VegDinnerCost" placeholder="Veg Dinner Price Starts At?" autocomplete="off" value="@ViewBag.service.VegDinnerCost">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Non-Veg Dinner Price Starts At?</label>
+                                            <input type="text" class="form-control" id="NonVegDinnerCost" name="NonVegDinnerCost" placeholder="Non-Veg Dinner Price Starts At?" autocomplete="off" value="@ViewBag.service.NonVegDinnerCost">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Minimum Order</label>
+                                            <input type="text" class="form-control" id="MinOrder" name="MinOrder" placeholder="Minimum Order" autocomplete="off" value="@ViewBag.service.MinOrder">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Maximum Order</label>
+                                            <input type="text" class="form-control" id="MaxOrder" name="MaxOrder" placeholder="Maximum Order" autocomplete="off" value="@ViewBag.service.MaxOrder">
+                                        </div>
+                                    }
+                                    @if (ViewBag.category == "Catering")
+                                    {
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label" for="inputBasicFirstName">Veg Price Starts At?</label>
+                                            <input type="text" class="form-control" id="VegLunchCost" name="VegLunchCost" placeholder="Veg Price Starts At?" autocomplete="off" value="@ViewBag.service.Veg">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label" for="inputBasicFirstName">Non-Veg Price Starts At?</label>
+                                            <input type="text" class="form-control" id="NonVegLunchCost" name="NonVegLunchCost" placeholder="Non-Veg Price Starts At?" autocomplete="off" value="@ViewBag.service.NonVeg">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Minimum Order</label>
+                                            <input type="text" class="form-control" id="MinOrder" name="MinOrder" placeholder="Minimum Order" autocomplete="off" value="@ViewBag.service.MinOrder">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Maximum Order</label>
+                                            <input type="text" class="form-control" id="MaxOrder" name="MaxOrder" placeholder="Maximum Order" autocomplete="off" value="@ViewBag.service.MaxOrder">
+                                        </div>
+                                    }
+                                    @if (ViewBag.category == "Decorator" || ViewBag.category == "Photography")
+                                    {
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Service Cost</label>
+                                            <input type="text" class="form-control" id="ServiceCost" name="ServiceCost" placeholder="Service Cost" autocomplete="off" value="@ViewBag.service.ServiceCost">
+                                        </div>
+                                    }
+                                    @if (ViewBag.category == "Other")
+                                    {
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Service Cost</label>
+                                            <input type="text" class="form-control" id="ServiceCost" name="ServiceCost" placeholder="Service Cost" autocomplete="off" value="@ViewBag.service.ServiceCost">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Minimum Order</label>
+                                            <input type="text" class="form-control" id="MinOrder" name="MinOrder" placeholder="Minimum Order" autocomplete="off" value="@ViewBag.service.MinOrder">
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label class="control-label" for="inputBasicFirstName">Maximum Order</label>
+                                            <input type="text" class="form-control" id="MaxOrder" name="MaxOrder" placeholder="Maximum Order" autocomplete="off" value="@ViewBag.service.MaxOrder">
+                                        </div>
+                                    }
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" onclick="updatedetails('seven')">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 }
             </div>
@@ -550,7 +642,14 @@
                 Dimentions: $('#Dimentions').val(),
                 Minimumseatingcapacity: $('#Minimumseatingcapacity').val(),
                 Maximumcapacity: $('#Maximumcapacity').val(),
-                Description: $('#Description').val()
+                Description: $('#Description').val(),
+                VegLunchCost: $('#VegLunchCost').val(),
+                NonVegLunchCost: $('#NonVegLunchCost').val(),
+                VegDinnerCost: $('#VegDinnerCost').val(),
+                NonVegDinnerCost: $('#NonVegDinnerCost').val(),
+                MinOrder: $('#MinOrder').val(),
+                MaxOrder: $('#MaxOrder').val(),
+                ServiceCost: $('#ServiceCost').val(),
             }
             var category = '@Request.QueryString["category"]';//$('#serviceselection').val();
             var subcategory = '@Request.QueryString["subcategory"]';//$('#subcategory').val();
@@ -563,15 +662,7 @@
                 datatype: "json",
                 data: { vendormaster: vendormaster, vendorVenue: vendorVenue },
                 success: function (response) {
-                    if (response.Result == 'success') {
-
-                    }
-                    else if (response.Result == 'staffadded') {
-
-                    }
-                    else {
                         alert(response);
-                    }
                 },
                 error: function (er) {
                     errormsg("System Encountered Internal Error!!! Try Again After Some Time");
@@ -609,6 +700,21 @@
             //$(document).on('load', '#subcategory', function () {
             //    alert("subcategory alert");
             //});
+
+
+            $("#exampleTabsLeftTwo input[type='checkbox']").change(function () {
+                var arr = [], i = 0;
+                var selectedvalue = '@ViewBag.category';
+                var id = '' + selectedvalue + 'Amenities';
+                //$('#' + id + '').css('display', 'block');
+                $("#"+id+" input[type='checkbox']:checked").each(function () {
+                    arr[i++] = $(this).next("label").text();
+                });
+                alert(arr);
+                //$('#services').val(arr);
+                //alert($('#services').val());
+                //console.log(arr);
+            });
         </script>
         <script type="text/javascript">
             /*=============== Image Block remove =============*/

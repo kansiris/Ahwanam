@@ -27,7 +27,7 @@
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:@ViewBag.servicetypeprice /-</div>
+                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@ViewBag.servicetypeprice</text> /-</div>
 
                         <div class="w-100 tags my-15">
                             @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
@@ -135,7 +135,13 @@
 
                                 </span>
                                 <p>Hall Details</p>
-                                <span>Hall Details Content</span>
+                                <span>
+                                    <p>Hall Name : @ViewBag.particularVenue.name</p>
+                                    <p>Hall Dimentions : @ViewBag.particularVenue.Dimentions</p>
+                                    <p>Minimum Seating Capacity : @ViewBag.particularVenue.Minimumseatingcapacity</p>
+                                    <p>Maximum Seating Capacity : @ViewBag.particularVenue.Maximumcapacity</p>
+                                    <p>Hall Description : @ViewBag.particularVenue.Description</p>
+                                </span>
                                 <p>Terms & Conditions</p>
                                 <span>Terms and Conditions content</span>
                             </div>
@@ -195,7 +201,7 @@
                                                         <div class="float-right packageCheckbox">
                                                             <label>
                                                                 <input type="checkbox" name="">
-                                                                <p>Select</p>
+                                                                <p onclick="return location.href = '/NViewDeal/Index?id=@item.VendorId&&type=@item.VendorType&&eve='">Select</p>
                                                             </label>
                                                         </div>
                                                         <div class="float-right">
@@ -262,10 +268,11 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-md-6 address">
                                             <h6 class="themeColor">Address</h6>
-                                            <p>@ViewBag.Productinfo.Address,</p>
-                                            <p>@ViewBag.Productinfo.Landmark,</p>
-                                            <p>@ViewBag.Productinfo.City, @ViewBag.Productinfo.State</p>
-                                            <p>@ViewBag.Productinfo.ZipCode.</p>
+
+                                            <p>@ViewBag.location.Address,</p>
+                                            <p>@ViewBag.location.Landmark,</p>
+                                            <p>@ViewBag.location.City, @ViewBag.location.State</p>
+                                            <p>@ViewBag.location.ZipCode.</p>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 contact">
                                             <h6 class="themeColor">Contact</h6>
@@ -294,7 +301,14 @@
                                     <div class="row packages">
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
-                                                <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
+                                                @if (item.VenueType != "" && item.VenueType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
                                                 </div>
@@ -318,7 +332,15 @@
                                     <div class="row packages">
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
-                                                <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>*@
+                                                @if (item.CuisineType != "" && item.CuisineType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.Veg</span></p>
                                                 </div>
@@ -342,7 +364,15 @@
                                     <div class="row packages">
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
-                                                <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>*@
+                                                @if (item.DecorationType != "" && item.DecorationType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
                                                 </div>
@@ -366,7 +396,15 @@
                                     <div class="row packages">
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
-                                                <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>*@
+                                                @if (item.PhotographyType != "" && item.PhotographyType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">Photography</a></p></div>
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
                                                 </div>
@@ -390,7 +428,15 @@
                                     <div class="row packages">
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
-                                                <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>*@
+                                                @if (item.type != "" && item.type != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">Other</a></p></div>
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.ItemCost</span></p>
                                                 </div>
@@ -417,6 +463,7 @@
                 <div class="row bgWhite mb-3">
                     <div class="w-100 px-4 py-3">
                         <div class="row mx-0">
+                            <input type="hidden" id="serviceprice" value="@ViewBag.servicetypeprice"/>
                             <h3 class="noteWorthybold">
                                 Fill the Details
                                 <div class="blackBorder"></div>
@@ -444,7 +491,7 @@
                                 </div>
                             </div>
                             <div class="w-100 mt-3 eventDate">
-                                <div class="date-picker">
+                                <div class="datentime w-100">
                                     @*<div class="input">
                                             <div class="result nexaBold">Occasion Date: <span id="occasiondate"></span></div>
                                             <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
@@ -625,8 +672,14 @@
 
                 $(".packageCheckbox label").click(function () {
                     if ($(this).find("input[type='checkbox']").is(':checked')) {
+                        var packagename = $(this).parents('div.float-left').find('p.packageName').text();
+                        var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
+                        $('#eventtype').val(packagename);
+                        $('#serviceprice').val(packageprice);
                         $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
                     } else {
+                        $('#eventtype').val('');
+                        $('#serviceprice').val(sprice);
                         $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
                     }
                 });
@@ -721,7 +774,7 @@
                 var id = '@Request.QueryString["id"]';
                 var vid = '@Request.QueryString["vid"]';
                 var date = $("#datetimepicker").val();
-                var price = '@ViewBag.servicetypeprice';
+                var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
                 var nop = $("#members").val();
                 var timeslot = 'Morning';
                 var totalprice = price * nop;

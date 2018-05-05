@@ -37,7 +37,7 @@ namespace MaaAahwanam.Web.Controllers
                 type = "Other";
             //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
             var data = vendorMasterService.GetVendor(long.Parse(id)); //
-            var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)); //.Where(a => a.VendorId == long.Parse(vid)).ToList();
+            var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)).Where(a => a.VendorId == long.Parse(vid)).ToList();
             ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
             ViewBag.allimages = allimages;
             ViewBag.Productinfo = data;
@@ -68,22 +68,27 @@ namespace MaaAahwanam.Web.Controllers
             if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue")
             {
                 if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.ServiceCost.ToString(); };
+                ViewBag.location = ViewBag.particularVenue;
             }
             else if (type == "Catering")
             {
                 if (ViewBag.particularCatering != null) { price = ViewBag.particularCatering.Veg.ToString(); };
+                ViewBag.location = ViewBag.particularCatering;
             }
             else if (type == "Photography")
             {
                 if (ViewBag.particularPhotography != null) { price = ViewBag.particularPhotography.StartingPrice.ToString(); };
+                ViewBag.location = ViewBag.particularPhotography;
             }
             else if (type == "Decorator")
             {
                 if (ViewBag.particularDecorator != null) { price = ViewBag.particularDecorator.StartingPrice.ToString(); };
+                ViewBag.location = ViewBag.particularDecorator;
             }
             else if (type == "Mehendi" || type == "Pandit" || type == "Other")
             {
                 if (ViewBag.particularOther != null) { price = ViewBag.particularOther.ItemCost.ToString(); };
+                ViewBag.location = ViewBag.particularOther;
             }
 
             ViewBag.Venue = Venuerecords;
@@ -98,7 +103,7 @@ namespace MaaAahwanam.Web.Controllers
             if (type == "Venues") type = "Venue";
 
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type);
-            ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id);//.Where(p => p.VendorSubId == long.Parse(vid));
+            ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid));
             return View();
         }
 

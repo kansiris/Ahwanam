@@ -84,7 +84,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult filtercategories(string type)
         {
-            string venueservices = "Select Sub-Category,Convention Hall,Function Hall,Banquet Hall,Meeting Room,Open Lawn,Roof Top,Hotel,Resort";
+            string venueservices = "Select Sub-Category,Convention Hall,Function Hall,Banquet Hall,Meeting Room,Open Lawn,Hotel,Resort"; //Roof Top,
             string cateringservices = "Select Sub-Category,Indian,Chinese,Mexican,South Indian,Continental,Multi Cuisine,Chaat,Fast Food,Others";
             string photographyservices = "Select Sub-Category,Wedding,Candid,Portfolio,Fashion,Toddler,Videography,Conventional,Cinematography,Others";
             //string eventservices = "Select Sub-Category,Corporate Events,Brand Promotion,Fashion Shows,Exhibition,Conference & Seminar,Wedding Management,Birthday Planning & Celebrations,Live Concerts,Musical Nights,Celebrity Shows";
@@ -185,6 +185,54 @@ namespace MaaAahwanam.Web.Controllers
             {
                 vendormaster = vendorMasterService.UpdateVendorMaster(vendormaster, long.Parse(id)); //updating Vendor Master
                 return Json("Your Address Updated");
+            }
+            else if (command == "seven")
+            {
+                var venuedata = vendorVenue;
+                if (category == "Venue")
+                {
+                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid)); // Retrieving Particular Vendor Record
+                    vendorVenue.ServiceCost = venuedata.ServiceCost;
+                    vendorVenue.VegLunchCost = venuedata.VegLunchCost;
+                    vendorVenue.NonVegLunchCost = venuedata.NonVegLunchCost;
+                    vendorVenue.VegDinnerCost = venuedata.VegDinnerCost;
+                    vendorVenue.NonVegDinnerCost = venuedata.NonVegDinnerCost;
+                    vendorVenue.MinOrder = venuedata.MinOrder;
+                    vendorVenue.MaxOrder = venuedata.MaxOrder;
+                    vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                }
+                else if (category == "Catering")
+                {
+                    VendorCateringService vendorCateringService = new VendorCateringService();
+                    VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(long.Parse(id), long.Parse(vid));
+                    vendorsCatering.Veg = vendorVenue.VegLunchCost;
+                    vendorsCatering.NonVeg = vendorVenue.NonVegLunchCost;
+                    vendorsCatering.MinOrder = vendorVenue.MinOrder;
+                    vendorsCatering.MaxOrder = vendorVenue.MaxOrder;
+                    //vendorsCatering.ZipCode = vendorVenue.ZipCode;
+                    vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, long.Parse(id), long.Parse(vid));
+                }
+                else if (category == "Photography")
+                {
+                    VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
+                    vendorsPhotography.StartingPrice = vendorVenue.ServiceCost;
+                    vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, long.Parse(id), long.Parse(vid));
+                }
+                else if (category == "Decorator")
+                {
+                    VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id), long.Parse(vid));
+                    vendorsDecorator.StartingPrice = vendorVenue.ServiceCost;
+                    vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, long.Parse(id), long.Parse(vid));
+                }
+                else if (category == "Other")
+                {
+                    VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(long.Parse(id), long.Parse(vid));
+                    vendorsOther.ItemCost = vendorVenue.ServiceCost;
+                    vendorsOther.MinOrder = vendorVenue.MinOrder;
+                    vendorsOther.MaxOrder = vendorVenue.MaxOrder;
+                    vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, long.Parse(id), long.Parse(vid));
+                }
+                return Json("Price Updated");
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
