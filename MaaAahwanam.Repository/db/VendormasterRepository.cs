@@ -35,7 +35,7 @@ namespace MaaAahwanam.Repository.db
             vendorMaster.Status = GetMasterRecord.Status;
             vendorMaster.UpdatedDate = GetMasterRecord.UpdatedDate;
             if (GetMasterRecord.ServicType.Split(',').Contains(vendorMaster.ServicType) == false)
-                vendorMaster.ServicType = string.Join(",", (GetMasterRecord.ServicType + "," + vendorMaster.ServicType).Split(',').Distinct());
+                vendorMaster.ServicType = string.Join(",", (GetMasterRecord.ServicType + "," + vendorMaster.ServicType).Split(',').Distinct()).TrimEnd(',');
             _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(vendorMaster);
             _dbContext.SaveChanges();
             return vendorMaster;
