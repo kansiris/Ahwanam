@@ -1,7 +1,15 @@
 ﻿<div class="totalDealsBlock filteredResultsBlock bgWhite py-3">
     <div class="row mx-0">
         <h3 class="noteWorthybold px-15">
-            Deals(<span>@ViewBag.dealcount</span>)
+            @if (Request.QueryString["eve"] != null)
+            {
+                <p> @Request.QueryString["eve"] Deals(<span>@ViewBag.dealcount</span>)</p>
+            }
+            else
+            {
+                <p>All Deals(<span>@ViewBag.dealcount</span>)</p>
+            }
+            
             <div class="blackBorder"></div>
         </h3>
     </div>
@@ -44,8 +52,8 @@
                                 <span>@deal.DealPrice</span> INR
                             </p>
                             @*<p class="productMrp mb-0 ml-1 greyColor">
-                                ( <span>2.50</span><small>k</small> INR )
-                            </p>*@
+                                    ( <span>2.50</span><small>k</small> INR )
+                                </p>*@
                         </div>
                     </div>
                 </div>
@@ -57,14 +65,14 @@
 
     </div>
     <div class="row mx-0 my-4" moreButton>
-        @if(ViewBag.count == "0")
+        @if (ViewBag.count == "0")
         {
-        <div class="mx-auto d-inline-flex" id="more" name="more">
-            <span class="themeBgColorPrimary btnSecondary text-white"> No deals At the moment Please visit us again</span>
-        </div>
+            <div class="mx-auto d-inline-flex" id="more" name="more">
+                <span class="themeBgColorPrimary btnSecondary text-white"> No deals At the moment Please visit us again</span>
+            </div>
         }
 
-        else if (@ViewBag.dealLastRecord <= @ViewBag.dealcount)
+        else if (@ViewBag.dealLastRecord < @ViewBag.dealcount)
         {
 
 
@@ -73,11 +81,11 @@
             </div>
         }
         @*else
-        { <div class="mx-auto d-inline-flex" id="more" name="more">
-            <span class="themeBgColorPrimary btnSecondary text-white"> Thats All !!!!</span>
-        </div>
+            { <div class="mx-auto d-inline-flex" id="more" name="more">
+                <span class="themeBgColorPrimary btnSecondary text-white"> Thats All !!!!</span>
+            </div>
 
-        }*@
+            }*@
 
 
     </div>
