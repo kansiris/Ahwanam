@@ -98,6 +98,8 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
+                type = (type == "Banquet") ? "Banquet Hall" : type;
+                type = (type == "Function") ? "Function Hall" : type;
                 var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, count);
                 if (data.Count > 0)
                     ViewBag.results = data.Take(takecount).ToList();
