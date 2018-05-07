@@ -145,7 +145,7 @@ namespace MaaAahwanam.Web.Controllers
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
 
-                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt16(id));
+                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(id));
 
 
                 string txtto1 = vendordetails.EmailId ;

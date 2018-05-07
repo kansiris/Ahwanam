@@ -150,7 +150,7 @@ namespace MaaAahwanam.Web.Controllers
             UserDetail userDetail = new UserDetail();
             userDetail.FirstName = name;
             userDetail.LastName = lastname;
-            userDetail.UserImgName = firstname;
+            userDetail.FirstName = firstname;
             userDetail.UserImgName = Picture;
             userLogin.UserName = email;
             userLogin.Password = "Google";

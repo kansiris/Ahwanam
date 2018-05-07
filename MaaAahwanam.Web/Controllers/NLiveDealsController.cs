@@ -26,19 +26,20 @@ namespace MaaAahwanam.Web.Controllers
 
         public PartialViewResult Loadmore(string lastrecord, string eve)
         {
-            if (eve == null) { eve = "All"; }
+            if (eve == null) { eve = "1"; }
             //int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
             int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
                 //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
                 //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
                 var deals = vendorProductsService.getalleventdeal(eve).OrderBy(m => m.DealID).Take(id);
             ViewBag.deal = deals;
-
+            ViewBag.dealcount = vendorProductsService.getalleventdeal(eve).Count();
 
             ViewBag.dealLastRecord = id;
+            if (eve == "1") { eve = "All"; }
             ViewBag.dealLastRecordeve = eve;
 
-            ViewBag.dealcount = vendorProductsService.getalleventdeal(eve).Count();
+           
             return PartialView("Loadmore");
         }
 
