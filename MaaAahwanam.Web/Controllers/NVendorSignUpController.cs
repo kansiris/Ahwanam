@@ -36,6 +36,7 @@ namespace MaaAahwanam.Web.Controllers
                         vendorMaster.ServicType = "Other";
                     }
                     UserLogin userLogin1 = new UserLogin();
+                    userLogin1.ActivationCode = Guid.NewGuid().ToString();
                     userLogin1.UserType = "Vendor";
                     vendorMaster = venorVenueSignUpService.AddvendorMaster(vendorMaster);
                     userLogin1.UserName = vendorMaster.EmailId;
