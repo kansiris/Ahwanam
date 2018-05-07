@@ -26,7 +26,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public PartialViewResult Loadmore(string lastrecord, string eve)
         {
-            if (eve == null) { eve = "1"; }
+            if (eve == null) { eve = "All"; }
             //int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
             int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
                 //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);

@@ -215,7 +215,21 @@ namespace MaaAahwanam.Web.Controllers
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt16(id));
 
+
+                string txtto1 = vendordetails.EmailId;
+                string vname = vendordetails.BusinessName;
+                string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
+                FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+                string readfile1 = file1.OpenText().ReadToEnd();
+                readfile1 = readfile1.Replace("[ActivationLink]", url1);
+                readfile1 = readfile1.Replace("[name]", name);
+                readfile1 = readfile1.Replace("[vname]", vname);
+                readfile1 = readfile1.Replace("[orderid]", OrderId);
+                string txtmessage1 = readfile1;
+                string subj1 = "order has been placed";
+                emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
 
 
                 return Json("Success", JsonRequestBehavior.AllowGet);
