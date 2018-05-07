@@ -31,10 +31,10 @@ namespace MaaAahwanam.Web.Controllers
             count = (count != "undefined" && count != "") ? count : "10";
             int takecount = (L1 != null) ? int.Parse(L1) : 6;
             //string inputcategory = (takecount > 6) ? type : services[0];
-            if (new string[] { "Hotel", "Resort", "Convention Hall", }.Contains(type))
-            {
+            //if (new string[] { "Hotel", "Resort", "Convention Hall", }.Contains(type))
+            //{
 
-            }
+            //}
             if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement" }.Contains(type))
             {
                 if (new string[] { "Hotel", "Resort", "Convention Hall" }.Contains(stype.Split(',')[0]))
