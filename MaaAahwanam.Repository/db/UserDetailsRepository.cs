@@ -22,6 +22,7 @@ namespace MaaAahwanam.Repository.db
             return userDetails;
         }
 
+
         public UserLogin GetLoginDetails(int userId)
         {
             UserLogin list1 = new UserLogin();
@@ -30,6 +31,15 @@ namespace MaaAahwanam.Repository.db
             return list1;
         }
         //To Show the login user details in all pages at the top
+
+        public Vendormaster getvendor(int vendorid)
+        {
+            Vendormaster list = new Vendormaster();
+            if (vendorid != 0)
+                list = _dbContext.Vendormaster.SingleOrDefault(p => p.Id == vendorid);
+            return list;
+        }
+
         public UserDetail GetLoginDetailsByUsername(int userId)
         {
             UserDetail list = new UserDetail();

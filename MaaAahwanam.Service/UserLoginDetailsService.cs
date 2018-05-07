@@ -42,6 +42,14 @@ namespace MaaAahwanam.Service
             UserLogin list = userDetailsRepository.GetLoginDetails(userid);
             return list;
         }
+
+        public Vendormaster getvendor(int vendorid)
+        {
+            string response = string.Empty;
+            Vendormaster list = userDetailsRepository.getvendor(vendorid);
+            return list;
+
+        }
         public UserDetail GetUser(int userid)
         {
             string response = string.Empty;
