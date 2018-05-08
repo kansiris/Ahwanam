@@ -9,18 +9,19 @@
     <div class="container-fluid questionery">
         <div class="row py-2 justify-content-center">
             <div class="col-12 col-sm-8 col-md-6 col-lg-6 bgWhite boxShadow margin-top-50 margin-bottom-50">
-                
+
                 <div class="row p-4">
-                    <h3>Sign up</h3>
-                    <div class="d-inline ml-auto questionsCount">
-                        <span>1</span> / <span></span>
+                    <div class="col-md-6 offset-md-2 offset-lg-2">
+                        <h3 class="question">Sign Up</h3>
                     </div>
+                    <div class="col-md-2 col-lg-2 text-right d-inline questionsCount"> <span>1</span> / <span></span> </div>
+
 
                     <div class="w-100 filteredQuestions">
                         <div class="w-100 mb-3 questions">
                             <div class="mb-2">
                                 <div class="options">
-                                    <div class="row mx-0 my-2">
+                                    <div class="w-100 mx-0">
                                         <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
                                             <div class="form-group w-100">
                                                 <input type="text" class="form-control" name="Item2.ContactPerson" id="Item2_ContactPerson" placeholder="User Name" required>
@@ -29,7 +30,7 @@
                                         <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
                                             <div class="form-group w-100">
                                                 <select class="form-control" name="Item2.ServicType" id="Item2_ServicType" required>
-                                                    <option disabled="disabled" value="" selected="selected">Serivice Type</option>
+                                                    <option value="" selected="selected">Serivice Type</option>
                                                     <option>Venue</option>
                                                     <option>Catering</option>
                                                     <option>Photography</option>
@@ -45,13 +46,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2 prevNext">
+                                            <p class="d-inline">Already have an Account ? <a href="/NUserRegistration">Login</a></p>
+                                            <div class="ml-auto">
+                                                <div class="d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white nextQues">Next</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="w-100 mb-3 questions">
                             <div class="mb-2">
                                 <div class="options">
-                                    <div class="row mx-0 my-2">
+                                    <div class="w-100 mx-0">
                                         <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
                                             <div class="form-group w-100">
                                                 <input type="text" class="form-control" name="Item2.EmailId" id="Item2_EmailId" onchange="check()" placeholder="E- Mail" required>
@@ -68,26 +77,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2 prevNext">
+                                            <div class="ml-auto">
+                                                <div class="d-inline-flex backQues"> <span class="btnSecondary">Back</span> </div>
+                                                <div class="d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white continueBtn">Continue</span> </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="w-100 prevNext">
-                        <div class="ml-auto">
-                            <div class="d-inline-flex backQues">
-                                <span class="btnSecondary">Back</span>
-                            </div>
-                            <div class="d-inline-flex">
-                                <span class="themeBgColorPrimary btnSecondary text-white nextQues">Next</span>
-                            </div>
-                            <div class="d-inline-flex">
-                                @*<span class="themeBgColorPrimary btnSecondary text-white continueBtn">Continue</span>*@
-                                <button type="submit" class="themeBgColorPrimary btnSecondary text-white" name="command" value="VendorReg" id="Register"> Join Now </button>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Already have an Account ?<a href="/NUserRegistration">Login</a></p>
+
                 </div>
             </div>
         </div>
@@ -95,6 +98,13 @@
 </form>
 
 @section scripts{
+<script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
+</script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('body').attr("id", "userAuthentication");
@@ -178,8 +188,8 @@
             var questionMinCount = parseInt($(".questionsCount > span:first-child").text());
             var questionMax = $(".questionsCount > span:last-child");
             $(questionMax).empty().append(questionsLen);
-            $(".prevNext .backQues").css("visibility", "hidden");
             $(".filteredQuestions").children().eq(questionMinCount - 1).css("display", "block");
+
 
             /*---- Click Continue button then append selected categories P Tag to --*/
             var hiddenP = $("<p class='hiddenP'></p>");
@@ -187,48 +197,46 @@
             /*---- Click Continue button then append selected categories P Tag to --*/
 
             $(".prevNext .backQues").click(function () {
+                $(this).parents(".questions").css("display", "none");
+                $(this).parents(".questions").prev(".questions").css("display", "block");
                 questionMinCount--;
                 if (questionMinCount > 1) {
                     $(questionMin).empty().append(questionMinCount);
-                    $(".filteredQuestions").children().css("display", "none");
-                    $(".filteredQuestions").children().eq(questionMinCount - 1).css("display", "block");
-                    $(".prevNext .nextQues").css("display", "block");
-                    $(".prevNext .continueBtn").css("display", "none");
                 } else if (questionMinCount == 1) {
                     $(questionMin).empty().append(questionMinCount);
-                    $(".filteredQuestions").children().css("display", "none");
-                    $(".filteredQuestions").children().eq(questionMinCount - 1).css("display", "block");
-                    $(this).css("visibility", "hidden");
-                    $(".prevNext .nextQues").css("display", "block");
-                    $(".prevNext .continueBtn").css("display", "none");
                 }
             });
 
             $(".prevNext .nextQues").click(function () {
-                /*--$('.filteredQuestions .questions').each(function(){
-                  if($(this).css('display') == 'block'){
-                    $(this).find('input').each(function(){
-                      if($(this).val().length == 0){
-                        alert("empty");
-                      }
-                    });
-                    alert('block');
-                  }
-                 });--*/
-                questionMinCount++;
-                if (questionMinCount < questionsLen) {
-                    $(questionMin).empty().append(questionMinCount);
-                    $(".filteredQuestions").children().css("display", "none");
-                    $(".filteredQuestions").children().eq(questionMinCount - 1).css("display", "block");
-                    $(".prevNext .backQues").css("visibility", "visible");
-                } else if (questionMinCount == questionsLen) {
-                    $(questionMin).empty().append(questionMinCount);
-                    $(".filteredQuestions").children().css("display", "none");
-                    $(".filteredQuestions").children().eq(questionMinCount - 1).css("display", "block");
-                    $(this).css("display", "none");
-                    $(".prevNext .backQues").css("visibility", "visible");
-                    $(".prevNext .continueBtn").css("display", "block");
+                var username = $('#Item2_ContactPerson').val();
+                var stype = $('#item2_servictype').val();
+                var bname = $('#item2_businessname').val();
+
+                //alertmsg(bname);
+
+                if (username.trim() == '') {
+                    alertmsg("Enter Your Name");
+                    $('#Item2_ContactPerson').focus();
                 }
+                else if (stype == '') {
+                    alertmsg("Select Service Type");
+                }
+                else if (bname == '') {
+                    alertmsg("Enter Business Name");
+                    $('#Item2_BusinessName').focus();
+                }
+                else {
+                    $(this).parents(".questions").css("display", "none");
+                    $(this).parents(".questions").next(".questions").css("display", "block");
+                    questionMinCount++;
+                    if (questionMinCount < questionsLen) {
+                        $(questionMin).empty().append(questionMinCount);
+                    } else if (questionMinCount == questionsLen) {
+                        $(questionMin).empty().append(questionMinCount);
+                    }
+                }
+
+                
             });
 
             $(".prevNext .continueBtn").click(function () {
@@ -245,6 +253,7 @@
                 /*---- Click Continue button then append selected categories P Tag to --*/
 
             });
+
 
         });
 

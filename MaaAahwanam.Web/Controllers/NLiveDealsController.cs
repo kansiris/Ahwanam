@@ -13,10 +13,10 @@ namespace MaaAahwanam.Web.Controllers
     {
         VendorProductsService vendorProductsService = new VendorProductsService();
         // GET: NLiveDeals
-        public ActionResult Index(string id,string eve)
+        public ActionResult Index(string id, string eve)
         {
-           
-            
+
+
             ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);//.Where(m => m.subtype == "Hotel");
             return View();
         }
@@ -29,17 +29,17 @@ namespace MaaAahwanam.Web.Controllers
             if (eve == null) { eve = "All"; }
             //int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
             int id = (lastrecord == null) ? 6 : int.Parse(lastrecord) + 6;
-                //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
-                //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
-                var deals = vendorProductsService.getalleventdeal(eve).OrderBy(m => m.DealID).Take(id);
+            //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+            //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+            var deals = vendorProductsService.getalleventdeal(eve).OrderBy(m => m.DealID).Take(id);
             ViewBag.deal = deals;
             ViewBag.dealcount = vendorProductsService.getalleventdeal(eve).Count();
 
             ViewBag.dealLastRecord = id;
-          
+
             ViewBag.dealLastRecordeve = eve;
 
-           
+
             return PartialView("Loadmore");
         }
 
