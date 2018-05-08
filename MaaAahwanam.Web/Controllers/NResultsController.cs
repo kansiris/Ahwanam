@@ -13,8 +13,8 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NResultsController : Controller
     {
-        static List<string> services = new List<string> { "Hotel", "Resort", "Convention Hall", "Catering", "Photography", "Decorator", "Mehendi", "Pandit" };
-        static List<string> selectedservices = services;
+        public static List<string> services = new List<string> { "Hotel", "Resort", "Convention Hall", "Catering", "Photography", "Decorator", "Mehendi", "Pandit" };
+        public static List<string> selectedservices = services;
         //string services1 = { "Hotel,Resort,Convention Hall,Catering,Photography,Decorator,Mehendi,Pandit" };
         // GET: NResults
         VendorProductsService vendorProductsService = new VendorProductsService();
@@ -59,6 +59,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.type = "Venues";
                     int recordcount = data.Count();
                     ViewBag.count = (recordcount >= takecount) ? "1" : "0";
+                    ViewBag.recordcount = recordcount;
                 }
                 else
                 {
@@ -70,6 +71,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.type = stype.Split(',')[0];
                     int recordcount = data.Count();
                     ViewBag.count = (recordcount >= takecount) ? "1" : "0";
+                    ViewBag.recordcount = recordcount;
                 }
                 //if (takecount > 6)
                 //{
@@ -84,9 +86,11 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView();
             }
 
-            if (new string[] { "Hotel", "Resort", "Convetion", "Convention" }.Contains(type))
+            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "Banquet", "Function" }.Contains(type))
             {
                 type = (type == "Convetion" || type == "Convention") ? "Convention Hall" : type;
+                type = (type == "Banquet") ? "Banquet Hall" : type;
+                type = (type == "Function") ? "Function Hall" : type;
                 var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, count);
                 if (data.Count > 0)
                     ViewBag.results = data.Take(takecount).ToList();
@@ -98,8 +102,8 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
-                type = (type == "Banquet") ? "Banquet Hall" : type;
-                type = (type == "Function") ? "Function Hall" : type;
+                //type = (type == "Banquet") ? "Banquet Hall" : type;
+                //type = (type == "Function") ? "Function Hall" : type;
                 var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, count);
                 if (data.Count > 0)
                     ViewBag.results = data.Take(takecount).ToList();
