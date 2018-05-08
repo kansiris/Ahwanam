@@ -54,13 +54,13 @@ namespace MaaAahwanam.Web.Controllers
         public PartialViewResult Loadmoredeals(string lastrecord, string eve)
         {
             int id = (lastrecord == null) ? 2 : int.Parse(lastrecord) + 2;
-
+            if (eve == null || eve == "") { eve = "All"; }
 
             //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
             //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
 
             //ViewBag.dealLastRecord = id;
-           // ViewBag.dealcount = vendorProductsService.getalldeal().Count();
+            // ViewBag.dealcount = vendorProductsService.getalldeal().Count();
 
             var deals = vendorProductsService.getalleventdeal(eve).OrderBy(m => m.DealID).Take(id);
             ViewBag.deal = deals;
