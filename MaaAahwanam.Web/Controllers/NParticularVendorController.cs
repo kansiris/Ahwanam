@@ -162,84 +162,92 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-
-                string updateddate = DateTime.UtcNow.ToShortDateString();
-                int userid = Convert.ToInt32(user.UserId);
-                decimal totalprice = 0;
-                if (type == "Catering")
-                    totalprice = int.Parse(guest) * decimal.Parse(price);
+                var orderscount = orders.Where(m => m.Id == long.Parse(id)).Count();
+                var serviceselected = orders.Where(m => m.ServicType.Split(',').Contains(type)).Count();
+                if (orderscount > 0 && serviceselected > 0)
+                {
+                    return Json("Exists", JsonRequestBehavior.AllowGet);
+                }
                 else
-                    totalprice = Convert.ToDecimal(price);
-                //Saving Record in order Table
-                //OrderService orderService = new OrderService();
-                Order order = new Order();
-                order.TotalPrice = totalprice;//Convert.ToDecimal(price);
-                order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
-                order.UpdatedBy = (Int64)user.UserId;
-                order.OrderedBy = (Int64)user.UserId;
-                order.UpdatedDate = Convert.ToDateTime(updateddate);
-                order.Status = "Pending";
-                order = orderService.SaveOrder(order);
+                {
+                    string updateddate = DateTime.UtcNow.ToShortDateString();
+                    int userid = Convert.ToInt32(user.UserId);
+                    decimal totalprice = 0;
+                    if (type == "Catering")
+                        totalprice = int.Parse(guest) * decimal.Parse(price);
+                    else
+                        totalprice = Convert.ToDecimal(price);
+                    //Saving Record in order Table
+                    //OrderService orderService = new OrderService();
+                    Order order = new Order();
+                    order.TotalPrice = totalprice;//Convert.ToDecimal(price);
+                    order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
+                    order.UpdatedBy = (Int64)user.UserId;
+                    order.OrderedBy = (Int64)user.UserId;
+                    order.UpdatedDate = Convert.ToDateTime(updateddate);
+                    order.Status = "Pending";
+                    order = orderService.SaveOrder(order);
 
-                //Saving Order Details
-                OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.OrderId = order.OrderId;
-                orderDetail.OrderBy = user.UserId;
-                orderDetail.PaymentId = 0;
-                orderDetail.ServiceType = type;
-                orderDetail.ServicePrice = decimal.Parse(price);
-                orderDetail.attribute = timeslot;
-                orderDetail.TotalPrice = totalprice;
-                orderDetail.PerunitPrice = decimal.Parse(price);
-                orderDetail.Quantity = int.Parse(guest);
-                orderDetail.OrderId = order.OrderId;
-                orderDetail.VendorId = long.Parse(id);
-                orderDetail.Status = "Pending";
-                orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
-                orderDetail.UpdatedBy = user.UserId;
-                orderDetail.subid = long.Parse(vid);
-                orderDetail.BookedDate = Convert.ToDateTime(date);
-                orderDetail.EventType = eventtype;
-                orderdetailsServices.SaveOrderDetail(orderDetail);
-                var userlogdetails = userLoginDetailsService.GetUserId(userid);
+                    //Saving Order Details
+                    OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderId = order.OrderId;
+                    orderDetail.OrderBy = user.UserId;
+                    orderDetail.PaymentId = 0;
+                    orderDetail.ServiceType = type;
+                    orderDetail.ServicePrice = decimal.Parse(price);
+                    orderDetail.attribute = timeslot;
+                    orderDetail.TotalPrice = totalprice;
+                    orderDetail.PerunitPrice = decimal.Parse(price);
+                    orderDetail.Quantity = int.Parse(guest);
+                    orderDetail.OrderId = order.OrderId;
+                    orderDetail.VendorId = long.Parse(id);
+                    orderDetail.Status = "Pending";
+                    orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+                    orderDetail.UpdatedBy = user.UserId;
+                    orderDetail.subid = long.Parse(vid);
+                    orderDetail.BookedDate = Convert.ToDateTime(date);
+                    orderDetail.EventType = eventtype;
+                    orderdetailsServices.SaveOrderDetail(orderDetail);
+                    var userlogdetails = userLoginDetailsService.GetUserId(userid);
 
-                string txtto = userlogdetails.UserName;
-                var userdetails = userLoginDetailsService.GetUser(userid);
+                    string txtto = userlogdetails.UserName;
+                    var userdetails = userLoginDetailsService.GetUser(userid);
 
-                string name = userdetails.FirstName;
-                string OrderId = Convert.ToString(order.OrderId);
+                    string name = userdetails.FirstName;
+                    string OrderId = Convert.ToString(order.OrderId);
 
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
-                string readFile = File.OpenText().ReadToEnd();
-                readFile = readFile.Replace("[ActivationLink]", url);
-                readFile = readFile.Replace("[name]", name);
-                readFile = readFile.Replace("[orderid]", OrderId);
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    readFile = readFile.Replace("[ActivationLink]", url);
+                    readFile = readFile.Replace("[name]", name);
+                    readFile = readFile.Replace("[orderid]", OrderId);
 
-                string txtmessage = readFile;//readFile + body;
-                string subj = "Thanks for your order";
-                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt16(id));
-
-
-                string txtto1 = vendordetails.EmailId;
-                string vname = vendordetails.BusinessName;
-                string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
-                FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
-                string readfile1 = file1.OpenText().ReadToEnd();
-                readfile1 = readfile1.Replace("[ActivationLink]", url1);
-                readfile1 = readfile1.Replace("[name]", name);
-                readfile1 = readfile1.Replace("[vname]", vname);
-                readfile1 = readfile1.Replace("[orderid]", OrderId);
-                string txtmessage1 = readfile1;
-                string subj1 = "order has been placed";
-                emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+                    string txtmessage = readFile;//readFile + body;
+                    string subj = "Thanks for your order";
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                    var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt16(id));
 
 
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                    string txtto1 = vendordetails.EmailId;
+                    string vname = vendordetails.BusinessName;
+                    string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+                    string readfile1 = file1.OpenText().ReadToEnd();
+                    readfile1 = readfile1.Replace("[ActivationLink]", url1);
+                    readfile1 = readfile1.Replace("[name]", name);
+                    readfile1 = readfile1.Replace("[vname]", vname);
+                    readfile1 = readfile1.Replace("[orderid]", OrderId);
+                    string txtmessage1 = readfile1;
+                    string subj1 = "order has been placed";
+                    emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+
+
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+                }
+                
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
