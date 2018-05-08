@@ -99,6 +99,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.type = type;
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
+                ViewBag.recordcount = recordcount;
             }
             else
             {
@@ -112,6 +113,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.type = type;
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
+                ViewBag.recordcount = ViewBag.results.Count;
             }
             //if (takecount > 6)
             //{
