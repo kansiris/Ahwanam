@@ -19,6 +19,10 @@
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.theme.default.css">
 
+    <!-- Alerts -->
+    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/newdesign/css/jquery.alertable.css">
+
+
     @RenderSection("css", required: false)
     <style>
         .nav-item.dropdown.open .dropdown-menu {
@@ -27,7 +31,7 @@
     </style>
 </head>
 
-<body  id="bodyTop">
+<body id="bodyTop">
     <div class="container-fluid px-0">
         <nav class="navbar navbar-toggleable-md navbar-light themeBgColorSecondaryYellow">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +45,7 @@
 
 
         </nav>
-        
+
     </div>
     @{Html.RenderAction("ItemsCartdetails", "NHomePage");}
 
@@ -49,45 +53,45 @@
 
 
     @*<div class="container-fluid">
-            <div class="row">
-                <div class="cartBlock p-2">
-                    <div class="arrow"></div>
+                    <div class="row">
+                        <div class="cartBlock p-2">
+                            <div class="arrow"></div>
 
-@if (ViewBag.cartCount != 0)
-{
-                    <ul class="pl-0">
-@foreach (var item in ViewBag.cartitems)
-{
-                        <li>
-                            <div class="d-inline-block image">
-                                @if (item.image != null)
-                                {
-                                    <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
+        @if (ViewBag.cartCount != 0)
+        {
+                            <ul class="pl-0">
+        @foreach (var item in ViewBag.cartitems)
+        {
+                                <li>
+                                    <div class="d-inline-block image">
+                                        @if (item.image != null)
+                                        {
+                                            <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
 
-                                }
-                                else if (item.image == null)
-                                {
-                                    <img width="100" height="100" src="~/noimages.png" />
-                                }
+                                        }
+                                        else if (item.image == null)
+                                        {
+                                            <img width="100" height="100" src="~/noimages.png" />
+                                        }
+                                    </div>
+                                    <div class="d-inline-block title">
+                                        <p>@item.BusinessName</p>
+                                    </div>
+                                    <div class="d-inline-block price">
+                                        <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
+                                    </div>
+                                    <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i>
+        </li>
+        }
+                            </ul>
+        }
+                            <div class="w-100 d-flex justify-content-center">
+                                <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2">Checkout</span>
+                                <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Total: Rs </span>@ViewBag.Total</div>
                             </div>
-                            <div class="d-inline-block title">
-                                <p>@item.BusinessName</p>
-                            </div>
-                            <div class="d-inline-block price">
-                                <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
-                            </div>
-                            <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i>
-</li>
-}
-                    </ul>
-}
-                    <div class="w-100 d-flex justify-content-center">
-                        <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2">Checkout</span>
-                        <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Total: Rs </span>@ViewBag.Total</div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>*@
+                </div>*@
 
 
     <div class="search">
@@ -117,9 +121,9 @@
                     <div class="col-12 col-md-4 pl-0">
                         <div class="form-group mb-0">
                             @*<span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
-                            <div class="ui-widget" style="display: block;">
-                                <input id="tags1" class="ui-autocomplete-input" autocomplete="off">
-                            </div>*@
+                                <div class="ui-widget" style="display: block;">
+                                    <input id="tags1" class="ui-autocomplete-input" autocomplete="off">
+                                </div>*@
                             <span><i class="fa fa-angle-down" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" id="tags1" name="" placeholder="Enter Location" style="border-left: none;">
                         </div>
@@ -138,7 +142,7 @@
     @RenderBody()
     @*</div>*@
 
-    @*<div class="container">
+    <div class="container">
         <div class="margin-top-50">
             <div class="row mx-0">
                 <h3 class="noteWorthybold">
@@ -149,55 +153,55 @@
             <div class="row my-3">
                 <div class="col-6 col-sm-4 col-md-2 block">
                     <a href="#" class="d-block text-center">
-                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
+                        <img src="~/newdesign/images/hotels-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Hotels</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/resort-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Resorts</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/convention-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Convetion Hall</p>
                     </a>
                 </div>
                 <div class="col-6 col-sm-4 col-md-2 block">
                     <a href="#" class="d-block text-center">
                         <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
+                        <p class="themeColor mt-2">Caterer</p>
                     </a>
                 </div>
                 <div class="col-6 col-sm-4 col-md-2 block">
                     <a href="#" class="d-block text-center">
-                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
+                        <img src="~/newdesign/images/photographer.jpg" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Photographer</p>
                     </a>
                 </div>
                 <div class="col-6 col-sm-4 col-md-2 block">
                     <a href="#" class="d-block text-center">
-                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
+                        <img src="~/newdesign/images/decorators-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Decorator</p>
                     </a>
                 </div>
                 <div class="col-6 col-sm-4 col-md-2 block">
                     <a href="#" class="d-block text-center">
-                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
+                        <img src="~/newdesign/images/mehendi.jpg" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Mehendi</p>
                     </a>
                 </div>
                 <div class="col-6 col-sm-4 col-md-2 block">
                     <a href="#" class="d-block text-center">
-                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
-                    </a>
-                </div>
-                <div class="col-6 col-sm-4 col-md-2 block">
-                    <a href="#" class="d-block text-center">
-                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
-                    </a>
-                </div>
-                <div class="col-6 col-sm-4 col-md-2 block">
-                    <a href="#" class="d-block text-center">
-                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
-                        <p class="themeColor mt-2">Venues</p>
+                        <img src="~/newdesign/images/pundit-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Pandit</p>
                     </a>
                 </div>
             </div>
         </div>
-    </div>*@
+    </div>
     <footer class="footerBg text-white py-4 margin-top-50">
         <div class="row mx-0">
             @*<div class="col-6 col-sm-4 col-md-2 offset-md-1">
@@ -337,6 +341,12 @@
     <script type="text/javascript" src="~/newdesign/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
 
+    <!-- For Alerts -->
+    <script type="text/javascript" src="http://design.maa-aahwanam.com/newdesign/js/jquery.alertable.js"></script>
+    <script src='http://design.maa-aahwanam.com/newdesign/js/velocity.min.js'></script>
+    <script src='http://design.maa-aahwanam.com/newdesign/js/velocity.ui.min.js'></script>
+
+
     <!------ Date Picker ---------->
     <script type="text/javascript" src="~/newdesign/js/jquery-ui.min.js"></script>
     @*<script type="text/javascript" src="~/newdesign/js/datepicker.js"></script>*@
@@ -345,8 +355,7 @@
     <!------ Owl Thumb Slider ---------->
     <script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
     <script>
-        function DeletecartItem(cartId)
-        {
+        function DeletecartItem(cartId) {
             var obj = {}
             obj.cartId = cartId;
             $.ajax({
@@ -465,6 +474,23 @@
             }, "slow");
         });
         /*-- Scroll Top --*/
+
+        /*-- Alerts --*/
+        //function alertmsgs(msg) {
+            $.alertable.alert('Alert Message', {
+                show: function () {
+                    $(this.overlay).velocity('transition.fadeIn');
+                    $(this.modal).velocity('transition.flipBounceYIn');
+                },
+                hide: function () {
+                    $(this.overlay).velocity('transition.fadeOut');
+                    $(this.modal).velocity('transition.perspectiveUpOut');
+                }
+            });
+        ///}
+        /*-- Alerts --*/
+
+
     </script>
 </body>
 </html>

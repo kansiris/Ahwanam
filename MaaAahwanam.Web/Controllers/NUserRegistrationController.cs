@@ -76,6 +76,10 @@ namespace MaaAahwanam.Web.Controllers
         }
         public ActionResult Index()
         {
+            if (TempData["Active"] == "1")
+            {
+                ViewBag.Active = "Please check Your email to verify Email ID";
+            }
             perfecturl = "";
             return View();
         }
@@ -102,7 +106,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     activationcode = userLogin.ActivationCode;
                     txtto = userLogin.UserName;
-                    string  username = userDetail.FirstName ;
+                    string username = userDetail.FirstName;
                     string emailid = userLogin.UserName;
                     string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
@@ -126,7 +130,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 if (userResponse != null)
                 {
-                    if (userResponse1.Status == "Active"  )
+                    if (userResponse1.Status == "Active")
                     {
                         vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
                         string userData = JsonConvert.SerializeObject(userResponse);
@@ -142,8 +146,9 @@ namespace MaaAahwanam.Web.Controllers
                             ViewBag.userid = userResponse.UserLoginId;
                         return RedirectToAction("Index", "NHomePage");
                     }
-                    return Content("<script language='javascript' type='text/javascript'>alert('Please check Your email to verify Email ID');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-
+                    TempData["Active"] = "1";
+                    //return Content("<script language='javascript' type='text/javascript'>alert('Please check Your email to verify Email ID');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                    return RedirectToAction("Index", "NUserRegistration");
 
                 }
                 else
@@ -154,29 +159,29 @@ namespace MaaAahwanam.Web.Controllers
                     else
                         return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                 }
-               
+
             }
             if (command == "forgotpassword")
             {
                 var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
                 if (userResponse != null)
                 {
-                    activationcode =  userResponse.ActivationCode;
+                    activationcode = userResponse.ActivationCode;
                     string name = userDetail.FirstName;
-                txtto = userLogin.UserName;
-                string emailid = userLogin.UserName;
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
-                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
-                string readFile = File.OpenText().ReadToEnd();
-                readFile = readFile.Replace("[ActivationLink]", url);
-                readFile = readFile.Replace("[name]", name);
-                string txtmessage = readFile;//readFile + body;
-                string subj = "Password reset information";
+                    txtto = userLogin.UserName;
+                    string emailid = userLogin.UserName;
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    readFile = readFile.Replace("[ActivationLink]", url);
+                    readFile = readFile.Replace("[name]", name);
+                    string txtmessage = readFile;//readFile + body;
+                    string subj = "Password reset information";
 
 
-                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-                return Content("<script language='javascript' type='text/javascript'>alert('A mail is sent to your email to change password Please check your email');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                    return Content("<script language='javascript' type='text/javascript'>alert('A mail is sent to your email to change password Please check your email');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                 }
                 else
                 {
@@ -200,8 +205,8 @@ namespace MaaAahwanam.Web.Controllers
 
             if (ActivationCode == userResponse.ActivationCode)
             {
-               return RedirectToAction("updatepassword", "NUserRegistration", new { Email = Email });
-               
+                return RedirectToAction("updatepassword", "NUserRegistration", new { Email = Email });
+
             }
             return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
 
@@ -221,7 +226,7 @@ namespace MaaAahwanam.Web.Controllers
                 userLogin.Status = "Active";
 
                 string email = userLogin.UserName;
-               
+
                 var userid = userResponse.UserLoginId;
                 userLoginDetailsService.changestatus(userLogin, (int)userid);
 
@@ -247,7 +252,7 @@ namespace MaaAahwanam.Web.Controllers
             userLoginDetailsService.changepassword(userLogin, (int)userid);
 
             return Json("success");
-           // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
+            // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
 
         }
 
@@ -273,7 +278,7 @@ namespace MaaAahwanam.Web.Controllers
         //    return Redirect(loginUrl.AbsoluteUri);
         //}
 
-      
+
 
 
         public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)

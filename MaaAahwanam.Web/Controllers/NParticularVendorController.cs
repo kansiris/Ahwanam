@@ -21,7 +21,7 @@ namespace MaaAahwanam.Web.Controllers
         WhishListService whishListService = new WhishListService();
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-
+        OrderService orderService = new OrderService();
 
         //static int count = 0;
         // GET: NParticularVendor
@@ -141,33 +141,40 @@ namespace MaaAahwanam.Web.Controllers
             int takecount = (L1 != null) ? int.Parse(L1) : 2;
             //ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);
             //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
-
-            var records = vendorProductsService.Getvendorproducts_Result(type);
-            ViewBag.deal = records.Take(takecount);
-            int count = records.Count();
             if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
-            if (type == "Conventions" || type == "Resorts" || type == "Hotels")
+            if (type == "Conventions" || type == "Resorts" || type == "Hotels" || type == "Venues")
                 type = "Venue";
             if (type == "Mehendi" || type == "Pandit")
                 type = "Other";
             ViewBag.type = type;
+            var records = vendorProductsService.Getvendorproducts_Result(type);
+            ViewBag.deal = records.Take(takecount).ToList();
+            int count = records.Count();
+            
             ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
         }
 
         public ActionResult BookNow(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
         {
+            
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
+                ViewBag.order = orders.OrderByDescending(m => m.OrderId);
+
                 string updateddate = DateTime.UtcNow.ToShortDateString();
                 int userid = Convert.ToInt32(user.UserId);
-
-
+                decimal totalprice = 0;
+                if (type == "Catering")
+                    totalprice = int.Parse(guest) * decimal.Parse(price);
+                else
+                    totalprice = Convert.ToDecimal(price);
                 //Saving Record in order Table
-                OrderService orderService = new OrderService();
+                //OrderService orderService = new OrderService();
                 Order order = new Order();
-                order.TotalPrice = Convert.ToDecimal(price);
+                order.TotalPrice = totalprice;//Convert.ToDecimal(price);
                 order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
                 order.UpdatedBy = (Int64)user.UserId;
                 order.OrderedBy = (Int64)user.UserId;
@@ -184,7 +191,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.ServiceType = type;
                 orderDetail.ServicePrice = decimal.Parse(price);
                 orderDetail.attribute = timeslot;
-                orderDetail.TotalPrice = decimal.Parse(price);
+                orderDetail.TotalPrice = totalprice;
                 orderDetail.PerunitPrice = decimal.Parse(price);
                 orderDetail.Quantity = int.Parse(guest);
                 orderDetail.OrderId = order.OrderId;
