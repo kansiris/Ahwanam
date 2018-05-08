@@ -1,0 +1,46 @@
+﻿
+<div class="w-100 px-4 py-3">
+    <div class="row mx-0">
+        <h3 class="noteWorthybold">
+            More Vendors
+            <div class="blackBorder"></div>
+        </h3>
+    </div>
+    <div class="row mx-0 mt-4">
+        @foreach (var item in ViewBag.deal)
+        {
+            <div class="row block w-100">
+                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-5 topVenueBlockImg">
+                    <a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid">
+                        @if (item.image != null && item.image != "")
+                        {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
+                        else
+                        { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-7 px-xl-0 topVenueDetails">
+                    @*<a href="/NViewDeal/Index?id=@item.DealID&&type=@item.VendorType">*@
+                        <p class="mb-0">@item.businessname</p>
+                    @*</a>*@
+                    <div class="w-100">
+                        <p class="productMinPrice mb-0 themeColor d-block"> <span>@item.cost</span> </p> @* <small>k</small>*@
+                        @*<p class="productMaxPrice mb-0 greyColor d-block"> ( <span>1,24,000</span> <small>k</small> ) </p>*@
+                    </div>
+                    <div class="row mx-0 d-block float-right">
+                        <a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid" class="mb-0 themeColor">Profile</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @if (ViewBag.count == "1")
+    {
+        <div class="row mx-0 my-4">
+            <div class="mx-auto d-inline-flex">
+                <span class="themeBgColorPrimary btnSecondary text-white" onclick="DealsPartial()">
+                    <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
+                </span>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@if (ViewBag.cartCount != 0)
+{
+<div class="container-fluid">
+                <div class="row">
+                    <div class="cartBlock p-2">
+                        <div class="arrow"></div>
+
+   
+                        <ul class="pl-0">
+    @foreach (var item in ViewBag.cartitems)
+    {
+                            <li>
+                                <div class="d-inline-block image">
+                                    @if (item.image != null)
+                                    {
+                                        <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
+
+                                    }
+                                    else if (item.image == null)
+                                    {
+                                        <img width="100" height="100" src="~/noimages.png" />
+                                    }
+                                </div>
+                                <div class="d-inline-block title">
+                                    <p>@item.BusinessName</p>
+                                </div>
+                                <div class="d-inline-block price">
+                                    <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
+                                </div>
+                                <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i></a>
+    </li>
+    }
+                        </ul>
+    
+                        <div class="w-100 d-flex justify-content-center">
+                            <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2">Checkout</span>
+                            <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@ViewBag.Total</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+}

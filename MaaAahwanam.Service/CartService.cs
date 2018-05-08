@@ -18,6 +18,11 @@ namespace MaaAahwanam.Service
             List<GetCartItems_Result> l1 = cartItemRepoitory.CartItemList(vid);
             return l1;
         }
+        public List<GetCartItemsnew_Result> CartItemsListnew(int vid)
+        {
+            List<GetCartItemsnew_Result> l1 = cartItemRepoitory.CartItemListnew(vid);
+            return l1;
+        }
         public GetCartItems_Result editcartitem(int vid, int cartID)
         {
             GetCartItems_Result l1 = cartItemRepoitory.CartItemList(vid).Where(i => i.CartId == cartID).FirstOrDefault();
@@ -46,6 +51,7 @@ namespace MaaAahwanam.Service
         public CartItem AddCartItem(CartItem cartItem)
         {
             string message = "";
+            cartItem.Status = "Active";
             cartItem = cartItemRepoitory.AddCartItem(cartItem);
             //if (cartItem != null)
             //{

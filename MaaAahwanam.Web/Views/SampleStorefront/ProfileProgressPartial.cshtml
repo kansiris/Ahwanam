@@ -6,14 +6,19 @@
                 <a href="/Homepage"><img src="~/newdesign/images/logo.png" alt="Logo"></a>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 top-right-menu">
+                @*<div class="admin-tel">
+                    <div class="admin-tel-info">
+                        <p><a href="/SampleStorefront/SignOut"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Sign out</a></p>
+                    </div>
+                </div>*@
                 <div class="logged-box">
                     <i class="fa fa-suitcase" aria-hidden="true"></i>
-                    <p>@Model.BusinessName</p>
+                    <p>@Model.BusinessName</p><input type="hidden" id="vid" value="@Model.Id" />
                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </div>
                 <ul class="dropdown">
                     <li><i class="fa fa-cog" aria-hidden="true"></i>Account Settings</li>
-                    <li onclick="window.location.href = '/Vendorprofile?id=@Model.Id';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>profile</li>
+                    <li onclick="window.location.href = '/Vendorprofile?id=@Model.Id';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Profile</li>
                     <li onclick="window.location.href = '/SampleStorefront/SignOut';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Sign out</li>
                 </ul>
                 <div class="admin-tel">
@@ -46,11 +51,12 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#"><i class="fa fa-building-o" aria-hidden="true"></i>Store Front</a></li>
+                            <li class="active"><a href="/NewVendorDashboard?id=@Model.Id"><i class="fa fa-home" aria-hidden="true"></i>Home <span class="sr-only">(current)</span></a></li>
+                            <li><a href="/availableservices?id=@Model.Id"><i class="fa fa-building-o" aria-hidden="true"></i>Store Front</a></li>
                             <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></i>Enquiries</a></li>
                             <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i>Reviews</a></li>
-                            <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i>My Account</a></li>
+                            <li><a href="/Vendorprofile?id=@Model.Id"><i class="fa fa-cog" aria-hidden="true"></i>My Account</a></li>
+                            @*<li><a href="/VendorCalendar?id=@Model.Id"><i class="fa fa-calendar" aria-hidden="true"></i>Calendar</a></li>*@
                         </ul>
 @if (Model != null)
 {
@@ -77,3 +83,9 @@
             </nav>
         </div>
     </div>
+<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
+<script>
+    $(".dashboard .top-right-menu > .logged-box").click(function () {
+        $(".dashboard .top-right-menu > ul.dropdown").toggle();
+    });
+</script>

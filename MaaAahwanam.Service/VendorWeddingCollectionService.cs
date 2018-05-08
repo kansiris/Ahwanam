@@ -79,6 +79,19 @@ namespace MaaAahwanam.Service
             return vendorsWeddingCollection;
         }
 
+         public VendorsWeddingCollection activateWeddingCollection(VendorsWeddingCollection vendorsWeddingCollection, Vendormaster vendorMaster, long masterid,long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorsWeddingCollection.Status = "Active";
+            vendorsWeddingCollection.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "WeddingCollection";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsWeddingCollection = vendorsWeddingCollectionsRepository.UpdateWeddingCollection(vendorsWeddingCollection, masterid,vid);
+            return vendorsWeddingCollection;
+        }
+
         public VendorsWeddingCollection AddNewWeddingCollection(VendorsWeddingCollection vendorsWeddingCollection, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

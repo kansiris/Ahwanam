@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "Add Deal";
+    Layout = "~/Views/SharedWeb/NVendorMasterPage.cshtml";
+}
+<link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
+
+<div class="page-content container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            @using (Html.BeginForm("adddeal", "NVendorAddDeal", FormMethod.Post))
+            {
+                <div class="nav-tabs-vertical">
+                    <div class="tab-content padding-vertical-15">
+                        <form class="">
+                            <input type="hidden" class="form-control" name="id" value="@ViewBag.vendormasterid" autocomplete="off">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label" for="inputBasicFirstName">Deal Name</label>
+
+                                    <input type="text" class="form-control" name="DealName" placeholder="Deal Name" autocomplete="off" required>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label" for="inputBasicFirstName">Original Price</label>
+
+                                    <input type="number" class="form-control" name="OriginalPrice" placeholder="Original Price" autocomplete="off" required>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label" for="inputBasicFirstName">Deal Price</label>
+
+                                    <input type="number" class="form-control" name="DealPrice" placeholder="Deal Price" autocomplete="off" required>
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label" for="inputBasicFirstName">Catogery</label>
+
+                                    <select class="form-control form-control-lg" id="selectbox1" name="catogary">
+                                        <option> Select Catogery</option>
+                                        <option value="Engagement"><span>Engagement</span></option>
+                                        <option value="Birthdays"><span>Birthdays</span></option>
+                                        <option value="Kitty Cocktails Parties"><span>Kitty Cocktails Parties</span></option>
+                                        <option value="Corporates Cocktail parties"><span>Corporates Cocktail parties</span></option>
+                                        <option value="Annual Day Celebrations"><span>Annual Day Celebrations</span></option>
+                                        <option value="Corporate Buffet Lunch / Dinner"><span>Corporate Buffet Lunch / Dinner</span></option>
+                                        <option value="Honeymoon packages Rooms CP Plan"><span>Honeymoon packages Rooms CP Plan</span></option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label" for="inputBasicFirstName"> Type </label>
+
+                                    <select class="form-control form-control-lg" id="selectbox2" name="type" >
+                                        <option>Select Type</option>
+                                        @if (ViewBag.venuerecord != null)
+                                        {
+                                            foreach (var item in ViewBag.venuerecord)
+                                            {
+                                                <option value="@item.subid,@item.type,@item.subtype"><span>@item.type - @item.subtype</span></option>}
+                                        }
+                                        @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group  col-md-12">
+                                    <label class="control-label" for="inputBasicFirstName">Food Type </label>
+                                    <div class="row">
+                                        <div class="form-group col-sm-6">
+                                            <div class="icheckbox-custom icheckbox-primary">
+                                                <input class="icheckbox-primary " type="radio" name="foodtype" value="Veg" checked> Veg<br>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <div class="icheckbox-custom icheckbox-primary">
+                                                <input class="icheckbox-primary " type="radio" name="foodtype" value="Non-Veg"> Non-Veg<br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                               
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicFirstName">Minimum Number Of Guests</label>
+
+                                        <input type="number" class="form-control" name="minGuests" placeholder="Minimum Number Of Guests" autocomplete="off" required>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label" for="inputBasicFirstName">Maximum Number Of Guests</label>
+
+                                        <input type="number" class="form-control" name="maxGuests" placeholder="Maximum Number Of Guests" autocomplete="off" required>
+                                    </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label" for="inputBasicFirstName">Start Date</label>
+
+                                    @*<input type="date" class="form-control" name="StartDate" placeholder="Start Date" autocomplete="off">*@
+                                    @*<input placeholder="@item.DealStartDate" name="StartDate" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">*@
+                                    <input type="text" value="" name="StartDate" id="datetimepicker" class="form-control" placeholder="Start Date" required />
+
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label" for="inputBasicFirstName">End Date</label>
+
+                                    @*<input type="date" class="form-control" name="EndDate" placeholder="End Date" autocomplete="off">*@
+                                    <input type="text" value="" name="EndDate" id="datetimepicker1" class="form-control" placeholder="End Date" required />
+
+                                    @*<input placeholder="@item.DealEndDate" name="EndDate" class="textbox-n" type="text" id="datetimepicker">*@
+
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label" for="inputBasicFirstName">Timeslot</label>
+                                    <div class="row">
+                                        <div class="form-group col-sm-6">
+                                            <div class="checkbox-custom checkbox-primary">
+                                                <input type="checkbox" name="timeslot" value="Morning">
+                                                <label>Morning</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <div class="checkbox-custom checkbox-primary">
+                                                <input type="checkbox" name="timeslot1" value="Evening">
+                                                <label>Evening</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <div class="form-group">
+                                <label class="control-label" for="inputBasicFirstName">Deal Description</label>
+
+                                <textarea class="form-control" name="ddesc" placeholder="Deal Description" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
+    <script type="text/javascript">
+        /*--- Date and Time ----*/
+        $('#datetimepicker,#datetimepicker1').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+            maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+        });
+        /*------------ Date and Time --------------*/
+    </script>
+}

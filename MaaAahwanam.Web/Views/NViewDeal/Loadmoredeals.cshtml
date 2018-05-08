@@ -1,0 +1,65 @@
+﻿<div class="w-100 px-4 py-3">
+    <div class="row mx-0">
+        <h3 class="noteWorthybold">
+            More Deals
+            <div class="blackBorder"></div>
+        </h3>
+    </div>
+    <div class="row mx-0 mt-4">
+        <div class="row block w-100">
+            @if (ViewBag.deal != "" && ViewBag.deal != null)
+            {
+
+                foreach (var deal in ViewBag.deal)
+                {
+                    <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-5 topVenueBlockImg">
+
+                        @if (@deal.image == null)
+                        {
+
+                            <img src="~/noimages.png" class="img-fluid" alt="Top Venue">
+                        }
+                        else
+                        {
+                            <img src="~/vendorimages/@deal.image" class="img-fluid" alt="Top Venue">
+                        }
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-7 px-xl-0 topVenueDetails">
+                        <p class="mb-0">@deal.businessname</p>
+                        <div class="w-100">
+                            <p class="productMinPrice mb-0 themeColor d-block"> <span>@deal.cost</span> <small></small> </p>
+                            <p class="productMaxPrice mb-0 greyColor d-block"> ( <span>@deal.DealPrice</span> <small></small> ) </p>
+                        </div>
+                        <div class="row mx-0 d-block float-right">
+                            <a href="/NViewDeal/Index?id=@deal.VendorId&&type=@deal.VendorType&&eve=@deal.category" class="mb-0 themeColor">Profile</a>
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+    <div class="row mx-0 my-4">
+@if (ViewBag.count == "0")
+{
+    <div class="mx-auto d-inline-flex" id="more" name="more">
+        <span class="themeBgColorPrimary btnSecondary text-white"> No deals At the moment Please visit us again</span>
+    </div>
+}
+
+else if (@ViewBag.dealLastRecord < @ViewBag.dealcount)
+{
+
+
+    <div class="mx-auto d-inline-flex" id="more" name="more">
+        <span class="themeBgColorPrimary btnSecondary text-white" onclick="load('deals')"><i class="fa fa-plus mr-1" aria-hidden="true"></i>More</span>
+    </div>
+}
+        @*<div class="mx-auto d-inline-flex">
+            <span class="themeBgColorPrimary btnSecondary text-white"  onclick="load('deals')">
+                <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
+            </span>
+        </div>*@
+    </div>
+</div>
+

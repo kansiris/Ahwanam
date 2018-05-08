@@ -31,6 +31,7 @@ namespace MaaAahwanam.Repository.db
         {
             var GetVendor = _dbContext.VendorsInvitationCard.SingleOrDefault(m => m.VendorMasterId == id && m.Id == vid);
             vendorsInvitationCard.Id = GetVendor.Id;
+            vendorsInvitationCard.VendorMasterId = id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsInvitationCard);
             _dbContext.SaveChanges();
             return vendorsInvitationCard;

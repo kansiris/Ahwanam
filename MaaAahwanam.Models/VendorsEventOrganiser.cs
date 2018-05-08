@@ -12,7 +12,10 @@ namespace MaaAahwanam.Models
         [Key]
         public long Id { get; set; }
         public long VendorMasterId { get; set; }
+        public string type { get; set; }
         public decimal StartingPrice { get; set; }
+        public string MinOrder { get; set; }
+        public string MaxOrder { get; set; }
         public string Status { get; set; }
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
@@ -23,5 +26,7 @@ namespace MaaAahwanam.Models
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public string PriorBookingsDays { get; set; }
+        //public int tier { get; set; }
     }
 }

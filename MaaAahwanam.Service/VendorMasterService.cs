@@ -28,12 +28,29 @@ namespace MaaAahwanam.Service
 
         public Vendormaster UpdateVendorMaster(Vendormaster vendorMaster, long id)
         {
-            return vendormasterRepository.UpdateVendorMaster(vendorMaster,id);
+            return vendormasterRepository.UpdateVendorMaster(vendorMaster, id);
         }
 
         public Vendormaster GetVendorByEmail(string emailid)
         {
             return vendormasterRepository.GetVendorByEmail(emailid);
+        }
+        public List<dynamic> GetVendorLocations()
+        {
+            return vendormasterRepository.VendormasterList().Select(m => m.Landmark).ToList<dynamic>();
+        }
+        public List<dynamic> GetVendorname()
+        {
+            return vendormasterRepository.VendormasterList().Select(m => m.BusinessName).ToList<dynamic>();
+        }
+        public List<dynamic> GetVendorword()
+        {
+            var l1 = vendormasterRepository.VendormasterList().Select(i => i.BusinessName + "," + i.Address + "," + i.ServicType);
+            return l1.ToList<dynamic>();
+        }
+        public List<dynamic> GetVendorCities()
+        {
+            return vendormasterRepository.VendormasterList().Select(m => m.City).ToList<dynamic>();
         }
     }
 }

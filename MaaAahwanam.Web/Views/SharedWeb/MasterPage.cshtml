@@ -21,57 +21,58 @@
     { Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + ""); }
 }
 
-    <body id="body-top">
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="top-menu">
-                   @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                       {
-                           ApiContext _dbContext = new ApiContext();
-                           var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                           var userResponse = _dbContext.UserDetail.Where(m => m.UserLoginId == user.UserId).FirstOrDefault();
+<body id="body-top">
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="top-menu">
+                @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    ApiContext _dbContext = new ApiContext();
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var userResponse = _dbContext.UserDetail.Where(m => m.UserLoginId == user.UserId).FirstOrDefault();
                     <ul>
-                        <li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>
+                        @*<li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>*@
                         @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
                         <li><a href="#">Hi @userResponse.FirstName @userResponse.LastName</a></li>
                         <li onclick="window.location.href = '/SampleStorefront/SignOut';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Sign out</li>
                     </ul>
-                   }
-                   else
-                   {
+                }
+                else
+                {
                     <ul>
-                        <li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>
+                        @*<li><a href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>Are you getting married?</a></li>*@
                         @*<li><a href="#"> LOG IN or SIGN UP FOR FREE</a></li>*@
+                        <li><a href="/CorporateEvents">Corporate Events</a></li>
                         <li><a href="/SampleStorefront">Sign In</a></li>
                         <li><a href="/UserRegistration">Sign Up For Free</a></li>
                         <li><a href="/SampleStorefront"><i class="fa fa-suitcase" aria-hidden="true"></i>ARE YOU A PARTNER?</a></li>
                     </ul>
-                   }
-                    
-                </nav>
-            </div>
-            <div class="row">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="/Homepage"><img src="~/newdesign/images/logo.png" alt="Logo"></a>
-                        </div>
+                }
 
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#">Wedding</a></li>
+            </nav>
+        </div>
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/Homepage"><img src="~/newdesign/images/logo.png" alt="Logo"></a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            @*<li><a href="#">Wedding</a></li>
                                 <li><a href="/VendorProducts/index?service=Venue">Venues</a></li>
                                 <li><a href="#">Event Vendors</a></li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More vendors <span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Vendors <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="/VendorProducts/index?service=Catering">Catering</a></li>
                                         <li><a href="/VendorProducts/index?service=Photography">Photography</a></li>
@@ -79,35 +80,70 @@
                                         @*<li role="separator" class="divider"></li>
                                             <li><a href="#">Event Vendors 4</a></li>
                                             <li role="separator" class="divider"></li>
-                                            <li><a href="#">Event Vendors 5</a></li>*@
+                                            <li><a href="#">Event Vendors 5</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Brides</a></li>
                                 <li><a href="#">Grooms</a></li>
-                                <li><a href="#">Event Ideas</a></li>
-                            </ul>
-                        </div><!-- /.navbar-collapse -->
-                    </div><!-- /.container-fluid -->
-                </nav>
-            </div>
-            <!--<div class="row gallery">
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-left"></div>
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-right"></div>
-            </div>-->
+                                <li><a href="#">Event Ideas</a></li>*@
+                            @*<li><a href="/VendorProducts/index?service=Catering">Catering</a></li>
+                            <li><a href="/VendorProducts/index?service=Venue">Venues</a></li>
+                            <li><a href="/VendorProducts/index?service=Photography">Photography</a></li>*@
+                            @*<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Vendors <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/VendorProducts/index?service=Catering">Catering</a></li>
+                                        <li><a href="/VendorProducts/index?service=Photography">Photography</a></li>
+                                        <li><a href="/VendorProducts/index?service=Decorator">Decorator</a></li>
+                                    </ul>
+                                </li>*@
+                            @*<li><a href="/VendorProducts/index?service=Resorts">Resort</a></li>
+                            <li><a href="/VendorProducts/index?service=Hotels">Hotel</a></li>
+                            <li><a href="/VendorProducts/index?service=Conventions">Convention</a></li>
+                            <li><a href="/VendorProducts/index?service=Decorator">Decorator</a></li>
+                            <li><a href="/VendorProducts/index?service=Mehendi">Mehendi Artist</a></li>*@
+                            @*<li><a href="/CorporateEvents">Corporate Events</a></li>*@
+                            <li><a href="/VendorProducts/index?service=Venue">Venues</a></li>
+                            <li><a href="/VendorProducts/index?service=Hotels">Hotels</a></li>
+                            <li><a href="/VendorProducts/index?service=Resorts">Resorts</a></li>
+                            <li><a href="/VendorProducts/index?service=Conventions">Conventions</a></li>
+                            <li><a href="/VendorProducts/index?service=Catering">Caterers</a></li>
+                            <li><a href="/VendorProducts/index?service=Decorator">Decorators</a></li>
+                            <li><a href="/VendorProducts/index?service=Photography">Photographers</a></li>
+                            <li><a href="/VendorProducts/index?service=Mehendi">Mehendi Artists</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Others <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/VendorProducts/index?service=Pandit">Pandits</a></li>
+                                    <li><a href="/VendorProducts/index?service=EventManagement">Event Management</a></li>
+                                    @*<li><a href="/VendorProducts/index?service=Decorator">Decorator</a></li>*@
+                                </ul>
+                            </li>
+                            @*<li><a href="#">Event Managers</a></li>*@
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
         </div>
-        <div>
-            @RenderBody()
-        </div>
-        <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
-        <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.chained.js"></script>
-        <!-- BX Slider -->
-        <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.bxslider.min.js"></script>
-        @RenderSection("scripts", required: false)
-    </body>
+        <!--<div class="row gallery">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-left"></div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 gallery-right"></div>
+        </div>-->
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="container-fluid margin-top-30">
+        <div class="row">&copy;&nbsp;Ahwanam 2017. All right reserved.</div>
+    </footer>
+    <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
+    <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.chained.js"></script>
+    <!-- BX Slider -->
+    <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery.bxslider.min.js"></script>
 
-
-    <script src="~/newdesign/js/jquery-3.2.1.min.js"></script>
+    @RenderSection("scripts", required: false)
+    @*<script src="~/newdesign/js/jquery-3.2.1.min.js"></script>*@
 
     <script>
         //<!-------- Body Scroll Top ----------->
@@ -132,6 +168,10 @@
         });
         //<!-------- Body Scroll Top ----------->
     </script>
+</body>
+
+
+
 
 
 </html>

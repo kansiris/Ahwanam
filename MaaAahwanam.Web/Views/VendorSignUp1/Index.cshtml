@@ -52,8 +52,8 @@
         <div class="progress-content">
             <div>General Information</div>
             <div>Photo Gallery</div>
-            <div>Frequently Asked Questions</div>
-            <div>Promotions</div>
+            <div>Details</div>
+            <div>Discount %</div>
         </div>
     </div>
     <form method="post">
@@ -102,6 +102,11 @@
                         @*<input type="text" class="form-control1" placeholder="Website">*@
                         @Html.TextBoxFor(model => this.Model.Item1.Url, new { @class = "form-control1", placeholder = "Website", Value = @ViewBag.data.Url })
                     </div>
+                    <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
+                        <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
+                        @*<input type="text" class="form-control1" placeholder="Website">*@
+                        @Html.TextBoxFor(model => this.Model.Item1.Experience, new { @class = "form-control1", placeholder = "Experience", Value = @ViewBag.data.Experience })
+                    </div>
                 </div>
                 <div class="col-sm-6 col-md-3 col-md-offset-1 hidden-xs">
                     <p class="grey"><small>Enquiries from couples interested in your services and updates from Ahwanam will be sent to this email address.</small></p>
@@ -131,7 +136,7 @@
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0 selectcategory">
                         @*@Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Landmark *", Required = "Required" })*@
                         @*@Html.DropDownListFor(Model => Model.Item3.Country, (SelectList)ViewBag.country, "Select country", new { @class = "form-control", required = "required" })*@
-                        @*<select class="form-control" id="sel1" multiple size="5">
+                        @*<select class="form-control" id="sel1">
                                 <option>Venues</option>
                                 <option>Decoration</option>
                                 <option>Catering</option>
@@ -180,12 +185,25 @@
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="Address *">*@
-                        @Html.TextBoxFor(model => this.Model.Item4.Address, new { @class = "form-control", placeholder = "Address *", Required = "Required", Value = @ViewBag.service.Address, style = "display :none", @readonly="true" })
+                        @Html.TextBoxFor(model => this.Model.Item4.Address, new { @class = "form-control", placeholder = "Address *", Required = "Required", Value = @ViewBag.service.Address, style = "display :none", @readonly = "true" })
                         @Html.TextBoxFor(model => this.Model.Item1.Address, new { @class = "form-control", placeholder = "Address *", Required = "Required", Value = @ViewBag.data.Address })
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         @*<input type="text" class="form-control" placeholder="Address *">*@
-                        <label><input type="checkbox" id="newaddress" value=""><span></span>New Address ?</label>
+                        @*@Html.TextBoxFor(model => this.Model.Item4.Address, new { @class = "form-control", placeholder = "Address *", Required = "Required", Value = @ViewBag.service.Address, style = "display :none", @readonly = "true" })*@
+                        @Html.TextBoxFor(model => this.Model.Item1.GeoLocation, new { @class = "form-control", placeholder = "GeoLocation *", Required = "Required", Value = @ViewBag.data.GeoLocation })
+                    </div>
+                    <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
+                        @*<input type="text" class="form-control" placeholder="Address *">*@
+                        @if (ViewBag.service.Landmark != null && ViewBag.service.Landmark != "")
+                        {
+                            <label><input type="checkbox" id="newaddress" value="" checked disabled><span></span>New Address ?</label>
+                        }
+                        else
+                        {
+                            <label><input type="checkbox" id="newaddress" value=""><span></span>New Address ?</label>
+                        }
+
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3 col-md-offset-1 hidden-xs">
@@ -204,7 +222,18 @@
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         <i class="fa fa-suitcase fa-2x" aria-hidden="true"></i>
                         @*<input type="text" class="form-control1" placeholder="Name of your Business">*@
-                        @Html.TextBoxFor(model => this.Model.Item4.name, new { @class = "form-control1", placeholder = "Business Type", Required = "Required", Value = @ViewBag.service.name })
+                        @Html.TextBoxFor(model => this.Model.Item4.name, new { @class = "form-control1", placeholder = "Business Type Name", Required = "Required", Value = @ViewBag.service.name })
+                    </div>
+                    <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0 selectcategory">
+                        <select class="form-control1" id="Item1_tier" name="Item1.tier" required>
+                            <option selected="selected" disabled>Select Tier</option>
+                            <option value="1">Tier 1</option>
+                            <option value="2">Tier 2</option>
+                            <option value="3">Tier 3</option>
+                        </select>
+                        @*@Html.DropDownListFor(model=>model.Item4.tier, new List<SelectListItem>
+                            { new SelectListItem{Text="Tier 1", Value="1"},
+                              new SelectListItem{Text="Tier 2", Value="2"},new SelectListItem{Text="Tier 3", Value="3"}}, new { @class = "form-control1",@Selected= @ViewBag.service.tier })*@
                     </div>
                     <div class="form-group-1 col-xs-12 col-sm-12 col-md-8 padding-left-0 padding-right-0">
                         <label>Describe your business and services offered (in third person)</label>
@@ -230,6 +259,7 @@
             </div>
             <div class="row">
                 @Html.HiddenFor(model => model.Item1.ServicType, new { Value = ViewBag.type })
+                @Html.HiddenFor(model => model.Item1.priority, new { Value = ViewBag.data.priority })
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
                     @*<div class="checkbox1">
                             @foreach (var item in ViewBag.data.ServicType.Split(","))
@@ -274,6 +304,15 @@
                                 <label><input type="checkbox" value=""><span></span>Photography</label>
                             }*@
                     </div>
+
+                    <div class="checkbox1">
+                        @if (ViewBag.type == "EventManagement")
+                        {
+                            <label><input type="checkbox" value="" checked disabled><span></span>EventManagement</label>
+                        }
+
+                    </div>
+
                     <div class="checkbox1">
 
                         @if (ViewBag.type == "Decorator")
@@ -309,8 +348,8 @@
             </div>
 
             <div class="row margin-top margin-bottom" id="businesscategory">
-                <input type="hidden" name="Item4.VenueType" id="Item4_VenueType" value="@ViewBag.categorytype"/>
-                @if (ViewBag.type == "Venue" && ViewBag.service.name != null)
+                <input type="hidden" name="Item4.VenueType" id="Item4_VenueType" value="@ViewBag.categorytype" />
+                @if (ViewBag.type == "Venue" && ViewBag.categorytype != null && ViewBag.categorytype != "")
                 {
                     @*<input type="hidden" name="Item4.VenueType" id="Item1_VenueType" value="@ViewBag.service.VenueType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Venue">
@@ -351,7 +390,7 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Catering" && ViewBag.service.name != null)
+                @if (ViewBag.type == "Catering" && ViewBag.categorytype != null && ViewBag.categorytype != "")
                 {
                     @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.CuisineType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="display:none" id="Catering">
@@ -395,7 +434,7 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Photography" && ViewBag.service.name != null)
+                @if (ViewBag.type == "Photography" && ViewBag.categorytype != null && ViewBag.categorytype != "")
                 {
                     @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.PhotographyType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Photography">
@@ -439,7 +478,7 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Decorator" && ViewBag.service.name != null)
+                @if (ViewBag.type == "Decorator" && ViewBag.categorytype != null && ViewBag.categorytype != "")
                 {
                     @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.DecorationType" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Decorator">
@@ -465,7 +504,55 @@
                     </div>
                 }
 
-                @if (ViewBag.type == "Other" && ViewBag.service.name != null)
+
+                @if (ViewBag.type == "EventManagement" && ViewBag.categorytype != null && ViewBag.categorytype != "")
+                {
+                    @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.DecorationType" />*@
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="EventManagement">
+                        <h4>Event Management</h4>
+                        <div class="checkbox">
+                            <label><input type="checkbox" checked disabled><span></span>@ViewBag.categorytype</label>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="EventManagement">
+                        <h4>EventManagement</h4>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value=""><span></span>Corporate Events</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Brand Promotion<span></span></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Fashion Shows<span></span></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Exhibition<span></span></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Conference & Seminar<span></span></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value=""><span></span>Wedding Management</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Birthday Planning & Celebrations<span></span></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Live Concerts<span></span></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Musical Nights<span></span></label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="">Celebrity Shows<span></span></label>
+                        </div>
+                    </div>
+                }
+
+                @if (ViewBag.type == "Other" && ViewBag.categorytype != null && ViewBag.categorytype != "")
                 {
                     @*<input type="hidden" name="Item1.VenueType" id="Item1_VenueType" value="@ViewBag.service.type" />*@
                     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Other">
@@ -488,6 +575,9 @@
                         <div class="checkbox">
                             <label><input type="checkbox"><span></span>Mehendi</label>
                         </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox"><span></span>Pandit</label>
+                        </div>
                     </div>
                 }
             </div>
@@ -499,7 +589,15 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 @*<a href="/VendorSignUp2" class="btn btn-default red-bg white">Next</a>*@
-                <input type="submit" value="Update Info" class="btn btn-default red-bg white margin-left" id="firstnextbtn" />
+                @if (ViewBag.categorytype == null || ViewBag.categorytype == "")
+                {
+                    <input type="submit" value="Save Info" class="btn btn-default red-bg white margin-left" id="firstnextbtn" name="command" />
+                }
+                else
+                {
+                    <input type="submit" value="Update Info" class="btn btn-default red-bg white margin-left" id="firstnextbtn" name="command" />
+                }
+
                 <a href="/HomePage" class="btn btn-default red-bg white margin-left">Cancel</a>
             </div>
         </div>
@@ -574,7 +672,7 @@
             $('#Item4_ZipCode').hide().attr("readonly", "true");
             $('#Item4_Address').hide().attr("readonly", "true");
         }
-        });
+    }).change();
 
     ///*------- Select Business Category -------------*/
     //var listval, idval;
@@ -648,6 +746,10 @@
                 });
             }
         });
+
+
+        $('#Item1_tier option[value="@ViewBag.data.tier"]').attr("selected", "selected");
+
     });
 
     //window.load =function(){

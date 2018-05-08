@@ -60,7 +60,7 @@ namespace MaaAahwanam.Web.Controllers
                 
                 if (query == 0)
                 {
-                    if (vendorMaster.ServicType == "Mehendi")
+                    if (vendorMaster.ServicType == "Mehendi" || vendorMaster.ServicType == "Pandit")
                     {
                         type = vendorMaster.ServicType;
                         vendorMaster.ServicType = "Other";
@@ -145,6 +145,13 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsDecorator.VendorMasterId = vendorMaster.Id;
                 vendorsDecorator = venorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
                 if (vendorsDecorator.Id != 0) count++;
+            }
+            if (vendorMaster.ServicType == "EventManagement")
+            {
+                VendorsEventOrganiser vendorsEventOrganiser = new VendorsEventOrganiser();
+                vendorsEventOrganiser.VendorMasterId = vendorMaster.Id;
+                vendorsEventOrganiser = venorVenueSignUpService.AddVendorEventOrganiser(vendorsEventOrganiser);
+                if (vendorsEventOrganiser.Id != 0) count++;
             }
             if (vendorMaster.ServicType == "Other")
             {

@@ -1,0 +1,214 @@
+﻿@model MaaAahwanam.Models.UserLogin
+
+@{
+    ViewBag.Title = ":: Ahwanam ::";
+    Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
+}
+
+<div class="container-fluid userProfile">
+    <div class="row innerPagesBg">
+        <div class="col-12 col-sm-5 col-md-4 col-lg-3 sideBar">
+            <a class="navbar-brand hidden-xs-down" href="/NHomePage"> <img src="~/newdesign/images/logo.png" alt="Logo"> </a>
+            <ul>
+                <li> <a href="#">Dashboard</a> </li>
+                <li> <a href="#profileDetails">Profile</a> </li>
+                <li> <a href="#profileSettings">Settings</a> </li>
+                <li>
+                    @*<a href="/NUserRegistration/SignOut">Logout</a>*@ @*onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'"*@
+                    <a onclick="window.location.href = '/NUserRegistration/SignOut';">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-sm-7 col-md-8 col-lg-9 offset-sm-5 offset-md-4 offset-lg-3">
+            <div class="row mx-2 my-4 bgWhite">
+                <div class="userTotalInfo p-3 w-100">
+                    <div id="userTicketDetails">
+                        <div class="row mx-0">
+                            <h3 class="noteWorthybold">
+                                Ticket Details
+                                <div class="blackBorder"></div>
+                            </h3>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-12 col-sm-4 col-md-4 d-flex mb-2">
+                                <span class="themeBgColorPrimary btnSecondary text-white">
+                                    Current Tickets
+                                </span>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 d-flex mb-2">
+                                <span class="themeBgColor btnSecondary text-white">
+                                    History
+                                </span>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 d-flex mb-2">
+                                <span class="themeBgColor btnSecondary text-white">
+                                    Wishlist
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2 tableData">
+
+                            @if (ViewBag.order != null)
+                            {
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+
+                                            <th>OrderID</th>
+                                            <th>Vendor Details</th>
+                                            <th>Order Date</th>
+                                            <th>Status</th>
+                                            <th>Price</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.order)
+                                        {
+                                            <tr>
+
+                                                <td>@item.OrderId</td>
+                                                <td>
+                                                    <h4>@item.BusinessName</h4>
+                                                    <p>
+                                                        @item.Landmark<br>
+                                                        @item.Address, @item.City,<br>
+                                                        @item.ContactNumber
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            @item.OrderDate
+                                                        </div>
+                                                </td>
+                                                <td>@item.Status</td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                    <div id="profileDetails">
+                        <div class="row mx-0">
+                            <h3 class="noteWorthybold">
+                                Profile Details
+                                <div class="blackBorder"></div>
+                            </h3>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Name" id="username" value="@ViewBag.username">
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="email" value="@ViewBag.emailid" disabled>
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="phoneno" id="phoneno" value="@ViewBag.phoneno">
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <span class="themeBgColorPrimary btnSecondary text-white" onclick="load('userdetails')">Save Changes</span>
+
+                        </div>
+                    </div>
+                    <div id="profileSettings">
+                        <div class="row mx-0">
+                            <h3 class="noteWorthybold">
+                                Settings
+                                <div class="blackBorder"></div>
+                            </h3>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="New Password" id="Password">
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirm Password" id="Password1">
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <span class="themeBgColorPrimary btnSecondary text-white" onclick="load1('password')">
+                                Save Changes
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.userProfile').nextAll('.container, footer').css("display", "none");
+        });
+
+    </script>
+    <script>
+        function load(userdetails) {
+
+            var userdet = {
+
+                FirstName: document.getElementById("username").value,
+                UserPhone: document.getElementById("phoneno").value,
+            }
+
+            $.ajax({
+                url: '/NUserProfile/updatedetails',
+                type: "POST",
+                datatype: "json",
+                data: { userdetail: userdet },
+                success: function (response) {
+                    if (response == 'success') {
+                        alert('userdetails Updated Successfully');
+                    }
+                }
+            })
+        }
+
+
+
+        function load1(password) {
+            Password = document.getElementById("Password").value
+            Password1 = document.getElementById("Password1").value
+
+            if (Password != Password1) {
+                alert("password doesnot match")
+            }
+            else {
+                var userLogin = {
+                    Password: document.getElementById("Password").value
+
+                }
+                $.ajax({
+                    url: '/NUserProfile/changepassword',
+                    type: "POST",
+                    datatype: "json",
+                    data: { userLogin: userLogin },
+                    success: function (response) {
+                        if (response == 'success') {
+                            alert('Password Updated Successfully');
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+}
+}
+

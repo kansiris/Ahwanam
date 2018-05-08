@@ -6,6 +6,7 @@
 }
 
 <form method="post">
+    <div class="gallery"></div>
     <div class="container margin-top-100 margin-bottom-100 selectblock">
 
         @*Venue Div's*@
@@ -22,21 +23,25 @@
                                 @*<input type="file" id="fileupload" onchange="upload(@ViewBag.vendormasterid,@item.Id,venue)">*@
                                 <input type="file" />
                             </div>
-
+                            <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                            <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue" />
                             <p>
                                 <span>
-                                    @if (item.name != null)
+                                    @if (item.name != null && item.name != "")
                                     { @item.name }
-                                    else
+                                    else if (item.VenueType != null && item.VenueType != "")
                                     { @item.VenueType }
+                                    else
+                                    { <text> -- No Category Selected -- </text> }
                                 </span>
                             </p>
                             <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
                             <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
                             <a href="/VendorSignUp3?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
                             <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Venue"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
-                            <a>@item.VenueType</a>
+                            <a href="/VendorCalendar?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-money" aria-hidden="true"></i>Calendar</a>
                         </div>
+                        <div class="selected-block">@item.VenueType</div>
                     </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
@@ -60,21 +65,26 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering" />
                         @*<p><span>@item.CuisineType</span></p>*@
                         <p>
                             <span>
                                 @if (item.name != null)
                                 { @item.name }
-                                else
+                                else if (item.CuisineType != null)
                                 { @item.CuisineType }
+                                else
+                                { <text> -- No Category Selected -- </text> }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
                         <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
                         <a href="/CateringFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
                         <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Catering"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        <a href="/VendorCalendar?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-money" aria-hidden="true"></i>Calendar</a>
                     </div>
+                    <div class="selected-block">@item.CuisineType</div>
                 </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
@@ -99,22 +109,71 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography" />
                         @*<p><span>@item.PhotographyType</span></p>*@
                         <p>
                             <span>
                                 @if (item.name != null)
                                 { @item.name }
-                                else
+                                else if (item.PhotographyType != null)
                                 { @item.PhotographyType }
+                                else
+                                { <text> -- No Category Selected -- </text> }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
                         <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
                         <a href="/PhotographyFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
                         <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Photography"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        <a href="/VendorCalendar?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-money" aria-hidden="true"></i>Calendar</a>
+                    </div>
+                    <div class="selected-block">@item.PhotographyType</div>
+                </div>
+                }
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                    <div class="block">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </div>
                 </div>
+            </div>
+        }
+
+
+        @*Event Management Div's*@
+        @if (ViewBag.services.Contains("EventManagement"))
+        {
+            <h3 class="row margin-left-0 margin-right-0">Event Management</h3>
+            <div class="row">
+                @foreach (var item in ViewBag.Eventrecord)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
+                        <div class="block">
+                            <div class="pic">
+                                <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                <input type="file">
+                            </div>
+                            <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                            <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=EventManagement" />
+                            @*<p><span>@item.PhotographyType</span></p>*@
+                            <p>
+                                <span>
+                                    @if (item.name != null)
+                                    { @item.name }
+                                    else if (item.type != null)
+                                    { @item.type }
+                                    else
+                                    { <text> -- No Category Selected -- </text> }
+                                </span>
+                            </p>
+                            <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=EventManagement"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
+                            <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=EventManagement"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
+                            <a href="/EventManagementFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                            <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=EventManagement"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                            <a href="/VendorCalendar?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-money" aria-hidden="true"></i>Calendar</a>
+                        </div>
+                        <div class="selected-block">@item.type</div>
+                    </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
                     <div class="block">
@@ -137,21 +196,26 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator" />
                         @*<p><span>@item.DecorationType</span></p>*@
                         <p>
                             <span>
                                 @if (item.name != null)
                                 { @item.name }
-                                else
+                                else if (item.DecorationType != null)
                                 { @item.DecorationType }
+                                else
+                                { <text> -- No Category Selected -- </text> }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
                         <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
                         <a href="/DecoratorFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
                         <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Decorator"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        <a href="/VendorCalendar?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-money" aria-hidden="true"></i>Calendar</a>
                     </div>
+                    <div class="selected-block">@item.DecorationType</div>
                 </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
@@ -175,21 +239,26 @@
                             <span><i class="fa fa-camera" aria-hidden="true"></i></span>
                             <input type="file">
                         </div>
-
+                        <img src="~/newdesign/images/trash.png" width="18" alt="trash" class="delete-block" />
+                        <input type="hidden" id="removediv" value="id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other" />
                         @*<p><span>@item.type</span></p>*@
                         <p>
                             <span>
                                 @if (item.name != null)
                                 { @item.name }
-                                else
+                                else if (item.type != null)
                                 { @item.type }
+                                else
+                                { <text> -- No Category Selected -- </text> }
                             </span>
                         </p>
                         <a href="/VendorSignUp1?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-info-circle" aria-hidden="true"></i>Update Info</a>
                         <a href="/VendorSignUp2?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload Photos</a>
-                        <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
+                        <a href="/OthersFAQ?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Details</a>
                         <a href="/VendorSignUp4?id=@ViewBag.vendormasterid&&vid=@item.Id&&type=Other"><i class="fa fa-money" aria-hidden="true"></i>Discount  %</a>
+                        <a href="/VendorCalendar?id=@ViewBag.vendormasterid&&vid=@item.Id"><i class="fa fa-money" aria-hidden="true"></i>Calendar</a>
                     </div>
+                    <div class="selected-block">@item.type</div>
                 </div>
                 }
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 blocks">
@@ -200,7 +269,7 @@
             </div>
         }
 
-        <div class="addservice">
+        <div class="addservice" id="addservice">
             <i class="fa fa-times" aria-hidden="true"></i>
             <div class="row">
                 <div class="form-group-1 col-xs-12 col-sm-12 col-md-12 selectcategory">
@@ -213,7 +282,7 @@
                         else
                         {*@
                     <div class="checkbox1">
-                        <label><input type="checkbox" value=""><span></span>Venue</label>
+                        <label><input type="checkbox" value="" checked><span></span>Venue</label>
                     </div>
                     @*}*@
 
@@ -242,6 +311,9 @@
                         {*@
                     <div class="checkbox1">
                         <label><input type="checkbox" value=""><span></span>Photography</label>
+                    </div>
+                    <div class="checkbox1">
+                        <label><input type="checkbox" value=""><span></span>EventManagement</label>
                     </div>
                     @*}
                         @if (ViewBag.services.Contains("Decorator"))
@@ -297,7 +369,6 @@
                         <label><input type="checkbox"><span></span>Resort</label>
                     </div>
                 </div>
-
                 <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Catering">
                     <h4>Catering</h4>
                     <div class="checkbox">
@@ -356,6 +427,39 @@
                     </div>
                     <div class="checkbox">
                         <label><input type="checkbox" value="">Others<span></span></label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="EventManagement">
+                    <h4>EventManagement</h4>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value=""><span></span>Corporate Events</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Brand Promotion<span></span></label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Fashion Shows<span></span></label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Exhibition<span></span></label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Conference & Seminar<span></span></label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value=""><span></span>Wedding Management</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Birthday Planning & Celebrations<span></span></label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Live Concerts<span></span></label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Musical Nights<span></span></label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Celebrity Shows<span></span></label>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" id="Decorator">
@@ -436,11 +540,19 @@
                     <div class="checkbox">
                         <label><input type="checkbox" value=""><span></span>Mehendi</label>
                     </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value=""><span></span>Pandit</label>
+                    </div>
                 </div>
             </div>
             <div class="row addcategory">
                 <button type="submit" class="btn btn-primary red-bg"><i class="fa fa-plus-circle"></i>Add</button>
             </div>
+        </div>
+
+        <div class="container-fluid" id="topicon">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            @*<i class="fa fa-arrow-up" aria-hidden="true" style="position:absolute;top: 8px;"></i>*@
         </div>
 
     </div>
@@ -449,6 +561,7 @@
 <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function (e) {
+        $("#topicon").css("display", "none");
         //$(".selectblock .blocks:first-of-type").css("opacity","1");
         $(".selectblock .blocks").each(function () {
             $(this).css({ "opacity": "1" });
@@ -456,12 +569,41 @@
     });
     /*------- Add Blocks & close service area -------------*/
     $(".selectblock .blocks:last-of-type > .block").click(function () {
+        $("html,body").animate({
+            scrollTop: $(document).height()
+        }, "slow");
         $(".selectblock > .addservice").css("display", "block");
     });
 
     $(".selectblock > .addservice > i").click(function () {
         $(this).parent(".addservice").css("display", "none");
     });
+
+    $(".delete-block").click(function () {
+        var data = $(this).next("input#removediv").attr("value");
+        var conFirm = confirm("Do you want to delete this block?");
+        if (conFirm == true) {
+            removeservice(data);
+            $(this).parents(".blocks").css({ "display": "none" })
+        }
+        //alert($(this).next("input#removediv").attr("value"));
+    });
+
+    function removeservice(value) {
+        $.ajax({
+            url: "/AvailableServices/deleteservice",
+            type: "POST",
+            data: value,
+            success: function (data) {
+                if (data == "Removed") {
+                    alert("Service Removed");
+                }
+            },
+            error: function (data) {
+                alert("Try Again After Some Time");
+            }
+        });
+    }
     /*------- Add Blocks & close service area -------------*/
 
     /*------- Select Business Category -------------*/
@@ -507,6 +649,24 @@
         $('#categories').val(arr);
         //alert($('#categories').val());
         //console.log(arr);
+    });
+    //$(".dashboard .top-right-menu > .logged-box").click(function () {
+    //    $(".dashboard .top-right-menu > ul.dropdown").toggle();
+    //});
+    //Scroll to TOP
+    $("#topicon").click(function () {
+        $("html, body").animate({
+            scrollTop: $(".gallery").offset().top
+        }, "slow");
+    });
+
+    $(window).on("scroll", function () {
+        var ScrollTop = $(this).scrollTop();
+        if (ScrollTop > 1226) {
+            $("#topicon").css("display", "block");
+        } else {
+            $("#topicon").css("display", "none");
+        }
     });
 </script>
 

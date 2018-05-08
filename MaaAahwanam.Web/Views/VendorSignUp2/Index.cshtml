@@ -1,4 +1,4 @@
-﻿
+﻿@model MaaAahwanam.Models.VendorImage
 @{
     ViewBag.Title = ":: Upload Photos ::";
     Layout = "~/Views/SharedWeb/VendorMasterPage.cshtml";
@@ -22,15 +22,18 @@
         <div class="progress-content">
             <div>General Information</div>
             <div>Photo Gallery</div>
-            <div>Frequently Asked Questions</div>
-            <div>Promotions</div>
+            <div>Details</div>
+            <div>Discount %</div>
         </div>
     </div>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="uploadimageform">
         <div class="block">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 form-headding border-default-top border-default-bottom">
                     <h4><i class="fa fa-picture-o" aria-hidden="true"></i> Photo Gallery</h4>
+                    <input type="hidden" id="ImageType" name="ImageType" />
+                    <input type="hidden" id="Imagedescription" name="Imagedescription" />
+                    <input type="hidden" id="ImageName" name="ImageName" />
                 </div>
             </div>
             <div class="row margin-top margin-bottom">
@@ -56,7 +59,7 @@
                     @*<input type="file" multiple="multiple" accept="image/*" id='fileUpload1' name="file" class="opacity-0">*@
                     @*<button type="button" class="btn btn-default red-bg white" onclick="javascript: document.getElementById('fileUpload1').click();">Click Here</button>
                         <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" style="display:none"/>*@
-                    <button type="button" class="btn btn-default red-bg white" onclick="javascript: document.getElementById('fileUpload1').click();">Click Here</button>
+                    <button type="button" id="fileuploadbutton" class="btn btn-default red-bg white" onclick="javascript: document.getElementById('fileUpload1').click();">Click Here</button>
                     <input type="file" multiple="multiple" accept="image/*" id='fileUpload1' name="file" style="display:none">
                     <input type="hidden" id="removedimages" name="removedimages" />
                 </div>
@@ -74,39 +77,67 @@
         </div>
         <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
         <div class="block margin-top-30">
-            <div class="row margin-top margin-bottom" id="dvPreview"></div>
+            <h2 id="uploadimagediv" style="display:none">Uploaded images</h2>
+            @*<div class="row margin-top margin-bottom" id="dvPreview"></div>*@
+           @*@{ Html.RenderAction("UploadImage", "VendorSignUp2");}*@
         </div>
-        <div class="block margin-top-30">
-            <h2>Database images</h2>
-            <div class="row margin-top margin-bottom" id="dbPreview">
-                @if (ViewBag.images != null)
-                {
-                    foreach (var item in ViewBag.images)
+        @if (ViewBag.images.Count != 0)
+        {
+            <div class="block margin-top-30">
+                @*<h2>Uploaded images</h2> <a href="/VendorSignUp2/RemoveAllImages?id=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["type"]">Remove All Images</a>*@
+                <div class="row" style="line-height:32px;">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <h2 class="margin-top-0">Uploaded images</h2>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 removeallimages">
+                        <span>
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            <a href="/VendorSignUp2/RemoveAllImages?id=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["type"]">Remove All Images</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="row margin-top margin-bottom" id="dbPreview">
+                    @foreach (var item in ViewBag.images)
                     {
                         <div class='col-xs-6 col-sm-4 col-md-2 col-lg-2 blocks'>
                             <div class='block thumbnail'>
                                 <div class='ow thumb-img'>
-                                    <img src="~/vendorimages/@item" style="height:120px;width:120px" />
+                                    <img src="~/vendorimages/@item.ImageName" style="height:120px;width:120px" alt="@item.ImageName" />
                                 </div>
                                 <div class='row margin-top'>
                                     <div class='form-group-1 col-xs-12 col-sm-12 col-md-12'>
-                                        <input type='text' class='form-control' placeholder='Description:' required>
+                                        <input type='text' class='form-control' placeholder='Description:' required value="@item.Imagedescription" id="Imagedescription" name="Imagedescription">
                                     </div>
                                 </div>
                                 <div class='row'>
                                     <div class='col-xs-12'>
                                         <div class='radio'>
-                                            <label><input type='radio' name='optradio+@i' value="Logo"><span></span>Logo</label>
+                                            @if (item.ImageType == "Logo")
+                                            {
+                                                <label><input type='radio' name='optradio+@i' value="Logo" checked><span></span>Logo</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input type='radio' name='optradio+@i' value="Logo"><span></span>Logo</label>
+                                            }
                                         </div>
                                         <div class='radio'>
-                                            <label><input type='radio' name='optradio+@i' value="Photo"><span></span>Photo</label>
+                                            @if (item.ImageType == "Photo")
+                                            {
+                                                <label><input type='radio' name='optradio+@i' value="Photo" checked><span></span>Photo</label>
+                                            }
+                                            else
+                                            {
+                                                <label><input type='radio' name='optradio+@i' value="Photo"><span></span>Photo</label>
+                                            }
                                         </div>
                                     </div>
                                 </div>
                                 <div class='hr-line border-default-bottom'></div>
                                 <div class='row'>
                                     <div class='col-xs-12 col-md-12'>
-                                        <a href="/VendorSignUp2/Removeimage?src=@item&&id=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["type"]">
+                                        @*<a href="/VendorSignUp2/Removeimage?src=@item.ImageName&&id=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["type"]">*@
+                                        <a>
                                             <p class='red'>
                                                 <small>
                                                     <i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo
@@ -117,19 +148,32 @@
                                 </div>
                             </div>
                         </div>
-                       <p style="display:none">@(++i)</p> 
+                        <p style="display:none">@(++i)</p>
                     }
-
-                }
+                </div>
             </div>
-        </div>
+        }
         <div class="col-xs-12 col-sm-12 col-md-12 padding-left-0 padding-right-0 border-default-bottom hr-line"></div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 @*<a href="/VendorSignUp3" class="btn btn-default red-bg white">Next</a>*@
-                <input type="submit" value="Save" class="btn btn-default red-bg white margin-left" id="uploadBtn" />
+                @*@if (ViewBag.images.Count != 0)
+                {
+                    <input type="submit" value="Save" class="btn btn-default red-bg white margin-left" id="uploadBtn" name="command" disabled/>
+                    <input type="submit" value="Update" class="btn btn-default red-bg white margin-left" id="updaterecord" name="command" />
+                }
+                else
+                {*@
+                    @*<input type="submit" value="Save" class="btn btn-default red-bg white margin-left" id="uploadBtn" name="command" disabled/>*@
+                    <input type="submit" value="Update" class="btn btn-default red-bg white margin-left" id="updaterecord" name="command" />
+                @*}*@
+                @*<input type="submit" value="Save" class="btn btn-default red-bg white margin-left" id="uploadBtn" name="command" />
+                <input type="submit" value="Update" class="btn btn-default red-bg white margin-left" id="updaterecord" name="command" />*@
                 <a href="/availableservices?id=@ViewBag.id&&vid=@ViewBag.vid" class="btn btn-default red-bg white margin-left">Cancel</a>
             </div>
+            <div class="blockDescrption" style="display:none"></div>
+            <div class="radioName" style="display:none"></div>
+            <div class="imagename" style="display:none"></div>
         </div>
     </form>
 </div>
@@ -140,44 +184,52 @@
     $(document).on('change', '#fileUpload1', function () {
         var filecount = $(this)[0].files.length;
         if (filecount <= 8) {
-            //$("#fileUpload1").change(function () {
-                if (typeof (FileReader) != "undefined") {
-                    var dvPreview = $("#dvPreview");
-                    //var no = 1;
-                    //dvPreview.html("");
-                    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-                    var i = 0;
-                    $($(this)[0].files).each(function () {
-                        var file = $(this);
-                        if (regex.test(file[0].name.toLowerCase())) {
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                var img = $("<img />");
-                                img.attr("style", "height:90px;width:90px");
-                                img.attr("src", e.target.result);
-                                img.addClass();
-                                //dvPreview.append(img);
-                                dvPreview.prepend("<div class='col-xs-6 col-sm-4 col-md-2 col-lg-2 blocks'><div class='block thumbnail'><div class='ow thumb-img'><img style='height:120px;width:120px' src=" + e.target.result + " alt = " + file[0].name + "></img></div><div class='row margin-top'><div class='form-group-1 col-xs-12 col-sm-12 col-md-12'><input type='text' class='form-control' placeholder='Description:' required></div></div><div class='row'><div class='col-xs-12'><div class='radio'><label><input type='radio' name='optradio" + i + "' required><span></span>Logo</label></div><div class='radio'><label><input type='radio' name='optradio" + i + "' required><span></span>Photo</label></div></div></div><div class='hr-line border-default-bottom'></div><div class='row'><div class='col-xs-12 col-md-12'><p class='red'><small><i class='fa fa-times padding-right-5 grey' aria-hidden='true'></i>Remove Photo</small></p></div></div></div></div>");
-                                i++;
-                            }
-                            reader.readAsDataURL(file[0]);
-                        } else {
-                            alert(file[0].name + " is not a valid image file.");
-                            //dvPreview.html("");
-                            return false;
-                        } //no++;
-                        
-                        //document.getElementById("fileUpload1").value = "";
-                    });
-                } else {
-                    alert("This browser does not support HTML5 FileReader.");
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#dvPreview");
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                var params = dvPreview.serializeArray();
+                //Getting Files Collection
+                var files = $("#fileUpload1")[0].files;
+
+                //Declaring new Form Data Instance
+                var formData = new FormData();
+
+                //Looping through uploaded files collection in case there is a Multi File Upload. This also works for single i.e simply remove MULTIPLE attribute from file control in HTML.
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("file", files[i]);
                 }
-            //});
+
+                //disabling Submit Button so that user cannot press Submit Multiple times
+                var btn = $("#fileuploadbutton");
+                btn.val("Uploading...");
+                btn.prop("disabled", true);
+                $.ajax({
+                    url: "/VendorSignUp2/UploadImages?id=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["type"]",
+                    method: "post",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function (data) {
+                        //Firing event if File Upload is completed!
+                        alert("Upload Completed");
+                        btn.prop("disabled", false);
+                        btn.val("Select Files");
+                        $("#File1").val("");
+                        @*var url = '/VendorSignUp2/UploadImage?id=@ViewBag.id&&vid=@ViewBag.vid';
+                        $("#dvPreview").empty().load(url);*@
+                        location.reload();
+                    },
+                    error: function (error) { alert("Try Again After Sometime"); }
+                });
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
         }
         else {
-            alert("Max 6 Photos Allowed at a time");
+            alert("Max 8 Photos Allowed at a time");
         }
-
     });
     /*=============== Image Block remove =============*/
     $(document).on('click', 'p.red', function () {
@@ -196,7 +248,7 @@
         alert(@ViewBag.id);
         alert(@ViewBag.vid)*@
 
-        @*var id = '@Request.QueryString["id"]';
+        var id = '@Request.QueryString["id"]';
         var vid = '@Request.QueryString["vid"]';
         $.ajax({
             url: '/VendorSignUp2/Removeimage',//?src=' + imgname.replace('/vendorimages/', '')+'id='+id+'vid='+vid,
@@ -214,17 +266,18 @@
             },
             error: function (data)
             { errormsg("Failed!!!"); }
-        });*@
+        });
 
 
-       $('#removedimages').val(removed);
+        $('#removedimages').val(removed);
     });
     /*=============== Image Block remove =============*/
 
     /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
 
     //$(document).on('click','div.radio:first-of-type',function(){
-    $('#dvPreview .blocks').find('div.radio').click(function () {
+    $(document).find('#dvPreview .blocks div.radio').click(function () {
+        //$(document).find('#dvPreview > .blocks > div.radio').on('click', function () {
         alert("hi");
         $(this).next("div.radio").find("input[type='radio']").prop('checked', false);
         $("#dvPreview .blocks div.radio:last-of-type input[type='radio']").each(function () {
@@ -232,30 +285,89 @@
         });
     });
 
-    $(".next").click(function (e) {
+    @*$("#uploadBtn").click(function (e) {
         $('.radioName').empty();
         $('.blockDescrption').empty();
+        $(".imagename").empty();
         e.preventDefault();
-        var arr;
         var BlockLen = $("#dvPreview .blocks").length;
-        $('div.radio').find('input[type="radio"]').each(function () {
-            if ($(this).is(':checked')) {
-                $(".radioName").append($(this).attr('name') + ',');
+        $('#dvPreview .blocks').find('img').each(function () {
+            var v = $.trim($(this).attr('alt'));
+            if (v != "") {
+                $(".imagename").append(v + ',');
             }
+        });
+        $('#dvPreview div.radio').find('input[type="radio"]').each(function () {
+            if ($(this).is(':checked')) {
+                $(".radioName").append($(this).val() + ',');
+            }
+            //else {
+            //    $(".radioName").append($(this).val() + ',null');
+            //}
         });
         $("#dvPreview .blocks").find('input[type="text"]').each(function () {
             var v = $.trim($(this).val());
             if (v != "") {
                 $(".blockDescrption").append($(this).val() + ',');
             }
+            else {
+                $(".blockDescrption").append($(this).val() + ',null');
+            }
         });
-        var blockDescrption = $('.blockDescrption').text();
-        alert(blockDescrption);
-        var radioName = $('.radioName').text();
-        alert(radioName);
+        var data=1;
+        for (var i = 0; i < BlockLen; i++) {
+            data = data+','+ $(".imagename").text().split(',')[i] + '-' + $(".radioName").text().split(',')[i] + '-' + $(".blockDescrption").text().split(',')[i];
+        }
+        //alert(data);
+        $('#Imagedescription').val($('.blockDescrption').text().slice(0, -1));
+        $('#ImageType').val($('.radioName').text().slice(0, -1));
+        $('#ImageName').val(data.slice(0, -1));
+        //alert($('#ImageName').val());
+        var url = '/VendorSignUp2/Index?id=@Request.QueryString["id"]&vid=@Request.QueryString["vid"]&type=@Request.QueryString["type"]&command=Save';
+        $("#uploadimageform").attr("action", url);
+        var imagetype = $('#ImageType').val();
+        var imagedescription = $('.blockDescrption').text();
+        if (imagetype.split(',').length != BlockLen || imagedescription.split(',').includes("null") == true) @* || $('#ImageType').val() == '' || $('#Imagedescription').val() == ''
+        { alert("Description & Logo/Photo option is Mandatory for Every Image"); }
+        else {
+            this.form.submit();
+        }
+    });*@
+
+
+    /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
+
+    $("#updaterecord").click(function (e) {
+        $('.radioName').empty();
+        $('.blockDescrption').empty();
+        e.preventDefault();
+        var BlockLen = $("#dbPreview .blocks").length;
+        $('#dbPreview div.radio').find('input[type="radio"]').each(function () {
+            if ($(this).is(':checked')) {
+                $(".radioName").append($(this).val() + ',');
+            }
+        });
+        $("#dbPreview .blocks").find('input[type="text"]').each(function () {
+            var v = $.trim($(this).val());
+            if (v != "") {
+                $(".blockDescrption").append($(this).val() + ',');;
+            } else {
+                $(".blockDescrption").append($(this).val() + ',null');
+            }
+        });
+        $('#Imagedescription').val($('.blockDescrption').text().slice(0, -1));
+        $('#ImageType').val($('.radioName').text().slice(0, -1));
+        //var url = window.location.href.replace(window.location.protocol + '//', '').replace(window.location.host + '/', '') + '&&command=update';
+        var url = '/VendorSignUp2/Index?id=@Request.QueryString["id"]&vid=@Request.QueryString["vid"]&type=@Request.QueryString["type"]&command=update';
+        $("#uploadimageform").attr("action", url); //"/VendorSignUp2/index?command=update"
+        var imagetype = $('#ImageType').val();
+        var imagedescription = $('.blockDescrption').text();
+        if (imagetype.split(',').length != BlockLen || imagedescription.split(',').includes("null") == true)
+        { alert("Description & Logo/Photo option is Mandatory for Every Image"); }
+        else {
+            this.form.submit();
+        }
 
     });
-
-    /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
 </script>
 

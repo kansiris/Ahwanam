@@ -78,6 +78,20 @@ namespace MaaAahwanam.Service
             vendorsGift = vendorGiftsRepository.UpdatesGift(vendorsGift, masterid,vid);
             return vendorsGift;
         }
+
+        public VendorsGift activationGift(VendorsGift vendorsGift, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorsGift.Status = "Active";
+            vendorsGift.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Gifts";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsGift = vendorGiftsRepository.UpdatesGift(vendorsGift, masterid, vid);
+            return vendorsGift;
+        }
+
         public VendorsGift AddNewGift(VendorsGift vendorsGift, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

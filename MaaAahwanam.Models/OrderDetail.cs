@@ -32,5 +32,6 @@ namespace MaaAahwanam.Models
         public long DealId { get; set; }
         public string attribute { get; set; }
         public DateTime? BookedDate { get; set; }
+        public string EventType { get; set; }
     }
 }

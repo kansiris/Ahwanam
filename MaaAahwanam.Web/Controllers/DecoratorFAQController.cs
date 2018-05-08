@@ -29,9 +29,17 @@ namespace MaaAahwanam.Web.Controllers
             vendorsDecorator.UpdatedBy = vendorMaster.UpdatedBy = 2;
             vendorsDecorator.DecorationType = data.DecorationType;
             vendorsDecorator.discount = data.discount;
+            vendorsDecorator.Address = data.Address;
+            vendorsDecorator.City = data.City;
+            vendorsDecorator.State = data.State;
+            vendorsDecorator.Landmark = data.Landmark;
+            vendorsDecorator.ZipCode = data.ZipCode;
+            vendorsDecorator.name = data.name;
+            vendorsDecorator.Status = data.Status;
+            //vendorsDecorator.tier = data.tier;
             long masterid = vendorsDecorator.VendorMasterId = vendorMaster.Id = long.Parse(id);
             vendorsDecorator = venorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendorMaster, masterid, long.Parse(vid));
-            return Content("<script language='javascript' type='text/javascript'>alert('Details Updated');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('Details Saved Successfully');location.href='AvailableServices/Index?id=" + id + "&&vid=" + vid + "'</script>");
         }
     }
 }

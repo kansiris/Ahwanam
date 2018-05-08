@@ -75,6 +75,19 @@ namespace MaaAahwanam.Service
             vendorsBeautyService = vendorBeautyServiceRespository.UpdatesBeautyService(vendorsBeautyService, masterid,vid);
             return vendorsBeautyService;
         }
+        public VendorsBeautyService ActivationBeautyService(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+           // vendorsBeautyService.Status = "Active";
+            vendorsBeautyService.UpdatedDate = Convert.ToDateTime(updateddate);
+           // vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "BeautyServices";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsBeautyService = vendorBeautyServiceRespository.UpdatesBeautyService(vendorsBeautyService, masterid, vid);
+            return vendorsBeautyService;
+        }
+
         public VendorsBeautyService AddNewBeautyService(VendorsBeautyService vendorsBeautyService, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

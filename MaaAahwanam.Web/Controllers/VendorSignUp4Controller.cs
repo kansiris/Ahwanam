@@ -38,14 +38,26 @@ namespace MaaAahwanam.Web.Controllers
                 VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
                 ViewBag.data = vendorDecoratorService.GetVendorDecorator(long.Parse(id), long.Parse(vid)).discount;
             }
+            if (type == "EventManagement")
+            {
+                VendorEventOrganiserService vendorEventOrganiserService = new VendorEventOrganiserService();
+                ViewBag.data = vendorEventOrganiserService.GetVendorEventOrganiser(long.Parse(id), long.Parse(vid)).discount;
+            }
+            if (type == "Other")
+            {
+                VendorOthersService vendorOthersService = new VendorOthersService();
+                ViewBag.data = vendorOthersService.GetVendorOther(long.Parse(id), long.Parse(vid)).discount;
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string vid, string type, string discount)
+        public ActionResult Index(string id, string vid, string type, string discount,string txtdiscount)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                if (txtdiscount != "" && txtdiscount != null)
+                    discount = txtdiscount+"%";
                 vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                 //vendorMaster.discount = discount;
                 //vendorMaster = vendorMasterService.UpdateVendorMaster(vendorMaster, long.Parse(id));
@@ -58,7 +70,7 @@ namespace MaaAahwanam.Web.Controllers
                 //emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", StrContent.ToString(), "Test Mail");
                 //emailSendingUtility.Email_maaaahwanam("srinivas.b@ahwanam.com", StrContent.ToString(), "Test Mail");
                 //return RedirectToAction("Index", "VendorSeccessReg");
-                return Content("<script language='javascript' type='text/javascript'>alert('Registration successful. Please click on Activation link which has been sent to your Email to enable your Login Access.');location.href='" + @Url.Action("Index", "VendorSeccessReg") + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Discount Saved Successfully');location.href='" + @Url.Action("Index", "AvailableServices", new { id = vendorMaster.Id }) + "'</script>");
             }
             else
             {

@@ -11,9 +11,76 @@ namespace MaaAahwanam.Repository.db
     {
         readonly ApiContext _dbContext = new ApiContext();
         MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
+
+        public List<filtervendors_Result> filtervendors_Result(string type,string f1, string f2, string f3)
+        {
+            return maaAahwanamEntities.filtervendors(type, f1, f2,f3).ToList();
+        }
+
+        public List<searchvendorproducts_Result> Getsearchvendorproducts_Result(string search,string type)
+        {
+            return maaAahwanamEntities.searchvendorproducts(search,type).ToList();
+        }
         public List<vendorproducts_Result> Getvendorproducts_Result(string type)
         {
             return maaAahwanamEntities.vendorproducts(type).ToList();
         }
+
+        public List<addvendorservices_Result> getvendorsubid(string id)
+        {
+            return maaAahwanamEntities.addvendorservices(Convert.ToInt64(id)).ToList();
+        }
+
+        public List<SPGETNpkg_Result> getvendorpkgs(string id)
+        {
+            return maaAahwanamEntities.SPGETNpkg(Convert.ToInt64(id)).ToList();
+        }
+        public List<SPGETpartpkg_Result> getpartpkgs(long id)
+        {
+            return maaAahwanamEntities.SPGETpartpkg(id).ToList();
+        }
+        public List<SPGETNDeal_Result> getvendordeals(string id)
+        {
+            return maaAahwanamEntities.SPGETNDeal(Convert.ToInt64(id)).ToList();
+        }
+        public List<SPgetpartdeal_Result> getpartdeals(string id)
+        {
+            return maaAahwanamEntities.SPgetpartdeal(Convert.ToInt64(id)).ToList();
+        }
+
+        public List<searchvendors_Result> GetSearchedVendorRecords(string type,string param)
+        {
+            return maaAahwanamEntities.searchvendors(type,param).ToList();
+        }
+        public List<spsearchword_Result> spsearchword(string search, string Type)
+        {
+            return maaAahwanamEntities.spsearchword(search, Type).ToList();
+        }
+        public List<spsearchdeal_Result> spsearchdeal(string search, string Type)
+        {
+            return maaAahwanamEntities.spsearchdeal(search, Type).ToList();
+        }
+        public List<spsearchdealname_Result> spsearchdealname(string name, string Type)
+        {
+            return maaAahwanamEntities.spsearchdealname(name, Type).ToList();
+        }
+
+        public List<Spgetalldeals_Result> getalldeal()
+        {
+            return maaAahwanamEntities.Spgetalldeals().ToList();
+        }
+        public List<Spgetalleventdeals_Result> getalleventdeal(string eve)
+        {
+            return maaAahwanamEntities.Spgetalleventdeals(eve).ToList();
+        }
+        public List<Spalldeals_Result> getparticulardeal(int id, string type)
+        {
+            return maaAahwanamEntities.Spalldeals(id, type).ToList();
+        }
+        public List<speventvdeals_Result> getpartvendordeal(string vid, string type)
+        {
+            return maaAahwanamEntities.speventvdeals(vid, type).ToList();
+        }
     }
+
 }

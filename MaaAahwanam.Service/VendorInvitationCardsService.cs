@@ -79,6 +79,19 @@ namespace MaaAahwanam.Service
             return vendorsInvitationCard;
         }
 
+        public VendorsInvitationCard activationInvitationCard(VendorsInvitationCard vendorsInvitationCard, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //vendorsInvitationCard.Status = "Active";
+            vendorsInvitationCard.UpdatedDate = Convert.ToDateTime(updateddate);
+            //vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "InvitationCard";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorsInvitationCard = vendorInvitationCardsRepository.UpdatesInvitationCard(vendorsInvitationCard, masterid, vid);
+            return vendorsInvitationCard;
+        }
+
         public VendorsInvitationCard AddNewInvitationCard(VendorsInvitationCard vendorsInvitationCard, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

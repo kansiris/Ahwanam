@@ -19,7 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: AvailableServices
         public ActionResult Index(string id)
         {
-            string[] services = { "Venue", "Catering", "Photography", "Decorator", "Other" };
+            string[] services = { "Venue", "Catering", "Photography", "EventManagement", "Decorator", "Other" };
             string vid = "";
             vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Venue"))
@@ -28,6 +28,8 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cateringrecord = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
             if (vendorMaster.ServicType.Split(',').Contains("Photography"))
                 ViewBag.Photographyrecord = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
+            if (vendorMaster.ServicType.Split(',').Contains("EventManagement"))
+                ViewBag.Eventrecord = vendorVenueSignUpService.GetVendorEventOrganiser(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Decorator"))
                 ViewBag.Decoratorrecord = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
             if (vendorMaster.ServicType.Split(',').Contains("Other"))
@@ -49,14 +51,16 @@ namespace MaaAahwanam.Web.Controllers
                     string[] venueservices = { "Convention Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Open Lawn", "Roof Top", "Hotel", "Resort" };
                     string[] cateringservices = { "Indian", "Chinese", "Mexican", "South Indian", "Continental", "Multi Cuisine", "Chaat", "Fast Food", "Others" };
                     string[] photographyservices = { "Wedding", "Candid", "Portfolio", "Fashion", "Toddler", "Videography", "Conventional", "Cinematography", "Others" };
+                    string[] eventservices = { "Corporate Events", "Brand Promotion", "Fashion Shows", "Exhibition", "Conference & Seminar", "Wedding Management", "Birthday Planning & Celebrations", "Live Concerts","Musical Nights","Celebrity Shows" };
                     string[] decoratorservices = { "Florists", "TentHouse Decorators", "Others" };
-                    string[] otherservices = { "Mehendi" };
+                    string[] otherservices = { "Mehendi", "Pandit" };
 
                     List<string> matchingvenues = venueservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingcatering = cateringservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingphotography = photographyservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingdecorators = decoratorservices.Intersect(categories.Split(',')).ToList();
                     List<string> matchingothers = otherservices.Intersect(categories.Split(',')).ToList();
+                    List<string> matchingevents = eventservices.Intersect(categories.Split(',')).ToList(); 
 
                     vendorMaster = vendorMasterService.GetVendor(long.Parse(id));
                     vendorMaster.ServicType = string.Join(",", (services + "," + vendorMaster.ServicType).Split(',').Distinct());
@@ -102,6 +106,16 @@ namespace MaaAahwanam.Web.Controllers
                             vendorsPhotography = vendorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
                         }
                     }
+                    if (services.Split(',').Contains("EventManagement"))
+                    {
+                        VendorsEventOrganiser vendorsEventOrganiser = new VendorsEventOrganiser();
+                        for (int a = 0; a < matchingevents.Count(); a++)
+                        {
+                            vendorsEventOrganiser.VendorMasterId = long.Parse(id);
+                            vendorsEventOrganiser.type = matchingevents[a];
+                            vendorsEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorsEventOrganiser);
+                        }
+                    }
                     if (services.Split(',').Contains("Decorator"))
                     {
                         VendorsDecorator vendorsDecorator = new VendorsDecorator();
@@ -118,6 +132,10 @@ namespace MaaAahwanam.Web.Controllers
                     if (services.Split(',').Contains("Other"))
                     {
                         VendorsOther vendorsOther = new VendorsOther();
+                        vendorsOther.MinOrder = "0.0";
+                        vendorsOther.MaxOrder = "0.0";
+                        vendorsOther.ItemCost = 0;
+                        vendorsOther.UpdatedBy = 0;
                         //vendorsDecorator.VendorMasterId = vendorMaster.Id;
                         //vendorsDecorator.DecorationType = string.Join<string>(",", matchingdecorators);
                         //vendorsDecorator = vendorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
@@ -172,6 +190,39 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return Json(JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult deleteservice(string id, string vid, string type)
+        {
+            int count = 0;
+            if (type =="Venue")
+                count = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList().Count;
+            if (type == "Catering")
+                count = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList().Count;
+            if (type == "Photography")
+                count = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id)).Count;
+            if (type == "EventManagement")
+                count = vendorVenueSignUpService.GetVendorEventOrganiser(long.Parse(id)).Count;
+            if (type == "Decorator")
+                count = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id)).Count;
+            if (type == "Other")
+                count = vendorVenueSignUpService.GetVendorOther(long.Parse(id)).Count;
+            if (count > 1)
+            {
+                string msg = vendorVenueSignUpService.RemoveVendorService(vid,type);
+                string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
+                return Json(msg);
+            }
+            else
+            {
+                long value = vendorVenueSignUpService.UpdateVendorService(id, vid, type);
+                string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
+                if (value > 0)
+                    return Json("Removed");
+                else
+                    return Json("Failed!!!");
+            }
         }
     }
 }

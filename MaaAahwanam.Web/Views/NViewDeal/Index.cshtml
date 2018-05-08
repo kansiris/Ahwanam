@@ -1,0 +1,1019 @@
+﻿@using MaaAahwanam.Web.Custom
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
+    CustomPrincipal user = null;
+    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        user = (CustomPrincipal)HttpContext.Current.User;
+    }
+    var i = 0;
+}
+<input type="hidden" id="dealcount" value="@ViewBag.dealcount" />
+<input type="hidden" id="dealLastRecord" value="@ViewBag.dealLastRecord" />
+
+<input type="hidden" id="dealevent" value="@ViewBag.dealLastRecordeve" />
+
+<div class="container-fluid dealProfile">
+    <div class="row innerPagesBg py-2">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 mb-2 mb-sm-0 mb-md-0">
+            <div class="row mx-0 bgWhite p-2">
+                <div class="w-100 bannerImg">
+                    @if (ViewBag.singledeal.image == null || ViewBag.singledeal.image == "")
+                    {
+
+                    <img src="~/noimages.png" class="img-fluid" alt="Default Image">
+                    }
+                    else
+                    {
+                    <img src="~/vendorimages/@ViewBag.singledeal.image" class="img-fluid" alt="Default Image">
+                    }
+
+                </div>
+                <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
+                        <div class="w-100 title">@ViewBag.singledeal.businessname</div>
+                        <div class="w-100 tags my-15">
+                            @if (@ViewBag.singledeal.Cocktail != null && @ViewBag.singledeal.Cocktail == "Yes" && @ViewBag.singledeal.Cocktail != "")
+                            {
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>CockTails</span></p>
+                            </div>
+                            }
+                            @if (@ViewBag.singledeal.Rooms != null && @ViewBag.singledeal.Rooms == "Yes" && @ViewBag.singledeal.Rooms != "")
+                            {
+                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                <p class="mb-0"><span>Rooms</span></p>
+                            </div>
+                            }
+                            @* @if (@ViewBag.singledeal.MinGuest != null && @ViewBag.singledeal.MinGuest != 0)
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0">@ViewBag.singledeal.MinGuest<span>SeatingCapacity</span></p>
+                                    </div>
+                                }
+                                @if (@ViewBag.singledeal.MaxGuest != null && @ViewBag.singledeal.MaxGuest != 0)
+                                {
+                                    <div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0">@ViewBag.singledeal.MaxGuest<span>SeatingCapacity</span></p>
+                                    </div>
+                                }
+                                                        @if (@ViewBag.singledeal.DecorationAllowed != null && @ViewBag.singledeal.DecorationAllowed == "Yes" && @ViewBag.singledeal.DecorationAllowed != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span> DecorationAllowed</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.HallType != null && @ViewBag.singledeal.HallType != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.HallType</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Wifi != null && @ViewBag.singledeal.Wifi == "Yes" && @ViewBag.singledeal.Wifi != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Wifi</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.LiveCookingStation != null && @ViewBag.singledeal.LiveCookingStation == "Yes" && @ViewBag.singledeal.LiveCookingStation != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>LiveCookingStation</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.CuisineType != null && @ViewBag.singledeal.CuisineType != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.CuisineType</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.MineralWaterIncluded != null && @ViewBag.singledeal.MineralWaterIncluded == "Yes" && @ViewBag.singledeal.MineralWaterIncluded != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>MineralWaterIncluded</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Menuitems != null && @ViewBag.singledeal.Menuitems != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.Menuitems</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.TransportIncluded != null && @ViewBag.singledeal.TransportIncluded == "Yes" && @ViewBag.singledeal.TransportIncluded != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>TransportIncluded</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.PhotographyType != null && @ViewBag.singledeal.PhotographyType != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.PhotographyType</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.PreWeddingShoot != null && @ViewBag.singledeal.PreWeddingShoot == "Yes" && @ViewBag.singledeal.PreWeddingShoot != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>PreWeddingShoot</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.DestinationPhotography != null && @ViewBag.singledeal.DestinationPhotography == "Yes" && @ViewBag.singledeal.DestinationPhotography != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>DestinationPhotography</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.DecorationType != null && @ViewBag.singledeal.DecorationType != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.DecorationType</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Archway != null && @ViewBag.singledeal.Archway == "Yes" && @ViewBag.singledeal.Archway != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Archway</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Altararrangements != null && @ViewBag.singledeal.Altararrangements == "Yes" && @ViewBag.singledeal.Altararrangements != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Altararrangements</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Pewbows != null && @ViewBag.singledeal.Pewbows == "Yes" && @ViewBag.singledeal.Pewbows != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Pewbows</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Aislerunner != null && @ViewBag.singledeal.Aislerunner == "Yes" && @ViewBag.singledeal.Aislerunner != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Aislerunner</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Headpieces != null && @ViewBag.singledeal.Headpieces == "Yes" && @ViewBag.singledeal.Headpieces != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Headpieces</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Centerpieces != null && @ViewBag.singledeal.Centerpieces == "Yes" && @ViewBag.singledeal.Centerpieces != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Centerpieces</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Chaircovers != null && @ViewBag.singledeal.Chaircovers == "Yes" && @ViewBag.singledeal.Chaircovers != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Chaircovers</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Headtabledecor != null && @ViewBag.singledeal.Headtabledecor == "Yes" && @ViewBag.singledeal.Headtabledecor != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Headtabledecorator</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Backdrops != null && @ViewBag.singledeal.Backdrops == "Yes" && @ViewBag.singledeal.Backdrops != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Backdrops</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Ceilingcanopies != null && @ViewBag.singledeal.Ceilingcanopies == "Yes" && @ViewBag.singledeal.Ceilingcanopies != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Ceilingcanopies</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Mandaps != null && @ViewBag.singledeal.Mandaps == "Yes" && @ViewBag.singledeal.Mandaps != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Mandaps</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Mehendi != null && @ViewBag.singledeal.Mehendi == "Yes" && @ViewBag.singledeal.Mehendi != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Mehendi</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Sangeet != null && @ViewBag.singledeal.Sangeet == "Yes" && @ViewBag.singledeal.Sangeet != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Sangeet</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Chuppas != null && @ViewBag.singledeal.Chuppas == "Yes" && @ViewBag.singledeal.Chuppas != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Chuppas</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Lighting != null && @ViewBag.singledeal.Lighting == "Yes" && @ViewBag.singledeal.Lighting != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Lighting</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Giftsforguests != null && @ViewBag.singledeal.Giftsforguests == "Yes" && @ViewBag.singledeal.Giftsforguests != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Gifts for guests</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.BasketorBoxforgifts != null && @ViewBag.singledeal.BasketorBoxforgifts == "Yes" && @ViewBag.singledeal.BasketorBoxforgifts != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Basketor Box for gifts</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Placeorseatingcards != null && @ViewBag.singledeal.Placeorseatingcards == "Yes" && @ViewBag.singledeal.Placeorseatingcards != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Place or seatingcards</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Cardecoration != null && @ViewBag.singledeal.Cardecoration == "Yes" && @ViewBag.singledeal.Cardecoration != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Card Decoration</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Bridesbouquet != null && @ViewBag.singledeal.Bridesbouquet == "Yes" && @ViewBag.singledeal.Bridesbouquet != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Brides bouquet</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Bridesmaidsbouquets != null && @ViewBag.singledeal.Bridesmaidsbouquets == "Yes" && @ViewBag.singledeal.Bridesmaidsbouquets != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Brides maids bouquets</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Maidofhonorbouquet != null && @ViewBag.singledeal.Maidofhonorbouquet == "Yes" && @ViewBag.singledeal.Maidofhonorbouquet != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Maid of honor bouquet</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Throwawaybouquet != null && @ViewBag.singledeal.Throwawaybouquet == "Yes" && @ViewBag.singledeal.Throwawaybouquet != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Throw away bouquet</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Corsages != null && @ViewBag.singledeal.Corsages == "Yes" && @ViewBag.singledeal.Corsages != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Corsages</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Boutonnieres != null && @ViewBag.singledeal.Boutonnieres == "Yes" && @ViewBag.singledeal.Boutonnieres != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Boutonnieres</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Decora != null && @ViewBag.singledeal.Decora == "Yes" && @ViewBag.singledeal.Decora != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Decora</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.Justmarriedclings != null && @ViewBag.singledeal.Justmarriedclings == "Yes" && @ViewBag.singledeal.Justmarriedclings != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>Just married clings</span></p>
+                                                            </div>
+                                                        }
+                                                        @if (@ViewBag.singledeal.type != null && @ViewBag.singledeal.type != "")
+                                                        {
+                                                            <div class="d-inline-block p-2 mr-4 greyBg">
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.type</span></p>
+                                                            </div>
+                                                        }*@
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption">
+
+                    @*  <div class="block px-2 w-100">
+                                                <h6 class="d-inline-block">
+                                                    <a href="#dealDescrption" class="themeColor">Available Deals</a>
+                                                    <div class="blackBorder"></div>
+                                                </h6>
+                                                      @if (ViewBag.singledeal1 != null)
+                                                      {
+                                                          foreach (var item in ViewBag.singledeal1)
+                                                          {
+                                                            <p>  @item.Category - @item.FoodType (
+                                                                @item.DealPrice
+                                                            )</p>
+
+                                                    <div class="row mx-0 content" id="dealDescrption" style="display: block;">
+                                                    @*<div class="w-100">
+                                                            <h6>Veg Deal (1400/p)</h6>
+                                                            <p>
+                                                                Block One
+                                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                                                            </p>
+                                                        </div>
+                                                        <div class="w-100">
+                                                            <h6>Non-Veg Deal (1600/p)</h6>
+                                                            <p>
+                                                                Block One
+                                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                                                            </p>
+                                                        </div>
+                                                    <p>
+                                                        @item.DealDescription
+                                                        @*ViewBag.singledeal.cost
+                            @ViewBag.singledeal.DealDescription
+                                                    </p>
+                        </div>
+                                  }
+                              }
+                                            </div>*@
+                    <div class="block px-2 w-100">
+                        <h6 class="d-inline-block">
+                            <a href="#dealDescrption" class="themeColor secondaryFont">Available Deals</a>
+                            <div class="blackBorder"></div>
+                        </h6>
+                        @if (ViewBag.singledeal1 != null)
+                        {
+                            foreach (var item in ViewBag.singledeal1)
+                            {
+                        <div class="row mx-0 packages">
+                            <div class="col-12 colmd-12 packageDetails">
+                                <div class="w-100 float-left">
+                                    <div class="float-left"><p class="mb-0 packageName">@item.Category ( @item.FoodType )</p></div>
+                                    <div class="float-right">
+                                        <p class="productMaxPrice mb-0 d-block"> ( INR/Person : <span>@item.OriginalPrice</span> <small></small> ) </p>
+                                    </div>
+                                    <div class="float-right">
+                                        <p class="mb-0 mr-2">INR/Person : <span>@item.DealPrice</span> </p>
+                                    </div>
+                                </div>
+                                <br />
+                                <hr />
+                                <div class="w-100">
+                                    <p class="packageContent">
+                                        @item.DealDescription
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                            }
+                        }
+                    </div>
+                    <div class="block px-2 w-100">
+                        <h6 class="themeColor d-inline-block">
+                            <a href="#termsCondition" class="themeColor">Terms &amp; Conditions</a>
+                            <div class="blackBorder"></div>
+                        </h6>
+                        <div class="row mx-0 content" id="termsCondition">
+                            <p>
+                                @*  @item.TermsConditions*@
+                                @ViewBag.singledeal.TermsConditions
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="block px-2 w-100">
+                        <h6 class="themeColor d-inline-block">
+                            <a href="#location" class="themeColor">Location</a>
+                            <div class="blackBorder"></div>
+                        </h6>
+
+                        <div class="row mx-0 content" id="location">
+                            <p>
+
+                                @* @ViewBag.singledeal.Address,@ViewBag.singledeal.Landmark,@ViewBag.singledeal.City,@ViewBag.singledeal.State*@
+                                @ViewBag.singledeal.address,@ViewBag.singledeal.landmark,@ViewBag.singledeal.city,@ViewBag.singledeal.state
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 pl-md-0 topVenus">
+            <div class="px-15">
+                <div class="row bgWhite mb-3">
+                    <div class="w-100 px-4 py-3">
+                        <div class="row mx-0">
+                            <h3 class="noteWorthybold">
+                                Fill the Details
+                                <div class="blackBorder"></div>
+                            </h3>
+                        </div>
+                        <input type="hidden" id="vid" name="vid" value="@ViewBag.singledeal.VendorSubId">
+                        <div class="row mx-0 mt-4 dealProfileForm">
+                            @*    <div class="w-100">@ViewBag.singledeal.dtype
+                                                           <select class="w-100 p-2 ml-auto">
+                                    <option id="etype1">Type</option>
+                                    @foreach (var item in ViewBag.singledeal.dtype)
+                                    {
+                                        <option>@ViewBag.singledeal.dtype @(++i)</option>
+                                    }
+
+                                </select>
+
+
+                                                            </div>*@
+
+                            <div class="w-100">
+
+                                <select class="w-100 p-2 ml-auto" id="selectbox1">
+                                    @if (ViewBag.events != null)
+                                    {
+                                    <option>Select Event</option>
+                                        foreach (var item in ViewBag.events)
+                                        {
+                                    <option value="@item">@item</option>
+                                        }
+                                    }
+                                </select>
+
+                            </div>
+
+                            @*<div class="w-100 mt-3 eventDate">
+                                    <div class="date-picker">
+                                        <div class="input">
+                                            <div class="result nexaBold">Occasion Date: <span id="date"></span></div>
+                                            <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
+                                        </div>
+                                        <div class="calendar"></div>
+                                    </div>
+                                </div>*@
+
+                            <div class="w-100 mt-3 eventDate">
+                                <div class="datentime w-100">
+                                    <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Date Here" />
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="w-100 mt-3">
+                                <select class="w-100 p-2 ml-auto pricePerPlate" id="selectbox2">
+                                    <option id="price"> Select Prices</option>
+                                     @*   <option value="@ViewBag.singledeal.cost">Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>*@
+                                    @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
+                                </select>
+                            </div>
+
+                            <div class="w-100 mt-3 noOfPeoples">
+                                <div class="form-group">
+                                    <input type="number" class="form-control nexaBold" id="nop" placeholder="Members" />
+                                </div>
+                            </div>
+                            <div class="w-100 mt-3 slotTime">
+                                <div class="w-50 float-left">
+                                    <label class="w-100 mb-0">
+                                        <input type="checkbox" id="ch1" value="Morning" />
+                                        <span></span>
+                                        <p class="mb-0 d-inline">Morning</p>
+                                    </label>
+                                </div>
+                                <div class="w-50 float-left">
+                                    <label class="w-100 mb-0">
+                                        <input type="checkbox" id="ch2" value="Evening" />
+                                        <span></span>
+                                        <p class="mb-0 d-inline">Evening</p>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="w-100 mt-3 text-center totalAmount">
+                                <div class="themeColor">
+                                    <p class="mb-0"><span id="tp">000</span>INR</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="w-100 d-flex my-2">
+
+                                @if (user != null)
+                                {
+                                <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow">Book Now</span>
+                                }
+                                else
+                                {
+                                <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow1">
+                                    Book Now
+                                </span>
+
+                                }
+                            </div>
+                            <div class="w-100 d-flex my-2">
+                                    <span class="themeBgColorPrimary needHelpBtn btnSecondary text-white text-center w-100">
+                                        Need any help ?
+                                    </span>
+                                </div>
+                        </div>
+
+
+                        <div class="w-100 mt-3 totalAmount d-inline-block fontSize-16">
+                            <div class="float-left">
+                                <div class="float-left">
+                                    @if (user != null)
+                                    {
+                                    <p class="mb-0 " onclick="Sethdnvalue('addtocartbtn')">Add To Cart</p>
+                                    }
+                                    else
+                                    {
+                                    <p class="mb-0" onclick="Sethdnvalue1('addtocartbtn1')">Add To Cart</p>
+
+                                    }
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="row bgWhite mb-3">
+                    @{Html.RenderAction("Loadmoredeals", "NViewDeal");}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="margin-top-50">
+        <div class="row mx-0">
+            <h3 class="noteWorthybold">
+                What's Trending
+                <div class="blackBorder"></div>
+            </h3>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <div class="owl-carousel owl-theme mt-3">
+                    <a href="#" class="item">
+                        <img src="~/newdesign/images/hotels-bg.png" alt="Hotels" />
+                        <span class="d-block mt-2 text-center themeFontColor">Hotels</span>
+                    </a>
+                    <a href="#" class="item">
+                        <img src="~/newdesign/images/functionhalls-bg.png" alt="Function Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Function Halls</span>
+                    </a>
+                    <a href="#" class="item">
+                        <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
+                    </a>
+                    <a href="#" class="item">
+                        <img src="~/newdesign/images/convention-bg.png" alt="Convention Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Convention Halls</span>
+                    </a>
+                    <a href="#" class="item">
+                        <img src="~/newdesign/images/resort-bg.png" alt="Resort" />
+                        <span class="d-block mt-2 text-center themeFontColor">Resort</span>
+                    </a>
+                    <a href="#" class="item">
+                        <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @*<h3>Vamsi</h3>*@
+    </div>
+
+    @*<div class="margin-top-50">
+            <div class="row mx-0">
+                <h3 class="noteWorthybold">
+                    Choose an other Service
+                    <div class="blackBorder"></div>
+                </h3>
+            </div>
+            <div class="row my-3">
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 block">
+                    <a href="#" class="d-block text-center">
+                        <img src="~/newdesign/images/functionhalls-bg.png" class="img-fluid" alt="Other Service">
+                        <p class="themeColor mt-2">Venues</p>
+                    </a>
+                </div>
+            </div>
+        </div>*@
+</div>
+<div class="container-fluid needHelpBlock">
+    <div class="row">
+        <div class="block bgWhite">
+            <div class="text-center">
+                <a class="col-md-12" href="mailto:info@ahwanam.com"><i class="fa fa-envelope fa-lg mr-3" aria-hidden="true"></i> info@ahwanam.com</a>
+                <p class="col-md-12"><i class="fa fa-phone fa-lg mr-3 themeColor" aria-hidden="true"></i> +91 - 9000090000</p>
+            </div>
+            <i class="fa fa-times closeBlock"></i>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        /*--- Date and Time ----*/
+        $('#datetimepicker').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+            maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+        });
+        /*------------ Date and Time --------------*/
+    </script>
+
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $('body').attr("id", "userAuthentication");
+        //});
+        $('.container').hide();
+        $('.search').hide();
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var owl = $('.owl-carousel');
+            owl.owlCarousel({
+                margin: 10,
+                nav: true,
+                loop: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
+                    }
+                }
+            })
+
+            // Function releated to Package select
+
+
+
+
+
+            //$('input[type=checkbox]').on('change', function () {
+            //    alert($(this).val());
+            //});
+
+
+            localStorage.removeItem("nop");
+
+
+          //  $("#etype1").text(window.localStorage.getItem("etype1"));
+          //  $("#date").text(window.localStorage.getItem("date"));
+
+          //  $("#price").text(window.localStorage.getItem("PRICE"));
+          //  document.getElementById("nop").value = localStorage.getItem("nop");
+            //var inputs = JSON.parse(localStorage.getItem('inputs'));
+            //// For each inputs...
+            //inputs.forEach(function (input) {
+            //    // Set the 'checked' value
+            //    document.getElementById(input.id).checked = input.checked;
+            //    // $("#tp").text(window.localStorage.getItem("tp"));
+
+
+            //})
+
+            //  <!------------- dealProfile Accoding ----------->
+            $(".dealProfileTotalDescrption > .block:first-child .content").css("display", "block");
+            var link = $(".dealProfileTotalDescrption > .block > h6 > a");
+
+            link.on('click', function (event) {
+                event.preventDefault();
+                var anchorVal = $(this).attr("href");
+                $(anchorVal).slideDown('fast');
+                $(".dealProfileTotalDescrption > .block .content").not(anchorVal).slideUp('fast');
+            })
+        })
+        // <!------------- dealProfile Accoding ----------->
+    </script>
+
+    <script type="text/javascript">
+        function checkedBox() {
+            var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
+           total = checkLen * totalVal;
+            $(".totalAmount span").empty().append(total);
+        }
+
+        $(".dealProfileForm select.pricePerPlate").on('change', function () {
+            var val = $(this).find('option:selected').val(), el = $(this), placeholder = $("<div class='selectAppended'></div>").insertAfter(el);
+            $('.selectAppended:not(:eq(0))').remove();
+            $(placeholder).append(val).css('display', 'none');
+            $(".slotTime input[type='checkbox']").prop("checked", false);
+            $(".totalAmount span").empty();
+            $(".noOfPeoples input[type='number']").val('');
+        });
+
+        $(".noOfPeoples input[type='number']").on('change', function () {
+            el = $(this),
+            members = parseInt($(this).val());
+            var price = $("select.pricePerPlate").find("option:selected").text();
+            var price1 = price.split('~')[0];
+            total = price1 * members,
+            placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+            $(".totalVal:not(:eq(0))").remove();
+            $(placeholder).append(total).css('display', 'none');
+            $(".slotTime input[type='checkbox']").prop("checked", false);
+            $(".totalAmount span").empty();
+        });
+
+        $(".slotTime input[type='checkbox']").each(function () {
+            $(this).on('change', function () {
+                if ($(this).is(':checked')) {
+                    checkedBox();
+                } else {
+                    checkedBox();
+                }
+            });
+        });
+
+        function Sethdnvalue(btn) {
+            if ($("select.eventType").find("option:selected").val() == '') {
+                alert("Please select Event type");
+            } else if ($("#datetimepicker").val() == '') {
+                alert("Please select event date");
+            } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
+                alert("Please select Menu type");
+            } else if ($(".noOfPeoples input[type='number']").val() == '') {
+                alert("Please Mention No Of Guests");
+            } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                var timeslot = ($('input[type=checkbox]').val());
+                var etype1 = $('#selectbox1').val();
+                var type = '@Request.QueryString["type"]';
+                var vid = $('input#vid').val();
+                var id = '@Request.QueryString["id"]';
+                var date = $("#datetimepicker").val();
+                var price = $("select.pricePerPlate").find("option:selected").text();
+                var price1 = price.split('~')[0];
+                var nop = $(".noOfPeoples input[type='number']").val();
+                var totalprice = price1 * nop;
+                var did = $("select.pricePerPlate").find("option:selected").val();
+                url1 = '/NViewDeal/addcnow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + did;
+
+                $.ajax({
+                    url: url1,
+                    success: function (data) {
+                        if (data == "Success") {
+                            alert("Sucessfully Added to cart")
+                            localStorage.removeItem("etype1");
+                            localStorage.removeItem("date");
+                            localStorage.removeItem("nop");
+                            localStorage.removeItem("tp");
+                        }
+                        else if (data == "failed") {
+                            alert("login to the cart");
+                        }
+                        location.href = '/NUserProfile/Index';
+                    }
+                });
+
+            } else {
+                alert("Please select time slot");
+            }
+
+        };
+
+        function Sethdnvalue1(btn1) {
+            if ($("select.eventType").find("option:selected").val() == '') {
+                alert("Please select Event type");
+            } else if ($("#datetimepicker").val() == '') {
+                alert("Please select event date");
+            } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
+                alert("Please select Menu type");
+            } else if ($(".noOfPeoples input[type='number']").val() == '') {
+                alert("Please Mention No Of Guests");
+            } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                var timeslot = ($('input[type=checkbox]').val());
+                var etype1 = $('#selectbox1').val();
+                var type = '@Request.QueryString["type"]';
+                var vid = $('input#vid').val();
+                var id = '@Request.QueryString["id"]';
+                var date = $("#datetimepicker").val();
+                var price = $("select.pricePerPlate").find("option:selected").text();
+                var price1 = price.split('~')[0];
+                var nop = $(".noOfPeoples input[type='number']").val();
+                var totalprice = price1 * nop;
+                var did = $("select.pricePerPlate").find("option:selected").val();
+                window.localStorage.setItem("etype1", etype1);
+                window.localStorage.setItem("date", date);
+                window.localStorage.setItem("PRICE", price1);
+                window.localStorage.setItem("nop", nop);
+                var timeslot = ($('input[type=checkbox]').val());
+                location.href = '/NUserRegistration/Index';
+            } else {
+                alert("Please select time slot");
+            }
+
+        };
+
+
+
+
+        $(".bookNow").click(function () {
+            if ($("select.eventType").find("option:selected").val() == '') {
+                alert("Please select Event type");
+            } else if ($("#datetimepicker").val() == '') {
+                alert("Please select event date");
+            } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
+                alert("Please select Menu type");
+            } else if ($(".noOfPeoples input[type='number']").val() == '') {
+                alert("Please Mention No Of Guests");
+            } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                var timeslot = ($('input[type=checkbox]').val());
+                var etype1 = $('#selectbox1').val();
+                var type = '@Request.QueryString["type"]';
+                var vid = $('input#vid').val();
+                var id = '@Request.QueryString["id"]';
+                var date = $("#datetimepicker").val();
+                var price = $("select.pricePerPlate").find("option:selected").text();
+                var price1 = price.split('~')[0];
+                var nop = $(".noOfPeoples input[type='number']").val();
+                var totalprice = price1 * nop;
+                var did = $("select.pricePerPlate").find("option:selected").val();
+                url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + did;
+
+                $.ajax({
+                    url: url1,
+                    success: function (data) {
+                        if (data == "Success") {
+                            alert("Sucessfully Added to booklist")
+                            localStorage.removeItem("etype1");
+                            localStorage.removeItem("date");
+                            localStorage.removeItem("nop");
+                            localStorage.removeItem("tp");
+                        }
+                        else if (data == "failed") {
+                            alert("login to the cart");
+                        }
+                        location.href = '/NUserProfile/Index';
+                    }
+                });
+            } else {
+                alert("Please select time slot");
+            }
+
+        });
+
+        $(".bookNow1").click(function () {
+            if ($("select.eventType").find("option:selected").val() == '') {
+                alert("Please select Event type");
+            } else if ($("#datetimepicker").val() == '') {
+                alert("Please select event date");
+            } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
+                alert("Please select Menu type");
+            } else if ($(".noOfPeoples input[type='number']").val() == '') {
+                alert("Please Mention No Of Guests");
+            } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                var etype1 = $('#selectbox1').val();
+                var date = $("#datetimepicker").val();
+                var price = $("select.pricePerPlate").find("option:selected").text();
+                //alert(price);
+                var price1 = price.split('~')[0];
+                var did = $("select.pricePerPlate").find("option:selected").val();
+                var nop = $(".noOfPeoples input[type='number']").val();
+                var totalprice = price1 * nop;
+                window.localStorage.setItem("etype1", etype1);
+                window.localStorage.setItem("date", date);
+                window.localStorage.setItem("PRICE", price1);
+                window.localStorage.setItem("nop", nop);
+                var timeslot = ($('input[type=checkbox]').val());
+                location.href = '/NUserRegistration/Index';
+            }
+        });
+
+        $('#selectbox1').change(function () {
+            //$(".noOfPeoples input[type='number']").text() == "";
+            document.getElementById("nop").value = ""
+            var data = "";
+            var type = '@Request.QueryString["type"]';
+            var id = '@Request.QueryString["id"]';
+            $.ajax({
+                type: "GET",
+                url: "/NViewDeal/sort?eve=" + $(this).val() + '&&type=' + type + '&&id=' + id,
+                data: id,
+                success: function (response) {
+                    data = response;
+                    var string = data.split("~");
+                    var array1 = string;
+                    var select = $('#selectbox2');
+                    select.empty();
+                    //$.each(array1, function (index, value) {
+                    //   alert(value);
+                    //select.append($('<option></option>').val(value).html(value));
+                    //   select.append('<option>'+value+'</option>');
+                    $.each(array1, function (index, valu) {
+                        var dealprice = valu.split(',')[0].split('{ DealPrice =')[1];
+                        var itemtype = valu.split(',')[1].split('FoodType =')[1];
+                        var did = valu.split(',')[2].split('DealID =')[1].replace('}', '');
+                        var fvalue = did;
+
+                        var finalvalue = dealprice + '~' + itemtype;
+                        //            alert(dealprice +',' +itemtype);
+                        $('#selectbox2')
+                            .append($("<option value=" + fvalue + "></option>")
+                          //  .attr("value", index)
+                            .text(finalvalue));
+                    });
+                    //alert(select);
+                    //$('#selectbox2').show();
+                },
+                error: function () {
+                    alert('Error occured');
+                }
+            });
+
+        });
+        /*-- Need Help Block --*/
+        $('.needHelpBtn').click(function () {
+            $('.needHelpBlock').css('display', 'block');
+        });
+        $('.closeBlock').click(function () {
+            $('.needHelpBlock').css('display', 'none');
+        });
+        /*-- Need Help Block --*/
+
+    </script>
+<script>
+        function load(typ) {
+            var lastrecord;
+            if (typ == 'deals') {
+                lastrecord = document.getElementById("dealLastRecord").value;
+                dealcount = document.getElementById("dealcount").value;
+                dealevent = document.getElementById("dealevent").value;
+
+                // alert(dealevent);
+            }
+            var url = '/NLiveDeals/Loadmore?lastrecord=' + lastrecord + '&eve=' + dealevent;
+            $("#dealssection").empty().load(url);
+
+        }
+
+
+</script>
+}
+
+
+
+

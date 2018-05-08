@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
 using System.Security.Principal;
+using System.Web.Helpers;
 
 namespace MaaAahwanam.Web
 {
@@ -20,6 +21,8 @@ namespace MaaAahwanam.Web
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
+            //AuthConfig.RegisterAuth();
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)

@@ -89,7 +89,31 @@ namespace MaaAahwanam.Service
             vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue,masterid,vid);
             return vendorVenue;
         }
+        public VendorVenue activeVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorVenue.Status = "Active";
+            vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Venue";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, masterid, vid);
+            return vendorVenue;
+        }
 
+        public VendorVenue inactiveVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid, long vid)
+        {
+            string updateddate = DateTime.UtcNow.ToShortDateString();
+            vendorVenue.Status = "InActive";
+            vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.Status = "InActive";
+            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.ServicType = "Venue";
+            vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
+            vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, masterid, vid);
+            return vendorVenue;
+        }
         public VendorVenue AddNewVenue(VendorVenue vendorVenue, Vendormaster vendorMaster)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();

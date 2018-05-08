@@ -30,6 +30,7 @@ namespace MaaAahwanam.Repository.db
         {
             var GetVendor = _dbContext.VendorsDecorator.SingleOrDefault(m => m.VendorMasterId == id&&m.Id==vid);
             vendorsDecorator.Id = GetVendor.Id;
+            vendorsDecorator.VendorMasterId = id;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(vendorsDecorator);
             _dbContext.SaveChanges();
             return vendorsDecorator;
