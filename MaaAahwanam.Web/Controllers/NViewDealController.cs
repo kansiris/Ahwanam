@@ -32,6 +32,7 @@ namespace MaaAahwanam.Web.Controllers
                     var data = vendorProductsService.getpartvendordeal(id, type).Where(m => m.Category == eve);
                     ViewBag.singledeal1 = data ;
                     ViewBag.events = data.Select(m => m.Category).Distinct();
+                    ViewBag.dealLastRecordeve = eve;
 
                 }
                 else
@@ -39,6 +40,7 @@ namespace MaaAahwanam.Web.Controllers
                     var data = vendorProductsService.getpartvendordeal(id, type);
                     ViewBag.singledeal1 = data;
                     ViewBag.events = data.Select(m => m.Category).Distinct();
+                    ViewBag.dealLastRecordeve = "All";
                 }
 
             return View();
@@ -49,13 +51,21 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public PartialViewResult Loadmoredeals(string lastrecord)
+        public PartialViewResult Loadmoredeals(string lastrecord, string eve)
         {
             int id = (lastrecord == null) ? 2 : int.Parse(lastrecord) + 2;
-            ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
-            var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+            if (eve == null || eve == "") { eve = "All"; }
+
+            //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+            //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
+
+            //ViewBag.dealLastRecord = id;
+            // ViewBag.dealcount = vendorProductsService.getalldeal().Count();
+
+            var deals = vendorProductsService.getalleventdeal(eve).OrderBy(m => m.DealID).Take(id);
+            ViewBag.deal = deals;
             ViewBag.dealLastRecord = id;
-            ViewBag.dealcount = vendorProductsService.getalldeal().Count();
+            ViewBag.dealcount = vendorProductsService.getalleventdeal(eve).Count();
             return PartialView("Loadmoredeals");
         }
 

@@ -166,17 +166,20 @@ namespace MaaAahwanam.Web.Controllers
                 var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
                 if (userResponse != null)
                 {
-                    activationcode = userResponse.ActivationCode;
-                    string name = userDetail.FirstName;
-                    txtto = userLogin.UserName;
                     string emailid = userLogin.UserName;
-                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
-                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
-                    string readFile = File.OpenText().ReadToEnd();
-                    readFile = readFile.Replace("[ActivationLink]", url);
-                    readFile = readFile.Replace("[name]", name);
-                    string txtmessage = readFile;//readFile + body;
-                    string subj = "Password reset information";
+
+                    activationcode =  userResponse.ActivationCode;
+                    int id = Convert.ToInt32(userResponse.UserLoginId);
+                    var userdetails = userLoginDetailsService.GetUser(id);
+                    string name = userdetails.FirstName;
+                    txtto = userLogin.UserName;
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Password reset information";
 
 
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
@@ -220,20 +223,27 @@ namespace MaaAahwanam.Web.Controllers
             if (ActivationCode == "")
             { ActivationCode = null; }
             var userResponse = venorVenueSignUpService.GetUserdetails(Email);
-
-            if (ActivationCode == userResponse.ActivationCode)
+            if (userResponse.Status != "Active")
             {
-                userLogin.Status = "Active";
+
+                if (ActivationCode == userResponse.ActivationCode)
+                {
+                    userLogin.Status = "Active";
 
                 string email = userLogin.UserName;
 
                 var userid = userResponse.UserLoginId;
                 userLoginDetailsService.changestatus(userLogin, (int)userid);
 
-                return RedirectToAction("Index", "NUserRegistration");
+                    return RedirectToAction("Index", "NUserRegistration");
+
+                }
+            }
+            else {
+                return Content("<script language='javascript' type='text/javascript'>alert('Your Account is already Verified Please login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
 
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('Email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
 
         }
 
