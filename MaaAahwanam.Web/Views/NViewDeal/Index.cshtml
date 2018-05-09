@@ -106,12 +106,12 @@
                 </div>
 
 
-                <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption">
+                <div class="row w-100 mx-0 my-15 dealProfileTotalDescrption ">
 
                 
                
                     <div class="block px-2 w-100">
-                        <h6 class="d-inline-block">
+                        <h6 class="themeColor d-inline-block">
                             <a href="#dealDescrption" class="themeColor secondaryFont">Available Deals</a>
                             <div class="blackBorder"></div>
                         </h6>
@@ -119,7 +119,7 @@
                         {
                             foreach (var item in ViewBag.singledeal1)
                             {
-                        <div class="row mx-0 packages">
+                        @*<div class="row mx-0 packages">
                             <div class="col-12 colmd-12 packageDetails">
                                 <div class="w-100 float-left">
                                     <div class="float-left"><p class="mb-0 packageName">@item.Category ( @item.FoodType )</p></div>
@@ -146,10 +146,37 @@
                                     </p>
                                 </div>
                             </div>
-                        </div>
-                            }
-                        }
-                    </div>
+                        </div>*@
+                                <div class="row mx-0 packages">
+                                    <div class="col-12 colmd-12 packageDetails">
+                                        <div class="w-100 float-left">
+                                            <div class="float-left"><p class="mb-0 packageName" >@item.Category ( @item.FoodType )</p></div>
+                                           <input type="hidden" value="@item.DealID" name="did" id="did">
+                                             <div class="float-right packageCheckbox">
+                                                <label>
+                                                    <input type="checkbox" name="">
+                                                    <p>Select</p>
+                                                </label>
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="productMaxPrice mb-0 d-block"> ( <span>@item.OriginalPrice</span> <small></small> ) </p>
+                                            </div>
+                                            <div class="float-right">
+                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR/Person : <span>@item.DealPrice</span> </p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="w-100">
+                                            <p class="packageContent">
+                                                @item.DealDescription
+                                            </p>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    }
+                                    }
+                                </div>
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
                             <a href="#termsCondition" class="themeColor">Terms &amp; Conditions</a>
@@ -221,6 +248,7 @@
                                 </select>*@
 
                             </div>
+                            <input type="hidden" id="did1" name="did1"  />
 
                             @*<div class="w-100 mt-3 eventDate">
                                     <div class="date-picker">
@@ -243,11 +271,13 @@
 
 
                             <div class="w-100 mt-3">
-                                <select class="w-100 p-2 ml-auto pricePerPlate" id="selectbox2">
+                                <input type="text" class="form-control nexaBold" placeholder="Price/Person" id="pricePerPlate" name="pricePerPlate">
+
+                                @*<select class="w-100 p-2 ml-auto pricePerPlate" id="selectbox2">
                                     <option id="price"> Select Prices</option>
                                      @*   <option value="@ViewBag.singledeal.cost">Non veg (<span>@ViewBag.singledeal.cost</span>/p)</option>*@
-                                    @*// <option value="1100">Veg (<span>1100</span>/p)</option>*@
-                                </select>
+                                    @*// <option value="1100">Veg (<span>1100</span>/p)</option>*
+                                </select>*@
                             </div>
 
                             <div class="w-100 mt-3 noOfPeoples">
@@ -486,6 +516,63 @@
         }
 </script>
     <script>
+        //<!-- hr Responsive Tabs -->
+        $(document).ready(function () {
+
+            // Function releated to Package select
+           $( function checkSelect() {
+
+                $(".packageCheckbox label").click(function () {
+                    if ($(this).find("input[type='checkbox']").is(':checked')) {
+                        var packagename = $(this).parents('div.float-left').find('p.packageName').text();
+                        var did = $(this).parents('div.float-left').find('input#did').val(); //$('#did').val();
+                       // alert(did);
+                        //var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
+                         var packageprice = $(this).parents('div.float-left').find('p.dprice').text();
+                        $('#eventtype').val(packagename);
+                        $('#pricePerPlate').val(packageprice);
+                        $('#did1').val(did);
+                        $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
+                    } else {
+                        $('#eventtype').val('');
+                        $('#pricePerPlate').val('');
+                        $('#did1').val('');
+
+                        $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
+                    }
+                });
+            })
+
+            $.fn.responseTabs = function () {
+                var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
+                placeholder = $('<div class="responsive-tabs-placeholder bgWhite"></div>').insertAfter(el);
+
+                tabs.on('click', function () {
+                    var tab = $(this);
+
+                    tabs.not(tab).removeClass('active');
+                    tab.addClass(' active');
+
+                    placeholder.html(tab.next().html());
+
+                 
+                    checkSelect();  // Function releated to Package select
+
+                });
+                tabs.filter(':first').trigger('click');
+            }
+            $(".responsiveTabs").responseTabs();
+
+       
+
+        });
+
+
+
+        //<!-- hr Responsive Tabs -->
+    </script>
+
+    <script>
         $(document).ready(function () {
             var owl = $('.owl-carousel');
             owl.owlCarousel({
@@ -504,57 +591,8 @@
                     }
                 }
             })
-
-              // Function releated to Package select
-                function checkSelect() {
-
-                    $(".packageCheckbox label").click(function () {
-                        if ($(this).find("input[type='checkbox']").is(':checked')) {
-                            var packagename = $(this).parents('div.float-left').find('p.packageName').text();
-                            var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
-                            $('#eventtype').val(packagename);
-                            $('#serviceprice').val(packageprice);
-                            $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
-                        } else {
-                            $('#eventtype').val('');
-                            $('#serviceprice').val(sprice);
-                            $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
-                        }
-                    });
-                }
-
-                $.fn.responseTabs = function () {
-                    var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
-                    placeholder = $('<div class="responsive-tabs-placeholder bgWhite"></div>').insertAfter(el);
-
-                    tabs.on('click', function () {
-                        var tab = $(this);
-
-                        tabs.not(tab).removeClass('active');
-                        tab.addClass(' active');
-
-                        placeholder.html(tab.next().html());
-
-                        $(".vrResponsiveTabs > p").click(function () {
-                            $('.vrResponsiveTabs > p').removeClass('active');
-                            $(this).addClass(' active');
-                            var subContent = $(this).next('span');
-                            $(this).parents('.vrResponsiveTabs').next('.appendedData').empty().html(subContent.html());
-
-                            checkSelect();  // Function releated to Package select
-                        });
-                        checkSelect();  // Function releated to Package select
-
-                    });
-                    tabs.filter(':first').trigger('click');
-                }
-                $(".responsiveTabs").responseTabs();
-
-                $('.vrResponsiveTabs p:first-child').trigger('click');
-
-         
-
-
+            
+          
 
             //$('input[type=checkbox]').on('change', function () {
             //    alert($(this).val());
@@ -594,15 +632,7 @@
     </script>
 
     <script type="text/javascript">
-   
-
-
-
-
-
-
-
-        function checkedBox() {
+           function checkedBox() {
             var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
            total = checkLen * totalVal;
             $(".totalAmount span").empty().append(total);
@@ -620,8 +650,9 @@
         $(".noOfPeoples input[type='number']").on('change', function () {
             el = $(this),
             members = parseInt($(this).val());
-            var price = $("select.pricePerPlate").find("option:selected").text();
-            var price1 = price.split('~')[0];
+          //  var price = $("select.pricePerPlate").find("option:selected").text();
+            var price = $('#pricePerPlate').val();
+            var price1 = price.split(':')[1];
             total = price1 * members,
             placeholder = $("<div class='totalVal'></div>").insertAfter(el);
             $(".totalVal:not(:eq(0))").remove();
@@ -641,8 +672,9 @@
         });
 
         function Sethdnvalue(btn) {
-            if ($("select.eventType").find("option:selected").val() == '') {
-                // alert("Please select Event type");
+            //if ($("select.eventType").find("option:selected").val() == '') {
+            // alert("Please select Event type");
+            if ($("#eventtype").val() == '') {
                 alertmsg("Please select Event type");
             } else if ($("#datetimepicker").val() == '') {
                // alert("Please select event date");
@@ -655,18 +687,31 @@
                 //alert("Please Mention No Of Guests");
                 alertmsg("Please Mention No Of Guests");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                var timeslot = ($('input[type=checkbox]').val());
-                var etype1 = $('#selectbox1').val();
+               // var timeslot = ($('input[type=checkbox]').val());
+                var timeslot = $(".slotTime input[type='checkbox']").val();
+                // var etype1 = $('#selectbox1').val();
+                var evetype1 = $("#eventtype").val();
+                var etype1 = evetype1.split('(')[0];
+
                 var type = '@Request.QueryString["type"]';
                 var vid = $('input#vid').val();
                 var id = '@Request.QueryString["id"]';
                 var date = $("#datetimepicker").val();
-                var price = $("select.pricePerPlate").find("option:selected").text();
-                var price1 = price.split('~')[0];
+                //  var price = $("select.pricePerPlate").find("option:selected").text();
+                var price = $('#pricePerPlate').val();
+                var price1 = price.split(':')[1];
                 var nop = $(".noOfPeoples input[type='number']").val();
                 var totalprice = price1 * nop;
-                var did = $("select.pricePerPlate").find("option:selected").val();
-                url1 = '/NViewDeal/addcnow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + did;
+                // var did = $("select.pricePerPlate").find("option:selected").val();
+                var deid = $('#did1').val();
+                //alert(deid);
+                //if ($(this).find("input[type='checkbox']").is(':checked')) {
+                //    var checkText = $(this).find('p').text();
+                //    $('.hiddenP').append(checkText + ",");
+                //}
+                //alert(checkText);
+            
+                url1 = '/NViewDeal/addcnow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + deid;
 
                 $.ajax({
                     url: url1,
@@ -698,8 +743,9 @@
         };
 
         function Sethdnvalue1(btn1) {
-            if ($("select.eventType").find("option:selected").val() == '') {
-                //alert("Please select Event type");
+            //if ($("select.eventType").find("option:selected").val() == '') {
+            //    //alert("Please select Event type");
+            if ($("#eventtype").val() == '') {
                 alertmsg("Please select Event type");
 
             } else if ($("#datetimepicker").val() == '') {
@@ -714,17 +760,24 @@
                 alertmsg("Please Mention No Of Guests");
 
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                var timeslot = ($('input[type=checkbox]').val());
-                var etype1 = $('#selectbox1').val();
+               // var timeslot = ($('input[type=checkbox]').val());
+                var timeslot = $(".slotTime input[type='checkbox']").val();
+                // var etype1 = $('#selectbox1').val();
+                var evetype1 = $("#eventtype").val();
+                var etype1 = evetype1.split('(')[0];
+
                 var type = '@Request.QueryString["type"]';
                 var vid = $('input#vid').val();
                 var id = '@Request.QueryString["id"]';
                 var date = $("#datetimepicker").val();
-                var price = $("select.pricePerPlate").find("option:selected").text();
-                var price1 = price.split('~')[0];
+                //  var price = $("select.pricePerPlate").find("option:selected").text();
+                var price = $('#pricePerPlate').val();
+                var price1 = price.split(':')[1];
                 var nop = $(".noOfPeoples input[type='number']").val();
                 var totalprice = price1 * nop;
-                var did = $("select.pricePerPlate").find("option:selected").val();
+                // var did = $("select.pricePerPlate").find("option:selected").val();
+                var deid = $('#did1').val();
+                //alert(deid);
                 window.localStorage.setItem("etype1", etype1);
                 window.localStorage.setItem("date", date);
                 window.localStorage.setItem("PRICE", price1);
@@ -758,18 +811,25 @@
                 alertmsg("Please Mention No Of Guests");
 
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                var timeslot = ($('input[type=checkbox]').val());
-                var etype1 = $('#selectbox1').val();
+                // var timeslot = ($('input[type=checkbox]').val());
+                var timeslot = $(".slotTime input[type='checkbox']").val();
+                // var etype1 = $('#selectbox1').val();
+                var evetype1 = $("#eventtype").val();
+                var etype1 = evetype1.split('(')[0];
+
                 var type = '@Request.QueryString["type"]';
                 var vid = $('input#vid').val();
                 var id = '@Request.QueryString["id"]';
                 var date = $("#datetimepicker").val();
-                var price = $("select.pricePerPlate").find("option:selected").text();
-                var price1 = price.split('~')[0];
+                //  var price = $("select.pricePerPlate").find("option:selected").text();
+                var price = $('#pricePerPlate').val();
+                var price1 = price.split(':')[1];
                 var nop = $(".noOfPeoples input[type='number']").val();
                 var totalprice = price1 * nop;
-                var did = $("select.pricePerPlate").find("option:selected").val();
-                url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + did;
+                // var did = $("select.pricePerPlate").find("option:selected").val();
+                var deid = $('#did1').val();
+                //alert(deid);
+                url1 = '/NViewDeal/booknow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + deid;
 
                 $.ajax({
                     url: url1,
@@ -817,24 +877,34 @@
                 alertmsg("Please Mention No Of Guests");
 
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                var etype1 = $('#selectbox1').val();
+                // var timeslot = ($('input[type=checkbox]').val());
+                var timeslot = $(".slotTime input[type='checkbox']").val();
+                // var etype1 = $('#selectbox1').val();
+                var evetype1 = $("#eventtype").val();
+                var etype1 = evetype1.split('(')[0];
+
+                var type = '@Request.QueryString["type"]';
+                var vid = $('input#vid').val();
+                var id = '@Request.QueryString["id"]';
                 var date = $("#datetimepicker").val();
-                var price = $("select.pricePerPlate").find("option:selected").text();
-                //alert(price);
-                var price1 = price.split('~')[0];
-                var did = $("select.pricePerPlate").find("option:selected").val();
+                //  var price = $("select.pricePerPlate").find("option:selected").text();
+                var price = $('#pricePerPlate').val();
+                var price1 = price.split(':')[1];
                 var nop = $(".noOfPeoples input[type='number']").val();
                 var totalprice = price1 * nop;
+                // var did = $("select.pricePerPlate").find("option:selected").val();
+                var deid = $('#did1').val();
+                //alert(deid);
                 window.localStorage.setItem("etype1", etype1);
                 window.localStorage.setItem("date", date);
                 window.localStorage.setItem("PRICE", price1);
                 window.localStorage.setItem("nop", nop);
-                var timeslot = ($('input[type=checkbox]').val());
+               // var timeslot = ($('input[type=checkbox]').val());
                 location.href = '/NUserRegistration/Index';
             }
         });
 
- 
+
 
 
 
