@@ -103,7 +103,7 @@ namespace MaaAahwanam.Web.Controllers
             if (type == "Venues") type = "Venue";
 
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type);
-            ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid));
+            ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
             return View();
         }
 
