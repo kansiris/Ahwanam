@@ -146,7 +146,7 @@ namespace MaaAahwanam.Web.Controllers
                 data = vendorProductsService.Getfiltervendors_Result(inputcategory, loc, budget, count);
             //ViewBag.results = data.Take(takecount).ToList();
             //if (data.Count > 0)
-                ViewBag.results = data.Take(takecount).ToList();
+            ViewBag.results = data.Take(takecount).ToList();
             //else
             //    ViewBag.results = vendorProductsService.Getfiltervendors_Result(inputcategory, loc, "0", "0").ToList();
             int recordcount = data.Count();

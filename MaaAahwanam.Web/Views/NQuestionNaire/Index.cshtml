@@ -23,7 +23,7 @@
 
                             <div class="options">
                                 <div class="w-100 mx-0">
-                                    <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
+                                    <div class="col-12 col-md-8 col-lg-8">
                                         <div class="question">
                                             Please Enter Location
                                         </div>
@@ -51,7 +51,7 @@
                         <div class="mb-2">
                             <div class="options">
                                 <div class="w-100 mx-0">
-                                    <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
+                                    <div class="col-12 col-md-8 col-lg-8">
                                         <div class="question">
                                             Please Select Event Date
                                         </div>
@@ -100,7 +100,7 @@
 
                             <div class="options">
                                 <div class="w-100 mx-0">
-                                    <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
+                                    <div class="col-12 col-md-8 col-lg-8">
                                         <div class="question">
                                             Please Enter your Event Budget
                                         </div>
@@ -158,7 +158,7 @@
 
                             <div class="options">
                                 <div class="w-100 mx-0">
-                                    <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
+                                    <div class="col-12 col-md-8 col-lg-8">
                                         <div class="question">
                                             Please enter the number of guests
                                         </div>
@@ -198,7 +198,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2 prevNext">
+                                    <div class="col-12 col-md-8 col-lg-8 prevNext">
                                         <div class="ml-auto">
                                             @if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement" }.Contains(@Request.QueryString["servicetype"]))
                                             {
@@ -222,7 +222,7 @@
                             <div class="mb-2">
                                 <div class="options">
                                     <div class="w-100 mx-0">
-                                        <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
+                                        <div class="col-12 col-md-8 col-lg-8">
                                             <div class="question">
                                                 Choose Required Services
                                             </div>
@@ -230,12 +230,12 @@
                                                 <div class="ui-widget" style="display:block">
                                                     <ul>
                                                         @*<li>
-                <label class="d-inline-flex align-items-center">
-                    <input type="checkbox" />
-                    <span></span>
-                    <p class="mb-0">Venue</p>
-                </label>
-            </li>*@
+                                                                <label class="d-inline-flex align-items-center">
+                                                                    <input type="checkbox" />
+                                                                    <span></span>
+                                                                    <p class="mb-0">Venue</p>
+                                                                </label>
+                                                            </li>*@
                                                         <li>
                                                             <label class="d-inline-flex align-items-center">
                                                                 <input type="checkbox" />
@@ -301,11 +301,15 @@
                                         <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2 prevNext">
                                             <div class="ml-auto">
                                                 <div class="d-inline-flex backQues"><span class="btnSecondary">Back</span></div>
-                                                @*<div class="d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white nextQues">Next</span> </div>*@
-                                                <span class="themeBgColorPrimary btnSecondary text-white continueBtn" id="btnsubmit">Continue</span>
+                                                @*<div class="d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white nextQues">Next</span> </div>
+                                                    <span class="themeBgColorPrimary btnSecondary text-white continueBtn" id="btnsubmit">Continue</span>*@
+                                                <div class="d-inline-flex">
+                                                    <span class="themeBgColorPrimary btnSecondary text-white continueBtn" id="btnsubmit" style="display: block;">Continue</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <p class="hiddenP"></p>
                                 </div>
                             </div>
                         </div>
@@ -454,8 +458,8 @@
         $(".filteredQuestions").children().eq(questionMinCount - 1).css("display", "block");
 
         /*---- Click Continue button then append selected categories P Tag to --*/
-        var hiddenP = $("<p class='hiddenP'></p>");
-        $(hiddenP).insertAfter(".question + .options ul");
+        //var hiddenP = $("<p class='hiddenP'></p>");
+        //$(hiddenP).insertAfter(".questions + .options ul");
         /*---- Click Continue button then append selected categories P Tag to --*/
 
 
@@ -505,7 +509,10 @@
         $(".filteredQuestions > .questions:last-of-type .options > ul > li").each(function () {
             if ($(this).find("input[type='checkbox']").is(':checked')) {
                 var checkText = $(this).find('p').text();
-                $(".filteredQuestions > .questions:last-of-type .options > ul").next('p').append(checkText + ",");
+                //$(".filteredQuestions > .questions:last-of-type .options > ul").next('p').append(checkText + ",");
+                //var value = checkText + ","
+                //$('#hiddenP').val(checkText + ",");
+                $('.hiddenP').append(checkText + ",");
             }
         });
 
@@ -542,9 +549,9 @@
         var date = $('#date').val();
         var budget = $('#budget').val();
         var count = $('#count').val();
-        var stype = $('.hiddenP').text().slice(0, -1);//'Venue';//$('#stype').val();
+        var stype = "Hotel,Catering,Photography";//$('.hiddenP').text();//$('.hiddenP').text().slice(0, -1);//'Venue';//$('#stype').val();
         var type = '@Request.QueryString["servicetype"]';
-
+        //alert(stype);
 
         if (loc == '') {
            // alert("Enter Location");

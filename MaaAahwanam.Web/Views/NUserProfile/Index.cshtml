@@ -10,9 +10,9 @@
         <div class="col-12 col-sm-5 col-md-4 col-lg-3 sideBar">
             <a class="navbar-brand hidden-xs-down" href="/NHomePage"> <img src="~/newdesign/images/logo.png" alt="Logo"> </a>
             <ul>
-                <li> <a href="#">Dashboard</a> </li>
-                <li> <a href="#profileDetails">Profile</a> </li>
-                <li> <a href="#profileSettings">Settings</a> </li>
+                <li> <a href="#" onclick="userProfile('userTicketDetails')">Dashboard</a> </li>
+                <li> <a href="#" onclick="userProfile('profileDetails')">Profile</a> </li>
+                <li> <a href="#" onclick="userProfile('profileSettings')">Settings</a> </li>
                 <li>
                     @*<a href="/NUserRegistration/SignOut">Logout</a>*@ @*onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'"*@
                     <a onclick="window.location.href = '/NUserRegistration/SignOut';">Logout</a>
@@ -29,24 +29,24 @@
                                 <div class="blackBorder"></div>
                             </h3>
                         </div>
-                        <div class="row my-2">
+                        <div class="row my-2 ticketButtons">
                             <div class="col-12 col-sm-4 col-md-4 d-flex mb-2">
-                                <span class="themeBgColorPrimary btnSecondary text-white">
+                                <span class="themeBgColorPrimary btnSecondary text-white" id="currentTickets" onclick="ticketHistory('currentTickets')">
                                     Current Tickets
                                 </span>
                             </div>
                             <div class="col-12 col-sm-4 col-md-4 d-flex mb-2">
-                                <span class="themeBgColor btnSecondary text-white">
+                                <span class="themeBgColor btnSecondary text-white" id="bookingHistory" onclick="ticketHistory('bookingHistory')">
                                     History
                                 </span>
                             </div>
                             <div class="col-12 col-sm-4 col-md-4 d-flex mb-2">
-                                <span class="themeBgColor btnSecondary text-white">
+                                <span class="themeBgColor btnSecondary text-white" id="wishList" onclick="ticketHistory('wishList')">
                                     Wishlist
                                 </span>
                             </div>
                         </div>
-                        <div class="row mx-0 mt-2 tableData">
+                        <div class="row mx-0 mt-2 tableData" id="currentTickets">
 
                             @if (ViewBag.order != null)
                             {
@@ -65,36 +65,117 @@
                                     <tbody>
                                         @foreach (var item in ViewBag.order)
                                         {
-                                            <tr>
+                                        <tr>
 
-                                                <td>@item.OrderId</td>
-                                                <td>
-                                                    <h4>@item.BusinessName</h4>
-                                                    <p>
-                                                        @item.Landmark<br>
-                                                        @item.Address, @item.City,<br>
-                                                        @item.ContactNumber
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <div class="event-date-time">
-                                                        <div class="event-dates">
-                                                            @item.OrderDate
-                                                        </div>
-                                                </td>
-                                                <td>@item.Status</td>
-                                                <td>
-                                                    <div class="item-price">
-                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                            <td>@item.OrderId</td>
+                                            <td>
+                                                <h4>@item.BusinessName</h4>
+                                                <p>
+                                                    @item.Landmark<br>
+                                                    @item.Address, @item.City,<br>
+                                                    @item.ContactNumber
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="event-date-time">
+                                                    <div class="event-dates">
+                                                        @item.OrderDate
                                                     </div>
+                                            </td>
+                                            <td>@item.Status</td>
+                                            <td>
+                                                <div class="item-price">
+                                                    <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                </div>
 
-                                                </td>
-                                            </tr>
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
                             }
                         </div>
+                        <div class="row mx-0 mt-2 tableData" id="bookingHistory">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Event/Services 1</th>
+                                        <th>Service List</th>
+                                        <th>Budget</th>
+                                        <th>Status</th>
+                                        <th>Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mary</td>
+                                        <td>Moe</td>
+                                        <td>mary@example.com</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>July</td>
+                                        <td>Dooley</td>
+                                        <td>july@example.com</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row mx-0 mt-2 tableData" id="wishList">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Event/Services 2</th>
+                                        <th>Service List</th>
+                                        <th>Budget</th>
+                                        <th>Status</th>
+                                        <th>Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mary</td>
+                                        <td>Moe</td>
+                                        <td>mary@example.com</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>July</td>
+                                        <td>Dooley</td>
+                                        <td>july@example.com</td>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                     <div id="profileDetails">
                         <div class="row mx-0">
@@ -159,6 +240,36 @@
         });
 
     </script>
+    <script type="text/javascript">
+        function userProfile(e) {
+            $(".userTotalInfo > div").each(function () {
+                if ($(this).attr('id') == e) {
+                    $(this).css("display", "block");
+                } else {
+                    $(this).css("display", "none");
+                }
+            });
+        }
+
+        function ticketHistory(e) {
+            $(".ticketButtons span").each(function () {
+                if ($(this).attr('id') == e) {
+                    $(this).removeClass(" themeBgColor").addClass(" themeBgColorPrimary");
+                } else {
+                    $(this).removeClass(" themeBgColorPrimary").addClass(" themeBgColor");
+                }
+            });
+
+            $("#userTicketDetails div.tableData").each(function () {
+                if ($(this).attr('id') == e) {
+                    $(this).css("display", "block");
+                } else {
+                    $(this).css("display", "none");
+                }
+            });
+        }
+    </script>
+
     <script>
         function load(userdetails) {
 
