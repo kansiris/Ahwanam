@@ -98,13 +98,13 @@
 </form>
 
 @section scripts{
-<script>
+    <script>
         function alertmsg(msg) {
             alertify.alert("" + msg + "", function () {
                 //alertify.message('OK');
             });
         }
-</script>
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('body').attr("id", "userAuthentication");
@@ -140,8 +140,7 @@
                             //$("#Item2_EmailId").focus();
                         }
                     },
-                    error: function (data)
-                    { //alert("Server is Not Responding at the Moment"); 
+                    error: function (data) { //alert("Server is Not Responding at the Moment");
                         alertmsg("Server is Not Responding at the Moment");
 
                     }
@@ -216,10 +215,10 @@
 
             $(".prevNext .nextQues").click(function () {
                 var username = $('#Item2_ContactPerson').val();
-                var stype = $('#item2_servictype').val();
-                var bname = $('#item2_businessname').val();
-
-                //alertmsg(bname);
+                var stype = $('#Item2_ServicType').val();
+                var bname = $('#Item2_BusinessName').val();
+                //alert(stype);
+                //alert(bname);
 
                 if (username.trim() == '') {
                     alertmsg("Enter Your Name");
@@ -243,22 +242,40 @@
                     }
                 }
 
-                
+
             });
 
             $(".prevNext .continueBtn").click(function () {
-               // alert("Redirect");
-                alertmsg("Redirect");
+                var email = $('#Item2_EmailId').val();
+                var mobile = $('#Item2_ContactNumber').val();
+                var password = $('#Item1_Password').val();
+                if (email.trim() == '') {
+                    alertmsg("Enter Email ID");
+                    $('#Item2_EmailId').focus();
+                }
+                else if (mobile.trim() == '') {
+                    alertmsg("Enter Mobile Number");
+                    $('#Item2_ContactNumber').focus();
+                }
+                else if (password.trim() == '') {
+                    alertmsg("Enter Password");
+                    $('#Item1_Password').focus();
+                }
+                else {
+                    this.form.submit();
+                }
+                // alert("Redirect");
+                //alertmsg("Redirect");
 
-                /*---- Click Continue button then append selected categories P Tag to --*/
-                $(".filteredQuestions > .questions:last-of-type .options > ul").next('p').empty();
-                $(".filteredQuestions > .questions:last-of-type .options > ul > li").each(function () {
-                    if ($(this).find("input[type='checkbox']").is(':checked')) {
-                        var checkText = $(this).find('p').text();
-                        $(".filteredQuestions > .questions:last-of-type .options > ul").next('p').append(checkText + ", ");
-                    }
-                });
-                /*---- Click Continue button then append selected categories P Tag to --*/
+                ///*---- Click Continue button then append selected categories P Tag to --*/
+                //$(".filteredQuestions > .questions:last-of-type .options > ul").next('p').empty();
+                //$(".filteredQuestions > .questions:last-of-type .options > ul > li").each(function () {
+                //    if ($(this).find("input[type='checkbox']").is(':checked')) {
+                //        var checkText = $(this).find('p').text();
+                //        $(".filteredQuestions > .questions:last-of-type .options > ul").next('p').append(checkText + ", ");
+                //    }
+                //});
+                ///*---- Click Continue button then append selected categories P Tag to --*/
 
             });
 

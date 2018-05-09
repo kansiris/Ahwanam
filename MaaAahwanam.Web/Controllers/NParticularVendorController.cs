@@ -65,7 +65,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.particularOther = Otherrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
 
             string price = "";
-            if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue")
+            if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue" || type == "Banquet Hall" || type == "Function Hall")
             {
                 if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.ServiceCost.ToString(); };
                 ViewBag.location = ViewBag.particularVenue;
@@ -100,7 +100,7 @@ namespace MaaAahwanam.Web.Controllers
 
             //Loading Vendor deals
             //if (type.Split(',').Count() > 1) type = type.Split(',')[0];
-            if (type == "Venues") type = "Venue";
+            if (type == "Venues" || type == "Banquet Hall" || type == "Function Hall") type = "Venue";
 
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type);
             ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
@@ -142,7 +142,7 @@ namespace MaaAahwanam.Web.Controllers
             //ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);
             //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
             if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
-            if (type == "Conventions" || type == "Resorts" || type == "Hotels" || type == "Venues")
+            if (type == "Conventions" || type == "Resorts" || type == "Hotels" || type == "Venues" || type == "Banquet Hall" || type == "Function Hall" || type == "Banquet" || type == "Function")
                 type = "Venue";
             if (type == "Mehendi" || type == "Pandit")
                 type = "Other";
