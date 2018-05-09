@@ -120,7 +120,9 @@
             var emailId = $("#Item2_EmailId").val();
             //alert(emailId);
             if (!ValidateEmail(emailId)) {
-                alert("Invalid email address.");
+                // alert("Invalid email address.");
+                alertmsg("Invalid email address.");
+
             }
             else {
                 $.ajax({
@@ -131,13 +133,18 @@
                     contentType: 'application/json',
                     success: function (data) {
                         if (data == "exists") {
-                            alert("E-Mail ID Already Taken!!! Try Another");
+                            //  alert("E-Mail ID Already Taken!!! Try Another");
+                            alertmsg("E-Mail ID Already Taken!!! Try Another");
+
                             $("#Item2_EmailId").val("").focus();
                             //$("#Item2_EmailId").focus();
                         }
                     },
                     error: function (data)
-                    { alert("Server is Not Responding at the Moment"); }
+                    { //alert("Server is Not Responding at the Moment"); 
+                        alertmsg("Server is Not Responding at the Moment");
+
+                    }
                 });
             }
 
@@ -240,7 +247,8 @@
             });
 
             $(".prevNext .continueBtn").click(function () {
-                alert("Redirect");
+               // alert("Redirect");
+                alertmsg("Redirect");
 
                 /*---- Click Continue button then append selected categories P Tag to --*/
                 $(".filteredQuestions > .questions:last-of-type .options > ul").next('p').empty();

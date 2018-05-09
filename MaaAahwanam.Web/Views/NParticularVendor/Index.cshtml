@@ -644,6 +644,14 @@
     </script>
 
     <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
+<script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
+</script>
+
     <script>
         $(document).ready(function () {
             var owl = $('.owl-carousel');
@@ -737,10 +745,14 @@
                 url: url1,
                 success: function (data) {
                     if (data == "Success") {
-                        alert("Sucessfully Added to Wishlist")
+                       // alert("Sucessfully Added to Wishlist")
+                        alertmsg("Sucessfully Added to Wishlist")
+
                     }
                     else if (data == "removed") {
-                        alert("Removed From Wishlist");
+                       // alert("Removed From Wishlist");
+                        alertmsg("Removed From Wishlist");
+
                     }
                     location.href = '/NParticularVendor/Index?type=' + type + '&&id=' + id + '&&vid=' + vid;
                 }
@@ -766,10 +778,14 @@
         $(".bookNow").click(function () {
             var type = '@Request.QueryString["type"]';
             if ($("#eventtype").val() == '') {
-                alert("Please Enter Event type");
+              //  alert("Please Enter Event type");
+                alertmsg("Please Enter Event type");
+
             }
             else if ($("#members").val() == '') {
-                alert("Please Enter Members Count");
+                //   alert("Please Enter Members Count");
+                alertmsg("Please Enter Members Count");
+
             }
             else if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
@@ -787,18 +803,27 @@
                     url: url1,
                     success: function (data) {
                         if (data == "Success") {
-                            alert("Booked Sucessfully"); location.href = '/NUserProfile/Index';
+                            //alert("Booked Sucessfully");
+                            alertmsg("Booked Sucessfully");
+
+                            location.href = '/NUserProfile/Index';
                         }
                         else if (data == "failed") {
-                            alert("login to the cart");
+                            // alert("login to the cart");
+                            alertmsg("Login to the cart");
+
                         }
                         else if (data == "Exists") {
-                            alert("Already Booked or Cannot Book This Service");
+                            // alert("Already Booked or Cannot Book This Service");
+                            alertmsg("Already Booked or Cannot Book This Service");
+
                         }
                     }
                 });
             } else {
-                alert("Please select time slot");
+                // alert("Please select time slot");
+                alertmsg("Please select time slot");
+
             }
         });
         /*-- Need Help Block --*/

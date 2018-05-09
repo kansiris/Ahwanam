@@ -62,10 +62,13 @@ namespace MaaAahwanam.Web.Controllers
                 string message = vendorVenueSignUpService.deletepack(id);
                 ViewBag.vendormasterid = id;
                 if (message == "success")
-                { 
+                {
+                    TempData["Active"] = "Package deleted";
+                    return RedirectToAction("Index", "NVendorPkgs", new { id = vid });
+
                     //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
-                    return Content("<script language='javascript' type='text/javascript'>alert('package deleted');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = vid }) + "'</script>");
-            }
+                    //    return Content("<script language='javascript' type='text/javascript'>alert('package deleted');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = vid }) + "'</script>");
+                }
             }
             return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
         }

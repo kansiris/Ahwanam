@@ -15,7 +15,10 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string id)
         {
-
+            if (TempData["Active"] != "")
+            {
+                ViewBag.Active = TempData["Active"];
+            }
             var deals = vendorProductsService.getvendorsubid(id);
             ViewBag.venuerecord = deals;
             ViewBag.vendormasterid = id;
@@ -56,6 +59,9 @@ namespace MaaAahwanam.Web.Controllers
                 package = vendorVenueSignUpService.addpack(package);
                 ViewBag.vendormasterid = id;
                 //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
+                //TempData["Active"] = "Package added";
+                //return RedirectToAction("Index", "NVendorPkgs", new { id = id });
+
                 return Content("<script language='javascript' type='text/javascript'>alert('package added');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
             }
             else

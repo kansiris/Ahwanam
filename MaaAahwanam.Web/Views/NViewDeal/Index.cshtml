@@ -9,13 +9,12 @@
     }
     var i = 0;
 }
-<input type="hidden" id="dealcount" value="@ViewBag.dealcount" />
-<input type="hidden" id="dealLastRecord" value="@ViewBag.dealLastRecord" />
 
-<input type="hidden" id="dealevent" value="@ViewBag.dealLastRecordeve" />
 
 <div class="container-fluid dealProfile">
     <div class="row innerPagesBg py-2">
+        <input type="hidden" id="dealevent" value="@ViewBag.dealLastRecordeve" />
+
         <div class="col-12 col-sm-12 col-md-8 col-lg-8 mb-2 mb-sm-0 mb-md-0">
             <div class="row mx-0 bgWhite p-2">
                 <div class="w-100 bannerImg">
@@ -53,12 +52,12 @@
                                                                 <p class="mb-0"><span> DecorationAllowed</span></p>
                                                             </div>
                                                         }
-                                                        @if (@ViewBag.singledeal.Halltype != null && @ViewBag.singledeal.Halltype != "")
+                                                        @*@if (@ViewBag.singledeal.Halltype != null && @ViewBag.singledeal.Halltype != "")
                                                         {
                                                             <div class="d-inline-block p-2 mr-4 greyBg">
-                                                                <p class="mb-0"><span>@ViewBag.singledeal.HallType</span></p>
+                                                                <p class="mb-0"><span>@ViewBag.singledeal.Halltype</span></p>
                                                             </div>
-                                                        }
+                                                        }*@
                                                         @if (@ViewBag.singledeal.Wifi != null && @ViewBag.singledeal.Wifi == "Yes" && @ViewBag.singledeal.Wifi != "")
                                                         {
                                                             <div class="d-inline-block p-2 mr-4 greyBg">
@@ -124,19 +123,19 @@
                             <div class="col-12 colmd-12 packageDetails">
                                 <div class="w-100 float-left">
                                     <div class="float-left"><p class="mb-0 packageName">@item.Category ( @item.FoodType )</p></div>
-                                   
-                                    <div class="float-right">
-                                        <p class="productMaxPrice mb-0 d-block"> ( INR/Person : <span>@item.OriginalPrice</span> <small></small> ) </p>
-                                    </div>
-                                    <div class="float-right">
-                                        <p class="mb-0 mr-2">INR/Person : <span>@item.DealPrice</span> </p>
-                                    </div>
                                     <div class="float-right packageCheckbox">
                                         <label>
                                             <input type="checkbox" name="">
                                             <p>Select</p>
                                         </label>
                                     </div>
+                                    <div class="float-right">
+                                        <p class="productMaxPrice mb-0 d-block"> ( <span>@item.OriginalPrice</span> <small></small> ) </p>
+                                    </div>
+                                    <div class="float-right">
+                                        <p class="mb-0 mr-2">INR/Person : <span>@item.DealPrice</span> </p>
+                                    </div>
+                                  
 
                                 </div>
                                 <br />
@@ -323,7 +322,7 @@
 
                     </div>
                 </div>
-                <div class="row bgWhite mb-3">
+                <div class="row bgWhite mb-3" id="dealssection">
                     @{Html.RenderAction("Loadmoredeals", "NViewDeal");}
                 </div>
             </div>
@@ -455,7 +454,23 @@
         });
         /*------------ Date and Time --------------*/
     </script>
+<script>
+        function load(typ) {
+            var lastrecord;
+            if (typ == 'deals') {
+                lastrecord = document.getElementById("dealLastRecord").value;
+                dealcount = document.getElementById("dealcount").value;
+                dealevent = document.getElementById("dealevent").value;
 
+                // alert(dealevent);
+            }
+            var url = '/NViewDeal/Loadmoredeals?lastrecord=' + lastrecord + '&eve=' + dealevent;
+            $("#dealssection").empty().load(url);
+
+        }
+
+
+</script>
     <script type="text/javascript">
         //$(document).ready(function () {
         //    $('body').attr("id", "userAuthentication");
@@ -463,7 +478,13 @@
         $('.container').hide();
         $('.search').hide();
     </script>
-
+<script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
+</script>
     <script>
         $(document).ready(function () {
             var owl = $('.owl-carousel');
@@ -621,13 +642,18 @@
 
         function Sethdnvalue(btn) {
             if ($("select.eventType").find("option:selected").val() == '') {
-                alert("Please select Event type");
+                // alert("Please select Event type");
+                alertmsg("Please select Event type");
             } else if ($("#datetimepicker").val() == '') {
-                alert("Please select event date");
+               // alert("Please select event date");
+                alertmsg("Please select event date");
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
-                alert("Please select Menu type");
+                //   alert("Please select Menu type");
+                alertmsg("Please select Menu type");
+
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
-                alert("Please Mention No Of Guests");
+                //alert("Please Mention No Of Guests");
+                alertmsg("Please Mention No Of Guests");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                 var timeslot = ($('input[type=checkbox]').val());
                 var etype1 = $('#selectbox1').val();
@@ -646,34 +672,47 @@
                     url: url1,
                     success: function (data) {
                         if (data == "Success") {
-                            alert("Sucessfully Added to cart")
+                            //  alert("Sucessfully Added to cart")
+                            alertmsg("Sucessfully Added to cart")
+
                             localStorage.removeItem("etype1");
                             localStorage.removeItem("date");
                             localStorage.removeItem("nop");
                             localStorage.removeItem("tp");
                         }
                         else if (data == "failed") {
-                            alert("login to the cart");
+                         //   alert("login to the cart");
+                            alertmsg("Login to the cart");
+
                         }
                         location.href = '/NUserProfile/Index';
                     }
                 });
 
             } else {
-                alert("Please select time slot");
+                alertmsg("Please select time slot");
+
+               // alert("Please select time slot");
             }
 
         };
 
         function Sethdnvalue1(btn1) {
             if ($("select.eventType").find("option:selected").val() == '') {
-                alert("Please select Event type");
+                //alert("Please select Event type");
+                alertmsg("Please select Event type");
+
             } else if ($("#datetimepicker").val() == '') {
-                alert("Please select event date");
+                //alert("Please select event date");
+                alertmsg("Please select event date");
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
-                alert("Please select Menu type");
+                //alert("Please select Menu type");
+                alertmsg("Please select Menu type");
+
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
-                alert("Please Mention No Of Guests");
+                // alert("Please Mention No Of Guests");
+                alertmsg("Please Mention No Of Guests");
+
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                 var timeslot = ($('input[type=checkbox]').val());
                 var etype1 = $('#selectbox1').val();
@@ -693,7 +732,9 @@
                 var timeslot = ($('input[type=checkbox]').val());
                 location.href = '/NUserRegistration/Index';
             } else {
-                alert("Please select time slot");
+                alertmsg("Please select time slot");
+
+              //  alert("Please select time slot");
             }
 
         };
@@ -703,13 +744,19 @@
 
         $(".bookNow").click(function () {
             if ($("select.eventType").find("option:selected").val() == '') {
-                alert("Please select Event type");
+                // alert("Please select Event type");
+                alertmsg("Please select Event type");
+
             } else if ($("#datetimepicker").val() == '') {
-                alert("Please select event date");
+                //alert("Please select event date");
+                alertmsg("Please select event date");
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
-                alert("Please select Menu type");
+                // alert("Please select Menu type");
+                alertmsg("Please select Menu type");
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
-                alert("Please Mention No Of Guests");
+                // alert("Please Mention No Of Guests");
+                alertmsg("Please Mention No Of Guests");
+
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                 var timeslot = ($('input[type=checkbox]').val());
                 var etype1 = $('#selectbox1').val();
@@ -728,33 +775,47 @@
                     url: url1,
                     success: function (data) {
                         if (data == "Success") {
-                            alert("Sucessfully Added to booklist")
+                            //  alert("Sucessfully Added to booklist")
+                            alertmsg("Sucessfully Added to booklist")
+
                             localStorage.removeItem("etype1");
                             localStorage.removeItem("date");
                             localStorage.removeItem("nop");
                             localStorage.removeItem("tp");
                         }
                         else if (data == "failed") {
-                            alert("login to the cart");
+                            alertmsg("Login to the cart");
+
+                           // alert("login to the cart");
                         }
                         location.href = '/NUserProfile/Index';
                     }
                 });
             } else {
-                alert("Please select time slot");
+                //alert("Please select time slot");
+                alertmsg("Please select time slot");
+
             }
 
         });
 
         $(".bookNow1").click(function () {
             if ($("select.eventType").find("option:selected").val() == '') {
-                alert("Please select Event type");
+              //  alert("Please select Event type");
+                alertmsg("Please select Event type");
+
             } else if ($("#datetimepicker").val() == '') {
-                alert("Please select event date");
+                //alert("Please select event date");
+                alertmsg("Please select event date");
+
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
-                alert("Please select Menu type");
+                //alert("Please select Menu type");
+                alertmsg("Please select Menu type");
+
             } else if ($(".noOfPeoples input[type='number']").val() == '') {
-                alert("Please Mention No Of Guests");
+                //alert("Please Mention No Of Guests");
+                alertmsg("Please Mention No Of Guests");
+
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                 var etype1 = $('#selectbox1').val();
                 var date = $("#datetimepicker").val();
@@ -829,23 +890,7 @@
         /*-- Need Help Block --*/
 
     </script>
-<script>
-        function load(typ) {
-            var lastrecord;
-            if (typ == 'deals') {
-                lastrecord = document.getElementById("dealLastRecord").value;
-                dealcount = document.getElementById("dealcount").value;
-                dealevent = document.getElementById("dealevent").value;
 
-                // alert(dealevent);
-            }
-            var url = '/NLiveDeals/Loadmore?lastrecord=' + lastrecord + '&eve=' + dealevent;
-            $("#dealssection").empty().load(url);
-
-        }
-
-
-</script>
 }
 
 
