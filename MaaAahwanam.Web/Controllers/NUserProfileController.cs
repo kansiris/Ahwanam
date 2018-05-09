@@ -22,6 +22,11 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NUserProfile
         public ActionResult Index()
         {
+            if (TempData["Active"] != "")
+            {
+                ViewBag.Active = TempData["Active"];
+            }
+
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -51,11 +56,15 @@ namespace MaaAahwanam.Web.Controllers
                     // ViewBag.Total = total;
                     return View();
                 }
+                TempData["Active"] = "Please Login";
+                return RedirectToAction("Index", "NUserRegistration");
 
-                return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+               // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
 
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+            TempData["Active"] = "Please Login";
+            return RedirectToAction("Index", "NUserRegistration");
+           // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
         }
 
         public ActionResult changepassword(UserLogin userLogin)
