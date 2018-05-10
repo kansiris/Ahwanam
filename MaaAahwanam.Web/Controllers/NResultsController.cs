@@ -107,6 +107,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.type1 = type1;
                 type = (type == "Banquet Hall" || type == "Banquet") ? "BanquetHall" : type;
                 type = (type == "Function Hall" || type == "Function") ? "FunctionHall" : type;
+                type = (type == "Convetion" || type == "Convention") ? "ConventionHall" : type;
                 ViewBag.type = type;
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
@@ -116,7 +117,10 @@ namespace MaaAahwanam.Web.Controllers
             {
                 //type = (type == "Banquet") ? "Banquet Hall" : type;
                 //type = (type == "Function") ? "Function Hall" : type;
+                string type1 = type;
                 var data = vendorProductsService.Getfiltervendors_Result(type, loc, budget, count);
+                if (type == "Mehendi" || type == "Pandit")
+                    data = data.Where(m => m.subtype == type).ToList();
                 if (data.Count > 0)
                     ViewBag.results = data.Take(takecount).ToList();
                 else
