@@ -28,8 +28,8 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index([Bind(Prefix = "Item1")]UserLogin userLogin, [Bind(Prefix = "Item2")] Vendormaster vendorMaster, string command)
         {
-            if (command == "VendorReg")
-            {
+            //if (command == "VendorReg")
+            //{
                 int query = vendorMasterService.checkemail(vendorMaster.EmailId);
 
                 if (query == 0)
@@ -81,8 +81,8 @@ namespace MaaAahwanam.Web.Controllers
                     TempData["Active"] = "E-Mail ID Already Taken!!! Try Another";
                 return RedirectToAction("Index", "NUserRegistration");
                // return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
-            }
-            return View();
+            //}
+           // return View();
         }
 
         public JsonResult checkemail(string emailid)
