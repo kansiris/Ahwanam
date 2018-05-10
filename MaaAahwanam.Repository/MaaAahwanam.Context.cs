@@ -570,15 +570,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendors_Result>("filtervendors", typeParameter, f1Parameter, f2Parameter, f3Parameter);
         }
     
-        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals(string eve)
-        {
-            var eveParameter = eve != null ?
-                new ObjectParameter("eve", eve) :
-                new ObjectParameter("eve", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter);
-        }
-    
         public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
@@ -640,6 +631,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("Id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPgetpartdeal_Result>("SPgetpartdeal", idParameter);
+        }
+    
+        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals(string eve)
+        {
+            var eveParameter = eve != null ?
+                new ObjectParameter("eve", eve) :
+                new ObjectParameter("eve", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter);
         }
     }
 }

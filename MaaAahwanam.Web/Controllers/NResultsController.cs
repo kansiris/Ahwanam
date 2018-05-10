@@ -75,6 +75,7 @@ namespace MaaAahwanam.Web.Controllers
                     else
                         ViewBag.results = vendorProductsService.Getfiltervendors_Result(stype.Split(',')[0], loc, "0", "0").ToList();
                     ViewBag.type = stype.Split(',')[0];
+                    ViewBag.type1 = stype.Split(',')[0];
                     int recordcount = data.Count();
                     ViewBag.count = (recordcount >= takecount) ? "1" : "0";
                     ViewBag.recordcount = recordcount;
@@ -121,6 +122,7 @@ namespace MaaAahwanam.Web.Controllers
                 else
                     ViewBag.results = vendorProductsService.Getfiltervendors_Result(type, loc, "0", "0").ToList();
                 ViewBag.type = type;
+                ViewBag.type1 = type;
                 int recordcount = data.Count();
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
                 ViewBag.recordcount = ViewBag.results.Count;
