@@ -18,7 +18,6 @@ namespace MaaAahwanam.Repository
         public string DealID { get; set; }
         public string VendorId { get; set; }
         public string VendorType { get; set; }
-        public decimal OriginalPrice { get; set; }
         public string cost { get; set; }
         public string image { get; set; }
         public string category { get; set; }
