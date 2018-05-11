@@ -17,6 +17,10 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorDeals
         public ActionResult Index(string id)
         {
+            if (TempData["Active"] != "")
+            {
+                ViewBag.msg = TempData["Active"];
+            }
             var deals = vendorProductsService.getvendordeals(id);
             ViewBag.dealrecord = deals;
             ViewBag.id = id;
@@ -35,7 +39,12 @@ namespace MaaAahwanam.Web.Controllers
             
             
             if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
-            { return Content("<script> alert('select timeslot');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>"); }
+            {
+                TempData["Active"] = "Please Login";
+                return RedirectToAction("edit", "NVendorDeals", new { pid = id, vid = vid });
+
+                //  return Content("<script> alert('select timeslot');location.href='" + @Url.Action("edit", "NVendorDeals", new { pid = id, vid = vid }) + "' </script>");
+            }
 
             string time = null;
             if (timeslot == null || timeslot == "")
@@ -66,10 +75,13 @@ namespace MaaAahwanam.Web.Controllers
                
                 deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";
                 deals = vendorVenueSignUpService.updatedeal(long.Parse(id),deals);
-                //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
-                return Content("<script language='javascript' type='text/javascript'>alert('deal updated');location.href='" + @Url.Action("Index", "NVendorDeals", new { id = vid }) + "'</script>");
+                TempData["Active"] = "Deal Updated";
+                return RedirectToAction ("Index", "NVendorDeals", new { id = vid });
+                //   return Content("<script language='javascript' type='text/javascript'>alert('deal updated');location.href='" + @Url.Action("Index", "NVendorDeals", new { id = vid }) + "'</script>");
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
+            TempData["Active"] = "Please Login";
+            return RedirectToAction("Index", "Nhomepage", new { id = vid });
+          //  return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
         }
 
         public ActionResult deletedeal(string id, string vid)
@@ -82,11 +94,15 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.vendormasterid = id;
                 if (message == "success")
                 {
+                    TempData["Active"] = "Deal Deleted";
+                    return RedirectToAction("Index", "NVendorDeals", new { id = vid });
                     //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
-                    return Content("<script language='javascript' type='text/javascript'>alert('deal deleted');location.href='" + @Url.Action("Index", "NVendorDeals", new { id = vid }) + "'</script>");
+                    //  return Content("<script language='javascript' type='text/javascript'>alert('deal deleted');location.href='" + @Url.Action("Index", "NVendorDeals", new { id = vid }) + "'</script>");
                 }
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
+            TempData["Active"] = "Please login";
+            return RedirectToAction("Index", "Nhomepage", new { id = vid });
+            //return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
         }
 
     }

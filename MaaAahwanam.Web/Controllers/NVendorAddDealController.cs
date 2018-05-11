@@ -15,6 +15,10 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string id)
         {
+            if (TempData["Active"] != "")
+            {
+                ViewBag.msg = TempData["Active"];
+            }
             var deals = vendorProductsService.getvendorsubid(id);
             ViewBag.venuerecord = deals;
             ViewBag.vendormasterid = id;
@@ -25,10 +29,20 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult adddeal(string id, string DealName, string OriginalPrice, string type, string foodtype, string DealPrice, string catogary,string minGuests,string maxGuests, string StartDate, string EndDate, string ddesc, string timeslot,string timeslot1)
         {
             if (type == "Select Type")
-            {     return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");       }
+            {
+                TempData["Active"] = "Please Login";
+                return RedirectToAction("Index", "NVendorAddDeal",  new { id = id });
+
+                // return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
+            }
 
             if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
-            { return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>"); }
+            {
+                TempData["Active"] = "Select Timeslot";
+                return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
+
+                //  return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
+            }
 
             string time = null;
             if (timeslot == null || timeslot == "")
@@ -67,8 +81,10 @@ namespace MaaAahwanam.Web.Controllers
             deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";
             deals = vendorVenueSignUpService.adddeal(deals);
 
+            TempData["Active"] = "Deal is Saved";
+            return RedirectToAction("Index", "NVendorDeals", new { id = id });
 
-            return Content("<script> alert('deal is saved');location.href='"+Url.Action("Index", "NVendorDeals", new {id = id }) + "'</script>");
+          //  return Content("<script> alert('deal is saved');location.href='"+Url.Action("Index", "NVendorDeals", new {id = id }) + "'</script>");
         }
 
         }

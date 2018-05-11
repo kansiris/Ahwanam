@@ -43,7 +43,7 @@
                                                     <td>@item.DealPrice</td>
                                                     <td>@item.OriginalPrice</td>
                                                     <td>@item.DealDescription</td>
-                                                    <td><a  href='/NVendorDeals/edit?pid=@item.DealID&vid= @item.VendorId'>Edit</a>&nbsp;&nbsp;<a  href='/NVendorDeals/deletedeal?id=@item.DealID&vid= @item.VendorId'>Delete</a></td>
+                                                    <td><a  href='/NVendorDeals/edit?pid=@item.DealID&vid= @item.VendorId'>Edit</a>&nbsp;&nbsp;<a  onclick="deld(@item.DealID)">Delete</a></td>
                                                 </tr>
     }
 }
@@ -62,4 +62,26 @@
         </div>
     </div>
 </div>
+@section scripts{
+<script>
+    function deld(did) {
+        //var paid = $(this).find('input#pid').val();
+        alertify.confirm("Are you sure You want to delete.",
+          function () {
+              alertify.success('Deleted');
+              location.href = '/NVendorDeals/deletedeal?id=' + did + '&vid= @ViewBag.id'
+          },
+          function () {
+              //alertify.error('Cancel');
+          });
+    }
+</script>
 
+@if (ViewBag.msg != "" && ViewBag.msg != null)
+{
+    <script>
+        alertify.alert("@ViewBag.msg", function () {
+        });
+    </script>
+}
+}

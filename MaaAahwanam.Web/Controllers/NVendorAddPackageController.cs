@@ -34,8 +34,10 @@ namespace MaaAahwanam.Web.Controllers
 
                 if (type == null)
                 {
+                    TempData["Active"] = "Select Type";
+                    return RedirectToAction("Index", "NVendorAddPackage", new { id = id });
 
-                    return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
+                  //  return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
                 }
               
                 DateTime updateddate = DateTime.Now;
@@ -59,10 +61,10 @@ namespace MaaAahwanam.Web.Controllers
                 package = vendorVenueSignUpService.addpack(package);
                 ViewBag.vendormasterid = id;
                 //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
-                //TempData["Active"] = "Package added";
-                //return RedirectToAction("Index", "NVendorPkgs", new { id = id });
+                TempData["Active"] = "Package added";
+                return RedirectToAction("Index", "NVendorPkgs", new { id = id });
 
-                return Content("<script language='javascript' type='text/javascript'>alert('package added');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
+              //  return Content("<script language='javascript' type='text/javascript'>alert('package added');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
             }
             else
             {

@@ -336,7 +336,7 @@
                                     {
                                         <div class="form-group col-sm-6">
                                             <label class="control-label" for="inputBasicFirstName">Service Cost</label>
-                                            <input type="text" class="form-control" id="ServiceCost" name="ServiceCost" placeholder="Service Cost" autocomplete="off" value="@ViewBag.service.ServiceCost">
+                                            <input type="text" class="form-control" id="ServiceCost" name="ServiceCost" placeholder="Service Cost" autocomplete="off" value="@ViewBag.service.StartingPrice">
                                         </div>
                                     }
                                     @if (ViewBag.category == "Other")
@@ -369,6 +369,13 @@
 
 
 @section scripts{
+<script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
+</script>
     <script>
         $('#serviceselection').on('change', function () {
             var selectedvalue = $(this).val();
@@ -383,7 +390,7 @@
                 url: "/NVendorManageStoreFront/filtercategories?type=" + selectedvalue,
                 success: function (result) {
                     if (result == "Fail") {
-                        alert("Failed to Fetch data");
+                        alertmsg("Failed to Fetch data");
                     }
                     else {
                         var selecttag = $('#subcategory').empty();
@@ -395,7 +402,7 @@
                     }
                 },
                 error: function (data)
-                { alert("Something Went Wrong Try Again Later"); }
+                { alertmsg("Something Went Wrong Try Again Later"); }
             });
         }
     </script>
@@ -447,10 +454,10 @@
                 datatype: "json",
                 data: { vendormaster: vendormaster, vendorVenue: vendorVenue },
                 success: function (response) {
-                        alert(response);
+                    alertmsg(response);
                 },
                 error: function (er) {
-                    errormsg("System Encountered Internal Error!!! Try Again After Some Time");
+                    alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
                 }
             });
         }
@@ -495,7 +502,7 @@
                 $("#"+id+" input[type='checkbox']:checked").each(function () {
                     arr[i++] = $(this).next("label").text();
                 });
-                alert(arr);
+                alertmsg(arr);
                 //$('#services').val(arr);
                 //alert($('#services').val());
                 //console.log(arr);
@@ -518,14 +525,14 @@
                     contentType: 'application/json',
                     success: function (data) {
                         if (data == "success") {
-                            alert('Image deleted successfully!');
+                            alertmsg('Image deleted successfully!');
                         }
                         else {
-                            alert('Failed!');
+                            alertmsg('Failed!');
                         }
                     },
                     error: function (data)
-                    { errormsg("Failed!!!"); }
+                    { alertmsg("Failed!!!"); }
                 });
             });
             /*=============== Image Block remove =============*/
@@ -561,18 +568,18 @@
                             processData: false,
                             success: function (data) {
                                 //Firing event if File Upload is completed!
-                                alert("Upload Completed");
+                                alertmsg("Upload Completed");
                                 $("#File1").val("");
                                 location.reload();
                             },
-                            error: function (error) { alert("Try Again After Sometime"); }
+                            error: function (error) { alertmsg("Try Again After Sometime"); }
                         })
                     } else {
-                        alert("This browser does not support HTML5 FileReader.");
+                        alertmsg("This browser does not support HTML5 FileReader.");
                     }
                 }
                 else {
-                    alert("Max 8 Photos Allowed at a time");
+                    alertmsg("Max 8 Photos Allowed at a time");
                 }
             });
             /*=============== Image upload and Placed =============*/
@@ -613,7 +620,7 @@
                     success: function (data) {
                         alert("Image Description Updated");
                     },
-                    error: function (error) { alert("Try Again After Sometime"); }
+                    error: function (error) { alertmsg("Try Again After Sometime"); }
                 });
             });
 
