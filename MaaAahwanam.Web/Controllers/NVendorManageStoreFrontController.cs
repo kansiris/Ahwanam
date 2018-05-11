@@ -457,5 +457,21 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult UploadProfilePic(HttpPostedFileBase helpSectionImages, string email)
+        {
+            string fileName = string.Empty;
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+                var filename = email + path;
+                fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
+                helpSectionImages.SaveAs(fileName);
+                userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
+            }
+            return Json(JsonRequestBehavior.AllowGet);
+        }
     }
 }
