@@ -374,6 +374,13 @@
 
 
 @section scripts{
+<script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
+</script>
     <script>
         $('#serviceselection').on('change', function () {
             var selectedvalue = $(this).val();
@@ -388,7 +395,7 @@
                 url: "/NVendorManageStoreFront/filtercategories?type=" + selectedvalue,
                 success: function (result) {
                     if (result == "Fail") {
-                        alert("Failed to Fetch data");
+                        alertmsg("Failed to Fetch data");
                     }
                     else {
                         var selecttag = $('#subcategory').empty();
@@ -400,7 +407,7 @@
                     }
                 },
                 error: function (data)
-                { alert("Something Went Wrong Try Again Later"); }
+                { alertmsg("Something Went Wrong Try Again Later"); }
             });
         }
     </script>
@@ -422,49 +429,44 @@
                     ZipCode: $('#vZipCode').val()
                 }
 
-                var vendorVenue = {
-                    Address: $('#Address').val(),
-                    Landmark: $('#Landmark').val(),
-                    City: $('#City').val(),
-                    State: $('#State').val(),
-                    ZipCode: $('#ZipCode').val(),
-                    GeoLocation: $('#GeoLocation').val(),
-                    name: $('#name').val(),
-                    Dimentions: $('#Dimentions').val(),
-                    Minimumseatingcapacity: $('#Minimumseatingcapacity').val(),
-                    Maximumcapacity: $('#Maximumcapacity').val(),
-                    Description: $('#Description').val(),
-                    VegLunchCost: $('#VegLunchCost').val(),
-                    NonVegLunchCost: $('#NonVegLunchCost').val(),
-                    VegDinnerCost: $('#VegDinnerCost').val(),
-                    NonVegDinnerCost: $('#NonVegDinnerCost').val(),
-                    MinOrder: $('#MinOrder').val(),
-                    MaxOrder: $('#MaxOrder').val(),
-                    ServiceCost: $('#ServiceCost').val(),
-                }
-                var category = '@Request.QueryString["category"]';//$('#serviceselection').val();
-                var subcategory = '@Request.QueryString["subcategory"]';//$('#subcategory').val();
-                var vendorid = '@ViewBag.id';
-                var vendorsubid = '@Request.QueryString["vid"]';
-
-                
-
-                //alert(val);
-                $.ajax({
-                    url: '/NVendorManageStoreFront/UpdateStoreFront?command=' + val + '&&category=' + category + '&&subcategory=' + subcategory + '&&id=' + vendorid + '&&vid=' + vendorsubid,
-                    type: "POST",
-                    datatype: "json",
-                    data: { vendormaster: vendormaster, vendorVenue: vendorVenue, helpSectionImages: data },
-                    success: function (response) {
-                        alert(response);
-                    },
-                    error: function (er) {
-                        errormsg("System Encountered Internal Error!!! Try Again After Some Time");
-                    }
-                });
+            var vendorVenue = {
+                Address: $('#Address').val(),
+                Landmark: $('#Landmark').val(),
+                City: $('#City').val(),
+                State: $('#State').val(),
+                ZipCode: $('#ZipCode').val(),
+                GeoLocation: $('#GeoLocation').val(),
+                name: $('#name').val(),
+                Dimentions: $('#Dimentions').val(),
+                Minimumseatingcapacity: $('#Minimumseatingcapacity').val(),
+                Maximumcapacity: $('#Maximumcapacity').val(),
+                Description: $('#Description').val(),
+                VegLunchCost: $('#VegLunchCost').val(),
+                NonVegLunchCost: $('#NonVegLunchCost').val(),
+                VegDinnerCost: $('#VegDinnerCost').val(),
+                NonVegDinnerCost: $('#NonVegDinnerCost').val(),
+                MinOrder: $('#MinOrder').val(),
+                MaxOrder: $('#MaxOrder').val(),
+                ServiceCost: $('#ServiceCost').val(),
             }
-
-        
+            var category = '@Request.QueryString["category"]';//$('#serviceselection').val();
+            var subcategory = '@Request.QueryString["subcategory"]';//$('#subcategory').val();
+            var vendorid = '@ViewBag.id';
+            var vendorsubid = '@Request.QueryString["vid"]';
+            //alert(val);
+            $.ajax({
+                url: '/NVendorManageStoreFront/UpdateStoreFront?command=' + val + '&&category=' + category + '&&subcategory=' + subcategory + '&&id=' + vendorid + '&&vid=' + vendorsubid,
+                type: "POST",
+                datatype: "json",
+                data: { vendormaster: vendormaster, vendorVenue: vendorVenue },
+                success: function (response) {
+                    alertmsg(response);
+                },
+                error: function (er) {
+                    alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
+                }
+            });
+        }
     </script>
 
     @if (ViewBag.display == "1")
@@ -506,7 +508,7 @@
                 $("#"+id+" input[type='checkbox']:checked").each(function () {
                     arr[i++] = $(this).next("label").text();
                 });
-                alert(arr);
+                alertmsg(arr);
                 //$('#services').val(arr);
                 //alert($('#services').val());
                 //console.log(arr);
@@ -529,14 +531,14 @@
                     contentType: 'application/json',
                     success: function (data) {
                         if (data == "success") {
-                            alert('Image deleted successfully!');
+                            alertmsg('Image deleted successfully!');
                         }
                         else {
-                            alert('Failed!');
+                            alertmsg('Failed!');
                         }
                     },
                     error: function (data)
-                    { errormsg("Failed!!!"); }
+                    { alertmsg("Failed!!!"); }
                 });
             });
             /*=============== Image Block remove =============*/
@@ -572,18 +574,18 @@
                             processData: false,
                             success: function (data) {
                                 //Firing event if File Upload is completed!
-                                alert("Upload Completed");
+                                alertmsg("Upload Completed");
                                 $("#File1").val("");
                                 location.reload();
                             },
-                            error: function (error) { alert("Try Again After Sometime"); }
+                            error: function (error) { alertmsg("Try Again After Sometime"); }
                         })
                     } else {
-                        alert("This browser does not support HTML5 FileReader.");
+                        alertmsg("This browser does not support HTML5 FileReader.");
                     }
                 }
                 else {
-                    alert("Max 8 Photos Allowed at a time");
+                    alertmsg("Max 8 Photos Allowed at a time");
                 }
             });
             /*=============== Image upload and Placed =============*/
@@ -624,7 +626,7 @@
                     success: function (data) {
                         alert("Image Description Updated");
                     },
-                    error: function (error) { alert("Try Again After Sometime"); }
+                    error: function (error) { alertmsg("Try Again After Sometime"); }
                 });
             });
 

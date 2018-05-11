@@ -16,6 +16,10 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorPackages
         public ActionResult Index(string id)
         {
+            if (TempData["Active"] != "")
+            {
+                ViewBag.msg = TempData["Active"];
+            }
             var pkgs = vendorProductsService.getvendorpkgs(id);
             ViewBag.pacakagerecord = pkgs;
             ViewBag.id = id;
@@ -48,10 +52,14 @@ namespace MaaAahwanam.Web.Controllers
                 package.UpdatedDate = updateddate;
                 package = vendorVenueSignUpService.updatepack(id, package);
                 ViewBag.vendormasterid = id;
+                TempData["Active"] = "Package Updated";
+                return RedirectToAction("Index", "NVendorPkgs",new { id = vid });
                 //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
-                return Content("<script language='javascript' type='text/javascript'>alert('package updated');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = vid }) + "'</script>");
+                //return Content("<script language='javascript' type='text/javascript'>alert('package updated');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = vid }) + "'</script>");
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
+            TempData["Active"] = "package updated";
+            return RedirectToAction("Index", "Nhomepage", new { id = vid });
+          //  return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
         }
         public ActionResult deletepkg(string id, string vid)
         {
@@ -63,14 +71,18 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.vendormasterid = id;
                 if (message == "success")
                 {
-                    TempData["Active"] = "Package deleted";
-                    return RedirectToAction("Index", "NVendorPkgs", new { id = vid });
+                    //TempData["Active"] = "Package deleted";
+                    //return RedirectToAction("Index", "NVendorPkgs", new { id = vid });
 
                     //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
-                    //    return Content("<script language='javascript' type='text/javascript'>alert('package deleted');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = vid }) + "'</script>");
+                    TempData["Active"] = "Package Deleted";
+                    return RedirectToAction("Index", "NVendorPkgs", new { id = vid });
+                  //  return Content("<script language='javascript' type='text/javascript'>alert('package deleted');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = vid }) + "'</script>");
                 }
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
+            TempData["Active"] = "Please Login";
+            return RedirectToAction("Index", "Nhomepage", new { id = vid });
+          //  return Content("<script language='javascript' type='text/javascript'>alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
         }
     }
 
