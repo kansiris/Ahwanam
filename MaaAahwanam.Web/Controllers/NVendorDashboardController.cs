@@ -20,19 +20,19 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "User")
-                {
+                //if (user.UserType == "User")
+                //{
                     ViewBag.id = id;
                     ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
                     var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
                     ViewBag.order = orders.OrderByDescending(m => m.OrderId);
                     UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                     ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
-                }
-                else
-                {
-                    return RedirectToAction("Index", "NHomePage");
-                }
+                //}
+                //else
+                //{
+                //    return RedirectToAction("Index", "NUserRegistration");
+                //}
             }
             else
             {
