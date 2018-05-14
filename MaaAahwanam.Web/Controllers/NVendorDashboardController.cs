@@ -14,6 +14,8 @@ namespace MaaAahwanam.Web.Controllers
     {
         OrderService orderService = new OrderService();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+
         // GET: NVendorDashboard
         public ActionResult Index(string id)
         {
@@ -26,7 +28,6 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
                     var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
                     ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-                    UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
                     ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
                 //}
                 //else
@@ -46,7 +47,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                ViewBag.id = user.UserId;
                 ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
             }
             return PartialView("VendorAuth");

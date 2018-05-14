@@ -149,9 +149,11 @@ namespace MaaAahwanam.Web.Controllers
                         if (perfecturl != null && perfecturl != "")
                             return Redirect(perfecturl);
                         if (userResponse.UserType == "Vendor")
+                        {
+                            var vnid = userResponse.UserLoginId;
                             //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
-                            return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
-
+                            return RedirectToAction("Index", "NVendorDashboard", new { id = vnid });
+                        }
                         else
                             ViewBag.userid = userResponse.UserLoginId;
                         return RedirectToAction("Index", "NHomePage");
