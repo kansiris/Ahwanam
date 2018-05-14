@@ -70,7 +70,7 @@ namespace MaaAahwanam.Web.Controllers
             var value = (type == null || type == "Venues") ? "Venue" : type;
             var records = vendorProductsService.Getsearchvendorproducts_Result(search, value);
             if (type == "Hotel" || type == "Resort" || type == "Convention Hall")
-                records = records.Where(m => m.subtype == type).Take(6).ToList();
+                records = records.Where(m => m.subtype.Contains(type)).Take(6).ToList();
             else
                 records = records.Take(6).ToList();
             ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V", value).Where(m => m.landmark == location).Take(6).ToList() :  records;//vendorProductsService.Getsearchvendorproducts_Result(search, value).Where(m => m.subtype == type).Take(6).ToList();//vendorProductsService.Getsearchvendorproducts_Result(search, value).Take(6).ToList(); //.Where(m => m.landmark == location)

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = ":: Ahwanam ::";
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
+    var i = 0; var j = 0; var k = 0;
 }
 
 <div class="container-fluid userProfile">
@@ -53,7 +54,7 @@
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-
+                                            <th>S.No</th>
                                             <th>OrderID</th>
                                             <th>Vendor Details</th>
                                             <th>Order Date</th>
@@ -65,31 +66,31 @@
                                     <tbody>
                                         @foreach (var item in ViewBag.order)
                                         {
-                                        <tr>
-
-                                            <td>@item.OrderId</td>
-                                            <td>
-                                                <h4>@item.BusinessName</h4>
-                                                <p>
-                                                    @item.Landmark<br>
-                                                    @item.Address, @item.City,<br>
-                                                    @item.ContactNumber
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <div class="event-date-time">
-                                                    <div class="event-dates">
-                                                        @item.OrderDate
+                                            <tr>
+                                                <td>@(++i)</td>
+                                                <td>@item.OrderId</td>
+                                                <td>
+                                                    <h4>@item.BusinessName</h4>
+                                                    <p>
+                                                        @item.Landmark<br>
+                                                        @item.Address, @item.City,<br>
+                                                        @item.ContactNumber
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            @item.OrderDate
+                                                        </div>
+                                                </td>
+                                                <td>@item.Status</td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
                                                     </div>
-                                            </td>
-                                            <td>@item.Status</td>
-                                            <td>
-                                                <div class="item-price">
-                                                    <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
-                                                </div>
 
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -100,38 +101,54 @@
                                 <thead>
                                     <tr>
                                         <th>S.No</th>
-                                        <th>Event/Services 1</th>
-                                        <th>Service List</th>
-                                        <th>Budget</th>
+                                        <th>OrderID</th>
+                                        <th>Vendor Details</th>
+                                        <th>Order Date</th>
                                         <th>Status</th>
-                                        <th>Manage</th>
+                                        <th>Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mary</td>
-                                        <td>Moe</td>
-                                        <td>mary@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>July</td>
-                                        <td>Dooley</td>
-                                        <td>july@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
+                                    @if (ViewBag.orderhistory.Count != 0)
+                                    {
+
+                                        foreach (var item in ViewBag.orderhistory)
+                                        {
+                                            <tr>
+                                                <td>@(++j)</td>
+                                                <td>@item.OrderId</td>
+                                                <td>
+                                                    <h4>@item.BusinessName</h4>
+                                                    <p>
+                                                        @item.Landmark<br>
+                                                        @item.Address, @item.City,<br>
+                                                        @item.ContactNumber
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            @item.OrderDate
+                                                        </div>
+                                                </td>
+                                                <td>@item.Status</td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <p>No Past Orders</p>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -140,38 +157,46 @@
                                 <thead>
                                     <tr>
                                         <th>S.No</th>
-                                        <th>Event/Services 2</th>
-                                        <th>Service List</th>
-                                        <th>Budget</th>
+                                        <th>Service Type</th>
+                                        <th>Business Name</th>
+                                        <th>Whishlisted Date</th>
                                         <th>Status</th>
                                         <th>Manage</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mary</td>
-                                        <td>Moe</td>
-                                        <td>mary@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>July</td>
-                                        <td>Dooley</td>
-                                        <td>july@example.com</td>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
+                                    @if (ViewBag.whishlists.Count != 0)
+                                    {
+
+                                        foreach (var item in ViewBag.whishlists)
+                                        {
+                                            <tr>
+                                                <td>@(++k)</td>
+                                                <td>@item.ServiceType</td>
+                                                <td>
+                                                    <h4>@item.BusinessName</h4>
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            @item.WhishListedDate
+                                                        </div>
+                                                </td>
+                                                <td>@item.Status</td>
+                                                <td>
+                                                    <a>Remove</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <p>No Wishlists</p>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -234,13 +259,13 @@
 </div>
 
 @section scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
         //$(document).ready(function () {
         //    $('body').attr("id", "userAuthentication");
         //});
         $('.container').hide();
         $('.search').hide();
-</script>
+    </script>
 
 
     <script type="text/javascript">

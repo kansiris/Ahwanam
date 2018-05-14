@@ -38,10 +38,10 @@ namespace MaaAahwanam.Web.Controllers
             //if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement" }.Contains(type))
             if(stype != null && stype != "")
             {
-                if (new string[] { "Hotel", "Resort", "Convention Hall","Convention-Hall" }.Contains(stype.Split(',')[0]))
+                if (new string[] { "Hotel", "Resort", "Convention Hall","Convention-Hall", "ConventionHall" }.Contains(stype.Split(',')[0]))
                 {
                     string selectedtype = stype.Split(',')[0];
-                    selectedtype = (stype.Split(',')[0] == "Convention-Hall") ? "Convention Hall" : stype.Split(',')[0];
+                    selectedtype = (stype.Split(',')[0] == "Convention-Hall" || stype.Split(',')[0] == "ConventionHall") ? "Convention Hall" : stype.Split(',')[0];
                     var data = vendorProductsService.Getfiltervendors_Result(selectedtype, loc, budget, count);
                     //string[] venuetypes = { "Convention-Hall", "Function Hall", "Banquet Hall", "Meeting Room", "Hotel", "Resort", "Convention Hall" };
                     //List<string> matchingvenues = venuetypes.Intersect(stype.Split(',')).ToList();
@@ -73,7 +73,7 @@ namespace MaaAahwanam.Web.Controllers
                     if (data.Count > 0)
                         ViewBag.results = data.Take(takecount).ToList();
                     else
-                        ViewBag.results = vendorProductsService.Getfiltervendors_Result(stype.Split(',')[0], loc, "0", "0").ToList();
+                        ViewBag.results = vendorProductsService.Getfiltervendors_Result(stype.Split(',')[0], loc, "0", "0").Take(takecount).ToList();
                     ViewBag.type = stype.Split(',')[0];
                     ViewBag.type1 = stype.Split(',')[0];
                     int recordcount = data.Count();
@@ -93,17 +93,17 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView();
             }
 
-            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "BanquetHall", "FunctionHall" ,"Banquet","Function", "Banquet Hall", "Function Hall" }.Contains(type))
+            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "BanquetHall", "FunctionHall" ,"Banquet","Function", "Banquet Hall", "Function Hall" , "ConventionHall" }.Contains(type))
             {
                 string type1 = type;
-                type1 = (type1 == "Convetion" || type1 == "Convention") ? "Convention Hall" : type1;
+                type1 = (type1 == "Convetion" || type1 == "Convention" || type1 == "ConventionHall") ? "Convention Hall" : type1;
                 type1 = (type1 == "BanquetHall" || type1 == "Banquet") ? "Banquet Hall" : type1;
                 type1 = (type1 == "FunctionHall" || type1 == "Function") ? "Function Hall" : type1;
                 var data = vendorProductsService.Getfiltervendors_Result(type1, loc, budget, count);
                 if (data.Count > 0)
                     ViewBag.results = data.Take(takecount).ToList();
                 else
-                    ViewBag.results = vendorProductsService.Getfiltervendors_Result(type1, loc, "0", "0").ToList();
+                    ViewBag.results = vendorProductsService.Getfiltervendors_Result(type1, loc, "0", "0").Take(takecount).ToList();
                 ViewBag.type1 = type1;
                 type = (type == "Banquet Hall" || type == "Banquet") ? "BanquetHall" : type;
                 type = (type == "Function Hall" || type == "Function") ? "FunctionHall" : type;
