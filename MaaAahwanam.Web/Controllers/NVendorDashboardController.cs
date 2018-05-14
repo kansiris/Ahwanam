@@ -47,8 +47,11 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                ViewBag.id = user.UserId;
-                ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
+                //ViewBag.id = user.UserId;
+                var vendorrecord = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString()));
+                ViewBag.profilepic = vendorrecord.UserImgName;
+                var emailid = vendorrecord.AlternativeEmailID;
+                ViewBag.id = vendorMasterService.GetVendorByEmail(emailid).Id;
             }
             return PartialView("VendorAuth");
         }
