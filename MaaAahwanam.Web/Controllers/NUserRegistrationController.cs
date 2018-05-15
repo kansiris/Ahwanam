@@ -200,7 +200,6 @@ namespace MaaAahwanam.Web.Controllers
                     txtto = userLogin.UserName;
                     string mailid = userLogin.UserName;
                     var userR = venorVenueSignUpService.GetUserdetails(mailid);
-
                     string pas1 = userR.Password;
                     string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/WelcomeMessage.html"));
@@ -255,7 +254,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult ActivateEmail1(string ActivationCode, string Email)
         {
             UserLogin userLogin = new UserLogin();
-
+            UserDetail userDetails = new UserDetail();
             if (ActivationCode == "")
             { ActivationCode = null; }
             var userResponse = venorVenueSignUpService.GetUserdetails(Email);
@@ -265,11 +264,12 @@ namespace MaaAahwanam.Web.Controllers
                 if (ActivationCode == userResponse.ActivationCode)
                 {
                     userLogin.Status = "Active";
+                    userDetails.Status = "Active";
 
                     string email = userLogin.UserName;
 
                     var userid = userResponse.UserLoginId;
-                    userLoginDetailsService.changestatus(userLogin, (int)userid);
+                    userLoginDetailsService.changestatus(userLogin, userDetails,(int)userid);
 
                     return RedirectToAction("Index", "NUserRegistration");
 
