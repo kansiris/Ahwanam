@@ -473,5 +473,8 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
+
+        public void UpdateAmenities()
+        { }
     }
 }
