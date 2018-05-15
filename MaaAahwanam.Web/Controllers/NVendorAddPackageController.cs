@@ -32,7 +32,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
 
-                if (type == null)
+                if (type == "Type")
                 {
                     TempData["Active"] = "Select Type";
                     return RedirectToAction("Index", "NVendorAddPackage", new { id = id });

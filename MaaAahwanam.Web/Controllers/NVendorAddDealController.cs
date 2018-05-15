@@ -30,8 +30,15 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (type == "Select Type")
             {
-                TempData["Active"] = "Please Login";
+                TempData["Active"] = "Select Type";
                 return RedirectToAction("Index", "NVendorAddDeal",  new { id = id });
+
+                // return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
+            }
+            if (catogary == "Select Event")
+            {
+                TempData["Active"] = "Select Event";
+                return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
 
                 // return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
             }
@@ -44,6 +51,16 @@ namespace MaaAahwanam.Web.Controllers
                 //  return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
             }
 
+            DateTime s = Convert.ToDateTime(StartDate);
+            DateTime e = Convert.ToDateTime(EndDate);
+
+            if (e < s)
+            {
+                TempData["Active"] = "Start Date should be lesser than End Date";
+                return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
+
+                //  return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
+            }
             string time = null;
             if (timeslot == null || timeslot == "")
             { time = timeslot1; }
@@ -80,7 +97,7 @@ namespace MaaAahwanam.Web.Controllers
             deals.Category = catogary;
             deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";
             deals = vendorVenueSignUpService.adddeal(deals);
-
+            ViewBag.id = id;
             TempData["Active"] = "Deal is Saved";
             return RedirectToAction("Index", "NVendorDeals", new { id = id });
 

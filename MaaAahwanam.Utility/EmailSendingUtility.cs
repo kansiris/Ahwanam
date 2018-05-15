@@ -23,7 +23,7 @@ namespace MaaAahwanam.Utility
             Msg.IsBodyHtml = true;
             // your remote SMTP server IP.
             SmtpClient smtp = new SmtpClient();
-            smtp.Host = ("SMTP.GMAIL.com").ToString();
+            smtp.Host = ("smtp.gmail.com").ToString();
             System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
             NetworkCred.UserName = ("maaaahwanamtest@gmail.com").ToString();
             NetworkCred.Password = ("maaaahwanamtest").ToString();

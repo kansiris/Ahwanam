@@ -71,9 +71,9 @@ namespace MaaAahwanam.Service
             var changes = userLoginRepository.UpdatePassword(userLogin, UserLoginId);
             return changes;
         }
-        public UserLogin changestatus(UserLogin userLogin, int UserLoginId)
+        public UserLogin changestatus(UserLogin userLogin, UserDetail userDetails, int UserLoginId)
         {
-            var changes = userLoginRepository.Updatestatus(userLogin, UserLoginId);
+            var changes = userLoginRepository.Updatestatus(userLogin,userDetails, UserLoginId);
             return changes;
         }
         public string SetUserDP(int userloginid)

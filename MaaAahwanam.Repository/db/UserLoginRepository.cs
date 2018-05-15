@@ -65,13 +65,18 @@ namespace MaaAahwanam.Repository.db
             }
             return userLogin;
         }
-        public UserLogin Updatestatus(UserLogin userLogin, int UserloginID)
+        public UserLogin Updatestatus(UserLogin userLogin,UserDetail userDetails, int UserloginID)
         {
             // Query the database for the row to be updated.
             var query =
                 from ord in _dbContext.UserLogin
                 where ord.UserLoginId == UserloginID
                 select ord;
+            // Query the database for the row to be updated.
+            var query1 =
+                from ord1 in _dbContext.UserDetail
+                where ord1.UserLoginId == UserloginID
+                select ord1;
 
             // Execute the query, and change the column values
             // you want to change.
@@ -81,6 +86,11 @@ namespace MaaAahwanam.Repository.db
                 // Insert any additional changes to column values.
             }
 
+            foreach (UserDetail ord1 in query1)
+            {
+                ord1.Status = userDetails.Status;
+                // Insert any additional changes to column values.
+            }
             // Submit the changes to the database.
             try
             {
