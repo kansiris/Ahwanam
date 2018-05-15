@@ -151,8 +151,9 @@ namespace MaaAahwanam.Web.Controllers
                         if (userResponse.UserType == "Vendor")
                         {
                             var vnid = userResponse.UserLoginId;
+                            return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
                             //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
-                            return RedirectToAction("Index", "NVendorDashboard", new { id = vnid });
+                            //return RedirectToAction("Index", "NVendorDashboard", new { id = vnid });
                         }
                         else
                             ViewBag.userid = userResponse.UserLoginId;
