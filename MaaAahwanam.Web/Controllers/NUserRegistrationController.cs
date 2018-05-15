@@ -186,15 +186,33 @@ namespace MaaAahwanam.Web.Controllers
                     int id = Convert.ToInt32(userResponse.UserLoginId);
                     var userdetails = userLoginDetailsService.GetUser(id);
                     string name = userdetails.FirstName;
+                    //txtto = userLogin.UserName;
+                    //string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                    //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
+                    //string readFile = File.OpenText().ReadToEnd();
+                    //readFile = readFile.Replace("[ActivationLink]", url);
+                    //readFile = readFile.Replace("[name]", name);
+                    //string txtmessage = readFile;//readFile + body;
+                    //string subj = "Password reset information";
+
+
+                    // vendor mail activation  begin
                     txtto = userLogin.UserName;
-                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
-                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
+                    string mailid = userLogin.UserName;
+                    var userR = venorVenueSignUpService.GetUserdetails(mailid);
+
+                    string pas1 = userR.Password;
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/WelcomeMessage.html"));
                     string readFile = File.OpenText().ReadToEnd();
                     readFile = readFile.Replace("[ActivationLink]", url);
                     readFile = readFile.Replace("[name]", name);
+                    readFile = readFile.Replace("[username]", mailid);
+                    readFile = readFile.Replace("[pass1]", pas1);
                     string txtmessage = readFile;//readFile + body;
-                    string subj = "Password reset information";
+                    string subj = "Welcome to Ahwanam";
 
+                    // vendor mail activation  end
 
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
