@@ -92,9 +92,9 @@ namespace MaaAahwanam.Service
         public VendorVenue activeVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid, long vid)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();
-            vendorVenue.Status = "Active";
+           // vendorVenue.Status = "Active";
             vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendorMaster.Status = "Active";
+           // vendorMaster.Status = "Active";
             vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Venue";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
@@ -105,9 +105,9 @@ namespace MaaAahwanam.Service
         public VendorVenue inactiveVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid, long vid)
         {
             string updateddate = DateTime.UtcNow.ToShortDateString();
-            vendorVenue.Status = "InActive";
+        //    vendorVenue.Status = "InActive";
             vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
-            vendorMaster.Status = "InActive";
+          //  vendorMaster.Status = "InActive";
             vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
             vendorMaster.ServicType = "Venue";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
