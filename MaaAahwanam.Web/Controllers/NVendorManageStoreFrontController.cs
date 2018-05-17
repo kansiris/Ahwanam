@@ -229,6 +229,7 @@ namespace MaaAahwanam.Web.Controllers
                 else if (category == "Other")
                 {
                     VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(long.Parse(id), long.Parse(vid));
+                    if(vendorVenue.ServiceCost != 0)
                     vendorsOther.ItemCost = vendorVenue.ServiceCost;
                     vendorsOther.MinOrder = vendorVenue.MinOrder;
                     vendorsOther.MaxOrder = vendorVenue.MaxOrder;

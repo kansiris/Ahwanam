@@ -11,6 +11,7 @@ namespace MaaAahwanam.Web.Controllers
     public class NVendorStoreFrontController : Controller
     {
         VendorImageService vendorImageService = new VendorImageService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         // GET: NVendorStoreFront
         public ActionResult Index(string id)
@@ -20,6 +21,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.msg = TempData["Active"];
             }
             ViewBag.id = id;
+            ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
             var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList();
             var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
             var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
