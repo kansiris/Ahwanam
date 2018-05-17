@@ -10,6 +10,7 @@ using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.Text.RegularExpressions;
 using MaaAahwanam.Repository;
+using System.Globalization;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -48,8 +49,8 @@ namespace MaaAahwanam.Web.Controllers
                     var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
                     ViewBag.emailid = userdata1.UserName;
                     var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                    ViewBag.order = orders.OrderByDescending(m=>m.OrderId).Where(m=>m.Status == "Pending").ToList();
-                    ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m=>m.Status == "InActive").ToList();
+                    ViewBag.order = orders.OrderByDescending(m=>m.OrderId).Where(m => m.Status == "Pending" ).ToList();
+                    ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m=>m.Status == "InActive" || m.Status == "Cancelled").ToList();
                     WhishListService whishListService = new WhishListService();
                     ViewBag.whishlists = whishListService.GetWhishList(user.UserId.ToString());
                     // OrderByDescending(m => m.OrderId).Take(10);
@@ -69,6 +70,70 @@ namespace MaaAahwanam.Web.Controllers
             return RedirectToAction("Index", "NUserRegistration");
            // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
         }
+        public ActionResult orderdelete(string orderid)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                if (user.UserType == "Vendor")
+                {
+                    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
+                }
+                if (user.UserType == "User")
+                {
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                    
+                    
+                    var orders = orderService.userOrderList().Where(m => m.OrderId  == Convert.ToInt64(orderid));
+                    Order order = new Order();
+                    OrderDetail orderdetail = new OrderDetail();
+                    order.Status = "Removed";
+                    orderdetail.Status = "Removed";
+                    order = orderService.updateOrderstatus(order , orderdetail, Convert.ToInt64(orderid));
+                    TempData["Active"] = "Order Deleted";
+                    return RedirectToAction("Index", "NUserProfile");
+                }
+                TempData["Active"] = "Please Login";
+                return RedirectToAction("Index", "NUserRegistration");
+                // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+            }
+            TempData["Active"] = "Please Login";
+            return RedirectToAction("Index", "NUserRegistration");
+            // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+        }
+
+        public ActionResult ordercancel(string orderid)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                if (user.UserType == "Vendor")
+                {
+                    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
+                }
+                if (user.UserType == "User")
+                {
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+
+
+                    var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
+                    Order order = new Order();
+                    OrderDetail orderdetail = new OrderDetail();
+                    order.Status = "Cancelled";
+                    orderdetail.Status = "Cancelled";
+                    order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+                    TempData["Active"] = "Order Cancelled";
+                    return RedirectToAction("Index", "NUserProfile");
+                }
+                TempData["Active"] = "Please Login";
+                return RedirectToAction("Index", "NUserRegistration");
+                // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+            }
+            TempData["Active"] = "Please Login";
+            return RedirectToAction("Index", "NUserRegistration");
+            // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+        }
+
 
         public ActionResult changepassword(UserLogin userLogin)
         {

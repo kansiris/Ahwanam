@@ -8,6 +8,7 @@
         user = (CustomPrincipal)HttpContext.Current.User;
     }
 }
+@using System.Globalization
 
 <div class="container-fluid dealProfile">
     <div class="row innerPagesBg py-2">
@@ -28,10 +29,10 @@
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@ViewBag.servicetypeprice</text> /-</div>
+                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)) </text > / -</div >
 
                         <div class="w-100 tags my-15">
-                            @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
+                            @if(new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
                             {
                                 if (ViewBag.particularVenue.HallType != null && ViewBag.particularVenue.HallType != "")
                                 {
@@ -58,19 +59,19 @@
                                     </div>
                                 }
                             }
-                            @if (Request.QueryString["type"] == "Catering")
+                            @if(Request.QueryString["type"] == "Catering")
+                        {
+                            if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
                             {
-                                if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
-                                {
                                     <div class="d-inline-block p-2 mr-4 greyBg">
                                         <p class="mb-0"><span>LiveCookingStation : @ViewBag.particularCatering.LiveCookingStation</span></p>
                                     </div>
                                 }
                             }
-                            @if (Request.QueryString["type"] == "Photography")
+                            @if(Request.QueryString["type"] == "Photography")
+                        {
+                            if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
                             {
-                                if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
-                                {
                                     <div class="d-inline-block p-2 mr-4 greyBg">
                                         <p class="mb-0"><span>Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot</span></p>
                                     </div>
