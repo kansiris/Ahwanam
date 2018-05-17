@@ -150,9 +150,10 @@ namespace MaaAahwanam.Web.Controllers
                 inputcategory = (takecount > 6) ? type : services[0];
             else
                 inputcategory = (takecount > 6) ? type : selectedservices[0];
-            if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
+            if (stype.Split(',').Length > 1) inputcategory = stype.Split(',')[1];
+            //if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
             type1 = (inputcategory == "Convetion" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "ConventionHall") ? "Convention Hall" : inputcategory;
-            if (takecount > 6) inputcategory = type1;
+            //if (takecount > 6) inputcategory = type1;
             loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             count = (count != "undefined" && count != "") ? count : "10";
@@ -220,9 +221,10 @@ namespace MaaAahwanam.Web.Controllers
                 inputcategory = (takecount > 6) ? type : services[0];
             else
                 inputcategory = (takecount > 6) ? type : selectedservices[0];
-            if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
+            if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2];
+            //if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
             type1 = (inputcategory == "Convetion" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "ConventionHall") ? "Convention Hall" : inputcategory;
-            if (takecount > 6) inputcategory = type1;
+            //if (takecount > 6) inputcategory = type1;
                 loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             var data = vendorProductsService.Getfiltervendors_Result(inputcategory, loc, "0", "0");
@@ -286,9 +288,10 @@ namespace MaaAahwanam.Web.Controllers
                 inputcategory = (takecount > 6) ? type : services[0];
             else
                 inputcategory = (takecount > 6) ? type : selectedservices[0];
-            if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
+            if (stype.Split(',').Length > 3) inputcategory = stype.Split(',')[3];
+            //if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
             type1 = (inputcategory == "Convetion" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "ConventionHall") ? "Convention Hall" : inputcategory;
-            if (takecount > 6) inputcategory = type1;
+            //if (takecount > 6) inputcategory = type1;
             loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             var data = vendorProductsService.Getfiltervendors_Result(inputcategory, loc, "0", "0");
@@ -352,9 +355,10 @@ namespace MaaAahwanam.Web.Controllers
                 inputcategory = (takecount > 6) ? type : services[0];
             else
                 inputcategory = (takecount > 6) ? type : selectedservices[0];
-            if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
+            if (stype.Split(',').Length > 4) inputcategory = stype.Split(',')[4];
+            //if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
             type1 = (inputcategory == "Convetion" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "ConventionHall") ? "Convention Hall" : inputcategory;
-            if (takecount > 6) inputcategory = type1;
+            //if (takecount > 6) inputcategory = type1;
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             var data = vendorProductsService.Getfiltervendors_Result(inputcategory, loc, "0", "0");
             if (inputcategory == "Mehendi" || inputcategory == "Pandit")
