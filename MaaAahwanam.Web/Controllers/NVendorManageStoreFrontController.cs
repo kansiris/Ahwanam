@@ -100,14 +100,16 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult UpdateStoreFront(string command, string category, string subcategory, string id, string vid, Vendormaster vendormaster, VendorVenue vendorVenue)
         {
+            vendormaster.ServicType = category;
             if (command == "one")
             {
-                vendormaster = vendorMasterService.UpdateVendorMaster(vendormaster, long.Parse(id)); //updating Vendor Master
+                vendormaster = vendorMasterService.UpdateVendorStorefront(vendormaster, long.Parse(id)); //updating Vendor Master
                 return Json("Basic Details Updated");
             }
             else if (command == "two")
             {
-
+                UpdateAmenities(category, subcategory, vendorVenue.Distancefrommainplaceslike, id, vid);
+                return Json("Amenities Updated");
             }
             else if (command == "three")
             {
@@ -183,7 +185,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (command == "six")
             {
-                vendormaster = vendorMasterService.UpdateVendorMaster(vendormaster, long.Parse(id)); //updating Vendor Master
+                vendormaster = vendorMasterService.UpdateVendorStorefront(vendormaster, long.Parse(id)); //updating Vendor Master
                 return Json("Your Address Updated");
             }
             else if (command == "seven")
@@ -474,7 +476,75 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public void UpdateAmenities()
-        { }
+        public void UpdateAmenities(string category, string subcategory, string selectedamenities,string id,string vid)
+        {
+            //long count = 0;
+            Vendormaster vendormaster = new Vendormaster();
+            vendormaster.ServicType = category;
+            string[] selectedamenitieslist = selectedamenities.Split(',');
+            if (category == "Venue")
+            {
+                VendorVenue vendorVenue = new VendorVenue();
+                if (selectedamenitieslist.Contains("CockTails")) vendorVenue.CockTails = "Yes";
+                if (selectedamenitieslist.Contains("Rooms")) vendorVenue.Rooms = "Yes";
+                if (selectedamenitieslist.Contains("Wifi")) vendorVenue.Wifi = "Yes";
+                if (selectedamenitieslist.Contains("Live Cooking Station")) vendorVenue.LiveCookingStation = "Yes";
+                if (selectedamenitieslist.Contains("Decoration Allowed")) vendorVenue.DecorationAllowed = "Yes";
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                //if (vendorVenue.Id != 0) count = vendorVenue.Id;
+            }
+            else if (category == "Catering")
+            {
+                VendorsCatering vendorsCatering = new VendorsCatering();
+                if (selectedamenitieslist.Contains("Mineral Water Included")) vendorsCatering.MineralWaterIncluded = "Yes";
+                if (selectedamenitieslist.Contains("Transport Included")) vendorsCatering.TransportIncluded = "Yes";
+                if (selectedamenitieslist.Contains("Live Cooking Station")) vendorsCatering.LiveCookingStation = "Yes";
+                vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, long.Parse(id), long.Parse(vid));
+                //if (vendorsCatering.Id != 0) count = vendorsCatering.Id;
+            }
+            else if (category == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                if (selectedamenitieslist.Contains("Pre Wedding Shoot")) vendorsPhotography.PreWeddingShoot = "Yes";
+                if (selectedamenitieslist.Contains("Destination Photography")) vendorsPhotography.DestinationPhotography = "Yes";
+                vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, long.Parse(id), long.Parse(vid));
+                //if (vendorsPhotography.Id != 0) count = vendorsPhotography.Id;
+            }
+            else if (category == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                if (selectedamenitieslist.Contains("Archway")) vendorsDecorator.Archway = "Yes";
+                if (selectedamenitieslist.Contains("Altar arrangements")) vendorsDecorator.Altararrangements = "Yes";
+                if (selectedamenitieslist.Contains("Pew bows")) vendorsDecorator.Pewbows = "Yes";
+                if (selectedamenitieslist.Contains("Aisle runner")) vendorsDecorator.Aislerunner = "Yes";
+                if (selectedamenitieslist.Contains("Head pieces")) vendorsDecorator.Headpieces = "Yes";
+                if (selectedamenitieslist.Contains("Center pieces")) vendorsDecorator.Centerpieces = "Yes";
+                if (selectedamenitieslist.Contains("Chair covers")) vendorsDecorator.Chaircovers = "Yes";
+                if (selectedamenitieslist.Contains("Head table decor")) vendorsDecorator.Headtabledecor = "Yes";
+                if (selectedamenitieslist.Contains("Backdrops")) vendorsDecorator.Backdrops = "Yes";
+                if (selectedamenitieslist.Contains("Ceiling canopies")) vendorsDecorator.Ceilingcanopies = "Yes";
+                if (selectedamenitieslist.Contains("Mandaps")) vendorsDecorator.Mandaps = "Yes";
+                if (selectedamenitieslist.Contains("Mehendi")) vendorsDecorator.Mehendi = "Yes";
+                if (selectedamenitieslist.Contains("Sangeet")) vendorsDecorator.Sangeet = "Yes";
+                if (selectedamenitieslist.Contains("Chuppas")) vendorsDecorator.Chuppas = "Yes";
+                if (selectedamenitieslist.Contains("Lighting")) vendorsDecorator.Lighting = "Yes";
+                if (selectedamenitieslist.Contains("Gifts for guests")) vendorsDecorator.Giftsforguests = "Yes";
+                if (selectedamenitieslist.Contains("Gift table")) vendorsDecorator.Gifttable = "Yes";
+                if (selectedamenitieslist.Contains("Basket or Box for gifts")) vendorsDecorator.BasketorBoxforgifts = "Yes";
+                if (selectedamenitieslist.Contains("Place or seating cards")) vendorsDecorator.Placeorseatingcards = "Yes";
+                if (selectedamenitieslist.Contains("Car decoration")) vendorsDecorator.Cardecoration = "Yes";
+                if (selectedamenitieslist.Contains("Brides bouquet")) vendorsDecorator.Bridesbouquet = "Yes";
+                if (selectedamenitieslist.Contains("Bridesmaids bouquets")) vendorsDecorator.Bridesmaidsbouquets = "Yes";
+                if (selectedamenitieslist.Contains("Maid of honor bouquet")) vendorsDecorator.Maidofhonorbouquet = "Yes";
+                if (selectedamenitieslist.Contains("Throw away bouquet")) vendorsDecorator.Throwawaybouquet = "Yes";
+                if (selectedamenitieslist.Contains("Corsages")) vendorsDecorator.Corsages = "Yes";
+                if (selectedamenitieslist.Contains("Boutonnieres (for groom, fathers, grandfathers, best man, groom’s men)")) vendorsDecorator.Boutonnieres = "Yes";
+                if (selectedamenitieslist.Contains("Decora")) vendorsDecorator.Decora = "Yes";
+                if (selectedamenitieslist.Contains("Just married clings")) vendorsDecorator.Justmarriedclings = "Yes";
+                vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, long.Parse(id), long.Parse(vid));
+                //if (vendorsDecorator.Id != 0) count = vendorsDecorator.Id;
+            }
+            //return count;
+        }
     }
 }

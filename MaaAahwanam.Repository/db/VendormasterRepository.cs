@@ -62,5 +62,21 @@ namespace MaaAahwanam.Repository.db
         //{
 
         //}
+
+        public Vendormaster UpdateVendorStorefront(Vendormaster vendorMaster, long id)
+        {
+            var GetMasterRecord = _dbContext.Vendormaster.SingleOrDefault(m => m.Id == id);
+            vendorMaster.Id = GetMasterRecord.Id;
+            vendorMaster.ContactPerson = GetMasterRecord.ContactPerson;
+            vendorMaster.Status = GetMasterRecord.Status;
+            vendorMaster.UpdatedDate = GetMasterRecord.UpdatedDate;
+            if (GetMasterRecord.ServicType.Split(',').Contains(vendorMaster.ServicType) == false)
+                vendorMaster.ServicType = GetMasterRecord.ServicType + "," + vendorMaster.ServicType;//string.Join(",", (GetMasterRecord.ServicType + "," + vendorMaster.ServicType).Split(',').Distinct()).TrimEnd(',');
+            else
+                vendorMaster.ServicType = GetMasterRecord.ServicType;
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(vendorMaster);
+            _dbContext.SaveChanges();
+            return vendorMaster;
+        }
     }
 }
