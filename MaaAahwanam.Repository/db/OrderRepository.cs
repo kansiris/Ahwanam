@@ -32,5 +32,49 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return order;
         }
+        public Order updateOrderstatus(Order order,OrderDetail orderdetail, long orderid)
+        {
+            
+            // Query the database for the row to be updated.
+            var query =
+                from ord in _dbContext.Order
+                where ord.OrderId == orderid
+                select ord;
+            // Query the database for the row to be updated.
+           
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (Order ord in query)
+            {
+                ord.Status = order.Status;
+                // Insert any additional changes to column values.
+            }
+            // Query the database for the row to be updated.
+            var query1 =
+                from ord1 in _dbContext.OrderDetail
+                where ord1.OrderId == orderid
+                select ord1;
+            // Query the database for the row to be updated.
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (OrderDetail ord1 in query1)
+            {
+                ord1.Status = order.Status;
+                // Insert any additional changes to column values.
+            }
+            // Submit the changes to the database.
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception Ex)
+            {
+
+            }
+            return order;
+        }
+
     }
 }
+

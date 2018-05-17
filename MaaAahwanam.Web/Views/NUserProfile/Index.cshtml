@@ -1,4 +1,5 @@
 ﻿@model MaaAahwanam.Models.UserLogin
+    @using System.Globalization
 
 @{
     ViewBag.Title = ":: Ahwanam ::";
@@ -60,6 +61,10 @@
                                             <th>Order Date</th>
                                             <th>Status</th>
                                             <th>Price</th>
+                                            <th>Event Type</th>
+                                            <th>Booking date</th>
+                                            <th>Timeslot</th>
+                                            <th>Action</th>
 
                                         </tr>
                                     </thead>
@@ -70,26 +75,44 @@
                                                 <td>@(++i)</td>
                                                 <td>@item.OrderId</td>
                                                 <td>
-                                                    <h4>@item.BusinessName</h4>
-                                                    <p>
-                                                        @item.Landmark<br>
-                                                        @item.Address, @item.City,<br>
-                                                        @item.ContactNumber
-                                                    </p>
+                                                    <p class="productName mb-0">@item.BusinessName</p>
                                                 </td>
                                                 <td>
                                                     <div class="event-date-time">
                                                         <div class="event-dates">
-                                                            @item.OrderDate
+                                                            @item.OrderDate.ToString("dd MMM yyyy")
                                                         </div>
                                                 </td>
                                                 <td>@item.Status</td>
                                                 <td>
                                                     <div class="item-price">
-                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                        <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)) </span></p>
                                                     </div>
 
                                                 </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.EventType</p>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.BookedDate.ToString("dd MMM yyyy")</p>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.attribute</p>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <a href='/NUserProfile/ordercancel?orderid=@item.OrderId'>Cancel</a>&nbsp;&nbsp;<a onclick="alert(@item.OrderId)">Delete</a>
+</div>
+</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -104,6 +127,9 @@
                                         <th>OrderID</th>
                                         <th>Vendor Details</th>
                                         <th>Order Date</th>
+                                        <th>Event Type</th>
+                                        <th>Booking date</th>
+                                        <th>Timeslot</th>
                                         <th>Status</th>
                                         <th>Price</th>
                                     </tr>
@@ -119,22 +145,36 @@
                                                 <td>@item.OrderId</td>
                                                 <td>
                                                     <h4>@item.BusinessName</h4>
-                                                    <p>
-                                                        @item.Landmark<br>
-                                                        @item.Address, @item.City,<br>
-                                                        @item.ContactNumber
-                                                    </p>
+                                                 
                                                 </td>
                                                 <td>
                                                     <div class="event-date-time">
                                                         <div class="event-dates">
-                                                            @item.OrderDate
+                                                            @item.OrderDate.ToString("dd MMM yyyy")
                                                         </div>
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.EventType</p>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.BookedDate.ToString("dd MMM yyyy")</p>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.attribute</p>
+                                                    </div>
+
                                                 </td>
                                                 <td>@item.Status</td>
                                                 <td>
                                                     <div class="item-price">
-                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                        <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice))</span></p>
                                                     </div>
 
                                                 </td>
@@ -360,6 +400,20 @@
             }
         }
     </script>
+<script>
+
+
+    function alert(paid) {
+        //var paid = $(this).find('input#pid').val();
+        alertify.confirm("Are you sure You want to delete.",
+          function () {
+         //     alertify.success('Deleted');
+              location.href = '/NUserProfile/orderdelete?orderid=' + paid + '&vid= @ViewBag.id'
+          },
+          function () {
+          });
+    }
+</script>
 }
 }
 

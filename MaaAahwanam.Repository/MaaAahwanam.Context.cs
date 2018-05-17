@@ -276,11 +276,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     
-        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
-        }
-    
         public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails_Result> MaaAahwanam_Orders_OrderDetails(Nullable<long> orderNo)
         {
             var orderNoParameter = orderNo.HasValue ?
@@ -570,11 +565,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendors_Result>("filtervendors", typeParameter, f1Parameter, f2Parameter, f3Parameter);
         }
     
-        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
-        }
-    
         public virtual ObjectResult<speventvdeals_Result> speventvdeals(string vid, string type)
         {
             var vidParameter = vid != null ?
@@ -640,6 +630,16 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("eve", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter);
+        }
+    
+        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
+        }
+    
+        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
         }
     }
 }
