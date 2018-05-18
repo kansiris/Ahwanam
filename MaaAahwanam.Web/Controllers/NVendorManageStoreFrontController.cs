@@ -485,7 +485,7 @@ namespace MaaAahwanam.Web.Controllers
             string[] selectedamenitieslist = selectedamenities.Split(',');
             if (category == "Venue")
             {
-                VendorVenue vendorVenue = new VendorVenue();
+                VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid)); // Retrieving Particular Vendor Record
                 if (selectedamenitieslist.Contains("CockTails")) vendorVenue.CockTails = "Yes";
                 if (selectedamenitieslist.Contains("Rooms")) vendorVenue.Rooms = "Yes";
                 if (selectedamenitieslist.Contains("Wifi")) vendorVenue.Wifi = "Yes";
@@ -496,7 +496,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (category == "Catering")
             {
-                VendorsCatering vendorsCatering = new VendorsCatering();
+                VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(long.Parse(id), long.Parse(vid));
                 if (selectedamenitieslist.Contains("Mineral Water Included")) vendorsCatering.MineralWaterIncluded = "Yes";
                 if (selectedamenitieslist.Contains("Transport Included")) vendorsCatering.TransportIncluded = "Yes";
                 if (selectedamenitieslist.Contains("Live Cooking Station")) vendorsCatering.LiveCookingStation = "Yes";
@@ -505,7 +505,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (category == "Photography")
             {
-                VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
                 if (selectedamenitieslist.Contains("Pre Wedding Shoot")) vendorsPhotography.PreWeddingShoot = "Yes";
                 if (selectedamenitieslist.Contains("Destination Photography")) vendorsPhotography.DestinationPhotography = "Yes";
                 vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, long.Parse(id), long.Parse(vid));
@@ -513,7 +513,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (category == "Decorator")
             {
-                VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id), long.Parse(vid));
                 if (selectedamenitieslist.Contains("Archway")) vendorsDecorator.Archway = "Yes";
                 if (selectedamenitieslist.Contains("Altar arrangements")) vendorsDecorator.Altararrangements = "Yes";
                 if (selectedamenitieslist.Contains("Pew bows")) vendorsDecorator.Pewbows = "Yes";
