@@ -139,13 +139,18 @@
                                 @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall","Venue" }.Contains(Request.QueryString["type"]))
                                 {
                                     <p>Hall Details</p>
-                                    <span>
-                                        <p>Hall Name : @ViewBag.particularVenue.name</p>
-                                        <p>Hall Dimentions : @ViewBag.particularVenue.Dimentions</p>
-                                        <p>Minimum Seating Capacity : @ViewBag.particularVenue.Minimumseatingcapacity</p>
-                                        <p>Maximum Seating Capacity : @ViewBag.particularVenue.Maximumcapacity</p>
-                                        <p>Hall Description : @ViewBag.particularVenue.Description</p>
-                                    </span>
+                                    if (ViewBag.particularVenue != null)
+                                    {
+                                        <span>
+                                            <p>Hall Name : @ViewBag.particularVenue.name</p>
+                                            <p>Hall Dimentions : @ViewBag.particularVenue.Dimentions</p>
+                                            <p>Minimum Seating Capacity : @ViewBag.particularVenue.Minimumseatingcapacity</p>
+                                            <p>Maximum Seating Capacity : @ViewBag.particularVenue.Maximumcapacity</p>
+                                            <p>Hall Description : @ViewBag.particularVenue.Description</p>
+                                        </span>
+                                    }
+
+
                                 }
                                 <p>Terms & Conditions</p>
                                 <span>Terms and Conditions content</span>
@@ -273,21 +278,21 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-md-6 address">
                                             <h6 class="themeColor">Address</h6>
-
-                                            @if (ViewBag.location.Address == null|| ViewBag.location.Landmark == null || ViewBag.location.City == null || ViewBag.location.State == null || ViewBag.location.ZipCode == null)
+                                           @if (ViewBag.location.Address != null || ViewBag.location.Landmark != null || ViewBag.location.City != null || ViewBag.location.State != null || ViewBag.location.ZipCode != null)
+                                            {
+                                            <p>@ViewBag.location.Address,</p>
+                                            <p>@ViewBag.location.Landmark,</p>
+                                            <p>@ViewBag.location.City, @ViewBag.location.State</p>
+                                            <p>@ViewBag.location.ZipCode.</p>
+                                            }
+                                            else if (ViewBag.location.Address == null|| ViewBag.location.Landmark == null || ViewBag.location.City == null || ViewBag.location.State == null || ViewBag.location.ZipCode == null)
                                             {
                                                 <p>@ViewBag.Productinfo.Address,</p>
                                                 <p>@ViewBag.Productinfo.Landmark,</p>
                                                 <p>@ViewBag.Productinfo.City, @ViewBag.Productinfo.State</p>
                                                 <p>@ViewBag.Productinfo.ZipCode.</p>
                                             }
-                                            else
-                                            {
-                                                <p>@ViewBag.location.Address,</p>
-                                                <p>@ViewBag.location.Landmark,</p>
-                                                <p>@ViewBag.location.City, @ViewBag.location.State</p>
-                                                <p>@ViewBag.location.ZipCode.</p>
-                                            }
+                                            
                                                 
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-6 contact">

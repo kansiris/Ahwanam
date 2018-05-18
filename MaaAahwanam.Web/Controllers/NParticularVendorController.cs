@@ -91,6 +91,8 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.location = ViewBag.particularOther;
             }
 
+            if (price == "")
+                price = "0";
             ViewBag.Venue = Venuerecords;
             ViewBag.Catering = Cateringrecords;
             ViewBag.Decorator = Decoratorrecords;

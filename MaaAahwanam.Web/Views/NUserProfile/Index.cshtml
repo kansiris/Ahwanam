@@ -6,7 +6,8 @@
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
     var i = 0; var j = 0; var k = 0;
 }
-
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
 <div class="container-fluid userProfile">
     <div class="row innerPagesBg">
         <div class="col-12 col-sm-5 col-md-4 col-lg-3 sideBar">
@@ -16,8 +17,8 @@
                 <li> <a href="#" onclick="userProfile('profileDetails')">Profile</a> </li>
                 <li> <a href="#" onclick="userProfile('profileSettings')">Settings</a> </li>
                 <li>
-                    @*<a href="/NUserRegistration/SignOut">Logout</a>*@ @*onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'"*@
-                    <a onclick="window.location.href = '/NUserRegistration/SignOut';">Logout</a>
+                    <a href="/NUserRegistration/SignOut">Logout</a> @*onclick="location.href='@Url.Action("SignOut", "NUserRegistration")'"*@
+                    @*<a onclick="window.location.href = '/NUserRegistration/SignOut';">Logout</a>*@
                 </li>
             </ul>
         </div>
@@ -251,7 +252,7 @@
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name" id="username" value="@ViewBag.username">
+                                <input type="text" class="form-control" placeholder="Name" id="username" value="@ViewBag.username" required>
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
@@ -261,7 +262,7 @@
                         </div>
                         <div class="row mx-0 mt-2">
                             <div class="form-group">
-                                <input type="number" class="form-control" placeholder="phoneno" id="phoneno" value="@ViewBag.phoneno">
+                                <input type="number" class="form-control" placeholder="Phone number" id="phoneno" value="@ViewBag.phoneno"required>
                             </div>
                         </div>
                         <div class="row mx-0 mt-2">
@@ -417,3 +418,4 @@
 }
 }
 
+}
