@@ -343,15 +343,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
         }
     
-        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
-        }
-    
         public virtual ObjectResult<SP_Amenities_Result> SP_Amenities(Nullable<long> vendorid, string ntype)
         {
             var vendoridParameter = vendorid.HasValue ?
@@ -565,19 +556,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendors_Result>("filtervendors", typeParameter, f1Parameter, f2Parameter, f3Parameter);
         }
     
-        public virtual ObjectResult<speventvdeals_Result> speventvdeals(string vid, string type)
-        {
-            var vidParameter = vid != null ?
-                new ObjectParameter("vid", vid) :
-                new ObjectParameter("vid", typeof(string));
-    
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<speventvdeals_Result>("speventvdeals", vidParameter, typeParameter);
-        }
-    
         public virtual ObjectResult<addvendorservices_Result> addvendorservices(Nullable<long> id)
         {
             var idParameter = id.HasValue ?
@@ -640,6 +618,32 @@ namespace MaaAahwanam.Repository
         public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
+        }
+    
+        public virtual ObjectResult<speventvdeals_Result> speventvdeals(string vid, string type, Nullable<System.DateTime> date)
+        {
+            var vidParameter = vid != null ?
+                new ObjectParameter("vid", vid) :
+                new ObjectParameter("vid", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<speventvdeals_Result>("speventvdeals", vidParameter, typeParameter, dateParameter);
+        }
+    
+        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     }
 }

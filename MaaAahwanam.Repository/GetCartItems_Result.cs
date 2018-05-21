@@ -22,6 +22,7 @@ namespace MaaAahwanam.Repository
         public string ContactNumber { get; set; }
         public string ServicType { get; set; }
         public long CartId { get; set; }
+        public string ServiceType { get; set; }
         public bool Isdeal { get; set; }
         public long DealId { get; set; }
         public string image { get; set; }

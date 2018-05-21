@@ -69,9 +69,6 @@ namespace MaaAahwanam.Web.Controllers
                     return RedirectToAction("Index", "NUserRegistration");
 
                    // return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-
-
-
                     //if (vendorMaster.Id != 0)
                     //{
                     //    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");

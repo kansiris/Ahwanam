@@ -22,18 +22,11 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                //if (user.UserType == "User")
-                //{
-                    ViewBag.id = id;
-                    ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
-                    var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                    ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-                    ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
-                //}
-                //else
-                //{
-                //    return RedirectToAction("Index", "NUserRegistration");
-                //}
+                ViewBag.id = id;
+                ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
+                var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
+                ViewBag.order = orders.OrderByDescending(m => m.OrderId);
+                ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
             }
             else
             {
@@ -47,7 +40,6 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                //ViewBag.id = user.UserId;
                 var vendorrecord = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString()));
                 ViewBag.profilepic = vendorrecord.UserImgName;
                 var emailid = vendorrecord.AlternativeEmailID;

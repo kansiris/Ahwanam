@@ -23,7 +23,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.category = category;
             ViewBag.subcategory = subcategory;
             if (vid != null)
-                ViewBag.images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
+            ViewBag.images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
             ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
             ViewBag.display = "0";
             if (vid != "" && vid != null)

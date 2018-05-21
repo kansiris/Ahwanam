@@ -35,23 +35,17 @@ namespace MaaAahwanam.Web.Controllers
             {
                 TempData["Active"] = "Select Type";
                 return RedirectToAction("Index", "NVendorAddDeal",  new { id = id });
-
-                // return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
             }
             if (catogary == "Select Event")
             {
                 TempData["Active"] = "Select Event";
                 return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
-
-                // return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
             }
 
             if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
             {
                 TempData["Active"] = "Select Timeslot";
                 return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
-
-                //  return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
             }
 
             DateTime s = Convert.ToDateTime(StartDate);
@@ -61,8 +55,6 @@ namespace MaaAahwanam.Web.Controllers
             {
                 TempData["Active"] = "Start Date should be lesser than End Date";
                 return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
-
-                //  return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");
             }
             string time = null;
             if (timeslot == null || timeslot == "")
@@ -75,13 +67,10 @@ namespace MaaAahwanam.Web.Controllers
             { time = timeslot + ',' + timeslot1; }
 
             DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-
-          //  DateTime date = DateTime.Now;
             string[] word = type.Split(',');
             string subid = word[0];
             string type1 = word[1];
             string subtype = word[2];
-
             NDeals deals = new NDeals();
             deals.DealName = DealName;
             deals.TimeSlot = time;
@@ -95,8 +84,8 @@ namespace MaaAahwanam.Web.Controllers
             deals.MaxMemberCount = maxGuests;
             deals.FoodType = foodtype;
             deals.DealPrice =  decimal.Parse(DealPrice);
-            deals.DealStartDate = Convert.ToDateTime(StartDate);
-            deals.DealEndDate = Convert.ToDateTime(EndDate);
+            deals.DealStartDate = TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(StartDate), INDIAN_ZONE);
+            deals.DealEndDate = TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(EndDate), INDIAN_ZONE);
             deals.DealDescription = ddesc;
             deals.Category = catogary;
             deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";
@@ -104,9 +93,6 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.id = id;
             TempData["Active"] = "Deal is Saved";
             return RedirectToAction("Index", "NVendorDeals", new { id = id });
-
-          //  return Content("<script> alert('deal is saved');location.href='"+Url.Action("Index", "NVendorDeals", new {id = id }) + "'</script>");
         }
-
-        }
+      }
 }

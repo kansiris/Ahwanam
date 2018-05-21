@@ -22,6 +22,8 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
 
         //static int count = 0;
         // GET: NParticularVendor
@@ -103,8 +105,8 @@ namespace MaaAahwanam.Web.Controllers
             //Loading Vendor deals
             //if (type.Split(',').Count() > 1) type = type.Split(',')[0];
             if (type == "Venues" || type == "Banquet Hall" || type == "Function Hall") type = "Venue";
-
-            ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type);
+            DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type,date);
             ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
             return View();
         }

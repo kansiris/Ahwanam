@@ -25,12 +25,13 @@ namespace MaaAahwanam.Web.Controllers
         {
             try
             {
+                DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
 
                 //                ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
-                ViewBag.singledeal = vendorProductsService.getpartvendordeal(id, type).FirstOrDefault();
+                ViewBag.singledeal = vendorProductsService.getpartvendordeal(id, type,date).FirstOrDefault();
                 if (eve != "")
                 {
-                    var data = vendorProductsService.getpartvendordeal(id, type).Where(m => m.Category == eve);
+                    var data = vendorProductsService.getpartvendordeal(id, type, date).Where(m => m.Category == eve);
                     ViewBag.singledeal1 = data ;
                     ViewBag.events = data.Select(m => m.Category).Distinct();
                     ViewBag.dealLastRecordeve = eve;
@@ -38,7 +39,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    var data = vendorProductsService.getpartvendordeal(id, type);
+                    var data = vendorProductsService.getpartvendordeal(id, type,date);
                     ViewBag.singledeal1 = data;
                     ViewBag.events = data.Select(m => m.Category).Distinct();
                     ViewBag.dealLastRecordeve = "All";
@@ -75,22 +76,6 @@ namespace MaaAahwanam.Web.Controllers
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                //  var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                //  var vendor = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
-                //  string updateddate = DateTime.UtcNow.ToShortDateString();
-                //  CartItem cartItem = new CartItem();
-                //  cartItem.VendorId = vendor.Id;
-                //  cartItem.ServiceType = etype1;
-                //  cartItem.TotalPrice = decimal.Parse(totalprice);
-                //  cartItem.Orderedby = user.UserId;
-                //  cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
-                //  cartItem.Perunitprice = decimal.Parse(price);
-                //  cartItem.Quantity = Convert.ToInt16(guest);
-                //  cartItem.subid = vendor.subid;
-                ////  cartItem.attribute = orderRequest.attribute;
-                //  cartItem.DealId = Convert.ToInt64(id);
-                //  CartService cartService = new CartService();
-                //  cartItem = cartService.AddCartItem(cartItem);
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 // string updateddate = DateTime.UtcNow.ToShortDateString();
 
@@ -160,7 +145,6 @@ namespace MaaAahwanam.Web.Controllers
 
                 var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(id));
 
-
                 string txtto1 = vendordetails.EmailId ;
                 string vname = vendordetails.BusinessName;
                 string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
@@ -208,7 +192,9 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult sort(string id, string type, string eve)
         {
-            var data = vendorProductsService.getpartvendordeal(id, type).Where(m => m.Category == eve);
+            DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+            var data = vendorProductsService.getpartvendordeal(id, type,date).Where(m => m.Category == eve);
             var message = String.Join("~", data.Select(m => new  {   m.DealPrice,  m.FoodType, m.DealID }));
             return Json(message,JsonRequestBehavior.AllowGet);
         }
