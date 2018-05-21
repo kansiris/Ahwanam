@@ -88,8 +88,6 @@ namespace MaaAahwanam.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
-
-
             if (command == "UserReg")
             {
                 userLogin.IPAddress = HttpContext.Request.UserHostAddress;
@@ -102,7 +100,6 @@ namespace MaaAahwanam.Web.Controllers
                 { response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); }
                 else
                 {
-                    //return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Registered!!! Try Logging with your Password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     TempData["Active"] = "E-Mail ID Already Registered!!! Try Logging with your Password";
                     return RedirectToAction("Index", "NUserRegistration");
                 }
@@ -121,14 +118,11 @@ namespace MaaAahwanam.Web.Controllers
                     string subj = "Account Activation";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-
-                    //return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     TempData["Active"] = "Check your email to active your account to login";
                     return RedirectToAction("Index", "NUserRegistration");
                 }
                 else
                 {
-                    //return Content("<script language='javascript' type='text/javascript'>alert('Registration Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     TempData["Active"] = "Registration Failed";
                     return RedirectToAction("Index", "NUserRegistration");
                 }
@@ -145,24 +139,19 @@ namespace MaaAahwanam.Web.Controllers
                         vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
                         string userData = JsonConvert.SerializeObject(userResponse);
                         ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                        //ValidUserUtility.SetAuthCookie(userData, userLogin.UserLoginId.ToString());
                         if (perfecturl != null && perfecturl != "")
                             return Redirect(perfecturl);
                         if (userResponse.UserType == "Vendor")
                         {
                             var vnid = userResponse.UserLoginId;
                             return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
-                            //  return RedirectToAction("Index", "NewVendorDashboard", new { id = vendorMaster.Id });
-                            //return RedirectToAction("Index", "NVendorDashboard", new { id = vnid });
                         }
                         else
                             ViewBag.userid = userResponse.UserLoginId;
                         return RedirectToAction("Index", "NHomePage");
                     }
                     TempData["Active"] = "Please check Your email to verify Email ID";
-                    //return Content("<script language='javascript' type='text/javascript'>alert('Please check Your email to verify Email ID');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     return RedirectToAction("Index", "NUserRegistration");
-
                 }
                 else
                 {
@@ -216,7 +205,6 @@ namespace MaaAahwanam.Web.Controllers
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                     TempData["Active"] = "A mail is sent to your email to change password Please check your email";
-                    //return Content("<script language='javascript' type='text/javascript'>alert('A mail is sent to your email to change password Please check your email');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     return RedirectToAction("Index", "NUserRegistration");
                 }
                 else
@@ -239,11 +227,9 @@ namespace MaaAahwanam.Web.Controllers
             if (ActivationCode == "")
             { ActivationCode = null; }
             var userResponse = venorVenueSignUpService.GetUserdetails(Email);
-
             if (ActivationCode == userResponse.ActivationCode)
             {
                 return RedirectToAction("updatepassword", "NUserRegistration", new { Email = Email });
-
             }
             //return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             TempData["Active"] = "Email ID not found";
@@ -260,19 +246,14 @@ namespace MaaAahwanam.Web.Controllers
             var userResponse = venorVenueSignUpService.GetUserdetails(Email);
             if (userResponse.Status != "Active")
             {
-
                 if (ActivationCode == userResponse.ActivationCode)
                 {
                     userLogin.Status = "Active";
                     userDetails.Status = "Active";
-
                     string email = userLogin.UserName;
-
                     var userid = userResponse.UserLoginId;
                     userLoginDetailsService.changestatus(userLogin, userDetails,(int)userid);
-
                     return RedirectToAction("Index", "NUserRegistration");
-
                 }
             }
             else
@@ -299,7 +280,6 @@ namespace MaaAahwanam.Web.Controllers
             var userResponse = venorVenueSignUpService.GetUserdetails(email);
             var userid = userResponse.UserLoginId;
             userLoginDetailsService.changepassword(userLogin, (int)userid);
-
             return Json("success");
             // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
 
@@ -310,24 +290,6 @@ namespace MaaAahwanam.Web.Controllers
             perfecturl = ReturnUrl;
             return Json(JsonRequestBehavior.AllowGet);
         }
-
-        //public ActionResult FacebookAuthentication()
-        //{
-        //    var fb = new FacebookClient();
-        //    var loginUrl = fb.GetLoginUrl(new
-        //    {
-
-        //        client_id = "152565978688349",
-        //        client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
-        //        redirect_uri = RediredtUri.AbsoluteUri,
-        //        response_type = "code",
-        //        scope = "email"
-
-        //    });
-        //    return Redirect(loginUrl.AbsoluteUri);
-        //}
-
-
 
 
         public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)
@@ -372,69 +334,7 @@ namespace MaaAahwanam.Web.Controllers
             return RedirectToAction("Index", "NUserRegistration");
         }
 
-        //public ActionResult FacebookCallback(string code)
-        //{
-        //    try
-        //    {
-        //        var fb = new FacebookClient();
-        //        dynamic result = fb.Post("oauth/access_token", new
-        //        {
-        //            client_id = "152565978688349",
-        //            client_secret = "e94b2cf9672b78b7ef552d2097d3c605",
-        //            redirect_uri = RediredtUri.AbsoluteUri,
-        //            code = code
-
-        //        });
-        //        var accessToken = result.access_token;
-        //        Session["AccessToken"] = accessToken;
-        //        fb.AccessToken = accessToken;
-        //        dynamic me = fb.Get("me?fields=link,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
-        //        string email = me.email;
-        //        TempData["email"] = me.email;
-        //        TempData["first_name"] = me.first_name;
-        //        TempData["lastname"] = me.last_name;
-        //        TempData["picture"] = me.picture.data.url;
-        //        FormsAuthentication.SetAuthCookie(email, false);
-        //        UserLogin userLogin = new UserLogin();
-        //        UserDetail userDetail = new UserDetail();
-        //        userDetail.FirstName = me.first_name;
-        //        userDetail.LastName = me.last_name;
-        //        userDetail.UserImgName = me.picture.data.url;
-        //        userDetail.Url = me.link;
-        //        userDetail.Gender = me.gender;
-        //        userLogin.UserName = email;
-        //        userLogin.Password = "Facebook";
-        //        userLogin.UserType = "User";
-
-        //        UserLogin userlogin1 = new UserLogin();
-
-        //        userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
-        //        var response = "";
-        //        if (userlogin1 == null)
-        //            response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
-        //        else
-        //            response = "sucess";
-        //        if (response == "sucess")
-        //        {
-        //            var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-        //            if (userResponse != null)
-        //            {
-        //                vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-        //                string userData = JsonConvert.SerializeObject(userResponse); //creating identity
-        //                ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-        //                return RedirectToAction("Index", "NHomePage");
-        //            }
-        //        }
-        //        else
-        //        { return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>"); }
-        //        return RedirectToAction("Index", "NUserRegistration");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return RedirectToAction("Index", "NUserRegistration");
-        //    }
-        //}
-
+    
 
         [HttpPost]
         [AllowAnonymous]

@@ -33,49 +33,36 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-
                 if (type == "Type")
                 {
                     TempData["Active"] = "Select Type";
                     return RedirectToAction("Index", "NVendorAddPackage", new { id = id });
-
-                  //  return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
                 }
                 DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-
-               // DateTime updateddate = DateTime.Now;
                 string[] words = type.Split(',');
                 string subid = words[0];
                 string type1 = words[1];
                 string subtype = words[2];
                 Package package = new Package();
-
                 package.VendorId = Convert.ToInt64(id);
                 package.VendorSubId = Convert.ToInt64(subid);
-
                 package.VendorType = type1;
                 package.VendorSubType = subtype;
                 package.PackageName = packagename;
                 package.PackagePrice = packageprice;
                 package.PackageDescription = Packagedec;
-
                 package.Status = "Active";
                 package.UpdatedDate = updateddate;
                 package = vendorVenueSignUpService.addpack(package);
                 ViewBag.vendormasterid = id;
-                //return Content("<script type='text/javscript'> alert('package added'); location.href='/NVendorAddPackage/Index?id="+ id+ "</script>");
                 TempData["Active"] = "Package added";
                 return RedirectToAction("Index", "NVendorPkgs", new { id = id });
-
               //  return Content("<script language='javascript' type='text/javascript'>alert('package added');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
             }
             else
             {
                 return RedirectToAction("Index", "Nhomepage");
             }
-
         }
-
-
     }
 }

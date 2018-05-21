@@ -18,7 +18,6 @@ namespace MaaAahwanam.Web.Controllers
     {
 
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        //CartService cartService = new CartService();
         OrderService orderService = new OrderService();
         // GET: NUserProfile
         public ActionResult Index()
@@ -37,7 +36,6 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 if (user.UserType == "User")
                 {
-                    //var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                     if (userdata.FirstName != "" && userdata.FirstName != null)
                         ViewBag.username = userdata.FirstName;
@@ -62,13 +60,9 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 TempData["Active"] = "Please Login";
                 return RedirectToAction("Index", "NUserRegistration");
-
-               // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "NUserRegistration");
-           // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
         }
         public ActionResult orderdelete(string orderid)
         {
@@ -82,8 +76,6 @@ namespace MaaAahwanam.Web.Controllers
                 if (user.UserType == "User")
                 {
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    
-                    
                     var orders = orderService.userOrderList().Where(m => m.OrderId  == Convert.ToInt64(orderid));
                     Order order = new Order();
                     OrderDetail orderdetail = new OrderDetail();
@@ -95,11 +87,9 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 TempData["Active"] = "Please Login";
                 return RedirectToAction("Index", "NUserRegistration");
-                // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "NUserRegistration");
-            // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
         }
 
         public ActionResult ordercancel(string orderid)
@@ -114,8 +104,6 @@ namespace MaaAahwanam.Web.Controllers
                 if (user.UserType == "User")
                 {
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-
-
                     var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
                     Order order = new Order();
                     OrderDetail orderdetail = new OrderDetail();
@@ -127,11 +115,9 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 TempData["Active"] = "Please Login";
                 return RedirectToAction("Index", "NUserRegistration");
-                // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "NUserRegistration");
-            // return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
         }
 
 
@@ -141,19 +127,13 @@ namespace MaaAahwanam.Web.Controllers
             var userdata12 = userLoginDetailsService.GetUserId((int)user.UserId);
             userLoginDetailsService.changepassword(userLogin, (int)user.UserId);
             return Json("success");
-            //return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
-
         }
 
         public ActionResult updatedetails(UserDetail userdetail)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             userLoginDetailsService.UpdateUserdetailsnew(userdetail, (int)user.UserId);
-
             return Json("success");
-
-            //  return Content("<script language='javascript' type='text/javascript'>alert('userdetails Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
-
         }
     }
 }

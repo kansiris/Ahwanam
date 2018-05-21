@@ -73,9 +73,9 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.getparticulardeal(id,  type);
         }
-        public List<speventvdeals_Result> getpartvendordeal(string id, string type)
+        public List<speventvdeals_Result> getpartvendordeal(string id, string type,DateTime date)
         {
-            return vendorProductsRepository.getpartvendordeal(id, type);
+            return vendorProductsRepository.getpartvendordeal(id, type,  date);
         }
     }
 }

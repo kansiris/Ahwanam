@@ -24,6 +24,7 @@ namespace MaaAahwanam.Web.Controllers
         OrderService orderService = new OrderService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
+
         //static int count = 0;
         // GET: NParticularVendor
         public ActionResult Index(string type, string id, string vid, string m)
@@ -104,8 +105,8 @@ namespace MaaAahwanam.Web.Controllers
             //Loading Vendor deals
             //if (type.Split(',').Count() > 1) type = type.Split(',')[0];
             if (type == "Venues" || type == "Banquet Hall" || type == "Function Hall") type = "Venue";
-
-            ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type);
+            DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type,date);
             ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
             return View();
         }
@@ -173,8 +174,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    //string updateddate = DateTime.UtcNow.ToShortDateString();
-                    DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                    string updateddate = DateTime.UtcNow.ToShortDateString();
                     int userid = Convert.ToInt32(user.UserId);
                     decimal totalprice = 0;
                     if (type == "Catering")
@@ -185,10 +185,10 @@ namespace MaaAahwanam.Web.Controllers
                     //OrderService orderService = new OrderService();
                     Order order = new Order();
                     order.TotalPrice = totalprice;//Convert.ToDecimal(price);
-                    order.OrderDate = updateddate;//Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
+                    order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
                     order.UpdatedBy = (Int64)user.UserId;
                     order.OrderedBy = (Int64)user.UserId;
-                    order.UpdatedDate = updateddate;
+                    order.UpdatedDate = Convert.ToDateTime(updateddate);
                     order.Status = "Pending";
                     order = orderService.SaveOrder(order);
 
@@ -207,7 +207,7 @@ namespace MaaAahwanam.Web.Controllers
                     orderDetail.OrderId = order.OrderId;
                     orderDetail.VendorId = long.Parse(id);
                     orderDetail.Status = "Pending";
-                    orderDetail.UpdatedDate = updateddate;
+                    orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                     orderDetail.UpdatedBy = user.UserId;
                     orderDetail.subid = long.Parse(vid);
                     orderDetail.BookedDate = Convert.ToDateTime(date);

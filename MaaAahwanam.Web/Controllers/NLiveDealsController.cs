@@ -15,15 +15,11 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NLiveDeals
         public ActionResult Index(string id, string eve)
         {
-
-
-            ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);//.Where(m => m.subtype == "Hotel");
-            return View();
+          var  Deal1 = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);//.Where(m => m.subtype == "Hotel");
+          ViewBag.records = Deal1;
+          return View();
         }
-
-
-
-
+        
         public PartialViewResult Loadmore(string lastrecord, string eve)
         {
             if (eve == null) { eve = "All"; }
@@ -34,15 +30,9 @@ namespace MaaAahwanam.Web.Controllers
             var deals = vendorProductsService.getalleventdeal(eve).OrderBy(m => m.DealID).Take(id);
             ViewBag.deal = deals;
             ViewBag.dealcount = vendorProductsService.getalleventdeal(eve).Count();
-
             ViewBag.dealLastRecord = id;
-
             ViewBag.dealLastRecordeve = eve;
-
-
             return PartialView("Loadmore");
         }
-
-
     }
 }

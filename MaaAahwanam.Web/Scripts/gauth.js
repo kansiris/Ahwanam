@@ -57,11 +57,11 @@ function validateToken(token) {
               data: null,
               success: function (responseText) {
                   var data = {
-                      email: responseText.email,
-                      name: responseText.name,
-                      lastname: responseText.family_name,
-                      firstname: responseText.given_name,
-                      Picture: responseText.picture
+                      email: user.email,
+                      name: user.name,
+                      lastname: user.given_name,
+                      firstname: user.given_name,
+                      Picture: user.picture
                   }
                   $.ajax({
                       url: '/UserRegistration/GoogleLogin/',
