@@ -13,6 +13,9 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorAddDeal
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
+
         public ActionResult Index(string id)
         {
             if (TempData["Active"] != "")
@@ -70,9 +73,10 @@ namespace MaaAahwanam.Web.Controllers
 
             if (timeslot1 != null && timeslot != null)
             { time = timeslot + ',' + timeslot1; }
-            
 
-            DateTime date = DateTime.Now;
+            DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+          //  DateTime date = DateTime.Now;
             string[] word = type.Split(',');
             string subid = word[0];
             string type1 = word[1];
