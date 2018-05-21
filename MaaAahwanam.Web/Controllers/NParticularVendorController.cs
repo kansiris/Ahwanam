@@ -22,6 +22,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
         //static int count = 0;
         // GET: NParticularVendor
@@ -172,7 +173,8 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    string updateddate = DateTime.UtcNow.ToShortDateString();
+                    //string updateddate = DateTime.UtcNow.ToShortDateString();
+                    DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                     int userid = Convert.ToInt32(user.UserId);
                     decimal totalprice = 0;
                     if (type == "Catering")
@@ -183,10 +185,10 @@ namespace MaaAahwanam.Web.Controllers
                     //OrderService orderService = new OrderService();
                     Order order = new Order();
                     order.TotalPrice = totalprice;//Convert.ToDecimal(price);
-                    order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
+                    order.OrderDate = updateddate;//Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
                     order.UpdatedBy = (Int64)user.UserId;
                     order.OrderedBy = (Int64)user.UserId;
-                    order.UpdatedDate = Convert.ToDateTime(updateddate);
+                    order.UpdatedDate = updateddate;
                     order.Status = "Pending";
                     order = orderService.SaveOrder(order);
 
@@ -205,7 +207,7 @@ namespace MaaAahwanam.Web.Controllers
                     orderDetail.OrderId = order.OrderId;
                     orderDetail.VendorId = long.Parse(id);
                     orderDetail.Status = "Pending";
-                    orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+                    orderDetail.UpdatedDate = updateddate;
                     orderDetail.UpdatedBy = user.UserId;
                     orderDetail.subid = long.Parse(vid);
                     orderDetail.BookedDate = Convert.ToDateTime(date);
