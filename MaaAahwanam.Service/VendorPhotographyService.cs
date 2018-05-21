@@ -9,8 +9,9 @@ using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Service
 {
-   public class VendorPhotographyService
+    public class VendorPhotographyService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         RandomPassword randomPassword = new RandomPassword();
         UserLoginRepository userLoginRepository = new UserLoginRepository();
         UserDetailsRepository userDetailsRepository = new UserDetailsRepository();
@@ -19,23 +20,23 @@ namespace MaaAahwanam.Service
         VendormasterRepository vendorMasterRepository = new VendormasterRepository();
         VendorsPhotographyRepository vendorsPhotographyRepository = new VendorsPhotographyRepository();
         public VendorsPhotography AddPhotography(VendorsPhotography vendorPhotography, Vendormaster vendorMaster)
-       {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+        {
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorPhotography.Status = "Active";
-           vendorPhotography.UpdatedDate =  Convert.ToDateTime(updateddate);
-           vendorMaster.Status = "Active";
-           vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
-           vendorMaster.ServicType = "Photography";
-           vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
-           vendorPhotography.VendorMasterId = vendorMaster.Id;
-           vendorPhotography = vendorsPhotographyRepository.AddPhotography(vendorPhotography);
+            vendorPhotography.UpdatedDate = updateddate;
+            vendorMaster.Status = "Active";
+            vendorMaster.UpdatedDate = updateddate;
+            vendorMaster.ServicType = "Photography";
+            vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
+            vendorPhotography.VendorMasterId = vendorMaster.Id;
+            vendorPhotography = vendorsPhotographyRepository.AddPhotography(vendorPhotography);
             userLogin.UserName = vendorMaster.EmailId;
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
             userLogin.Status = "Active";
-            userLogin.RegDate = Convert.ToDateTime(updateddate);
-            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
+            userLogin.RegDate = updateddate;
+            userLogin.UpdatedDate = updateddate;
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
             userDetail.FirstName = vendorMaster.BusinessName;
@@ -47,7 +48,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+            userDetail.UpdatedDate = updateddate;
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -61,32 +62,32 @@ namespace MaaAahwanam.Service
                 return vendorPhotography;
             }
         }
-        public VendorsPhotography GetVendorPhotography(long id,long vid)
+        public VendorsPhotography GetVendorPhotography(long id, long vid)
         {
-            return vendorsPhotographyRepository.GetVendorsPhotography(id,vid);
+            return vendorsPhotographyRepository.GetVendorsPhotography(id, vid);
         }
 
-        public VendorsPhotography UpdatesPhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid,long vid)
+        public VendorsPhotography UpdatesPhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorsPhotography.Status = "Active";
-            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsPhotography.UpdatedDate = updateddate;
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorMaster.ServicType = "Photography";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
-            vendorsPhotography =  vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid,vid);
+            vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid, vid);
             return vendorsPhotography;
         }
 
 
         public VendorsPhotography ActivePhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             //vendorsPhotography.Status = "Active";
-            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsPhotography.UpdatedDate = updateddate;
             //vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorMaster.ServicType = "Photography";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid, vid);
@@ -94,11 +95,11 @@ namespace MaaAahwanam.Service
         }
         public VendorsPhotography InActivePhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             //vendorsPhotography.Status = "Active";
-            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsPhotography.UpdatedDate = updateddate;
             //vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorMaster.ServicType = "Photography";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid, vid);
@@ -107,9 +108,9 @@ namespace MaaAahwanam.Service
 
         public VendorsPhotography AddNewPhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorsPhotography.Status = "Active";
-            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsPhotography.UpdatedDate = updateddate;
             vendorsPhotography.VendorMasterId = vendorMaster.Id;
             vendorsPhotography = vendorsPhotographyRepository.AddPhotography(vendorsPhotography);
             return vendorsPhotography;

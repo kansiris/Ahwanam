@@ -11,6 +11,7 @@ namespace MaaAahwanam.Service
 {
     public class DashBoardService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         DashBoardRepository dashBoardRepository = new DashBoardRepository();
         MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
         public List<sp_AllOrders_Result> GetOrdersService(int id)
@@ -69,17 +70,17 @@ namespace MaaAahwanam.Service
 
         public Comment InsertCommentService(Comment comment)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
-            comment.UpdatedDate = Convert.ToDateTime(updateddate);
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            comment.UpdatedDate = updateddate;
             comment.Status = "Active";
             return dashBoardRepository.InsertComment(comment);
         }
 
         public CommentDetail InsertCommentDetailService(CommentDetail commentDetail)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
-            commentDetail.CommentDate = Convert.ToDateTime(updateddate);
-            commentDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            commentDetail.CommentDate = updateddate;
+            commentDetail.UpdatedDate = updateddate;
             commentDetail.Status = "Active";
             return dashBoardRepository.InsertCommentDetail(commentDetail);
         }

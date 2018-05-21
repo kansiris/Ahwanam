@@ -11,6 +11,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NVendorManageStoreFrontController : Controller
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         const string imagepath = @"/vendorimages/";
         VendorImageService vendorImageService = new VendorImageService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
@@ -290,7 +291,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsOther.MaxOrder = "0";
                 vendorsOther.Status = "InActive";
                 vendorsOther.UpdatedBy = 2;
-                vendorsOther.UpdatedDate = Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
                 vendorsOther.type = subcategory;
                 vendorsOther = vendorVenueSignUpService.AddVendorOther(vendorsOther);
                 if (vendorsOther.Id != 0) count = vendorsOther.Id;
@@ -349,7 +350,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorsOther.MaxOrder = "0";
                 vendorsOther.Status = "InActive";
                 vendorsOther.UpdatedBy = 2;
-                vendorsOther.UpdatedDate = Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
                 vendorsOther.type = subcategory;
                 vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, id, vid);
                 if (vendorsOther.Id != 0) count = vendorsOther.Id;

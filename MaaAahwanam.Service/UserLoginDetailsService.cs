@@ -7,15 +7,16 @@ namespace MaaAahwanam.Service
 {
     public class UserLoginDetailsService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         UserLoginRepository userLoginRepository = new UserLoginRepository();
         UserDetailsRepository userDetailsRepository = new UserDetailsRepository();
         public string AddUserDetails(UserLogin userLogin, UserDetail userDetails)
         {
             string response;
             //userLogin.Status = "Active";
-            string updateddate = DateTime.UtcNow.ToShortDateString();
-            userLogin.RegDate = Convert.ToDateTime(updateddate);
-            userLogin.UpdatedDate = userDetails.UpdatedDate = Convert.ToDateTime(updateddate);
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//DateTime.UtcNow.ToShortDateString();
+            userLogin.RegDate = updateddate;
+            userLogin.UpdatedDate = userDetails.UpdatedDate = updateddate;
             try
             {
                 UserLogin l1 = userLoginRepository.AddLoginCredentials(userLogin);

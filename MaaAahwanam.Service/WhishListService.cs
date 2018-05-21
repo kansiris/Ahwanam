@@ -10,14 +10,15 @@ namespace MaaAahwanam.Service
 {
     public class WhishListService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         WhishListRepository whishListRepository = new WhishListRepository();
 
-        string updateddate = DateTime.UtcNow.ToShortDateString();
+        DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
 
         public AvailableWhishLists AddWhishList(AvailableWhishLists availableWhishLists)
         {
             availableWhishLists.Status = "InActive";
-            availableWhishLists.WhishListedDate = Convert.ToDateTime(updateddate);
+            availableWhishLists.WhishListedDate = updateddate;
             return whishListRepository.AddWhishList(availableWhishLists);
         }
 
