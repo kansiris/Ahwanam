@@ -12,6 +12,7 @@ namespace MaaAahwanam.Web.Controllers
     {
         VendorProductsService vendorProductsService = new VendorProductsService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
         // GET: NVendorPackages
         public ActionResult Index(string id)
@@ -42,8 +43,8 @@ namespace MaaAahwanam.Web.Controllers
             
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-
-                DateTime updateddate = DateTime.Now;
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+              //  DateTime updateddate = DateTime.Now;
                 Package package = new Package();
                 package.PackageName = packagename;
                 package.PackagePrice = packageprice;

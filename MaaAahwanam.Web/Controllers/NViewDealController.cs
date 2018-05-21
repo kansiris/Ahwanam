@@ -17,8 +17,9 @@ namespace MaaAahwanam.Web.Controllers
     {
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
-        
+
         // GET: NViewDeal
         public ActionResult Index(string id, string type, string eve)
         {
@@ -91,7 +92,9 @@ namespace MaaAahwanam.Web.Controllers
                 //  CartService cartService = new CartService();
                 //  cartItem = cartService.AddCartItem(cartItem);
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string updateddate = DateTime.UtcNow.ToShortDateString();
+                // string updateddate = DateTime.UtcNow.ToShortDateString();
+
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 int userid = Convert.ToInt32(user.UserId);
                 //Saving Record in order Table
                 OrderService orderService = new OrderService();
@@ -182,7 +185,8 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 var vendor = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
-                string updateddate = DateTime.UtcNow.ToShortDateString();
+                // string updateddate = DateTime.UtcNow.ToShortDateString();
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 CartItem cartItem = new CartItem();
                 cartItem.VendorId = Int32.Parse(id);
                 cartItem.ServiceType = etype1;

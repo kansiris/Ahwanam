@@ -11,8 +11,10 @@ namespace MaaAahwanam.Web.Controllers
     public class NVendorAddPackageController : Controller
     {
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
-
         VendorProductsService vendorProductsService = new VendorProductsService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
+
         public ActionResult Index(string id)
         {
             if (TempData["Active"] != "")
@@ -39,8 +41,9 @@ namespace MaaAahwanam.Web.Controllers
 
                   //  return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddPackage", new { id = id }) + "' </script>");
                 }
-              
-                DateTime updateddate = DateTime.Now;
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+               // DateTime updateddate = DateTime.Now;
                 string[] words = type.Split(',');
                 string subid = words[0];
                 string type1 = words[1];
