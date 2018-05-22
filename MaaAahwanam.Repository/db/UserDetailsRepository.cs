@@ -166,5 +166,19 @@ namespace MaaAahwanam.Repository.db
             }
             return 1;
         }
+
+        public UserDetail UpdateUserDetailEmail(UserDetail userDetail, string email)
+        {
+            var GetMasterRecord = _dbContext.UserDetail.SingleOrDefault(m => m.AlternativeEmailID == email);
+            userDetail.AlternativeEmailID = userDetail.AlternativeEmailID;
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userDetail);
+            _dbContext.SaveChanges();
+            return userDetail;
+        }
+
+        public UserDetail GetUserDetailsByEmail(string email)
+        {
+            return _dbContext.UserDetail.SingleOrDefault(m => m.AlternativeEmailID == email);
+        }
     }
 }

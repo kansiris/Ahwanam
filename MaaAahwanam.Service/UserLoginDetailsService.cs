@@ -103,5 +103,20 @@ namespace MaaAahwanam.Service
             userDetailsRepository.UpdateUserDetail(email, status);
             return userLoginRepository.UpdateUserLogin(email, status);
         }
+
+        public UserLogin UpdateUserName(UserLogin userLogin, string email)
+        {
+            return userLoginRepository.UpdateUserName(userLogin, email);
+        }
+
+        public UserDetail UpdateUserDetailEmail(UserDetail userDetail, string email)
+        {
+            return userDetailsRepository.UpdateUserDetailEmail(userDetail, email);
+        }
+
+        public UserDetail GetUserDetailsByEmail(string email)
+        {
+            return userDetailsRepository.GetUserDetailsByEmail(email);
+        }
     }
 }

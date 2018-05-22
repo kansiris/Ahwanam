@@ -78,5 +78,13 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorMaster;
         }
+
+        public Vendormaster UpdateVendorDetails(Vendormaster vendorMaster, long id)
+        {
+            var GetMasterRecord = _dbContext.Vendormaster.SingleOrDefault(m => m.Id == id);
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(vendorMaster);
+            _dbContext.SaveChanges();
+            return vendorMaster;
+        }
     }
 }

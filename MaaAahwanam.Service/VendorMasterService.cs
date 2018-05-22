@@ -57,5 +57,16 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.UpdateVendorStorefront(vendorMaster, id);
         }
+
+        public List<Vendormaster> SearchVendors()
+        {
+            return vendormasterRepository.VendormasterList();
+        }
+
+        public Vendormaster UpdateVendorDetails(Vendormaster vendorMaster, long id)
+        {
+            return vendormasterRepository.UpdateVendorDetails(vendorMaster, id);
+        }
+
     }
 }

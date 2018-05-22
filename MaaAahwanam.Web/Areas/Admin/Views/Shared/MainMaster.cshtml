@@ -1,258 +1,262 @@
 ﻿@using MaaAahwanam.Web.Custom
 @using System.Web.Security
 @{
-                Layout = null;
-    var user = (CustomPrincipal)HttpContext.Current.User;
-}
+    Layout = null;
+    CustomPrincipal user = null;
+    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        user = (CustomPrincipal)HttpContext.Current.User;
 
-<!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="en">
-<!--<![endif]-->
-<!-- BEGIN HEAD -->
 
-<head>
-    <meta charset="UTF-8" />
-    <title>MaAdmin </title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
 
-    <!-- GLOBAL STYLES -->
-    <link rel="stylesheet" href="~/Assets/plugins/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/Assets/css/main.css" />
-    <link rel="stylesheet" href="~/Assets/css/theme.css" />
-    <link rel="stylesheet" href="~/Assets/css/MoneAdmin.css" />
-    <link rel="stylesheet" href="~/Assets/plugins/Font-Awesome/css/font-awesome.css" />
-    <!-- END GLOBAL STYLES -->
-    <!-- PAGE LEVEL STYLES -->
-    <link href="../Testadmin/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-    
-    <style>
-        ul.wysihtml5-toolbar > li {
-            position: relative;
-        }
-    </style>
-    
-    <!-- END PAGE LEVEL  STYLES -->
+        <!DOCTYPE html>
+        <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+        <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+        <!--[if !IE]><!-->
+        <html lang="en">
+        <!--<![endif]-->
+        <!-- BEGIN HEAD -->
 
-</head>
-<!-- END HEAD -->
-<!-- BEGIN BODY -->
-<body class="padTop53 ">
-    @*<div class="overlay" style="display: block;">
-        <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
-            <img src="~/CSSWeb/images/Loader.gif" /><br>
-            <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
-        </div>
-    </div>*@
-    
-    @RenderSection("header", false)
-    <!-- MAIN WRAPPER -->
-    <div id="wrap">
-        <!-- HEADER SECTION -->
-        <div id="top">
-            <nav class="navbar navbar-inverse navbar-fixed-top " style="padding-top: 10px;">
-                <a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="#menu" id="menu-toggle"> <i class="icon-align-justify"></i> </a>
-                <!-- LOGO SECTION -->
-                <header class="navbar-header"> <a href="index.html" class="navbar-brand"> <img src="~/Assets/img/logo.png" alt="" /> </a> </header>
-                <!-- END LOGO SECTION -->
-                <ul class="nav navbar-top-links navbar-right">
+        <head>
+            <meta charset="UTF-8" />
+            <title>MaAdmin </title>
+            <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+            <meta content="" name="description" />
+            <meta content="" name="author" />
 
-                    <!--ADMIN SETTINGS SECTIONS -->
+            <!-- GLOBAL STYLES -->
+            <link rel="stylesheet" href="~/Assets/plugins/bootstrap/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/Assets/css/main.css" />
+            <link rel="stylesheet" href="~/Assets/css/theme.css" />
+            <link rel="stylesheet" href="~/Assets/css/MoneAdmin.css" />
+            <link rel="stylesheet" href="~/Assets/plugins/Font-Awesome/css/font-awesome.css" />
+            <!-- END GLOBAL STYLES -->
+            <!-- PAGE LEVEL STYLES -->
+            <link href="../Testadmin/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i> </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            @*<li><a href="/Admin/DashBoard/UserProfile"><i class="icon-user"></i> User Profile </a> </li>
-    <li><a href="/Admin/DashBoard/ChangePassword"><i class="icon-bell-alt"></i> Change Password </a> </li>
-    <li><a href="/Admin/DashBoard/Lock"><i class="icon-gear"></i> Lock </a> </li>
-    <li class="divider"></li>*@
-                            @*<li>@Html.ActionLink("Logout", "SignOut", "Login",new { @class="icon-signout"})</li>*@
-                            <li><a href="/Admin/Login/SignOut"><i class="icon-signout"></i> Logout </a></li>
-                        </ul>
-                    </li>
-
-                    
-                    <!--END ADMIN SETTINGS -->
-                </ul>
-            </nav>
-        </div>
-        
-        <!-- END HEADER SECTION -->
-        
-        <!-- MENU SECTION -->
-        <div id="left">
-            <div class="media user-media well-small">
-
-                <a class="user-link" href="#"><img class="media-object img-thumbnail user-img" alt="User Picture" src="~/adminimage.png" style="width:74px; height:74px" /></a> <br />
-                <br /> <div class="media-body">
-                @if (user.UserType == "Admin")
-                {<h5 class="media-heading"> @user.FirstName @user.LastName</h5>}
-                @if (user.UserType != "Admin")
-                {
-                    FormsAuthentication.SignOut();
-                    <script>window.location = '/admin/login';</script>
+            <style>
+                ul.wysihtml5-toolbar > li {
+                    position: relative;
                 }
-                @*<h5 class="media-heading"> @Html.Label(Model.FirstName)  @Html.Label(Model.LastName)</h5>
-                           <br />
-                           <br />   
-    
-                               
-                    @*<ul class="list-unstyled user-info">
-                    <li> <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> Online </li>
-                </ul>*@
+            </style>
+
+            <!-- END PAGE LEVEL  STYLES -->
+
+        </head>
+        <!-- END HEAD -->
+        <!-- BEGIN BODY -->
+        <body class="padTop53 ">
+            @*<div class="overlay" style="display: block;">
+                    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+                        <img src="~/CSSWeb/images/Loader.gif" /><br>
+                        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+                    </div>
+                </div>*@
+
+            @RenderSection("header", false)
+            <!-- MAIN WRAPPER -->
+            <div id="wrap">
+                <!-- HEADER SECTION -->
+                <div id="top">
+                    <nav class="navbar navbar-inverse navbar-fixed-top " style="padding-top: 10px;">
+                        <a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="#menu" id="menu-toggle"> <i class="icon-align-justify"></i> </a>
+                        <!-- LOGO SECTION -->
+                        <header class="navbar-header"> <a href="index.html" class="navbar-brand"> <img src="~/Assets/img/logo.png" alt="" /> </a> </header>
+                        <!-- END LOGO SECTION -->
+                        <ul class="nav navbar-top-links navbar-right">
+
+                            <!--ADMIN SETTINGS SECTIONS -->
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i> </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    @*<li><a href="/Admin/DashBoard/UserProfile"><i class="icon-user"></i> User Profile </a> </li>
+                                        <li><a href="/Admin/DashBoard/ChangePassword"><i class="icon-bell-alt"></i> Change Password </a> </li>
+                                        <li><a href="/Admin/DashBoard/Lock"><i class="icon-gear"></i> Lock </a> </li>
+                                        <li class="divider"></li>*@
+                                    @*<li>@Html.ActionLink("Logout", "SignOut", "Login",new { @class="icon-signout"})</li>*@
+                                    <li><a href="/Admin/Login/SignOut"><i class="icon-signout"></i> Logout </a></li>
+                                </ul>
+                            </li>
+
+
+                            <!--END ADMIN SETTINGS -->
+                        </ul>
+                    </nav>
                 </div>
-                <br />
-            </div>
-            @*@{Html.RenderAction("Masterdata", "DashBoard");}*@
-            <ul id="menu" class="collapse">
-                @*<li class="panel"> <a href="/Admin/DashBoard/dashboard"> <i class="icon-table"></i> Dashboard </a> </li>*@
-                @*<li class="panel ">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav"> <i class="icon-tasks"> </i>Service Requests <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
-                    <ul class="collapse" id="component-nav">
-                        <li class=""><a href="/Admin/ServiceRequest/requests?page=Invitation"><i class="icon-angle-right"></i> Invitation request </a></li>
-                        <li class=""><a href="/Admin/ServiceRequest/requests?page=Quotation"><i class="icon-angle-right"></i> Quotation request</a></li>
-                        <li class=""><a href="/Admin/Other/Index"><i class="icon-angle-right"></i> Advertiser’s requests</a></li>
-                        <li class=""><a href="/Admin/Other/Index"><i class="icon-angle-right"></i> Registration requests</a></li>
+
+                <!-- END HEADER SECTION -->
+                <!-- MENU SECTION -->
+                <div id="left">
+                    <div class="media user-media well-small">
+
+                        <a class="user-link" href="#"><img class="media-object img-thumbnail user-img" alt="User Picture" src="~/adminimage.png" style="width:74px; height:74px" /></a> <br />
+                        <br /> <div class="media-body">
+                            @if (user.UserType == "Admin")
+                            {<h5 class="media-heading"> @user.FirstName @user.LastName</h5>}
+                            @if (user.UserType != "Admin")
+                            {
+                                FormsAuthentication.SignOut();
+                                <script>window.location = '/admin/login';</script>
+                            }
+                            @*<h5 class="media-heading"> @Html.Label(Model.FirstName)  @Html.Label(Model.LastName)</h5>
+                                           <br />
+                                           <br />
+
+
+                                    @*<ul class="list-unstyled user-info">
+                                    <li> <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> Online </li>
+                                </ul>*@
+                        </div>
+                        <br />
+                    </div>
+                    @*@{Html.RenderAction("Masterdata", "DashBoard");}*@
+                    <ul id="menu" class="collapse">
+                        @*<li class="panel"> <a href="/Admin/DashBoard/dashboard"> <i class="icon-table"></i> Dashboard </a> </li>*@
+                        @*<li class="panel ">
+                                <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav"> <i class="icon-tasks"> </i>Service Requests <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
+                                <ul class="collapse" id="component-nav">
+                                    <li class=""><a href="/Admin/ServiceRequest/requests?page=Invitation"><i class="icon-angle-right"></i> Invitation request </a></li>
+                                    <li class=""><a href="/Admin/ServiceRequest/requests?page=Quotation"><i class="icon-angle-right"></i> Quotation request</a></li>
+                                    <li class=""><a href="/Admin/Other/Index"><i class="icon-angle-right"></i> Advertiser’s requests</a></li>
+                                    <li class=""><a href="/Admin/Other/Index"><i class="icon-angle-right"></i> Registration requests</a></li>
+                                    <!-- Sai code start -->
+                                    <li class=""><a href="/Admin/ServiceRequest/requests?page=Bidding"><i class="icon-angle-right"></i> Bidding Requests </a></li>
+                                    <li class=""><a href="/Admin/ServiceRequest/requests?page=ReturnGifts"><i class="icon-angle-right"></i> ReturnGifts Requests </a></li>
+
+
+                                    <li class=""><a href="/Admin/ServiceRequest/requests?page=BookNow"><i class="icon-angle-right"></i> BookNow Request  </a></li>
+                                    <li class=""><a href="/Admin/ServiceRequest/requests?page=Registration"><i class="icon-angle-right"></i> Registration Request  </a></li>
+                                    <li class=""><a href="/Admin/ServiceRequest/requests?page=Pending"><i class="icon-angle-right"></i> Pending Cart  </a></li>
+                                    <!-- Sai code end -->
+                                </ul>
+                            </li>*@
+
+                        @*<li class="panel ">
+                                <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle collapsed" data-target="#ordform-nav"> <i class="icon-pencil"></i> Order requests <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
+                                <ul class="collapse" id="ordform-nav">
+                                    <li class=""><a href="/Admin/OrderRequests/Allorders"><i class="icon-angle-right"></i> AllOrders </a></li>
+                                    <li class=""><a href="/Admin/OrderRequests/Invitationorders"><i class="icon-angle-right"></i> Invitation Orders </a></li>
+                                    <li class=""><a href="/Admin/OrderRequests/Quotationorders"><i class="icon-angle-right"></i> Quotation Orders </a></li>
+                                    <li class=""><a href="/Admin/OrderRequests/Biddingorders"><i class="icon-angle-right"></i> Bidding Orders </a></li>
+                                    <li class=""><a href="/Admin/OrderRequests/Returngiftorders"><i class="icon-angle-right"></i> ReturnGift Orders </a></li>
+                                    <li class=""><a href="/Admin/OrderRequests/Booknoworders"><i class="icon-angle-right"></i> BookNow Orders </a></li>
+                                </ul>
+                            </li>*@
+
+
+                        <li class="panel"> <a href="/Admin/DashBoard/dashboard"> <i class="icon-dashboard"></i> Dashboard </a> </li>
+                        <li class="panel"> <a href="/Admin/Vendors/SearchVendor"> <i class="icon-search"></i> Search Vendor </a> </li>
+                        <li class="panel">
+                            <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#createnav"> <i class="icon-plus"></i> Create New Vendor <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
+                            <ul class="collapse" id="createnav">
+                                @*<li><a href="#"><i class="icon-angle-right"></i> Images</a></li>*@
+                                <li><a href="/Admin/CreateVendor/BeautyServices"><i class="icon-angle-right"></i> Beauty Services </a></li>
+                                <li><a href="/Admin/CreateVendor/Catering"><i class="icon-angle-right"></i> Catering </a></li>
+                                <li><a href="/Admin/CreateVendor/Decorator"><i class="icon-angle-right"></i> Decorator</a></li>
+                                <li><a href="/Admin/CreateVendor/Entertainment"><i class="icon-angle-right"></i> Entertainment</a></li>
+                                <li><a href="/Admin/CreateVendor/EventOrganisers"><i class="icon-angle-right"></i> Event Organisers </a></li>
+                                <li><a href="/Admin/CreateVendor/Gifts"><i class="icon-angle-right"></i> Gifts </a></li>
+                                <li><a href="/Admin/CreateVendor/InvitationCards"><i class="icon-angle-right"></i> Invitation Cards </a></li>
+                                <li><a href="/Admin/CreateVendor/Photography"><i class="icon-angle-right"></i> Photography </a></li>
+                                <li><a href="/Admin/CreateVendor/TravelAccomodation"><i class="icon-angle-right"></i> Travel & Accommodation </a></li>
+                                <li><a href="/Admin/CreateVendor/WeddingCollection"><i class="icon-angle-right"></i> Wedding Collection </a></li>
+                                <li><a href="/Admin/CreateVendor/Venue"><i class="icon-angle-right"></i> Venue </a></li>
+                                <li><a href="/Admin/CreateVendor/Others"><i class="icon-angle-right"></i> Others </a></li>
+                            </ul>
+                        </li>
+
+                        <li class="panel">
+                            <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#error-nav"> <i class="icon-warning-sign"></i> Vendors Setup <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
+                            <ul class="collapse" id="error-nav">
+                                <li><a href="/Admin/Vendors/AllVendors"><i class="icon-angle-right"></i> All vendors</a></li>
+                                @*<li><a href="/Admin/Vendors/Activevendors"><i class="icon-angle-right"></i> Active vendors</a></li>
+                                    <li><a href="/Admin/Vendors/Pendingvendors"><i class="icon-angle-right"></i> Pending vendors</a></li>
+                                    <li><a href="/Admin/Vendors/Suspendedvendors"><i class="icon-angle-right"></i> Suspended vendors</a></li>*@
+                            </ul>
+                        </li>
+                        <li class="panel">
+                            <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav1"> <i class="icon-bullhorn"></i> Deals <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
+                            <ul class="collapse" id="uerror-nav1">
+                                <li><a href="/Admin/Deals/NewDeal"><i class="icon-angle-right"></i> New Deal</a></li>
+                                <li><a href="/Admin/Deals/AllDeals"><i class="icon-angle-right"></i> All Deals</a></li>
+                            </ul>
+                        </li>
+                        <li class="panel">
+                            @*<a href="/Admin/EventsTips/Index" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav"> <i class="icon-warning-sign"></i> Events & Tips</a>*@
+                            <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav"> <i class="icon-warning-sign"></i> Events & Tips <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
+                            <ul class="collapse" id="uerror-nav">
+                                <li><a href="/Admin/EventsTips/Index"><i class="icon-angle-right"></i> New Event & Tip</a></li>
+                                <li><a href="/Admin/EventsTips/AllRecords"><i class="icon-angle-right"></i> All Events & Tips</a></li>
+                            </ul>
+                        </li>
+
                         <!-- Sai code start -->
-                        <li class=""><a href="/Admin/ServiceRequest/requests?page=Bidding"><i class="icon-angle-right"></i> Bidding Requests </a></li>
-                        <li class=""><a href="/Admin/ServiceRequest/requests?page=ReturnGifts"><i class="icon-angle-right"></i> ReturnGifts Requests </a></li>
+                        @*<li class="panel"> <a href="/Admin/giftdesigns/Index"> <i class="icon-gift"></i> Gift Designs </a> </li>*@
+                        <li class="panel">
+                            <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#error-nav2"> <i class="icon-warning-sign"></i> Services <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
+                            <ul class="collapse" id="error-nav2">
+                                <li><a href="/Admin/Services/BidRequests"><i class="icon-angle-right"></i> Biddings </a></li>
+                                <li><a href="/Admin/Services/QuotRequests"><i class="icon-angle-right"></i> Quotations </a></li>
+                                <li><a href="/Admin/Services/RevBidRequests"><i class="icon-angle-right"></i> Reverse Biddings </a></li>
+                            </ul>
+                        </li>
+                        <li class="panel">
+                            <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#orders-nav"> <i class="icon-bar-chart"></i> Orders <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
+                            <ul class="collapse" id="orders-nav">
+                                <li><a href="/Admin/Orders/AllOrders"><i class="icon-angle-right"></i> All Orders </a></li>
+                                @*<li><a href="../Other/Index"><i class="icon-angle-right"></i> Payment Methods</a></li>*@
+                            </ul>
+                        </li>
 
+                        <li class="panel"> <a href="/Admin/others/Notification"> <i class="icon-bell"></i> Notifications </a> </li>
+                        <li class="panel"> <a href="/Admin/others/Comments"> <i class="icon-comment"></i> Comments </a> </li>
+                        <li class="panel"> <a href="/Admin/Others/Tickets"> <i class="icon-ticket"></i> Tickets </a> </li>
+                        <li class="panel"> <a href="/Admin/Others/Testimonials"> <i class="icon-gift"></i> Testimonials </a> </li>
+                        <li class="panel"> <a href="/Admin/Others/RegisteredUsers"> <i class="icon-user"></i> Registered Users </a> </li>
+                        @*<li class="panel">
+                                <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#settings-nav"> <i class="icon-bar-chart"></i> Settings <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
+                                <ul class="collapse" id="settings-nav">
+                                    <li><a href="/Admin/Settings/SiteFaq"><i class="icon-angle-right"></i> Site FAQ</a></li>
+                                    <li><a href="../Other/Index"><i class="icon-angle-right"></i> Payment Methods</a></li>
+                                </ul>
+                            </li>*@
+                        @*<li class="panel"> <a href="/Admin/IssueTicketsAdmin/AdminTicketIndex" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav"> <i class="icon-warning-sign"></i> Issue Tickets </a> </li>
+                            <li class="panel"> <a href="/Admin/Comments"> <i class="icon-comment"></i> Comments </a> </li>
+                            <li class="panel"> <a href="/Admin/Logs"> <i class="icon-dashboard"></i> Logs </a> </li>
+                            <li class="panel"> <a href="/Admin/Other/Index"> <i class="icon-user"></i> ManageUsers </a> </li>
+                            <li class="panel"> <a href="/Admin/Other/Index"> <i class="icon-bullseye"></i> Reviews </a> </li>
+                            <li class="panel"> <a href="/Admin/Reports/Index"> <i class="icon-bar-chart"></i> Reports </a> </li>
+                            <li class="panel"> <a href="/Admin/Usermodule"> <i class="icon-bar-chart"></i> Usermodules </a> </li>*@
+                        @*<li class="panel">
+                                <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#Others-nav"> <i class="icon-bar-chart"></i> Others <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
+                                <ul class="collapse" id="Others-nav">
+                                    <li><a href="/Admin/Eventsandtips?page=events"><i class="icon-angle-right"></i> Upcoming Events</a></li>
+                                    <li><a href="/Admin/Eventsandtips?page=Beauty"><i class="icon-angle-right"></i> Beauty Tips</a></li>
+                                    <li><a href="/Admin/Eventsandtips?page=Health"><i class="icon-angle-right"></i> Health Tips</a></li>
+                                    <li><a href="/Admin/testimonials"><i class="icon-angle-right"></i> Testimonials</a></li>
+                                </ul>
+                            </li>*@
+                    </ul>
+                </div>
+                <!--END MENU SECTION -->
+                @RenderBody()
 
-                        <li class=""><a href="/Admin/ServiceRequest/requests?page=BookNow"><i class="icon-angle-right"></i> BookNow Request  </a></li>
-                        <li class=""><a href="/Admin/ServiceRequest/requests?page=Registration"><i class="icon-angle-right"></i> Registration Request  </a></li>
-                        <li class=""><a href="/Admin/ServiceRequest/requests?page=Pending"><i class="icon-angle-right"></i> Pending Cart  </a></li>
-                        <!-- Sai code end -->
-                    </ul>
-                </li>*@
-               
-                @*<li class="panel ">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle collapsed" data-target="#ordform-nav"> <i class="icon-pencil"></i> Order requests <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
-                    <ul class="collapse" id="ordform-nav">          
-                        <li class=""><a href="/Admin/OrderRequests/Allorders"><i class="icon-angle-right"></i> AllOrders </a></li>
-                        <li class=""><a href="/Admin/OrderRequests/Invitationorders"><i class="icon-angle-right"></i> Invitation Orders </a></li>
-                        <li class=""><a href="/Admin/OrderRequests/Quotationorders"><i class="icon-angle-right"></i> Quotation Orders </a></li>
-                        <li class=""><a href="/Admin/OrderRequests/Biddingorders"><i class="icon-angle-right"></i> Bidding Orders </a></li>
-                        <li class=""><a href="/Admin/OrderRequests/Returngiftorders"><i class="icon-angle-right"></i> ReturnGift Orders </a></li>
-                        <li class=""><a href="/Admin/OrderRequests/Booknoworders"><i class="icon-angle-right"></i> BookNow Orders </a></li>
-                    </ul>
-                </li>*@
-                
+            </div>
 
-                <li class="panel"> <a href="/Admin/DashBoard/dashboard"> <i class="icon-dashboard"></i> Dashboard </a> </li>
-                <li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#createnav"> <i class="icon-plus"></i> Create New Vendor <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
-                    <ul class="collapse" id="createnav">
-                        @*<li><a href="#"><i class="icon-angle-right"></i> Images</a></li>*@
-                        <li><a href="/Admin/CreateVendor/BeautyServices"><i class="icon-angle-right"></i> Beauty Services </a></li>
-                        <li><a href="/Admin/CreateVendor/Catering"><i class="icon-angle-right"></i> Catering </a></li>
-                        <li><a href="/Admin/CreateVendor/Decorator"><i class="icon-angle-right"></i> Decorator</a></li>
-                        <li><a href="/Admin/CreateVendor/Entertainment"><i class="icon-angle-right"></i> Entertainment</a></li>
-                        <li><a href="/Admin/CreateVendor/EventOrganisers"><i class="icon-angle-right"></i> Event Organisers </a></li>
-                        <li><a href="/Admin/CreateVendor/Gifts"><i class="icon-angle-right"></i> Gifts </a></li>
-                        <li><a href="/Admin/CreateVendor/InvitationCards"><i class="icon-angle-right"></i> Invitation Cards </a></li>
-                        <li><a href="/Admin/CreateVendor/Photography"><i class="icon-angle-right"></i> Photography </a></li>
-                        <li><a href="/Admin/CreateVendor/TravelAccomodation"><i class="icon-angle-right"></i> Travel & Accommodation </a></li>
-                        <li><a href="/Admin/CreateVendor/WeddingCollection"><i class="icon-angle-right"></i> Wedding Collection </a></li>
-                        <li><a href="/Admin/CreateVendor/Venue"><i class="icon-angle-right"></i> Venue </a></li>
-                        <li><a href="/Admin/CreateVendor/Others"><i class="icon-angle-right"></i> Others </a></li>
-                    </ul>
-                </li>
+            <!--END MAIN WRAPPER -->
+            <!-- FOOTER -->
+            <div id="footer">
+                <p>&copy;  Maa-Aahwanam &nbsp;2015 &nbsp;</p>
+            </div>
+            @RenderSection("Bottom", false)
 
-                <li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#error-nav"> <i class="icon-warning-sign"></i> Vendors Setup <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
-                    <ul class="collapse" id="error-nav">
-                        <li><a href="/Admin/Vendors/AllVendors"><i class="icon-angle-right"></i> All vendors</a></li>
-                        @*<li><a href="/Admin/Vendors/Activevendors"><i class="icon-angle-right"></i> Active vendors</a></li>
-                        <li><a href="/Admin/Vendors/Pendingvendors"><i class="icon-angle-right"></i> Pending vendors</a></li>
-                        <li><a href="/Admin/Vendors/Suspendedvendors"><i class="icon-angle-right"></i> Suspended vendors</a></li>*@
-                    </ul>
-                </li>
-                <li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav1"> <i class="icon-bullhorn"></i> Deals <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
-                    <ul class="collapse" id="uerror-nav1">
-                        <li><a href="/Admin/Deals/NewDeal"><i class="icon-angle-right"></i> New Deal</a></li>
-                        <li><a href="/Admin/Deals/AllDeals"><i class="icon-angle-right"></i> All Deals</a></li>
-                    </ul>
-                </li>
-                <li class="panel"> 
-                    @*<a href="/Admin/EventsTips/Index" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav"> <i class="icon-warning-sign"></i> Events & Tips</a>*@ 
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav"> <i class="icon-warning-sign"></i> Events & Tips <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
-                    <ul class="collapse" id="uerror-nav">
-                        <li><a href="/Admin/EventsTips/Index"><i class="icon-angle-right"></i> New Event & Tip</a></li>
-                        <li><a href="/Admin/EventsTips/AllRecords"><i class="icon-angle-right"></i> All Events & Tips</a></li>
-                    </ul>
-                </li>
-              
-                  <!-- Sai code start -->
-                @*<li class="panel"> <a href="/Admin/giftdesigns/Index"> <i class="icon-gift"></i> Gift Designs </a> </li>*@  
-                <li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#error-nav2"> <i class="icon-warning-sign"></i> Services <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
-                    <ul class="collapse" id="error-nav2">
-                        <li><a href="/Admin/Services/BidRequests"><i class="icon-angle-right"></i> Biddings </a></li>
-                        <li><a href="/Admin/Services/QuotRequests"><i class="icon-angle-right"></i> Quotations </a></li>
-                        <li><a href="/Admin/Services/RevBidRequests"><i class="icon-angle-right"></i> Reverse Biddings </a></li>
-                    </ul>
-                </li>
-                <li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#orders-nav"> <i class="icon-bar-chart"></i> Orders <span class="pull-right"> <i class="icon-angle-down"></i> </span> </a>
-                    <ul class="collapse" id="orders-nav">
-                        <li><a href="/Admin/Orders/AllOrders"><i class="icon-angle-right"></i> All Orders </a></li>
-                        @*<li><a href="../Other/Index"><i class="icon-angle-right"></i> Payment Methods</a></li>*@
-                    </ul>
-                </li>
-
-                <li class="panel"> <a href="/Admin/others/Notification"> <i class="icon-bell"></i> Notifications </a> </li>
-                <li class="panel"> <a href="/Admin/others/Comments"> <i class="icon-comment"></i> Comments </a> </li>
-                <li class="panel"> <a href="/Admin/Others/Tickets"> <i class="icon-ticket"></i> Tickets </a> </li>
-                <li class="panel"> <a href="/Admin/Others/Testimonials"> <i class="icon-gift"></i> Testimonials </a> </li>
-                <li class="panel"> <a href="/Admin/Others/RegisteredUsers"> <i class="icon-user"></i> Registered Users </a> </li>
-                @*<li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#settings-nav"> <i class="icon-bar-chart"></i> Settings <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
-                    <ul class="collapse" id="settings-nav">                      
-                        <li><a href="/Admin/Settings/SiteFaq"><i class="icon-angle-right"></i> Site FAQ</a></li>
-                        <li><a href="../Other/Index"><i class="icon-angle-right"></i> Payment Methods</a></li>
-                    </ul>
-                </li>*@               
-                @*<li class="panel"> <a href="/Admin/IssueTicketsAdmin/AdminTicketIndex" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#uerror-nav"> <i class="icon-warning-sign"></i> Issue Tickets </a> </li>               
-                <li class="panel"> <a href="/Admin/Comments"> <i class="icon-comment"></i> Comments </a> </li>
-                <li class="panel"> <a href="/Admin/Logs"> <i class="icon-dashboard"></i> Logs </a> </li>
-                <li class="panel"> <a href="/Admin/Other/Index"> <i class="icon-user"></i> ManageUsers </a> </li>
-                <li class="panel"> <a href="/Admin/Other/Index"> <i class="icon-bullseye"></i> Reviews </a> </li>
-                <li class="panel"> <a href="/Admin/Reports/Index"> <i class="icon-bar-chart"></i> Reports </a> </li>
-                <li class="panel"> <a href="/Admin/Usermodule"> <i class="icon-bar-chart"></i> Usermodules </a> </li>*@
-                @*<li class="panel">
-                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#Others-nav"> <i class="icon-bar-chart"></i> Others <span class="pull-right"> <i class="icon-angle-left"></i> </span> </a>
-                    <ul class="collapse" id="Others-nav">                        
-                        <li><a href="/Admin/Eventsandtips?page=events"><i class="icon-angle-right"></i> Upcoming Events</a></li>
-                        <li><a href="/Admin/Eventsandtips?page=Beauty"><i class="icon-angle-right"></i> Beauty Tips</a></li>
-                        <li><a href="/Admin/Eventsandtips?page=Health"><i class="icon-angle-right"></i> Health Tips</a></li>
-                        <li><a href="/Admin/testimonials"><i class="icon-angle-right"></i> Testimonials</a></li>
-                    </ul>
-                </li>*@
-            </ul>
-        </div>
-        <!--END MENU SECTION -->
-        @RenderBody()
-
-    </div>
-
-    <!--END MAIN WRAPPER -->
-    <!-- FOOTER -->
-    <div id="footer">
-        <p>&copy;  Maa-Aahwanam &nbsp;2015 &nbsp;</p>
-    </div>
-    @RenderSection("Bottom", false)
-
-    <!-- END PAGE LEVEL SCRIPTS -->
-    <!-- GLOBAL SCRIPTS -->
-    <script src="../Testadmin/assets/plugins/jquery-2.0.3.min.js"></script>
-    <script src="../Testadmin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../Testadmin/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script>
+            <!-- END PAGE LEVEL SCRIPTS -->
+            <!-- GLOBAL SCRIPTS -->
+            <script src="../Testadmin/assets/plugins/jquery-2.0.3.min.js"></script>
+            <script src="../Testadmin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+            <script src="../Testadmin/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+            <script>
         $('#datetimepicker_format').datetimepicker({ value: '2015/12/12 05:03', format: $("#datetimepicker_format_value").val() });
         $("#datetimepicker_format_change").on("click", function (e) {
             $("#datetimepicker_format").data('xdsoft_datetimepicker').setOptions({ format: $("#datetimepicker_format_value").val() });
@@ -274,47 +278,47 @@
             format: 'd/m/Y',
             formatDate: 'Y/m/d',
         });
-    </script>
-    <!-- END GLOBAL SCRIPTS -->
-    <!-- PAGE LEVEL SCRIPTS -->
-    <script src="../Testadmin/assets/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="../Testadmin/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-    
-    <script>
+            </script>
+            <!-- END GLOBAL SCRIPTS -->
+            <!-- PAGE LEVEL SCRIPTS -->
+            <script src="../Testadmin/assets/plugins/dataTables/jquery.dataTables.js"></script>
+            <script src="../Testadmin/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+            <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
         });
-    </script>
-    <!-- END PAGE LEVEL SCRIPTS -->
+            </script>
+            <!-- END PAGE LEVEL SCRIPTS -->
 
 
-    <script src="../Testadmin/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+            <script src="../Testadmin/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+            <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
-    <script src="../Testadmin/Assets/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="../Testadmin/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../Testadmin/Assets/plugins/jasny/js/bootstrap-fileupload.js"></script>
-    <script src="../Testadmin/Scripts/jquery.validate.min.js"></script>
-    <script src="../Testadmin/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    
-    <script>
+            <script src="../Testadmin/Assets/plugins/dataTables/jquery.dataTables.js"></script>
+            <script src="../Testadmin/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+            <script src="../Testadmin/Assets/plugins/jasny/js/bootstrap-fileupload.js"></script>
+            <script src="../Testadmin/Scripts/jquery.validate.min.js"></script>
+            <script src="../Testadmin/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+            <script>
         //window.onload = function () {
         //    //var username = $("#adminname").val();
         //    var label = $("#label").val();
         //    alert(label);
-            
+
         //    //HttpContext.Current.User.Identity.Name = label;
         //    //alert(HttpContext.Current.User.Identity.Name);
         //    //label.html(username);
         //}
-    </script>
-    <script>
+            </script>
+            <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
         });
-    </script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript">
+            </script>
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+            <script language="javascript" type="text/javascript">
         $(function () {
             $("#fileUpload").change(function () {
                 if (typeof (FileReader) != "undefined") {
@@ -344,54 +348,54 @@
                 }
             });
         });
-    </script>
-    <!-- PAGE LEVEL SCRIPTS -->
-    <script src="../testadmin/Assets/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="../testadmin/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../testadmin/Assets/plugins/validationengine/js/jquery.validationEngine.js"></script>
-    <script src="../testadmin/Assets/plugins/validationengine/js/languages/jquery.validationEngine-en.js"></script>
-    <script src="../testadmin/Assets/plugins/jquery-validation-1.11.1/dist/jquery.validate.min.js"></script>
-    <script src="../testadmin/Assets/js/validationInit.js"></script>
-    <script src="../testadmin/Assets/js/jquery-ui.min.js"></script>
-    <script src="../testadmin/Assets/plugins/uniform/jquery.uniform.min.js"></script>
-    <script src="../testadmin/Assets/plugins/inputlimiter/jquery.inputlimiter.1.3.1.min.js"></script>
-    <script src="../testadmin/Assets/plugins/chosen/chosen.jquery.min.js"></script>
-    <script src="../testadmin/Assets/plugins/tagsinput/jquery.tagsinput.min.js"></script>
-    <script src="../testadmin/Assets/plugins/validVal/js/jquery.validVal.min.js"></script>
-    <script src="../testadmin/Assets/plugins/switch/static/js/bootstrap-switch.min.js"></script>
-    <script src="../testadmin/Assets/plugins/jquery.dualListbox-1.3/jquery.dualListBox-1.3.min.js"></script>
-    <script src="../testadmin/Assets/plugins/autosize/jquery.autosize.min.js"></script>
-    <script src="../testadmin/Assets/plugins/jasny/js/bootstrap-inputmask.js"></script>
-    <script src="../testadmin/Assets/plugins/jasny/js/bootstrap-fileupload.js"></script>
-    <script src="../testadmin/Assets/plugins/jquery.fancybox-1.3.4/jquery-1.4.3.min.js"></script> 
-    <script src="../testadmin/Assets/plugins/jquery.fancybox-1.3.4/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-    <script src="../testadmin/Assets/plugins/jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.js"></script>
-    <script src="../testadmin/Assets/js/image_gallery.js"></script>
+            </script>
+            <!-- PAGE LEVEL SCRIPTS -->
+            <script src="../testadmin/Assets/plugins/dataTables/jquery.dataTables.js"></script>
+            <script src="../testadmin/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+            <script src="../testadmin/Assets/plugins/validationengine/js/jquery.validationEngine.js"></script>
+            <script src="../testadmin/Assets/plugins/validationengine/js/languages/jquery.validationEngine-en.js"></script>
+            <script src="../testadmin/Assets/plugins/jquery-validation-1.11.1/dist/jquery.validate.min.js"></script>
+            <script src="../testadmin/Assets/js/validationInit.js"></script>
+            <script src="../testadmin/Assets/js/jquery-ui.min.js"></script>
+            <script src="../testadmin/Assets/plugins/uniform/jquery.uniform.min.js"></script>
+            <script src="../testadmin/Assets/plugins/inputlimiter/jquery.inputlimiter.1.3.1.min.js"></script>
+            <script src="../testadmin/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+            <script src="../testadmin/Assets/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+            <script src="../testadmin/Assets/plugins/validVal/js/jquery.validVal.min.js"></script>
+            <script src="../testadmin/Assets/plugins/switch/static/js/bootstrap-switch.min.js"></script>
+            <script src="../testadmin/Assets/plugins/jquery.dualListbox-1.3/jquery.dualListBox-1.3.min.js"></script>
+            <script src="../testadmin/Assets/plugins/autosize/jquery.autosize.min.js"></script>
+            <script src="../testadmin/Assets/plugins/jasny/js/bootstrap-inputmask.js"></script>
+            <script src="../testadmin/Assets/plugins/jasny/js/bootstrap-fileupload.js"></script>
+            <script src="../testadmin/Assets/plugins/jquery.fancybox-1.3.4/jquery-1.4.3.min.js"></script>
+            <script src="../testadmin/Assets/plugins/jquery.fancybox-1.3.4/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+            <script src="../testadmin/Assets/plugins/jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.js"></script>
+            <script src="../testadmin/Assets/js/image_gallery.js"></script>
 
-    <script>
+            <script>
         $(function () { formValidation(); });
-    </script>
-    <!-- END PAGE LEVEL SCRIPTS -->
-    
-   <script src="../testadmin/assets/plugins/jquery-2.0.3.min.js"></script>
-    <script src="../testadmin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../testadmin/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-   
-    <!-- END GLOBAL SCRIPTS -->
-    <!-- PAGE LEVEL SCRIPTS -->
-    @*<script src="../testadmin/assets/plugins/dataTables/jquery.dataTables.js"></script>
-        <script src="../testadmin/assets/plugins/dataTables/dataTables.bootstrap.js"></script>*@
-    <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
-    <script>
+            </script>
+            <!-- END PAGE LEVEL SCRIPTS -->
+
+            <script src="../testadmin/assets/plugins/jquery-2.0.3.min.js"></script>
+            <script src="../testadmin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+            <script src="../testadmin/assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+
+            <!-- END GLOBAL SCRIPTS -->
+            <!-- PAGE LEVEL SCRIPTS -->
+            @*<script src="../testadmin/assets/plugins/dataTables/jquery.dataTables.js"></script>
+                <script src="../testadmin/assets/plugins/dataTables/dataTables.bootstrap.js"></script>*@
+            <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+            <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
+            <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable({
                 "order": [[0, 'desc']]
             });
         });
-    </script>
-    <script>
+            </script>
+            <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
@@ -402,9 +406,9 @@
         ga('create', 'UA-66938345-1', 'auto');
         ga('send', 'pageview');
 
-    </script>
-    <!-- END PAGE LEVEL SCRIPTS -->
-    <script>
+            </script>
+            <!-- END PAGE LEVEL SCRIPTS -->
+            <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
@@ -415,9 +419,15 @@
         ga('create', 'UA-66938345-1', 'auto');
         ga('send', 'pageview');
 
-    </script>
+            </script>
 
-</body>
-<!-- END BODY -->
-</html>
+        </body>
+        <!-- END BODY -->
+    </html>
+    }
+    else
+    {
+        Response.Redirect("/Admin/Login");
+    }
+}
 

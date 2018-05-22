@@ -146,5 +146,23 @@ namespace MaaAahwanam.Repository.db
             }
             return 1;
         }
+
+        public UserLogin UpdateUserName(UserLogin userLogin,string email)
+        {
+            var GetMasterRecord = _dbContext.UserLogin.SingleOrDefault(m => m.UserName == email);
+            userLogin.UserName = userLogin.UserName;
+            userLogin.UserLoginId = GetMasterRecord.UserLoginId;
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userLogin);
+            _dbContext.SaveChanges();
+            return userLogin;
+        }
+
+        //public UserLogin UpdateActivationCode(UserLogin userlogin)
+        //{
+        //    var GetMasterRecord = _dbContext.UserLogin.SingleOrDefault(m => m.UserName == userlogin.UserName);
+        //    _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userlogin);
+        //    _dbContext.SaveChanges();
+        //    return userlogin;
+        //}
     }
 }

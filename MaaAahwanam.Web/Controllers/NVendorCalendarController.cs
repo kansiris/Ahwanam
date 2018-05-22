@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorCalendar
         public ActionResult Index(string id, string vid)
         {
+            ViewBag.id = id;
             ViewBag.vid = vid;
             return View();
         }

@@ -1,0 +1,99 @@
+﻿@model MaaAahwanam.Models.Vendormaster
+@{
+    ViewBag.Title = "SearchVendor";
+    Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div id="content">
+        <div class="inner">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2> Search Vendor </h2>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+
+                        @*<a href="/Admin/Vendors/VendorDetails" class="btn btn-primary btn-xs">Create New Vendor</a>*@
+                        <div align="right" class="panel-heading">
+                            <button type="button" data-toggle="tooltip" data-placement="top" title="Export to PDF" class="btn btn-default btn-circle">
+                                <i class="icon-check"></i>
+                            </button>
+                            <button type="button" data-toggle="tooltip" data-placement="top" title="Export to Exccel" class="btn btn-primary btn-circle">
+                                <i class="icon-list"></i>
+                            </button>
+                            <button type="button" data-toggle="tooltip" data-placement="top" title="Print" class="btn btn-success btn-circle">
+                                <i class="icon-link"></i>
+                            </button>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label class="control-label col-lg-4">Enter Business Name</label>
+                            <div class="col-lg-4">
+                                <input type="text" id="searchvendor" name="searchvendor" class="form-control" value="@Request["searchvendor"]" />
+                            </div>
+                            <input type="submit" id="btnsearch" value="Search" class="btn btn-primary" />
+                        </div>
+                        <br />
+                        @if (ViewBag.VendorList != null)
+                        {
+                            
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id="collapse2" class="body collapse in">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Business Name</label>
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="BusinessName" name="BusinessName" class="form-control" value="@ViewBag.VendorList.BusinessName" readonly />
+                                                </div>
+                                            </div>
+                                            <br /><br />
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Service Type</label>
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="ServicType" name="ServicType" class="form-control" value="@ViewBag.VendorList.ServicType" readonly />
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Email ID</label>
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="EmailId" name="EmailId" class="form-control" value="@ViewBag.VendorList.EmailId" placeholder="Enter Email ID" />
+                                                </div>
+                                                <input type="hidden" id="pemail" name="pemail" value="@ViewBag.VendorList.EmailId" />
+                                                <p>By Updating this Email ID previously Registered Email ID will be removed from database</p>
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Contact Person</label>
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="ContactPerson" name="ContactPerson" class="form-control" value="@ViewBag.VendorList.ContactPerson" placeholder="Enter Contact Person Name" />
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Contact Number</label>
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="ContactNumber" name="ContactNumber" class="form-control" value="@ViewBag.VendorList.ContactNumber" placeholder="Enter Contact Person Number" />
+                                                </div>
+                                            </div>
+                                            <br/><br />
+                                            <input type="submit" id="btnadd" value="Update" class="btn text-muted text-center btn-success" formaction="/Vendors/SearchVendor?id=@ViewBag.VendorList.Id" name="Command" />
+                                            <button class="btn text-muted text-center btn-primary" value="Email" name="command">Send Invite</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
