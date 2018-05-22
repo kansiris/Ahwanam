@@ -151,7 +151,16 @@
                                 <div class="row mx-0 packages">
                                     <div class="col-12 colmd-12 packageDetails">
                                         <div class="w-100 float-left">
+
+@if (@item.FoodType != null && @item.FoodType != "")
+{
                                             <div class="float-left"><p class="mb-0 packageName" >@item.Category ( @item.FoodType )</p></div>
+}
+else
+{
+    <div class="float-left"><p class="mb-0 packageName">@item.Category </p></div>
+
+}
                                            <input type="hidden" value="@item.DealID" name="did" id="did">
                                              <div class="float-right packageCheckbox">
                                                 <label>
@@ -492,10 +501,10 @@
                 lastrecord = document.getElementById("dealLastRecord").value;
                 dealcount = document.getElementById("dealcount").value;
                 dealevent = document.getElementById("dealevent").value;
-
+                dealevent1= dealevent.replace(/ /g,'');
                 // alert(dealevent);
             }
-            var url = '/NViewDeal/Loadmoredeals?lastrecord=' + lastrecord + '&eve=' + dealevent;
+            var url = '/NViewDeal/Loadmoredeals?lastrecord=' + lastrecord + '&eve=' + dealevent1;
             $("#dealssection").empty().load(url);
 
         }

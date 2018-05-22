@@ -55,7 +55,7 @@ function validateToken(token) {
           {
               url: VALIDURL + token,
               data: null,
-              success: function (responseText) {
+              success: function () {
                   var data = {
                       email: user.email,
                       name: user.name,

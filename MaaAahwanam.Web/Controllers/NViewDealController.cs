@@ -57,6 +57,13 @@ namespace MaaAahwanam.Web.Controllers
         {
             int id = (lastrecord == null) ? 2 : int.Parse(lastrecord) + 2;
             if (eve == null || eve == "") { eve = "All"; }
+            if (eve == "KittyCocktailsParties") { eve = "Kitty Cocktails Parties"; }
+            if (eve == "CorporatesCocktailparties") { eve = "Corporates Cocktail parties"; }
+            if (eve == "CorporateBuffetLunch/Dinner") { eve = "Corporate Buffet Lunch / Dinner"; }
+            if (eve == "AnnualDayCelebrations") { eve = "Annual Day Celebrations"; }
+            if (eve == "HoneymoonpackagesRoomsCPPlan") { eve = "Honeymoon packages Rooms CP Plan"; }
+
+            DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
 
             //ViewBag.deal = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
             //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Take(id);
@@ -64,10 +71,10 @@ namespace MaaAahwanam.Web.Controllers
             //ViewBag.dealLastRecord = id;
             // ViewBag.dealcount = vendorProductsService.getalldeal().Count();
 
-            var deals = vendorProductsService.getalleventdeal(eve).OrderBy(m => m.DealID).Take(id);
+            var deals = vendorProductsService.getalleventdeal(eve,date).OrderBy(m => m.DealID).Take(id);
             ViewBag.deal = deals;
             ViewBag.dealLastRecord = id;
-            ViewBag.dealcount = vendorProductsService.getalleventdeal(eve).Count();
+            ViewBag.dealcount = vendorProductsService.getalleventdeal(eve,date).Count();
             return PartialView("Loadmoredeals");
         }
 
@@ -131,6 +138,7 @@ namespace MaaAahwanam.Web.Controllers
                 string   txtto = userlogdetails.UserName;
                 var userdetails = userLoginDetailsService.GetUser(userid);
                 string name = userdetails.FirstName;
+                name = Capitalise(name);
                 string OrderId = Convert.ToString(order.OrderId);
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
@@ -147,6 +155,8 @@ namespace MaaAahwanam.Web.Controllers
 
                 string txtto1 = vendordetails.EmailId ;
                 string vname = vendordetails.BusinessName;
+                vname = Capitalise(vname);
+
                 string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
                 string readfile1 = file1.OpenText().ReadToEnd();
@@ -161,6 +171,12 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);
+        }
+        public string Capitalise(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
         public ActionResult addcnow(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did)
         {

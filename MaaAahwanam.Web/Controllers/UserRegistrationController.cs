@@ -155,9 +155,10 @@ namespace MaaAahwanam.Web.Controllers
             userLogin.UserName = email;
             userLogin.Password = "Google";
             userLogin.UserType = "User";
+            userLogin.Status = "Active";
             UserLogin userlogin1 = new UserLogin();
 
-            userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
+            userlogin1 = venorVenueSignUpService.GetUserLogdetails(userLogin); // checking where email id is registered or not.
 
             if (userlogin1 == null)
                 response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
