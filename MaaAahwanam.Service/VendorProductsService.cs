@@ -65,9 +65,9 @@ namespace MaaAahwanam.Service
         {
             return vendorProductsRepository.getalldeal();
         }
-        public List<Spgetalleventdeals_Result> getalleventdeal(string eve)
+        public List<Spgetalleventdeals_Result> getalleventdeal(string eve, DateTime date)
         {
-            return vendorProductsRepository.getalleventdeal(eve);
+            return vendorProductsRepository.getalleventdeal(eve,date);
         }
         public List<Spalldeals_Result> getparticulardeal(int id,  string type)
         {

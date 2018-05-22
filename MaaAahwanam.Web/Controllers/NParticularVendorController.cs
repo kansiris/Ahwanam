@@ -158,7 +158,12 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
         }
-
+        public string Capitalise(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
+        }
         public ActionResult BookNow(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
         {
             
@@ -219,6 +224,9 @@ namespace MaaAahwanam.Web.Controllers
                     var userdetails = userLoginDetailsService.GetUser(userid);
 
                     string name = userdetails.FirstName;
+
+                    name = Capitalise(name);
+
                     string OrderId = Convert.ToString(order.OrderId);
 
                     string url = Request.Url.Scheme + "://" + Request.Url.Authority;
@@ -237,6 +245,8 @@ namespace MaaAahwanam.Web.Controllers
 
                     string txtto1 = vendordetails.EmailId;
                     string vname = vendordetails.BusinessName;
+                    vname = Capitalise(vname);
+
                     string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                     FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
                     string readfile1 = file1.OpenText().ReadToEnd();

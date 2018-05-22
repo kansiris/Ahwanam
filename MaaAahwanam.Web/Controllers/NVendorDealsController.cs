@@ -37,11 +37,11 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult updatedeal(string id, string vid, string DealName, string OriginalPrice, string DealPrice,string minGuests, string maxGuests, string StartDate, string EndDate, string ddesc , string timeslot, string timeslot1)
         {
-            if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
-            {
-                TempData["Active"] = "Please Login";
-                return RedirectToAction("edit", "NVendorDeals", new { pid = id, vid = vid });
-            }
+            //if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
+            //{
+            //    TempData["Active"] = "Please Login";
+            //    return RedirectToAction("edit", "NVendorDeals", new { pid = id, vid = vid });
+            //}
             string time = null;
             if (timeslot == null || timeslot == "")
             { time = timeslot1; }

@@ -107,7 +107,8 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     activationcode = userLogin.ActivationCode;
                     txtto = userLogin.UserName;
-                    string username = userDetail.FirstName;
+                    string username = userDetail.FirstName ;
+                    username = Capitalise(username);
                     string emailid = userLogin.UserName;
                     string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
@@ -175,30 +176,32 @@ namespace MaaAahwanam.Web.Controllers
                     int id = Convert.ToInt32(userResponse.UserLoginId);
                     var userdetails = userLoginDetailsService.GetUser(id);
                     string name = userdetails.FirstName;
-                    //txtto = userLogin.UserName;
-                    //string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
-                    //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
-                    //string readFile = File.OpenText().ReadToEnd();
-                    //readFile = readFile.Replace("[ActivationLink]", url);
-                    //readFile = readFile.Replace("[name]", name);
-                    //string txtmessage = readFile;//readFile + body;
-                    //string subj = "Password reset information";
 
-
-                    // vendor mail activation  begin
+                    name = Capitalise(name);
                     txtto = userLogin.UserName;
-                    string mailid = userLogin.UserName;
-                    var userR = venorVenueSignUpService.GetUserdetails(mailid);
-                    string pas1 = userR.Password;
-                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
-                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/WelcomeMessage.html"));
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
                     string readFile = File.OpenText().ReadToEnd();
                     readFile = readFile.Replace("[ActivationLink]", url);
                     readFile = readFile.Replace("[name]", name);
-                    readFile = readFile.Replace("[username]", mailid);
-                    readFile = readFile.Replace("[pass1]", pas1);
                     string txtmessage = readFile;//readFile + body;
-                    string subj = "Welcome to Ahwanam";
+                    string subj = "Password reset information";
+
+
+                    // vendor mail activation  begin
+                    //txtto = userLogin.UserName;
+                    //string mailid = userLogin.UserName;
+                    //var userR = venorVenueSignUpService.GetUserdetails(mailid);
+                    //string pas1 = userR.Password;
+                    //string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                    //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/WelcomeMessage.html"));
+                    //string readFile = File.OpenText().ReadToEnd();
+                    //readFile = readFile.Replace("[ActivationLink]", url);
+                    //readFile = readFile.Replace("[name]", name);
+                    //readFile = readFile.Replace("[username]", mailid);
+                    //readFile = readFile.Replace("[pass1]", pas1);
+                    //string txtmessage = readFile;//readFile + body;
+                    //string subj = "Welcome to Ahwanam";
 
                     // vendor mail activation  end
 
@@ -220,6 +223,13 @@ namespace MaaAahwanam.Web.Controllers
             }
 
             return View();
+        }
+
+        public string Capitalise(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
 
         public ActionResult ActivateEmail(string ActivationCode, string Email)
@@ -306,33 +316,37 @@ namespace MaaAahwanam.Web.Controllers
             userLogin.UserName = email;
             userLogin.Password = "Facebook";
             userLogin.UserType = "User";
+            userLogin.Status = "Active";
             UserLogin userlogin1 = new UserLogin();
 
-            userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
+            
+                userlogin1 = venorVenueSignUpService.GetUserLogdetails(userLogin); // checking where email id is registered or not.
 
-            if (userlogin1 == null)
-                response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
-            else
-                response = "sucess";
-            if (response == "sucess")
-            {
-                var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-                if (userResponse != null)
+                if (userlogin1 == null)
+
+                    response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
+                else
+                    response = "sucess";
+                if (response == "sucess")
                 {
-                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-                    string userData = JsonConvert.SerializeObject(userResponse); //creating identity
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    return RedirectToAction("Index", "NHomePage");
+                    var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+                    if (userResponse != null)
+                    {
+                        vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                        string userData = JsonConvert.SerializeObject(userResponse); //creating identity
+                        ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                        return RedirectToAction("Index", "NHomePage");
+                    }
                 }
-            }
-            else
-            {
-                // return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-                TempData["Active"] = "Authentication Failed";
+                else
+                {
+                    // return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                    TempData["Active"] = "Authentication Failed";
+                    return RedirectToAction("Index", "NUserRegistration");
+                }
                 return RedirectToAction("Index", "NUserRegistration");
             }
-            return RedirectToAction("Index", "NUserRegistration");
-        }
+        
 
     
 
@@ -559,6 +573,8 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
+
+
         }
 
 

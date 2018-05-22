@@ -160,6 +160,7 @@
         <Function Name="Spgetalldeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Spgetalleventdeals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="eve" Type="nvarchar" Mode="In" />
+          <Parameter Name="date" Type="datetime" Mode="In" />
         </Function>
         <Function Name="SPGETNDeal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="bigint" Mode="In" />
@@ -378,9 +379,6 @@
           <FunctionImport Name="SPgetpartdeal" ReturnType="Collection(MaaAahwanamModel.SPgetpartdeal_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="Spgetalleventdeals" ReturnType="Collection(MaaAahwanamModel.Spgetalleventdeals_Result)">
-          <Parameter Name="eve" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_userorddisplay" ReturnType="Collection(MaaAahwanamModel.sp_userorddisplay_Result)" />
           <FunctionImport Name="sp_ordersdisplay" ReturnType="Collection(MaaAahwanamModel.sp_ordersdisplay_Result)" />
           <FunctionImport Name="speventvdeals" ReturnType="Collection(MaaAahwanamModel.speventvdeals_Result)">
@@ -389,7 +387,11 @@
             <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
-            <Parameter Name="VID" Mode="In" Type="Int32" />
+          <Parameter Name="VID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Spgetalleventdeals" ReturnType="Collection(MaaAahwanamModel.Spgetalleventdeals_Result)">
+            <Parameter Name="eve" Mode="In" Type="String" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -1154,16 +1156,6 @@
           <Property Type="String" Name="TimeSlot" Nullable="true" />
           <Property Type="String" Name="DealName" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="Spgetalleventdeals_Result">
-          <Property Type="String" Name="businessname" Nullable="true" />
-          <Property Type="String" Name="DealPrice" Nullable="true" />
-          <Property Type="String" Name="DealID" Nullable="true" />
-          <Property Type="String" Name="VendorId" Nullable="true" />
-          <Property Type="String" Name="VendorType" Nullable="true" />
-          <Property Type="String" Name="cost" Nullable="true" />
-          <Property Type="String" Name="image" Nullable="true" />
-          <Property Type="String" Name="category" Nullable="false" MaxLength="1" />
-        </ComplexType>
         <ComplexType Name="sp_userorddisplay_Result">
           <Property Type="Int64" Name="OrderId" Nullable="false" />
           <Property Type="DateTime" Name="OrderDate" Nullable="true" Precision="23" />
@@ -1274,6 +1266,16 @@
           <Property Type="DateTime" Name="eventstartdate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="eventid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Spgetalleventdeals_Result">
+          <Property Type="String" Name="businessname" Nullable="true" />
+          <Property Type="String" Name="DealPrice" Nullable="true" />
+          <Property Type="String" Name="DealID" Nullable="true" />
+          <Property Type="String" Name="VendorId" Nullable="true" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
+          <Property Type="String" Name="cost" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2252,20 +2254,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Spgetalleventdeals" FunctionName="MaaAahwanamModel.Store.Spgetalleventdeals">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.Spgetalleventdeals_Result">
-                <ScalarProperty Name="businessname" ColumnName="businessname" />
-                <ScalarProperty Name="DealPrice" ColumnName="DealPrice" />
-                <ScalarProperty Name="DealID" ColumnName="DealID" />
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="category" ColumnName="category" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_userorddisplay" FunctionName="MaaAahwanamModel.Store.sp_userorddisplay">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_userorddisplay_Result">
@@ -2390,6 +2378,20 @@
                 <ScalarProperty Name="eventstartdate" ColumnName="eventstartdate" />
                 <ScalarProperty Name="eventenddate" ColumnName="eventenddate" />
                 <ScalarProperty Name="eventid" ColumnName="eventid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Spgetalleventdeals" FunctionName="MaaAahwanamModel.Store.Spgetalleventdeals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Spgetalleventdeals_Result">
+                <ScalarProperty Name="businessname" ColumnName="businessname" />
+                <ScalarProperty Name="DealPrice" ColumnName="DealPrice" />
+                <ScalarProperty Name="DealID" ColumnName="DealID" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="category" ColumnName="category" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

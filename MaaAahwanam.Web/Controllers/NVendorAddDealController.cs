@@ -42,11 +42,11 @@ namespace MaaAahwanam.Web.Controllers
                 return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
             }
 
-            if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
-            {
-                TempData["Active"] = "Select Timeslot";
-                return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
-            }
+            //if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
+            //{
+            //    TempData["Active"] = "Select Timeslot";
+            //    return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
+            //}
 
             DateTime s = Convert.ToDateTime(StartDate);
             DateTime e = Convert.ToDateTime(EndDate);
@@ -65,8 +65,11 @@ namespace MaaAahwanam.Web.Controllers
 
             if (timeslot1 != null && timeslot != null)
             { time = timeslot + ',' + timeslot1; }
-
-            DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
+            {
+                time = "Morning,Evening";
+            }
+                DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             string[] word = type.Split(',');
             string subid = word[0];
             string type1 = word[1];
@@ -82,10 +85,13 @@ namespace MaaAahwanam.Web.Controllers
             deals.OriginalPrice = Decimal.Parse(OriginalPrice);
             deals.MinMemberCount = minGuests;
             deals.MaxMemberCount = maxGuests;
-            deals.FoodType = foodtype;
+            if (type1 == "Venue" || type1 == "Catering")
+            { 
+            deals.FoodType = foodtype; }
+
             deals.DealPrice =  decimal.Parse(DealPrice);
-            deals.DealStartDate = TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(StartDate), INDIAN_ZONE);
-            deals.DealEndDate = TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(EndDate), INDIAN_ZONE);
+            deals.DealStartDate = (Convert.ToDateTime(StartDate));
+            deals.DealEndDate = (Convert.ToDateTime(EndDate));
             deals.DealDescription = ddesc;
             deals.Category = catogary;
             deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";

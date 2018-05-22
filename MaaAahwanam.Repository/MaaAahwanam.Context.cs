@@ -601,15 +601,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPgetpartdeal_Result>("SPgetpartdeal", idParameter);
         }
     
-        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals(string eve)
-        {
-            var eveParameter = eve != null ?
-                new ObjectParameter("eve", eve) :
-                new ObjectParameter("eve", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter);
-        }
-    
         public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
@@ -644,6 +635,19 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
+        }
+    
+        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals(string eve, Nullable<System.DateTime> date)
+        {
+            var eveParameter = eve != null ?
+                new ObjectParameter("eve", eve) :
+                new ObjectParameter("eve", typeof(string));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter, dateParameter);
         }
     }
 }
