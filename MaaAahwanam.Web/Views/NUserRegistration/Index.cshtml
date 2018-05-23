@@ -41,8 +41,12 @@
                 <div class="row mx-0 align-items-center my-4">
                     <input type="hidden" id="auth-logoutlink">
                     <span class="fbBg btnSecondary text-white text-center" onclick="fbLogin()"><i class="fa fa-facebook mr-2" aria-hidden="true"></i> Facebook</span>
-                    <span class="gmailBg btnSecondary text-white ml-3 fontSize-18" id="GoogleLogin" onclick="login()"><i class="fa fa-google mr-2" aria-hidden="true"></i> Gmail</span>
+                    <span class="gmailBg btnSecondary text-white ml-3 fontSize-18" id="login-button"><i class="fa fa-google mr-2" aria-hidden="true"></i> Gmail</span>
+
+                    @*<span class="gmailBg btnSecondary text-white ml-3 fontSize-18" id="GoogleLogin" onclick="login()"><i class="fa fa-google mr-2" aria-hidden="true"></i> Gmail</span>*@
                 </div>
+                @*<div id="gSignIn"></div>*@
+
             </div>
 
             <div class="register p-5">
@@ -71,7 +75,7 @@
                     </div>
                     <div class="row mx-0 my-2">
                         <div class="form-group w-100">
-                            <input type="tel" pattern="^\d{10}$"  class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" name="Item2.UserPhone" id="Item2_UserPhone" required />
+                            <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" name="Item2.UserPhone" id="Item2_UserPhone" required />
                             @*<input type="number" class="form-control" name="" placeholder="Mobile Number">*@
                         </div>
                     </div>
@@ -109,14 +113,13 @@
                     </div>
                 }
             </div>
-
-
-
         </div>
     </div>
 </div>
 
 @section scripts{
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript">
         //$(document).ready(function () {
         //    $('body').attr("id", "userAuthentication");
@@ -129,6 +132,7 @@
         $(document).ready(function () {
             $('body').attr("id", "userAuthentication");
         });
+
         var regClick = $(".registerBtn"), loginClick = $(".loginBtn"), forgotClick = $(".forgotPasswordBtn"),
             loginBlock = $(".login"), regBlock = $(".register"), forgotBlock = $(".forgotPassword");
         $(regClick).click(function () {
@@ -158,16 +162,209 @@
             //$.post("/NUserRegistration/assignreturnurl", { ReturnUrl: url }, function (data) { });
         }
     </script>
-    <script src="~/Scripts/gauth.js"></script>
-    <script src="~/Scripts/fauth.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    @*@if (ViewBag.Active != null)
-    {
-        <script>
-            alertify.alert("@ViewBag.Active", function () {
-                //alertify.message('OK');
+
+    @*fblogin*@
+
+    <script>
+        window.fbAsyncInit = function () {
+            // FB JavaScript SDK configuration and setup
+            FB.init({
+                appId: '1210420135768170', //'152565978688349',// FB App ID
+                cookie: true,  // enable cookies to allow the server to access the session
+                xfbml: true,  // parse social plugins on this page
+                version: 'v2.8' // use graph api version 2.8
             });
-        </script>
-    }*@
+
+            // Check whether the user already logged in
+            //FB.getLoginStatus(function (response) {
+            //    if (response.status === 'connected') {
+            //        //display user data
+            //        getFbUserData();
+            //                  }
+            //});
+        };
+
+        // Load the JavaScript SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Facebook login with JavaScript SDK
+        function fbLogin() {
+            FB.login(function (response) {
+
+                if (response.authResponse) {
+                    // Get and display the user profile data
+                    getFbUserData();
+
+                } else {
+                    document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
+                }
+            }, { scope: 'email' });
+        }
+
+        // Fetch the user profile data from facebook
+        function getFbUserData() {
+            //FB.api('/me?fields=id,name,gender,email,birthday,first_name,currency,last_name,locale,timezone,verified,picture,age_range', function (me) {
+            // FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picturename,birthday,currency,timezone,verified,age_range' },
+            FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture,timezone,verified,age_range,name' },
+                 function (response) {
+                     var url1 = document.referrer;
+                     var data = {
+                         Name: response.name,
+                         ID: response.id,
+                         gender: response.gender,
+                         birthday: response.birthday,
+                         email: response.email,
+                         firstname: response.first_name,
+                         currency: response.currency,
+                         lastname: response.last_name,
+                         location: response.locale,
+                         timezone: response.timezone,
+                         verified: response.verified,
+                         picture: response.picture,
+                         agerange: response.age_range
+                     }
+                     $.ajax({
+                         url: '/NUserRegistration/facebookLogin/',
+                         type: 'POST',
+                         data: data,
+                         success: function () {
+                             if (data == 'failed') {
+                                 alert('This email is registared as Vendor please login with Your Credentials')
+                             }
+                             else {
+                                 var url1 = document.referrer;
+                                 window.location.href = url1;// "/NHomePage/Index/";
+                             }
+                         },
+                     });
+                     // Save user data
+                     //  saveUserData(response);
+                     // });
+                 }
+            )
+        }
+
+        // Save user data to the database
+        /*function saveUserData(userData){
+            $.post('userData.php', {oauth_provider:'facebook',userData: JSON.stringify(userData)}, function(data){ return true; });
+        }*/
+
+        // Logout from facebook
+        function fbLogout() {
+            FB.logout();
+            // location.reload();
+            //   FB.logout( function () {
+            //document.getElementById('fbLink').setAttribute("onclick", "fbLogin()");
+            //document.getElementById('fbLink').innerHTML = 'login';
+            //document.getElementById('userData').innerHTML = '';
+            //document.getElementById('status').innerHTML = 'You have successfully logout from Facebook.';
+            //});
+        }
+    </script>
+
+    @*gmail login*@
+
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};HandleGoogleApiLibrary()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+    <script>
+
+// Called when Google Javascript API Javascript is loaded
+function HandleGoogleApiLibrary() {
+	// Load "client" & "auth2" libraries
+	gapi.load('client:auth2', {
+		callback: function() {
+			// Initialize client library
+			// clientId & scope is provided => automatically initializes auth2 library
+			gapi.client.init({
+			    apiKey: 'OgwtDRPCLm9fielelhM8nRr6',
+		    	clientId: '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com',
+		    	scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
+			}).then(
+				// On success
+				function(success) {
+			  		// After library is successfully loaded then enable the login button
+			  		$("#login-button").removeAttr('disabled');
+				},
+				// On error
+				function(error) {
+					alert('Error : Failed to Load Library');
+			  	}
+			);
+		},
+		onerror: function() {
+			// Failed to load libraries
+		}
+	});
+}
+
+// Click on login button
+$("#login-button").on('click', function() {
+	$("#login-button").attr('disabled', 'disabled');
+
+	// API call for Google login
+	gapi.auth2.getAuthInstance().signIn().then(
+		// On success
+		function(success) {
+			// API call to get user information
+			gapi.client.request({ path: 'https://www.googleapis.com/plus/v1/people/me' }).then(
+				// On success
+				function(success) {
+					console.log(success);
+					var user_info = JSON.parse(success.body);
+
+					var data = {
+					    email: user_info.emails[0].value,
+					    name: user_info.displayName,
+					    lastname: user_info.name.familyName,
+					    firstname: user_info.name.givenName,
+					    Picture: user_info.image.url,
+					    id:user_info.id
+					}
+					$.ajax({
+					    url: '/UserRegistration/GoogleLogin/',
+					    type: 'POST',
+					    data: data,
+					    success: function (data) {
+					        if (data == 'failed') {
+					            alert('This email is registared as Vendor please login with Your Credentials')
+					        }
+					        if (data == 'success') {
+					            var url1 = document.referrer;
+					            window.location.href = url1;// "/NHomePage/Index/";
+					        }
+					    },
+					});
+				},
+				// On error
+				function(error) {
+					$("#login-button").removeAttr('disabled');
+					alert('Error : Failed to get user user information');
+				}
+			);
+		},
+		// On error
+		function(error) {
+			$("#login-button").removeAttr('disabled');
+			alert('Error : Login Failed');
+		}
+	);
+});
+
+ </script>
+    @*<script src="~/Scripts/gauth.js"></script>
+        <script src="~/Scripts/fauth.js"></script>*@
+
+    @*@if (ViewBag.Active != null)
+        {
+            <script>
+                alertify.alert("@ViewBag.Active", function () {
+                    //alertify.message('OK');
+                });
+            </script>
+        }*@
 }

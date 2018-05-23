@@ -80,6 +80,10 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult booknow(string type, string etype1, string date, string totalprice, string id,string price, string guest, string timeslot,string vid, string did)
      {
+            if (type == "Photography" || type == "Decorator" || type == "Other")
+            {
+                totalprice = price;
+            }
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -183,6 +187,10 @@ namespace MaaAahwanam.Web.Controllers
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                if (type == "Photography" || type == "Decorator" || type == "Other")
+                {
+                    totalprice = price;
+                }
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 var vendor = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
                 // string updateddate = DateTime.UtcNow.ToShortDateString();
