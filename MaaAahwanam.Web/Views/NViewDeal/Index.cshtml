@@ -290,12 +290,12 @@ else
 
 
 
-                            <div class="w-100 mt-3 noOfPeoples">
+                            <div class="w-100 mt-3 noOfPeoples" id="people">
                                 <div class="form-group">
                                     <input type="number" class="form-control nexaBold" id="nop" placeholder="Members" />
                                 </div>
                             </div>
-                            <div class="w-100 mt-3 slotTime">
+                            <div class="w-100 mt-3 slotTime" id="timeslot">
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
                                         <input type="checkbox" id="ch1" value="Morning" name="timeslot" />
@@ -311,7 +311,7 @@ else
                                     </label>
                                 </div>
                             </div>
-                            <div class="w-100 mt-3 text-center totalAmount">
+                            <div class="w-100 mt-3 text-center totalAmount" id="totamount">
                                 <div class="themeColor">
                                     <p class="mb-0"><span id="tp">000</span> INR</p>
                                 </div>
@@ -549,6 +549,24 @@ else
 
                         $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
                     }
+
+                    var vtype = '@Request.QueryString["type"]';
+                        alert(vtype);
+                        if (vtype == 'Photography' || vtype == 'Decorator' || vtype == 'Other') {
+                            //  alert(value1);
+                            $("#people").hide();
+                            $("#timeslot").hide();
+                            $("#totamount").hide();
+                        }
+                        if (vtype == 'Venue' || vtype == 'Catering') {
+                            //      alert(value1);
+                            $("#people").show();
+                            $("#timeslot").show();
+                            $("#totamount").show();
+                        }
+
+
+
                 });
             })
 
@@ -586,7 +604,7 @@ else
                     }
                 }
             })
-            
+
             localStorage.removeItem("nop");
             //  <!------------- dealProfile Accoding ----------->
             $(".dealProfileTotalDescrption > .block:first-child .content").css("display", "block");
@@ -649,9 +667,6 @@ else
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
                 //   alert("Please select Menu type");
                 alertmsg("Please select Deal");
-            } else if ($(".noOfPeoples input[type='number']").val() == '') {
-                //alert("Please Mention No Of Guests");
-                alertmsg("Please Mention No Of Guests");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                // var timeslot = ($('input[type=checkbox]').val());
                 //var timeslot = $(".slotTime input[type='checkbox']").val();
@@ -762,13 +777,9 @@ else
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
                 // alert("Please select Menu type");
                 alertmsg("Please select Deal");
-            } else if ($(".noOfPeoples input[type='number']").val() == '') {
-                // alert("Please Mention No Of Guests");
-                alertmsg("Please Mention No Of Guests");
+       
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                // var timeslot = ($('input[type=checkbox]').val());
-               // var timeslot = $(".slotTime input[type='checkbox']").val();
-                // var etype1 = $('#selectbox1').val();
+              
                 var favorite = [];
                 $.each($("input[name='timeslot']:checked"), function () {
                     favorite.push($(this).val());
@@ -824,9 +835,6 @@ else
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
                 //alert("Please select Menu type");
                 alertmsg("Please select Deal");
-            } else if ($(".noOfPeoples input[type='number']").val() == '') {
-                //alert("Please Mention No Of Guests");
-                alertmsg("Please Mention No Of Guests");
             } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                 // var timeslot = ($('input[type=checkbox]').val());
                // var timeslot = $(".slotTime input[type='checkbox']").val();
