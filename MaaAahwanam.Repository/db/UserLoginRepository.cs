@@ -34,7 +34,7 @@ namespace MaaAahwanam.Repository.db
             UserDetail userDetail = new UserDetail();
             if (list != null)
             {
-                userDetail = _dbContext.UserDetail.FirstOrDefault(m=>m.UserLoginId==list.UserLoginId);
+                userDetail = _dbContext.UserDetail.FirstOrDefault(m => m.UserLoginId == list.UserLoginId);
             }
             return userDetail;
         }
@@ -65,7 +65,7 @@ namespace MaaAahwanam.Repository.db
             }
             return userLogin;
         }
-        public UserLogin Updatestatus(UserLogin userLogin,UserDetail userDetails, int UserloginID)
+        public UserLogin Updatestatus(UserLogin userLogin, UserDetail userDetails, int UserloginID)
         {
             // Query the database for the row to be updated.
             var query =
@@ -119,7 +119,7 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.UserLogin.Where(p => p.UserLoginId == UserId).Select(u => u.Password).FirstOrDefault();
         }
 
-        public int UpdateUserLogin(string email,string status)
+        public int UpdateUserLogin(string email, string status)
         {
             // Query the database for the row to be updated.
             var query =
@@ -147,11 +147,12 @@ namespace MaaAahwanam.Repository.db
             return 1;
         }
 
-        public UserLogin UpdateUserName(UserLogin userLogin,string email)
+        public UserLogin UpdateUserName(UserLogin userLogin, string email)
         {
-            var GetMasterRecord = _dbContext.UserLogin.SingleOrDefault(m => m.UserName == email);
+            var GetMasterRecord = _dbContext.UserLogin.Where(m => m.UserType == "Vendor").SingleOrDefault(m => m.UserName == email);
             userLogin.UserName = userLogin.UserName;
             userLogin.UserLoginId = GetMasterRecord.UserLoginId;
+            userLogin.UserType = "Vendor";
             _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userLogin);
             _dbContext.SaveChanges();
             return userLogin;

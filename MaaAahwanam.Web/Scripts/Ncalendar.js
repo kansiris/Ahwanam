@@ -10,8 +10,8 @@
         success: function (data) {
             $.each(data, function (i, v) {
                 var start1, end1 = null;
-                if (moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("A") == 'AM') {
-                    end1 = moment(v.EndDate).add(12, 'hours').add(30, 'minutes')
+                if (moment(v.EndDate).format("A") == 'AM') {
+                    end1 = moment(v.EndDate)
                 }
                 else {
                     end1 = moment(v.EndDate);
@@ -20,7 +20,7 @@
                     eventID: v.Id,
                     title: v.Title,
                     description: v.Description,
-                    start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
+                    start: moment(v.StartDate),
                     end: end1,//moment(v.EndDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
                     color: v.Color,
                     allDay: v.IsFullDay,
@@ -61,9 +61,9 @@ function GenerateCalender(events) {
                     selectedEvent = data;
                     $('#myModal #eventTitle').text(data.Title);
                     var $description = $('<div/>');
-                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
+                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).format("DD/MMM/YYYY hh:mm A")));
                     if (data.IsFullDay == "False" || data.IsFullDay == null) {
-                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
+                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).format("DD/MMM/YYYY hh:mm A")));
                     }
                     $description.append($('<p/>').html('<b>Description:</b>' + data.Description));
                     $('#myModal #pDetails').empty().html($description);
@@ -103,7 +103,7 @@ function GenerateCalender(events) {
                 Color: event.color,
                 IsFullDay: event.allDay,
                 Type: event.type,
-                VendorId: $('#vid').val(),
+                VendorId: $('#vendorid').val(),
                 Servicetype: event.servicetype
             };
             //alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
@@ -119,6 +119,8 @@ $('#btnEdit').click(function () {
 })
 
 $('#btnDelete').click(function () {
+    var id = $('#vendorid').val();
+    var vid = $('#vendorsubid').val();
     if (selectedEvent != null && confirm('Are you sure?')) {
         $.ajax({
             type: "POST",
@@ -127,7 +129,7 @@ $('#btnDelete').click(function () {
             success: function (data) {
                 if (data.status) {
                     //Refresh the calender
-                    FetchEventAndRenderCalendar();
+                    FetchEventAndRenderCalendar(id,vid);
                     $('#myModal').modal('hide');
                 }
             },
@@ -160,8 +162,8 @@ function openAddEditForm() {
         $('#subject').val(selectedEvent.Title);
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
         if (selectedEvent.eventID != 0) {
-            $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A"));
-            $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") : '');
+            $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MM/YYYY hh:mm A"));
+            $('#enddate').val(moment(selectedEvent.EndDate).format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).format("DD/MM/YYYY hh:mm A") : '');
         }
         else {
             $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY hh:mm A"));
@@ -225,7 +227,7 @@ $('#btnSave').click(function () {
         Color: $('#color').val(),
         IsFullDay: $('#chkIsFullDay').val(),
         Type: $('#type').val(),
-        VendorId: $('#vid').val(),
+        VendorId: $('#vendorid').val(),
         Servicetype: 'Venue',
     }
     SaveEvent(data);
@@ -234,7 +236,10 @@ $('#btnSave').click(function () {
 
 
 function SaveEvent(data) {
-    var vid = location.search.split('vid=')[1];
+    var id = $('#vendorid').val();
+    var vid = $('#vendorsubid').val();
+    //alert(id);
+    //alert(vid);
     $.ajax({
         type: "POST",
         url: "/NVendorCalendar/SaveEvent?vid=" + vid.toString() + "",
@@ -242,7 +247,7 @@ function SaveEvent(data) {
         success: function (data) {
             if (data.status) {
                 //Refresh the calender
-                FetchEventAndRenderCalendar($('#vendorsubcatids').val());
+                FetchEventAndRenderCalendar(id,vid);
                 $('#CalenderModalNew').modal('hide');
                 //location.reload();
             }

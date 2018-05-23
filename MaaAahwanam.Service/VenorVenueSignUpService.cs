@@ -371,5 +371,10 @@ namespace MaaAahwanam.Service
             }
             return masterid;
         }
+
+        public UserLogin GetParticularUserdetails(string email)
+        {
+            return vendorVenueSignUpRepository.GetParticularUserdetails(email);
+        }
     }
 }

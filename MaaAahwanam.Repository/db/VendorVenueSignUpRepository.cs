@@ -227,5 +227,11 @@ namespace MaaAahwanam.Repository.db
                 return "Failed!!!";
             }
         }
+
+        public UserLogin GetParticularUserdetails(string email)
+        {
+            var data = _dbContext.UserLogin.Where(p => p.UserName == email && p.UserType == "Vendor").FirstOrDefault(); // && p.UserType == userLogin.UserType
+            return data;
+        }
     }
 }
