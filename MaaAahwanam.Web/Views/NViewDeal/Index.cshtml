@@ -171,9 +171,19 @@ else
                                             <div class="float-right">
                                                 <p class="productMaxPrice mb-0 d-block"> ( <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.OriginalPrice)) </span > <small ></small > ) </p >
                                             </div >
+
+                                        
+                                           @if (Request.QueryString["type"] == "Photography" || Request.QueryString["type"] == "Decorator" || Request.QueryString["type"] == "Other")
+                                           {
+
                                             <div class="float-right">
-                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR/Person : <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)) </span > </p >
+                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR : <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)) </span > </p >
                                             </div >
+                                           }
+                                           else
+                                           { <div class="float-right">
+                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR/Person : <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)) </span> </p>
+                                            </div> }
                                         </div >
                                         <br />
                                         <hr />
@@ -551,7 +561,7 @@ else
                     }
 
                     var vtype = '@Request.QueryString["type"]';
-                        alert(vtype);
+                        //alert(vtype);
                         if (vtype == 'Photography' || vtype == 'Decorator' || vtype == 'Other') {
                             //  alert(value1);
                             $("#people").hide();

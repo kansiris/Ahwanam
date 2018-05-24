@@ -67,6 +67,11 @@ namespace MaaAahwanam.Service
             var userdetail = userDetailsRepository.UpdateUserdetailsnew(userDetail, UserloginID);
             return userdetail;
         }
+        public Vendormaster Updatevendordetailsnew(Vendormaster vendor,string  email)
+        {
+            var vendordetail = userDetailsRepository.Updatevendordetailsnew(vendor, email);
+            return vendordetail;
+        }
         public UserLogin changepassword(UserLogin userLogin, int UserLoginId)
         {
             var changes = userLoginRepository.UpdatePassword(userLogin, UserLoginId);
