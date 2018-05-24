@@ -35,8 +35,8 @@ namespace MaaAahwanam.Utility
 
             //Mail method for go daddy
             //string HostAdd = "relay-hosting.secureserver.net";
-            //string FromEmailid = "maaaahwanamtest@gmail.com";
-            //string Pass = "maaaahwanamtest";
+            //string FromEmailid = "info@ahwanam.com";
+            //string Pass = "spreadinghappiness";
             //string to = txtto.ToString();
             //MailMessage mailMessage = new MailMessage();
             //mailMessage.From = FromEmailid;

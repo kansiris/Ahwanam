@@ -75,40 +75,52 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             UserLogin userlogin = new UserLogin();
             UserDetail userdetails = new UserDetail();
+            //var details = vendorMasterService.SearchVendors();
+            //var particularvendor = details.Where(m => m.BusinessName.Contains(searchvendor)).FirstOrDefault();
             ViewBag.VendorList = vendorMasterService.SearchVendors().Where(m => m.BusinessName == searchvendor).FirstOrDefault();
             if (command == "Update")
             {
+                if (pemail != vendormaster.EmailId)
+                {
+                    int query = vendorMasterService.checkemail(vendormaster.EmailId);
+                    if (query != 0)
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('Email ID Already Taken');location.href='/admin/Vendors/SearchVendor'</script>");
+                    }
+                }
                 var updatedetails = vendormaster;
                 VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
-                vendormaster = vendorMasterService.GetVendorByEmail(pemail);
+                vendormaster = vendorMasterService.GetVendor(long.Parse(id));
                 vendormaster.EmailId = updatedetails.EmailId;
                 vendormaster.ContactNumber = updatedetails.ContactNumber;
                 vendormaster.ContactPerson = updatedetails.ContactPerson;
                 vendormaster = vendorMasterService.UpdateVendorDetails(vendormaster, long.Parse(id)); // Updating Email ID in Vendor Master Table
-                userlogin.UserName = pemail;
-                userlogin = venorVenueSignUpService.GetUserLogdetails(userlogin);
+                //userlogin.UserName = pemail;
+                //userlogin = venorVenueSignUpService.GetUserLogdetails(userlogin);
+                userlogin = venorVenueSignUpService.GetParticularUserdetails(pemail);
                 userlogin.UserName = vendormaster.EmailId;
                 userlogin = userLoginDetailsService.UpdateUserName(userlogin, pemail); // Updating Email ID in User Login Table
-                userdetails = userLoginDetailsService.GetUserDetailsByEmail(pemail);
+                //userdetails = userLoginDetailsService.GetUserDetailsByEmail(pemail);
+                userdetails = userLoginDetailsService.GetUser(int.Parse(userlogin.UserLoginId.ToString()));
                 userdetails.AlternativeEmailID = vendormaster.EmailId;
                 userdetails.FirstName = vendormaster.ContactPerson;
                 userdetails.UserPhone = vendormaster.ContactNumber;
-                userdetails = userLoginDetailsService.UpdateUserDetailEmail(userdetails, pemail); // Updating Email ID in User Detail Table
-                TempData["Active"] = "Info Updated";
-                return RedirectToAction("SearchVendor", "Vendors");
+                //userdetails = userLoginDetailsService.UpdateUserDetailEmail(userdetails, pemail); // Updating Email ID in User Detail Table
+                userdetails = userLoginDetailsService.UpdateUserdetails(userdetails, userlogin.UserLoginId);
+                return Content("<script language='javascript' type='text/javascript'>alert('Info Updated');location.href='/admin/Vendors/SearchVendor'</script>");
             }
             if (command == "Email")
             {
                 VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
                 userlogin.UserName = vendormaster.EmailId;
-                var userResponse = venorVenueSignUpService.GetUserLogdetails(userlogin);
+                var userResponse = venorVenueSignUpService.GetParticularUserdetails(pemail);
                 if (userResponse != null)
                 {
                     string emailid = userlogin.UserName;
                     if (userResponse.ActivationCode == null)
                     {
                         userlogin = userResponse;
-                        userlogin.ActivationCode= Guid.NewGuid().ToString();
+                        userlogin.ActivationCode = Guid.NewGuid().ToString();
                         userlogin = userLoginDetailsService.UpdateUserName(userlogin, emailid);
                         userResponse.ActivationCode = userlogin.ActivationCode;
                     }
@@ -119,9 +131,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     string name = userdetail.FirstName;
 
                     // vendor mail activation  begin
-                    
+
                     string mailid = userlogin.UserName;
-                    var userR = venorVenueSignUpService.GetUserdetails(mailid);
+                    var userR = userResponse;//venorVenueSignUpService.GetUserdetails(mailid);
                     string pas1 = userR.Password;
                     string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/WelcomeMessage.html"));
@@ -138,8 +150,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-                    TempData["Active"] = "Invitation Sent to " + txtto + "";
-                    return RedirectToAction("SearchVendor", "Vendors");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Invitation Sent to " + txtto + "');location.href='/admin/Vendors/SearchVendor'</script>");
                 }
             }
             return View();
