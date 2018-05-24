@@ -113,6 +113,44 @@ namespace MaaAahwanam.Repository.db
             }
             return userDetail;
         }
+
+
+        public Vendormaster Updatevendordetailsnew(Vendormaster vendor,  string email)
+        {
+            // Query the database for the row to be updated.
+            var query =
+                from ord in _dbContext.Vendormaster
+                where ord.EmailId == email
+                select ord;
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (Vendormaster ord in query)
+            {
+                ord.BusinessName = vendor.BusinessName;
+                ord.Address = vendor.Address;
+                ord.City = vendor.City;
+                ord.Landmark = vendor.Landmark;
+                ord.ContactPerson = vendor.ContactPerson;
+                ord.ContactNumber = vendor.ContactNumber;
+                ord.Description = vendor.Description;
+                ord.LandlineNumber = vendor.LandlineNumber;
+                ord.ZipCode = vendor.ZipCode;
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception Ex)
+            {
+
+            }
+            return vendor;
+        }
+
         public void UpdateDP(int UserloginsID,string imagename)
         {
             var list = _dbContext.UserDetail.SingleOrDefault(o=>o.UserLoginId==UserloginsID);
