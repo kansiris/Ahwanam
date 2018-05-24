@@ -98,7 +98,7 @@ function GenerateCalender(events) {
                 Id: event.eventID,
                 Title: event.title,
                 StartDate: event.start.format('DD/MMM/YYYY hh:mm A'),
-                EndDate: event.end != null ? event.end.format('DD/MM/YYYY hh:mm A') : null,
+                EndDate: event.end != null ? event.end.format('DD/MM/YYYY hh:mm A') : event.start.format('DD/MMM/YYYY hh:mm A'),
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay,
