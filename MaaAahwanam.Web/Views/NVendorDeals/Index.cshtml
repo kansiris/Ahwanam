@@ -9,7 +9,13 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="row">
                 <div class="col-sm-6 col-md-3">
-                    <a class="btn btn-block btn-primary" href="/NVendorAddDeal?id=@ViewBag.id">Add Deal</a>
+
+                    <button type="button" onclick="window.location.href='/NVendorAddDeal?id=@ViewBag.id'" class="btn btn-animate btn-animate-side btn-primary">
+                        <span>
+                            <i class="icon wb-plus-circle" aria-hidden="true"></i>Add Deal
+                        </span>
+                    </button>
+                    @*<a class="btn btn-block btn-primary" href="/NVendorAddDeal?id=@ViewBag.id">Add Deal</a>*@
                 </div>
             </div>
             <div class="row">
@@ -26,7 +32,13 @@
                                     <div class="col-sm-12">
                                         <table class="table table-hover dataTable table-striped width-full dtr-inline" data-plugin="dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                                             <thead>
-                                                <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 95px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Category</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 228px;" aria-label="Position: activate to sort column ascending">DealStartDate</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 135px;" aria-label="Office: activate to sort column ascending">DealEndDate</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 70px;" aria-label="Age: activate to sort column ascending">DealPrice</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 149px;" aria-label="Date: activate to sort column ascending">OriginalPrice</th><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 95px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">DealDescription</th><th>Actions</th></tr>
+                                                <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 230px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Category</th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 135px;" aria-label="Position: activate to sort column ascending">DealStartDate</th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 135px;" aria-label="Office: activate to sort column ascending">DealEndDate</th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;" aria-label="Age: activate to sort column ascending">DealPrice</th>
+                                                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;" aria-label="Date: activate to sort column ascending">OriginalPrice</th>
+                                                <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 95px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">DealDescription</th>
+                                                <th style="width: 70px;">Actions</th></tr>
                                             </thead>
                                             @*<tfoot>
                                                 <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Age</th><th rowspan="1" colspan="1">Date</th><th rowspan="1" colspan="1">Salary</th></tr>
@@ -43,7 +55,10 @@
                                                     <td>@item.DealPrice</td>
                                                     <td>@item.OriginalPrice</td>
                                                     <td>@item.DealDescription</td>
-                                                    <td><a  href='/NVendorDeals/edit?pid=@item.DealID&vid= @item.VendorId'>Edit</a>&nbsp;&nbsp;<a  onclick="deld(@item.DealID)">Delete</a></td>
+                                                    <td class="actions">
+                                                        <a href='/NVendorDeals/edit?pid=@item.DealID&vid= @item.VendorId' class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row" data-toggle="tooltip" data-original-title="Edit"><i class="icon wb-edit" aria-hidden="true"></i></a>
+                                                        <a href="#" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row" onclick="deld(@item.DealID)" data-toggle="tooltip" data-original-title="Remove"><i class="icon wb-trash" aria-hidden="true"></i></a>
+                                                    </td>  
                                                 </tr>
     }
 }
