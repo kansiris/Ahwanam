@@ -27,7 +27,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
 
-                //                ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
+                //ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
                 ViewBag.singledeal = vendorProductsService.getpartvendordeal(id, type,date).FirstOrDefault();
                 if (eve != "")
                 {
