@@ -37,5 +37,10 @@ namespace MaaAahwanam.Service
         {
             return vendorDatesRepository.GetParticularDate(id);
         }
+
+        public List<VendorDates> GetCurrentMonthDates(long id)
+        {
+            return vendorDatesRepository.GetCurrentMonthDates(id);
+        }
     }
 }

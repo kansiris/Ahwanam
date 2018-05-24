@@ -50,5 +50,14 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendorDates.Where(m => m.Id == id).FirstOrDefault();
         }
+
+        public List<VendorDates> GetCurrentMonthDates(long id)
+        {
+            var today = DateTime.UtcNow;
+            var first = new DateTime(today.Year, today.Month, 1);
+            var last = first.AddMonths(1).AddDays(-1);
+            return _dbContext.VendorDates.Where(m => m.VendorId == id && m.StartDate > first && m.EndDate <= last).ToList();
+            //return _dbContext.Availabledates.Where(m => m.vendorId == id).ToList();
+        }
     }
 }

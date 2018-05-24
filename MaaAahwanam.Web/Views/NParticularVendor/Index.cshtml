@@ -487,6 +487,7 @@
                         <div class="w-100 px-4 py-3">
                             <div class="row mx-0">
                                 <input type="hidden" id="serviceprice" value="@ViewBag.servicetypeprice" />
+                                <input type="hidden" id="vendoravailabledates" value="@ViewBag.vendoravailabledates" />
                                 <h3 class="noteWorthybold">
                                     Fill the Details
                                     <div class="blackBorder"></div>
@@ -658,7 +659,41 @@
                 timepicker: false,
                 format: 'd/m/Y',
                 minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-                maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+                maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+                beforeShowDay: function (date) {
+                    var disableddates = $('#vendoravailabledates').val();
+                    if (disableddates != '') {
+                        var unavailableDates = '';
+                        var final = ''; var dateslist1 = disableddates.split(',');
+                        for (var i = 0; i < dateslist1.length; i++) {
+                            var dateslist = dateslist1[i].split('/');
+                            if (dateslist[0] < 10 && dateslist[1] < 10) {
+                                var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                                final = final + datepart + ",";
+                            }
+                            else if (dateslist[0] < 10 && dateslist[1] >= 10) {
+                                var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                                final = final + datepart + ",";
+                            }
+                            else if (dateslist[0] >= 10 && dateslist[1] < 10) {
+                                var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                                final = final + datepart + ",";
+                            }
+
+                            else {
+                                final = final + dateslist1[i] + ",";
+                            }
+                            unavailableDates = final.slice(0, -1).split(',');
+                        }
+                        var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                        alert(unavailableDates);
+                        if ($.inArray(dmy, unavailableDates) == -1) {
+                            //alert("Date Booked");//return [false, "myclass", "Unavailable"];
+                        } else {
+                            return [true, ""];
+                        }
+                    }
+                }
             });
             /*------------ Date and Time --------------*/
         </script>
