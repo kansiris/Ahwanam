@@ -22,6 +22,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
+        VendorDatesService vendorDatesService = new VendorDatesService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
 
@@ -108,6 +109,25 @@ namespace MaaAahwanam.Web.Controllers
             DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type,date);
             ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
+
+            //Blocking Dates
+            //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
+            if (int.Parse(id) != 0)
+            {
+                var today = DateTime.UtcNow;
+                var first = new DateTime(today.Year, today.Month, 1);
+                var vendordates = vendorDatesService.GetCurrentMonthDates(long.Parse(id)).Select(n => n.StartDate.ToShortDateString()).ToArray();
+                var bookeddates = productInfoService.GetCount(long.Parse(id), long.Parse(vid), type).Where(k => k.BookedDate > first).Select(l => l.BookedDate.Value.ToShortDateString()).Distinct().ToArray();
+                //var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
+                var finalbookeddates = bookeddates.Except(vendordates).ToList();
+                var finalvendordates = vendordates.Except(bookeddates).ToList();
+                //var finalbookeddates1 = bookeddates;
+                //var finalvendordates1 = vendordates;
+                if (finalbookeddates.Count() != 0)
+                    ViewBag.vendoravailabledates = string.Join(",", finalvendordates) + string.Join(",", finalbookeddates);
+                else
+                    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
+            }
             return View();
         }
 
