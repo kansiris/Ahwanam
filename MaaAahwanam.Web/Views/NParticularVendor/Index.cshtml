@@ -30,7 +30,7 @@
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
                         <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)) </text > / -</div >
-
+                        @*<p>@ViewBag.vendoravailabledates</p>*@
                         <div class="w-100 tags my-15">
                             @if(new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
                             {
@@ -666,7 +666,7 @@
                         var unavailableDates = '';
                         var final = ''; var dateslist1 = disableddates.split(',');
                         for (var i = 0; i < dateslist1.length; i++) {
-                            var dateslist = dateslist1[i].split('/');
+                            var dateslist = dateslist1[i].split('-');
                             if (dateslist[0] < 10 && dateslist[1] < 10) {
                                 var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
                                 final = final + datepart + ",";
@@ -686,9 +686,9 @@
                             unavailableDates = final.slice(0, -1).split(',');
                         }
                         var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-                        alert(unavailableDates);
-                        if ($.inArray(dmy, unavailableDates) == -1) {
-                            //alert("Date Booked");//return [false, "myclass", "Unavailable"];
+                        //alert(unavailableDates);
+                        if ($.inArray(dmy, unavailableDates) != -1) {
+                           return [false, "myclass", "Unavailable"];
                         } else {
                             return [true, ""];
                         }

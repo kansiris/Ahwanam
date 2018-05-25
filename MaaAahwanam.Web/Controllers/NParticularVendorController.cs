@@ -107,26 +107,48 @@ namespace MaaAahwanam.Web.Controllers
             //if (type.Split(',').Count() > 1) type = type.Split(',')[0];
             if (type == "Venues" || type == "Banquet Hall" || type == "Function Hall") type = "Venue";
             DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type,date);
+            ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type, date);
             ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
 
             //Blocking Dates
             //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
             if (int.Parse(id) != 0)
             {
-                var today = DateTime.UtcNow;
-                var first = new DateTime(today.Year, today.Month, 1);
-                var vendordates = vendorDatesService.GetCurrentMonthDates(long.Parse(id)).Select(n => n.StartDate.ToShortDateString()).ToArray();
-                var bookeddates = productInfoService.GetCount(long.Parse(id), long.Parse(vid), type).Where(k => k.BookedDate > first).Select(l => l.BookedDate.Value.ToShortDateString()).Distinct().ToArray();
-                //var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
-                var finalbookeddates = bookeddates.Except(vendordates).ToList();
-                var finalvendordates = vendordates.Except(bookeddates).ToList();
-                //var finalbookeddates1 = bookeddates;
-                //var finalvendordates1 = vendordates;
-                if (finalbookeddates.Count() != 0)
-                    ViewBag.vendoravailabledates = string.Join(",", finalvendordates) + string.Join(",", finalbookeddates);
-                else
-                    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
+                var betweendates = new List<string>();
+                var Gettotaldates = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
+                int recordcount = Gettotaldates.Count();
+                foreach (var item in Gettotaldates)
+                {
+                    var startdate = Convert.ToDateTime(item.StartDate);
+                    var enddate = Convert.ToDateTime(item.EndDate);
+                    if (startdate != enddate)
+                    {
+                        for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
+                        {
+                            betweendates.Add(dt.ToString("dd-MM-yyyy"));
+                        }
+                    }
+                    else
+                    {
+                        betweendates.Add(startdate.ToString("dd-MM-yyyy"));
+                    }
+                }
+                ViewBag.vendoravailabledates = String.Join(",", betweendates);
+
+                //var today = DateTime.UtcNow;
+                //var first = new DateTime(today.Year, today.Month, 1);
+                //var vendordates = vendorDatesService.GetCurrentMonthDates(long.Parse(id)).Select(n => n.StartDate.ToShortDateString()).ToArray();
+                //var bookeddates = productInfoService.GetCount(long.Parse(id), long.Parse(vid), type).Where(k => k.BookedDate > first).Select(l => l.BookedDate.Value.ToShortDateString()).Distinct().ToArray();
+
+                ////var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
+                //var finalbookeddates = bookeddates.Except(vendordates).ToList();
+                //var finalvendordates = vendordates.Except(bookeddates).ToList();
+                ////var finalbookeddates1 = bookeddates;
+                ////var finalvendordates1 = vendordates;
+                //if (finalbookeddates.Count() != 0)
+                //    ViewBag.vendoravailabledates = string.Join(",", finalvendordates) + string.Join(",", finalbookeddates);
+                //else
+                //    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
             }
             return View();
         }
@@ -174,7 +196,7 @@ namespace MaaAahwanam.Web.Controllers
             var records = vendorProductsService.Getvendorproducts_Result(type);
             ViewBag.deal = records.Take(takecount).ToList();
             int count = records.Count();
-            
+
             ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
         }
@@ -186,7 +208,7 @@ namespace MaaAahwanam.Web.Controllers
         }
         public ActionResult BookNow(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
         {
-            
+
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -281,7 +303,7 @@ namespace MaaAahwanam.Web.Controllers
 
                     return Json("Success", JsonRequestBehavior.AllowGet);
                 }
-                
+
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
