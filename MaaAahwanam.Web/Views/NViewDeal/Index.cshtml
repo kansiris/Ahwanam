@@ -116,10 +116,7 @@
                             <a href="#dealDescrption" class="themeColor secondaryFont">Available Deals</a>
                             <div class="blackBorder"></div>
                         </h6>
-                        @if (ViewBag.singledeal1 != null)
-                        {
-                            foreach (var item in ViewBag.singledeal1)
-                            {
+                    
                         @*<div class="row mx-0 packages">
                             <div class="col-12 colmd-12 packageDetails">
                                 <div class="w-100 float-left">
@@ -149,6 +146,11 @@
                             </div>
                         </div>*@
                                 <div class="row mx-0 packages">
+@if (ViewBag.singledeal1 != null)
+{
+    foreach (var item in ViewBag.singledeal1)
+    {
+
                                     <div class="col-12 colmd-12 packageDetails">
                                         <div class="w-100 float-left">
 
@@ -193,9 +195,10 @@ else
                                             </p>
                                         </div>
                                     </div>
+    }
+}
                                     </div>
-                                    }
-                                                }
+                                   
                                 </div>
                     <div class="block px-2 w-100">
                         <h6 class="themeColor d-inline-block">
@@ -541,7 +544,9 @@ else
 
             // Function releated to Package select
            $( function checkSelect() {
-                $(".packageCheckbox label").click(function () {
+               $(".packageCheckbox label").click(function () {
+
+
                     if ($(this).find("input[type='checkbox']").is(':checked')) {
                         var packagename = $(this).parents('div.float-left').find('p.packageName').text();
                         var did = $(this).parents('div.float-left').find('input#did').val(); //$('#did').val();
@@ -552,13 +557,25 @@ else
                         $('#pricePerPlate').val(packageprice);
                         $('#did1').val(did);
                         $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
-                    } else {
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "none");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "none");
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+
+                    }
+                    else {
                         $('#eventtype').val('');
                         $('#pricePerPlate').val('');
                         $('#did1').val('');
 
                         $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "block");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "block");
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").find("span").remove();
                     }
+
+                   
 
                     var vtype = '@Request.QueryString["type"]';
                         //alert(vtype);
@@ -579,7 +596,9 @@ else
 
                 });
             })
-
+            $(document).on('click', ".packages .packageCheckbox > span", function () {
+                alertify.alert("You cannot select more than one package");
+            });
             $.fn.responseTabs = function () {
                 var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
                 placeholder = $('<div class="responsive-tabs-placeholder bgWhite"></div>').insertAfter(el);
