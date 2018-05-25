@@ -83,6 +83,7 @@ namespace MaaAahwanam.Web.Controllers
             if (type == "Photography" || type == "Decorator" || type == "Other")
             {
                 totalprice = price;
+                guest = "0";
             }
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -190,6 +191,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (type == "Photography" || type == "Decorator" || type == "Other")
                 {
                     totalprice = price;
+                    guest = "0";
                 }
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 var vendor = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();

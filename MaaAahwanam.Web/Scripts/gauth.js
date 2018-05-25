@@ -2,7 +2,7 @@
 var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
 var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
 var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
-var CLIENTID = '940368706527-qu2oqpfn1ad533kr1bpclh3qbleau1ug.apps.googleusercontent.com';
+var CLIENTID = '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com '// '940368706527-qu2oqpfn1ad533kr1bpclh3qbleau1ug.apps.googleusercontent.com';
 var REDIRECT = 'http://www.ahwanam.com/';
 var LOGOUT = 'http://www.ahwanam.com/';
 var TYPE = 'token';
