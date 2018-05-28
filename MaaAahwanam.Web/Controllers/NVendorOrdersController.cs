@@ -50,12 +50,12 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     else
                     {
-                        order.Status = "Removed";
-                        orderdetail.Status = "Removed";
+                        order.Status = "Vendor Declined";
+                        orderdetail.Status = "Vendor Declined";
                         TempData["Active"] = "Order Cancelled";
                     }
                     order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
-                    SendEmail(int.Parse(orders.FirstOrDefault().UserLoginId.ToString()), orderid, id, command, orders.FirstOrDefault().BusinessName);
+                    //SendEmail(int.Parse(orders.FirstOrDefault().UserLoginId.ToString()), orderid, id, command, orders.FirstOrDefault().BusinessName);
                     return RedirectToAction("Index", "NVendorOrders", new { id = id });
                 }
             }
@@ -79,7 +79,7 @@ namespace MaaAahwanam.Web.Controllers
             string name = userdetails.FirstName;
             string umessage = "";
             if (command == "Accept") umessage = "" + BusinessName + " Accepted Your Order";
-            else if (command == "Decline") umessage = "" + BusinessName + " Declined Your Order Request Due to inavaiablity of Dates";
+            else if (command == "Decline") umessage = "" + BusinessName + " Declined Your Order Request Due to inavailablity of Dates";
             name = Capitalise(name);
 
             string OrderId = orderid;

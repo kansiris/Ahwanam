@@ -1,0 +1,197 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row innerPagesBg py-4">
+        <div class="container cartPage">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <h3 class="noteWorthybold">
+                        Cart
+                        <div class="blackBorder"></div>
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-8">
+                    <div class="p-3 bgWhite mb-2 block">
+                        <div class="row mx-0">
+                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('http://www.ahwanam.com/vendorimages/Venue_10453_10172_1.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                            </div>
+                            <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock">
+                                <div class="w-100">
+                                    <h4 class="noteWorthybold d-inline">Celebrations</h4>
+                                    <label class="mb-0 float-right">
+                                        <input type="checkbox" checked>
+                                        <span></span>
+                                    </label>
+                                </div>
+                                <div class="w-100 text-left address">
+                                    <p>
+                                        H.No- 152, Ranibagh, Balamrai,<br>
+                                        Secunderabad, Telangana 500003 ,<br>
+                                    </p>
+                                </div>
+                                <ul class="pl-0 customDates"></ul>
+                                <div class="w-100 buttons">
+                                    <ul class="pl-0 float-right">
+                                        <li><span class="addDates">Add Dates</span></li>
+                                        <li><a href="#">Wishlist</a></li>
+                                        <li><span class="deleteBlock">Delete</span></li>
+                                    </ul>
+                                </div>
+                                <div class="dateInput">
+                                    <div class="triangle"></div>
+                                    <i class="fa fa-times"></i>
+                                    <div class="form-group mb-0">
+                                        <input type="text" value="" class="form-control datetimepicker" placeholder="Date Here" />
+                                    </div>
+                                    <span class="addSelDates">Add Date</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="p-3 bgWhite mb-2 block">
+                        <div class="row mx-0">
+                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('http://www.ahwanam.com/vendorimages/_10517_10108_1.jpg');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                            </div>
+                            <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock">
+                                <div class="w-100">
+                                    <h4 class="noteWorthybold d-inline">Celebrations 1</h4>
+                                    <label class="mb-0 float-right">
+                                        <input type="checkbox" checked>
+                                        <span></span>
+                                    </label>
+                                </div>
+                                <div class="w-100 text-left address">
+                                    <p>
+                                        H.No- 152, Ranibagh, Balamrai,<br>
+                                        Secunderabad, Telangana 500003 ,<br>
+                                    </p>
+                                </div>
+                                <ul class="pl-0 customDates"></ul>
+                                <div class="w-100 buttons">
+                                    <ul class="pl-0 float-right">
+                                        <li><span class="addDates">Add Dates</span></li>
+                                        <li><a href="#">Wishlist</a></li>
+                                        <li><span class="deleteBlock">Delete</span></li>
+                                    </ul>
+                                </div>
+                                <div class="dateInput">
+                                    <div class="triangle"></div>
+                                    <i class="fa fa-times"></i>
+                                    <div class="form-group mb-0">
+                                        <input type="text" value="" class="form-control datetimepicker" placeholder="Date Here" />
+                                    </div>
+                                    <span class="addSelDates">Add Date</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 d-flex justify-content-center">
+                        <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow" disabled>Book Now</button>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4">
+                    <div class="p-3 bgWhite">
+                        <div class="row mx-0">
+                            <div class="w-100">Block One</div>
+                            <div class="w-100">Block Two</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $('body').attr("id", "userAuthentication");
+        //});
+        //$('.container').hide();
+        $('.search').hide();
+    </script>
+
+    <script type="text/javascript">
+
+        /*--- Date and Time ----*/
+        $('.datetimepicker').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+            maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+        });
+        /*------------ Date and Time --------------*/
+
+        /*-- Add Dates Block --*/
+
+        var addDates = $(".cartPage .block .detailsBlock .buttons > ul > li > span.addDates"),
+        dateInput = $(".cartPage .block .detailsBlock .buttons + .dateInput"),
+        closeDateInput = $(".cartPage .block .detailsBlock .buttons + .dateInput > .triangle + i.fa-times"),
+        removeCustLi = $(".cartPage ul.customDates > li > i");
+        $(addDates).click(function () {
+            $(this).parents(".buttons").next(dateInput).css("display", "block");
+        });
+
+        $(closeDateInput).click(function () {
+            $(this).parents(".dateInput").css("display", "none");
+        });
+
+        $(".addSelDates").click(function () {
+            var dateVal = $(this).prev(".form-group").find("input").val();
+            if (dateVal != "") {
+                var custLi = $(this).parents(dateInput).prevAll("ul.customDates").append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "</li>");
+            }
+            $(this).prev(".form-group").find("input").val('');
+        });
+        $(document).on('click', '.cartPage ul.customDates > li', function () {
+            $(this).remove();
+        });
+
+        /*-- Add Dates Block --*/
+
+        /*-- Delete Blocks --*/
+        var deleteBlock = $(".cartPage .block .detailsBlock .buttons > ul > li > span.deleteBlock");
+        $(deleteBlock).click(function () {
+            $(this).parents('.block').remove();
+        });
+
+        /*-- Checkbox Fun for Book Now Button --*/
+
+        function checkFun() {
+            $(".cartPage .block").each(function () {
+                if (($(this).find("input[type='checkbox']")).is(':checked')) {
+                    $(this).parents(".cartPage").find("button.btn").prop('disabled', false);
+                    return false;
+                } else {
+                    $(this).parents(".cartPage").find("button.btn").prop('disabled', true);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            checkFun();
+        });
+        $(".cartPage .block").find("input[type='checkbox']").change(function () {
+            checkFun();
+        });
+
+        /*-- Checkbox Fun for Book Now Button --*/
+
+        /*-- Book Now Button --*/
+        $(".cartPage .bookNow").click(function () {
+            alert("Yes");
+        });
+        /*-- Book Now Button --*/
+    </script>
+}
+
