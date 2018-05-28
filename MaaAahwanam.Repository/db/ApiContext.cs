@@ -59,5 +59,6 @@ namespace MaaAahwanam.Repository.db
         public DbSet<AvailableWhishLists> AvailableWhishLists { get; set; }
         public DbSet<NDeals> NDeal { get; set; }
         public DbSet<Package> Package { get; set; }
+        public DbSet<OrderTransactionLog> OrderTransactionLog { get; set; }
     }
 }
