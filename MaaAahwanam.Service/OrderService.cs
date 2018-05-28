@@ -36,5 +36,10 @@ namespace MaaAahwanam.Service
             var changes = orderRepository.updateOrderstatus(order, orderdetail,orderid);
             return changes;
         }
+
+        public Order GetParticularOrder(long id)
+        {
+            return orderRepository.GetParticularOrder(id);
+        }
     }
 }

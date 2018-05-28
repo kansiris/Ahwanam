@@ -75,6 +75,10 @@ namespace MaaAahwanam.Repository.db
             return order;
         }
 
+        public Order GetParticularOrder(long id)
+        {
+            return _dbContext.Order.Where(m => m.OrderId == id).FirstOrDefault();
+        }
     }
 }
 
