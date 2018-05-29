@@ -17,13 +17,30 @@
             </div>
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-8">
+
+@if (ViewBag.cartitems != null)
+{
+    foreach (var item in ViewBag.cartitems)
+    {
                     <div class="p-3 bgWhite mb-2 block">
                         <div class="row mx-0">
-                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('http://www.ahwanam.com/vendorimages/Venue_10453_10172_1.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                            </div>
+                            @if (item.image != null)
+                            {
+
+                                <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                                </div>
+
+                            }
+                            else if (item.image == null)
+                            {
+                                <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('~/noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                                </div>
+                            }
+
+
                             <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock">
                                 <div class="w-100">
-                                    <h4 class="noteWorthybold d-inline">Celebrations</h4>
+                                    <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
                                     <label class="mb-0 float-right">
                                         <input type="checkbox" checked>
                                         <span></span>
@@ -31,16 +48,17 @@
                                 </div>
                                 <div class="w-100 text-left address">
                                     <p>
-                                        H.No- 152, Ranibagh, Balamrai,<br>
-                                        Secunderabad, Telangana 500003 ,<br>
+                                        @item.Address
+                                        <br>
+                                        @item.Landmark,@item.City <br>
                                     </p>
                                 </div>
                                 <ul class="pl-0 customDates"></ul>
                                 <div class="w-100 buttons">
                                     <ul class="pl-0 float-right">
                                         <li><span class="addDates">Add Dates</span></li>
-                                        <li><a href="#">Wishlist</a></li>
-                                        <li><span class="deleteBlock">Delete</span></li>
+                                        <li><a href="#" onclick="addwishlistItem(@item.CartId);" >Wishlist</a></li>
+                                        <li><span class="deleteBlock" onclick="DeletecartItem(@item.CartId);" >Delete</span></li>
                                     </ul>
                                 </div>
                                 <div class="dateInput">
@@ -55,43 +73,11 @@
 
                         </div>
                     </div>
-                    <div class="p-3 bgWhite mb-2 block">
-                        <div class="row mx-0">
-                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('http://www.ahwanam.com/vendorimages/_10517_10108_1.jpg');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                            </div>
-                            <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock">
-                                <div class="w-100">
-                                    <h4 class="noteWorthybold d-inline">Celebrations 1</h4>
-                                    <label class="mb-0 float-right">
-                                        <input type="checkbox" checked>
-                                        <span></span>
-                                    </label>
-                                </div>
-                                <div class="w-100 text-left address">
-                                    <p>
-                                        H.No- 152, Ranibagh, Balamrai,<br>
-                                        Secunderabad, Telangana 500003 ,<br>
-                                    </p>
-                                </div>
-                                <ul class="pl-0 customDates"></ul>
-                                <div class="w-100 buttons">
-                                    <ul class="pl-0 float-right">
-                                        <li><span class="addDates">Add Dates</span></li>
-                                        <li><a href="#">Wishlist</a></li>
-                                        <li><span class="deleteBlock">Delete</span></li>
-                                    </ul>
-                                </div>
-                                <div class="dateInput">
-                                    <div class="triangle"></div>
-                                    <i class="fa fa-times"></i>
-                                    <div class="form-group mb-0">
-                                        <input type="text" value="" class="form-control datetimepicker" placeholder="Date Here" />
-                                    </div>
-                                    <span class="addSelDates">Add Date</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+    }
+}
+
+
                     <div class="row mt-3 d-flex justify-content-center">
                         <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow" disabled>Book Now</button>
                     </div>
@@ -159,11 +145,12 @@
 
         /*-- Add Dates Block --*/
 
-        /*-- Delete Blocks --*/
-        var deleteBlock = $(".cartPage .block .detailsBlock .buttons > ul > li > span.deleteBlock");
-        $(deleteBlock).click(function () {
-            $(this).parents('.block').remove();
-        });
+        ///*-- Delete Blocks --*/
+        //var deleteBlock = $(".cartPage .block .detailsBlock .buttons > ul > li > span.deleteBlock");
+        //$(deleteBlock).click(function () {
+        //    $(this).parents('.block').remove();
+
+        //});
 
         /*-- Checkbox Fun for Book Now Button --*/
 
@@ -192,6 +179,52 @@
             alert("Yes");
         });
         /*-- Book Now Button --*/
+
+        function DeletecartItem(cartId) {
+            var obj = {}
+            obj.cartId = cartId;
+            $.ajax({
+                type: "POST",
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/NCartView/DeletecartItem',
+                data: {},
+                data: JSON.stringify(obj),
+                //data: sendInfo,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data != null) {
+                        window.location.reload();
+                    }
+                },
+                error: function (data) {
+                    //alert('error');
+                    alertmsg("error");
+                }
+            });
+        }
+
+        function addwishlistItem(cartId) {
+            var obj = {}
+            obj.cartId = cartId;
+            $.ajax({
+                type: "POST",
+                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/NCartView/addwishlistItem',
+                data: {},
+                data: JSON.stringify(obj),
+                //data: sendInfo,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data != null) {
+                        window.location.reload();
+                    }
+                },
+                error: function (data) {
+                    //alert('error');
+                    alertmsg("error");
+                }
+            });
+        }
     </script>
 }
 
