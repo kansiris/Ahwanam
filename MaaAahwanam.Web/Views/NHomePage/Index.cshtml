@@ -711,6 +711,7 @@
         <div class="icon"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
     </div>
 
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
     <script type="text/javascript" src="~/newdesign/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
@@ -740,7 +741,59 @@
                     }
                 }
             })
+
+          
+
         })
+    </script>
+    @*geolocation*@
+    <script>
+        window.onload = function () {
+            var city_name = "";
+          
+            var geocoder = new google.maps.Geocoder();
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+            }
+            //Get the latitude and the longitude;
+            function successFunction(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                codeLatLng(lat, lng)
+            }
+
+            function errorFunction() {
+                alert("Geocoder failed");
+            }
+
+            function initialize() {
+                geocoder = new google.maps.Geocoder();
+
+
+
+            }
+
+            function codeLatLng(lat, lng) {
+
+                var latlng = new google.maps.LatLng(lat, lng);
+                var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false'
+
+                $.ajax(url).done(function(data) {
+                    for (var i = 0; i < data.results.length; i++) {
+                        for (var j = 0; j < data.results[i].address_components.length; j++) {
+                            for (var k = 0; k < data.results[i].address_components[j].types.length; k++) {
+                                if (data.results[i].address_components[j].types[k] === 'locality') {
+                                     city_name = data.results[i].address_components[j].long_name;
+                                }
+                            }
+                        }
+                    }
+                    alert(city_name);
+
+                })
+            }
+        }
     </script>
     <!------ Auto Complete ---------->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

@@ -234,7 +234,7 @@ else
         </div>
         <div class="col-12 col-sm-12 col-md-4 col-lg-4 pl-md-0 topVenus">
             <div class="px-15">
-                <div class="row bgWhite mb-3">
+                <div class="row bgWhite mb-3" id="filldetails">
                     <div class="w-100 px-4 py-3">
                         <div class="row mx-0">
                             <h3 class="noteWorthybold">
@@ -541,7 +541,7 @@ else
     <script>
         //<!-- hr Responsive Tabs -->
         $(document).ready(function () {
-
+            $("#filldetails").hide();
             // Function releated to Package select
            $( function checkSelect() {
                $(".packageCheckbox label").click(function () {
@@ -561,7 +561,7 @@ else
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "none");
                         $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
-
+                        $("#filldetails").show();
 
                     }
                     else {
@@ -574,6 +574,7 @@ else
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "block");
                         $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").find("span").remove();
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                        $("#filldetails").hide();
 
                     }
 
@@ -691,14 +692,15 @@ else
         function Sethdnvalue(btn) {
             //if ($("select.eventType").find("option:selected").val() == '') {
             // alert("Please select Event type");
+            var timeslot = '';
             var type = '@Request.QueryString["type"]';
-            if (type == 'Venue' || type == 'Catering') {
+            if (type == 'Venue' || type == 'Catering' || type == 'venue') {
                 if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
                     var favorite = [];
                     $.each($("input[name='timeslot']:checked"), function () {
                         favorite.push($(this).val());
-                        var timeslot = favorite.join(", ");
+                        timeslot = favorite.join(", ");
                     })
                 }
                 else {
@@ -708,7 +710,9 @@ else
             else if (type == 'Photography' || type == 'Decorator' || type == 'Other') {
                 timeslot = "n/a";
               //  alert('ks');
-            } else if ($("#eventtype").val() == '') {
+            }
+        
+            if ($("#eventtype").val() == '') {
                 alertmsg("Please select Deal");
             } else if ($("#datetimepicker").val() == '') {
                // alert("Please select event date");
@@ -717,15 +721,16 @@ else
                 //   alert("Please select Menu type");
                 alertmsg("Please select Deal");
             }
-            //else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-            //    // var timeslot = ($('input[type=checkbox]').val());
-            //    //var timeslot = $(".slotTime input[type='checkbox']").val();
-            //    var favorite = [];
-            //    $.each($("input[name='timeslot']:checked"), function () {
-            //        favorite.push($(this).val());
-            //    });
-              //  var timeslot = favorite.join(", ");
+                //else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                //    // var timeslot = ($('input[type=checkbox]').val());
+                //    //var timeslot = $(".slotTime input[type='checkbox']").val();
+                //    var favorite = [];
+                //    $.each($("input[name='timeslot']:checked"), function () {
+                //        favorite.push($(this).val());
+                //    });
+                //  var timeslot = favorite.join(", ");
                 // var etype1 = $('#selectbox1').val();
+            else {
                 var evetype1 = $("#eventtype").val();
                 var etype1 = evetype1.split('(')[0];
                 var type = '@Request.QueryString["type"]';
@@ -736,7 +741,8 @@ else
                 var price = $('#pricePerPlate').val();
                 var price1 = price.split(':')[1].replace(/,/g, "");
                 var nop = $(".noOfPeoples input[type='number']").val();
-                var totalprice = price1 * nop;
+               // var totalprice = price1 * nop * a;
+                var totalprice = $('#tp').html();
                 // var did = $("select.pricePerPlate").find("option:selected").val();
                 var deid = $('#did1').val();
                 url1 = '/NViewDeal/addcnow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + deid;
@@ -761,21 +767,22 @@ else
                         }
                     }
                 });
-
+            }
             };
 
         function Sethdnvalue1(btn1) {
             //if ($("select.eventType").find("option:selected").val() == '') {
             //    //alert("Please select Event type");
+            var timeslot = '';
 
             var type = '@Request.QueryString["type"]';
-            if (type == 'Venue' || type == 'Catering') {
+            if (type == 'Venue' || type == 'Catering' || type == 'venue') {
                 if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
                     var favorite = [];
                     $.each($("input[name='timeslot']:checked"), function () {
                         favorite.push($(this).val());
-                        var timeslot = favorite.join(", ");
+                        timeslot = favorite.join(", ");
                     })
                 }
                 else {
@@ -786,7 +793,7 @@ else
                 timeslot = "n/a";
                 //alert('ks');
             }
-          else  if ($("#eventtype").val() == '') {
+           if ($("#eventtype").val() == '') {
                 alertmsg("Please select Deal");
           } 
           else if ($("#datetimepicker").val() == '') {
@@ -797,40 +804,44 @@ else
                 //alert("Please select Menu type");
                 alertmsg("Please select Menu type");
             } 
-            else if ($(".noOfPeoples input[type='number']").val() == '') {
-                // alert("Please Mention No Of Guests");
-                alertmsg("Please Mention No Of Guests");
-            }
-                var evetype1 = $("#eventtype").val();
-                var etype1 = evetype1.split('(')[0];
-                var vid = $('input#vid').val();
-                var id = '@Request.QueryString["id"]';
-                var date = $("#datetimepicker").val();
-                //  var price = $("select.pricePerPlate").find("option:selected").text();
-                var price = $('#pricePerPlate').val();
-                var price1 = price.split(':')[1].replace(/,/g, "");
-                var nop = $(".noOfPeoples input[type='number']").val();
-                var totalprice = price1 * nop;
-                // var did = $("select.pricePerPlate").find("option:selected").val();
-                var deid = $('#did1').val();
-                //alert(deid);
-                window.localStorage.setItem("etype1", etype1);
-                window.localStorage.setItem("date", date);
-                window.localStorage.setItem("PRICE", price1);
-                window.localStorage.setItem("nop", nop);
-                var timeslot = ($('input[type=checkbox]').val());
-                location.href = '/NUserRegistration/Index';
+          else if ($(".noOfPeoples input[type='number']").val() == '') {
+              // alert("Please Mention No Of Guests");
+              alertmsg("Please Mention No Of Guests");
+          }
+          else {
+              var evetype1 = $("#eventtype").val();
+              var etype1 = evetype1.split('(')[0];
+              var vid = $('input#vid').val();
+              var id = '@Request.QueryString["id"]';
+              var date = $("#datetimepicker").val();
+              //  var price = $("select.pricePerPlate").find("option:selected").text();
+              var price = $('#pricePerPlate').val();
+              var price1 = price.split(':')[1].replace(/,/g, "");
+              var nop = $(".noOfPeoples input[type='number']").val();
+              // var totalprice = price1 * nop;
+              var totalprice = $('#tp').html();
+              // var did = $("select.pricePerPlate").find("option:selected").val();
+              var deid = $('#did1').val();
+              //alert(deid);
+              window.localStorage.setItem("etype1", etype1);
+              window.localStorage.setItem("date", date);
+              window.localStorage.setItem("PRICE", price1);
+              window.localStorage.setItem("nop", nop);
+              var timeslot = ($('input[type=checkbox]').val());
+              location.href = '/NUserRegistration/Index';
+          }
         };
 
         $(".bookNow").click(function () {
+            var timeslot = '';
             var type = '@Request.QueryString["type"]';
-            if (type == 'Venue' || type == 'Catering') {
+            if (type == 'Venue' || type == 'Catering' || type == 'venue') {
                 if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
                     var favorite = [];
                     $.each($("input[name='timeslot']:checked"), function () {
                         favorite.push($(this).val());
-                        var timeslot = favorite.join(", ");
+                        timeslot = favorite.join(", ");
                     })
                 }
                 else {
@@ -839,9 +850,9 @@ else
             }
             else if (type == 'Photography' || type == 'Decorator' || type == 'Other') {
                 timeslot = "n/a";
-               // alert('ks');
+                // alert('ks');
             }
-            else if ($("select.eventType").find("option:selected").val() == '') {
+           if ($("select.eventType").find("option:selected").val() == '') {
                 // alert("Please select Event type");
                 alertmsg("Please select Deal");
             }
@@ -855,7 +866,7 @@ else
                 alertmsg("Please select Deal");
             }
 
-
+            else {
                 var evetype1 = $("#eventtype").val();
                 var etype1 = evetype1.split('(')[0];
 
@@ -866,7 +877,8 @@ else
                 var price = $('#pricePerPlate').val();
                 var price1 = price.split(':')[1].replace(/,/g, "");
                 var nop = $(".noOfPeoples input[type='number']").val();
-                var totalprice = price1 * nop;
+                // var totalprice = price1 * nop;
+                var totalprice = $('#tp').html();
                 // var did = $("select.pricePerPlate").find("option:selected").val();
                 var deid = $('#did1').val();
                 //alert(deid);
@@ -891,7 +903,7 @@ else
                     }
                 });
             }
-        
+        }
             //else {
             //    //alert("Please select time slot");
             //    alertmsg("Please select time slot");
@@ -899,7 +911,27 @@ else
         );
 
         $(".bookNow1").click(function () {
-            if ($("select.eventType").find("option:selected").val() == '') {
+            var timeslot = '';
+            var type = '@Request.QueryString["type"]';
+            if (type == 'Venue' || type == 'Catering' || type == 'venue') {
+                if ($(".slotTime input[type='checkbox']").is(':checked')) {
+
+                    var favorite = [];
+                    $.each($("input[name='timeslot']:checked"), function () {
+                        favorite.push($(this).val());
+                         timeslot = favorite.join(", ");
+                    })
+                }
+                else {
+                    alertmsg("Please select time slot");
+                }
+            }
+            else if (type == 'Photography' || type == 'Decorator' || type == 'Other') {
+                timeslot = "n/a";
+                // alert('ks');
+            }
+
+         if ($("select.eventType").find("option:selected").val() == '') {
               //  alert("Please select Event type");
                 alertmsg("Please select Deal");
             } else if ($("#datetimepicker").val() == '') {
@@ -908,15 +940,7 @@ else
             } else if ($("select.pricePerPlate").find("option:selected").val() == '') {
                 //alert("Please select Menu type");
                 alertmsg("Please select Deal");
-            } else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-                // var timeslot = ($('input[type=checkbox]').val());
-               // var timeslot = $(".slotTime input[type='checkbox']").val();
-                // var etype1 = $('#selectbox1').val();
-                var favorite = [];
-                $.each($("input[name='timeslot']:checked"), function () {
-                    favorite.push($(this).val());
-                });
-                var timeslot = favorite.join(", ");
+            } else {
                 var evetype1 = $("#eventtype").val();
                 var etype1 = evetype1.split('(')[0];
                 var type = '@Request.QueryString["type"]';
@@ -927,7 +951,8 @@ else
                 var price = $('#pricePerPlate').val();
                 var price1 = price.split(':')[1].replace(/,/g, "");
                 var nop = $(".noOfPeoples input[type='number']").val();
-                var totalprice = price1 * nop;
+                var totalprice = $('#tp').html();
+                // var totalprice = price1 * nop;
                 // var did = $("select.pricePerPlate").find("option:selected").val();
                 var deid = $('#did1').val();
                 //alert(deid);
