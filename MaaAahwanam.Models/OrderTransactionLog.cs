@@ -10,6 +10,7 @@ namespace MaaAahwanam.Models
     public class OrderTransactionLog
     {
         [Key]
+        public long TransactionLogID { get; set; }
         public long OrderDetailId { get; set; }
         public long OrderId { get; set; }
         public long VendorId { get; set; }
