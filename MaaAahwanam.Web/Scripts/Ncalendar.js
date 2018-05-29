@@ -1,4 +1,4 @@
-﻿function FetchEventAndRenderCalendar(id,subvid) {
+﻿function FetchEventAndRenderCalendar(id, subvid) {
     events = [];
     var date = new Date(),
         d = date.getDate(),
@@ -76,21 +76,31 @@ function GenerateCalender(events) {
         },
         selectable: true,
         select: function (start, end) {
+            var check = moment(start).format("DD/MMM/YYYY hh:mm A"); //$('#calendar').fullCalendar.formatDate(start, 'yyyy-MM-dd');
+            var today = moment(new Date()).format("DD/MMM/YYYY hh:mm A"); //$('#calendar').fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
+            if (check < today) {
+                alert("Can't add past dates");
+            }
+            else {
+                $('#divEndDate').show();
+                selectedEvent = {
+                    eventID: 0,
+                    title: '',
+                    description: '',
+                    start: start,
+                    end: end,
+                    allDay: false,
+                    color: '',
+                    type: '',
+                    servicetype: ''
+                };
+                openAddEditForm();
+                $('#calendar').fullCalendar('unselect');
+            }
+
+
             //alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
-            $('#divEndDate').show();
-            selectedEvent = {
-                eventID: 0,
-                title: '',
-                description: '',
-                start: start,
-                end: end,
-                allDay: false,
-                color: '',
-                type: '',
-                servicetype: ''
-            };
-            openAddEditForm();
-            $('#calendar').fullCalendar('unselect');
+            
         },
         editable: true,
         eventDrop: function (event) {
@@ -108,6 +118,18 @@ function GenerateCalender(events) {
             };
             //alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
             SaveEvent(data);
+        },
+        viewRender: function (currentView) {
+            var minDate = moment()
+            // Past
+            if (minDate >= currentView.start && minDate <= currentView.end) {
+                $(".fc-prev-button").prop('disabled', true);
+                $(".fc-prev-button").addClass('fc-state-disabled');
+            }
+            else {
+                $(".fc-prev-button").removeClass('fc-state-disabled');
+                $(".fc-prev-button").prop('disabled', false);
+            }
         }
     })
     //$('body.dashboard').css('padding-right', '0px');
@@ -129,7 +151,7 @@ $('#btnDelete').click(function () {
             success: function (data) {
                 if (data.status) {
                     //Refresh the calender
-                    FetchEventAndRenderCalendar(id,vid);
+                    FetchEventAndRenderCalendar(id, vid);
                     $('#myModal').modal('hide');
                 }
             },
@@ -247,7 +269,7 @@ function SaveEvent(data) {
         success: function (data) {
             if (data.status) {
                 //Refresh the calender
-                FetchEventAndRenderCalendar(id,vid);
+                FetchEventAndRenderCalendar(id, vid);
                 $('#CalenderModalNew').modal('hide');
                 //location.reload();
             }

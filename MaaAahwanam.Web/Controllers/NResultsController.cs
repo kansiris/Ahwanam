@@ -22,6 +22,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string type, string loc, string budget, string stype, string date, string count) //string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,
         {
             stypecount = stype.Split(',').Count();
+            ViewBag.stype = stype.Split(',');
             ViewBag.stypecount = stypecount;
             ViewBag.count = 6;
             return View();
