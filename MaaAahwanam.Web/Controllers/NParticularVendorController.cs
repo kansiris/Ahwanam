@@ -109,7 +109,8 @@ namespace MaaAahwanam.Web.Controllers
             DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type, date);
             ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
-
+            var orderdates = orderService.userOrderList().Where(k => k.Id == long.Parse(id) && k.Status == "Active").Select(k=>k.OrderDate.Value.ToString("dd-MM-yyyy")).ToList();
+            
             //Blocking Dates
             //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
             if (int.Parse(id) != 0)
@@ -133,8 +134,10 @@ namespace MaaAahwanam.Web.Controllers
                         betweendates.Add(startdate.ToString("dd-MM-yyyy"));
                     }
                 }
-                ViewBag.vendoravailabledates = String.Join(",", betweendates);
-
+                //ViewBag.vendoravailabledates = String.Join(",", betweendates,orderdates);
+                var vendoravailabledates = String.Join(",", betweendates);
+                vendoravailabledates = vendoravailabledates +","+ String.Join(",", orderdates);
+                ViewBag.vendoravailabledates = vendoravailabledates;
                 //var today = DateTime.UtcNow;
                 //var first = new DateTime(today.Year, today.Month, 1);
                 //var vendordates = vendorDatesService.GetCurrentMonthDates(long.Parse(id)).Select(n => n.StartDate.ToShortDateString()).ToArray();
