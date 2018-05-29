@@ -39,10 +39,10 @@
 
 
                             <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock">
-                                <div class="w-100">
+                                <div class="w-100 cartselect">
                                     <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
                                     <label class="mb-0 float-right">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox" name="cartid" value="@item.CartId" checked>
                                         <span></span>
                                     </label>
                                 </div>
@@ -176,8 +176,40 @@
 
         /*-- Book Now Button --*/
         $(".cartPage .bookNow").click(function () {
-            alert("Yes");
+            //  alert("Yes");
+            var cartnos = '';
+            if ($(".cartselect input[type='checkbox']").is(':checked')) {
+
+                var favorite = [];
+                $.each($("input[name='cartid']:checked"), function () {
+                    favorite.push($(this).val());
+                    cartnos = favorite.join(", ");
+                })
+            }
+
+            alert(cartnos);
+
+            url1 = '/NCartView/booknow?cartnos=' +cartnos;
+            $.ajax({
+                url: url1,
+                success: function (data) {
+                    if (data == "Success") {
+                        //  alert("Sucessfully Added to cart")
+                        alert("Sucessfully Added to cart");
+                      
+                        if (data != null) {
+                            window.location.reload();
+                        }
+                    }
+                    else if (data == "failed") {
+                        //   alert("login to the cart");
+                        alertmsg("Login to the cart");
+                    }
+                }
+            });
+        
         });
+           
         /*-- Book Now Button --*/
 
         function DeletecartItem(cartId) {

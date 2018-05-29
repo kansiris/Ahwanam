@@ -206,7 +206,7 @@ namespace MaaAahwanam.Web.Controllers
                 cartItem.Perunitprice = decimal.Parse(price);
                 cartItem.Quantity = Convert.ToInt16(guest);
                 cartItem.subid = Convert.ToInt64(vid);
-                //  cartItem.attribute = orderRequest.attribute;
+                  cartItem.attribute = timeslot;
                 cartItem.DealId = Convert.ToInt64(did);
                 CartService cartService = new CartService();
                 cartItem = cartService.AddCartItem(cartItem);
