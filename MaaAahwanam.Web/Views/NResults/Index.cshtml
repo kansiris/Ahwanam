@@ -12,7 +12,7 @@
             <ul class="px-0 py-2 mb-0">
                 @foreach (var item in ViewBag.stype)
                 {
-                    <li id="BlockOnePartial">@item</li>
+                    <li id="@item[0]">@item[1]</li>
                 }
             </ul>
         </div>
@@ -379,6 +379,8 @@
             //var value =
             if ('@Request.QueryString["stype"]') {
                 $(".resultsPopUp").css("display", "block");
+                var attrId = $(this).parents(".filteredResultsBlock").attr("id");
+                document.getElementsByClassName("resultsPopUp")[0].setAttribute("id", attrId);
             }
 
 
@@ -404,11 +406,11 @@
             $(vendorAmenities).find("ul").prevAll("ul").remove();
 
             //Viewmore Button
-            $(this).parents(".productBlock").find(".vendorViewMore").clone().appendTo(viewMoreBtn);
+            $(this).find(".vendorViewMore").clone().appendTo(viewMoreBtn);
             $(viewMoreBtn).children("a").prevAll("a").remove();
 
             //AddtoCart Button
-            $(this).parents(".productBlock").find(".vendorAddtoCart").clone().appendTo(addtoCart);
+            $(this).find(".vendorAddtoCart").clone().appendTo(addtoCart);
             $(addtoCart).find("span").prevAll("span").remove();
         });
         $(".resultsPopUp i.fa-times").click(function () {
@@ -427,8 +429,8 @@
 
         //$(".addtoCart").click(function () {
         $(document).on('click', '.addtoCart', function () {
-            alert("hi");
             var attrId = $(this).parents(".resultsPopUp").attr("id");
+            //alert(attrId);
             $(".selectedServices ul li").each(function () {
                 var liId = $(this).attr("id");
                 if (liId == attrId) {

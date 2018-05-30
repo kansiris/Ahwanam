@@ -23,8 +23,16 @@ namespace MaaAahwanam.Web.Controllers
         {
             stypecount = stype.Split(',').Count();
             ViewBag.stype = stype.Split(',');
+            string idslist = "BlockOnePartial,BlockTwoPartial,BlockThreePartial,BlockFourPartial,BlockFivePartial";
+            List<string[]> list = new List<string[]>();
+            for (int i = 0; i < stypecount; i++)
+            {
+                list.Add(new string[] {idslist.Split(',')[i], stype.Split(',')[i] });
+            }
+            
             ViewBag.stypecount = stypecount;
             ViewBag.count = 6;
+            ViewBag.stype = list;
             return View();
         }
 
@@ -106,7 +114,7 @@ namespace MaaAahwanam.Web.Controllers
                 type = (type == "Function Hall" || type == "Function") ? "FunctionHall" : type;
                 type = (type == "Convetion" || type == "Convention") ? "ConventionHall" : type;
                 ViewBag.type = type;
-                
+
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
                 ViewBag.recordcount = recordcount;
             }
@@ -129,7 +137,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.type = type;
                 ViewBag.type1 = type;
                 ViewBag.results = data.Take(takecount).ToList();
-                
+
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";
                 ViewBag.recordcount = data.Count;
             }
@@ -184,7 +192,7 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.results = data.Take(takecount).ToList();
             //else
             //    ViewBag.results = vendorProductsService.Getfiltervendors_Result(inputcategory, loc, "0", "0").ToList();
-            
+
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             inputcategory = (inputcategory == "Convention Hall" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "Convetion") ? "ConventionHall" : inputcategory;
             ViewBag.type = inputcategory;
@@ -230,7 +238,7 @@ namespace MaaAahwanam.Web.Controllers
             //if (takecount == 6) { if (stype.Split(',').Length > 2) inputcategory = stype.Split(',')[2]; }
             type1 = (inputcategory == "Convetion" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "ConventionHall") ? "Convention Hall" : inputcategory;
             if (takecount > 6) inputcategory = type1;
-                loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
+            loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             var data = vendorProductsService.Getfiltervendors_Result(inputcategory, loc, "0", "0");
             if (inputcategory == "Mehendi" || inputcategory == "Pandit")
@@ -253,7 +261,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             ViewBag.results = data.Take(takecount).ToList();
-            
+
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             inputcategory = (inputcategory == "Convention Hall" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "Convetion") ? "ConventionHall" : inputcategory;
             ViewBag.type = inputcategory;
@@ -321,7 +329,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             ViewBag.results = data.Take(takecount).ToList();
-            
+
             ViewBag.count = (recordcount >= takecount) ? "1" : "0";
             inputcategory = (inputcategory == "Convention Hall" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "Convetion") ? "ConventionHall" : inputcategory;
             ViewBag.type = inputcategory;
@@ -390,7 +398,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
 
-            
+
             ViewBag.results = data.Take(takecount).ToList();
             inputcategory = (inputcategory == "Convention Hall" || inputcategory == "Convention-Hall" || inputcategory == "Convention" || inputcategory == "Convetion") ? "ConventionHall" : inputcategory;
             ViewBag.type = inputcategory;
