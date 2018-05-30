@@ -25,10 +25,14 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.stype = stype.Split(',');
             string idslist = "BlockOnePartial,BlockTwoPartial,BlockThreePartial,BlockFourPartial,BlockFivePartial";
             List<string[]> list = new List<string[]>();
-            for (int i = 0; i < stypecount; i++)
+            if (stype != "")
             {
-                list.Add(new string[] {idslist.Split(',')[i], stype.Split(',')[i] });
+                for (int i = 0; i < stypecount; i++)
+                {
+                    list.Add(new string[] { idslist.Split(',')[i], stype.Split(',')[i] });
+                }
             }
+            
             
             ViewBag.stypecount = stypecount;
             ViewBag.count = 6;

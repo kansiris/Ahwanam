@@ -29,10 +29,10 @@
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)) </text > / -</div >
+                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)) </text> / -</div>
                         @*<p>@ViewBag.vendoravailabledates</p>*@
                         <div class="w-100 tags my-15">
-                            @if(new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
+                            @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
                             {
                                 if (ViewBag.particularVenue.HallType != null && ViewBag.particularVenue.HallType != "")
                                 {
@@ -59,19 +59,19 @@
                                     </div>
                                 }
                             }
-                            @if(Request.QueryString["type"] == "Catering")
-                        {
-                            if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
+                            @if (Request.QueryString["type"] == "Catering")
                             {
+                                if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
+                                {
                                     <div class="d-inline-block p-2 mr-4 greyBg">
                                         <p class="mb-0"><span>LiveCookingStation : @ViewBag.particularCatering.LiveCookingStation</span></p>
                                     </div>
                                 }
                             }
-                            @if(Request.QueryString["type"] == "Photography")
-                        {
-                            if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
+                            @if (Request.QueryString["type"] == "Photography")
                             {
+                                if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
+                                {
                                     <div class="d-inline-block p-2 mr-4 greyBg">
                                         <p class="mb-0"><span>Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot</span></p>
                                     </div>
@@ -136,7 +136,7 @@
                                     }
 
                                 </span>
-                                @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall","Venue" }.Contains(Request.QueryString["type"]))
+                                @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall", "Venue" }.Contains(Request.QueryString["type"]))
                                 {
                                     <p>Hall Details</p>
                                     if (ViewBag.particularVenue != null)
@@ -278,442 +278,447 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-md-6 address">
                                             <h6 class="themeColor">Address</h6>
-                                           @if (ViewBag.location.Address != null || ViewBag.location.Landmark != null || ViewBag.location.City != null || ViewBag.location.State != null || ViewBag.location.ZipCode != null)
+                                            @if (ViewBag.location.Address != null || ViewBag.location.Landmark != null || ViewBag.location.City != null || ViewBag.location.State != null || ViewBag.location.ZipCode != null)
                                             {
-                                            <p>@ViewBag.location.Address,</p>
-                                            <p>@ViewBag.location.Landmark,</p>
-                                            <p>@ViewBag.location.City, @ViewBag.location.State</p>
-                                            <p>@ViewBag.location.ZipCode.</p>
+                                                <p>@ViewBag.location.Address,</p>
+                                                <p>@ViewBag.location.Landmark,</p>
+                                                <p>@ViewBag.location.City, @ViewBag.location.State</p>
+                                                <p>@ViewBag.location.ZipCode.</p>
                                             }
-                                            else if (ViewBag.location.Address == null|| ViewBag.location.Landmark == null || ViewBag.location.City == null || ViewBag.location.State == null || ViewBag.location.ZipCode == null)
+                                            else if (ViewBag.location.Address == null || ViewBag.location.Landmark == null || ViewBag.location.City == null || ViewBag.location.State == null || ViewBag.location.ZipCode == null)
                                             {
                                                 <p>@ViewBag.Productinfo.Address,</p>
                                                 <p>@ViewBag.Productinfo.Landmark,</p>
                                                 <p>@ViewBag.Productinfo.City, @ViewBag.Productinfo.State</p>
                                                 <p>@ViewBag.Productinfo.ZipCode.</p>
                                             }
-                                            
-                                                
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-6 contact">
-                                                <h6 class="themeColor">Contact</h6>
-                                                @*<p>+91-@ViewBag.Productinfo.ContactNumber</p>
-                                                    <p>@ViewBag.Productinfo.EmailId</p>*@
-                                                <p>+91-7702053510</p>
-                                                <p>amit.saxena@ahwanam.com</p>
-                                            </div>
-                                        </div>
-                                    </span>
-                                    <p>Map</p>
-                                    <span>
-                                        Map Content
-                                        <!--<div class="map" style="height: 150px;">
-                                          <div id="google-map" data-latitude="17.425218" data-longitude="78.421246" style="height: 150px;"></div>
-                                        </div>-->
-                                    </span>
-                                </div>
-                                <div class="appendedData"></div>
-                            </dd>
 
-                            <dt>Other</dt>
-                            <dd>
-                                @foreach (var item in ViewBag.Venue)
+
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-6 contact">
+                                            <h6 class="themeColor">Contact</h6>
+                                            @*<p>+91-@ViewBag.Productinfo.ContactNumber</p>
+                                                <p>@ViewBag.Productinfo.EmailId</p>*@
+                                            <p>+91-7702053510</p>
+                                            <p>amit.saxena@ahwanam.com</p>
+                                        </div>
+                                    </div>
+                                </span>
+                                <p>Map</p>
+                                <span>
+                                    Map Content
+                                    <!--<div class="map" style="height: 150px;">
+                                      <div id="google-map" data-latitude="17.425218" data-longitude="78.421246" style="height: 150px;"></div>
+                                    </div>-->
+                                </span>
+                            </div>
+                            <div class="appendedData"></div>
+                        </dd>
+
+                        <dt>Other</dt>
+                        <dd>
+                            @foreach (var item in ViewBag.Venue)
+                            {
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
                                 {
-                                    if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                    {
-                                        <div class="row packages">
-                                            <div class="col-12 colmd-12 packageDetails">
-                                                <div class="w-100 float-left">
-                                                    @if (item.VenueType != "" && item.VenueType != null)
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                    }
-                                                    <div class="float-right">
-                                                        <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <hr />
-                                                <div class="w-100">
-                                                    <p class="packageContent">
-                                                        Food : @item.Food ; CockTails: @item.CockTails ; Rooms : @item.Rooms ; DecorationAllowed : @item.DecorationAllowed ; HallType : @item.HallType ; Wifi : @item.Wifi ; LiveCookingStation : @item.LiveCookingStation
-                                                    </p>
+                                    <div class="row packages">
+                                        <div class="col-12 colmd-12 packageDetails">
+                                            <div class="w-100 float-left">
+                                                @if (item.VenueType != "" && item.VenueType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
+                                                }
+                                                <div class="float-right">
+                                                    <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
                                                 </div>
                                             </div>
+                                            <br />
+                                            <hr />
+                                            <div class="w-100">
+                                                <p class="packageContent">
+                                                    Food : @item.Food ; CockTails: @item.CockTails ; Rooms : @item.Rooms ; DecorationAllowed : @item.DecorationAllowed ; HallType : @item.HallType ; Wifi : @item.Wifi ; LiveCookingStation : @item.LiveCookingStation
+                                                </p>
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
+                            }
 
-                                @foreach (var item in ViewBag.Catering)
+                            @foreach (var item in ViewBag.Catering)
+                            {
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
                                 {
-                                    if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                    {
-                                        <div class="row packages">
-                                            <div class="col-12 colmd-12 packageDetails">
-                                                <div class="w-100 float-left">
-                                                    @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>*@
-                                                    @if (item.CuisineType != "" && item.CuisineType != null)
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                    }
-                                                    <div class="float-right">
-                                                        <p class="mb-0 mr-2">INR <span>@item.Veg</span></p>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <hr />
-                                                <div class="w-100">
-                                                    <p class="packageContent">
-                                                        Live Cooking Station Availability : @item.LiveCookingStation ; Transport Included : @item.TransportIncluded
-                                                    </p>
+                                    <div class="row packages">
+                                        <div class="col-12 colmd-12 packageDetails">
+                                            <div class="w-100 float-left">
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>*@
+                                                @if (item.CuisineType != "" && item.CuisineType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
+                                                }
+                                                <div class="float-right">
+                                                    <p class="mb-0 mr-2">INR <span>@item.Veg</span></p>
                                                 </div>
                                             </div>
+                                            <br />
+                                            <hr />
+                                            <div class="w-100">
+                                                <p class="packageContent">
+                                                    Live Cooking Station Availability : @item.LiveCookingStation ; Transport Included : @item.TransportIncluded
+                                                </p>
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
+                            }
 
-                                @foreach (var item in ViewBag.Decorator)
+                            @foreach (var item in ViewBag.Decorator)
+                            {
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
                                 {
-                                    if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                    {
-                                        <div class="row packages">
-                                            <div class="col-12 colmd-12 packageDetails">
-                                                <div class="w-100 float-left">
-                                                    @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>*@
-                                                    @if (item.DecorationType != "" && item.DecorationType != null)
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                    }
-                                                    <div class="float-right">
-                                                        <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <hr />
-                                                <div class="w-100">
-                                                    <p class="packageContent">
-                                                        Mandap Design : @item.Mandaps ; Mehendi : @item.Mehendi ; Sangeet : @item.Sangeet ; Lighting : @item.Lighting
-                                                    </p>
+                                    <div class="row packages">
+                                        <div class="col-12 colmd-12 packageDetails">
+                                            <div class="w-100 float-left">
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>*@
+                                                @if (item.DecorationType != "" && item.DecorationType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
+                                                }
+                                                <div class="float-right">
+                                                    <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
                                                 </div>
                                             </div>
+                                            <br />
+                                            <hr />
+                                            <div class="w-100">
+                                                <p class="packageContent">
+                                                    Mandap Design : @item.Mandaps ; Mehendi : @item.Mehendi ; Sangeet : @item.Sangeet ; Lighting : @item.Lighting
+                                                </p>
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
+                            }
 
-                                @foreach (var item in ViewBag.Photography)
+                            @foreach (var item in ViewBag.Photography)
+                            {
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
                                 {
-                                    if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                    {
-                                        <div class="row packages">
-                                            <div class="col-12 colmd-12 packageDetails">
-                                                <div class="w-100 float-left">
-                                                    @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>*@
-                                                    @if (item.PhotographyType != "" && item.PhotographyType != null)
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">Photography</a></p></div>
-                                                    }
-                                                    <div class="float-right">
-                                                        <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <hr />
-                                                <div class="w-100">
-                                                    <p class="packageContent">
-                                                        Pre-Wedding Shoot : @item.PreWeddingShoot ;
-                                                    </p>
+                                    <div class="row packages">
+                                        <div class="col-12 colmd-12 packageDetails">
+                                            <div class="w-100 float-left">
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>*@
+                                                @if (item.PhotographyType != "" && item.PhotographyType != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">Photography</a></p></div>
+                                                }
+                                                <div class="float-right">
+                                                    <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
                                                 </div>
                                             </div>
+                                            <br />
+                                            <hr />
+                                            <div class="w-100">
+                                                <p class="packageContent">
+                                                    Pre-Wedding Shoot : @item.PreWeddingShoot ;
+                                                </p>
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
+                            }
 
-                                @foreach (var item in ViewBag.Other)
+                            @foreach (var item in ViewBag.Other)
+                            {
+                                if (item.Id != long.Parse(Request.QueryString["vid"]))
                                 {
-                                    if (item.Id != long.Parse(Request.QueryString["vid"]))
-                                    {
-                                        <div class="row packages">
-                                            <div class="col-12 colmd-12 packageDetails">
-                                                <div class="w-100 float-left">
-                                                    @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>*@
-                                                    @if (item.type != "" && item.type != null)
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">Other</a></p></div>
-                                                    }
-                                                    <div class="float-right">
-                                                        <p class="mb-0 mr-2">INR <span>@item.ItemCost</span></p>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <hr />
-                                                <div class="w-100">
-                                                    <p class="packageContent">
-                                                        Prior Bookings Days : @item.PriorBookingsDays
-                                                    </p>
+                                    <div class="row packages">
+                                        <div class="col-12 colmd-12 packageDetails">
+                                            <div class="w-100 float-left">
+                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>*@
+                                                @if (item.type != "" && item.type != null)
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">Other</a></p></div>
+                                                }
+                                                <div class="float-right">
+                                                    <p class="mb-0 mr-2">INR <span>@item.ItemCost</span></p>
                                                 </div>
                                             </div>
+                                            <br />
+                                            <hr />
+                                            <div class="w-100">
+                                                <p class="packageContent">
+                                                    Prior Bookings Days : @item.PriorBookingsDays
+                                                </p>
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
                                 }
+                            }
 
-                            </dd>
-                        </dl>
-                    </div>
+                        </dd>
+                    </dl>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4 pl-md-0 topVenus">
-                <div class="px-15">
-                    <div class="row bgWhite mb-3">
-                        <div class="w-100 px-4 py-3">
-                            <div class="row mx-0">
-                                <input type="hidden" id="serviceprice" value="@ViewBag.servicetypeprice" />
-                                <input type="hidden" id="vendoravailabledates" value="@ViewBag.vendoravailabledates" />
-                                <h3 class="noteWorthybold">
-                                    Fill the Details
-                                    <div class="blackBorder"></div>
-                                </h3>
-                            </div>
-                            <div class="row mx-0 mt-4 dealProfileForm">
-                                <div class="w-100">
-                                    <div class="form-group mb-0">
-                                        <input type="text" class="form-control nexaBold" placeholder="Event Type" id="eventtype" name="eventtype">
-                                    </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 pl-md-0 topVenus">
+            <div class="px-15">
+                <div class="row bgWhite mb-3">
+                    <div class="w-100 px-4 py-3">
+                        <div class="row mx-0">
+                            <input type="hidden" id="serviceprice" value="@ViewBag.servicetypeprice" />
+                            <input type="hidden" id="vendoravailabledates" value="@ViewBag.vendoravailabledates" />
+                            <h3 class="noteWorthybold">
+                                Fill the Details
+                                <div class="blackBorder"></div>
+                            </h3>
+                        </div>
+                        <div class="row mx-0 mt-4 dealProfileForm">
+                            <div class="w-100">
+                                <div class="form-group mb-0">
+                                    <input type="text" class="form-control nexaBold" placeholder="Event Type" id="eventtype" name="eventtype">
                                 </div>
+                            </div>
 
-                                @*<div class="w-100">
-                                        <select class="w-100 p-2 ml-auto">
-                                            <option>Event type</option>
-                                            @foreach (var item in ViewBag.Venue)
-                                            {
-                                                <option>@item.VenueType</option>
-                                            }
-                                        </select>
-                                    </div>*@
-                                <div class="w-100 mt-3 noOfPeoples">
-                                    <div class="form-group mb-0">
-                                        <input type="text" class="form-control nexaBold" placeholder="Members" id="members" name="members">
-                                    </div>
-                                </div>
-                                <div class="w-100 mt-3 eventDate">
-                                    <div class="datentime w-100">
-                                        @*<div class="input">
-                                                <div class="result nexaBold">Occasion Date: <span id="occasiondate"></span></div>
-                                                <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
-                                            </div>
-                                            <div class="calendar"></div>*@
-                                        <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Date Here" />
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                                <div class="w-100 mt-3 slotTime">
-                                    <div class="w-50 float-left">
-                                        <label class="w-100 mb-0">
-                                            <input type="checkbox">
-                                            <span></span>
-                                            <p class="mb-0 d-inline">Morning</p>
-                                        </label>
-                                    </div>
-                                    <div class="w-50 float-left">
-                                        <label class="w-100 mb-0">
-                                            <input type="checkbox">
-                                            <span></span>
-                                            <p class="mb-0 d-inline">Evening</p>
-                                        </label>
-                                    </div>
+                            @*<div class="w-100">
+                                    <select class="w-100 p-2 ml-auto">
+                                        <option>Event type</option>
+                                        @foreach (var item in ViewBag.Venue)
+                                        {
+                                            <option>@item.VenueType</option>
+                                        }
+                                    </select>
+                                </div>*@
+                            <div class="w-100 mt-3 noOfPeoples">
+                                <div class="form-group mb-0">
+                                    <input type="text" class="form-control nexaBold" placeholder="Members" id="members" name="members">
                                 </div>
                             </div>
-                            <div class="row mx-0">
-                                <div class="w-100 d-flex my-2">
-                                    @*<span class="themeBgColorPrimary btnSecondary text-white text-center w-100">Book Now</span>*@
-                                    @if (user != null)
-                                    {
-                                        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow">Book Now</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100" id="servicebook">Book Now</span> // /NUserRegistration/Index onclick="@Url.Action("Index","NUserRegistration")"
-                                    }
-                                </div>
-                                <div class="w-100 d-flex my-2">
-                                    <span class="themeBgColorPrimary needHelpBtn btnSecondary text-white text-center w-100">
-                                        Need any help ?
-                                    </span>
+                            <div class="w-100 mt-3 eventDate">
+                                <div class="datentime w-100">
+                                    @*<div class="input">
+                                            <div class="result nexaBold">Occasion Date: <span id="occasiondate"></span></div>
+                                            <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
+                                        </div>
+                                        <div class="calendar"></div>*@
+                                    <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Date Here" />
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="w-100 mt-3 totalAmount d-inline-block fontSize-16">
-                                <div class="float-left">
-                                    <input type="hidden" id="whishlistid" value="@ViewBag.whishlistid" />
-                                    @if (user != null)
-                                    {
-                                        if (ViewBag.whishlistmsg == 0)
-                                        { <p class="mb-0" onclick="wl('add')">Add To WishList</p> }
-                                        else if (ViewBag.whishlistmsg == 1)
-                                        { <p class="mb-0" onclick="wl('remove')">Remove From WishList</p> }
-                                        @*{ <p class="mb-0"><a href="/NParticularVendor/WhishList?type='@Request.QueryString["type"]'&&id='@Request.QueryString["id"]'&&vid='@Request.QueryString["vid"]'&&command=remove&&wid=@ViewBag.whishlistid">Remove From WishList</a></p> }*@
-                                    }
-                                    else
-                                    {
-                                        <p class="mb-0"><a href="/NUserRegistration/Index?m=AWL">Add To WishList</a></p>
-                                    }
-                                    @*<p class="mb-0" onclick="wl('remove')">Remove From WishList</p>*@
+                            <div class="w-100 mt-3 slotTime">
+                                <div class="w-50 float-left">
+                                    <label class="w-100 mb-0">
+                                        <input type="checkbox">
+                                        <span></span>
+                                        <p class="mb-0 d-inline">Morning</p>
+                                    </label>
                                 </div>
-                                @*<div class="float-right themeColor textUnderline">
-                                        <p class="mb-0">Reviews (<span>100</span>)</p>
-                                    </div>*@
+                                <div class="w-50 float-left">
+                                    <label class="w-100 mb-0">
+                                        <input type="checkbox">
+                                        <span></span>
+                                        <p class="mb-0 d-inline">Evening</p>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="w-100 mt-3 text-center totalAmount">
+                                <div class="themeColor">
+                                    <p class="mb-0"><span id="selectedprice">@ViewBag.servicetypeprice</span>INR</p>
+                                </div>
                             </div>
                         </div>
+                        <div class="row mx-0">
+                            <div class="w-100 d-flex my-2">
+                                @*<span class="themeBgColorPrimary btnSecondary text-white text-center w-100">Book Now</span>*@
+                                @if (user != null)
+                                {
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow">Book Now</span>
+                                }
+                                else
+                                {
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100" id="servicebook">Book Now</span> // /NUserRegistration/Index onclick="@Url.Action("Index","NUserRegistration")"
+                                }
+                            </div>
+                            <div class="w-100 d-flex my-2">
+                                <span class="themeBgColorPrimary needHelpBtn btnSecondary text-white text-center w-100">
+                                    Need any help ?
+                                </span>
+                            </div>
+                        </div>
+                        <div class="w-100 mt-3 totalAmount d-inline-block fontSize-16">
+                            <div class="float-left">
+                                <input type="hidden" id="whishlistid" value="@ViewBag.whishlistid" />
+                                @if (user != null)
+                                {
+                                    if (ViewBag.whishlistmsg == 0)
+                                    { <p class="mb-0" onclick="wl('add')">Add To WishList</p> }
+                                    else if (ViewBag.whishlistmsg == 1)
+                                    { <p class="mb-0" onclick="wl('remove')">Remove From WishList</p> }
+                                    @*{ <p class="mb-0"><a href="/NParticularVendor/WhishList?type='@Request.QueryString["type"]'&&id='@Request.QueryString["id"]'&&vid='@Request.QueryString["vid"]'&&command=remove&&wid=@ViewBag.whishlistid">Remove From WishList</a></p> }*@
+                                }
+                                else
+                                {
+                                    <p class="mb-0"><a href="/NUserRegistration/Index?m=AWL">Add To WishList</a></p>
+                                }
+                                @*<p class="mb-0" onclick="wl('remove')">Remove From WishList</p>*@
+                            </div>
+                            @*<div class="float-right themeColor textUnderline">
+                                    <p class="mb-0">Reviews (<span>100</span>)</p>
+                                </div>*@
+                        </div>
                     </div>
-                    <div class="row bgWhite mb-3" id="dealspartial">
-                        @{Html.RenderAction("DealsSection", "NParticularVendor"); }
-                    </div>
+                </div>
+                <div class="row bgWhite mb-3" id="dealspartial">
+                    @{Html.RenderAction("DealsSection", "NParticularVendor"); }
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="container">
-        <div class="margin-top-50">
-            <div class="row mx-0">
-                <h3 class="noteWorthybold">
-                    What's Trending
-                    <div class="blackBorder"></div>
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a href="/NQuestionNaire?servicetype=Hotel" class="item">
-                            <img src="~/newdesign/images/hotels-bg.png" alt="Hotels" />
-                            <span class="d-block mt-2 text-center themeFontColor">Hotels</span>
-                        </a>
-                        <a href="/NQuestionNaire?servicetype=Function Hall" class="item">
-                            <img src="~/newdesign/images/functionhalls-bg.png" alt="Function Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Function Halls</span>
-                        </a>
-                        <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
-                            <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
-                        </a>
-                        <a href="/NQuestionNaire?servicetype=Convention Hall" class="item">
-                            <img src="~/newdesign/images/convention-bg.png" alt="Convention Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Convention Halls</span>
-                        </a>
-                        <a href="/NQuestionNaire?servicetype=Resort" class="item">
-                            <img src="~/newdesign/images/resort-bg.png" alt="Resort" />
-                            <span class="d-block mt-2 text-center themeFontColor">Resort</span>
-                        </a>
-                        <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
-                            <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
-                            <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <div class="margin-top-50">
+        <div class="row mx-0">
+            <h3 class="noteWorthybold">
+                What's Trending
+                <div class="blackBorder"></div>
+            </h3>
         </div>
-    </div>
-
-    <div class="container-fluid needHelpBlock">
         <div class="row">
-            <div class="block bgWhite">
-                <div class="text-center">
-                    <a class="col-md-12" href="mailto:info@ahwanam.com"><i class="fa fa-envelope fa-lg mr-3" aria-hidden="true"></i> info@ahwanam.com</a>
-                    <p class="col-md-12"><i class="fa fa-phone fa-lg mr-3 themeColor" aria-hidden="true"></i> +91 - 9000090000</p>
+            <div class="col-12 col-md-12">
+                <div class="owl-carousel owl-theme mt-3">
+                    <a href="/NQuestionNaire?servicetype=Hotel" class="item">
+                        <img src="~/newdesign/images/hotels-bg.png" alt="Hotels" />
+                        <span class="d-block mt-2 text-center themeFontColor">Hotels</span>
+                    </a>
+                    <a href="/NQuestionNaire?servicetype=Function Hall" class="item">
+                        <img src="~/newdesign/images/functionhalls-bg.png" alt="Function Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Function Halls</span>
+                    </a>
+                    <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
+                        <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
+                    </a>
+                    <a href="/NQuestionNaire?servicetype=Convention Hall" class="item">
+                        <img src="~/newdesign/images/convention-bg.png" alt="Convention Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Convention Halls</span>
+                    </a>
+                    <a href="/NQuestionNaire?servicetype=Resort" class="item">
+                        <img src="~/newdesign/images/resort-bg.png" alt="Resort" />
+                        <span class="d-block mt-2 text-center themeFontColor">Resort</span>
+                    </a>
+                    <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
+                        <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
+                        <span class="d-block mt-2 text-center themeFontColor">Banquet Halls</span>
+                    </a>
                 </div>
-                <i class="fa fa-times closeBlock"></i>
             </div>
         </div>
     </div>
+</div>
+
+<div class="container-fluid needHelpBlock">
+    <div class="row">
+        <div class="block bgWhite">
+            <div class="text-center">
+                <a class="col-md-12" href="mailto:info@ahwanam.com"><i class="fa fa-envelope fa-lg mr-3" aria-hidden="true"></i> info@ahwanam.com</a>
+                <p class="col-md-12"><i class="fa fa-phone fa-lg mr-3 themeColor" aria-hidden="true"></i> +91 - 9000090000</p>
+            </div>
+            <i class="fa fa-times closeBlock"></i>
+        </div>
+    </div>
+</div>
 
 
-    @section scripts{
-        @*<script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>*@
+@section scripts{
+    @*<script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>*@
 
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-        <script type="text/javascript">
-            /*--- Date and Time ----*/
-            $('#datetimepicker').datetimepicker({
-                dayOfWeekStart: 1,
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-                maxDate: '+1970/03/02',//tomorrow is maximum date calendar
-                beforeShowDay: function (date) {
-                    var disableddates = $('#vendoravailabledates').val();
-                    if (disableddates != '') {
-                        var unavailableDates = '';
-                        var final = ''; var dateslist1 = disableddates.split(',');
-                        for (var i = 0; i < dateslist1.length; i++) {
-                            var dateslist = dateslist1[i].split('-');
-                            if (dateslist[0] < 10 && dateslist[1] < 10) {
-                                var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
-                                final = final + datepart + ",";
-                            }
-                            else if (dateslist[0] < 10 && dateslist[1] >= 10) {
-                                var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
-                                final = final + datepart + ",";
-                            }
-                            else if (dateslist[0] >= 10 && dateslist[1] < 10) {
-                                var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
-                                final = final + datepart + ",";
-                            }
-
-                            else {
-                                final = final + dateslist1[i] + ",";
-                            }
-                            unavailableDates = final.slice(0, -1).split(',');
+    <script type="text/javascript">
+        /*--- Date and Time ----*/
+        $('#datetimepicker').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+            maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+            beforeShowDay: function (date) {
+                var disableddates = $('#vendoravailabledates').val();
+                if (disableddates != '') {
+                    var unavailableDates = '';
+                    var final = ''; var dateslist1 = disableddates.split(',');
+                    for (var i = 0; i < dateslist1.length; i++) {
+                        var dateslist = dateslist1[i].split('-');
+                        if (dateslist[0] < 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
                         }
-                        var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-                        //alert(unavailableDates);
-                        if ($.inArray(dmy, unavailableDates) != -1) {
-                           return [false, "myclass", "Unavailable"];
-                        } else {
-                            return [true, ""];
+                        else if (dateslist[0] < 10 && dateslist[1] >= 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                            final = final + datepart + ",";
                         }
+                        else if (dateslist[0] >= 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+
+                        else {
+                            final = final + dateslist1[i] + ",";
+                        }
+                        unavailableDates = final.slice(0, -1).split(',');
+                    }
+                    var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                    //alert(unavailableDates);
+                    if ($.inArray(dmy, unavailableDates) != -1) {
+                        return [false, "myclass", "Unavailable"];
+                    } else {
+                        return [true, ""];
                     }
                 }
-            });
-            /*------------ Date and Time --------------*/
-        </script>
+            }
+        });
+        /*------------ Date and Time --------------*/
+    </script>
 
-        <script type="text/javascript">
-            $('#servicebook').click(function () {
-                var eventtype = $('#eventtype').val();
-                window.localStorage.setItem("eventtype", eventtype);
-                window.location.href = '/NUserRegistration/Index';
-            });
-        </script>
+    <script type="text/javascript">
+        $('#servicebook').click(function () {
+            var eventtype = $('#eventtype').val();
+            window.localStorage.setItem("eventtype", eventtype);
+            window.location.href = '/NUserRegistration/Index';
+        });
+    </script>
 
     <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
-<script>
+    <script>
         function alertmsg(msg) {
             alertify.alert("" + msg + "", function () {
                 //alertify.message('OK');
             });
         }
-</script>
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -738,57 +743,74 @@
 
 
 
-            //<!-- hr Responsive Tabs -->
-            $(document).ready(function () {
+        //<!-- hr Responsive Tabs -->
+        $(document).ready(function () {
 
-                // Function releated to Package select
-                function checkSelect() {
+            // Function releated to Package select
+            function checkSelect() {
 
-                    $(".packageCheckbox label").click(function () {
-                        if ($(this).find("input[type='checkbox']").is(':checked')) {
-                            var packagename = $(this).parents('div.float-left').find('p.packageName').text();
-                            var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
-                            $('#eventtype').val(packagename);
-                            $('#serviceprice').val(packageprice);
-                            $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
-                        } else {
-                            $('#eventtype').val('');
-                            $('#serviceprice').val(sprice);
-                            $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
-                        }
-                    });
-                }
-
-                $.fn.responseTabs = function () {
-                    var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
-                    placeholder = $('<div class="responsive-tabs-placeholder bgWhite"></div>').insertAfter(el);
-
-                    tabs.on('click', function () {
-                        var tab = $(this);
-
-                        tabs.not(tab).removeClass('active');
-                        tab.addClass(' active');
-
-                        placeholder.html(tab.next().html());
-
-                        $(".vrResponsiveTabs > p").click(function () {
-                            $('.vrResponsiveTabs > p').removeClass('active');
-                            $(this).addClass(' active');
-                            var subContent = $(this).next('span');
-                            $(this).parents('.vrResponsiveTabs').next('.appendedData').empty().html(subContent.html());
-
-                            checkSelect();  // Function releated to Package select
-                        });
-                        checkSelect();  // Function releated to Package select
-
-                    });
-                    tabs.filter(':first').trigger('click');
-                }
-                $(".responsiveTabs").responseTabs();
-
-                $('.vrResponsiveTabs p:first-child').trigger('click');
-
+                $(".packageCheckbox label").click(function () {
+                    if ($(this).find("input[type='checkbox']").is(':checked')) {
+                        $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "none");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "none");
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+                        $(".fillDetailsBg").css("display", "none");
+                        var packagename = $(this).parents('div.float-left').find('p.packageName').text();
+                        var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
+                        $('#eventtype').val(packagename);
+                        $('#serviceprice').val(packageprice);
+                        $('#selectedprice').html(packageprice);
+                    } else {
+                        $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "block");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "block");
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                        $(".fillDetailsBg").css("display", "block");
+                        $('#eventtype').val('');
+                        $('#serviceprice').val(@ViewBag.servicetypeprice);
+                        $('#selectedprice').html(@ViewBag.servicetypeprice);
+                    }
+                });
+            }
+            $(document).on('click', ".packages .packageCheckbox > span", function () {
+                alertmsg("You cannot select more than one package");
             });
+
+
+
+            $.fn.responseTabs = function () {
+                var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
+                placeholder = $('<div class="responsive-tabs-placeholder bgWhite"></div>').insertAfter(el);
+
+                tabs.on('click', function () {
+                    var tab = $(this);
+
+                    tabs.not(tab).removeClass('active');
+                    tab.addClass(' active');
+
+                    placeholder.html(tab.next().html());
+
+                    $(".vrResponsiveTabs > p").click(function () {
+                        $('.vrResponsiveTabs > p').removeClass('active');
+                        $(this).addClass(' active');
+                        var subContent = $(this).next('span');
+                        $(this).parents('.vrResponsiveTabs').next('.appendedData').empty().html(subContent.html());
+
+                        checkSelect();  // Function releated to Package select
+                    });
+                    checkSelect();  // Function releated to Package select
+
+                });
+                tabs.filter(':first').trigger('click');
+            }
+            $(".responsiveTabs").responseTabs();
+
+            $('.vrResponsiveTabs p:first-child').trigger('click');
+
+        });
 
 
 
@@ -808,12 +830,12 @@
                 url: url1,
                 success: function (data) {
                     if (data == "Success") {
-                       // alert("Sucessfully Added to Wishlist")
+                        // alert("Sucessfully Added to Wishlist")
                         alertmsg("Sucessfully Added to Wishlist")
 
                     }
                     else if (data == "removed") {
-                       // alert("Removed From Wishlist");
+                        // alert("Removed From Wishlist");
                         alertmsg("Removed From Wishlist");
 
                     }
@@ -822,30 +844,30 @@
             });
         }
 
-            $(document).ready(function () {
-                var getdate = $.cookie("url");
-                var getcount = $.cookie("qurl");
-                var eventtype = window.localStorage.getItem('eventtype');
-                $('#datetimepicker').val(getdate.split('occasiondate=')[1]);
-                $('#members').val(getcount.split('count=')[1].split('&&')[0]);
-                $('#eventtype').val(eventtype);
+        $(document).ready(function () {
+            var getdate = $.cookie("url");
+            var getcount = $.cookie("qurl");
+            var eventtype = window.localStorage.getItem('eventtype');
+            $('#datetimepicker').val(getdate.split('occasiondate=')[1]);
+            $('#members').val(getcount.split('count=')[1].split('&&')[0]);
+            $('#eventtype').val(eventtype);
 
-            });
+        });
 
-            function DealsPartial() {
-                var lastrecord = parseInt($('#L1').val()) + parseInt(2);
-                var type = document.URL.split('type=')[1].split('&&')[0];
-                var url = '/NParticularVendor/DealsSection?type=' + type + '&&L1=' + lastrecord;
-                $("#dealspartial").empty().load(url);
-                $('#L1').val(lastrecord);
-            }
-        </script>
+        function DealsPartial() {
+            var lastrecord = parseInt($('#L1').val()) + parseInt(2);
+            var type = document.URL.split('type=')[1].split('&&')[0];
+            var url = '/NParticularVendor/DealsSection?type=' + type + '&&L1=' + lastrecord;
+            $("#dealspartial").empty().load(url);
+            $('#L1').val(lastrecord);
+        }
+    </script>
 
     <script>
         $(".bookNow").click(function () {
             var type = '@Request.QueryString["type"]';
             if ($("#eventtype").val() == '') {
-              //  alert("Please Enter Event type");
+                //  alert("Please Enter Event type");
                 alertmsg("Please Enter Event type");
 
             }
@@ -856,24 +878,29 @@
             }
             else if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
-                    var eventtype = $("#eventtype").val();
-                    var id = '@Request.QueryString["id"]';
-                    var vid = '@Request.QueryString["vid"]';
-                    var date = $("#datetimepicker").val();
-                    var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
-                    var nop = $("#members").val();
-                    var timeslot = 'Morning';
-                    var totalprice = price * nop;
-                    url1 = '/NParticularVendor/BookNow?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop;
+                var eventtype = $("#eventtype").val();
+                var id = '@Request.QueryString["id"]';
+                var vid = '@Request.QueryString["vid"]';
+                var date = $("#datetimepicker").val();
+                var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
+                var nop = $("#members").val();
+                var timeslot = 'Morning';
+                var totalprice = price * nop;
+                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop;
 
                 $.ajax({
                     url: url1,
                     success: function (data) {
                         if (data == "Success") {
                             //alert("Booked Sucessfully");
-                            alertmsg("Booked Sucessfully");
-                            window.localStorage.removeItem("eventtype");
-                            location.href = '/NUserProfile/Index';
+                            //alertmsg("Added To Cart");
+                            alertify.confirm("Added To Cart", function () {
+                                window.localStorage.removeItem("eventtype");
+                                location.href = '/NCartView/Index';
+                            },
+                            function () {});
+                            //window.localStorage.removeItem("eventtype");
+                            //location.href = '/NCartView/Index';
                         }
                         else if (data == "failed") {
                             // alert("login to the cart");
