@@ -307,8 +307,40 @@
 
         /*-- Book Now Button --*/
         $(".cartPage .bookNow").click(function () {
-            alert("Yes");
+            //  alert("Yes");
+            var cartnos = '';
+            if ($(".cartselect input[type='checkbox']").is(':checked')) {
+
+                var favorite = [];
+                $.each($("input[name='cartid']:checked"), function () {
+                    favorite.push($(this).val());
+                    cartnos = favorite.join(", ");
+                })
+            }
+
+            alert(cartnos);
+
+            url1 = '/NCartView/booknow?cartnos=' +cartnos;
+            $.ajax({
+                url: url1,
+                success: function (data) {
+                    if (data == "Success") {
+                        //  alert("Sucessfully Added to cart")
+                        alert("Sucessfully Added to cart");
+                      
+                        if (data != null) {
+                            window.location.reload();
+                        }
+                    }
+                    else if (data == "failed") {
+                        //   alert("login to the cart");
+                        alertmsg("Login to the cart");
+                    }
+                }
+            });
+        
         });
+           
         /*-- Book Now Button --*/
 
         function DeletecartItem(cartId) {
