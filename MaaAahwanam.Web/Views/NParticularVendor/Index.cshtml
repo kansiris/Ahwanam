@@ -29,7 +29,7 @@
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)) </text> / -</div>
+                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)).Replace(".00", "") </text > / -</div >
                         @*<p>@ViewBag.vendoravailabledates</p>*@
                         <div class="w-100 tags my-15">
                             @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
@@ -178,7 +178,7 @@
                                                             </label>
                                                         </div>
                                                         <div class="float-right">
-                                                            <p class="mb-0 mr-2">INR <span>@item.PackagePrice</span></p>
+                                                            <p class="mb-0 mr-2">INR <span>@item.PackagePrice.Replace(".00", "")</span></p>
                                                         </div>
                                                     </div>
                                                     <br />
@@ -215,7 +215,7 @@
                                                             </label>
                                                         </div>
                                                         <div class="float-right">
-                                                            <p class="mb-0 mr-2">INR <span>@item.DealPrice.Replace(".00", "") </span></p>
+                                                            <p class="mb-0 mr-2">INR <span>@item.DealPrice </span></p>
                                                         </div>
                                                     </div>
                                                     <br />
@@ -380,37 +380,37 @@
                                 }
                             }
 
-                            @foreach (var item in ViewBag.Decorator)
-                            {
-                                if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                @foreach (var item in ViewBag.Decorator)
                                 {
-                                    <div class="row packages">
-                                        <div class="col-12 colmd-12 packageDetails">
-                                            <div class="w-100 float-left">
-                                                @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>*@
-                                                @if (item.DecorationType != "" && item.DecorationType != null)
-                                                {
-                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                }
-                                                <div class="float-right">
-                                                    <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
+                                    if (item.Id != long.Parse(Request.QueryString["vid"]))
+                                    {
+                                        <div class="row packages">
+                                            <div class="col-12 colmd-12 packageDetails">
+                                                <div class="w-100 float-left">
+                                                    @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>*@
+                                                    @if (item.DecorationType != "" && item.DecorationType != null)
+                                                    {
+                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
+                                                    }
+                                                    <div class="float-right">
+                                                        <p class="mb-0 mr-2">INR <span>@item.StartingPrice.Replace(".00", "")</span></p>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <hr />
+                                                <div class="w-100">
+                                                    <p class="packageContent">
+                                                        Mandap Design : @item.Mandaps ; Mehendi : @item.Mehendi ; Sangeet : @item.Sangeet ; Lighting : @item.Lighting
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <br />
-                                            <hr />
-                                            <div class="w-100">
-                                                <p class="packageContent">
-                                                    Mandap Design : @item.Mandaps ; Mehendi : @item.Mehendi ; Sangeet : @item.Sangeet ; Lighting : @item.Lighting
-                                                </p>
-                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
-                            }
 
                             @foreach (var item in ViewBag.Photography)
                             {

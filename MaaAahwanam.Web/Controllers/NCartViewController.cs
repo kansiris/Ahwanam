@@ -18,6 +18,8 @@ namespace MaaAahwanam.Web.Controllers
         CartService cartService = new CartService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         WhishListService whishListService = new WhishListService();
+        VendorProductsService vendorProductsService = new VendorProductsService();
+
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
         // GET: NCartView
@@ -55,6 +57,25 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message);
         }
 
+        public PartialViewResult DealsSection(string type, string L1)
+        {
+            int takecount = (L1 != null) ? int.Parse(L1) : 6;
+            if (type == null)  type = "Venue";
+            //ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);
+            //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
+            if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
+            if (type == "Conventions" || type == "Resorts" || type == "Hotels" || type == "Venues" || type == "Banquet Hall" || type == "Function Hall" || type == "Banquet" || type == "Function")
+                type = "Venue";
+            if (type == "Mehendi" || type == "Pandit")
+                type = "Other";
+            ViewBag.type = type;
+            var records = vendorProductsService.Getvendorproducts_Result(type);
+            ViewBag.deal = records.Take(takecount).ToList();
+            int count = records.Count();
+
+            ViewBag.count = (count >= takecount) ? "1" : "0";
+            return PartialView();
+        }
         public JsonResult addwishlistItem(long cartId)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -222,7 +243,7 @@ namespace MaaAahwanam.Web.Controllers
         public string Capitalise(string str)
         {
             if (String.IsNullOrEmpty(str))
-                return String.Empty;
+            return String.Empty;
             return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
     }

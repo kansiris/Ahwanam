@@ -199,15 +199,18 @@ namespace MaaAahwanam.Web.Controllers
                 DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 CartItem cartItem = new CartItem();
                 cartItem.VendorId = Int32.Parse(id);
-                cartItem.ServiceType = etype1;
+                cartItem.ServiceType = type;
                 cartItem.TotalPrice = decimal.Parse(totalprice);
                 cartItem.Orderedby = user.UserId;
                 cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
                 cartItem.Perunitprice = decimal.Parse(price);
                 cartItem.Quantity = Convert.ToInt16(guest);
                 cartItem.subid = Convert.ToInt64(vid);
-                  cartItem.attribute = timeslot;
+                cartItem.attribute = timeslot;
                 cartItem.DealId = Convert.ToInt64(did);
+                cartItem.Isdeal = true;
+                cartItem.EventType = etype1;
+                cartItem.EventDate = Convert.ToDateTime(date);
                 CartService cartService = new CartService();
                 cartItem = cartService.AddCartItem(cartItem);
 
