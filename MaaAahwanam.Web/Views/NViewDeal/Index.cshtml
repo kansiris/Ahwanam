@@ -171,7 +171,7 @@ else
                                                 </label>
                                             </div>
                                             <div class="float-right">
-                                                <p class="productMaxPrice mb-0 d-block"> ( <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.OriginalPrice)) </span > <small ></small > ) </p >
+                                                <p class="productMaxPrice mb-0 d-block"> ( <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.OriginalPrice)).Replace(".00", "") </span > <small ></small > ) </p >
                                             </div >
 
                                         
@@ -179,12 +179,12 @@ else
                                            {
 
                                             <div class="float-right">
-                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR : <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)) </span > </p >
+                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR : <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)).Replace(".00", "") </span > </p >
                                             </div >
                                            }
                                            else
                                            { <div class="float-right">
-                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR/Person : <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)) </span> </p>
+                                                <p class="mb-0 mr-2 dprice" value="@item.DealPrice">INR/Person : <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)).Replace(".00", "") </span> </p>
                                             </div> }
                                         </div >
                                         <br />
@@ -234,7 +234,15 @@ else
         </div>
         <div class="col-12 col-sm-12 col-md-4 col-lg-4 pl-md-0 topVenus">
             <div class="px-15">
-                <div class="row bgWhite mb-3" id="filldetails">
+                <div class="row bgWhite mb-3 p-relative" id="filldetails">
+                    <div class="fillDetailsBg p-absolute text-white text-center">
+                        <div class="p-absolute">
+                            <span class="mouseIcn">
+                                <span class="mouseScrollIcn"></span>
+                            </span>
+                            <p>Scroll down for deals</p>
+                        </div>
+                    </div>
                     <div class="w-100 px-4 py-3">
                         <div class="row mx-0">
                             <h3 class="noteWorthybold">
@@ -333,7 +341,7 @@ else
                         <div class="row mx-0">
                             <div class="w-100 d-flex my-2">
 
-                                @if (user != null)
+                                @*@if (user != null)
                                 {
                                 <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 bookNow">Book Now</span>
                                 }
@@ -343,7 +351,18 @@ else
                                     Book Now
                                 </span>
 
-                                }
+                                }*@
+                                @if (user != null)
+        {
+        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 " onclick="Sethdnvalue('addtocartbtn')">Book Now</span>
+        }
+        else
+        {
+        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 "onclick="Sethdnvalue1('addtocartbtn1')">
+            Book Now
+        </span>
+
+        }
                             </div>
                             <div class="w-100 d-flex my-2">
                                     <span class="themeBgColorPrimary needHelpBtn btnSecondary text-white text-center w-100">
@@ -561,7 +580,7 @@ else
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "none");
                         $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
-                        //$("#filldetails").show();
+                        $(".fillDetailsBg").css("display", "none");
 
                     }
                     else {
@@ -574,7 +593,7 @@ else
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "block");
                         $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").find("span").remove();
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").find("span").remove();
-                        //$("#filldetails").hide();
+                        $(".fillDetailsBg").css("display", "block");
 
                     }
 
@@ -655,39 +674,80 @@ else
             var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
            total = checkLen * totalVal;
             $(".totalAmount span").empty().append(total);
-        }
+           }
+           $(".dealProfileForm select.pricePerPlate").on('change', function () {
+               var val = $(this).find('option:selected').val(), el = $(this), placeholder = $("<div class='selectAppended'></div>").insertAfter(el);
+               $('.selectAppended:not(:eq(0))').remove();
+               $(placeholder).append(val).css('display', 'none');
+               $(".slotTime input[type='checkbox']").prop("checked", false);
+               $(".totalAmount span").text("000");
+               $(".noOfPeoples input[type='number']").val('');
+           });
 
-        $(".dealProfileForm select.pricePerPlate").on('change', function () {
-            var val = $(this).find('option:selected').val(), el = $(this), placeholder = $("<div class='selectAppended'></div>").insertAfter(el);
-            $('.selectAppended:not(:eq(0))').remove();
-            $(placeholder).append(val).css('display', 'none');
-            $(".slotTime input[type='checkbox']").prop("checked", false);
-            $(".totalAmount span").empty();
-            $(".noOfPeoples input[type='number']").val('');
-        });
+           $(".noOfPeoples input[type='number']").on('change', function () {
+               var price = $('#pricePerPlate').val();
+                  var price1 = price.split(':')[1].replace(/,/g, ""); el = $(this), members = parseInt($(this).val());
+                  total = price1 * members, placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+               $(".totalVal:not(:eq(0))").remove();
+               $(placeholder).append(total).css('display', 'none');
+               $(".slotTime input[type='checkbox']").prop("checked", false);
+               $(".totalAmount span").text("000");
+           });
 
-        $(".noOfPeoples input[type='number']").on('change', function () {
-            el = $(this),
-            members = parseInt($(this).val());
-          //  var price = $("select.pricePerPlate").find("option:selected").text();
-            var price = $('#pricePerPlate').val();
-            var price1 = price.split(':')[1].replace(/,/g, "");
-            total = price1 * members,
-            placeholder = $("<div class='totalVal'></div>").insertAfter(el);
-            $(".totalVal:not(:eq(0))").remove();
-            $(placeholder).append(total).css('display', 'none');
-            $(".slotTime input[type='checkbox']").prop("checked", false);
-            $(".totalAmount span").empty();
-        });
-        $(".slotTime input[type='checkbox']").each(function () {
-            $(this).on('change', function () {
-                if ($(this).is(':checked')) {
-                    checkedBox();
-                } else {
-                    checkedBox();
-                }
-            });
-        });
+           /*-- Check box Funcationality --*/
+
+           $(".noOfPeoples input[type='number']").focusout(function () {
+               if ($(this).val().length >= 1) {
+                   $(".slotTime input[type='checkbox']").attr("disabled", false);
+               } else {
+                   alert("Enter No of Guests");
+                   $(".slotTime input[type='checkbox']").prop("checked", false);
+               }
+           });
+
+           /*-- Check box Funcationality --*/
+
+           $(".slotTime input[type='checkbox']").each(function () {
+               $(this).on('change', function () {
+
+                   /*-- Check box Funcationality --*/
+
+                   if ($(".noOfPeoples input[type='number']").val().length >= 1) {
+                       $(this).attr("disabled", false);
+                   } else {
+                       alert("Enter No of Guests");
+                       $(this).prop("checked", false);
+                       return false;
+                   }
+
+                   /*-- Check box Funcationality --*/
+
+                   if ($(this).is(':checked')) {
+                       checkedBox();
+                   } else {
+                       checkedBox();
+                   }
+               });
+           });
+
+
+
+       
+
+        //$(".noOfPeoples input[type='number']").on('change', function () {
+        //    el = $(this),
+        //    members = parseInt($(this).val());
+        //  //  var price = $("select.pricePerPlate").find("option:selected").text();
+        //    var price = $('#pricePerPlate').val();
+        //    var price1 = price.split(':')[1].replace(/,/g, "");
+        //    total = price1 * members,
+        //    placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+        //    $(".totalVal:not(:eq(0))").remove();
+        //    $(placeholder).append(total).css('display', 'none');
+        //    $(".slotTime input[type='checkbox']").prop("checked", false);
+        //    $(".totalAmount span").empty();
+        //});
+
 
         function Sethdnvalue(btn) {
             //if ($("select.eventType").find("option:selected").val() == '') {

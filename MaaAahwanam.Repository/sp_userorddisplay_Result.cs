@@ -25,6 +25,9 @@ namespace MaaAahwanam.Repository
         public string EventType { get; set; }
         public string attribute { get; set; }
         public long DealId { get; set; }
+        public string logo { get; set; }
+        public decimal PerunitPrice { get; set; }
+        public int Quantity { get; set; }
         public string username { get; set; }
         public string Isdeal { get; set; }
         public long Id { get; set; }
