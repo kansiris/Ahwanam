@@ -109,8 +109,8 @@ namespace MaaAahwanam.Web.Controllers
             DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type, date);
             ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
-            var orderdates = orderService.userOrderList().Where(k => k.Id == long.Parse(id) && k.Status == "Active").Select(k=>k.OrderDate.Value.ToString("dd-MM-yyyy")).ToList();
-            
+            var orderdates = orderService.userOrderList().Where(k => k.Id == long.Parse(id) && k.Status == "Active").Select(k => k.OrderDate.Value.ToString("dd-MM-yyyy")).ToList();
+
             //Blocking Dates
             //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
             if (int.Parse(id) != 0)
@@ -136,7 +136,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 //ViewBag.vendoravailabledates = String.Join(",", betweendates,orderdates);
                 var vendoravailabledates = String.Join(",", betweendates);
-                vendoravailabledates = vendoravailabledates +","+ String.Join(",", orderdates);
+                vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates);
                 ViewBag.vendoravailabledates = vendoravailabledates;
                 //var today = DateTime.UtcNow;
                 //var first = new DateTime(today.Year, today.Month, 1);
@@ -203,12 +203,14 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
         }
+
         public string Capitalise(string str)
         {
             if (String.IsNullOrEmpty(str))
                 return String.Empty;
             return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
+
         public ActionResult BookNow(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
         {
 
@@ -307,6 +309,31 @@ namespace MaaAahwanam.Web.Controllers
                     return Json("Success", JsonRequestBehavior.AllowGet);
                 }
 
+            }
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AddToCart(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                CartItem cartItem = new CartItem();
+                cartItem.VendorId = Int32.Parse(id);
+                cartItem.ServiceType = type;
+                cartItem.TotalPrice = decimal.Parse(price);
+                cartItem.Orderedby = user.UserId;
+                cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                cartItem.Perunitprice = decimal.Parse(price);
+                cartItem.Quantity = Convert.ToInt16(guest);
+                cartItem.subid = Convert.ToInt64(vid);
+                cartItem.attribute = timeslot;
+                cartItem.EventType = eventtype;
+                cartItem.EventDate = Convert.ToDateTime(date);
+                cartItem.Quantity = int.Parse(guest);
+                CartService cartService = new CartService();
+                cartItem = cartService.AddCartItem(cartItem);
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
