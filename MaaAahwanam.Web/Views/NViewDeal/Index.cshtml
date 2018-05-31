@@ -243,7 +243,7 @@ else
                             <p>Scroll down for deals</p>
                         </div>
                     </div>
-                    <div class="w-100 px-4 py-3">
+                    <div class="w-100 px-4 py-3" id="filldetails1">
                         <div class="row mx-0">
                             <h3 class="noteWorthybold">
                                 Fill the Details
@@ -313,7 +313,7 @@ else
 
                             <div class="w-100 mt-3 noOfPeoples" id="people">
                                 <div class="form-group">
-                                    <input type="number" class="form-control nexaBold" id="nop" placeholder="Members" />
+                                    <input type="number" class="form-control nexaBold" id="nop" name="nop" placeholder="Members" />
                                 </div>
                             </div>
                             <div class="w-100 mt-3 slotTime" id="timeslot">
@@ -354,11 +354,11 @@ else
                                 }*@
                                 @if (user != null)
         {
-        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 " onclick="Sethdnvalue('addtocartbtn')">Book Now</span>
+        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 " onclick="Sethdnvalue('addtocartbtn')" >Book Now</span>
         }
         else
         {
-        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 "onclick="Sethdnvalue1('addtocartbtn1')">
+        <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 "onclick="Sethdnvalue1('addtocartbtn1')" >
             Book Now
         </span>
 
@@ -562,58 +562,107 @@ else
         $(document).ready(function () {
             //$("#filldetails").hide();
             // Function releated to Package select
-           $( function checkSelect() {
-               $(".packageCheckbox label").click(function () {
+            var vtype = '@Request.QueryString["type"]';
+            //alert(vtype);
+            if (vtype == 'Photography' || vtype == 'Decorator' || vtype == 'Other') {
+                //  alert(value1);
+                $("#people").hide();
+                $("#timeslot").hide();
+                $("#totamount").hide();
+            }
+            if (vtype == 'Venue' || vtype == 'Catering') {
+                //      alert(value1);
+                $("#people").show();
+                $("#timeslot").show();
+                $("#totamount").show();
+            }
+            var type = localStorage.getItem("etype1");
+            var date = localStorage.getItem("date");
+            var price = localStorage.getItem("PRICE");
+            var nop = localStorage.getItem("nop");
+            var did1 = localStorage.getItem("did1");
+            var totp = localStorage.getItem("totp");
+           var time = localStorage.getItem("timeslot");
 
+            if (type != null) {
+                alert(time);
+                $(".fillDetailsBg").css("display", "none");
+                $('#eventtype').val(type);
+                $('#pricePerPlate').val(price);
+                $('#did1').val(did1);
+                $('#nop').val(nop);
+                $(".totalAmount span").text(totp);
+                function checekWithValue(val) {
+                    var str2 = ",";
+                    if (val.indexOf(str2) != -1) {
 
-                    if ($(this).find("input[type='checkbox']").is(':checked')) {
-                        var packagename = $(this).parents('div.float-left').find('p.packageName').text();
-                        var did = $(this).parents('div.float-left').find('input#did').val(); //$('#did').val();
-                       // alert(did);
-                        //var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
-                         var packageprice = $(this).parents('div.float-left').find('p.dprice').text();
-                        $('#eventtype').val(packagename);
-                        $('#pricePerPlate').val(packageprice);
-                        $('#did1').val(did);
-                        $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
-                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "none");
-                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "none");
-                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
-                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
-                        $(".fillDetailsBg").css("display", "none");
-
+                      var val1 = val.split(', ');
+                        for (var i = 0, len = val1.length; i < len; i++) {
+                            {
+                                $(":checkbox").filter(function () {
+                                    return this.value == val1[i];
+                                }).prop("checked", "true");
+                            }
+                        }
                     }
                     else {
-                        $('#eventtype').val('');
-                        $('#pricePerPlate').val('');
-                        $('#did1').val('');
-
-                        $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
-                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "block");
-                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "block");
-                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").find("span").remove();
-                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").find("span").remove();
-                        $(".fillDetailsBg").css("display", "block");
-
+                        $(":checkbox").filter(function () {
+                            return this.value == val;
+                        }).prop("checked", "true");
                     }
+                }
 
 
+                    checekWithValue(time);
 
 
-                    var vtype = '@Request.QueryString["type"]';
-                        //alert(vtype);
-                        if (vtype == 'Photography' || vtype == 'Decorator' || vtype == 'Other') {
-                            //  alert(value1);
-                            $("#people").hide();
-                            $("#timeslot").hide();
-                            $("#totamount").hide();
-                        }
-                        if (vtype == 'Venue' || vtype == 'Catering') {
-                            //      alert(value1);
-                            $("#people").show();
-                            $("#timeslot").show();
-                            $("#totamount").show();
-                        }
+                checekWithValue(time);
+
+                $('#datetimepicker').val(date);
+
+            }
+
+            $(function checkSelect() {
+
+               $(".packageCheckbox label").click(function () {
+
+                  
+
+                   if ($(this).find("input[type='checkbox']").is(':checked')) {
+                       var packagename = $(this).parents('div.float-left').find('p.packageName').text();
+                       var did = $(this).parents('div.float-left').find('input#did').val(); //$('#did').val();
+                       // alert(did);
+                       //var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
+                       var packageprice = $(this).parents('div.float-left').find('p.dprice').text();
+                       $('#eventtype').val(packagename);
+                       $('#pricePerPlate').val(packageprice);
+                       $('#did1').val(did);
+                       $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
+                       $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "none");
+                       $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "none");
+                       $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+                       $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+                       $(".fillDetailsBg").css("display", "none");
+                      
+
+                   }
+                   else {
+                       $('#eventtype').val('');
+                       $('#pricePerPlate').val('');
+                       $('#did1').val('');
+
+                       $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
+                       $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "block");
+                       $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "block");
+                       $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                       $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                       $(".fillDetailsBg").css("display", "block");
+
+                   }
+
+
+                 
+                   
 
 
 
@@ -657,7 +706,7 @@ else
                 }
             })
 
-            localStorage.removeItem("nop");
+        //    localStorage.removeItem("nop");
             //  <!------------- dealProfile Accoding ----------->
             $(".dealProfileTotalDescrption > .block:first-child .content").css("display", "block");
             var link = $(".dealProfileTotalDescrption > .block > h6 > a");
@@ -813,10 +862,15 @@ else
                             //  alert("Sucessfully Added to cart")
                             alertmsg("Sucessfully Added to cart");
                             //  window.location.reload;
-                            localStorage.removeItem("etype1");
-                            localStorage.removeItem("date");
-                            localStorage.removeItem("nop");
-                            localStorage.removeItem("tp");
+                            window.localStorage.removeItem("etype1");
+                            window.localStorage.removeItem("date");
+                            window.localStorage.removeItem("nop");
+                            window.localStorage.removeItem("tp");
+                            window.localStorage.removeItem("PRICE");
+                            window.localStorage.removeItem("did1");
+                            window.localStorage.removeItem("totp");
+                            window.localStorage.removeItem("timeslot");
+
                             if (data != null) {
                                 // window.location.reload();
                                 location.href = '/NCartView/Index';
@@ -865,10 +919,10 @@ else
                 //alert("Please select Menu type");
                 alertmsg("Please select Menu type");
             } 
-          else if ($(".noOfPeoples input[type='number']").val() == '') {
-              // alert("Please Mention No Of Guests");
-              alertmsg("Please Mention No Of Guests");
-          }
+          //else if ($(".noOfPeoples input[type='number']").val() == '') {
+          //    // alert("Please Mention No Of Guests");
+          //    alertmsg("Please Mention No Of Guests");
+          //}
           else {
               var evetype1 = $("#eventtype").val();
               var etype1 = evetype1.split('(')[0];
@@ -886,14 +940,18 @@ else
               //alert(deid);
               window.localStorage.setItem("etype1", etype1);
               window.localStorage.setItem("date", date);
-              window.localStorage.setItem("PRICE", price1);
+              window.localStorage.setItem("PRICE", price);
               window.localStorage.setItem("nop", nop);
+              window.localStorage.setItem("did1", deid);
+              window.localStorage.setItem("timeslot", timeslot);
+
+              window.localStorage.setItem("totp", totalprice);
               var timeslot = ($('input[type=checkbox]').val());
               location.href = '/NUserRegistration/Index';
           }
         };
 
-        $(".bookNow").click(function () {
+        @*$(".bookNow").click(function () {
             var timeslot = '';
             var type = '@Request.QueryString["type"]';
             if (type == 'Venue' || type == 'Catering' || type == 'venue') {
@@ -1024,7 +1082,7 @@ else
                // var timeslot = ($('input[type=checkbox]').val());
                 location.href = '/NUserRegistration/Index';
             }
-        });
+        });*@
         /*-- Need Help Block --*/
         $('.needHelpBtn').click(function () {
             $('.needHelpBlock').css('display', 'block');

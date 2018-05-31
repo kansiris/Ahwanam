@@ -11,9 +11,15 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NQuestionNaire
         public ActionResult Index(string location,string servicetype,string occasiondate)
         {
+            try { 
             ViewBag.selectedlocation = location;
             ViewBag.selectedoccasiondate = occasiondate;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }

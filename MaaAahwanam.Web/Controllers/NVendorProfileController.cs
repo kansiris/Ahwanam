@@ -19,7 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorProfile
         public ActionResult Index(string id)
         {
-
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -34,11 +34,17 @@ namespace MaaAahwanam.Web.Controllers
                 return RedirectToAction("Index", "NUserRegistration");
             }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
         public ActionResult updateProfile([Bind(Prefix = "Item1")] Vendormaster vendor)
         {
+            try { 
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string email = vendor.EmailId;
 
@@ -46,8 +52,11 @@ namespace MaaAahwanam.Web.Controllers
             Int64 id = vendor.Id;
             TempData["Active"] = "Package added";
             return RedirectToAction("Index", "NVendorDashboard", new { id = id });
-        }
-
-       
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
+        }   
     }
 }

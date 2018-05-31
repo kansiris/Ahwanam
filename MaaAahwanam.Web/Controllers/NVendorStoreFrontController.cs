@@ -16,6 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorStoreFront
         public ActionResult Index(string id)
         {
+            try { 
             if (TempData["Active"] != "")
             {
                 ViewBag.msg = TempData["Active"];
@@ -33,10 +34,16 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.decorators = decorators;
             ViewBag.others = others;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult deleteservice(string id, string vid, string type)
         {
+            try { 
             int count = 0;
             if (type == "Venue")
                 count = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList().Count;
@@ -74,6 +81,11 @@ namespace MaaAahwanam.Web.Controllers
                     TempData["Active"] = "Something Went Wrong!!! Try Again After Some Time";
                 return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
                 //return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+            }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
             }
         }
     }

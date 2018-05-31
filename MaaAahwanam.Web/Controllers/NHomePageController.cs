@@ -21,6 +21,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult Index()
         {
+            try { 
             //DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             //ViewBag.currenttme = indianTime;
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -50,6 +51,11 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cartCount = cartService.CartItemsCount(0);
             }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public JsonResult AutoCompleteCountry()
@@ -59,8 +65,9 @@ namespace MaaAahwanam.Web.Controllers
             return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public PartialViewResult SortVendorsBasedOnLocation(string search, string type, string location)
+        public ActionResult SortVendorsBasedOnLocation(string search, string type, string location)
         {
+            try { 
             if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement", "Venues", "FunctionHall", "BanquetHall", "Function Hall", "Banquet Hall" }.Contains(type))
             { type = "Venue"; }
             if (type == "Convention") type = "Convention Hall";
@@ -75,12 +82,18 @@ namespace MaaAahwanam.Web.Controllers
                 records = records.Take(6).ToList();
             ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V", value).Where(m => m.landmark == location).Take(6).ToList() :  records;//vendorProductsService.Getsearchvendorproducts_Result(search, value).Where(m => m.subtype == type).Take(6).ToList();//vendorProductsService.Getsearchvendorproducts_Result(search, value).Take(6).ToList(); //.Where(m => m.landmark == location)
             return PartialView();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
 
         public ActionResult ItemsCartViewBindingLayout()
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -111,11 +124,17 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cartCount = cartService.CartItemsCount(0);
             }
             return PartialView("ItemsCartViewBindingLayout");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
         public ActionResult ItemsCartdetails()
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -142,6 +161,11 @@ namespace MaaAahwanam.Web.Controllers
 
 
             return PartialView("ItemsCartdetails");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }

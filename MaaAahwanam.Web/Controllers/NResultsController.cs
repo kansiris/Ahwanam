@@ -21,6 +21,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         public ActionResult Index(string type, string loc, string budget, string stype, string date, string count) //string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,
         {
+            try { 
             stypecount = stype.Split(',').Count();
             ViewBag.stype = stype.Split(',');
             string idslist = "BlockOnePartial,BlockTwoPartial,BlockThreePartial,BlockFourPartial,BlockFivePartial";
@@ -38,10 +39,16 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.count = 6;
             ViewBag.stype = list;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult BlockOnePartial(string type, string loc, string budget, string stype, string date, string count, string L1)  //string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,
         {
+            try { 
             loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             count = (count != "undefined" && count != "") ? count : "10";
@@ -153,10 +160,16 @@ namespace MaaAahwanam.Web.Controllers
             }
             else { services.Remove(type); };
             return PartialView();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult BlockTwoPartial(string type, string loc, string budget, string stype, string date, string count, string L2)
         {
+            try { 
             string type1 = "";
             int takecount = (L2 != null) ? int.Parse(L2) : 6;
             string inputcategory = null;
@@ -227,10 +240,16 @@ namespace MaaAahwanam.Web.Controllers
             //}
 
             return PartialView();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult BlockThreePartial(string type, string loc, string budget, string stype, string date, string count, string L3)
         {
+            try { 
             string type1 = "";
             int takecount = (L3 != null) ? int.Parse(L3) : 6;
             string inputcategory = null;
@@ -296,10 +315,16 @@ namespace MaaAahwanam.Web.Controllers
             //}
 
             return PartialView();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult BlockFourPartial(string type, string loc, string budget, string stype, string date, string count, string L4)
         {
+            try { 
             string type1 = "";
             stypecount = stype.Split(',').Count();
             int takecount = (L4 != null) ? int.Parse(L4) : 6;
@@ -366,10 +391,15 @@ namespace MaaAahwanam.Web.Controllers
                 selectedservices = services;
             }
             return PartialView();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult BlockFivePartial(string type, string loc, string budget, string stype, string date, string count, string L5)
-        {
+        {try { 
             string type1 = "";
             stypecount = stype.Split(',').Count();
             int takecount = (L5 != null) ? int.Parse(L5) : 6;
@@ -435,12 +465,18 @@ namespace MaaAahwanam.Web.Controllers
                 selectedservices = services;
             }
             return PartialView();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         #region Reference Code
 
         public void venue(string type, string loc, string budget, string count, int takecount)
         {
+
             if (new string[] { "Hotel", "Resort", "Convetion" }.Contains(type))
             {
                 type = (type == "Convetion") ? "Convention Hall" : type;

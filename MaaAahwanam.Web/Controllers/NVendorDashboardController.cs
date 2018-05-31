@@ -19,6 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorDashboard
         public ActionResult Index(string id)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -34,10 +35,16 @@ namespace MaaAahwanam.Web.Controllers
                 return RedirectToAction("Index", "NUserRegistration");
             }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
-        public PartialViewResult VendorAuth()
+        public ActionResult VendorAuth()
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -47,6 +54,11 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.id = vendorMasterService.GetVendorByEmail(emailid).Id;
             }
             return PartialView("VendorAuth");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }

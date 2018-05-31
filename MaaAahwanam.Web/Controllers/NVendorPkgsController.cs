@@ -17,6 +17,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorPackages
         public ActionResult Index(string id)
         {
+            try { 
             if (TempData["Active"] != "")
             {
                 ViewBag.msg = TempData["Active"];
@@ -25,18 +26,29 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.pacakagerecord = pkgs;
             ViewBag.id = id;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult editpkg(string pid, string vid)
         {
-
+            try { 
             var pkgs = vendorProductsService.getpartpkgs(pid);
             ViewBag.pacakagerecord = pkgs;
             ViewBag.id = vid;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
         public ActionResult updatepkg(string id, string vid, string packagename, string packageprice, string Packagedec)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
@@ -53,10 +65,16 @@ namespace MaaAahwanam.Web.Controllers
             }
             TempData["Active"] = "package updated";
             return RedirectToAction("Index", "Nhomepage", new { id = vid });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult deletepkg(string id, string vid)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 string message = vendorVenueSignUpService.deletepack(id);
@@ -69,6 +87,11 @@ namespace MaaAahwanam.Web.Controllers
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "Nhomepage", new { id = vid });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     } 
 }
