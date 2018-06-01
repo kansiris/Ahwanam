@@ -74,6 +74,7 @@ namespace MaaAahwanam.Web.Controllers
                 _userManager = value;
             }
         }
+
         public ActionResult Index()
         {
             if (TempData["Active"] != "")
@@ -135,8 +136,8 @@ namespace MaaAahwanam.Web.Controllers
 
                 if (userResponse != null)
                 {
-                    if (userResponse1.Status == "Active")
-                    {
+                    //if (userResponse1.Status == "Active")
+                    //{
                         vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
                         string userData = JsonConvert.SerializeObject(userResponse);
                         ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
@@ -150,9 +151,9 @@ namespace MaaAahwanam.Web.Controllers
                         else
                             ViewBag.userid = userResponse.UserLoginId;
                         return RedirectToAction("Index", "NHomePage");
-                    }
-                    TempData["Active"] = "Please check Your email to verify Email ID";
-                    return RedirectToAction("Index", "NUserRegistration");
+                    //}
+                    //TempData["Active"] = "Please check Your email to verify Email ID";
+                    //return RedirectToAction("Index", "NUserRegistration");
                 }
                 else
                 {
@@ -224,6 +225,47 @@ namespace MaaAahwanam.Web.Controllers
 
             return View();
         }
+
+        public ActionResult LoginBlocks(string email,string password,string id)
+        {
+            if (password != null)
+            {
+                var userlogin = userLoginDetailsService.GetUserId(int.Parse(id));
+                if (userlogin.Password == password)
+                {
+                    vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                    string userData = JsonConvert.SerializeObject(userlogin);
+                    ValidUserUtility.SetAuthCookie(userData, userlogin.UserLoginId.ToString());
+                    if (perfecturl != null && perfecturl != "")
+                        return Redirect(perfecturl);
+                    if (userlogin.UserType == "Vendor")
+                    {
+                        var vnid = userlogin.UserLoginId;
+                        return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+                    }
+                    else
+                        ViewBag.userid = userlogin.UserLoginId;
+                    return RedirectToAction("Index", "NHomePage");
+                }
+                else
+                {
+                    TempData["Active"] = "Wrong Credentials,Check Username and password"; 
+                    return RedirectToAction("Index", "NUserRegistration");
+                }
+            }
+            if (email != null)
+            {
+                var data = userLoginDetailsService.GetUserLoginTypes(email);
+                ViewBag.userdata = data;
+                if(data.Count() == 0)
+                {
+                    TempData["Active"] = "User Record Not Available";
+                    return RedirectToAction("Index", "NUserRegistration");
+                }
+            }
+            return PartialView();
+        }
+
 
         public string Capitalise(string str)
         {
