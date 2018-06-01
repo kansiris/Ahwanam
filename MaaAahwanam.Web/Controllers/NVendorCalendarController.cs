@@ -15,9 +15,15 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorCalendar
         public ActionResult Index(string id, string vid)
         {
+            try { 
             ViewBag.id = id;
             ViewBag.vid = vid;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public JsonResult GetDates(string id, string vid)

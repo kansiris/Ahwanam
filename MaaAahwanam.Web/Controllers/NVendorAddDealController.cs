@@ -18,6 +18,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult Index(string id)
         {
+            try { 
             if (TempData["Active"] != "")
             {
                 ViewBag.msg = TempData["Active"];
@@ -27,10 +28,16 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.vendormasterid = id;
             ViewBag.id = id;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult adddeal(string id, string DealName, string OriginalPrice, string type, string foodtype, string DealPrice, string catogary,string minGuests,string maxGuests, string StartDate, string EndDate, string ddesc, string timeslot,string timeslot1)
         {
+            try { 
             if (type == "Select Type")
             {
                 TempData["Active"] = "Select Type";
@@ -99,6 +106,11 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.id = id;
             TempData["Active"] = "Deal is Saved";
             return RedirectToAction("Index", "NVendorDeals", new { id = id });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
       }
 }

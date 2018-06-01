@@ -17,13 +17,20 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NLiveDeals
         public ActionResult Index(string id, string eve)
         {
+            try { 
           var  Deal1 = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);//.Where(m => m.subtype == "Hotel");
           ViewBag.records = Deal1;
           return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
         
-        public PartialViewResult Loadmore(string lastrecord, string eve)
+        public ActionResult Loadmore(string lastrecord, string eve)
         {
+            try { 
             DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
 
             if (eve == null) { eve = "All"; }
@@ -37,6 +44,11 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.dealLastRecord = id;
             ViewBag.dealLastRecordeve = eve;
             return PartialView("Loadmore");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }

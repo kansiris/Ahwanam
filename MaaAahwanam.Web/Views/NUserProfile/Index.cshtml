@@ -139,68 +139,37 @@
                                 <tbody>
                                     @if (ViewBag.orderhistory.Count != 0)
                                     {
-                                                    </td>
-                                                    <td>
-                                                        <div class="item-price">
-                                                            <a href='/NUserProfile/ordercancel?orderid=@item.OrderId'>Cancel</a>&nbsp;&nbsp;<a onclick="alert(@item.OrderId)">Delete</a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                }
-                            </div>
-                            <div class="row mx-0 mt-2 tableData" id="bookingHistory">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>S.No</th>
-                                            <th>OrderID</th>
-                                            <th>Vendor Details</th>
-                                            <th>Order Date</th>
-                                            <th>Event Type</th>
-                                            <th>Booking date</th>
-                                            <th>Timeslot</th>
-                                            <th>Status</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (ViewBag.orderhistory.Count != 0)
+                                        foreach (var item in ViewBag.orderhistory)
                                         {
+                                            <tr>
+                                                <td>@(++j)</td>
+                                                <td>@item.OrderId</td>
+                                                <td>
+                                                    <h4>@item.BusinessName</h4>
 
-                                            foreach (var item in ViewBag.orderhistory)
-                                            {
-                                                <tr>
-                                                    <td>@(++j)</td>
-                                                    <td>@item.OrderId</td>
-                                                    <td>
-                                                        <h4>@item.BusinessName</h4>
-
-                                                    </td>
-                                                    <td>
-                                                        <div class="event-date-time">
-                                                            <div class="event-dates">
-                                                                @item.OrderDate.ToString("dd MMM yyyy")
-                                                            </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="item-price">
-                                                            <p>@item.EventType</p>
+                                                </td>
+                                                <td>
+                                                    <div class="event-date-time">
+                                                        <div class="event-dates">
+                                                            @item.OrderDate.ToString("dd MMM yyyy")
                                                         </div>
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.EventType</p>
+                                                    </div>
 
-                                                    </td>
-                                                    <td>
-                                                        <div class="item-price">
-                                                            <p>@item.BookedDate.ToString("dd MMM yyyy")</p>
-                                                        </div>
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.BookedDate.ToString("dd MMM yyyy")</p>
+                                                    </div>
 
-                                                    </td>
-                                                    <td>
-                                                        <div class="item-price">
-                                                            <p>@item.attribute</p>
-                                                        </div>
+                                                </td>
+                                                <td>
+                                                    <div class="item-price">
+                                                        <p>@item.attribute</p>
+                                                    </div>
 
                                                 </td>
                                                 <td>@item.Status</td>
@@ -209,21 +178,23 @@
                                                         <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</span></p>
                                                     </div>
 
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <td colspan="9">
-                                                    <p>No Past Orders</p>
                                                 </td>
                                             </tr>
                                         }
-                                    </tbody>
-                                </table>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <p>No Past Orders</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                        </tbody>
+                                    </table>
+                                
                             </div>
+                       
                             <div class="row mx-0 mt-2 tableData" id="wishList">
                                 <table class="table table-bordered table-striped">
                                     <thead>

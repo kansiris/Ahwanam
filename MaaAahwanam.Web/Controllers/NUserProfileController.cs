@@ -22,6 +22,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NUserProfile
         public ActionResult Index()
         {
+            try { 
             if (TempData["Active"] != "")
             {
                 ViewBag.Active = TempData["Active"];
@@ -63,9 +64,15 @@ namespace MaaAahwanam.Web.Controllers
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "NUserRegistration");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
         public ActionResult orderdelete(string orderid)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -90,10 +97,16 @@ namespace MaaAahwanam.Web.Controllers
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "NUserRegistration");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult ordercancel(string orderid)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -118,22 +131,39 @@ namespace MaaAahwanam.Web.Controllers
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "NUserRegistration");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
         public ActionResult changepassword(UserLogin userLogin)
         {
+            try { 
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             var userdata12 = userLoginDetailsService.GetUserId((int)user.UserId);
             userLoginDetailsService.changepassword(userLogin, (int)user.UserId);
             return Json("success");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult updatedetails(UserDetail userdetail)
         {
+            try { 
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             userLoginDetailsService.UpdateUserdetailsnew(userdetail, (int)user.UserId);
             return Json("success");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }

@@ -28,6 +28,7 @@ namespace MaaAahwanam.Repository
         public string logo { get; set; }
         public decimal PerunitPrice { get; set; }
         public int Quantity { get; set; }
+        public string UserPhone { get; set; }
         public string username { get; set; }
         public string Isdeal { get; set; }
         public long Id { get; set; }

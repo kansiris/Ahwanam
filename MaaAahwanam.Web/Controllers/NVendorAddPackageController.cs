@@ -17,6 +17,10 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult Index(string id)
         {
+            try {
+
+                TempData.Clear();
+
             if (TempData["Active"] != "")
             {
                 ViewBag.Active = TempData["Active"];
@@ -26,11 +30,17 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.vendormasterid = id;
             ViewBag.id = id;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
         public ActionResult addpackage(string id, string type, string packagename, string packageprice, string Packagedec)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 if (type == "Type")
@@ -60,6 +70,11 @@ namespace MaaAahwanam.Web.Controllers
               //  return Content("<script language='javascript' type='text/javascript'>alert('package added');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
             }
             else
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
+            }
+            catch (Exception)
             {
                 return RedirectToAction("Index", "Nhomepage");
             }

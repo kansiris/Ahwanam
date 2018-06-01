@@ -53,8 +53,9 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public PartialViewResult Loadmoredeals(string lastrecord, string eve)
+        public ActionResult Loadmoredeals(string lastrecord, string eve)
         {
+            try { 
             int id = (lastrecord == null) ? 2 : int.Parse(lastrecord) + 2;
             if (eve == null || eve == "") { eve = "All"; }
             if (eve == "KittyCocktailsParties") { eve = "Kitty Cocktails Parties"; }
@@ -76,10 +77,16 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.dealLastRecord = id;
             ViewBag.dealcount = vendorProductsService.getalleventdeal(eve,date).Count();
             return PartialView("Loadmoredeals");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
-        public ActionResult booknow(string type, string etype1, string date, string totalprice, string id,string price, string guest, string timeslot,string vid, string did)
+     public ActionResult booknow(string type, string etype1, string date, string totalprice, string id,string price, string guest, string timeslot,string vid, string did)
      {
+            try { 
             if (type == "Photography" || type == "Decorator" || type == "Other")
             {
                 totalprice = price;
@@ -176,6 +183,11 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
         public string Capitalise(string str)
         {
@@ -185,7 +197,7 @@ namespace MaaAahwanam.Web.Controllers
         }
         public ActionResult addcnow(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did)
         {
-
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 if (type == "Photography" || type == "Decorator" || type == "Other")
@@ -217,15 +229,26 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult sort(string id, string type, string eve)
         {
+            try { 
             DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
 
             var data = vendorProductsService.getpartvendordeal(id, type,date).Where(m => m.Category == eve);
             var message = String.Join("~", data.Select(m => new  {   m.DealPrice,  m.FoodType, m.DealID }));
             return Json(message,JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
     }

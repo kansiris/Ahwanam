@@ -30,6 +30,7 @@ namespace MaaAahwanam.Repository.db
             cartItem.Perunitprice = cartitemjson.Perunitprice;
             cartItem.Quantity = cartitemjson.Quantity;
             cartItem.TotalPrice = cartitemjson.TotalPrice;
+            cartItem.Status = cartitemjson.Status;
             updatestatus = _dbContext.SaveChanges();
             return updatestatus;
         }

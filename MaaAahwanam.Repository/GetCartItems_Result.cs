@@ -29,11 +29,13 @@ namespace MaaAahwanam.Repository
         public decimal TotalPrice { get; set; }
         public string attribute { get; set; }
         public int Quantity { get; set; }
+        public string Status { get; set; }
         public decimal Perunitprice { get; set; }
         public long subid { get; set; }
         public decimal ServicePrice { get; set; }
         public decimal Discount { get; set; }
         public decimal DiscountPrice { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<System.DateTime> eventstartdate { get; set; }
         public Nullable<System.DateTime> eventenddate { get; set; }
         public Nullable<long> eventid { get; set; }

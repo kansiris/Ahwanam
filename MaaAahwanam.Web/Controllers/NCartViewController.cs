@@ -40,7 +40,7 @@ namespace MaaAahwanam.Web.Controllers
 
                     List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                     decimal total = cartlist.Sum(s => s.TotalPrice);
-                    ViewBag.cartitems = cartlist;
+                    ViewBag.cartitems = cartlist.OrderByDescending(m => m.UpdatedDate).Where(m=>m.Status == "Active");
                     ViewBag.Total = total;
                 }
             }
@@ -57,7 +57,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message);
         }
 
-        public PartialViewResult DealsSection(string type, string L1)
+        public ActionResult DealsSection(string type, string L1)
         {
             int takecount = (L1 != null) ? int.Parse(L1) : 6;
             if (type == null)  type = "Venue";
@@ -237,9 +237,39 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Updatecartitem(long cartId)
+        {
 
-                   
-      
+           
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                if (user.UserType == "User")
+                {
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                    ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                    var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                    var cartdetails = cartlist.Where(m => m.CartId == cartId).FirstOrDefault();
+
+
+                    string updateddate = DateTime.UtcNow.ToShortDateString();
+                    CartItem cartItem = new CartItem();
+                    cartItem.VendorId = cartdetails.Id;
+                    cartItem.ServiceType = cartdetails.ServiceType;
+                    cartItem.Perunitprice = cartdetails.Perunitprice;
+                    cartItem.TotalPrice = cartdetails.TotalPrice;
+                    cartItem.Orderedby = user.UserId;
+                    cartItem.Quantity = cartdetails.Quantity;
+                    cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                    cartItem.attribute = cartdetails.attribute;
+                    cartItem.CartId = cartdetails.CartId;
+                    cartItem.Status = "Saved";
+                    string mesaage = cartService.Updatecartitem(cartItem);
+                    return Json(mesaage);
+                }
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+           
+        
+
         public string Capitalise(string str)
         {
             if (String.IsNullOrEmpty(str))

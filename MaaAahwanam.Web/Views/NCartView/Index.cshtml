@@ -1,10 +1,13 @@
-﻿
+﻿@using System.Globalization
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
 }
 
 <div class="container-fluid">
+    <input type="hidden" id="L1" name="L1" value="@ViewBag.count" />
+
     <div class="row innerPagesBg py-4">
         <div class="container cartPage">
             <div class="row">
@@ -37,42 +40,44 @@
                                     </div>
                                     }
 
-                            <input type="hidden" id="type" name="type" value="@item.ServicType">
-                            <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock">
-                                <div class="w-100">
-                                    <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
-                                    <label class="mb-0 float-right">
-                                        <input type="checkbox" checked>
-                                        <span></span>
-                                    </label>
-                                </div>
-                                <div class="w-100 text-left float-left address">
-                                    <p class="float-left">
-                                        @item.Address
-                                        <br>
-                                        @item.Landmark,@item.City <br>
-                                    </p>
-                                    <p class="float-right total">
-                                        Rs <span>000</span>
-                                    </p>
-                                </div>
-                                <ul class="pl-0 customDates float-left"></ul>
-                                <div class="w-100 buttons">
-                                    <ul class="pl-0 float-right">
-                                        <li><span class="addDates">Add Dates</span></li>
-                                        <li><a href="#" onclick="addwishlistItem(@item.CartId);">Wishlist</a></li>
-                                        <li><span class="deleteBlock" onclick="DeletecartItem(@item.CartId);">Delete</span></li>
-                                    </ul>
-                                </div>
-                                <div class="dateInput">
-                                    <div class="triangle"></div>
-                                    <i class="fa fa-times"></i>
-                                    <div class="form-group mb-0">
-                                        <input type="text" value="" class="form-control datetimepicker" placeholder="Date Here" />
+                                    <input type="hidden" id="type" name="type" value="@item.ServicType">
+                                    <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock">
+                                        <div class="w-100">
+                                            <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
+                                            <label class="mb-0 float-right">
+                                                <input type="checkbox" checked>
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="w-100 text-left float-left address">
+                                            <p class="float-left">
+                                                @item.Address
+                                                <br>
+                                                @item.Landmark,@item.City <br>
+                                            </p>
+                                            <p class="float-right total">
+                                                Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>
+                                            </p>
+                                        </div>
+                                        <ul class="pl-0 customDates float-left"></ul>
+                                        <div class="w-100 buttons">
+                                            <ul class="pl-0 float-right">
+                                                <li><span class="deleteBlock" onclick="savecartItem(@item.CartId);">Save for Later</span></li>
+
+                                                <li><span class="addDates">Add Dates</span></li>
+                                                <li><a href = "#" onclick= "addwishlistItem(@item.CartId);" > Wishlist </a></li>
+                                                <li><span class="deleteBlock" onclick="DeletecartItem(@item.CartId);">Remove</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="dateInput">
+                                            <div class="triangle"></div>
+                                            <i class="fa fa-times"></i>
+                                            <div class="form-group mb-0">
+                                                <input type = "text" value="" class="form-control datetimepicker" placeholder="Date Here" />
+                                            </div>
+                                            <span class="addSelDates">Add Date</span>
+                                        </div>
                                     </div>
-                                    <span class="addSelDates">Add Date</span>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -95,13 +100,13 @@
                     </div>*@
                 <div class="col-12 col-sm-4 col-md-4">
                     <div class="p-3 bgWhite">
-                        @*<div class="w-100 px-4 py-3">
-
-                            <div class="row mx-0 mt-4">*@
+                        <div class="w-100 px-4 py-3">
+                           
+                            @*<div class="row mx-0 mt-4">*@
                                 @{Html.RenderAction("DealsSection", "NCartView"); }
 
 
-                            </div>
+                            @*</div>*@
                             @*<div class="row mx-0 my-4">
                                     <div class="mx-auto d-inline-flex">
                                         <span class="themeBgColorPrimary btnSecondary text-white">
@@ -117,6 +122,9 @@
     </div>
 </div>
 
+        </div>
+    </div>
+
 @section scripts{
     <script type="text/javascript">
         //$(document).ready(function () {
@@ -128,6 +136,8 @@
         $(document).ready(function () {
         var type = $('#type').val();
         });
+
+
     </script>
 
     <script type="text/javascript">
@@ -266,6 +276,9 @@
         /*-- Book Now Button --*/
 
         function DeletecartItem(cartId) {
+            alertify.confirm("Are you sure You want to delete.",
+         function () {
+         
             var obj = {}
             obj.cartId = cartId;
             $.ajax({
@@ -278,7 +291,8 @@
                 dataType: "json",
                 success: function (data) {
                     if (data != null) {
-                        window.location.reload();
+                        alertify.alert("Item Deleted");
+                                                window.location.reload();
                     }
                 },
                 error: function (data) {
@@ -286,9 +300,45 @@
                     alertmsg("error");
                 }
             });
+            
+         },
+         function () {
+         });
         }
-
+        function savecartItem(cartId) {
+            alertify.confirm("Are you sure You want to Save for Later.",
+         function () {
+         
+             var obj = {}
+             obj.cartId = cartId;
+             $.ajax({
+                 type: "POST",
+                 url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/NCartView/Updatecartitem',
+                 data: {},
+                 data: JSON.stringify(obj),
+                 //data: sendInfo,
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (data) {
+                     if (data != null) {
+                         alertify.alert("Item is save for later");
+                         window.location.reload();
+                     }
+                 },
+                 error: function (data) {
+                     //alert('error');
+                     alertmsg("error");
+                 }
+             });
+            
+         },
+         function () {
+         });
+        }
         function addwishlistItem(cartId) {
+            alertify.confirm("Are you sure You want to add to wishlist.",
+         function () {
+        
             var obj = {}
             obj.cartId = cartId;
             $.ajax({
@@ -309,6 +359,11 @@
                     alertmsg("error");
                 }
             });
+             //     alertify.success('Deleted');
+           
+         },
+         function () {
+         });
         }
     </script>
 }

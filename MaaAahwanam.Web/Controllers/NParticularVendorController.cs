@@ -32,7 +32,10 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NParticularVendor
         public ActionResult Index(string type, string id, string vid, string m)
         {
-            ViewBag.count = 2;
+
+            try
+            {
+                ViewBag.count = 2;
             if (m == "AWC")
                 WhishList(type, id, vid, "add", ""); //count++;
             if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
@@ -156,10 +159,16 @@ namespace MaaAahwanam.Web.Controllers
                 //    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
             }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult WhishList(string type, string id, string vid, string command, string wid)
         {
+            try { 
             //if (count <= 1) // if count > 1 new whishlist will not be created
             //{
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -185,10 +194,16 @@ namespace MaaAahwanam.Web.Controllers
             }
             //}
             return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
-        public PartialViewResult DealsSection(string type, string L1)
+        public ActionResult DealsSection(string type, string L1)
         {
+            try { 
             int takecount = (L1 != null) ? int.Parse(L1) : 2;
             //ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);
             //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
@@ -204,6 +219,11 @@ namespace MaaAahwanam.Web.Controllers
 
             ViewBag.count = (count >= takecount) ? "1" : "0";
             return PartialView();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public string Capitalise(string str)
@@ -215,6 +235,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult BookNow(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
         {
+            try { 
 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -313,10 +334,16 @@ namespace MaaAahwanam.Web.Controllers
 
             }
             return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult AddToCart(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -349,6 +376,12 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
+
 }

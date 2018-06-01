@@ -19,6 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorManageStoreFront
         public ActionResult Index(string id, string vid, string category, string subcategory)
         {
+            try { 
             ViewBag.id = id;
             ViewBag.vid = vid;
             ViewBag.category = category;
@@ -67,11 +68,17 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         [HttpPost]
         public ActionResult Index(string id, string command, string serviceselection, string subcategory, string vid)
         {
+            try { 
             long count = 0;
             if (command == "add")
                 count = addservice(serviceselection, subcategory, long.Parse(id));
@@ -81,6 +88,11 @@ namespace MaaAahwanam.Web.Controllers
             if (count > 0) msg = "Service Added Successfully";
             else msg = "Failed To Add Sevice";
             return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "&&vid=" + count + "&&category=" + serviceselection + "&&subcategory=" + subcategory + "'</script>");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public JsonResult filtercategories(string type)
@@ -412,6 +424,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult Removeimage(string src, string id, string vid, string type)
         {
+            try { 
             string delete = "";
             var vendorImage = vendorImageService.GetImageId(src, long.Parse(vid));
             delete = vendorImageService.DeleteImage(vendorImage);
@@ -424,6 +437,11 @@ namespace MaaAahwanam.Web.Controllers
             else
             {
                 return Json("Failed");
+            }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
             }
         }
 

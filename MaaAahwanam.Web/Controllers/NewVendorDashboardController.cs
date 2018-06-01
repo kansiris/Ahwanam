@@ -16,8 +16,14 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NewVendorDashboard
         public ActionResult Index(string id)
         {
+            try { 
             ViewBag.id = id;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }

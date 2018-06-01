@@ -18,16 +18,23 @@ namespace MaaAahwanam.Web.Controllers
         string type = "";
         public ActionResult Index()
         {
+            try { 
             if (TempData["Active"] != "")
             {
                 ViewBag.Active = TempData["Active"];
             }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         [HttpPost]
         public ActionResult Index([Bind(Prefix = "Item1")]UserLogin userLogin, [Bind(Prefix = "Item2")] Vendormaster vendorMaster, string command)
         {
+            try { 
             //if (command == "VendorReg")
             //{
                 int query = vendorMasterService.checkemail(vendorMaster.EmailId);
@@ -77,9 +84,14 @@ namespace MaaAahwanam.Web.Controllers
                 else
                     TempData["Active"] = "E-Mail ID Already Taken!!! Try Another";
                 return RedirectToAction("Index", "NUserRegistration");
-               // return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
-            //}
-           // return View();
+                // return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
+                //}
+                // return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public JsonResult checkemail(string emailid)

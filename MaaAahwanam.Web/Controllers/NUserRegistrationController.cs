@@ -89,6 +89,8 @@ namespace MaaAahwanam.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
+
+            try { 
             if (command == "UserReg")
             {
                 userLogin.IPAddress = HttpContext.Request.UserHostAddress;
@@ -224,6 +226,11 @@ namespace MaaAahwanam.Web.Controllers
             }
 
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult LoginBlocks(string email,string password,string id)
@@ -276,6 +283,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult ActivateEmail(string ActivationCode, string Email)
         {
+            try { 
             if (ActivationCode == "")
             { ActivationCode = null; }
             var userResponse = venorVenueSignUpService.GetUserdetails(Email);
@@ -286,11 +294,16 @@ namespace MaaAahwanam.Web.Controllers
             //return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             TempData["Active"] = "Email ID not found";
             return RedirectToAction("Index", "NUserRegistration");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
         public ActionResult ActivateEmail1(string ActivationCode, string Email)
-        {
+        {try { 
             UserLogin userLogin = new UserLogin();
             UserDetail userDetails = new UserDetail();
             if (ActivationCode == "")
@@ -317,38 +330,55 @@ namespace MaaAahwanam.Web.Controllers
             //return Content("<script language='javascript' type='text/javascript'>alert('Email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             TempData["Active"] = "Email ID not found";
             return RedirectToAction("Index", "NUserRegistration");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
         public ActionResult updatepassword(string Email)
         {
+            try { 
             ViewBag.email = Email;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult changepassword(UserLogin userLogin)
         {
+            try { 
             string email = userLogin.UserName;
             var userResponse = venorVenueSignUpService.GetUserdetails(email);
             var userid = userResponse.UserLoginId;
             userLoginDetailsService.changepassword(userLogin, (int)userid);
             return Json("success");
-            // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
-
+                // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public JsonResult assignreturnurl(string ReturnUrl)
         {
+
             perfecturl = ReturnUrl;
             return Json(JsonRequestBehavior.AllowGet);
         }
 
 
         public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)
-        {               //Write your code here to access these paramerters
-            var response = "";
-
-            
+        {
+            try { 
+            //Write your code here to access these paramerters
+            var response = "";           
             UserLogin userLogin = new UserLogin();
             UserDetail userDetail = new UserDetail();
             userDetail.FirstName = name;
@@ -382,7 +412,11 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("failed");
                 //  return Content("<script language='javascript' type='text/javascript'>alert('This email is registared as Vendor please login with Your Credentials');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
             }
-
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
     

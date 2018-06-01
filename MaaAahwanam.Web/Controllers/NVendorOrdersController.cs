@@ -18,6 +18,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorOrders
         public ActionResult Index(string id)
         {
+            try { 
             if (TempData["Active"] != "")
             {
                 ViewBag.Active = TempData["Active"];
@@ -26,10 +27,16 @@ namespace MaaAahwanam.Web.Controllers
             var orders = orderService.userOrderList().Where(m => m.Id == int.Parse(id));
             ViewBag.order = orders.OrderByDescending(m => m.OrderId);
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult OrderApproval(string id, string orderid, string command)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -61,6 +68,11 @@ namespace MaaAahwanam.Web.Controllers
             }
             TempData["Active"] = "Please Login";
             return RedirectToAction("Index", "NVendorOrders", new { id = id });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public string Capitalise(string str)
