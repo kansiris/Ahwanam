@@ -22,7 +22,7 @@
                 {
                     <div class="row mx-0 my-2">
                         <div class="form-group w-100">
-                            <input type="text" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" required autofocus />
+                            <input type="text" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" autofocus required/>
                             @*<input type="text" class="form-control" name="" placeholder="User Name">*@
                         </div>
                     </div>
@@ -32,6 +32,7 @@
                             </div>
                         </div>*@
                     <div class="row mx-0 align-items-center">
+                        @*<button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center" value="Login" name="command" onclick="testlogin()">Login</button>*@
                         <span class="themeBgColorPrimary btnSecondary text-white text-center nextBtn">Next</span>
                         @*<span class="themeBgColorPrimary btnSecondary text-white text-center">Login</span>*@
                         <span class="themeColor ml-3 fontSize-18 forgotPasswordBtn"> Forgot Password</span>
@@ -116,8 +117,9 @@
 
             @*@using (Html.BeginForm("LoginBlocks", "NUserRegistration", FormMethod.Post))
                 {*@
-            <form method="post">
+            <form method="post" id="LoginBlock"> 
                 <div class="userVendorLogin p-5">
+                    
                     @{Html.RenderAction("LoginBlocks", "NUserRegistration");}
                 </div>
             </form>
@@ -163,6 +165,7 @@
 
     <script>
         function testlogin() {
+            alert("Test Login Methos");
             var url = document.referrer;
             //alert(url.split('://')[1].split('/')[1].split('?')[0]);
             if (url != '') {
@@ -352,7 +355,7 @@
                               data: data,
                               success: function () {
                                   if (data == 'failed') {
-                                      alert('This email is registared as Vendor please login with Your Credentials')
+                                      alertmsg('This email is registared as Vendor please login with Your Credentials')
                                   }
                                   else {
                                       var url1 = document.referrer;
@@ -388,23 +391,37 @@
 
     <script type="text/javascript">
         $(".login .nextBtn").click(function () {
-            $(this).parents(".login").css("display", "none");
-            var url = '/NUserRegistration/LoginBlocks?email=' + $('#Item1_UserName').val() + '';
-            $(".userVendorLogin").empty().load(url);
-            $(".userVendorLogin").css("display", "block");
+            var emailid = $('#Item1_UserName').val();
+            if (emailid != '') {
+                $(this).parents(".login").css("display", "none");
+                var url = '/NUserRegistration/LoginBlocks?email=' + emailid + '';
+                $(".userVendorLogin").empty().load(url);
+                $(".userVendorLogin").css("display", "block");
+            }
+            else {
+                $('#Item1_UserName').focus();
+                alertmsg("Please Enter Your Email ID");
+                
+            }
         });
 
         //$(btnButtons).click(function () {
         $(document).on('click', '.userVendorLogin > div.row div.block .buttons button', function () {
             if ($(this).text() == "Select") {
-                $(this).parents(".block").prevAll(".block").find("button").html("Next");
-                $(this).parents(".block").nextAll(".block").find("button").html("Next");
+                $(this).parents(".block").prevAll(".block").find("button").html("Select");
+                $(this).parents(".block").nextAll(".block").find("button").html("Select");
                 $(this).parents(".block").find("input[type='password']").remove();
                 $(this).parents(".block").prevAll(".block").find("input[type='password']").remove();
                 $(this).parents(".block").nextAll(".block").find("input[type='password']").remove();
-                $(this).parents(".buttons").prev(".password").children(".form-group").append('<input type="password" name="Password" id="Password" class="form-control" name="" placeholder="Password here">');
+                $(this).parents(".block").prevAll(".block").find("input[type='button']").removeAttr('id');
+                $(this).parents(".block").nextAll(".block").find("input[type='button']").removeAttr('id');
+                $(this).parents(".buttons").prev(".password").children(".form-group").append('<input type="password" name="Item1.Password" id="Item1_Password" class="form-control" name="" placeholder="Password here" required>');
                 $(this).parents(".buttons").prev(".password").css("display", "block");
+                $('#Item1_Password').focus();
                 $(this).html("Login").prop('id', 'loginredirect');//.attr('onclick', 'redirection()');
+                var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
+                $('#Item1_UserLoginId').val(loginid);
+                $('#LoginBlock').attr('action', '/NUserRegistration/Index?command=Login'); // action="/NUserRegistration/Index?command=Login")
             } else {
                 $(this).html('Login');//.attr('onclick', 'testlogin()');
             }
@@ -413,10 +430,25 @@
 
     <script>
         $(document).on('click', '#loginredirect', function () {
-            testlogin();
-            var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
-            location.href = '/NUserRegistration/LoginBlocks?email=' + $('#Item1_UserName').val() + '&&password=' + $('#Password').val() + '&&id=' + loginid;
+            var passtxt = $('#Item1_Password').val();
+            if (passtxt != '') {
+                testlogin();
+                //var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
+                //location.href = '/NUserRegistration/LoginBlocks?email=' + $('#Item1_UserName').val() + '&&password=' + passtxt + '&&id=' + loginid;
+                this.form.submit();
+            }
+            else {
+                $('#Item1_Password').focus();
+                alertmsg("Please Enter Password");
+                
+            }
         });
+    </script>
+
+    <script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () { });
+        }
     </script>
 
 
