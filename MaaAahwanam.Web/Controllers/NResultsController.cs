@@ -13,6 +13,8 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NResultsController : Controller
     {
+        OrderService orderService = new OrderService();
+        VendorDatesService vendorDatesService = new VendorDatesService();
         int stypecount = 0;
         public static List<string> services = new List<string> { "Hotel", "Resort", "Convention Hall", "Catering", "Photography", "Decorator", "Mehendi", "Pandit" };
         public static List<string> selectedservices = services;
@@ -477,6 +479,42 @@ namespace MaaAahwanam.Web.Controllers
             {
                 return RedirectToAction("Index", "Nhomepage");
             }
+        }
+
+        public ActionResult GetVendorDates(string id,string vid,string type)
+        {
+            ProductInfoService productInfoService = new ProductInfoService();
+            string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type);
+
+            //Blocking Dates
+            //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
+
+            var betweendates = new List<string>();
+            var Gettotaldates = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
+            int recordcount = Gettotaldates.Count();
+            foreach (var item in Gettotaldates)
+            {
+                var startdate = Convert.ToDateTime(item.StartDate);
+                var enddate = Convert.ToDateTime(item.EndDate);
+                if (startdate != enddate)
+                {
+                    for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
+                    {
+                        betweendates.Add(dt.ToString("dd-MM-yyyy"));
+                    }
+                }
+                else
+                {
+                    betweendates.Add(startdate.ToString("dd-MM-yyyy"));
+                }
+
+                //ViewBag.vendoravailabledates = String.Join(",", betweendates,orderdates);
+                var vendoravailabledates = String.Join(",", betweendates);
+                vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates);
+                ViewBag.vendoravailabledates = vendoravailabledates;
+                return Json(vendoravailabledates, JsonRequestBehavior.AllowGet);
+            }
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         #region Reference Code

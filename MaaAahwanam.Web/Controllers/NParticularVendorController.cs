@@ -114,7 +114,9 @@ namespace MaaAahwanam.Web.Controllers
                 DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 ViewBag.availabledeals = vendorProductsService.getpartvendordeal(id, type, date);
                 ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
-                var orderdates = orderService.userOrderList().Where(k => k.Id == long.Parse(id) && k.Status == "Active").Select(k => k.OrderDate.Value.ToString("dd-MM-yyyy")).ToList();
+                //var orderdates = orderService.userOrderList().Where(k => k.Id == long.Parse(id) && k.Status == "Active").Select(k => k.OrderDate.Value.ToString("dd-MM-yyyy")).ToList();
+
+                string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type);
 
                 //Blocking Dates
                 //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
@@ -372,7 +374,7 @@ namespace MaaAahwanam.Web.Controllers
                     cartItem.EventType = eventtype;
                     cartItem.EventDate = Convert.ToDateTime(date);
                     //cartItem.Quantity = int.Parse(guest);
-                    if (selectedtype != "sprice")
+                    if (selectedtype != "sprice" && selectedtype != "")
                     {
                         cartItem.DealId = long.Parse(selectedtype);
                     }

@@ -52,7 +52,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             return View();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return RedirectToAction("Index", "Nhomepage");
             }
