@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
     <link href="~/newdesign/css/Timerdscountdown.css" rel="stylesheet" />
     <link href="~/newdesign/css/TimerStyles.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/newdesign/css/customstyles.css" />
+    <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container-fluid sectionOne">
@@ -83,18 +85,19 @@
                 <div class="row">
                     <div class="col-12 col-sm-4 col-md-4 m-auto bgWhite form">
                         <i class="fa fa-times" onClick="closeForm()"></i>
-                        <form class="py-5 px-3">
+                        <form class="py-5 px-3" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name" name="" id="uname">
+                                <input type="text" class="form-control" placeholder="Name" name="name" id="name" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="E-Mail" name="" id="uemail">
+                                <input type="email" class="form-control" placeholder="E-Mail" name="email" id="email" required>
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Phone Number" name="" id="unumber">
+                                <input type="text" class="form-control" placeholder="Phone Number" min="9" maxlength="10" oninput="numberOnly(this.id);"  name="mobile" id="mobile" required>
                             </div>
                             <div class="form-group text-center mb-0">
-                                <input type="button" class="btn themeBgColor" name="" value="Submit" onclick="sendemail()">
+                                @*<input type="button" class="btn themeBgColor" name="" value="Submit" onclick="sendemail()">*@
+                                <input type="submit" class="btn themeBgColor" value="Submit">
                             </div>
                         </form>
                     </div>
@@ -106,6 +109,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="~/newdesign/js/Timerdscountdown.js"></script>
+    <script src="~/newdesign/js/alertify.js"></script>
 
     <script type="text/javascript">
         function displayForm() {
@@ -124,51 +128,20 @@
 
     <script src="~/Scripts/jquery.min.js"></script>
     <script>
-        function sendemail() {
-            var name = $('#uname').val();
-            var email = $('#uemail').val();
-            var mobile = $('#unumber').val();
-            if (name.trim() == '') { alert("Please Enter Your Name"); $('#uname').focus(); }
-            else if (email.trim() == '') { alert("Please Enter Your Email-ID"); $('#uemail').focus(); }
-            else if (!IsEmail(email)) { alert('Invalid Email Address'); $('#uemail').focus(); }
-            else if (mobile.trim() == '') { alert("Please Enter Your Mobile Number"); $('#unumber').focus(); }
-            else if (!IsNumber(mobile)) { alert('Invalid Mobile Number'); $('#unumber').focus(); }
-            else {
-                $.ajax({
-                    type: 'POST',
-                    url: "/PreLaunch/SendEmail?name=" + name + "&&email=" + email + "&&mobile=" + mobile,
-                    success: function (data) {
-                        alert("Response recorded");
-                        closeForm();
-                        $('#uname').val('');
-                        $('#uemail').val('');
-                        $('#unumber').val('');
-                    }
-                });
-            }
-        }
-
-        function IsEmail(email) {
-            var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
-            var valid = emailReg.test(email);
-
-            if (!valid) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        function IsNumber(mobile) {
-            var mobileReg = /^[1-9]{1}[0-9]{9}$/;
-            var valid = mobileReg.test(mobile);
-
-            if (!valid) {
-                return false;
-            } else {
-                return true;
-            }
+        function numberOnly(id) {
+            //alert(id);
+            var element = document.getElementById(id);
+            var regex = /[^0-9]/gi;
+            element.value = element.value.replace(regex, "");
         }
     </script>
+
+    @if (ViewBag.Active != "" && ViewBag.Active != null)
+    {
+        <script>
+            alertify.alert("" + '@ViewBag.Active' + "", function () {
+            });
+        </script>
+    }
 </body>
 </html>
