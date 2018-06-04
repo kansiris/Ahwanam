@@ -136,7 +136,14 @@ namespace MaaAahwanam.Web.Controllers
 
                 var data = NdealService.GetdealDetails((dealid));
                 var pric1 = (data.DealPrice);
-                pricenew = Convert.ToString(pric1 * nofguests);
+
+                if (data.VendorType == "Venue" || data.VendorType == "Catering")
+                {
+                    pricenew = Convert.ToString(pric1 * nofguests);
+                }
+                else {
+                    pricenew = Convert.ToString(pric1);
+                }
             }
 
 
@@ -308,7 +315,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult multipledateinsert( string cartId,string price,string total,string date)
+        public ActionResult multipledateinsert( string cartId,string price, string date, string total)
         {
 
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -317,29 +324,37 @@ namespace MaaAahwanam.Web.Controllers
                 var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                 ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                 var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64( cartId)).FirstOrDefault();
+                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartId)).FirstOrDefault();
                 var totalprice = cartdetails.TotalPrice;
-                var totalprice1 = totalprice + price;
+                var totalprice1 = totalprice + decimal.Parse(price);
                 string updateddate = DateTime.UtcNow.ToShortDateString();
                 CartItem cartItem = new CartItem();
-                cartItem.VendorId = cartdetails.Id;
-                cartItem.ServiceType = cartdetails.ServiceType;
-                //var price1 = cartdetails.Perunitprice;
+                var price2 = date + ',' + price;
+                if (cartdetails.c1date == null)
+                {
+                    cartItem.ExtraDate1 = price2;
+                }
+                else if (cartdetails.c2date == null)
+                {
+                    cartItem.ExtraDate1 = cartdetails.c1date;
+                    cartItem.ExtraDate2 = price2;
+                }
+                else if (cartdetails.c3date == null)
+                {
+                    cartItem.ExtraDate1 = cartdetails.c1date;
+                    cartItem.ExtraDate2 = cartdetails.c2date;
+                    cartItem.ExtraDate3 = price2; }
+             else if (cartdetails.c3date != null)
 
-                 var price2 = date + ',' + price;
-                cartItem.Perunitprice = Convert.ToDecimal(price2);
-                cartItem.TotalPrice = Convert.ToDecimal(total);
-                cartItem.Orderedby = user.UserId;
-                cartItem.Quantity = cartdetails.Quantity;
-                var date1 = cartdetails.eventstartdate;
-                var date2 = date1 + ", " + date;
-                cartItem.EventDate = Convert.ToDateTime(date2);
+            {
+                    return Json("failed");
 
+                }
+                cartItem.TotalPrice = Convert.ToDecimal(totalprice1);
+            
                 cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
-                cartItem.attribute = cartdetails.attribute;
                 cartItem.CartId = cartdetails.CartId;
-                cartItem.Status = "Active";
-                string mesaage = cartService.Updatecartitem(cartItem);
+                string mesaage = cartService.adddatecartitem(cartItem);
                 return Json(mesaage);
             }
 
@@ -347,6 +362,55 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
+        public ActionResult multipledatedelete(string cartId, string price, string date, string total)
+        {
+            price = price.Replace(" ", "");
+            date = date.Replace(" ", "");
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            if (user.UserType == "User")
+            {
+                var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartId)).FirstOrDefault();
+                var totalprice = cartdetails.TotalPrice;
+                var totalprice1 = totalprice - decimal.Parse(price);
+                string updateddate = DateTime.UtcNow.ToShortDateString();
+                CartItem cartItem = new CartItem();
+                var price2 = date+','+price;
+                if (cartdetails.c1date == price2)
+                {
+                    cartItem.ExtraDate1 = null;
+                }
+                else if (cartdetails.c2date == price2)
+                {
+                    cartItem.ExtraDate1 = cartdetails.c1date;
+                    cartItem.ExtraDate2 = null;
+                }
+                else if (cartdetails.c3date == price2)
+                {
+                    cartItem.ExtraDate1 = cartdetails.c1date;
+                    cartItem.ExtraDate2 = cartdetails.c2date;
+                    cartItem.ExtraDate3 = null;
+                }
+                else if (cartdetails.c3date != null)
+
+                {
+                    return Json("failed");
+
+                }
+                cartItem.TotalPrice = Convert.ToDecimal(totalprice1);
+
+                cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                cartItem.CartId = cartdetails.CartId;
+                string mesaage = cartService.adddatecartitem(cartItem);
+                return Json(mesaage);
+            }
+
+
+
+            return View();
+        }
 
         public string Capitalise(string str)
         {
