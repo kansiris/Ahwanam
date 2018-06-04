@@ -19,6 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         WhishListService whishListService = new WhishListService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        Ndealservice NdealService = new Ndealservice();
 
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
@@ -111,16 +112,35 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
             var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid)).FirstOrDefault();
+            var nofguests = cartdetails.Quantity;
+            var pricenew = "";
+            var ISdeal = cartdetails.Isdeal;
+            if (ISdeal == false)
+            {
+               // var pricenew = cartdetails.TotalPrice;
 
-            var pricenew = cartdetails.TotalPrice;
+                var servicetype = cartdetails.ServiceType;
+                var vendorid = cartdetails.Id;
+                var vendorsubid = cartdetails.subid;
+                VendorProductsService vendorProductsService = new VendorProductsService();
+               var vendordetails = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
+                //   int query = vendorMasterService.checkemail(emailid);
 
-            //var servicetype = cartdetails.ServiceType;
-            //var vendorid = cartdetails.Id;
-            //var vendorsubid = cartdetails.subid;
-            //VendorProductsService vendorProductsService = new VendorProductsService();
-            //ViewBag.records = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m=>m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
-            //int query = vendorMasterService.checkemail(emailid);
-            if (pricenew != 0)
+
+            }
+            else if (ISdeal == true)
+            {
+                var dealid = cartdetails.DealId;
+
+                DateTime ddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+                var data = NdealService.GetdealDetails((dealid));
+                var pric1 = (data.DealPrice);
+                pricenew = Convert.ToString(pric1 * nofguests);
+            }
+
+
+                if (pricenew != "0")
             {
                 return Json(pricenew, JsonRequestBehavior.AllowGet);
             }
@@ -298,26 +318,27 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                 var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                 var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64( cartId)).FirstOrDefault();
-                
+                var totalprice = cartdetails.TotalPrice;
+                var totalprice1 = totalprice + price;
                 string updateddate = DateTime.UtcNow.ToShortDateString();
                 CartItem cartItem = new CartItem();
                 cartItem.VendorId = cartdetails.Id;
                 cartItem.ServiceType = cartdetails.ServiceType;
-                var price1 = cartdetails.Perunitprice;
+                //var price1 = cartdetails.Perunitprice;
 
-                 var price2 = price1 + ',' + price;
+                 var price2 = date + ',' + price;
                 cartItem.Perunitprice = Convert.ToDecimal(price2);
                 cartItem.TotalPrice = Convert.ToDecimal(total);
                 cartItem.Orderedby = user.UserId;
                 cartItem.Quantity = cartdetails.Quantity;
                 var date1 = cartdetails.eventstartdate;
                 var date2 = date1 + ", " + date;
-                cartItem.eventstartdate = Convert.ToDateTime(date2);
+                cartItem.EventDate = Convert.ToDateTime(date2);
 
                 cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
                 cartItem.attribute = cartdetails.attribute;
                 cartItem.CartId = cartdetails.CartId;
-                cartItem.Status = "Saved";
+                cartItem.Status = "Active";
                 string mesaage = cartService.Updatecartitem(cartItem);
                 return Json(mesaage);
             }

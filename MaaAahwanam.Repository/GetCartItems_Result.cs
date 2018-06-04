@@ -25,6 +25,7 @@ namespace MaaAahwanam.Repository
         public string ServiceType { get; set; }
         public bool Isdeal { get; set; }
         public long DealId { get; set; }
+        public string EventType { get; set; }
         public string image { get; set; }
         public decimal TotalPrice { get; set; }
         public string attribute { get; set; }
