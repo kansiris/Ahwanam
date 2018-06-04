@@ -106,6 +106,26 @@ namespace MaaAahwanam.Web.Controllers
 
         }
 
+        public JsonResult getprice(string cartid)
+        {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+            var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid)).FirstOrDefault();
+
+            var pricenew = cartdetails.TotalPrice;
+
+            //var servicetype = cartdetails.ServiceType;
+            //var vendorid = cartdetails.Id;
+            //var vendorsubid = cartdetails.subid;
+            //VendorProductsService vendorProductsService = new VendorProductsService();
+            //ViewBag.records = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m=>m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
+            //int query = vendorMasterService.checkemail(emailid);
+            if (pricenew != 0)
+            {
+                return Json(pricenew, JsonRequestBehavior.AllowGet);
+            }
+            return Json("exists", JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult booknow(string cartnos)
         {
@@ -267,8 +287,45 @@ namespace MaaAahwanam.Web.Controllers
                 }
             return Json(JsonRequestBehavior.AllowGet);
         }
-           
-        
+
+        public ActionResult multipledateinsert( string cartId,string price,string total,string date)
+        {
+
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            if (user.UserType == "User")
+            {
+                var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64( cartId)).FirstOrDefault();
+                
+                string updateddate = DateTime.UtcNow.ToShortDateString();
+                CartItem cartItem = new CartItem();
+                cartItem.VendorId = cartdetails.Id;
+                cartItem.ServiceType = cartdetails.ServiceType;
+                var price1 = cartdetails.Perunitprice;
+
+                 var price2 = price1 + ',' + price;
+                cartItem.Perunitprice = Convert.ToDecimal(price2);
+                cartItem.TotalPrice = Convert.ToDecimal(total);
+                cartItem.Orderedby = user.UserId;
+                cartItem.Quantity = cartdetails.Quantity;
+                var date1 = cartdetails.eventstartdate;
+                var date2 = date1 + ", " + date;
+                cartItem.eventstartdate = Convert.ToDateTime(date2);
+
+                cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                cartItem.attribute = cartdetails.attribute;
+                cartItem.CartId = cartdetails.CartId;
+                cartItem.Status = "Saved";
+                string mesaage = cartService.Updatecartitem(cartItem);
+                return Json(mesaage);
+            }
+
+
+            return View();
+        }
+
 
         public string Capitalise(string str)
         {
