@@ -22,18 +22,18 @@
                 {
                     <div class="row mx-0 my-2">
                         <div class="form-group w-100">
-                            <input type="text" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" required />
+                            <input type="text" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" autofocus required/>
                             @*<input type="text" class="form-control" name="" placeholder="User Name">*@
                         </div>
                     </div>
-                    <div class="row mx-0 my-2">
-                        <div class="form-group w-100">
-                            <input type="password" class="form-control" placeholder="Password" name="Item1.Password" id="Item1_Password" required />
-                            @*<input type="password" class="form-control" name="" placeholder="Password">*@
-                        </div>
-                    </div>
+                    @*<div class="row mx-0 my-2">
+                            <div class="form-group w-100">
+                                <input type="password" class="form-control" placeholder="Password" name="Item1.Password" id="Item1_Password" required />
+                            </div>
+                        </div>*@
                     <div class="row mx-0 align-items-center">
-                        <button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center" value="Login" name="command" onclick="testlogin()">Login</button>
+                        @*<button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center" value="Login" name="command" onclick="testlogin()">Login</button>*@
+                        <span class="themeBgColorPrimary btnSecondary text-white text-center nextBtn">Next</span>
                         @*<span class="themeBgColorPrimary btnSecondary text-white text-center">Login</span>*@
                         <span class="themeColor ml-3 fontSize-18 forgotPasswordBtn"> Forgot Password</span>
                     </div>
@@ -114,6 +114,17 @@
                     </div>
                 }
             </div>
+
+            @*@using (Html.BeginForm("LoginBlocks", "NUserRegistration", FormMethod.Post))
+                {*@
+            <form method="post" id="LoginBlock"> 
+                <div class="userVendorLogin p-5">
+                    
+                    @{Html.RenderAction("LoginBlocks", "NUserRegistration");}
+                </div>
+            </form>
+            @*}*@
+
         </div>
     </div>
 </div>
@@ -154,6 +165,7 @@
 
     <script>
         function testlogin() {
+            alert("Test Login Methos");
             var url = document.referrer;
             //alert(url.split('://')[1].split('/')[1].split('?')[0]);
             if (url != '') {
@@ -272,198 +284,260 @@
     @*gmail login*@
 
 
-<script type="text/javascript">
-var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
-var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
-var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
-var CLIENTID = '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com';//  '940368706527-qu2oqpfn1ad533kr1bpclh3qbleau1ug.apps.googleusercontent.com';
-var REDIRECT = 'http://localhost:8566/'; //'http://www.ahwanam.com/';
-var LOGOUT = 'http://localhost:8566/'; //'http://www.ahwanam.com/';
-var TYPE = 'token';
-var _url = OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
-var acToken;
-var tokenType;
-var expiresIn;
-var user;
-var loggedIn = false;
+    <script type="text/javascript">
+        var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
+        var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+        var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+        var CLIENTID = '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com';//  '940368706527-qu2oqpfn1ad533kr1bpclh3qbleau1ug.apps.googleusercontent.com';
+        var REDIRECT = 'http://localhost:8566/'; //'http://www.ahwanam.com/';
+        var LOGOUT = 'http://localhost:8566/'; //'http://www.ahwanam.com/';
+        var TYPE = 'token';
+        var _url = OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
+        var acToken;
+        var tokenType;
+        var expiresIn;
+        var user;
+        var loggedIn = false;
 
-function login() {
+        function login() {
 
-    var win = window.open(_url, "windowname1", 'width=800, height=600');
-    var pollTimer = window.setInterval(function () {
-        try {
-            console.log(win.document.URL);
-            if (win.document.URL.indexOf(REDIRECT) != -1) {
-                window.clearInterval(pollTimer);
-                var url = win.document.URL;
-                acToken = gup(url, 'access_token');
-                tokenType = gup(url, 'token_type');
-                expiresIn = gup(url, 'expires_in');
+            var win = window.open(_url, "windowname1", 'width=800, height=600');
+            var pollTimer = window.setInterval(function () {
+                try {
+                    console.log(win.document.URL);
+                    if (win.document.URL.indexOf(REDIRECT) != -1) {
+                        window.clearInterval(pollTimer);
+                        var url = win.document.URL;
+                        acToken = gup(url, 'access_token');
+                        tokenType = gup(url, 'token_type');
+                        expiresIn = gup(url, 'expires_in');
 
-                win.close();
+                        win.close();
 
-                validateToken(acToken);
-            }
+                        validateToken(acToken);
+                    }
+                }
+                catch (e) {
+
+                }
+            }, 500);
         }
-        catch (e) {
 
+        function gup(url, name) {
+            namename = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\#&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(url);
+            if (results == null)
+                return "";
+            else
+                return results[1];
         }
-    }, 500);
-}
 
-function gup(url, name) {
-    namename = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regexS = "[\\#&]" + name + "=([^&#]*)";
-    var regex = new RegExp(regexS);
-    var results = regex.exec(url);
-    if (results == null)
-        return "";
-    else
-        return results[1];
-}
+        function validateToken(token) {
 
-function validateToken(token) {
-
-    getUserInfo();
-    $.ajax(
-          {
-              url: VALIDURL + token,
-              data: null,
-              success: function () {
-                  var data = {
-                      email: user.email,
-                      name: user.name,
-                      lastname: user.given_name,
-                      firstname: user.given_name,
-                      Picture: user.picture
-                  }
-                  $.ajax({
-                      url: '/UserRegistration/GoogleLogin/',
-                      type: 'POST',
-                      data: data,
+            getUserInfo();
+            $.ajax(
+                  {
+                      url: VALIDURL + token,
+                      data: null,
                       success: function () {
-                          if (data == 'failed') {
-                              alert('This email is registared as Vendor please login with Your Credentials')
+                          var data = {
+                              email: user.email,
+                              name: user.name,
+                              lastname: user.given_name,
+                              firstname: user.given_name,
+                              Picture: user.picture
                           }
-                          else {
-                              var url1 = document.referrer;
-                              window.location.href = url1;// "/NHomePage/Index/";
-                          }
+                          $.ajax({
+                              url: '/UserRegistration/GoogleLogin/',
+                              type: 'POST',
+                              data: data,
+                              success: function () {
+                                  if (data == 'failed') {
+                                      alertmsg('This email is registared as Vendor please login with Your Credentials')
+                                  }
+                                  else {
+                                      var url1 = document.referrer;
+                                      window.location.href = url1;// "/NHomePage/Index/";
+                                  }
 
-                      }
+                              }
+                          });
+
+
+                      },
                   });
+        }
+
+        function getUserInfo() {
 
 
-              },
-          });
-}
+            $.ajax({
 
-function getUserInfo() {
+                url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
+                data: null,
+                success: function (resp) {
+                    user = resp;
 
-
-    $.ajax({
-
-        url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
-        data: null,
-        success: function (resp) {
-            user = resp;
-
-        },
-    })
+                },
+            })
 
 
 
-}
+        }
 
-</script>
+    </script>
+
+    <script type="text/javascript">
+        $(".login .nextBtn").click(function () {
+            var emailid = $('#Item1_UserName').val();
+            if (emailid != '') {
+                $(this).parents(".login").css("display", "none");
+                var url = '/NUserRegistration/LoginBlocks?email=' + emailid + '';
+                $(".userVendorLogin").empty().load(url);
+                $(".userVendorLogin").css("display", "block");
+            }
+            else {
+                $('#Item1_UserName').focus();
+                alertmsg("Please Enter Your Email ID");
+                
+            }
+        });
+
+        //$(btnButtons).click(function () {
+        $(document).on('click', '.userVendorLogin > div.row div.block .buttons button', function () {
+            if ($(this).text() == "Select") {
+                $(this).parents(".block").prevAll(".block").find("button").html("Select");
+                $(this).parents(".block").nextAll(".block").find("button").html("Select");
+                $(this).parents(".block").find("input[type='password']").remove();
+                $(this).parents(".block").prevAll(".block").find("input[type='password']").remove();
+                $(this).parents(".block").nextAll(".block").find("input[type='password']").remove();
+                $(this).parents(".block").prevAll(".block").find("input[type='button']").removeAttr('id');
+                $(this).parents(".block").nextAll(".block").find("input[type='button']").removeAttr('id');
+                $(this).parents(".buttons").prev(".password").children(".form-group").append('<input type="password" name="Item1.Password" id="Item1_Password" class="form-control" name="" placeholder="Password here" required>');
+                $(this).parents(".buttons").prev(".password").css("display", "block");
+                $('#Item1_Password').focus();
+                $(this).html("Login").prop('id', 'loginredirect');//.attr('onclick', 'redirection()');
+                var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
+                $('#Item1_UserLoginId').val(loginid);
+                $('#LoginBlock').attr('action', '/NUserRegistration/Index?command=Login'); // action="/NUserRegistration/Index?command=Login")
+            } else {
+                $(this).html('Login');//.attr('onclick', 'testlogin()');
+            }
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '#loginredirect', function () {
+            var passtxt = $('#Item1_Password').val();
+            if (passtxt != '') {
+                testlogin();
+                //var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
+                //location.href = '/NUserRegistration/LoginBlocks?email=' + $('#Item1_UserName').val() + '&&password=' + passtxt + '&&id=' + loginid;
+                this.form.submit();
+            }
+            else {
+                $('#Item1_Password').focus();
+                alertmsg("Please Enter Password");
+                
+            }
+        });
+    </script>
+
+    <script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () { });
+        }
+    </script>
 
 
     @*<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};HandleGoogleApiLibrary()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
-    <script>
+            <script>
 
-// Called when Google Javascript API Javascript is loaded
-function HandleGoogleApiLibrary() {
-	// Load "client" & "auth2" libraries
-	gapi.load('client:auth2', {
-		callback: function() {
-			// Initialize client library
-			// clientId & scope is provided => automatically initializes auth2 library
-			gapi.client.init({
-			    apiKey: 'OgwtDRPCLm9fielelhM8nRr6',
-			    clientId: '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com',
-		    	scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
-			}).then(
-				// On success
-				function(success) {
-			  		// After library is successfully loaded then enable the login button
-			  		$("#login-button").removeAttr('disabled');
-				},
-				// On error
-				function(error) {
-					//alert('Error : Failed to Load Library');
-			  	}
-			);
-		},
-		onerror: function() {
-			// Failed to load libraries
-		}
-	});
-}
+        // Called when Google Javascript API Javascript is loaded
+        function HandleGoogleApiLibrary() {
+            // Load "client" & "auth2" libraries
+            gapi.load('client:auth2', {
+                callback: function() {
+                    // Initialize client library
+                    // clientId & scope is provided => automatically initializes auth2 library
+                    gapi.client.init({
+                        apiKey: 'OgwtDRPCLm9fielelhM8nRr6',
+                        clientId: '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com',
+                        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
+                    }).then(
+                        // On success
+                        function(success) {
+                            // After library is successfully loaded then enable the login button
+                            $("#login-button").removeAttr('disabled');
+                        },
+                        // On error
+                        function(error) {
+                            //alert('Error : Failed to Load Library');
+                        }
+                    );
+                },
+                onerror: function() {
+                    // Failed to load libraries
+                }
+            });
+        }
 
-// Click on login button
-$("#login-button").on('click', function() {
-	$("#login-button").attr('disabled', 'disabled');
+        // Click on login button
+        $("#login-button").on('click', function() {
+            $("#login-button").attr('disabled', 'disabled');
 
-	// API call for Google login
-	gapi.auth2.getAuthInstance().signIn().then(
-		// On success
-		function(success) {
-			// API call to get user information
-			gapi.client.request({ path: 'https://www.googleapis.com/plus/v1/people/me' }).then(
-				// On success
-				function(success) {
-					console.log(success);
-					var user_info = JSON.parse(success.body);
+            // API call for Google login
+            gapi.auth2.getAuthInstance().signIn().then(
+                // On success
+                function(success) {
+                    // API call to get user information
+                    gapi.client.request({ path: 'https://www.googleapis.com/plus/v1/people/me' }).then(
+                        // On success
+                        function(success) {
+                            console.log(success);
+                            var user_info = JSON.parse(success.body);
 
-					var data = {
-					    email: user_info.emails[0].value,
-					    name: user_info.displayName,
-					    lastname: user_info.name.familyName,
-					    firstname: user_info.name.givenName,
-					    Picture: user_info.image.url,
-					    id:user_info.id
-					}
-					$.ajax({
-					    url: '/UserRegistration/GoogleLogin/',
-					    type: 'POST',
-					    data: data,
-					    success: function (data) {
-					        if (data == 'failed') {
-					            alert('This email is registered as Vendor please login with Your Credentials')
-					        }
-					        if (data == 'success') {
-					            var url1 = document.referrer;
-					            window.location.href = url1;// "/NHomePage/Index/";
-					        }
-					    },
-					});
-				},
-				// On error
-				function(error) {
-					$("#login-button").removeAttr('disabled');
-					alert('Error : Failed to get user user information');
-				}
-			);
-		},
-		// On error
-		function(error) {
-			$("#login-button").removeAttr('disabled');
-			alert('Error : Login Failed');
-		}
-	);
-});
+                            var data = {
+                                email: user_info.emails[0].value,
+                                name: user_info.displayName,
+                                lastname: user_info.name.familyName,
+                                firstname: user_info.name.givenName,
+                                Picture: user_info.image.url,
+                                id:user_info.id
+                            }
+                            $.ajax({
+                                url: '/UserRegistration/GoogleLogin/',
+                                type: 'POST',
+                                data: data,
+                                success: function (data) {
+                                    if (data == 'failed') {
+                                        alert('This email is registered as Vendor please login with Your Credentials')
+                                    }
+                                    if (data == 'success') {
+                                        var url1 = document.referrer;
+                                        window.location.href = url1;// "/NHomePage/Index/";
+                                    }
+                                },
+                            });
+                        },
+                        // On error
+                        function(error) {
+                            $("#login-button").removeAttr('disabled');
+                            alert('Error : Failed to get user user information');
+                        }
+                    );
+                },
+                // On error
+                function(error) {
+                    $("#login-button").removeAttr('disabled');
+                    alert('Error : Login Failed');
+                }
+            );
+        });
 
- </script>*@
+         </script>*@
     @*<script src="~/Scripts/gauth.js"></script>
         <script src="~/Scripts/fauth.js"></script>*@
 
@@ -475,4 +549,6 @@ $("#login-button").on('click', function() {
                 });
             </script>
         }*@
+
+
 }

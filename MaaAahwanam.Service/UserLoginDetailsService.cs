@@ -2,6 +2,7 @@
 using MaaAahwanam.Models;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Service.Mapper;
+using System.Collections.Generic;
 
 namespace MaaAahwanam.Service
 {
@@ -122,6 +123,11 @@ namespace MaaAahwanam.Service
         public UserDetail GetUserDetailsByEmail(string email)
         {
             return userDetailsRepository.GetUserDetailsByEmail(email);
+        }
+
+        public List<UserLogin> GetUserLoginTypes(string email)
+        {
+            return userDetailsRepository.GetUserLoginTypes(email);
         }
     }
 }

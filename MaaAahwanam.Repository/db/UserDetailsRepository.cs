@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using MaaAahwanam.Models;
 using System;
-
+using System.Collections.Generic;
 
 namespace MaaAahwanam.Repository.db
 {
@@ -217,6 +217,11 @@ namespace MaaAahwanam.Repository.db
         public UserDetail GetUserDetailsByEmail(string email)
         {
             return _dbContext.UserDetail.SingleOrDefault(m => m.AlternativeEmailID == email);
+        }
+
+        public List<UserLogin> GetUserLoginTypes(string email)
+        {
+            return _dbContext.UserLogin.Where(m => m.UserName == email).ToList();
         }
     }
 }

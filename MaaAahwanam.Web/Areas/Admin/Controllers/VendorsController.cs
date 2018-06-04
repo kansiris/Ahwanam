@@ -77,7 +77,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             UserDetail userdetails = new UserDetail();
             //var details = vendorMasterService.SearchVendors();
             //var particularvendor = details.Where(m => m.BusinessName.Contains(searchvendor)).FirstOrDefault();
-            ViewBag.VendorList = vendorMasterService.SearchVendors().Where(m => m.BusinessName == searchvendor).FirstOrDefault();
+            //var VendorList = vendorMasterService.SearchVendors().Where(m => m.BusinessName.ToLower() == searchvendor.TrimEnd()).FirstOrDefault();
+            var VendorList = vendorMasterService.SearchVendors().Where(m => m.BusinessName.ToLower().Contains(searchvendor.ToLower().TrimEnd())).FirstOrDefault();
+
+            ViewBag.VendorList = VendorList;
             if (command == "Update")
             {
                 if (pemail != vendormaster.EmailId)

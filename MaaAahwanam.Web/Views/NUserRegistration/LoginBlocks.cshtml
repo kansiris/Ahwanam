@@ -1,0 +1,52 @@
+﻿@if (ViewBag.userdata != null)
+{
+
+    <div class="row mx-0 margin mb-3">
+        <h4>
+            Login
+            <div class="blackBorder"></div>
+        </h4>
+    </div>
+    <div class="row">
+        @foreach (var item in ViewBag.userdata)
+        {
+            <div class="col-12 col-sm-6 col-md-6 block">
+                <div class="userBlock">
+                    <input type="hidden" id="typeid" name="typeid" value="@item.UserLoginId" />
+                    <input type="hidden" id="Item1_UserLoginId" name="Item1.UserLoginId"/>
+                    <input type="hidden" id="Item1_UserName" name="Item1.UserName" value="@item.UserName" />
+                    <div class="w-100">
+                        <h5>
+                            @if (item.Password == "Google" || item.Password == "Facebook")
+                            { @item.Password }
+                            else
+                            { @item.UserType} Login
+                            <div class="blackBorder" style="width: 40%"></div>
+                        </h5>
+                    </div>
+                    <div class="w-100">
+                        <figure>
+                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="user name" class="rounded-circle">
+                        </figure>
+                    </div>
+                    <div class="w-100 businessName mt-3 text-center">
+                        <p class="mb-0">@item.UserName</p>
+                    </div>
+                    <div class="w-100 password mt-3">
+                        <div class="form-group mb-0">
+                        </div>
+                    </div>
+                    
+                    <div class="w-100 buttons mt-3">
+                        <button type="button" class="themeBgColorPrimary btnSecondary text-white text-center" >Select</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 col-md-12 backToHome">
+            <a href="/NHomePage"> << Back to Home</a>
+        </div>
+    </div>
+}

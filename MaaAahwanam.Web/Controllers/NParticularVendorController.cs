@@ -9,6 +9,7 @@ using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.Net;
 using System.IO;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
         VendorDatesService vendorDatesService = new VendorDatesService();
+        CartService cartService = new CartService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
 
@@ -345,6 +347,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                 DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 CartItem cartItem = new CartItem();
                 cartItem.VendorId = Int32.Parse(id);
@@ -359,8 +362,18 @@ namespace MaaAahwanam.Web.Controllers
                 cartItem.EventType = eventtype;
                 cartItem.EventDate = Convert.ToDateTime(date);
                 cartItem.Quantity = int.Parse(guest);
-                CartService cartService = new CartService();
-                cartItem = cartService.AddCartItem(cartItem);
+                long vendorid = Convert.ToInt64(id);
+                var cartcount = cartlist.Where(m => m.Id == long.Parse(id) && m.subid == long.Parse(vid)).Count();
+                if (cartcount > 0)
+                    return Json("Exists", JsonRequestBehavior.AllowGet);
+                else
+                {
+                    cartItem = cartService.AddCartItem(cartItem);
+                    if (cartItem.CartId != 0)
+                        return Json("Success", JsonRequestBehavior.AllowGet);
+                    else
+                        return Json("failed", JsonRequestBehavior.AllowGet);
+                }
             }
             return Json(JsonRequestBehavior.AllowGet);
             }

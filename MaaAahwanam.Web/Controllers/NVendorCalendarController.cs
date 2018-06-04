@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Models;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -12,13 +13,22 @@ namespace MaaAahwanam.Web.Controllers
     {
         VendorDatesService vendorDatesService = new VendorDatesService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         // GET: NVendorCalendar
         public ActionResult Index(string id, string vid)
         {
-            try { 
-            ViewBag.id = id;
-            ViewBag.vid = vid;
-            return View();
+            try
+            {
+                ViewBag.id = id;
+                ViewBag.vid = vid;
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
+                    return View();
+                }
+                else
+                    return RedirectToAction("Index", "NUserRegistration");
             }
             catch (Exception)
             {
