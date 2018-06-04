@@ -169,9 +169,11 @@
                                             foreach (var item in ViewBag.availablepackages)
                                             {
                                                 <div class="col-12 colmd-12 packageDetails">
+                                                    
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">@item.PackageName</p></div>
                                                         <div class="float-right packageCheckbox">
+                                                            <input type="hidden" id="pkgid" value="@item.PackageID" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
@@ -488,6 +490,7 @@
                         <div class="row mx-0">
                             <input type="hidden" id="serviceprice" value="@ViewBag.servicetypeprice" />
                             <input type="hidden" id="vendoravailabledates" value="@ViewBag.vendoravailabledates" />
+                            <input type="hidden" id="selectedtype" />
                             <h3 class="noteWorthybold">
                                 Fill the Details
                                 <div class="blackBorder"></div>
@@ -745,7 +748,7 @@
 
         if ('@ViewBag.type' == "Photography" || '@ViewBag.type' == "Decorator" ) {
             $('#members').attr('disabled','disabled');
-            $(".slotTime input[type='checkbox']").attr('disabled','disabled');
+            //$(".slotTime input[type='checkbox']").attr('disabled','disabled');
         }
 
         //<!-- hr Responsive Tabs -->
@@ -764,12 +767,14 @@
                         $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
                         $(".fillDetailsBg").css("display", "none");
                         var packagename = $(this).parents('div.float-left').find('p.packageName').text();
-                        var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
+                        var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();//pkgid
+                        var pkgid = $(this).parents('div.packageCheckbox').find('input').val(); //packageDetails
+                        //alert(pkgid);
                         var selectedpackageprice = parseInt(packageprice);
                         var membercount = parseInt($('#members').val());
                         var calculatedprice = selectedpackageprice * membercount;
                         $('#eventtype').val(packagename);
-                        if (@ViewBag.type != "Photography" && @ViewBag.type != "Decorator" ) {
+                        if ('@ViewBag.type' != "Photography" && '@ViewBag.type' != "Decorator" ) {
                             $('#serviceprice').val(calculatedprice);
                             $('#selectedprice').html(calculatedprice);
                         }
@@ -777,7 +782,7 @@
                             $('#serviceprice').val(packageprice);
                             $('#selectedprice').html(packageprice);
                         }
-
+                        $('#selectedtype').val(pkgid);
                     } else {
                         $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
                         $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "block");
@@ -788,6 +793,7 @@
                         $('#eventtype').val('');
                         $('#serviceprice').val(@ViewBag.servicetypeprice);
                         $('#selectedprice').html(@ViewBag.servicetypeprice);
+                        $('#selectedtype').val("sprice");
                     }
                 });
             }
@@ -882,15 +888,17 @@
     <script>
         $(".bookNow").click(function () {
             var type = '@Request.QueryString["type"]';
+            alert(type);
             if ($("#eventtype").val() == '') {
                 //  alert("Please Enter Event type");
                 alertmsg("Please Enter Event type");
 
             }
-            else if ($("#members").val() == '') {
+            if (type != "Photography" && type != "Decorator" ) {
+             if ($("#members").val() == '') {
                 //   alert("Please Enter Members Count");
                 alertmsg("Please Enter Members Count");
-
+            }
             }
             else if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
@@ -902,7 +910,8 @@
                 var nop = $("#members").val();
                 var timeslot = 'Morning';
                 var totalprice = price * nop;
-                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop;
+                var selectedtype = $('#selectedtype').val();
+                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop+ '&&selectedtype='+selectedtype;
 
                 $.ajax({
                     url: url1,
