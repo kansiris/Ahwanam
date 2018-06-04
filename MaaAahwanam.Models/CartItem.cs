@@ -30,6 +30,12 @@ namespace MaaAahwanam.Models
         public long DealId { get; set; }
         public string EventType { get; set; }
         public DateTime? EventDate { get; set; }
+        public string ExtraDate1 { get; set; }
+        public string ExtraDate2 { get; set; }
+        public string ExtraDate3 { get; set; }
+        public string ExtraDate4 { get; set; }
+        public string ExtraDate5 { get; set; }
+        public string ExtraDate6 { get; set; }
         //public DateTime? eventstartdate { get; set; }
     }
 }
