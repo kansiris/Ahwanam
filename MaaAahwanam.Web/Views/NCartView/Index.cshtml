@@ -30,17 +30,17 @@
                                     @if (item.image != null)
                                     {
 
-                                        <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                                        </div>
+                                    <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                                    </div>
 
                                     }
                                     else if (item.image == null)
                                     {
-                                        <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('~/noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                                        </div>
+                                    <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('~/noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                                    </div>
                                     }
 
-                                                <input type="hidden" value="200" id="cartid" />
+                                    @*<input type="hidden" value="200" id="cartid" />*@
 
 
                                     @*<input type="hidden" id="type" name="type" value="@item.ServicType">*@
@@ -59,19 +59,41 @@
                                                 @item.Landmark,@item.City <br>
                                             </p>
                                             <p class="float-right total">
+                                        @*        Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>*@
                                                 Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>
                                             </p>
                                         </div>
                                         <ul class="pl-0 customDates float-left">
-                                            <li><i class="fa fa-times"></i>@item.eventstartdate<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</span></li>
+                                            @if (@item.ServiceType == "Venue" || @item.ServiceType == "Catering")
+                                            {
+                                            <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt16(@item.Perunitprice) * @item.Quantity)).Replace(".00", "")</span></li>
+                                            }
+                                            else
+                                            {
+                                            <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.Perunitprice).Replace(".00", "")</span></li>
+                                            }
+                                     @if (@item.c1date != null && @item.c1date != "")
+                                     {
+                                        <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span> @item.c1date.Split(',')[1]</span></li>
 
+                                     }
+                                            @if (item.c2date != null)
+                                            {
+                                                
+                                                <li><i class="fa fa-times"></i>@item.c2date.Split(',')[0] <br /> Rs <span> @item.c2date.Split(',')[1]</span></li>
+                                            }
+                                            @if (@item.c3date != null)
+                                            {
+                                                <li><i class="fa fa-times"></i>@item.c3date.Split(',')[0] <br /> Rs <span> @item.c3date.Split(',')[1]</span></li>
+
+                                            }
                                         </ul>
                                         <div class="w-100 buttons">
                                             <ul class="pl-0 float-right">
                                                 <li><span class="deleteBlock" onclick="savecartItem(@item.CartId);">Save for Later</span></li>
 
                                                 <li><span class="addDates">Add Dates</span></li>
-                                                <li><a href = "#" onclick= "addwishlistItem(@item.CartId);" > Wishlist </a></li>
+                                                <li><a href="#" onclick="addwishlistItem(@item.CartId);"> Wishlist </a></li>
                                                 <li><span class="deleteBlock" onclick="DeletecartItem(@item.CartId);">Remove</span></li>
                                             </ul>
                                         </div>
@@ -79,7 +101,7 @@
                                             <div class="triangle"></div>
                                             <i class="fa fa-times"></i>
                                             <div class="form-group mb-0">
-                                                <input type = "text" value="" class="form-control datetimepicker" placeholder="Date Here" />
+                                                <input type="text" value="" class="form-control datetimepicker" placeholder="Date Here" />
                                             </div>
                                             <span class="addSelDates">Add Date</span>
                                         </div>
@@ -100,37 +122,37 @@
                     </div>
                 </div>
                 @*<div class="col-12 col-sm-4 col-md-4">
-                <div class="p-3 bgWhite">
-                    <div class="row mx-0">
-                            <div class="w-100">Block One</div>
-                            <div class="w-100">Block Two</div>
-                    </div>
-                </div>
-            </div>*@
+                        <div class="p-3 bgWhite">
+                            <div class="row mx-0">
+                                    <div class="w-100">Block One</div>
+                                    <div class="w-100">Block Two</div>
+                            </div>
+                        </div>
+                    </div>*@
                 <div class="col-12 col-sm-4 col-md-4">
                     <div class="p-3 bgWhite">
                         <div class="w-100 px-4 py-3">
-                           
+
                             @*<div class="row mx-0 mt-4">*@
-                                @{Html.RenderAction("DealsSection", "NCartView"); }
+                            @{Html.RenderAction("DealsSection", "NCartView"); }
 
 
                             @*</div>*@
                             @*<div class="row mx-0 my-4">
-                                <div class="mx-auto d-inline-flex">
-                                    <span class="themeBgColorPrimary btnSecondary text-white">
-                                        <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
-                                    </span>
-                                </div>
-                            </div>*@
+                                    <div class="mx-auto d-inline-flex">
+                                        <span class="themeBgColorPrimary btnSecondary text-white">
+                                            <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
+                                        </span>
+                                    </div>
+                                </div>*@
                         </div>
                     </div>
                 </div>
             </div>
-</div>
-
         </div>
+
     </div>
+</div>
 
 @section scripts{
     <script type="text/javascript">
@@ -138,10 +160,10 @@
         //    $('body').attr("id", "userAuthentication");
         //});
         //$('.container').hide();
-      //  $('.search').hide();
+        //  $('.search').hide();
 
         $(document).ready(function () {
-        var type = $('#type').val();
+            var type = $('#type').val();
         });
 
 
@@ -178,7 +200,7 @@
         $(".addSelDates").click(function(){
             var price1 ='';
             var cartId = $(this).parents(".block").find(hiddenField).val();
-           // alert("Hidden Text : " + cartIdl);
+            // alert("Hidden Text : " + cartIdl);
             var dateVal = $(this).prev(".form-group").find("input").val();
             var priceval = $(this).parents(dateInput).prevAll("ul.customDates");
             var totaltextfind = $(this).parents(".dateInput").prevAll(".customDates").find("li");
@@ -190,37 +212,43 @@
             var spanTxt1 = spanTxt.replace(",", "");
             spanTxt = parseInt(spanTxt1);
             total = parseInt(totalprice1);
-           
+
             $.get("/NCartView/getprice?cartid=" + cartId, function (data, status) {
-           
+
                 price1 = parseInt(data);
                 priceval.append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ price1 + "</span>" +  "</li>");
                 total += spanTxt;
                 alert(total);
-                totalpr.append(total);
-               
+                //totalpr.append(total);
+                alert(dateVal);
 
                 $.ajax({
-                    url: '/NCartView/multipledateinsert?cartid=' + cartId + '&price=' + price1 + '&total' + total + '&date' + dateVal,
-                    type: 'post',
-                    dataType : 'JSON',
-                    contentType: 'application/json',
-                success: function (data) {
-                    if (data == "success") {
-                        alert("Order Placed successfully");
-                        window.location.href = '/NCartView/Index'
+                    url: '/NCartView/multipledateinsert?cartid=' + cartId + '&&price=' + price1 + '&&date=' + dateVal + '&&total=' + total, 
+                    type: 'POST',
+                    dataType : 'json',
+                    success: function (data) {
+                        if (data == "success") {
+                            alert("Order Placed successfully");
+                            location.href = '/NCartView/Index'
+                        }
+                        else if (data == "failed") {
+                            alert("only four dates are allowed");
+                          location.href = '/NCartView/Index'
+                        }
+                        else {
+                            alert("not updated");
+                            location.href = '/NCartView/Index'
+                        }
+                    },
+                    error: function (data) {
+                        alert("Error in placing the order.");
+                       location.href = '/NCartView/Index'
+
                     }
-                    else {
-                        alert("not updated");  
-                    }
-                },
-                error: function (data) {
-                    alert("Error in placing the order.");
-                }
                 })
             });
 
-            
+
 
             $(this).prev(".form-group").find("input").val('');
 
@@ -234,17 +262,17 @@
             /*-- Total Price Increase --*/
 
         });
-        $(document).on('click', '.cartPage ul.customDates > li > i', function(){
-            /*-- Total Price Decrease --*/
-            $(this).each(function(){
-                var thisLiVal = parseInt($(this).parent('li').find("span").text());
-                var spanTxt = parseInt($(this).parents("ul.customDates").prev(".address").find(".total").find("span").text());
-                total=spanTxt - thisLiVal;
-                $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
-            });
-            /*-- Total Price Decrease --*/
-            $(this).parent('li').remove();
-        });
+        //$(document).on('click', '.cartPage ul.customDates > li > i', function(){
+        //    /*-- Total Price Decrease --*/
+        //    $(this).each(function(){
+        //        var thisLiVal = parseInt($(this).parent('li').find("span").text());
+        //        var spanTxt = parseInt($(this).parents("ul.customDates").prev(".address").find(".total").find("span").text());
+        //        total=spanTxt - thisLiVal;
+        //        $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
+        //    });
+        //    /*-- Total Price Decrease --*/
+        //    $(this).parent('li').remove();
+        //});
 
 
         /*-- Add Dates Block --*/
@@ -270,8 +298,8 @@
         }
         function DealsPartial() {
             var lastrecord = parseInt($('#L1').val()) + parseInt(2);
-          //  var type = $('#type').val();
-          //  var type = document.URL.split('type=')[1].split('&&')[0];
+            //  var type = $('#type').val();
+            //  var type = document.URL.split('type=')[1].split('&&')[0];
             var url = '/NParticularVendor/DealsSection?type=' + type + '&&L1=' + lastrecord;
             $("#dealspartial").empty().load(url);
             $('#L1').val(lastrecord);
@@ -281,6 +309,63 @@
         //    checkFun();
         //    $("ul.customDates").append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ 3500 + "</span>" +  "</li>");
         //});
+
+        $(document).on('click', '.cartPage ul.customDates > li > i', function(){
+            /*-- Total Price Decrease --*/
+            $(this).each(function(){
+                var thisLiVal = parseInt($(this).parent('li').find("span").text());
+                var spanTxt = parseInt($(this).parents("ul.customDates").prev(".address").find(".total").find("span").text());
+                total=spanTxt - thisLiVal;
+                $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
+            });
+
+            /*-- Hidden Field Value --*/
+
+            var cartId = $(this).parents(".block").find(hiddenField).val();
+
+            //var hiddenVal = $(this).parents(".block").find(hiddenField).val();
+            //alert("Hidden Text : " + cartId);
+            /*-- Hidden Field Value --*/
+            var LiDate = $(this).parent("li").text().split('Rs')[0];
+            //alert("Date : " + LiDate);
+            var LiPrice = $(this).parent("li").text().split('Rs')[1];
+            //alert("Price : " + LiPrice);
+
+            /*-- Total Price Decrease --*/
+            $(this).parent('li').remove();
+
+            $.ajax ({
+                url: '/NCartView/multipledatedelete?cartid=' + cartId + '&&price=' + LiPrice + '&&date=' + LiDate + '&&total=' + total, 
+            type: 'POST',
+            dataType : 'json',
+            success: function (data) {
+                if (data == "success") {
+                    alert("Date is deleted successfully");
+                   location.href = '/NCartView/Index'
+                }
+                else if (data == "failed") {
+                    alert("only four dates are allowed");
+                    location.href = '/NCartView/Index'
+                }
+                else {
+                    alert("not updated");
+                    location.href = '/NCartView/Index'
+                }
+            },
+            error: function (data) {
+                alert("Error in placing the order.");
+                location.href = '/NCartView/Index'
+
+            }
+        })
+
+
+
+
+        });
+
+
+
         $(".cartPage .block").find("input[type='checkbox']").change(function () {
             checkFun();
         });
@@ -309,7 +394,7 @@
                     if (data == "Success") {
                         //  alert("Sucessfully Added to cart")
                         alert("Sucessfully Added to cart");
-                      
+
                         if (data != null) {
                             window.location.reload();
                         }
@@ -320,37 +405,37 @@
                     }
                 }
             });
-        
+
         });
-           
+
         /*-- Book Now Button --*/
 
         function DeletecartItem(cartId) {
             alertify.confirm("Are you sure You want to delete.",
          function () {
-         
-            var obj = {}
-            obj.cartId = cartId;
-            $.ajax({
-                type: "POST",
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/NCartView/DeletecartItem',
-                data: {},
-                data: JSON.stringify(obj),
-                //data: sendInfo,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (data != null) {
-                        alertify.alert("Item Deleted");
-                                                window.location.reload();
-                    }
-                },
-                error: function (data) {
-                    //alert('error');
-                    alertmsg("error");
-                }
-            });
-            
+
+             var obj = {}
+             obj.cartId = cartId;
+             $.ajax({
+                 type: "POST",
+                 url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/NCartView/DeletecartItem',
+                 data: {},
+                 data: JSON.stringify(obj),
+                 //data: sendInfo,
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (data) {
+                     if (data != null) {
+                         alertify.alert("Item Deleted");
+                         window.location.reload();
+                     }
+                 },
+                 error: function (data) {
+                     //alert('error');
+                     alertmsg("error");
+                 }
+             });
+
          },
          function () {
          });
@@ -358,7 +443,7 @@
         function savecartItem(cartId) {
             alertify.confirm("Are you sure You want to Save for Later.",
          function () {
-         
+
              var obj = {}
              obj.cartId = cartId;
              $.ajax({
@@ -380,7 +465,7 @@
                      alertmsg("error");
                  }
              });
-            
+
          },
          function () {
          });
@@ -388,29 +473,29 @@
         function addwishlistItem(cartId) {
             alertify.confirm("Are you sure You want to add to wishlist.",
          function () {
-        
-            var obj = {}
-            obj.cartId = cartId;
-            $.ajax({
-                type: "POST",
-                url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/NCartView/addwishlistItem',
-                data: {},
-                data: JSON.stringify(obj),
-                //data: sendInfo,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    if (data != null) {
-                        window.location.reload();
-                    }
-                },
-                error: function (data) {
-                    //alert('error');
-                    alertmsg("error");
-                }
-            });
+
+             var obj = {}
+             obj.cartId = cartId;
+             $.ajax({
+                 type: "POST",
+                 url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/NCartView/addwishlistItem',
+                 data: {},
+                 data: JSON.stringify(obj),
+                 //data: sendInfo,
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (data) {
+                     if (data != null) {
+                         window.location.reload();
+                     }
+                 },
+                 error: function (data) {
+                     //alert('error');
+                     alertmsg("error");
+                 }
+             });
              //     alertify.success('Deleted');
-           
+
          },
          function () {
          });

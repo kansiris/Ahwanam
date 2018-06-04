@@ -34,6 +34,20 @@ namespace MaaAahwanam.Repository.db
             updatestatus = _dbContext.SaveChanges();
             return updatestatus;
         }
+
+        public int adddatecartitem(CartItem cartitemjson)
+        {
+            int adddatecart;
+            CartItem cartItem = new CartItem();
+            cartItem = _dbContext.CartItem.SingleOrDefault(i => i.CartId == cartitemjson.CartId);
+        
+            cartItem.TotalPrice = cartitemjson.TotalPrice;
+            cartItem.ExtraDate1 = cartitemjson.ExtraDate1;
+            cartItem.ExtraDate2 = cartitemjson.ExtraDate2;
+            cartItem.ExtraDate3 = cartitemjson.ExtraDate3;
+            adddatecart = _dbContext.SaveChanges();
+            return adddatecart;
+        }
         public CartItem AddCartItem(CartItem cartItem)
         {
             cartItem = _dbContext.CartItem.Add(cartItem);
