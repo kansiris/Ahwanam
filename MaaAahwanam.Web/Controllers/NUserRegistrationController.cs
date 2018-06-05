@@ -559,6 +559,7 @@ namespace MaaAahwanam.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Response.Cookies.Clear();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "NHomePage");
         }
@@ -566,6 +567,8 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult SignOut()
         {
+   Response.Cookies.Clear();
+
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "NHomePage");
         }

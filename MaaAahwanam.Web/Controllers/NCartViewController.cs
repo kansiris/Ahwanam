@@ -58,9 +58,41 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message);
         }
 
+
+        public ActionResult savedlater()
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                if (user.UserType == "User")
+                {
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (user.UserType == "Admin")
+                    {
+                        ViewBag.cartCount = cartService.CartItemsCount(0);
+                        return PartialView("ItemsCartdetails");
+                    }
+                    ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+
+                    List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                    decimal total = cartlist.Sum(s => s.TotalPrice);
+                  var data1  = cartlist.OrderByDescending(m => m.UpdatedDate).Where(m => m.Status == "Saved");
+
+                    ViewBag.cartitems = data1;
+                    ViewBag.savecount = data1.Count() ;
+
+                    ViewBag.Total = total;
+                }
+            }
+            else
+            {
+                ViewBag.cartCount = cartService.CartItemsCount(0);
+            }
+            return PartialView();
+        }
         public ActionResult DealsSection(string type, string L1)
         {
-            int takecount = (L1 != null) ? int.Parse(L1) : 6;
+            int takecount = (L1 != null) ? int.Parse(L1) : 4;
             if (type == null)  type = "Venue";
             //ViewBag.records = vendorProductsService.Getvendorproducts_Result("Venue").Take(4);
             //var deals = vendorProductsService.getalldeal().OrderBy(m => m.DealID).Where(m => m.VendorType == type);
@@ -314,6 +346,40 @@ namespace MaaAahwanam.Web.Controllers
                 }
             return Json(JsonRequestBehavior.AllowGet);
         }
+
+
+
+        public ActionResult movetocart(long cartId)
+        {
+
+
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            if (user.UserType == "User")
+            {
+                var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                var cartdetails = cartlist.Where(m => m.CartId == cartId).FirstOrDefault();
+
+
+                string updateddate = DateTime.UtcNow.ToShortDateString();
+                CartItem cartItem = new CartItem();
+                cartItem.VendorId = cartdetails.Id;
+                cartItem.ServiceType = cartdetails.ServiceType;
+                cartItem.Perunitprice = cartdetails.Perunitprice;
+                cartItem.TotalPrice = cartdetails.TotalPrice;
+                cartItem.Orderedby = user.UserId;
+                cartItem.Quantity = cartdetails.Quantity;
+                cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                cartItem.attribute = cartdetails.attribute;
+                cartItem.CartId = cartdetails.CartId;
+                cartItem.Status = "Active";
+                string mesaage = cartService.Updatecartitem(cartItem);
+             return   RedirectToAction("Index", "Ncartview");
+            }
+            return RedirectToAction("Index", "Ncartview");
+        }
+
 
         public ActionResult multipledateinsert( string cartId,string price, string date, string total)
         {

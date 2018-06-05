@@ -1,0 +1,61 @@
+﻿@if (ViewBag.savecount != 0)
+{
+<div class="w-100 px-4 py-3">
+    <div class="row mx-0">
+        <h3 class="noteWorthybold">
+          Saved for later
+            <div class="blackBorder"></div>
+        </h3>
+    </div>
+    @using System.Globalization
+    <div class="row mx-0 mt-4">
+       @if (ViewBag.cartitems != null)
+       {
+           foreach (var item in ViewBag.cartitems)
+           {    <div class="row block w-100">
+                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-5 topVenueBlockImg">
+                  
+                        @if (item.image != null)
+                        {
+
+                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                            </div>
+
+                        }
+                        else if (item.image == null)
+                        {
+                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('~/noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                            </div>
+                        }
+                
+                </div>
+                <div class="col-6 col-sm-6 col-md-12 col-lg-6 col-xl-7 px-xl-0 topVenueDetails">
+                    @*<a href="/NViewDeal/Index?id=@item.DealID&&type=@item.VendorType">*@
+                    <p class="mb-0">@item.BusinessName</p>
+                    @*</a>*@
+                    <div class="w-100">
+
+
+                        @if (@item.ServiceType == "Venue" || @item.ServiceType == "Catering")
+                        {
+                            <p class="productMinPrice mb-0 themeColor d-block"> <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt16(@item.Perunitprice) * @item.Quantity)).Replace(".00", "")  </span> </p> @* <small>k</small>*@
+                        }
+                        else
+                        {
+                            <p class="productMinPrice mb-0 themeColor d-block"> <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Perunitprice)).Replace(".00", "")  </span> </p> @* <small>k</small>*@
+
+                        }
+                        @*<p class="productMaxPrice mb-0 greyColor d-block"> ( <span>1,24,000</span> <small>k</small> ) </p>*@
+                    </div>
+                    <div class="row mx-0 d-block float-right">
+                        <a href="/NCartview/movetocart?cartid=@item.CartId" class="mb-0 themeColor">Move to Cart</a>
+                    </div>
+                </div>
+            </div>
+           }
+       }
+    </div>
+  
+</div>
+
+}

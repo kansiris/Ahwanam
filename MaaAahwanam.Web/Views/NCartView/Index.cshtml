@@ -30,14 +30,14 @@
                                     @if (item.image != null)
                                     {
 
-                                    <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                                    </div>
+                                        <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                                        </div>
 
                                     }
                                     else if (item.image == null)
                                     {
-                                    <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('~/noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                                    </div>
+                                        <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('~/noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                                        </div>
                                     }
 
                                     @*<input type="hidden" value="200" id="cartid" />*@
@@ -48,7 +48,7 @@
                                         <div class="w-100">
                                             <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
                                             <label class="mb-0 float-right">
-                                                <input type="checkbox" checked>
+                                                <input name="cardid" value="@item.CartId" type="checkbox" checked>
                                                 <span></span>
                                             </label>
                                         </div>
@@ -59,27 +59,27 @@
                                                 @item.Landmark,@item.City <br>
                                             </p>
                                             <p class="float-right total">
-                                        @*        Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>*@
+                                                @*        Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>*@
                                                 Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>
                                             </p>
                                         </div>
                                         <ul class="pl-0 customDates float-left">
                                             @if (@item.ServiceType == "Venue" || @item.ServiceType == "Catering")
                                             {
-                                            <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt16(@item.Perunitprice) * @item.Quantity)).Replace(".00", "")</span></li>
+                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt16(@item.Perunitprice) * @item.Quantity)).Replace(".00", "")</span></li>
                                             }
                                             else
                                             {
-                                            <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.Perunitprice).Replace(".00", "")</span></li>
+                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.Perunitprice).Replace(".00", "")</span></li>
                                             }
-                                     @if (@item.c1date != null && @item.c1date != "")
+                                            @if (@item.c1date != null && @item.c1date != "")
                                      {
-                                        <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span> @item.c1date.Split(',')[1]</span></li>
+                                                <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span> @item.c1date.Split(',')[1]</span></li>
 
                                      }
                                             @if (item.c2date != null)
                                             {
-                                                
+
                                                 <li><i class="fa fa-times"></i>@item.c2date.Split(',')[0] <br /> Rs <span> @item.c2date.Split(',')[1]</span></li>
                                             }
                                             @if (@item.c3date != null)
@@ -122,37 +122,32 @@
                     </div>
                 </div>
                 @*<div class="col-12 col-sm-4 col-md-4">
-                        <div class="p-3 bgWhite">
-                            <div class="row mx-0">
-                                    <div class="w-100">Block One</div>
-                                    <div class="w-100">Block Two</div>
-                            </div>
-                        </div>
-                    </div>*@
-                <div class="col-12 col-sm-4 col-md-4">
-                    <div class="p-3 bgWhite">
-                        <div class="w-100 px-4 py-3">
-
-                            @*<div class="row mx-0 mt-4">*@
-                            @{Html.RenderAction("DealsSection", "NCartView"); }
-
-
-                            @*</div>*@
-                            @*<div class="row mx-0 my-4">
-                                    <div class="mx-auto d-inline-flex">
-                                        <span class="themeBgColorPrimary btnSecondary text-white">
-                                            <i class="fa fa-plus mr-1" aria-hidden="true"></i>More
-                                        </span>
-                                    </div>
-                                </div>*@
-                        </div>
+                <div class="p-3 bgWhite">
+                    <div class="row mx-0">
+                            <div class="w-100">Block One</div>
+                            <div class="w-100">Block Two</div>
                     </div>
                 </div>
+            </div>*@
+                <div class="col-12 col-sm-4 col-md-4 ">
+                    <div class="px-15">
+                        <div class="row bgWhite mb-3 firstBlock">
+                            @{Html.RenderAction("savedlater", "NCartView"); }
+                        </div>
+                        <div class="row bgWhite mb-3 firstBlock">
+                            @{Html.RenderAction("DealsSection", "NCartView"); }
+                        </div>
+                       
+                    </div>
+                </div>
+
+             
+
             </div>
-        </div>
 
     </div>
 </div>
+    </div>
 
 @section scripts{
     <script type="text/javascript">
@@ -305,10 +300,10 @@
             $('#L1').val(lastrecord);
         }
 
-        //$(document).ready(function () {
-        //    checkFun();
+        $(document).ready(function () {
+            checkFun();
         //    $("ul.customDates").append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ 3500 + "</span>" +  "</li>");
-        //});
+        });
 
         $(document).on('click', '.cartPage ul.customDates > li > i', function(){
             /*-- Total Price Decrease --*/
@@ -379,7 +374,7 @@
             if ($(".cartselect input[type='checkbox']").is(':checked')) {
 
                 var favorite = [];
-                $.each($("input[name='cartid']:checked"), function () {
+                $.each($("input[name='cardid']:checked"), function () {
                     favorite.push($(this).val());
                     cartnos = favorite.join(", ");
                 })
@@ -387,24 +382,24 @@
 
             alert(cartnos);
 
-            url1 = '/NCartView/booknow?cartnos=' +cartnos;
-            $.ajax({
-                url: url1,
-                success: function (data) {
-                    if (data == "Success") {
-                        //  alert("Sucessfully Added to cart")
-                        alert("Sucessfully Added to cart");
+            //url1 = '/NCartView/booknow?cartnos=' +cartnos;
+            //$.ajax({
+            //    url: url1,
+            //    success: function (data) {
+            //        if (data == "Success") {
+            //            //  alert("Sucessfully Added to cart")
+            //            alert("Sucessfully Added to cart");
 
-                        if (data != null) {
-                            window.location.reload();
-                        }
-                    }
-                    else if (data == "failed") {
-                        //   alert("login to the cart");
-                        alertmsg("Login to the cart");
-                    }
-                }
-            });
+            //            if (data != null) {
+            //                window.location.reload();
+            //            }
+            //        }
+            //        else if (data == "failed") {
+            //            //   alert("login to the cart");
+            //            alertmsg("Login to the cart");
+            //        }
+            //    }
+            //});
 
         });
 
