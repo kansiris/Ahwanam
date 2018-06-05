@@ -33,5 +33,11 @@ namespace MaaAahwanam.Models
         public string attribute { get; set; }
         public DateTime? BookedDate { get; set; }
         public string EventType { get; set; }
+        public string ExtraDate1 { get; set; }
+        public string ExtraDate2 { get; set; }
+        public string ExtraDate3 { get; set; }
+        public string ExtraDate4 { get; set; }
+        public string ExtraDate5 { get; set; }
+        public string ExtraDate6 { get; set; }
     }
 }
