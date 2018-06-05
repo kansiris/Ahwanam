@@ -11,8 +11,9 @@
     <div class="container-fluid userProfile">
         <div class="row innerPagesBg">
             <div class="col-12 col-sm-5 col-md-4 col-lg-3 sideBar">
-                <a class="navbar-brand hidden-xs-down" href="/NHomePage"> <img src="~/newdesign/images/logo.png" alt="Logo"> </a>
-                <ul>
+                <a class="navbar-brand noteWorthybold text-uppercase logoText" href="/NHomePage">
+                    Ahwanam
+                </a>                <ul>
                     <li> <a href="#" onclick="userProfile('userTicketDetails')">Dashboard</a> </li>
                     <li> <a href="#" onclick="userProfile('profileDetails')">Profile</a> </li>
                     <li> <a href="#" onclick="userProfile('profileSettings')">Settings</a> </li>
@@ -111,7 +112,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="item-price">
-                                                        <a href='/NUserProfile/ordercancel?orderid=@item.OrderId'>Cancel</a>&nbsp;&nbsp;<a onclick="alert(@item.OrderId)">Delete</a>
+                                                        <a  onclick="alert1(@item.OrderId)" ><i class="fa fa-close"></i></a>&nbsp;&nbsp;<a onclick="alert(@item.OrderId)"><i class="fa fa-trash" aria-hidden="true"></i></a>
 </div>
 </td>
                                             </tr>
@@ -145,7 +146,7 @@
                                                 <td>@(++j)</td>
                                                 <td>@item.OrderId</td>
                                                 <td>
-                                                    <h4>@item.BusinessName</h4>
+                                                    <p class="productName mb-0">@item.BusinessName</p>
 
                                                 </td>
                                                 <td>
@@ -217,7 +218,7 @@
                                                     <td>@(++k)</td>
                                                     <td>@item.ServiceType</td>
                                                     <td>
-                                                        <h4>@item.BusinessName</h4>
+                                                        <p class="productName mb-0">@item.BusinessName</p>
                                                     </td>
                                                     <td>
                                                         <div class="event-date-time">
@@ -404,7 +405,7 @@
 
     function alert(paid) {
         //var paid = $(this).find('input#pid').val();
-        alertify.confirm("Are you sure You want to delete.",
+        alertify.confirm("Are you sure You want to delete " + paid + " ?",
           function () {
          //     alertify.success('Deleted');
               location.href = '/NUserProfile/orderdelete?orderid=' + paid + '&vid= @ViewBag.id'
@@ -412,6 +413,18 @@
           function () {
           });
     }
+            function alert1(paid) {
+                //var paid = $(this).find('input#pid').val();
+                alertify.confirm("Are you sure You want to cancel orderid " +paid+ " ?",
+                  function () {
+                      //     alertify.success('Deleted');
+               
+                      location.href = '/NUserProfile/ordercancel?orderid=' + paid + '&vid= @ViewBag.id'
+                  },
+                  function () {
+                  });
+            }
+
 </script>
 
 
