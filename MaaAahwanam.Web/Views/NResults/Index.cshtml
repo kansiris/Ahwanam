@@ -236,10 +236,10 @@
 
                                                 <div class="w-100 mt-3 totalAmount d-inline-block fontSize-16">
                                                     <div class="float-left">
-                                                        <p class="mb-0">Add to wishlist</p>
+                                                        @*<p class="mb-0">Add to wishlist</p>*@
                                                     </div>
                                                     <div class="float-right themeColor textUnderline">
-                                                        <p class="mb-0">Reviews (<span>100</span>)</p>
+                                                        @*<p class="mb-0">Reviews (<span>100</span>)</p>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -263,6 +263,8 @@
                                         <div class="col-12 col-md-12 px-0">
                                             <h3 class="noteWorthybold mb-0">Amenities</h3>
                                             <div class="col-12 col-md-12 vendorAmenities"></div>
+                                            <input type="hidden" id="vendoravailabledates" />
+                                            <input type="hidden" id="serviceprice" />
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +291,41 @@
             timepicker: false,
             format: 'd/m/Y',
             minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-            maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+            maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+            beforeShowDay: function (date) {
+                var disableddates = $('#vendoravailabledates').val();
+                if (disableddates != '') {
+                    var unavailableDates = '';
+                    var final = ''; var dateslist1 = disableddates.split(',');
+                    for (var i = 0; i < dateslist1.length; i++) {
+                        var dateslist = dateslist1[i].split('-');
+                        if (dateslist[0] < 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] < 10 && dateslist[1] >= 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] >= 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+
+                        else {
+                            final = final + dateslist1[i] + ",";
+                        }
+                        unavailableDates = final.slice(0, -1).split(',');
+                    }
+                    var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                    //alert(unavailableDates);
+                    if ($.inArray(dmy, unavailableDates) != -1) {
+                        return [false, "myclass", "Unavailable"];
+                    } else {
+                        return [true, ""];
+                    }
+                }
+            }
         });
         /*------------ Date and Time --------------*/
         function checkavailableity() {
@@ -390,6 +426,16 @@
                 $(".resultsPopUp").css("display", "block");
                 var attrId = $(this).parents(".filteredResultsBlock").attr("id");
                 document.getElementsByClassName("resultsPopUp")[0].setAttribute("id", attrId);
+
+                var url = $(this).find(".vendorViewMore").attr("href");
+                var id = url.split("id=")[1].split("&&")[0];
+                var vid = url.split("vid=")[1];
+                var type = url.split("type=")[1].split("&&")[0];
+                //alert("id="+id+",vid="+vid+",type="+type);
+                $.get('/NResults/GetVendorDates', { id: id, vid: vid, type: type }, function (response) {
+                    //alert(response);
+                    $('#vendoravailabledates').val(response.slice(0, -1));
+                });
             }
 
 
@@ -403,8 +449,11 @@
 
             // Product Prices
             $(this).find(".vendorPrice").children("p").clone().appendTo(vendorPrice);
+            $('#serviceprice').val($(this).find(".vendorPrice").children("p").text());
             $(vendorPrice).children("p.productMinPrice").prevAll("p.productMinPrice").remove();
             $(vendorPrice).children("p.productMaxPrice").prevAll("p.productMaxPrice").remove();
+            
+            
 
             // Vendor Descrption
             $(this).find(".vendorDescrption").clone().appendTo(vendorDescrption);
@@ -422,15 +471,7 @@
             $(this).find(".vendorAddtoCart").clone().appendTo(addtoCart);
             $(addtoCart).find("span").prevAll("span").remove();
 
-            var url = $(this).find(".vendorViewMore").attr("href");
-            var id = url.split("id=")[1].split("&&")[0];
-            var vid = url.split("vid=")[1];
-            var type = url.split("type=")[1].split("&&")[0];
-            //alert("id="+id+",vid="+vid+",type="+type);
-            $.get('/NResults/GetVendorDates', { id: id, vid: vid, type: type }, function (response) {
-                alert(response);
-                //$("#mypar").html(response.amount);
-            });
+
         });
         $(".resultsPopUp i.fa-times").click(function () {
             $(this).parents(".resultsPopUp").css("display", "none");
@@ -463,6 +504,73 @@
         $(".resultsPopUp i.fa-times").click(function () {
             $(this).parents(".resultsPopUp").css("display", "none");
         });
+    </script>
+
+    <script>
+        $(document).on('click', '.vendorAddtoCart', function () {
+            var vurl = $(this).parents('div.addtoCart').nextAll('div.viewMoreBtn').find('a').attr('href');
+            var type = vurl.split('type=')[1].split('&&')[0];
+            if ($("#eventtype").val() == '') {
+                alertmsg("Please Enter Event type");
+
+            }
+            else if ($("#members").val() == '') {
+                alertmsg("Please Enter Members Count");
+            }
+            else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                //var checkText = $(".slotTime input[type='checkbox']").is(':checked');
+                //$(".filteredQuestions > .questions:last-of-type .options ul").next('p').append(checkText + ",");
+                //alert(checkText.nextAll("p").text());
+                var eventtype = $("#eventtype").val();
+                var id = vurl.split("id=")[1].split("&&")[0];
+                var vid = vurl.split("vid=")[1];
+                var date = $("#datetimepicker").val();
+                var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
+                var nop = $("#Members").val();
+                var timeslot = 'Morning';
+                //var totalprice = price * nop;
+                var selectedtype = 'sprice';//$('#selectedtype').val();
+                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype;
+                //alert(url1);
+                    $.ajax({
+                        url: url1,
+                        success: function (data) {
+                            if (data == "Success") {
+                                alertify.alert("Added To Cart", function () { $(".resultsPopUp").css("display", "none"); }); //location.href = '/NCartView/Index';
+                            }
+                            else if (data == "failed") {
+                                alertmsg("Failed To add item to the cart");
+                            }
+                            else if (data == "Exists") {
+                                alertmsg("This Service Already Exists in Cart");
+                            }
+                            else if (data == "Login") {
+                                //alertmsg("Login/Register to Add this Sevice to Cart");
+                                alertify.alert("Login/Register to Add this Sevice to Cart", function () {
+                                    location.href = '/NUserRegistration/Index';
+                                });
+                            }
+                        }
+                    });
+            }
+            else {
+                alertmsg("Please select time slot");
+            }
+        });
+        /*-- Need Help Block --*/
+        $('.needHelpBtn').click(function () {
+            $('.needHelpBlock').css('display', 'block');
+        });
+        $('.closeBlock').click(function () {
+            $('.needHelpBlock').css('display', 'none');
+        });
+        /*-- Need Help Block --*/
+    </script>
+
+    <script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () { });
+        }
     </script>
 }
 
