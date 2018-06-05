@@ -391,7 +391,7 @@ namespace MaaAahwanam.Web.Controllers
                             return Json("failed", JsonRequestBehavior.AllowGet);
                     }
                 }
-                return Json(JsonRequestBehavior.AllowGet);
+                return Json("Login",JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {

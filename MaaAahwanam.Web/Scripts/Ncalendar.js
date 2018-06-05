@@ -78,10 +78,10 @@ function GenerateCalender(events) {
         select: function (start, end) {
             var check = moment(start).format("DD/MMM/YYYY hh:mm A"); //$('#calendar').fullCalendar.formatDate(start, 'yyyy-MM-dd');
             var today = moment(new Date()).format("DD/MMM/YYYY hh:mm A"); //$('#calendar').fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
-            if (check < today) {
-                alert("Can't add past dates");
-            }
-            else {
+            //if (check < today) {
+            //    alert("Can't add past dates");
+            //}
+            //else {
                 $('#divEndDate').show();
                 selectedEvent = {
                     eventID: 0,
@@ -96,7 +96,7 @@ function GenerateCalender(events) {
                 };
                 openAddEditForm();
                 $('#calendar').fullCalendar('unselect');
-            }
+            //}
 
 
             //alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
