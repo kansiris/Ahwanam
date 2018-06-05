@@ -40,7 +40,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
 
                     List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    decimal total = cartlist.Sum(s => s.TotalPrice);
+                    decimal total = cartlist.Where(m => m.Status == "Active").Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist.OrderByDescending(m => m.UpdatedDate).Where(m=>m.Status == "Active");
                     ViewBag.Total = total;
                 }
