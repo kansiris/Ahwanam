@@ -198,10 +198,9 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                     var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartnos1 = cartnos.Split(',');
-                    for (int i = 0; i <= cartnos1.Count(); i++)
+                    for (int i = 0; i < cartnos1.Count(); i++)
                     {
                         string cartno2 = cartnos1[i];
-
                         string totalprice = "";
                         var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartno2)).FirstOrDefault();
                         string type = cartdetails.ServicType;
