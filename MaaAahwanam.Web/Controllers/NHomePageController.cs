@@ -67,7 +67,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult SortVendorsBasedOnLocation(string search, string type, string location)
         {
-            try { 
+          
             if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement", "Venues", "FunctionHall", "BanquetHall", "Function Hall", "Banquet Hall" }.Contains(type))
             { type = "Venue"; }
             if (type == "Convention") type = "Convention Hall";
@@ -82,11 +82,8 @@ namespace MaaAahwanam.Web.Controllers
                 records = records.Take(6).ToList();
             ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V", value).Where(m => m.landmark == location).Take(6).ToList() :  records;//vendorProductsService.Getsearchvendorproducts_Result(search, value).Where(m => m.subtype == type).Take(6).ToList();//vendorProductsService.Getsearchvendorproducts_Result(search, value).Take(6).ToList(); //.Where(m => m.landmark == location)
             return PartialView();
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Index", "Nhomepage");
-            }
+            
+           
         }
 
 
