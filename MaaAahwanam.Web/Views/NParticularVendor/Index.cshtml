@@ -31,7 +31,7 @@
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
                         <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)).Replace(".00", "") </text> / -</div>
                         @*<p>@ViewBag.vendoravailabledates</p>*@
-                        <div class="w-100 tags my-15">
+                        @*<div class="w-100 tags my-15">
                             @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
                             {
                                 if (ViewBag.particularVenue.HallType != null && ViewBag.particularVenue.HallType != "")
@@ -85,8 +85,8 @@
                                 </div>
                                 <div class="d-inline-block p-2 mr-4 greyBg">
                                     <p class="mb-0">300 <span>Guests</span></p>
-                                </div>*@
-                        </div>
+                                </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
@@ -477,7 +477,6 @@
                             </div>
                                 }
                             }
-
                         </dd>
                     </dl>
                 </div>
@@ -515,7 +514,7 @@
 
                             <div class="w-100 mt-3 noOfPeoples">
                                 <div class="form-group mb-0">
-                                    <input type="text" class="form-control nexaBold" placeholder="Members" id="members" name="members">
+                                    <input type="number" class="form-control nexaBold" placeholder="Members" id="members" name="members">
                                 </div>
                             </div>
 
@@ -941,5 +940,22 @@
             $('.needHelpBlock').css('display', 'none');
         });
         /*-- Need Help Block --*/
+    </script>
+
+    <script>
+        function checkedBox() {
+            var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
+           total = checkLen * totalVal;
+            $(".totalAmount span").empty().append(total);
+        }
+        $(".noOfPeoples input[type='number']").on('change', function () {
+            var price = $('#pricePerPlate').val();
+            var price1 = price.split(':')[1].replace(/,/g, ""); el = $(this), members = parseInt($(this).val());
+            total = price1 * members, placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+            $(".totalVal:not(:eq(0))").remove();
+            $(placeholder).append(total).css('display', 'none');
+            $(".slotTime input[type='checkbox']").prop("checked", false);
+            $(".totalAmount span").text("000");
+        });
     </script>
 }
