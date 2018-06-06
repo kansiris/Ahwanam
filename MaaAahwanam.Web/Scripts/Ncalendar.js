@@ -82,6 +82,7 @@ function GenerateCalender(events) {
             //    alert("Can't add past dates");
             //}
             //else {
+            
                 $('#divEndDate').show();
                 selectedEvent = {
                     eventID: 0,

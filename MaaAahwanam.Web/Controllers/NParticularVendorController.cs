@@ -73,7 +73,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.particularOther = Otherrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
 
                 string price = "";
-                if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue" || type == "Banquet Hall" || type == "Function Hall")
+                if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue" || type == "Banquet Hall" || type == "Function Hall" || type == "Venue")
                 {
                     if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.ServiceCost.ToString(); };
                     ViewBag.location = ViewBag.particularVenue;
@@ -98,6 +98,10 @@ namespace MaaAahwanam.Web.Controllers
                     if (ViewBag.particularOther != null) { price = ViewBag.particularOther.ItemCost.ToString(); };
                     ViewBag.location = ViewBag.particularOther;
                 }
+                if(ViewBag.location == null)
+                {
+                    ViewBag.location = data;
+                }
 
                 if (price == "")
                     price = "0";
@@ -107,6 +111,12 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Photography = Photographyrecords;
                 ViewBag.Other = Otherrecords;
                 ViewBag.servicetypeprice = price;
+
+                int count = Venuerecords.Where(k => k.Id != long.Parse(vid)).Count() + Cateringrecords.Where(k => k.Id != long.Parse(vid)).Count()+ Decoratorrecords.Where(k => k.Id != long.Parse(vid)).Count() + Photographyrecords.Where(k => k.Id != long.Parse(vid)).Count()+ Otherrecords.Where(k => k.Id != long.Parse(vid)).Count();
+                if (count == 0)
+                    ViewBag.msg = "No Extra Services Available";
+                else
+                    ViewBag.msg = "0";
 
                 //Loading Vendor deals
                 //if (type.Split(',').Count() > 1) type = type.Split(',')[0];
@@ -143,6 +153,7 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     //ViewBag.vendoravailabledates = String.Join(",", betweendates,orderdates);
                     var vendoravailabledates = String.Join(",", betweendates);
+                    if(orderdates != "")
                     vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates);
                     ViewBag.vendoravailabledates = vendoravailabledates;
                     //var today = DateTime.UtcNow;

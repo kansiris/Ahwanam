@@ -15,7 +15,7 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         // GET: NVendorCalendar
-        public ActionResult Index(string id, string vid,string type)
+        public ActionResult Index(string id, string vid, string type)
         {
             try
             {
@@ -40,8 +40,6 @@ namespace MaaAahwanam.Web.Controllers
         {
             //var vendorsubcatids = vendorVenueSignUpService.GetVendorVenue(long.Parse(id));
             //long vendorsubid = (vid == null || vid == "undefined" || vid == "") ? vendorsubcatids.FirstOrDefault().Id : long.Parse(vid); // if vid is null then automatically first Subcategory ID will be considered
-            ProductInfoService productInfoService = new ProductInfoService();
-            string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type);
             var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
             //if (orderdates != "") data = data + "," + orderdates.Split(',');
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -75,6 +73,16 @@ namespace MaaAahwanam.Web.Controllers
         {
             VendorDates dates = vendorDatesService.GetParticularDate(id);
             return new JsonResult { Data = dates, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult CheckOrderDate(string date, string id, string vid, string type)
+        {
+            ProductInfoService productInfoService = new ProductInfoService();
+            string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type);
+            if (orderdates.Split(',').Contains(date))
+                return Json("true", JsonRequestBehavior.AllowGet);
+            else
+                return Json("false", JsonRequestBehavior.AllowGet);
         }
     }
 }
