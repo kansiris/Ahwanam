@@ -133,7 +133,7 @@ namespace MaaAahwanam.Repository.db
                 ord.Landmark = vendor.Landmark;
                 ord.ContactPerson = vendor.ContactPerson;
                 ord.ContactNumber = vendor.ContactNumber;
-                ord.Description = vendor.Description;
+                //ord.Description = vendor.Description;
                 ord.LandlineNumber = vendor.LandlineNumber;
                 ord.ZipCode = vendor.ZipCode;
                 // Insert any additional changes to column values.
