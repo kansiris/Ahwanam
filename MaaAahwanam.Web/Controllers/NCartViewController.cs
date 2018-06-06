@@ -40,7 +40,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
 
                     List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    decimal total = cartlist.Sum(s => s.TotalPrice);
+                    decimal total = cartlist.Where(m => m.Status == "Active").Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist.OrderByDescending(m => m.UpdatedDate).Where(m=>m.Status == "Active");
                     ViewBag.Total = total;
                 }
@@ -270,6 +270,10 @@ namespace MaaAahwanam.Web.Controllers
                         orderDetail.BookedDate = updateddate;
                         orderDetail.EventType = etype1;
                         orderDetail.DealId = long.Parse(did);
+                        orderDetail.ExtraDate1 = cartdetails.c1date;
+                        orderDetail.ExtraDate2 = cartdetails.c2date;
+                        orderDetail.ExtraDate3 = cartdetails.c3date;
+                  
                         orderdetailsServices.SaveOrderDetail(orderDetail);
 
                         var userlogdetails = userLoginDetailsService.GetUserId(userid);
