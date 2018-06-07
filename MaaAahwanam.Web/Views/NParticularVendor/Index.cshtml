@@ -514,7 +514,7 @@
                                     </select>
                                 </div>*@
 
-                            <div class="w-100 mt-3 noOfPeoples">
+                            <div class="w-100 mt-3 noOfPeoples"  id="people">
                                 <div class="form-group mb-0">
                                     <input type="number" class="form-control nexaBold" placeholder="Members" id="members" name="members">
                                 </div>
@@ -531,17 +531,17 @@
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="w-100 mt-3 slotTime">
+                            <div class="w-100 mt-3 slotTime" id="timeslot">
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox">
+                                        <input type="checkbox" id="ch1" value="Morning" name="timeslot" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Morning</p>
                                     </label>
                                 </div>
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox">
+                                        <input type="checkbox" id="ch2" value="Evening" name="timeslot" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Evening</p>
                                     </label>
@@ -755,6 +755,23 @@
         //<!-- hr Responsive Tabs -->
         $(document).ready(function () {
 
+            // data based on type
+            var vtype = '@Request.QueryString["type"]';
+            //alert(vtype);
+            if (vtype == 'Photography' || vtype == 'Decorator' || vtype == 'Other') {
+                //  alert(value1);
+                $("#people").hide();
+                $("#timeslot").hide();
+                $("#totamount").hide();
+            }
+            if (vtype == 'Venue' || vtype == 'Catering') {
+                //      alert(value1);
+                $("#people").show();
+                $("#timeslot").show();
+                $("#totamount").show();
+            }
+
+
 
             // Function releated to Package select
             function checkSelect() {
@@ -891,7 +908,25 @@
 
     <script>
         $(".bookNow").click(function () {
-            var type = '@Request.QueryString["type"]';
+            var timeslot = '';
+             var type = '@Request.QueryString["type"]';
+            if (type == 'Venue' || type == 'Catering' || type == 'venue' || type == 'Hotel' || type == 'Resort' || type == 'Convetion Hall' || type == 'Catering' || type == 'Hotel') {
+                if ($(".slotTime input[type='checkbox']").is(':checked')) {
+
+                    var favorite = [];
+                    $.each($("input[name='timeslot']:checked"), function () {
+                        favorite.push($(this).val());
+                        timeslot = favorite.join(", ");
+                    })
+                }
+                else {
+                    alertmsg("Please select time slot");
+                }
+            }
+            else if (type == 'Photography' || type == 'Decorator' || type == 'Other' || type == 'Mehendi' || type == 'Pandit') {
+                timeslot = "n/a";
+                //  alert('ks');
+            }
             if ($("#eventtype").val() == '') {
                 //  alert("Please Enter Event type");
                 alertmsg("Please Enter Event type");
@@ -903,18 +938,23 @@
                 alertmsg("Please Enter Members Count");
             }
                 //}
-            else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                //else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+            //else if (timeslot =''){
+            //    alertmsg("Please select time slot");}
+            else{
 
+                alert(timeslot);
                 var eventtype = $("#eventtype").val();
                 var id = '@Request.QueryString["id"]';
                 var vid = '@Request.QueryString["vid"]';
                 var date = $("#datetimepicker").val();
                 var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
                 var nop = $("#members").val();
-                var timeslot = 'Morning';
+                var timeslot1 = 'Morning';
                 var totalprice = price * nop;
+                var total = $('#selectedprice').html();
                 var selectedtype = $('#selectedtype').val();
-                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype;
+               url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total='+ total;
 
                 $.ajax({
                     url: url1,
@@ -933,9 +973,9 @@
                     }
                 });
             }
-            else {
-                alertmsg("Please select time slot");
-            }
+            //else {
+            //    alertmsg("Please select time slot");
+            //}
         });
         /*-- Need Help Block --*/
         $('.needHelpBtn').click(function () {
@@ -952,6 +992,11 @@
             var pkgprice = $('#pkgprice').val();
             var members = $('#members').val();
             var totalVal = $('.totalVal').text();
+            if (pkgprice == '')
+            { pkgprice = $('#serviceprice').val(); }
+            //alert(pkgprice);
+            //alert(members);
+            //alert(totalVal);
             if (pkgprice != '0' && pkgprice != '') {
                 totalVal = pkgprice * members;
             }

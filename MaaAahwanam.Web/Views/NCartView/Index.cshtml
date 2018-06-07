@@ -90,7 +90,7 @@
                                         <ul class="pl-0 row mx-0 customDates float-left">
                                             @if (@item.ServiceType == "Venue" || @item.ServiceType == "Catering")
                                             {
-                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt64(@item.Perunitprice) * @item.Quantity)).Replace(".00", "")</span></li>
+                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt64(@item.Perunitprice) * @item.Quantity )).Replace(".00", "")</span></li>
                                             }
                                             else
                                             {
@@ -215,10 +215,10 @@
 
         var addDates = $(".cartPage .block .detailsBlock .buttons > ul > li > span.addDates"),
   dateInput = $(".cartPage .block .detailsBlock .buttons + .dateInput"),
-  closeDateInput = $(".cartPage .block .detailsBlock .buttons + .dateInput > .triangle + i.fa-times"),
+  closeDateInput = $(".cartPage .block .detailsBlock .dateInput > .triangle + i.fa-times"),
   removeCustLi = $(".cartPage ul.customDates > li > i"), total,hiddenField = $(".block > input[type='hidden']");
         $(addDates).click(function(){
-            $(this).parents(".buttons").next(dateInput).css("display","block");
+            $(this).parents(".buttons").prev(dateInput).css("display","block");
         });
 
         $(closeDateInput).click(function(){
@@ -249,7 +249,7 @@
                 //alert(total);
                 ////totalpr.append(total);
                 //alert(dateVal);
-
+                alert(price1);
                 $.ajax({
                     url: '/NCartView/multipledateinsert?cartid=' + cartId + '&&price=' + price1 + '&&date=' + dateVal + '&&total=' + total,
                     type: 'POST',
@@ -335,7 +335,30 @@
 
         $(document).ready(function () {
             checkFun();
-        //    $("ul.customDates").append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ 3500 + "</span>" +  "</li>");
+            //    $("ul.customDates").append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ 3500 + "</span>" +  "</li>");
+            /*-- Each Block for Vendor title Start --*/
+    
+            $(".totalBlocks .block").each(function(){
+                var title = $(this).find(".titleBlock").find("h4").text();
+                var titleOrg = $(this).find(".titleBlock").find("h4").text();
+                var threeDots = '...';
+                if(title.length > 15){
+                    title = title.substring(0, 15) + threeDots;
+                }
+                $(this).find(".titleBlock").find("h4").empty().append(title);
+
+                /*-- Hover Function --*/
+
+                $(this).find(".titleBlock").find("h4").hover(function(){
+                    var title1 = $(this).text();
+                    if(title1.indexOf('...') > 0){
+                        $(this).empty().append(titleOrg);
+                    } else{
+                        $(this).empty().append(title);
+                    }
+
+                }); /*-- Hover Function --*/
+            }); /*-- Each Block for Vendor title Close --*/
         });
 
         $(document).on('click', '.cartPage ul.customDates > li > i', function(){
@@ -396,6 +419,8 @@
 
         $(".cartPage .block").find("input[type='checkbox']").change(function () {
             checkFun();
+
+         
         });
 
         /*-- Checkbox Fun for Book Now Button --*/
