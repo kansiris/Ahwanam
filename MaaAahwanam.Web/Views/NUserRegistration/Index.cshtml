@@ -336,44 +336,27 @@
         }
 
         function validateToken(token) {
-
             getUserInfo();
-            $.ajax(
-                  {
-                      url: VALIDURL + token,
-                      data: null,
-                      success: function () {
-                          var data = {
-                              email: user.email,
-                              name: user.name,
-                              lastname: user.given_name,
-                              firstname: user.given_name,
-                              Picture: user.picture
-                          }
-                          $.ajax({
-                              url: '/UserRegistration/GoogleLogin/',
-                              type: 'POST',
-                              data: data,
-                              success: function () {
-                                  if (data == 'failed') {
-                                      alertmsg('This email is registared as Vendor please login with Your Credentials')
-                                  }
-                                  else {
-                                      var url1 = document.referrer;
-                                      window.location.href = url1;// "/NHomePage/Index/";
-                                  }
+            $.get(VALIDURL + token, function (data, status) {
+                $.ajax({
+                    url: '/UserRegistration/GoogleLogin/',
+                    type: 'POST',
+                    data: data,
+                    success: function () {
+                        if (data == 'failed') {
+                            alertmsg('This email is registared as Vendor please login with Your Credentials')
+                        }
+                        else {
+                            var url1 = document.referrer;
+                            window.location.href = url1;// "/NHomePage/Index/";
+                        }
 
-                              }
-                          });
-
-
-                      },
-                  });
+                    }
+                });
+            });
         }
 
         function getUserInfo() {
-
-
             $.ajax({
 
                 url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
@@ -383,9 +366,6 @@
 
                 },
             })
-
-
-
         }
 
     </script>

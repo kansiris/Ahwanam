@@ -82,26 +82,26 @@ function GenerateCalender(events) {
             //    alert("Can't add past dates");
             //}
             //else {
-            
-                $('#divEndDate').show();
-                selectedEvent = {
-                    eventID: 0,
-                    title: '',
-                    description: '',
-                    start: start,
-                    end: end,
-                    allDay: false,
-                    color: '',
-                    type: '',
-                    servicetype: ''
-                };
-                openAddEditForm();
-                $('#calendar').fullCalendar('unselect');
+
+            $('#divEndDate').show();
+            selectedEvent = {
+                eventID: 0,
+                title: '',
+                description: '',
+                start: start,
+                end: end,
+                allDay: false,
+                color: '',
+                type: '',
+                servicetype: ''
+            };
+            openAddEditForm();
+            $('#calendar').fullCalendar('unselect');
             //}
 
 
             //alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
-            
+
         },
         editable: true,
         eventDrop: function (event) {
@@ -121,16 +121,10 @@ function GenerateCalender(events) {
             SaveEvent(data);
         },
         viewRender: function (currentView) {
-            var minDate = moment()
-            // Past
-            if (minDate >= currentView.start && minDate <= currentView.end) {
-                $(".fc-prev-button").prop('disabled', true);
-                $(".fc-prev-button").addClass('fc-state-disabled');
-            }
-            else {
-                $(".fc-prev-button").removeClass('fc-state-disabled');
-                $(".fc-prev-button").prop('disabled', false);
-            }
+            var minDate = moment();
+            var cantGoBefore = currentView.start <= minDate;
+            $(".fc-prev-button", navigationContainer).prop('disabled', cantGoBefore);
+            $(".fc-prev-button", navigationContainer).toggleClass('fc-state-disabled', cantGoBefore);
         }
     })
     //$('body.dashboard').css('padding-right', '0px');
