@@ -15,18 +15,20 @@ namespace MaaAahwanam.Web.Controllers
     {
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
+        Payment_orderServices payment_orderServices = new Payment_orderServices();
         // GET: NVendorOrders
         public ActionResult Index(string id)
         {
-            try { 
-            if (TempData["Active"] != "")
+            try
             {
-                ViewBag.Active = TempData["Active"];
-            }
-            ViewBag.id = id;
-            var orders = orderService.userOrderList().Where(m => m.Id == int.Parse(id));
-            ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-            return View();
+                if (TempData["Active"] != "")
+                {
+                    ViewBag.Active = TempData["Active"];
+                }
+                ViewBag.id = id;
+                var orders = orderService.userOrderList().Where(m => m.Id == int.Parse(id));
+                ViewBag.order = orders.OrderByDescending(m => m.OrderId);
+                return View();
             }
             catch (Exception)
             {
@@ -36,38 +38,44 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult OrderApproval(string id, string orderid, string command)
         {
-            try { 
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            try
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "Vendor")
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    //var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
-                    Order order = orderService.GetParticularOrder(long.Parse(orderid));
-                    
-                    OrderDetail orderdetail = new OrderDetail();
-                    if (command == "Accept")
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    if (user.UserType == "Vendor")
                     {
-                        order.Status = "Active";
-                        order.UpdatedBy = long.Parse(id);
-                        orderdetail.Status = "Active";
-                        orderdetail.UpdatedBy = long.Parse(id);
-                        TempData["Active"] = "Order Accepted";
+                        //var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                        var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
+                        Order order = orderService.GetParticularOrder(long.Parse(orderid));
+                        OrderDetail orderdetail = new OrderDetail();
+                        int paymentchecking = payment_orderServices.GetPaymentOrderService(long.Parse(orderid)).Count();
+                        if (paymentchecking > 0)
+                        {
+                            TempData["Active"] = "Cannot Update Partial/Full Payement Orders Status";
+                            return RedirectToAction("Index", "NVendorOrders", new { id = id });
+                        }
+                        if (command == "Accept")
+                        {
+                            order.Status = "Active";
+                            order.UpdatedBy = long.Parse(id);
+                            orderdetail.Status = "Active";
+                            orderdetail.UpdatedBy = long.Parse(id);
+                            TempData["Active"] = "Order Accepted";
+                        }
+                        else
+                        {
+                            order.Status = "Vendor Declined";
+                            orderdetail.Status = "Vendor Declined";
+                            TempData["Active"] = "Order Cancelled";
+                        }
+                        order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+                        //SendEmail(int.Parse(orders.FirstOrDefault().UserLoginId.ToString()), orderid, id, command, orders.FirstOrDefault().BusinessName);
+                        return RedirectToAction("Index", "NVendorOrders", new { id = id });
                     }
-                    else
-                    {
-                        order.Status = "Vendor Declined";
-                        orderdetail.Status = "Vendor Declined";
-                        TempData["Active"] = "Order Cancelled";
-                    }
-                    order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
-                    //SendEmail(int.Parse(orders.FirstOrDefault().UserLoginId.ToString()), orderid, id, command, orders.FirstOrDefault().BusinessName);
-                    return RedirectToAction("Index", "NVendorOrders", new { id = id });
                 }
-            }
-            TempData["Active"] = "Please Login";
-            return RedirectToAction("Index", "NVendorOrders", new { id = id });
+                TempData["Active"] = "Please Login";
+                return RedirectToAction("Index", "NVendorOrders", new { id = id });
             }
             catch (Exception)
             {

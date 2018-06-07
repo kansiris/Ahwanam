@@ -121,10 +121,16 @@ function GenerateCalender(events) {
             SaveEvent(data);
         },
         viewRender: function (currentView) {
-            var minDate = moment();
-            var cantGoBefore = currentView.start <= minDate;
-            $(".fc-prev-button", navigationContainer).prop('disabled', cantGoBefore);
-            $(".fc-prev-button", navigationContainer).toggleClass('fc-state-disabled', cantGoBefore);
+            var minDate = moment()
+            // Past
+            if (minDate >= currentView.start && minDate <= currentView.end) {
+                $(".fc-prev-button").prop('disabled', true);
+                $(".fc-prev-button").addClass('fc-state-disabled');
+            }
+            else {
+                $(".fc-prev-button").removeClass('fc-state-disabled');
+                $(".fc-prev-button").prop('disabled', false);
+            }
         }
     })
     //$('body.dashboard').css('padding-right', '0px');
