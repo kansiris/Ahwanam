@@ -1,7 +1,7 @@
 ﻿window.fbAsyncInit = function () {
     // FB JavaScript SDK configuration and setup
     FB.init({
-        appId: '152565978688349',//'1210420135768170', // FB App ID
+        appId: '1210420135768170', //'152565978688349',// FB App ID
         cookie: true,  // enable cookies to allow the server to access the session
         xfbml: true,  // parse social plugins on this page
         version: 'v2.8' // use graph api version 2.8
@@ -12,8 +12,6 @@
     //    if (response.status === 'connected') {
     //        //display user data
     //        getFbUserData();
-
-
     //                  }
     //});
 };
@@ -30,6 +28,7 @@
 // Facebook login with JavaScript SDK
 function fbLogin() {
     FB.login(function (response) {
+
         if (response.authResponse) {
             // Get and display the user profile data
             getFbUserData();
@@ -46,8 +45,8 @@ function getFbUserData() {
     // FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picturename,birthday,currency,timezone,verified,age_range' },
     FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture,timezone,verified,age_range,name' },
          function (response) {
-
-              var data = {
+             var url1 = document.referrer;
+             var data = {
                  Name: response.name,
                  ID: response.id,
                  gender: response.gender,
@@ -61,26 +60,24 @@ function getFbUserData() {
                  verified: response.verified,
                  picture: response.picture,
                  agerange: response.age_range
-
              }
-           
              $.ajax({
-
                  url: '/NUserRegistration/facebookLogin/',
                  type: 'POST',
                  data: data,
-
                  success: function () {
-                     window.location.href = "/NHomepage/Index/";
+                     if (data == 'failed') {
+                         alert('This email is registared as Vendor please login with Your Credentials')
+                     }
+                     else {
+                         var url1 = document.referrer;
+                         window.location.href = url1;// "/NHomePage/Index/";
+                     }
                  },
-
              });
-
              // Save user data
              //  saveUserData(response);
              // });
-
-
          }
     )
 }
@@ -89,7 +86,6 @@ function getFbUserData() {
 /*function saveUserData(userData){
     $.post('userData.php', {oauth_provider:'facebook',userData: JSON.stringify(userData)}, function(data){ return true; });
 }*/
-
 
 // Logout from facebook
 function fbLogout() {

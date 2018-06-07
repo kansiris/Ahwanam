@@ -1,8 +1,7 @@
-﻿//<script type="text/javascript">
-var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
+﻿var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
 var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
 var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
-var CLIENTID = '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com '// '940368706527-qu2oqpfn1ad533kr1bpclh3qbleau1ug.apps.googleusercontent.com';
+var CLIENTID = '940368706527-qu2oqpfn1ad533kr1bpclh3qbleau1ug.apps.googleusercontent.com';
 var REDIRECT = 'http://www.ahwanam.com/';
 var LOGOUT = 'http://www.ahwanam.com/';
 var TYPE = 'token';
@@ -51,31 +50,26 @@ function gup(url, name) {
 function validateToken(token) {
 
     getUserInfo();
-    $.ajax(
-          {
-              url: VALIDURL + token,
-              data: null,
-              success: function () {
-                  var data = {
-                      email: user.email,
-                      name: user.name,
-                      lastname: user.given_name,
-                      firstname: user.given_name,
-                      Picture: user.picture
-                  }
-                  $.ajax({
-                      url: '/UserRegistration/GoogleLogin/',
-                      type: 'POST',
-                      data: data,
-                      success: function () {
-                          window.location.href = "/NHomePage/Index/";
-                      },
 
-                  });
+    $.get(VALIDURL + token, function (data, status) {
+        alert(data.email);
 
+        $.ajax({
+            url: '/UserRegistration/GoogleLogin/',
+            type: 'POST',
+            data: data,
+            success: function () {
+                if (data == 'failed') {
+                    alertmsg('This email is registared as Vendor please login with Your Credentials')
+                }
+                else {
+                    var url1 = document.referrer;
+                    window.location.href = url1;// "/NHomePage/Index/";
+                }
 
-              },
-          });
+            }
+        });
+    });
 }
 
 function getUserInfo() {
@@ -94,5 +88,3 @@ function getUserInfo() {
 
 
 }
-
-//</script>
