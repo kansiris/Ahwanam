@@ -39,12 +39,6 @@
 
 function GenerateCalender(events) {
     $('#calendar').fullCalendar('destroy');
-    var reqDate = new Date();
-    var eventDates = {};
-    eventDates[new Date('6/14/2017')] = new Date('6/14/2017');
-    eventDates[new Date('6/16/2017')] = new Date('6/16/2017');
-    eventDates[new Date('6/20/2017')] = new Date('6/20/2017');
-    eventDates[new Date('6/25/2017')] = new Date('6/25/2017');
     $('#calendar').fullCalendar({
         contentHeight: 600,
         timezone: 'India Standard Time',
@@ -55,25 +49,6 @@ function GenerateCalender(events) {
             center: 'title',
             right: 'month,basicWeek,basicDay'
         },
-        //beforeShowDay: function (data) {
-        //    var highlight = eventDates[date];
-        //    if (highlight) {
-        //        return [true, "event", highlight];
-        //    } else {
-        //        return [true, '', ''];
-        //    }
-        //},
-        //dayRender: function(daysOfWeek, cell)
-        //{
-        //    if(reqDate.getDate()==daysOfWeek.getDate())
-        //    {
-        //        $(cell).addClass('fc-state-highlight');
-        //    }
-        //    else
-        //    {
-        //        $(cell).removeClass('fc-state-highlight');
-        //    }
-        //},
         eventLimit: true,
         eventColor: '#378006',
         events: events,
