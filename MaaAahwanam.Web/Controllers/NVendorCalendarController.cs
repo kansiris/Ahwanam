@@ -14,6 +14,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorDatesService vendorDatesService = new VendorDatesService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        ProductInfoService productInfoService = new ProductInfoService();
         // GET: NVendorCalendar
         public ActionResult Index(string id, string vid, string type)
         {
@@ -25,6 +26,19 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                     ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
+                    var orderdates = productInfoService.GetCount(long.Parse(id), long.Parse(vid), type);
+                    string bookeddates = string.Empty;
+                    List<string[]> userorderdates = new List<string[]>();
+                    foreach (var item in orderdates)
+                    {
+                        bookeddates = item.BookedDate.ToString();
+                        if (item.ExtraDate1 != "" && item.ExtraDate1 != null) bookeddates = bookeddates + "," + item.ExtraDate1.ToString();
+                        if (item.ExtraDate2 != "" && item.ExtraDate2 != null) bookeddates = bookeddates + "," + item.ExtraDate2.ToString();
+                        if (item.ExtraDate3 != "" && item.ExtraDate3 != null) bookeddates = bookeddates + "," + item.ExtraDate3.ToString();
+                        var getuserdetails = userLoginDetailsService.GetUser(int.Parse(item.OrderBy.ToString()));
+                        userorderdates.Add(new string[] { item.EventType, getuserdetails.FirstName, getuserdetails.LastName, bookeddates, item.attribute, item.Isdeal.ToString(),  getuserdetails.UserPhone });
+                    }
+                    ViewBag.userorderdates = userorderdates;
                     return View();
                 }
                 else
@@ -75,14 +89,14 @@ namespace MaaAahwanam.Web.Controllers
             return new JsonResult { Data = dates, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public JsonResult CheckOrderDate(string date, string id, string vid, string type)
-        {
-            ProductInfoService productInfoService = new ProductInfoService();
-            string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type);
-            if (orderdates.Split(',').Contains(date))
-                return Json("true", JsonRequestBehavior.AllowGet);
-            else
-                return Json("false", JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult CheckOrderDate(string date, string id, string vid, string type)
+        //{
+        //    ProductInfoService productInfoService = new ProductInfoService();
+        //    string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type);
+        //    if (orderdates.Split(',').Contains(date))
+        //        return Json("true", JsonRequestBehavior.AllowGet);
+        //    else
+        //        return Json("false", JsonRequestBehavior.AllowGet);
+        //}
     }
 }

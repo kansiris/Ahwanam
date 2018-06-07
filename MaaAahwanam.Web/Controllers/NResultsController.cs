@@ -73,8 +73,8 @@ namespace MaaAahwanam.Web.Controllers
                     string type1 = selectedtype;
                     ViewBag.results = data;
                     type = (stype.Split(',')[0] == "Convention Hall" || stype.Split(',')[0] == "Convention-Hall" || stype.Split(',')[0] == "Convention" || stype.Split(',')[0] == "Convetion") ? "ConventionHall" : type;
-                    ViewBag.type = selectedtype;
                     ViewBag.type1 = selectedtype;
+                    ViewBag.type = type;
                     //int recordcount = data.Count();
                     ViewBag.count = (recordcount >= takecount) ? "1" : "0";
                     ViewBag.recordcount = recordcount;

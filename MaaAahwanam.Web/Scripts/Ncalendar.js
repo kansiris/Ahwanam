@@ -39,6 +39,12 @@
 
 function GenerateCalender(events) {
     $('#calendar').fullCalendar('destroy');
+    var reqDate = new Date();
+    var eventDates = {};
+    eventDates[new Date('6/14/2017')] = new Date('6/14/2017');
+    eventDates[new Date('6/16/2017')] = new Date('6/16/2017');
+    eventDates[new Date('6/20/2017')] = new Date('6/20/2017');
+    eventDates[new Date('6/25/2017')] = new Date('6/25/2017');
     $('#calendar').fullCalendar({
         contentHeight: 600,
         timezone: 'India Standard Time',
@@ -49,6 +55,25 @@ function GenerateCalender(events) {
             center: 'title',
             right: 'month,basicWeek,basicDay'
         },
+        //beforeShowDay: function (data) {
+        //    var highlight = eventDates[date];
+        //    if (highlight) {
+        //        return [true, "event", highlight];
+        //    } else {
+        //        return [true, '', ''];
+        //    }
+        //},
+        //dayRender: function(daysOfWeek, cell)
+        //{
+        //    if(reqDate.getDate()==daysOfWeek.getDate())
+        //    {
+        //        $(cell).addClass('fc-state-highlight');
+        //    }
+        //    else
+        //    {
+        //        $(cell).removeClass('fc-state-highlight');
+        //    }
+        //},
         eventLimit: true,
         eventColor: '#378006',
         events: events,
@@ -121,10 +146,16 @@ function GenerateCalender(events) {
             SaveEvent(data);
         },
         viewRender: function (currentView) {
-            var minDate = moment();
-            var cantGoBefore = currentView.start <= minDate;
-            $(".fc-prev-button", navigationContainer).prop('disabled', cantGoBefore);
-            $(".fc-prev-button", navigationContainer).toggleClass('fc-state-disabled', cantGoBefore);
+            var minDate = moment()
+            // Past
+            if (minDate >= currentView.start && minDate <= currentView.end) {
+                $(".fc-prev-button").prop('disabled', true);
+                $(".fc-prev-button").addClass('fc-state-disabled');
+            }
+            else {
+                $(".fc-prev-button").removeClass('fc-state-disabled');
+                $(".fc-prev-button").prop('disabled', false);
+            }
         }
     })
     //$('body.dashboard').css('padding-right', '0px');
