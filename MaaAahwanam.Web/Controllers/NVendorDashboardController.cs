@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
-using MaaAahwanam.Service;
 
 namespace MaaAahwanam.Web.Controllers
 {

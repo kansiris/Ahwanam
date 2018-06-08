@@ -203,12 +203,12 @@
                                                     </div>
                                                     <div class="w-100 mt-3 noOfPeoples">
                                                         <div class="form-group mb-0">
-                                                            <input type="number" class="form-control nexaBold" placeholder="Members" id="Members">
+                                                            <input type="number" class="form-control nexaBold" placeholder="No of Guests" id="Members">
                                                         </div>
                                                     </div>
                                                     <div class="w-100 mt-3 eventDate">
                                                         <div class="datentime w-100">
-                                                            <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Date Here">
+                                                            <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Event Date">
                                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                                         </div>
                                                     </div>
@@ -255,7 +255,7 @@
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="row mx-0 bgWhite p-2">
                                         <div class="col-12 col-md-12 px-0">
-                                            <h3 class="noteWorthybold mb-0">Descrption</h3>
+                                            <h3 class="noteWorthybold mb-0">Description</h3>
                                             <p class="limitText"></p>
                                         </div>
                                     </div>
@@ -525,12 +525,13 @@
                 var id = vurl.split("id=")[1].split("&&")[0];
                 var vid = vurl.split("vid=")[1];
                 var date = $("#datetimepicker").val();
-                var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
+                var price = $('#serviceprice').val().trim();//'@ViewBag.servicetypeprice';
                 var nop = $("#Members").val();
                 var timeslot = 'Morning';
+                var total = price;
                 //var totalprice = price * nop;
                 var selectedtype = 'sprice';//$('#selectedtype').val();
-                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype;
+                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total=' + total;
                 //alert(url1);
                     $.ajax({
                         url: url1,
