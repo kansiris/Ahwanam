@@ -34,7 +34,7 @@ namespace MaaAahwanam.Repository.db
             UserDetail userDetail = new UserDetail();
             if (list != null)
             {
-                userDetail = _dbContext.UserDetail.FirstOrDefault(m=>m.UserLoginId==list.UserLoginId);
+                userDetail = _dbContext.UserDetail.FirstOrDefault(m => m.UserLoginId == list.UserLoginId);
             }
             return userDetail;
         }
@@ -65,13 +65,18 @@ namespace MaaAahwanam.Repository.db
             }
             return userLogin;
         }
-        public UserLogin Updatestatus(UserLogin userLogin, int UserloginID)
+        public UserLogin Updatestatus(UserLogin userLogin, UserDetail userDetails, int UserloginID)
         {
             // Query the database for the row to be updated.
             var query =
                 from ord in _dbContext.UserLogin
                 where ord.UserLoginId == UserloginID
                 select ord;
+            // Query the database for the row to be updated.
+            var query1 =
+                from ord1 in _dbContext.UserDetail
+                where ord1.UserLoginId == UserloginID
+                select ord1;
 
             // Execute the query, and change the column values
             // you want to change.
@@ -81,6 +86,11 @@ namespace MaaAahwanam.Repository.db
                 // Insert any additional changes to column values.
             }
 
+            foreach (UserDetail ord1 in query1)
+            {
+                ord1.Status = userDetails.Status;
+                // Insert any additional changes to column values.
+            }
             // Submit the changes to the database.
             try
             {
@@ -109,7 +119,7 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.UserLogin.Where(p => p.UserLoginId == UserId).Select(u => u.Password).FirstOrDefault();
         }
 
-        public int UpdateUserLogin(string email,string status)
+        public int UpdateUserLogin(string email, string status)
         {
             // Query the database for the row to be updated.
             var query =
@@ -136,5 +146,24 @@ namespace MaaAahwanam.Repository.db
             }
             return 1;
         }
+
+        public UserLogin UpdateUserName(UserLogin userLogin, string email)
+        {
+            var GetMasterRecord = _dbContext.UserLogin.Where(m => m.UserType == "Vendor").SingleOrDefault(m => m.UserName == email);
+            userLogin.UserName = userLogin.UserName;
+            userLogin.UserLoginId = GetMasterRecord.UserLoginId;
+            userLogin.UserType = "Vendor";
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userLogin);
+            _dbContext.SaveChanges();
+            return userLogin;
+        }
+
+        //public UserLogin UpdateActivationCode(UserLogin userlogin)
+        //{
+        //    var GetMasterRecord = _dbContext.UserLogin.SingleOrDefault(m => m.UserName == userlogin.UserName);
+        //    _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userlogin);
+        //    _dbContext.SaveChanges();
+        //    return userlogin;
+        //}
     }
 }

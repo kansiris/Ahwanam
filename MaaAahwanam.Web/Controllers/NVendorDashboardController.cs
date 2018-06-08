@@ -14,22 +14,51 @@ namespace MaaAahwanam.Web.Controllers
     {
         OrderService orderService = new OrderService();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+
         // GET: NVendorDashboard
         public ActionResult Index(string id)
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 ViewBag.id = id;
                 ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
-                var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                ViewBag.order = orders.OrderByDescending(m => m.OrderId);
+                var orders = orderService.userOrderList().Where(m => m.Id == int.Parse(id));
+                ViewBag.currentorders = orders.Where(p=>p.Status == "Pending").Count();
+                ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
+                ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
             }
             else
             {
                 return RedirectToAction("Index", "NUserRegistration");
             }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
+        }
+
+        public ActionResult VendorAuth()
+        {
+            try { 
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var vendorrecord = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString()));
+                ViewBag.profilepic = vendorrecord.UserImgName;
+                var emailid = vendorrecord.AlternativeEmailID;
+                ViewBag.id = vendorMasterService.GetVendorByEmail(emailid).Id;
+            }
+            return PartialView("VendorAuth");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }

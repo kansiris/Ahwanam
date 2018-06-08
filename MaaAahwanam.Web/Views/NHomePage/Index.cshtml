@@ -7,7 +7,8 @@
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/Nbootstrap.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
     @*<link rel="stylesheet" type="text/css" href="~/newdesign/css/fonts.css">*@
-    <link rel="stylesheet" type="text/css" href="~/newdesign/css/Ncustomstyles.css">
+    @*<link rel="stylesheet" type="text/css" href="~/newdesign/css/Ncustomstyles.css">*@
+    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/newdesign/css/customstyles.css" />
     <link href="https://fonts.googleapis.com/css?family=Oswald:600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
     @*<link href="~/newdesign/css/datepicker.css" rel="stylesheet" />*@
@@ -15,6 +16,8 @@
     <!------ Owl Thumb Slider ---------->
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="~/newdesign/css/owl.theme.default.css">
+
+    <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
     <style>
         .nav-item.dropdown.open .dropdown-menu {
             display: block;
@@ -22,7 +25,7 @@
     </style>
 </head>
 @using MaaAahwanam.Web.Custom
-<body  id="bodyTop">
+<body id="bodyTop">
     <div class="container-fluid px-0">
         <nav class="navbar navbar-toggleable-md navbar-light themeBgColorSecondaryYellow">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,10 +106,10 @@
                                                 <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i></a>
                                             </li>
                                         }
-                                        
+
                                     </ul>
                                     <div class="w-100 d-flex justify-content-center">
-                                        <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2">Checkout</span>
+                                        <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2"  onclick="location.href='/NCartView/Index'">Checkout</span>
                                         <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@ViewBag.Total</div>
                                     </div>
                                 </div>
@@ -133,10 +136,11 @@
                 </div>
             }
 
-        </nav>   
+        </nav>
     </div>
 
     <div class="container-fluid mainBg">
+        @*<text>@ViewBag.currenttme</text>*@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-6">
@@ -178,8 +182,8 @@
                         </select>
                     </div>
                     @*<div class="row mx-0 mt-3 occasionDate">
-                        <input type="text" class="border-0 ml-auto" placeholder="Occasion Date">
-                    </div>*@
+                            <input type="text" class="border-0 ml-auto" placeholder="Occasion Date">
+                        </div>*@
                     <div class="row mx-0 mt-3 occasionDate">
                         <!--<input type="text" class="border-0 ml-auto" placeholder="Occasion Date">-->
                         <div class="datentime w-100">
@@ -187,10 +191,10 @@
                             <i class="fa fa-calendar" aria-hidden="true"></i>
 
                             @*<div class="input">
-                                <div class="result nexaBold">Occasion Date: <span id="selecteddate"></span></div>
-                                <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
-                            </div>
-                            <div class="calendar"></div>*@
+                                    <div class="result nexaBold">Occasion Date: <span id="selecteddate"></span></div>
+                                    <button class="themeBgColorSecondary"><i class="fa fa-calendar"></i></button>
+                                </div>
+                                <div class="calendar"></div>*@
                         </div>
                     </div>
 
@@ -304,11 +308,11 @@
                             <img src="~/newdesign/images/hotels-bg.png" alt="Hotels" />
                             <span class="d-block mt-2 themeFontColor">Hotels</span>
                         </a>
-                        <a href="/NQuestionNaire?servicetype=Function Hall" class="item">
+                        <a href="/NQuestionNaire?servicetype=FunctionHall" class="item">
                             <img src="~/newdesign/images/functionhalls-bg.png" alt="Function Halls" />
                             <span class="d-block mt-2 themeFontColor">Function Halls</span>
                         </a>
-                        <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
+                        <a href="/NQuestionNaire?servicetype=BanquetHall" class="item">
                             <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
                             <span class="d-block mt-2 themeFontColor">Banquet Halls</span>
                         </a>
@@ -320,187 +324,53 @@
                             <img src="~/newdesign/images/resort-bg.png" alt="Resort" />
                             <span class="d-block mt-2 themeFontColor">Resort</span>
                         </a>
-                        <a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
+                        @*<a href="/NQuestionNaire?servicetype=Banquet Hall" class="item">
                             <img src="~/newdesign/images/banquet-bg.png" alt="Banquet Halls" />
                             <span class="d-block mt-2 themeFontColor">Banquet Halls</span>
-                        </a>
+                        </a>*@
                     </div>
                 </div>
             </div>
         </div>
-        @*<div class="margin-top-50">
-            <div class="row mx-0">
-                <h3 class="noteWorthybold">
-                    Music & Artists
-                    <div class="blackBorder"></div>
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dj.png" alt="DJ" />
-                            <span class="d-block mt-2 themeFontColor">DJ</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/choreographer-bg.png" alt="Choreographer" />
-                            <span class="d-block mt-2 themeFontColor">Choreographer</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
-                            <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/orchestra-bg.png" alt="orchestra" />
-                            <span class="d-block mt-2 themeFontColor">Orchestra</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/performing-artists-bg.png" alt="Performing Artist" />
-                            <span class="d-block mt-2 themeFontColor">Performing Artist</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
-                            <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>*@
         <div class="margin-top-50">
-            <div class="row mx-0">
-                <h3 class="noteWorthybold">
-                    Event Services
-                    <div class="blackBorder"></div>
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a href="/NQuestionNaire?servicetype=Photography" class="item">
-                            <img src="~/newdesign/images/photography-bg.png" alt="Photography" />
-                            <span class="d-block mt-2 themeFontColor">Photography</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/makeup-artist-bg.png" alt="Makeup Artist" />
-                            <span class="d-block mt-2 themeFontColor">Makeup Artist</span>
-                        </a>
-                        <a href="/NQuestionNaire?servicetype=Decorator" class="item">
-                            <img src="~/newdesign/images/decorators-bg.png" alt="Decorators" />
-                            <span class="d-block mt-2 themeFontColor">Decorators</span>
-                        </a>
-                        <a href="/NQuestionNaire?servicetype=Pandit" class="item">
-                            <img src="~/newdesign/images/pundit-bg.png" alt="Pandits" />
-                            <span class="d-block mt-2 themeFontColor">Pandits</span>
-                        </a>
+                <div class="row mx-0">
+                    <h3 class="noteWorthybold">
+                        Music & Artists
+                        <div class="blackBorder"></div>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="owl-carousel owl-theme mt-3">
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/dj.png" alt="DJ" />
+                                <span class="d-block mt-2 themeFontColor">DJ</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/choreographer-bg.png" alt="Choreographer" />
+                                <span class="d-block mt-2 themeFontColor">Choreographer</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
+                                <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/orchestra-bg.png" alt="orchestra" />
+                                <span class="d-block mt-2 themeFontColor">Orchestra</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/performing-artists-bg.png" alt="Performing Artist" />
+                                <span class="d-block mt-2 themeFontColor">Performing Artist</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
+                                <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-    <div class="container-fluid">
-        <div class="row letsCelebrationBlock margin-top-50">
-            <div class="w-100 text-center">
-                <h2 class="noteWorthybold">Frame your memories with us.</h2>
-                <br />
-                <span class="themeBgColorPrimary btnPrimary text-white">Let's Celebrate with us</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        @*<div class="margin-top-50">
-            <div class="row mx-0">
-                <h3 class="noteWorthybold">
-                    Food & Catering
-                    <div class="blackBorder"></div>
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 themeFontColor">Hotels</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 themeFontColor">Function Halls</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 themeFontColor">Banquet Halls</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 themeFontColor">Convention Halls</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 themeFontColor">Meeting Halls</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Thumb" />
-                            <span class="d-block mt-2 themeFontColor">Others</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-        @*<div class="margin-top-50">
-            <div class="row mx-0">
-                <h3 class="noteWorthybold">
-                    Other Services
-                    <div class="blackBorder"></div>
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/event-organiser-bg.png" alt="Event Organizer" />
-                            <span class="d-block mt-2 themeFontColor">Event Organizer</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Gift Stores" />
-                            <span class="d-block mt-2 themeFontColor">Gift Stores</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/bouncer-bg.png" alt="Bouncers" />
-                            <span class="d-block mt-2 themeFontColor">Bouncers</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/travels-bg.png" alt="Travels" />
-                            <span class="d-block mt-2 themeFontColor">Travels</span>
-                        </a>
-                        <a href="#" class="item">
-                            <img src="~/newdesign/images/dummy_thumb.jpg" alt="Others" />
-                            <span class="d-block mt-2 themeFontColor">Others</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-    </div>
-
-
-
-    @*<div class="row margin-top-50 oneStopSolution align-items-center">
-                <div class="col-12 col-sm-12 col-md-6">
-                    <h3 class="noteWorthybold">One Stop Solutions</h3>
-                    <p class="mt-3">
-                        The days of heavy headachs are no more now, We are are announcing the most innovative & Intelligent solution that helps to manage your celebration with deep emotion.
-                    </p>
-                    <div class="row mx-0 mt-3">
-                        <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6">
-                    <img src="~/newdesign/images/main-image.png" class="mw-100" alt="Main Image" />
-                </div>
-            </div>
-
-        </div>*@
-
     <div class="container-fluid px-0" id="deals">
         <div class="margin-top-50 margin-bottom-50 themeBgColor text-white deals">
             <div class="row mx-0">
@@ -550,6 +420,142 @@
             </div>
         </div>
     </div>
+    <div class="container-fluid">
+        <div class="row letsCelebrationBlock margin-top-50">
+            <div class="w-100 text-center">
+                <h2 class="noteWorthybold">Frame your memories with us.</h2>
+                <br />
+                <span class="themeBgColorPrimary btnPrimary text-white">Let's Celebrate with us</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="margin-top-50">
+            <div class="row mx-0">
+                <h3 class="noteWorthybold">
+                    Event Services
+                    <div class="blackBorder"></div>
+                </h3>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <div class="owl-carousel owl-theme mt-3">
+                        <a href="/NQuestionNaire?servicetype=Photography" class="item">
+                            <img src="~/newdesign/images/photography-bg.png" alt="Photography" />
+                            <span class="d-block mt-2 themeFontColor">Photography</span>
+                        </a>
+                        <a href="#" class="item">
+                            <img src="~/newdesign/images/makeup-artist-bg.png" alt="Makeup Artist" />
+                            <span class="d-block mt-2 themeFontColor">Makeup Artist</span>
+                        </a>
+                        <a href="/NQuestionNaire?servicetype=Decorator" class="item">
+                            <img src="~/newdesign/images/decorators-bg.png" alt="Decorators" />
+                            <span class="d-block mt-2 themeFontColor">Decorators</span>
+                        </a>
+                        <a href="/NQuestionNaire?servicetype=Pandit" class="item">
+                            <img src="~/newdesign/images/pundit-bg.png" alt="Pandits" />
+                            <span class="d-block mt-2 themeFontColor">Pandits</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="margin-top-50">
+                <div class="row mx-0">
+                    <h3 class="noteWorthybold">
+                        Food & Catering
+                        <div class="blackBorder"></div>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="owl-carousel owl-theme mt-3">
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/indian.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Indian</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/chinese.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Chinese</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/mexican.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Mexican</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/southindian.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">South Indian</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/continent.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Continental</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/fastfood.jpg" alt="Thumb" />
+                                <span class="d-block mt-2 themeFontColor">Fast Food</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="margin-top-50">
+                <div class="row mx-0">
+                    <h3 class="noteWorthybold">
+                        Other Services
+                        <div class="blackBorder"></div>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="owl-carousel owl-theme mt-3">
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/event-organiser-bg.png" alt="Event Organizer" />
+                                <span class="d-block mt-2 themeFontColor">Event Organizer</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/giftstore.jpg" alt="Gift Stores" />
+                                <span class="d-block mt-2 themeFontColor">Gift Stores</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/bouncer-bg.png" alt="Bouncers" />
+                                <span class="d-block mt-2 themeFontColor">Bouncers</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="~/newdesign/images/travels-bg.png" alt="Travels" />
+                                <span class="d-block mt-2 themeFontColor">Travels</span>
+                            </a>
+                            <a href="#" class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/otherservices.jpg" alt="Others" />
+                                <span class="d-block mt-2 themeFontColor">Others</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+
+    @*<div class="row margin-top-50 oneStopSolution align-items-center">
+                <div class="col-12 col-sm-12 col-md-6">
+                    <h3 class="noteWorthybold">One Stop Solutions</h3>
+                    <p class="mt-3">
+                        The days of heavy headachs are no more now, We are are announcing the most innovative & Intelligent solution that helps to manage your celebration with deep emotion.
+                    </p>
+                    <div class="row mx-0 mt-3">
+                        <button type="button" class="btnPrimary themeBgColorPrimary border-0 text-white">Start Planing</button>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6">
+                    <img src="~/newdesign/images/main-image.png" class="mw-100" alt="Main Image" />
+                </div>
+            </div>
+
+        </div>*@
 
     <div class="container">
         <div class="row margin-top-50 oneStopSolution align-items-center">
@@ -572,24 +578,24 @@
 
     <footer class="footerBg text-white py-4 margin-top-50">
         <div class="row mx-0">
-            @*<div class="col-6 col-sm-4 col-md-2 offset-md-1">
-                <h4 class="noteWorthybold">
-                    Main Links
-                    <div class="whiteBorder"></div>
-                </h4>
-                <ul class="pl-0">
-                    <li>
-                        <a href="#" class="text-white">About Us</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white">Blog</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white">Contact Us</a>
-                    </li>
-                </ul>
-            </div>*@
-            <div class="col-6 col-sm-4 col-md-3 offset-md-2">
+            <div class="col-6 col-sm-4 col-md-2 offset-md-1">
+                    <h4 class="noteWorthybold">
+                        Main Links
+                        <div class="whiteBorder"></div>
+                    </h4>
+                    <ul class="pl-0">
+                        <li>
+                            <a href="#" class="text-white">About Us</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Blog</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            <div class="col-6 col-sm-4 col-md-2">
                 <h4 class="noteWorthybold">
                     Celebrations
                     <div class="whiteBorder"></div>
@@ -615,7 +621,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-6 col-sm-4 col-md-3">
+            <div class="col-6 col-sm-4 col-md-2">
                 <h4 class="noteWorthybold">
                     Services
                     <div class="whiteBorder"></div>
@@ -624,21 +630,21 @@
                     <li>
                         <a href="/NQuestionNaire?servicetype=Venue" class="text-white">Venues</a>
                     </li>
-                    @*<li>
-                        <a href="#" class="text-white">Music & Artists</a>
-                    </li>*@
+                    <li>
+                            <a href="#" class="text-white">Music & Artists</a>
+                        </li>
                     <li>
                         <a href="/NQuestionNaire?servicetype=Catering" class="text-white">Catering</a>
                     </li>
-                    @*<li>
-                        <a href="#" class="text-white">Event Services</a>
-                    </li>
                     <li>
-                        <a href="#" class="text-white">Other</a>
-                    </li>*@
+                            <a href="#" class="text-white">Event Services</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Other</a>
+                        </li>
                 </ul>
             </div>
-            <div class="col-6 col-sm-4 col-md-3">
+            <div class="col-6 col-sm-4 col-md-2">
                 <h4 class="noteWorthybold">
                     What's Trending
                     <div class="whiteBorder"></div>
@@ -647,55 +653,55 @@
                     <li>
                         <a href="/NQuestionNaire?servicetype=Photography" class="text-white">Photography</a>
                     </li>
-                    @*<li>
-                        <a href="#" class="text-white">Makeup Artists</a>
-                    </li>*@
+                    <li>
+                            <a href="#" class="text-white">Makeup Artists</a>
+                        </li>
                     <li>
                         <a href="/NQuestionNaire?servicetype=Decorator" class="text-white">Decorators</a>
                     </li>
                     <li>
                         <a href="/NQuestionNaire?servicetype=Pandit" class="text-white">Pandit</a>
                     </li>
-                    @*<li>
-                        <a href="#" class="text-white">Bakers</a>
-                    </li>*@
+                    <li>
+                            <a href="#" class="text-white">Bakers</a>
+                        </li>
                     <li>
                         <a href="/NQuestionNaire?servicetype=Banquet Hall" class="text-white">Banquet Halls</a>
                     </li>
                 </ul>
             </div>
-            @*<div class="col-6 col-sm-4 col-md-2">
-                <h4 class="noteWorthybold">
-                    Support System
-                    <div class="whiteBorder"></div>
-                </h4>
-                <ul class="pl-0">
-                    <li>
-                        <a href="#" class="text-white">Customer Support</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white">Vendor Support</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white">Faq's</a>
-                    </li>
-                </ul>
-            </div>*@
+            <div class="col-6 col-sm-4 col-md-2">
+                    <h4 class="noteWorthybold">
+                        Support System
+                        <div class="whiteBorder"></div>
+                    </h4>
+                    <ul class="pl-0">
+                        <li>
+                            <a href="#" class="text-white">Customer Support</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Vendor Support</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Faq's</a>
+                        </li>
+                    </ul>
+                </div>
         </div>
         <div class="row mx-0 secondFooter">
-            @*<div class="w-100 text-center">
-                <ul class="pl-0 mb-0">
-                    <li>
-                        <a href="#" class="text-white">Privacy Policy</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white">Refund Policy</a>
-                    </li>
-                    <li>
-                        <a href="#" class="text-white">Terms &amp; Conditions</a>
-                    </li>
-                </ul>
-            </div>*@
+            <div class="w-100 text-center">
+                    <ul class="pl-0 mb-0">
+                        <li>
+                            <a href="#" class="text-white">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Refund Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Terms &amp; Conditions</a>
+                        </li>
+                    </ul>
+                </div>
             <div class="w-100 text-center">
                 <p class="mb-0">Copy Right 2018, All rights reserved.</p>
             </div>
@@ -705,9 +711,11 @@
         <div class="icon"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
     </div>
 
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
     <script type="text/javascript" src="~/newdesign/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="~/newdesign/js/bootstrap.js"></script>
+    <script src="~/newdesign/js/alertify.js"></script>
     @*<!------ Owl Thumb Slider ---------->*@
     @*<script src="~/newdesign/js/jquery-ui.min.js"></script>
         <script src="~/newdesign/js/datepicker.js"></script>*@
@@ -733,7 +741,59 @@
                     }
                 }
             })
+
+          
+
         })
+    </script>
+    @*geolocation*@
+    <script>
+        window.onload = function () {
+            var city_name = "";
+          
+            var geocoder = new google.maps.Geocoder();
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+            }
+            //Get the latitude and the longitude;
+            function successFunction(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                codeLatLng(lat, lng)
+            }
+
+            function errorFunction() {
+                //alert("Geocoder failed");
+            }
+
+            function initialize() {
+                geocoder = new google.maps.Geocoder();
+
+
+
+            }
+
+            function codeLatLng(lat, lng) {
+
+                var latlng = new google.maps.LatLng(lat, lng);
+                var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false'
+
+                $.ajax(url).done(function(data) {
+                    for (var i = 0; i < data.results.length; i++) {
+                        for (var j = 0; j < data.results[i].address_components.length; j++) {
+                            for (var k = 0; k < data.results[i].address_components[j].types.length; k++) {
+                                if (data.results[i].address_components[j].types[k] === 'locality') {
+                                     city_name = data.results[i].address_components[j].long_name;
+                                }
+                            }
+                        }
+                    }
+                    //alert(city_name);
+
+                })
+            }
+        }
     </script>
     <!------ Auto Complete ---------->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -750,6 +810,14 @@
             maxDate: '+1970/03/02'//tomorrow is maximum date calendar
         });
         /*------------ Date and Time --------------*/
+    </script>
+
+    <script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
     </script>
 
     <script>
@@ -774,12 +842,21 @@
     <script>
         @*<!------ Top Section Area Search ---------->*@
         var areaSpan = $(".topSearchArea").find("span:last-child"),
-            topThisUiWidget = $(".topSearchArea").next(".ui-widget");
+            topThisUiWidget = $(".topSearchArea").next(".ui-widget").find('input');
         $(".topSearchArea").click(function (event) {
             $(areaSpan).css({ "display": "none" });
             $(topThisUiWidget).css({ "display": "block" });
-            $(topThisUiWidget).find("input").focus();
+            $(topThisUiWidget).focus();
         });
+
+        $(topThisUiWidget).on('blur', function () {
+            if ($(this).val() == '') {
+                //alert("Empty");
+                $(areaSpan).css({ "display": "flex" });
+                $(topThisUiWidget).css("display", "none");
+            }
+        });
+
         //      <!------ Top Section Area Search ---------->
 
         //<!------ Index Search Block ---------->
@@ -798,11 +875,18 @@
         @*<!------ Venue Area Search ---------->*@
         var venueSearch = $(".venueSearch").find("span"),
         venueSearchSpan = $(".venueSearch").find("span:first-of-type"),
-        venueUiWidge = $(".venueSearch").find(".ui-widget");
+        venueUiWidge = $(".venueSearch").find(".ui-widget").find('input');;
         $(venueSearch).click(function () {
             $(venueSearchSpan).css({ "display": "none" });
             $(venueUiWidge).css({ "display": "block" });
-            $(venueUiWidge).find("input").focus();
+            $(venueUiWidge).focus();
+        });
+        $(venueUiWidge).on('blur', function () {
+            if ($(this).val() == '') {
+                //alert("Empty");
+                $(venueSearch).css({ "display": "flex" });
+                $(venueUiWidge).css("display", "none");
+            }
         });
         $(document).on('click keydown', 'ul#ui-id-2 li.ui-menu-item', function () {
             $(".normalSearch > .normalSearchResult").css("display", "block");
@@ -841,7 +925,8 @@
                     //}
                 },
                 error: function (ex) {
-                    alert("Failed To Fetch data");
+                    //alert("Failed To Fetch data");
+                    alertmsg("Failed To Fetch data");
                 }
             });
             //});
@@ -907,8 +992,8 @@
             var servicetype = $('#selectedservice').val();
             var occasiondate = $('#datetimepicker').val();
             if (location == '') { location = 'Hyderabad'; }
-            if (servicetype == '') { alert("Select Service Type"); }
-            if (occasiondate == '') { alert("Select Occasion Date"); }
+            if (servicetype == '') { alertmsg("Select Service Type"); }
+            if (occasiondate == '') { alertmsg("Select Occasion Date"); }
             //alert("location=" + location + ",servicetype=" + servicetype + ",occasiondate=" + occasiondate + "");
             if (servicetype != '' && occasiondate != '') {
                 window.location.href = '/NQuestionNaire?location=' + location + '&&servicetype=' + servicetype + '&&occasiondate=' + occasiondate;
@@ -976,9 +1061,16 @@
                     }
                 },
                 error: function (data) {
-                    alert('error')
+                    //alert('error');
+                    alertmsg("error");
                 }
             });
+        }
+    </script>
+    <script>
+        function redirect(id,subid) {
+            var type = $('#searchvendortype').html();
+            location.href = '/NParticularVendor?type='+type+'&&id='+id+'&&vid='+subid+'';
         }
     </script>
 </body>

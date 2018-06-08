@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using MaaAahwanam.Models;
 using System;
-
+using System.Collections.Generic;
 
 namespace MaaAahwanam.Repository.db
 {
@@ -113,6 +113,44 @@ namespace MaaAahwanam.Repository.db
             }
             return userDetail;
         }
+
+
+        public Vendormaster Updatevendordetailsnew(Vendormaster vendor,  string email)
+        {
+            // Query the database for the row to be updated.
+            var query =
+                from ord in _dbContext.Vendormaster
+                where ord.EmailId == email
+                select ord;
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (Vendormaster ord in query)
+            {
+                ord.BusinessName = vendor.BusinessName;
+                ord.Address = vendor.Address;
+                ord.City = vendor.City;
+                ord.Landmark = vendor.Landmark;
+                ord.ContactPerson = vendor.ContactPerson;
+                ord.ContactNumber = vendor.ContactNumber;
+                //ord.Description = vendor.Description;
+                ord.LandlineNumber = vendor.LandlineNumber;
+                ord.ZipCode = vendor.ZipCode;
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception Ex)
+            {
+
+            }
+            return vendor;
+        }
+
         public void UpdateDP(int UserloginsID,string imagename)
         {
             var list = _dbContext.UserDetail.SingleOrDefault(o=>o.UserLoginId==UserloginsID);
@@ -165,6 +203,25 @@ namespace MaaAahwanam.Repository.db
                 return 0;
             }
             return 1;
+        }
+
+        public UserDetail UpdateUserDetailEmail(UserDetail userDetail, string email)
+        {
+            var GetMasterRecord = _dbContext.UserDetail.SingleOrDefault(m => m.AlternativeEmailID == email);
+            userDetail.AlternativeEmailID = userDetail.AlternativeEmailID;
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userDetail);
+            _dbContext.SaveChanges();
+            return userDetail;
+        }
+
+        public UserDetail GetUserDetailsByEmail(string email)
+        {
+            return _dbContext.UserDetail.SingleOrDefault(m => m.AlternativeEmailID == email);
+        }
+
+        public List<UserLogin> GetUserLoginTypes(string email)
+        {
+            return _dbContext.UserLogin.Where(m => m.UserName == email).ToList();
         }
     }
 }

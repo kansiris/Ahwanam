@@ -11,6 +11,7 @@ namespace MaaAahwanam.Service
 {
     public class EventsandtipsService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         EventsandTipRepository eventsandTipRepository = new EventsandTipRepository();
         public List<geteventsandtipsimages_Result> EventsandTipsList(int id)
         {
@@ -19,8 +20,8 @@ namespace MaaAahwanam.Service
 
         public EventsandTip AddEventandTip(EventsandTip eventAndTip)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
-            eventAndTip.UpdatedDate = Convert.ToDateTime(updateddate);
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            eventAndTip.UpdatedDate = updateddate;
             eventAndTip.Status = "Active";
             eventsandTipRepository.AddEventsAndTip(eventAndTip);
             return eventAndTip;
@@ -38,8 +39,8 @@ namespace MaaAahwanam.Service
 
         public EventsandTip UpdateEventandTip(EventsandTip eventAndTip,long id)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
-            eventAndTip.UpdatedDate = Convert.ToDateTime(updateddate);
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            eventAndTip.UpdatedDate = updateddate;
             eventAndTip.Status = "Active";
             eventsandTipRepository.UpdateEventsAndTip(eventAndTip,id);
             return eventAndTip;

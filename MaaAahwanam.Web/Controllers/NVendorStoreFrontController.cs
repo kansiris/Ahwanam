@@ -11,11 +11,18 @@ namespace MaaAahwanam.Web.Controllers
     public class NVendorStoreFrontController : Controller
     {
         VendorImageService vendorImageService = new VendorImageService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         // GET: NVendorStoreFront
         public ActionResult Index(string id)
         {
+            try { 
+            if (TempData["Active"] != "")
+            {
+                ViewBag.msg = TempData["Active"];
+            }
             ViewBag.id = id;
+            ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
             var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList();
             var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
             var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
@@ -27,10 +34,16 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.decorators = decorators;
             ViewBag.others = others;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult deleteservice(string id, string vid, string type)
         {
+            try { 
             int count = 0;
             if (type == "Venue")
                 count = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList().Count;
@@ -48,16 +61,31 @@ namespace MaaAahwanam.Web.Controllers
             {
                 string msg = vendorVenueSignUpService.RemoveVendorService(vid, type);
                 string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
-                return Content("<script language='javascript' type='text/javascript'>alert('Service " + msg + "');location.href='/NVendorStoreFront/Index?id=" + id +"'</script>");
+
+                TempData["Active"] = "Service " + msg + "";
+                return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
+              //  return Content("<script language='javascript' type='text/javascript'>alert('Service " + msg + "');location.href='/NVendorStoreFront/Index?id=" + id +"'</script>");
             }
             else
             {
                 long value = vendorVenueSignUpService.UpdateVendorService(id, vid, type);
                 string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
                 if (value > 0)
-                    return Content("<script language='javascript' type='text/javascript'>alert('Service Removed');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+                {
+                    TempData["Active"] = "Service Removed";
+                    return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
+                }
+                // return Content("<script language='javascript' type='text/javascript'>alert('Service Removed');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
                 else
-                    return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+
+                    TempData["Active"] = "Something Went Wrong!!! Try Again After Some Time";
+                return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
+                //return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+            }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
             }
         }
     }

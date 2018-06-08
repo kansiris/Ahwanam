@@ -145,7 +145,7 @@ namespace MaaAahwanam.Web.Controllers
         {               //Write your code here to access these paramerters
             var response = "";
 
-            FormsAuthentication.SetAuthCookie(email, false);
+            
             UserLogin userLogin = new UserLogin();
             UserDetail userDetail = new UserDetail();
             userDetail.FirstName = name;
@@ -155,33 +155,36 @@ namespace MaaAahwanam.Web.Controllers
             userLogin.UserName = email;
             userLogin.Password = "Google";
             userLogin.UserType = "User";
+            userLogin.Status = "Active";
             UserLogin userlogin1 = new UserLogin();
 
-            userlogin1 = venorVenueSignUpService.GetUserLogin(userLogin); // checking where email id is registered or not.
+            userlogin1 = venorVenueSignUpService.GetUserLogdetails(userLogin); // checking where email id is registered or not.
 
             if (userlogin1 == null)
+            {
                 response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
-            else
-                response = "sucess";
-            if (response == "sucess")
+            }
+
+            var userResponse = venorVenueSignUpService.GetUserdetails(email);
+
+
+            if (userResponse.UserType == "User")
             {
-                var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-                if (userResponse != null)
-                {
-                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-                    string userData = JsonConvert.SerializeObject(userResponse); //creating identity
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    // return Content("<script language='javascript' type='text/javascript'>alert('Thanks for login');location.href='" + @Url.Action("Index", "NHomePage") + "'</script>");
-                    return RedirectToAction("Index", "NHomePage");
-                }
+                FormsAuthentication.SetAuthCookie(email, false);
+                vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                string userData = JsonConvert.SerializeObject(userResponse); //creating identity
+                ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                return Json("success");
             }
             else
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Authentication Failed');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                return Json("failed");
+
+          //  return Content("<script language='javascript' type='text/javascript'>alert('This email is registared as Vendor please login with Your Credentials');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>"); 
             }
-            return RedirectToAction("Index", "NUserRegistration");
         }
-        
+
+
         private Uri RediredtUri
         {
             get

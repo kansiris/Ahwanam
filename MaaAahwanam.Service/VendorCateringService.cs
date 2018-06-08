@@ -11,6 +11,7 @@ namespace MaaAahwanam.Service
 {
    public class VendorCateringService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         RandomPassword randomPassword = new RandomPassword();
         UserLoginRepository userLoginRepository = new UserLoginRepository();
         VendormasterRepository vendorMasterRepository = new VendormasterRepository();
@@ -20,11 +21,11 @@ namespace MaaAahwanam.Service
         UserDetail userDetail = new UserDetail();
         public VendorsCatering AddCatering(VendorsCatering vendorCatering, Vendormaster vendorMaster)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorCatering.Status = "Active";
-            vendorCatering.UpdatedDate =  Convert.ToDateTime(updateddate);
+            vendorCatering.UpdatedDate = updateddate;
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorMaster.ServicType = "Catering";
             vendorMaster = vendorMasterRepository.AddVendorMaster(vendorMaster);
             vendorCatering.VendorMasterId = vendorMaster.Id;
@@ -33,8 +34,8 @@ namespace MaaAahwanam.Service
             userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
-            userLogin.RegDate = Convert.ToDateTime(updateddate);
-            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
+            userLogin.RegDate = updateddate;
+            userLogin.UpdatedDate = updateddate;
             userLogin.Status = "Active";
             userLogin = userLoginRepository.AddVendorUserLogin(userLogin);
             userDetail.UserLoginId = userLogin.UserLoginId;
@@ -47,7 +48,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendorMaster.ZipCode;
             userDetail.Status = "Active";
             userDetail.UpdatedBy = ValidUserUtility.ValidUser();
-            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+            userDetail.UpdatedDate = updateddate;
             userDetail.AlternativeEmailID = vendorMaster.EmailId;
             userDetail.Landmark = vendorMaster.Landmark;
             userDetail = userDetailsRepository.AddUserDetails(userDetail);
@@ -69,11 +70,11 @@ namespace MaaAahwanam.Service
 
         public VendorsCatering activeCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorsCatering.Status = "Active";
-            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsCatering.UpdatedDate = updateddate;
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorMaster.ServicType = "Catering";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsCatering = vendorCateringRespository.UpdatesCatering(vendorsCatering, masterid, vid);
@@ -82,11 +83,11 @@ namespace MaaAahwanam.Service
 
         public VendorsCatering InactiveCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorsCatering.Status = "InActive";
-            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsCatering.UpdatedDate = updateddate;
             vendorMaster.Status = "InActive";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorMaster.ServicType = "Catering";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsCatering = vendorCateringRespository.UpdatesCatering(vendorsCatering, masterid, vid);
@@ -96,11 +97,11 @@ namespace MaaAahwanam.Service
 
         public VendorsCatering UpdatesCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid,long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorsCatering.Status = "Active";
-            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsCatering.UpdatedDate = updateddate;
             vendorMaster.Status = "Active";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorMaster.ServicType = "Catering";
             vendorMaster = vendorMasterRepository.UpdateVendorMaster(vendorMaster, masterid);
             vendorsCatering = vendorCateringRespository.UpdatesCatering(vendorsCatering, masterid,vid);
@@ -109,9 +110,9 @@ namespace MaaAahwanam.Service
 
         public VendorsCatering AddNewCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorsCatering.Status = "Active";
-            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsCatering.UpdatedDate = updateddate;
             vendorsCatering.VendorMasterId = vendorMaster.Id;
             vendorsCatering = vendorCateringRespository.AddCatering(vendorsCatering);
             return vendorsCatering;

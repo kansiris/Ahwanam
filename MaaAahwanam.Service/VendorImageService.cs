@@ -10,12 +10,13 @@ namespace MaaAahwanam.Service
 {
    public class VendorImageService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         VendorImageRepository vendorImageRepository = new VendorImageRepository();
         public VendorImage AddVendorImage(VendorImage vendorImage, Vendormaster vendorMaster)
        {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             vendorImage.Status = "Active";
-           vendorImage.UpdatedDate = Convert.ToDateTime(updateddate);
+           vendorImage.UpdatedDate = updateddate;
            vendorImage.VendorMasterId = vendorMaster.Id;
            vendorImage = vendorImageRepository.AddVendorImage(vendorImage);
            return vendorImage;

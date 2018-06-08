@@ -4,6 +4,26 @@
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
 }
 
+@if (ViewBag.stype.Count != 0)
+{
+    <div class="container-fluid">
+        <div class="row innerPagesBg">
+            <div class="col-12 col-md-12 py-2 mb-3 selectedServices bgWhite">
+                <div class="w-100">
+                    Your selected services
+                </div>
+                <ul class="px-0 py-2 mb-0">
+                    @foreach (var item in ViewBag.stype)
+                {
+                        <li id="@item[0]">@item[1]</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+
 <div class="container-fluid">
     <div class="row innerPagesBg py-2">
         <input type="hidden" id="L1" name="L1" value="@ViewBag.count" />
@@ -13,31 +33,39 @@
         <input type="hidden" id="L5" name="L5" value="@ViewBag.count" />
         <div class="col-12 col-sm-12 col-md-9 mb-2 mb-sm-0 mb-md-0">
             <div class="totalDealsBlock filteredResultsBlock  bgWhite py-3" id="BlockOnePartial">
-                @{Html.RenderAction("BlockOnePartial", "NResults"); } @*Venue Records partial View*@
+                @{Html.RenderAction("BlockOnePartial", "NResults"); }
             </div>
             <div class="totalDealsBlock filteredResultsBlock  bgWhite py-3 my-3" id="BlockTwoPartial">
-                @{Html.RenderAction("BlockTwoPartial", "NResults"); } @*Catering Records partial View*@
+                @{Html.RenderAction("BlockTwoPartial", "NResults"); }
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-3 pl-md-0 topVenus">
             <div class="px-15">
                 <div class="row bgWhite filteredResultsBlock  mb-3" id="BlockThreePartial">
-                    @{Html.RenderAction("BlockThreePartial", "NResults"); } @*Decorator Records partial View*@
+                    @{Html.RenderAction("BlockThreePartial", "NResults"); }
                 </div>
                 <div class="row bgWhite filteredResultsBlock  mb-3" id="BlockFourPartial">
-                    @{Html.RenderAction("BlockFourPartial", "NResults"); } @*Photography Records partial View*@
+                    @{Html.RenderAction("BlockFourPartial", "NResults"); }
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@if (new string[] { "Mehendi", "Pandit" }.Contains(Request.QueryString["type"]) || new string[] { "Mehendi", "Pandit", "Mehendi,Pandit" }.Contains(Request.QueryString["stype"]))
+@if (ViewBag.stypecount > 4)
 {
-    <div class="container-fluid innerPagesBg" id="BlockFivePartial">
-        { Html.RenderAction("BlockFivePartial", "NResults"); } @*Mehendi/Pandit Records partial View*@
+    <div class="container-fluid innerPagesBg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 mb-4">
+                    <div class="totalDealsBlock filteredResultsBlock  bgWhite py-3 my-3" id="BlockFivePartial">
+                        @{ Html.RenderAction("BlockFivePartial", "NResults"); }
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-}
+                            }
 <div class="container">
     <div class="margin-top-50">
         <div class="row mx-0">
@@ -137,8 +165,173 @@
             </div>
         </div>*@
 </div>
+<div class="container-fluid">
+    <div class="row dealProfile">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="resultsPopUp">
+                <input type="hidden" id="availabledates" />
+                <div class="col-12 col-sm-12 col-md-9 content">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row innerPagesBg pt-2">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-2 mb-sm-0 mb-md-0">
+                                    <div class="row mx-0 bgWhite p-2">
+                                        <div class="w-100 bannerImg"></div>
+                                        <div class="row w-100 mx-0 my-15">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 dealProfileName px-0">
+                                                <div class="w-100 title noteWorthybold"></div>
+                                            </div>
+                                            <div class="col-6 col-md-6 vendorPrice text-right"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 pl-md-0 topVenus">
+                                    <div class="px-15">
+                                        <div class="row bgWhite mb-3">
+                                            <div class="w-100 px-2 py-2">
+                                                <div class="row mx-0">
+                                                    <h3 class="noteWorthybold mb-0">
+                                                        Fill the Details
+                                                        <div class="blackBorder"></div>
+                                                    </h3>
+                                                </div>
+                                                <div class="row mx-0 mt-4 dealProfileForm">
+                                                    <div class="w-100">
+                                                        <div class="form-group mb-0">
+                                                            <input type="text" class="form-control nexaBold" placeholder="Event Type" id="eventtype" name="eventtype">
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-100 mt-3 noOfPeoples">
+                                                        <div class="form-group mb-0">
+                                                            <input type="number" class="form-control nexaBold" placeholder="Members" id="Members">
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-100 mt-3 eventDate">
+                                                        <div class="datentime w-100">
+                                                            <input type="text" value="" id="datetimepicker" class="form-control" placeholder="Date Here">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-100 mt-3 slotTime">
+                                                        <div class="w-50 float-left">
+                                                            <label class="w-100 mb-0">
+                                                                <input type="checkbox">
+                                                                <span></span>
+                                                                <p class="mb-0 d-inline">Morning</p>
+                                                            </label>
+                                                        </div>
+                                                        <div class="w-50 float-left">
+                                                            <label class="w-100 mb-0">
+                                                                <input type="checkbox">
+                                                                <span></span>
+                                                                <p class="mb-0 d-inline">Evening</p>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mx-0">
+                                                    <div class="w-100 d-flex my-2 addtoCart"></div>
+                                                    <div class="w-100 d-flex my-2 viewMoreBtn"></div>
+                                                </div>
+
+                                                <div class="w-100 mt-3 totalAmount d-inline-block fontSize-16">
+                                                    <div class="float-left">
+                                                        @*<p class="mb-0">Add to wishlist</p>*@
+                                                    </div>
+                                                    <div class="float-right themeColor textUnderline">
+                                                        @*<p class="mb-0">Reviews (<span>100</span>)</p>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row basicDetails">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row innerPagesBg">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="row mx-0 bgWhite p-2">
+                                        <div class="col-12 col-md-12 px-0">
+                                            <h3 class="noteWorthybold mb-0">Descrption</h3>
+                                            <p class="limitText"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-0 bgWhite p-2">
+                                        <div class="col-12 col-md-12 px-0">
+                                            <h3 class="noteWorthybold mb-0">Amenities</h3>
+                                            <div class="col-12 col-md-12 vendorAmenities"></div>
+                                            <input type="hidden" id="vendoravailabledates" />
+                                            <input type="hidden" id="serviceprice" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    <script type="text/javascript">
+        /*--- Date and Time ----*/
+        $('#datetimepicker').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            timepicker: false,
+            format: 'd/m/Y',
+            minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+            maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+            beforeShowDay: function (date) {
+                var disableddates = $('#vendoravailabledates').val();
+                if (disableddates != '') {
+                    var unavailableDates = '';
+                    var final = ''; var dateslist1 = disableddates.split(',');
+                    for (var i = 0; i < dateslist1.length; i++) {
+                        var dateslist = dateslist1[i].split('-');
+                        if (dateslist[0] < 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] < 10 && dateslist[1] >= 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] >= 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+
+                        else {
+                            final = final + dateslist1[i] + ",";
+                        }
+                        unavailableDates = final.slice(0, -1).split(',');
+                    }
+                    var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                    //alert(unavailableDates);
+                    if ($.inArray(dmy, unavailableDates) != -1) {
+                        return [false, "myclass", "Unavailable"];
+                    } else {
+                        return [true, ""];
+                    }
+                }
+            }
+        });
+        /*------------ Date and Time --------------*/
+        function checkavailableity() {
+            alert("date selected");
+        }
+    </script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
 
 
@@ -164,10 +357,12 @@
                 }
             })
         })
+        $('#Members').val('@Request.QueryString["count"]');
+        $('#datetimepicker').val('@Request.QueryString["date"]');
     </script>
 
     <script>
-        var parameters = 'loc=@Request.QueryString["loc"]&&budget=@Request.QueryString["budget"]&&stype=@Request.QueryString["stype"].TrimEnd(',').Replace(' ','-')&&date=@Request.QueryString["date"]&&count=@Request.QueryString["count"]';
+        var parameters = 'loc=@Request.QueryString["loc"]&&budget=@Request.QueryString["budget"]&&stype=@Request.QueryString["stype"].TrimEnd(',').Replace(' ', '-')&&date=@Request.QueryString["date"]&&count=@Request.QueryString["count"]';
         function PartialOne() {
             var lastrecord = parseInt($('#L1').val()) + parseInt(6);
             var category = $("#BlockOneCategory").text().trim();
@@ -207,6 +402,178 @@
             var url = '/NResults/BlockFivePartial?' + parameters + '&&L5=' + lastrecord + '&&type=' + category;
             $("#BlockFivePartial").empty().load(url);
             $('#L5').val(lastrecord);
+        }
+    </script>
+
+    <script type="text/javascript">
+        /*--$(document).ready(function(){
+          var lenChar = document.getElementsByClassName("limitText");
+      for(var i = 0; i < lenChar.length; i++){
+        if(lenChar[i].className == 'limitText'){
+            lenChar[i].innerHTML = lenChar[i].innerHTML.substring(0 , 30);
+         }
+      }
+        });--*/
+        var bannerImg = $(".resultsPopUp .bannerImg"), vendorTitle = $(".resultsPopUp .dealProfileName div"),
+            vendorPrice = $(".resultsPopUp .vendorPrice"), vendorDescrption = $(".resultsPopUp h3 + p.limitText"),
+            vendorAmenities = $(".resultsPopUp .vendorAmenities"), viewMoreBtn = $(".resultsPopUp .viewMoreBtn"),
+            addtoCart = $(".resultsPopUp .addtoCart");
+        //$(".productBlock").click(function () {
+        $(document).on('click', '.productBlock', function () {
+
+            //var value =
+            if ('@Request.QueryString["stype"]') {
+                $(".resultsPopUp").css("display", "block");
+                var attrId = $(this).parents(".filteredResultsBlock").attr("id");
+                document.getElementsByClassName("resultsPopUp")[0].setAttribute("id", attrId);
+
+                var url = $(this).find(".vendorViewMore").attr("href");
+                var id = url.split("id=")[1].split("&&")[0];
+                var vid = url.split("vid=")[1];
+                var type = url.split("type=")[1].split("&&")[0];
+                //alert("id="+id+",vid="+vid+",type="+type);
+                $.get('/NResults/GetVendorDates', { id: id, vid: vid, type: type }, function (response) {
+                    //alert(response);
+                    $('#vendoravailabledates').val(response.slice(0, -1));
+                });
+            }
+
+
+            // Product Gallery
+            $(this).find(".vendorImg").children("img").clone().appendTo(bannerImg);
+            $(bannerImg).children("img").prevAll("img").remove();
+
+            // Product Title
+            $(this).find("p.productName").clone().appendTo(vendorTitle);
+            $(vendorTitle).children('p').prevAll("p").remove();
+
+            // Product Prices
+            $(this).find(".vendorPrice").children("p").clone().appendTo(vendorPrice);
+            $('#serviceprice').val($(this).find(".vendorPrice").children("p").text());
+            $(vendorPrice).children("p.productMinPrice").prevAll("p.productMinPrice").remove();
+            $(vendorPrice).children("p.productMaxPrice").prevAll("p.productMaxPrice").remove();
+            
+            
+
+            // Vendor Descrption
+            $(this).find(".vendorDescrption").clone().appendTo(vendorDescrption);
+            $(vendorDescrption).find(".vendorDescrption").prevAll(".vendorDescrption").remove();
+
+            // Vendor Amenities
+            $(this).find(".vendorAmenities").children("ul").clone().appendTo(vendorAmenities);
+            $(vendorAmenities).find("ul").prevAll("ul").remove();
+
+            //Viewmore Button
+            $(this).find(".vendorViewMore").clone().appendTo(viewMoreBtn);
+            $(viewMoreBtn).children("a").prevAll("a").remove();
+
+            //AddtoCart Button
+            $(this).find(".vendorAddtoCart").clone().appendTo(addtoCart);
+            $(addtoCart).find("span").prevAll("span").remove();
+
+
+        });
+        $(".resultsPopUp i.fa-times").click(function () {
+            $(this).parents(".resultsPopUp").css("display", "none");
+        });
+
+        /*-- Selected services block --*/
+        $(document).on('scroll', function () {
+            var scrollTop = $(this).scrollTop();
+            if (scrollTop > 100) {
+                $(".selectedServices").css({ "position": "fixed", "z-index": "1", "top": "0", "margin-top": "0", "box-shadow": "1px 0px 5px 2px rgba(0,0,0,.2)" });
+            } else {
+                $(".selectedServices").css({ "position": "relative", "margin-top": "15px", "box-shadow": "none" });
+            }
+        });
+
+        //$(".addtoCart").click(function () {
+        $(document).on('click', '.addtoCart', function () {
+            var attrId = $(this).parents(".resultsPopUp").attr("id").replace("Partial","");
+            //alert(attrId);
+            $(".selectedServices ul li").each(function () {
+                var liId = $(this).attr("id");
+                if (liId == attrId) {
+                    $(this).css("color", "#573393");
+                }
+            });
+        });
+        /*-- Selected services block --*/
+
+        //});
+        $(".resultsPopUp i.fa-times").click(function () {
+            $(this).parents(".resultsPopUp").css("display", "none");
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.vendorAddtoCart', function () {
+            var vurl = $(this).parents('div.addtoCart').nextAll('div.viewMoreBtn').find('a').attr('href');
+            var type = vurl.split('type=')[1].split('&&')[0];
+            if ($("#eventtype").val() == '') {
+                alertmsg("Please Enter Event type");
+
+            }
+            else if ($("#members").val() == '') {
+                alertmsg("Please Enter Members Count");
+            }
+            else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+                //var checkText = $(".slotTime input[type='checkbox']").is(':checked');
+                //$(".filteredQuestions > .questions:last-of-type .options ul").next('p').append(checkText + ",");
+                //alert(checkText.nextAll("p").text());
+                var eventtype = $("#eventtype").val();
+                var id = vurl.split("id=")[1].split("&&")[0];
+                var vid = vurl.split("vid=")[1];
+                var date = $("#datetimepicker").val();
+                var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
+                var nop = $("#Members").val();
+                var timeslot = 'Morning';
+                //var totalprice = price * nop;
+                var selectedtype = 'sprice';//$('#selectedtype').val();
+                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype;
+                //alert(url1);
+                    $.ajax({
+                        url: url1,
+                        success: function (data) {
+                            if (data == "Success") {
+                                alertify.alert("Added To Cart", function () {
+                                    $(".resultsPopUp").css("display", "none");
+                                    var url = '/NHomePage/ItemsCartViewBindingLayout';
+                                    $('#navbarSupportedContent').empty().load(url);
+                                }); //location.href = '/NCartView/Index';
+                            }
+                            else if (data == "failed") {
+                                alertmsg("Failed To add item to the cart");
+                            }
+                            else if (data == "Exists") {
+                                alertmsg("This Service Already Exists in Cart");
+                            }
+                            else if (data == "Login") {
+                                //alertmsg("Login/Register to Add this Sevice to Cart");
+                                alertify.alert("Login/Register to Add this Sevice to Cart", function () {
+                                    location.href = '/NUserRegistration/Index';
+                                });
+                            }
+                        }
+                    });
+            }
+            else {
+                alertmsg("Please select time slot");
+            }
+        });
+        /*-- Need Help Block --*/
+        $('.needHelpBtn').click(function () {
+            $('.needHelpBlock').css('display', 'block');
+        });
+        $('.closeBlock').click(function () {
+            $('.needHelpBlock').css('display', 'none');
+        });
+        /*-- Need Help Block --*/
+    </script>
+
+    <script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () { });
         }
     </script>
 }

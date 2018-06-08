@@ -18,14 +18,25 @@ namespace MaaAahwanam.Web.Controllers
         string type = "";
         public ActionResult Index()
         {
+            try { 
+            if (TempData["Active"] != "")
+            {
+                ViewBag.Active = TempData["Active"];
+            }
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         [HttpPost]
         public ActionResult Index([Bind(Prefix = "Item1")]UserLogin userLogin, [Bind(Prefix = "Item2")] Vendormaster vendorMaster, string command)
         {
-            if (command == "VendorReg")
-            {
+            try { 
+            //if (command == "VendorReg")
+            //{
                 int query = vendorMasterService.checkemail(vendorMaster.EmailId);
 
                 if (query == 0)
@@ -61,19 +72,26 @@ namespace MaaAahwanam.Web.Controllers
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
 
-                    return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                    TempData["Active"] = "Check your email to active your account to login";
+                    return RedirectToAction("Index", "NUserRegistration");
 
-
-
+                   // return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     //if (vendorMaster.Id != 0)
                     //{
                     //    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
                     //}
                 }
                 else
-                    return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
+                    TempData["Active"] = "E-Mail ID Already Taken!!! Try Another";
+                return RedirectToAction("Index", "NUserRegistration");
+                // return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
+                //}
+                // return View();
             }
-            return View();
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public JsonResult checkemail(string emailid)

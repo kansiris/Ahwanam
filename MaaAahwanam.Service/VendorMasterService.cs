@@ -52,5 +52,21 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.VendormasterList().Select(m => m.City).ToList<dynamic>();
         }
+
+        public Vendormaster UpdateVendorStorefront(Vendormaster vendorMaster, long id)
+        {
+            return vendormasterRepository.UpdateVendorStorefront(vendorMaster, id);
+        }
+
+        public List<Vendormaster> SearchVendors()
+        {
+            return vendormasterRepository.VendormasterList();
+        }
+
+        public Vendormaster UpdateVendorDetails(Vendormaster vendorMaster, long id)
+        {
+            return vendormasterRepository.UpdateVendorDetails(vendorMaster, id);
+        }
+
     }
 }

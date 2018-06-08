@@ -6,6 +6,7 @@
             <div class="blackBorder"></div>
         </h3>
     </div>
+    @using System.Globalization
     <div class="row mx-0 mt-4">
         @foreach (var item in ViewBag.deal)
         {
@@ -23,7 +24,7 @@
                         <p class="mb-0">@item.businessname</p>
                     @*</a>*@
                     <div class="w-100">
-                        <p class="productMinPrice mb-0 themeColor d-block"> <span>@item.cost</span> </p> @* <small>k</small>*@
+                        <p class="productMinPrice mb-0 themeColor d-block"> <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost)).Replace(".00", "")  </span > </p > @* <small>k</small>*@
                         @*<p class="productMaxPrice mb-0 greyColor d-block"> ( <span>1,24,000</span> <small>k</small> ) </p>*@
                     </div>
                     <div class="row mx-0 d-block float-right">

@@ -11,6 +11,7 @@ namespace MaaAahwanam.Service
 {
     public class VenorVenueSignUpService
     {
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         VendorVenueSignUpRepository vendorVenueSignUpRepository = new VendorVenueSignUpRepository();
         VendorVenueRepository vendorVenueRepository = new VendorVenueRepository();
         VendorCateringRepository vendorCateringRepository = new VendorCateringRepository();
@@ -19,16 +20,16 @@ namespace MaaAahwanam.Service
         VendorOthersRepository vendorOthersRepository = new VendorOthersRepository();
         VendorEventOrganiserRepository vendorEventOrganiserRepository = new VendorEventOrganiserRepository();
 
-        string updateddate = DateTime.UtcNow.ToShortDateString();
-        
+        DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
         public UserLogin AddUserLogin(UserLogin userLogin)
         {
             //userLogin.Password = randomPassword.GenerateString();
             userLogin.UserType = "Vendor";
             userLogin.UpdatedBy = 2;
             userLogin.Status = "InActive";
-            userLogin.RegDate = Convert.ToDateTime(updateddate);
-            userLogin.UpdatedDate = Convert.ToDateTime(updateddate);
+            userLogin.RegDate = updateddate;
+            userLogin.UpdatedDate = updateddate;
             return vendorVenueSignUpRepository.AddUserLogin(userLogin);
         }
 
@@ -50,7 +51,7 @@ namespace MaaAahwanam.Service
         public Vendormaster AddvendorMaster(Vendormaster vendormaster)
         {
             vendormaster.Status = "InActive";
-            vendormaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendormaster.UpdatedDate = updateddate;
             //vendormaster.ServicType = "Venue";
             return vendorVenueSignUpRepository.AddVendormaster(vendormaster);
         }
@@ -66,7 +67,7 @@ namespace MaaAahwanam.Service
             userDetail.ZipCode = vendormaster.ZipCode;
             userDetail.Status = "InActive";
             userDetail.UpdatedBy = 2;
-            userDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+            userDetail.UpdatedDate = updateddate;
             userDetail.AlternativeEmailID = vendormaster.EmailId;
             userDetail.Landmark = vendormaster.Landmark;
             return vendorVenueSignUpRepository.AddUserDetail(userDetail);
@@ -83,9 +84,9 @@ namespace MaaAahwanam.Service
         public VendorVenue UpdateVenue(VendorVenue vendorVenue, Vendormaster vendorMaster, long masterid, long vid)
         {
             //vendorVenue.Status = "InActive";
-            vendorVenue.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorVenue.UpdatedDate = updateddate;
             //vendorMaster.Status = "InActive";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             //vendorMaster.ServicType = "Venue";
             vendorVenue = vendorVenueRepository.UpdateVenue(vendorVenue, masterid, vid);
             return vendorVenue;
@@ -132,16 +133,16 @@ namespace MaaAahwanam.Service
 
         public VendorsCatering AddVendorCatering(VendorsCatering vendorsCatering)
         {
-            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsCatering.UpdatedDate = updateddate;
             return vendorVenueSignUpRepository.AddVendorCatering(vendorsCatering);
         }
 
         public VendorsCatering UpdateCatering(VendorsCatering vendorsCatering, Vendormaster vendorMaster, long masterid, long vid)
         {
             //vendorsCatering.Status = "InActive";
-            vendorsCatering.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsCatering.UpdatedDate = updateddate;
             //vendorMaster.Status = "InActive";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             //vendorMaster.ServicType = "Venue";
             vendorsCatering = vendorCateringRepository.UpdatesCatering(vendorsCatering, masterid, vid);
             return vendorsCatering;
@@ -161,16 +162,16 @@ namespace MaaAahwanam.Service
 
         public VendorsPhotography AddVendorPhotography(VendorsPhotography vendorsPhotography)
         {
-            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsPhotography.UpdatedDate = updateddate;
             return vendorVenueSignUpRepository.AddVendorPhotography(vendorsPhotography);
         }
 
         public VendorsPhotography UpdatePhotography(VendorsPhotography vendorsPhotography, Vendormaster vendorMaster, long masterid, long vid)
         {
             //vendorsPhotography.Status = "InActive";
-            vendorsPhotography.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsPhotography.UpdatedDate = updateddate;
             //vendorMaster.Status = "InActive";
-            vendorMaster.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorMaster.UpdatedDate = updateddate;
             vendorsPhotography = vendorsPhotographyRepository.UpdatesPhotography(vendorsPhotography, masterid, vid);
             return vendorsPhotography;
         }
@@ -189,7 +190,7 @@ namespace MaaAahwanam.Service
 
         public VendorsDecorator AddVendorDecorator(VendorsDecorator vendorsDecorator)
         {
-            vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsDecorator.UpdatedDate = updateddate;
             return vendorVenueSignUpRepository.AddVendorDecorator(vendorsDecorator);
         }
 
@@ -200,9 +201,9 @@ namespace MaaAahwanam.Service
 
         public VendorsDecorator UpdateDecorator(VendorsDecorator vendorsDecorator, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //string updateddate = DateTime.UtcNow.ToShortDateString();
             //vendorsDecorator.Status = "InActive";
-            vendorsDecorator.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsDecorator.UpdatedDate = updateddate;
             vendorsDecorator = vendorsDecoratorRepository.UpdateDecorator(vendorsDecorator, masterid, vid);
             return vendorsDecorator;
         }
@@ -217,7 +218,7 @@ namespace MaaAahwanam.Service
 
         public VendorsEventOrganiser AddVendorEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser)
         {
-            vendorsEventOrganiser.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsEventOrganiser.UpdatedDate = updateddate;
             return vendorEventOrganiserRepository.AddEventOrganiser(vendorsEventOrganiser);
         }
 
@@ -228,9 +229,9 @@ namespace MaaAahwanam.Service
 
         public VendorsEventOrganiser UpdateEventOrganiser(VendorsEventOrganiser vendorsEventOrganiser, Vendormaster vendorMaster, long masterid, long vid)
         {
-            string updateddate = DateTime.UtcNow.ToShortDateString();
+            //string updateddate = DateTime.UtcNow.ToShortDateString();
             //vendorsDecorator.Status = "InActive";
-            vendorsEventOrganiser.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsEventOrganiser.UpdatedDate = updateddate;
             vendorsEventOrganiser = vendorEventOrganiserRepository.UpdateEventOrganiser(vendorsEventOrganiser, masterid, vid);
             return vendorsEventOrganiser;
         }
@@ -244,7 +245,7 @@ namespace MaaAahwanam.Service
 
         public VendorsOther AddVendorOther(VendorsOther vendorsOther)
         {
-            vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsOther.UpdatedDate = updateddate;//Convert.ToDateTime(updateddate);
             return vendorVenueSignUpRepository.AddVendorOther(vendorsOther);
         }
 
@@ -257,7 +258,7 @@ namespace MaaAahwanam.Service
         {
             //string updateddate = DateTime.UtcNow.ToShortDateString();
             //vendorsDecorator.Status = "InActive";
-            vendorsOther.UpdatedDate = Convert.ToDateTime(updateddate);
+            vendorsOther.UpdatedDate = updateddate;
             vendorsOther = vendorOthersRepository.UpdateOthers(vendorsOther, masterid, vid);
             return vendorsOther;
         }
@@ -369,6 +370,11 @@ namespace MaaAahwanam.Service
                 masterid = vendorsOther.Id;
             }
             return masterid;
+        }
+
+        public UserLogin GetParticularUserdetails(string email)
+        {
+            return vendorVenueSignUpRepository.GetParticularUserdetails(email);
         }
     }
 }

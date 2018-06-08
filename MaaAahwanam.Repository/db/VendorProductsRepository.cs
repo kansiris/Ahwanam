@@ -69,17 +69,17 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.Spgetalldeals().ToList();
         }
-        public List<Spgetalleventdeals_Result> getalleventdeal(string eve)
+        public List<Spgetalleventdeals_Result> getalleventdeal(string eve ,DateTime date)
         {
-            return maaAahwanamEntities.Spgetalleventdeals(eve).ToList();
+            return maaAahwanamEntities.Spgetalleventdeals(eve,date).ToList();
         }
         public List<Spalldeals_Result> getparticulardeal(int id, string type)
         {
             return maaAahwanamEntities.Spalldeals(id, type).ToList();
         }
-        public List<speventvdeals_Result> getpartvendordeal(string vid, string type)
+        public List<speventvdeals_Result> getpartvendordeal(string vid, string type, DateTime date)
         {
-            return maaAahwanamEntities.speventvdeals(vid, type).ToList();
+            return maaAahwanamEntities.speventvdeals(vid, type, date).ToList();
         }
     }
 

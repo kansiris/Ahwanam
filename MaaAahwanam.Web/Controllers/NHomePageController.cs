@@ -17,9 +17,13 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         CartService cartService = new CartService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
         public ActionResult Index()
         {
+            try { 
+            //DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            //ViewBag.currenttme = indianTime;
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -37,9 +41,7 @@ namespace MaaAahwanam.Web.Controllers
                     return PartialView("ItemsCartViewBindingLayout");
                 }
                 ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-
-                List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                //List<cartcount_Result> cartlist = cartService.cartcountservice(user.UserId);
+                List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));            
                 decimal total = cartlist.Sum(s => s.TotalPrice);
                 ViewBag.cartitems = cartlist;
                 ViewBag.Total = total;
@@ -49,31 +51,46 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cartCount = cartService.CartItemsCount(0);
             }
             return View();
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public JsonResult AutoCompleteCountry()
         {
             VendorMasterService allVendorsService = new VendorMasterService();
             var Listoflocations = String.Join(",", allVendorsService.GetVendorCities().Distinct());
-            //return Json(Listoflocations,JsonRequestBehavior.AllowGet);
             return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public PartialViewResult SortVendorsBasedOnLocation(string search, string type, string location)
+        public ActionResult SortVendorsBasedOnLocation(string search, string type, string location)
         {
-            if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement", "Venues", "Function Hall" , "Banquet Hall" }.Contains(type))
+          
+            if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement", "Venues", "FunctionHall", "BanquetHall", "Function Hall", "Banquet Hall" }.Contains(type))
             { type = "Venue"; }
             if (type == "Convention") type = "Convention Hall";
+            type = (type == "BanquetHall") ? "Banquet Hall" : type;
+            type = (type == "FunctionHall") ? "Function Hall" : type;
             if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
             var value = (type == null || type == "Venues") ? "Venue" : type;
-            ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V", value).Where(m => m.landmark == location).Take(6).ToList() : vendorProductsService.Getsearchvendorproducts_Result(search, value).Take(6).ToList(); //.Where(m => m.landmark == location)
+            var records = vendorProductsService.Getsearchvendorproducts_Result(search, value);
+            if (type == "Hotel" || type == "Resort" || type == "Convention Hall")
+                records = records.Where(m => m.subtype.Contains(type)).Take(6).ToList();
+            else
+                records = records.Take(6).ToList();
+            ViewBag.records = (search == null) ? vendorProductsService.Getsearchvendorproducts_Result("V", value).Where(m => m.landmark == location).Take(6).ToList() :  records;//vendorProductsService.Getsearchvendorproducts_Result(search, value).Where(m => m.subtype == type).Take(6).ToList();//vendorProductsService.Getsearchvendorproducts_Result(search, value).Take(6).ToList(); //.Where(m => m.landmark == location)
             return PartialView();
+            
+           
         }
 
 
 
         public ActionResult ItemsCartViewBindingLayout()
         {
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -93,29 +110,28 @@ namespace MaaAahwanam.Web.Controllers
                         return PartialView("ItemsCartViewBindingLayout");
                     }
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-
                     List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    //List<cartcount_Result> cartlist = cartService.cartcountservice(user.UserId);
                     decimal total = cartlist.Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist;
                     ViewBag.Total = total;
-                    //ViewBag.cartcounttotal = cartService.cartcountservice(user.UserId).Count();
-                    //ViewBag.cartitems = cartService.cartcountservice(user.UserId);
                 }
-                }
-                else
-                {
-                    ViewBag.cartCount = cartService.CartItemsCount(0);
-                }
-                return PartialView("ItemsCartViewBindingLayout");
-            
-          
+            }
+            else
+            {
+                ViewBag.cartCount = cartService.CartItemsCount(0);
+            }
+            return PartialView("ItemsCartViewBindingLayout");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
 
         public ActionResult ItemsCartdetails()
         {
-
+            try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -130,21 +146,23 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
 
                     List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    //List<cartcount_Result> cartlist = cartService.cartcountservice(user.UserId);
                     decimal total = cartlist.Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist;
                     ViewBag.Total = total;
-                    //ViewBag.cartcounttotal = cartService.cartcountservice(user.UserId).Count();
-                    //ViewBag.cartitems = cartService.cartcountservice(user.UserId);
                 }
             }
             else
             {
                 ViewBag.cartCount = cartService.CartItemsCount(0);
             }
-           
+
 
             return PartialView("ItemsCartdetails");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
-        }
+    }
 }

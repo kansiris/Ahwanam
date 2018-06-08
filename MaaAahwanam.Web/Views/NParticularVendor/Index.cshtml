@@ -8,6 +8,7 @@
         user = (CustomPrincipal)HttpContext.Current.User;
     }
 }
+@using System.Globalization
 
 <div class="container-fluid dealProfile">
     <div class="row innerPagesBg py-2">
@@ -17,74 +18,75 @@
                 <div class="w-100 bannerImg">
                     @if (ViewBag.image != null)
                     {
-                        <img src="~/vendorimages/@ViewBag.image" class="img-fluid" alt="@ViewBag.image">
+                        @*<img src="~/vendorimages/@ViewBag.image" class="img-fluid" alt="@ViewBag.image">*@
+                        <div class="w-100 bannerImg" style="background: url('/vendorimages/@ViewBag.image');background-repeat: no-repeat;background-size: cover;background-position: center;"></div>
                     }
                     else
                     {
-                        <img src="~/noimages.png" class="img-fluid" alt="Default Image">
+                        @*<img src="~/noimages.png" class="img-fluid" alt="Default Image">*@
+                        <div class="w-100 bannerImg" style="background: url('/noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;"></div>
                     }
-
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@ViewBag.servicetypeprice</text> /-</div>
-
-                        <div class="w-100 tags my-15">
-                            @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
-                            {
-                                if (ViewBag.particularVenue.HallType != null && ViewBag.particularVenue.HallType != "")
+                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)).Replace(".00", "") </text> / -</div>
+                        @*<p>@ViewBag.vendoravailabledates</p>*@
+                        @*<div class="w-100 tags my-15">
+                                @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>@ViewBag.particularVenue.HallType</span></p>
-                                    </div>
+                                    if (ViewBag.particularVenue.HallType != null && ViewBag.particularVenue.HallType != "")
+                                    {
+                                        <div class="d-inline-block p-2 mr-4 greyBg">
+                                            <p class="mb-0"><span>@ViewBag.particularVenue.HallType</span></p>
+                                        </div>
+                                    }
+                                    if (ViewBag.particularVenue.Wifi != null && ViewBag.particularVenue.Wifi == "Yes" && ViewBag.particularVenue.Wifi != "")
+                                    {
+                                        <div class="d-inline-block p-2 mr-4 greyBg">
+                                            <p class="mb-0"><span>Wifi</span></p>
+                                        </div>
+                                    }
+                                    if (ViewBag.particularVenue.Rooms != null && ViewBag.particularVenue.Rooms == "Yes" && ViewBag.particularVenue.Rooms != "")
+                                    {
+                                        <div class="d-inline-block p-2 mr-4 greyBg">
+                                            <p class="mb-0"><span>Rooms</span></p>
+                                        </div>
+                                    }
+                                    if (ViewBag.particularVenue.Food != null && ViewBag.particularVenue.Food != "")
+                                    {
+                                        <div class="d-inline-block p-2 mr-4 greyBg">
+                                            <p class="mb-0"><span>@ViewBag.particularVenue.Food</span></p>
+                                        </div>
+                                    }
                                 }
-                                if (ViewBag.particularVenue.Wifi != null && ViewBag.particularVenue.Wifi == "Yes" && ViewBag.particularVenue.Wifi != "")
+                                @if (Request.QueryString["type"] == "Catering")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>Wifi</span></p>
-                                    </div>
+                                    if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
+                                    {
+                                        <div class="d-inline-block p-2 mr-4 greyBg">
+                                            <p class="mb-0"><span>LiveCookingStation : @ViewBag.particularCatering.LiveCookingStation</span></p>
+                                        </div>
+                                    }
                                 }
-                                if (ViewBag.particularVenue.Rooms != null && ViewBag.particularVenue.Rooms == "Yes" && ViewBag.particularVenue.Rooms != "")
+                                @if (Request.QueryString["type"] == "Photography")
                                 {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>Rooms</span></p>
-                                    </div>
+                                    if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
+                                    {
+                                        <div class="d-inline-block p-2 mr-4 greyBg">
+                                            <p class="mb-0"><span>Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot</span></p>
+                                        </div>
+                                    }
                                 }
-                                if (ViewBag.particularVenue.Food != null && ViewBag.particularVenue.Food != "")
-                                {
-                                    <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>@ViewBag.particularVenue.Food</span></p>
+                                @*<div class="d-inline-block p-2 mr-4 greyBg">
+                                        <p class="mb-0">300 <span>Guests</span></p>
                                     </div>
-                                }
-                            }
-                            @if (Request.QueryString["type"] == "Catering")
-                            {
-                                if (ViewBag.particularCatering.LiveCookingStation != null && ViewBag.particularCatering.LiveCookingStation != "")
-                                {
                                     <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>LiveCookingStation : @ViewBag.particularCatering.LiveCookingStation</span></p>
+                                        <p class="mb-0">300 <span>Guests</span></p>
                                     </div>
-                                }
-                            }
-                            @if (Request.QueryString["type"] == "Photography")
-                            {
-                                if (ViewBag.particularPhotography.PreWeddingShoot != null && ViewBag.particularPhotography.PreWeddingShoot != "")
-                                {
                                     <div class="d-inline-block p-2 mr-4 greyBg">
-                                        <p class="mb-0"><span>Pre-Wedding Shoot : @ViewBag.particularPhotography.PreWeddingShoot</span></p>
+                                        <p class="mb-0">300 <span>Guests</span></p>
                                     </div>
-                                }
-                            }
-                            @*<div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">300 <span>Guests</span></p>
-                                </div>
-                                <div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">300 <span>Guests</span></p>
-                                </div>
-                                <div class="d-inline-block p-2 mr-4 greyBg">
-                                    <p class="mb-0">300 <span>Guests</span></p>
-                                </div>*@
-                        </div>
+                            </div>*@
                     </div>
                 </div>
             </div>
@@ -134,17 +136,22 @@
                                     }
 
                                 </span>
-@if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
-{
-                                <p>Hall Details</p>
-                                <span>
-                                    <p>Hall Name : @ViewBag.particularVenue.name</p>
-                                    <p>Hall Dimentions : @ViewBag.particularVenue.Dimentions</p>
-                                    <p>Minimum Seating Capacity : @ViewBag.particularVenue.Minimumseatingcapacity</p>
-                                    <p>Maximum Seating Capacity : @ViewBag.particularVenue.Maximumcapacity</p>
-                                    <p>Hall Description : @ViewBag.particularVenue.Description</p>
-                                </span>
-}
+                                @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall", "Venue" }.Contains(Request.QueryString["type"]))
+                                {
+                                    <p>Hall Details</p>
+                                    if (ViewBag.particularVenue != null)
+                                    {
+                                        <span>
+                                            <p>Hall Name : @ViewBag.particularVenue.name</p>
+                                            <p>Hall Dimentions : @ViewBag.particularVenue.Dimentions</p>
+                                            <p>Minimum Seating Capacity : @ViewBag.particularVenue.Minimumseatingcapacity</p>
+                                            <p>Maximum Seating Capacity : @ViewBag.particularVenue.Maximumcapacity</p>
+                                            <p>Hall Description : @ViewBag.particularVenue.Description</p>
+                                        </span>
+                                    }
+
+
+                                }
                                 <p>Terms & Conditions</p>
                                 <span>Terms and Conditions content</span>
                             </div>
@@ -162,16 +169,18 @@
                                             foreach (var item in ViewBag.availablepackages)
                                             {
                                                 <div class="col-12 colmd-12 packageDetails">
+
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">@item.PackageName</p></div>
                                                         <div class="float-right packageCheckbox">
+                                                            <input type="hidden" id="pkgid" value="@item.PackageID" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
                                                             </label>
                                                         </div>
                                                         <div class="float-right">
-                                                            <p class="mb-0 mr-2">INR <span>@item.PackagePrice</span></p>
+                                                            <p class="mb-0 mr-2"> INR <span>@item.PackagePrice.Replace(".00", "")</span></p>
                                                         </div>
                                                     </div>
                                                     <br />
@@ -184,7 +193,7 @@
                                                 </div>
                                             }
                                         }
-                                        else
+                                        @if (ViewBag.availablepackages.Count == 0)
                                         {
                                             <p>No Packages Available</p>
                                         }
@@ -208,7 +217,7 @@
                                                             </label>
                                                         </div>
                                                         <div class="float-right">
-                                                            <p class="mb-0 mr-2">INR <span>@item.DealPrice</span></p>
+                                                            <p class="mb-0 mr-2">INR <span>@item.DealPrice </span></p>
                                                         </div>
                                                     </div>
                                                     <br />
@@ -233,12 +242,12 @@
                         </dd>
                         <dt>Gallery / Portfolio</dt>
                         <dd class="p-2">
-                            <div class="row justify-content-center gallery">
+                            <div class="row gallery">
                                 @*Gallery COntent is here*@
 
                                 @foreach (var item in ViewBag.allimages)
                                 {
-                                    <div class="text-center block">
+                                    <div class="block">
                                         <img src="~/vendorimages/@item.ImageName" class="img-fluid" alt="@item.ImageName">
                                         <span class="themeColor mt-1 d-block">
                                             @if (item.Imagedescription != null)
@@ -271,16 +280,29 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-md-6 address">
                                             <h6 class="themeColor">Address</h6>
+                                            @if (ViewBag.location.Address != null || ViewBag.location.Landmark != null || ViewBag.location.City != null || ViewBag.location.State != null || ViewBag.location.ZipCode != null)
+                                            {
+                                                <p>@ViewBag.location.Address,</p>
+                                                <p>@ViewBag.location.Landmark,</p>
+                                                <p>@ViewBag.location.City, @ViewBag.location.State</p>
+                                                <p>@ViewBag.location.ZipCode.</p>
+                                            }
+                                            else if (ViewBag.location.Address == null || ViewBag.location.Landmark == null || ViewBag.location.City == null || ViewBag.location.State == null || ViewBag.location.ZipCode == null)
+                                            {
+                                                <p>@ViewBag.Productinfo.Address,</p>
+                                                <p>@ViewBag.Productinfo.Landmark,</p>
+                                                <p>@ViewBag.Productinfo.City, @ViewBag.Productinfo.State</p>
+                                                <p>@ViewBag.Productinfo.ZipCode.</p>
+                                            }
 
-                                            <p>@ViewBag.location.Address,</p>
-                                            <p>@ViewBag.location.Landmark,</p>
-                                            <p>@ViewBag.location.City, @ViewBag.location.State</p>
-                                            <p>@ViewBag.location.ZipCode.</p>
+
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-6 contact">
                                             <h6 class="themeColor">Contact</h6>
-                                            <p>+91-@ViewBag.Productinfo.ContactNumber</p>
-                                            <p>@ViewBag.Productinfo.EmailId</p>
+                                            @*<p>+91-@ViewBag.Productinfo.ContactNumber</p>
+                                                <p>@ViewBag.Productinfo.EmailId</p>*@
+                                            <p>+91-7702053510</p>
+                                            <p>amit.saxena@ahwanam.com</p>
                                         </div>
                                     </div>
                                 </span>
@@ -305,13 +327,13 @@
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
                                                 @if (item.VenueType != "" && item.VenueType != null)
-                                                {
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
-                                                }
-                                                else
-                                                {
+                                                    }
+                                                    else
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                }
+                                                    }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
                                                 </div>
@@ -327,7 +349,6 @@
                                     </div>
                                 }
                             }
-
                             @foreach (var item in ViewBag.Catering)
                             {
                                 if (item.Id != long.Parse(Request.QueryString["vid"]))
@@ -337,13 +358,13 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>*@
                                                 @if (item.CuisineType != "" && item.CuisineType != null)
-                                                {
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
-                                                }
-                                                else
-                                                {
+                                                    }
+                                                    else
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                }
+                                                    }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.Veg</span></p>
                                                 </div>
@@ -359,7 +380,6 @@
                                     </div>
                                 }
                             }
-
                             @foreach (var item in ViewBag.Decorator)
                             {
                                 if (item.Id != long.Parse(Request.QueryString["vid"]))
@@ -369,15 +389,15 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>*@
                                                 @if (item.DecorationType != "" && item.DecorationType != null)
-                                                {
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
-                                                }
-                                                else
-                                                {
+                                                    }
+                                                    else
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                }
+                                                    }
                                                 <div class="float-right">
-                                                    <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
+                                                    <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p> @*.Replace(".00", "")*@
                                                 </div>
                                             </div>
                                             <br />
@@ -391,7 +411,6 @@
                                     </div>
                                 }
                             }
-
                             @foreach (var item in ViewBag.Photography)
                             {
                                 if (item.Id != long.Parse(Request.QueryString["vid"]))
@@ -401,13 +420,13 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>*@
                                                 @if (item.PhotographyType != "" && item.PhotographyType != null)
-                                                {
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
-                                                }
-                                                else
-                                                {
+                                                    }
+                                                    else
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">Photography</a></p></div>
-                                                }
+                                                    }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
                                                 </div>
@@ -423,7 +442,6 @@
                                     </div>
                                 }
                             }
-
                             @foreach (var item in ViewBag.Other)
                             {
                                 if (item.Id != long.Parse(Request.QueryString["vid"]))
@@ -433,13 +451,13 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>*@
                                                 @if (item.type != "" && item.type != null)
-                                                {
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
-                                                }
-                                                else
-                                                {
+                                                    }
+                                                    else
+                                                    {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">Other</a></p></div>
-                                                }
+                                                    }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.ItemCost</span></p>
                                                 </div>
@@ -456,6 +474,10 @@
                                 }
                             }
 
+                            @if (ViewBag.msg != "0")
+                            {
+                                @ViewBag.msg
+                            }
                         </dd>
                     </dl>
                 </div>
@@ -466,7 +488,10 @@
                 <div class="row bgWhite mb-3">
                     <div class="w-100 px-4 py-3">
                         <div class="row mx-0">
-                            <input type="hidden" id="serviceprice" value="@ViewBag.servicetypeprice"/>
+                            <input type="hidden" id="serviceprice" value="@ViewBag.servicetypeprice" />
+                            <input type="hidden" id="vendoravailabledates" value="@ViewBag.vendoravailabledates" />
+                            <input type="hidden" id="selectedtype" />
+                            <input type="hidden" id="pkgprice" />
                             <h3 class="noteWorthybold">
                                 Fill the Details
                                 <div class="blackBorder"></div>
@@ -488,11 +513,13 @@
                                         }
                                     </select>
                                 </div>*@
-                            <div class="w-100 mt-3 noOfPeoples">
+
+                            <div class="w-100 mt-3 noOfPeoples"  id="people">
                                 <div class="form-group mb-0">
-                                    <input type="text" class="form-control nexaBold" placeholder="Members" id="members" name="members">
+                                    <input type="number" class="form-control nexaBold" placeholder="Members" id="members" name="members">
                                 </div>
                             </div>
+
                             <div class="w-100 mt-3 eventDate">
                                 <div class="datentime w-100">
                                     @*<div class="input">
@@ -504,20 +531,25 @@
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="w-100 mt-3 slotTime">
+                            <div class="w-100 mt-3 slotTime" id="timeslot">
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox">
+                                        <input type="checkbox" id="ch1" value="Morning" name="timeslot" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Morning</p>
                                     </label>
                                 </div>
                                 <div class="w-50 float-left">
                                     <label class="w-100 mb-0">
-                                        <input type="checkbox">
+                                        <input type="checkbox" id="ch2" value="Evening" name="timeslot" />
                                         <span></span>
                                         <p class="mb-0 d-inline">Evening</p>
                                     </label>
+                                </div>
+                            </div>
+                            <div class="w-100 mt-3 text-center totalAmount">
+                                <div class="themeColor">
+                                    <p class="mb-0"><span id="selectedprice">@ViewBag.servicetypeprice.Replace(".00", "")</span> INR</p>
                                 </div>
                             </div>
                         </div>
@@ -530,7 +562,7 @@
                                 }
                                 else
                                 {
-                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100" onclick="window.location.href = '/NUserRegistration/Index'">Book Now</span> // /NUserRegistration/Index onclick="@Url.Action("Index","NUserRegistration")"
+                                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100" id="servicebook">Book Now</span> // /NUserRegistration/Index onclick="@Url.Action("Index","NUserRegistration")"
                                 }
                             </div>
                             <div class="w-100 d-flex my-2">
@@ -638,12 +670,62 @@
             timepicker: false,
             format: 'd/m/Y',
             minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-            maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+            maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+            beforeShowDay: function (date) {
+                var disableddates = $('#vendoravailabledates').val();
+                if (disableddates != '') {
+                    var unavailableDates = '';
+                    var final = ''; var dateslist1 = disableddates.split(',');
+                    for (var i = 0; i < dateslist1.length; i++) {
+                        var dateslist = dateslist1[i].split('-');
+                        if (dateslist[0] < 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] < 10 && dateslist[1] >= 10) {
+                            var datepart = dateslist[0].slice(-1, 2) + '/' + dateslist[1] + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+                        else if (dateslist[0] >= 10 && dateslist[1] < 10) {
+                            var datepart = dateslist[0] + '/' + dateslist[1].slice(-1, 2) + '/' + dateslist[2];
+                            final = final + datepart + ",";
+                        }
+
+                        else {
+                            final = final + dateslist1[i] + ",";
+                        }
+                        unavailableDates = final.slice(0, -1).split(',');
+                    }
+                    var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                    //alert(unavailableDates);
+                    if ($.inArray(dmy, unavailableDates) != -1) {
+                        return [false, "myclass", "Unavailable"];
+                    } else {
+                        return [true, ""];
+                    }
+                }
+            }
         });
         /*------------ Date and Time --------------*/
     </script>
 
+    <script type="text/javascript">
+        $('#servicebook').click(function () {
+            var eventtype = $('#eventtype').val();
+            window.localStorage.setItem("eventtype", eventtype);
+            window.location.href = '/NUserRegistration/Index';
+        });
+    </script>
+
     <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
+    <script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
+    </script>
+
     <script>
         $(document).ready(function () {
             var owl = $('.owl-carousel');
@@ -665,28 +747,82 @@
             })
         })
 
-
+        if ('@ViewBag.type' == "Photography" || '@ViewBag.type' == "Decorator") {
+            $('#members').attr('disabled', 'disabled');
+            //$(".slotTime input[type='checkbox']").attr('disabled','disabled');
+        }
 
         //<!-- hr Responsive Tabs -->
         $(document).ready(function () {
+
+            // data based on type
+            var vtype = '@Request.QueryString["type"]';
+            //alert(vtype);
+            if (vtype == 'Photography' || vtype == 'Decorator' || vtype == 'Other') {
+                //  alert(value1);
+                $("#people").hide();
+                $("#timeslot").hide();
+                $("#totamount").hide();
+            }
+            if (vtype == 'Venue' || vtype == 'Catering') {
+                //      alert(value1);
+                $("#people").show();
+                $("#timeslot").show();
+                $("#totamount").show();
+            }
+
+
 
             // Function releated to Package select
             function checkSelect() {
 
                 $(".packageCheckbox label").click(function () {
                     if ($(this).find("input[type='checkbox']").is(':checked')) {
-                        var packagename = $(this).parents('div.float-left').find('p.packageName').text();
-                        var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();
-                        $('#eventtype').val(packagename);
-                        $('#serviceprice').val(packageprice);
                         $(this).css('background', '#2e3192').find('p').css({ "color": "#fff" }).empty().append('Unselect');
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "none");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "none");
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").append("<span>Select</span>");
+                        $(".fillDetailsBg").css("display", "none");
+                        var packagename = $(this).parents('div.float-left').find('p.packageName').text();
+                        var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();//pkgid
+                        var pkgid = $(this).parents('div.packageCheckbox').find('input').val(); //packageDetails
+                        //alert(pkgid);
+                        var selectedpackageprice = parseInt(packageprice);
+                        var membercount = parseInt($('#members').val());
+                        var calculatedprice = selectedpackageprice * membercount;
+                        $('#eventtype').val(packagename);
+                        if ('@ViewBag.type' != "Photography" && '@ViewBag.type' != "Decorator") {
+                            $('#serviceprice').val(calculatedprice);
+                            $('#selectedprice').html(calculatedprice);
+                            $('#pkgprice').val(packageprice);
+                        }
+                        else {
+                            $('#serviceprice').val(packageprice);
+                            $('#selectedprice').html(packageprice);
+                            $('#pkgprice').val(packageprice);
+                        }
+                        $('#selectedtype').val(pkgid);
                     } else {
-                        $('#eventtype').val('');
-                        $('#serviceprice').val(sprice);
                         $(this).css({ "background": "#cecece" }).find('p').css({ "color": "#000" }).empty().append('Select');
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find("label").css("display", "block");
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find("label").css("display", "block");
+                        $(this).parents(".packageDetails").prevAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                        $(this).parents(".packageDetails").nextAll(".packageDetails").find(".packageCheckbox").find("span").remove();
+                        $(".fillDetailsBg").css("display", "block");
+                        $('#eventtype').val('');
+                        $('#serviceprice').val(@ViewBag.servicetypeprice);
+                        $('#selectedprice').html(@ViewBag.servicetypeprice);
+                        $('#selectedtype').val("sprice");
+                        $('#pkgprice').val(0);
                     }
                 });
             }
+            $(document).on('click', ".packages .packageCheckbox > span", function () {
+                alertmsg("You cannot select more than one package");
+            });
+
+
 
             $.fn.responseTabs = function () {
                 var el = $(this), tabs = el.find('dt'), content = el.find('dd'),
@@ -737,10 +873,14 @@
                 url: url1,
                 success: function (data) {
                     if (data == "Success") {
-                        alert("Sucessfully Added to Wishlist")
+                        // alert("Sucessfully Added to Wishlist")
+                        alertmsg("Sucessfully Added to Wishlist")
+
                     }
                     else if (data == "removed") {
-                        alert("Removed From Wishlist");
+                        // alert("Removed From Wishlist");
+                        alertmsg("Removed From Wishlist");
+
                     }
                     location.href = '/NParticularVendor/Index?type=' + type + '&&id=' + id + '&&vid=' + vid;
                 }
@@ -750,13 +890,17 @@
         $(document).ready(function () {
             var getdate = $.cookie("url");
             var getcount = $.cookie("qurl");
-            $('#datetimepicker').html(getdate.split('occasiondate=')[1]);
+            var eventtype = window.localStorage.getItem('eventtype');
+            $('#datetimepicker').val(getdate.split('occasiondate=')[1]);
             $('#members').val(getcount.split('count=')[1].split('&&')[0]);
+            $('#eventtype').val(eventtype);
+
         });
 
         function DealsPartial() {
             var lastrecord = parseInt($('#L1').val()) + parseInt(2);
-            var url = '/NParticularVendor/DealsSection?type=' + '@Request.QueryString["type"]' + '&&L1=' + lastrecord;
+            var type = document.URL.split('type=')[1].split('&&')[0];
+            var url = '/NParticularVendor/DealsSection?type=' + type + '&&L1=' + lastrecord;
             $("#dealspartial").empty().load(url);
             $('#L1').val(lastrecord);
         }
@@ -764,40 +908,74 @@
 
     <script>
         $(".bookNow").click(function () {
-            var type = '@Request.QueryString["type"]';
-            if ($("#eventtype").val() == '') {
-                alert("Please Enter Event type");
-            }
-            else if ($("#members").val() == '') {
-                alert("Please Enter Members Count");
-            }
-            else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+            var timeslot = '';
+             var type = '@Request.QueryString["type"]';
+            if (type == 'Venue' || type == 'Catering' || type == 'venue' || type == 'Hotel' || type == 'Resort' || type == 'Convetion Hall' || type == 'Catering' || type == 'Hotel') {
+                if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
+                    var favorite = [];
+                    $.each($("input[name='timeslot']:checked"), function () {
+                        favorite.push($(this).val());
+                        timeslot = favorite.join(", ");
+                    })
+                }
+                else {
+                    alertmsg("Please select time slot");
+                }
+            }
+            else if (type == 'Photography' || type == 'Decorator' || type == 'Other' || type == 'Mehendi' || type == 'Pandit') {
+                timeslot = "n/a";
+                //  alert('ks');
+            }
+            if ($("#eventtype").val() == '') {
+                //  alert("Please Enter Event type");
+                alertmsg("Please Enter Event type");
+
+            }
+                //else if (type != "Photography" || type != "Decorator") {
+            else if ($("#members").val() == '') {
+                //   alert("Please Enter Members Count");
+                alertmsg("Please Enter Members Count");
+            }
+                //}
+                //else if ($(".slotTime input[type='checkbox']").is(':checked')) {
+            //else if (timeslot =''){
+            //    alertmsg("Please select time slot");}
+            else{
+
+                alert(timeslot);
                 var eventtype = $("#eventtype").val();
                 var id = '@Request.QueryString["id"]';
                 var vid = '@Request.QueryString["vid"]';
                 var date = $("#datetimepicker").val();
                 var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
                 var nop = $("#members").val();
-                var timeslot = 'Morning';
+                var timeslot1 = 'Morning';
                 var totalprice = price * nop;
-                url1 = '/NParticularVendor/BookNow?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop;
+                var total = $('#selectedprice').html();
+                var selectedtype = $('#selectedtype').val();
+               url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total='+ total;
 
                 $.ajax({
                     url: url1,
                     success: function (data) {
+                        //alert(data);
                         if (data == "Success") {
-                            alert("Booked Sucessfully");
+                            alertify.alert("Added To Cart", function () { location.href = '/NCartView/Index'; });
                         }
                         else if (data == "failed") {
-                            alert("login to the cart");
+                            alertmsg("Failed To add item to the cart");
                         }
-                        location.href = '/NUserProfile/Index';
+                        else if (data == "Exists") {
+                            alertmsg("This Service Already Exists in Cart");
+                        }
+
                     }
                 });
-            } else {
-                alert("Please select time slot");
             }
+            //else {
+            //    alertmsg("Please select time slot");
+            //}
         });
         /*-- Need Help Block --*/
         $('.needHelpBtn').click(function () {
@@ -807,5 +985,74 @@
             $('.needHelpBlock').css('display', 'none');
         });
         /*-- Need Help Block --*/
+    </script>
+
+    <script>
+        function checkedBox() {
+            var pkgprice = $('#pkgprice').val();
+            var members = $('#members').val();
+            var totalVal = $('.totalVal').text();
+            if (pkgprice == '')
+            { pkgprice = $('#serviceprice').val(); }
+            //alert(pkgprice);
+            //alert(members);
+            //alert(totalVal);
+            if (pkgprice != '0' && pkgprice != '') {
+                totalVal = pkgprice * members;
+            }
+            var checkLen = $(".slotTime input[type='checkbox']:checked").length,
+                //totalVal = parseInt($(".totalVal").text()),
+                total = checkLen * totalVal;
+            $(".totalAmount span").empty().append(total);
+        }
+        $(".noOfPeoples input[type='number']").on('change', function () {
+            el = $(this), members = parseInt($(this).val()); alert(members);
+            var price = $('#selectedprice').html();
+            var pkgprice = $('#pkgprice').val();
+            if (pkgprice != '0' && pkgprice != '') {
+                price = pkgprice * members;
+            }
+            total = price * members, placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+            $(".totalVal:not(:eq(0))").remove();
+            $(placeholder).append(total).css('display', 'none');
+            $(".slotTime input[type='checkbox']").prop("checked", false);
+            $(".totalAmount span").text(price);
+        });
+
+        /*-- Check box Funcationality --*/
+
+        $(".noOfPeoples input[type='number']").focusout(function () {
+            if ($(this).val().length >= 1) {
+                $(".slotTime input[type='checkbox']").attr("disabled", false);
+            } else {
+                alert("Enter No of Guests");
+                $(".slotTime input[type='checkbox']").prop("checked", false);
+            }
+        });
+
+        /*-- Check box Funcationality --*/
+
+        $(".slotTime input[type='checkbox']").each(function () {
+            $(this).on('change', function () {
+
+                /*-- Check box Funcationality --*/
+
+                if ($(".noOfPeoples input[type='number']").val().length >= 1) {
+                    $(this).attr("disabled", false);
+                } else {
+                    alert("Enter No of Guests");
+                    $(this).prop("checked", false);
+                    return false;
+                }
+
+                /*-- Check box Funcationality --*/
+
+                if ($(this).is(':checked')) {
+                    checkedBox();
+                } else {
+                    checkedBox();
+                }
+            });
+        });
     </script>
 }

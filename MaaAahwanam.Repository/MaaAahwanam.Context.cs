@@ -156,15 +156,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDealServiceType_Result>("GetDealServiceType", ntypeParameter);
         }
     
-        public virtual ObjectResult<getservicetype_Result> getservicetype(string ntype)
-        {
-            var ntypeParameter = ntype != null ?
-                new ObjectParameter("ntype", ntype) :
-                new ObjectParameter("ntype", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
-        }
-    
         public virtual ObjectResult<orderconfirmation_Result> orderconfirmation(Nullable<int> oID)
         {
             var oIDParameter = oID.HasValue ?
@@ -276,11 +267,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllOrders_Result>("sp_AllOrders", idParameter);
         }
     
-        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
-        }
-    
         public virtual ObjectResult<MaaAahwanam_Orders_OrderDetails_Result> MaaAahwanam_Orders_OrderDetails(Nullable<long> orderNo)
         {
             var orderNoParameter = orderNo.HasValue ?
@@ -348,15 +334,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
         }
     
-        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
-        {
-            var vIDParameter = vID.HasValue ?
-                new ObjectParameter("VID", vID) :
-                new ObjectParameter("VID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
-        }
-    
         public virtual ObjectResult<SP_Amenities_Result> SP_Amenities(Nullable<long> vendorid, string ntype)
         {
             var vendoridParameter = vendorid.HasValue ?
@@ -420,23 +397,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vendorallservices_Result>("vendorallservices", typeParameter, idParameter);
-        }
-    
-        public virtual ObjectResult<GetProductsInfo_Result> GetProductsInfo(Nullable<int> vid, string nType, Nullable<int> vid2)
-        {
-            var vidParameter = vid.HasValue ?
-                new ObjectParameter("vid", vid) :
-                new ObjectParameter("vid", typeof(int));
-    
-            var nTypeParameter = nType != null ?
-                new ObjectParameter("nType", nType) :
-                new ObjectParameter("nType", typeof(string));
-    
-            var vid2Parameter = vid2.HasValue ?
-                new ObjectParameter("Vid2", vid2) :
-                new ObjectParameter("Vid2", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter, vid2Parameter);
         }
     
         public virtual ObjectResult<AllVendorList_Result> AllVendorList(string servicType)
@@ -570,33 +530,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendors_Result>("filtervendors", typeParameter, f1Parameter, f2Parameter, f3Parameter);
         }
     
-        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals(string eve)
-        {
-            var eveParameter = eve != null ?
-                new ObjectParameter("eve", eve) :
-                new ObjectParameter("eve", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter);
-        }
-    
-        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
-        }
-    
-        public virtual ObjectResult<speventvdeals_Result> speventvdeals(string vid, string type)
-        {
-            var vidParameter = vid != null ?
-                new ObjectParameter("vid", vid) :
-                new ObjectParameter("vid", typeof(string));
-    
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<speventvdeals_Result>("speventvdeals", vidParameter, typeParameter);
-        }
-    
         public virtual ObjectResult<addvendorservices_Result> addvendorservices(Nullable<long> id)
         {
             var idParameter = id.HasValue ?
@@ -640,6 +573,81 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("Id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPgetpartdeal_Result>("SPgetpartdeal", idParameter);
+        }
+    
+        public virtual ObjectResult<sp_ordersdisplay_Result> sp_ordersdisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ordersdisplay_Result>("sp_ordersdisplay");
+        }
+    
+        public virtual ObjectResult<speventvdeals_Result> speventvdeals(string vid, string type, Nullable<System.DateTime> date)
+        {
+            var vidParameter = vid != null ?
+                new ObjectParameter("vid", vid) :
+                new ObjectParameter("vid", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<speventvdeals_Result>("speventvdeals", vidParameter, typeParameter, dateParameter);
+        }
+    
+        public virtual ObjectResult<Spgetalleventdeals_Result> Spgetalleventdeals(string eve, Nullable<System.DateTime> date)
+        {
+            var eveParameter = eve != null ?
+                new ObjectParameter("eve", eve) :
+                new ObjectParameter("eve", typeof(string));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Spgetalleventdeals_Result>("Spgetalleventdeals", eveParameter, dateParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsInfo_Result> GetProductsInfo(Nullable<int> vid, string nType, Nullable<int> vid2)
+        {
+            var vidParameter = vid.HasValue ?
+                new ObjectParameter("vid", vid) :
+                new ObjectParameter("vid", typeof(int));
+    
+            var nTypeParameter = nType != null ?
+                new ObjectParameter("nType", nType) :
+                new ObjectParameter("nType", typeof(string));
+    
+            var vid2Parameter = vid2.HasValue ?
+                new ObjectParameter("Vid2", vid2) :
+                new ObjectParameter("Vid2", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsInfo_Result>("GetProductsInfo", vidParameter, nTypeParameter, vid2Parameter);
+        }
+    
+        public virtual ObjectResult<getservicetype_Result> getservicetype(string ntype)
+        {
+            var ntypeParameter = ntype != null ?
+                new ObjectParameter("ntype", ntype) :
+                new ObjectParameter("ntype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
+        }
+    
+        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
+        }
+    
+        public virtual ObjectResult<GetCartItems_Result> GetCartItems(Nullable<int> vID)
+        {
+            var vIDParameter = vID.HasValue ?
+                new ObjectParameter("VID", vID) :
+                new ObjectParameter("VID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
     }
 }

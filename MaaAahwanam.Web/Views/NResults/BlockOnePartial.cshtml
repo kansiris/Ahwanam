@@ -1,69 +1,149 @@
 ﻿
-    <div class="row mx-0">
-        <h3 class="noteWorthybold px-15" id="BlockOneCategory">
-            @ViewBag.type (@ViewBag.recordcount)
-            <div class="blackBorder"></div>
-        </h3>
-    </div>
-
-    @*Venue Records*@
-    @if (ViewBag.results.Count != 0)
-    {
-        <div class="row mx-0 my-4">
-            @foreach (var item in ViewBag.results)
-            {
-                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 productBlock">
-                    <a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid">
-                        <div class="w-100">
-                            @*<img src="~/newdesign/images/banquet-bg.png" class="img-fluid" alt="Deals" />*@
-                            @if (item.logo != null && item.logo != "")
-                    {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
-                    else if (item.image != null && item.image != "")
-                    {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
-                    else
-                    { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
-                        </div>
-                    </a>
-                        <div class="w-100">
-                            <div class="row mx-0 my-2 px-2 d-flex align-items-center">
-                                <a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid" class="productName mb-0">@item.businessname</a>
-                                <span class="ml-auto"><i class="fa fa-plus addCartIcn" aria-hidden="true"></i></span>
-                            </div>
-                        </div>
-                    
+<div class="row mx-0">
+    <h3 class="noteWorthybold px-15">
+        <text id="BlockOneCategory">@ViewBag.type</text>  (@ViewBag.recordcount)
+        <div class="blackBorder"></div>
+    </h3>
+</div>
+@using System.Globalization
+@*Venue Records*@
+@if (ViewBag.results.Count != 0)
+{
+    <div class="row mx-0 my-4">
+        @foreach (var item in ViewBag.results)
+        {
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 productBlock">
+                @if (Request.QueryString["stype"] != "")
+                {
+                    @*<input type="hidden" value="/NParticularVendor?type=@ViewBag.type1&&id=@item.id&&vid=@item.subid"/>*@
+                    @*<a href="/NParticularVendor?type=@ViewBag.type1&&id=@item.id&&vid=@item.subid">*@
+                    <div class="w-100 vendorImg">
+                        @*<img src="~/newdesign/images/banquet-bg.png" class="img-fluid" alt="Deals" />*@
+                        @if (item.logo != null && item.logo != "")
+                        {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
+                        else if (item.image != null && item.image != "")
+                        {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
+                        else
+                        { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
+                    </div>
+                    @*</a>*@
                     <div class="w-100">
-                        <div class="row px-2 d-flex align-items-center">
-                            <div class="col-6 col-md-6">
-                                <p class="productMinPrice mb-0 themeColor d-inline"> <span>@item.cost</span>  </p> @*<small>k</small>*@
-                                @*<p class="productMaxPrice mb-0 themeColor d-inline"> <span>@item.Maxorder</span>  </p>*@ @*<small>k</small>*@
-                            </div>
-                            <div class="col-6 col-md-6">
-                                <div class="starRating">
-                                    <div class="emptyStar"></div>
-                                    <div class="scoreStar yellowFont" style="width:51%"></div>
-                                </div>
-                            </div>
+                        <div class="row mx-0 my-2 px-2 d-flex align-items-center">
+                            <p class="productName">@item.businessname</p>
+                            @*<a href="/NParticularVendor?type=@ViewBag.type1&&id=@item.id&&vid=@item.subid" class="productName mb-0">@item.businessname</a>*@
+                            <span class="ml-auto"><i class="fa fa-plus addCartIcn" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <div class="w-100 d-inline-block">
+                }
+                else
+                {
+                    <a href="/NParticularVendor?type=@ViewBag.type1&&id=@item.id&&vid=@item.subid">
+                    <div class="w-100 vendorImg">
+                        @*<img src="~/newdesign/images/banquet-bg.png" class="img-fluid" alt="Deals" />*@
+                        @if (item.logo != null && item.logo != "")
+                        {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
+                        else if (item.image != null && item.image != "")
+                        {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
+                        else
+                        { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
+                    </div>
+                    </a>
+                    <div class="w-100">
+                        <div class="row mx-0 my-2 px-2 d-flex align-items-center">
+                            @*<p class="productName">@item.businessname</p>*@
+                            <a href="/NParticularVendor?type=@ViewBag.type1&&id=@item.id&&vid=@item.subid" class="productName mb-0">@item.businessname</a>
+                            <span class="ml-auto"><i class="fa fa-plus addCartIcn" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                }
+                
 
-                        <div class="d-inline float-right yellowFont pr-2 totalReviewCount"> (<span>162</span>) </div>
-
+                <div class="w-100">
+                    <div class="row px-2 d-flex align-items-center">
+                        <div class="col-6 col-md-6 vendorPrice">
+                            <p class="productMinPrice mb-0 themeColor d-inline"> <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost)).Replace(".00", "")  </span >  </p > @*<small>k</small>*@
+                            @*<p class="productMaxPrice mb-0 themeColor d-inline"> <span>@item.Maxorder</span>  </p>*@ @*<small>k</small>*@
+                        </div>
+                        <div class="col-6 col-md-6">
+                            <div class="starRating">
+                                <div class="emptyStar"></div>
+                                <div class="scoreStar yellowFont" style="width:51%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            }
-        </div>
-        if (ViewBag.count == "1")
-        {
-            <div class="row mx-0 my-4 moreButton">
-                <div class="mx-auto d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white" onclick="PartialOne()"><i class="fa fa-plus mr-1" aria-hidden="true"></i>More</span> </div>
+                <div class="w-100 d-inline-block">
+
+                    <div class="d-inline float-right yellowFont pr-2 totalReviewCount"> (<span>162</span>) </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12 vendorDescrption">@item.description</div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12 vendorAmenities">
+                        @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
+                        {
+                            <ul>
+                                @if (item.Halltype != null && item.Halltype != "")
+                                {
+                                    <li>HallType</li>
+                                }
+                                @if (item.Wifi != null && item.Wifi != "")
+                                {
+                                    <li>Wifi</li>
+                                }
+                                @if (item.Rooms != null && item.Rooms != "")
+                                {
+                                    <li>Rooms</li>
+                                }
+                                @if (item.Food != null && item.Food != "")
+                                {
+                                    <li>Food</li>
+                                }
+                            </ul>
+                        }
+                        @if (new string[] { "Catering" }.Contains(Request.QueryString["type"]))
+                        {
+                            <ul>
+                                @if (item.Livecooking != null && item.Livecooking != "")
+                                {
+                                    <li>LiveCookingStation</li>
+                                }
+                            </ul>
+                        }
+                        @if (new string[] { "Photography" }.Contains(Request.QueryString["type"]))
+                        {
+                            <ul>
+                                @if (item.Preweddingshoot != null && item.Preweddingshoot != "")
+                                {
+                                    <li>Pre-Wedding Shoot</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="/NParticularVendor?type=@ViewBag.type1&&id=@item.id&&vid=@item.subid" class="themeBgColorPrimary btnSecondary text-white text-center w-100 vendorViewMore"> View More </a>
+                </div>
+                <div class="row">
+                    <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 vendorAddtoCart">Add to Cart</span>
+                </div>
+
             </div>
         }
-    }
-    else
+    </div>
+    if (ViewBag.count == "1")
     {
-        <p>No Records Available</p>
+        <div class="row mx-0 my-4 moreButton">
+            <div class="mx-auto d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white" onclick="PartialOne()"><i class="fa fa-plus mr-1" aria-hidden="true"></i>More</span> </div>
+        </div>
     }
-    
+}
+else
+{
+    <p>No Records Available</p>
+}
+
 
 

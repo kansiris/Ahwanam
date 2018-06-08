@@ -1,4 +1,4 @@
-﻿
+﻿    
 @{
     ViewBag.Title = "Store Front";
     Layout = "~/Views/SharedWeb/NVendorMasterPage.cshtml";
@@ -29,11 +29,12 @@
                                         <table class="table table-hover dataTable table-striped width-full dtr-inline" data-plugin="dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                                             <thead>
                                                 <tr role="row">
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 95px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Sno</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 228px;" aria-label="Position: activate to sort column ascending">Category</th>
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 70px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Sno</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 150px;" aria-label="Position: activate to sort column ascending">Category</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 135px;" aria-label="Office: activate to sort column ascending">Sub Category</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 70px;" aria-label="Age: activate to sort column ascending">Address</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 149px;" aria-label="Date: activate to sort column ascending">Satus</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 200px;" aria-label="Age: activate to sort column ascending">Address</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 149px;" aria-label="Date: activate to sort column ascending">Calendar</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 149px;" aria-label="Date: activate to sort column ascending">Status</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 118px;" aria-label="Salary: activate to sort column ascending">Actions</th>
                                                 </tr>
                                             </thead>
@@ -43,7 +44,8 @@
                                                     <th rowspan="1" colspan="1">Category</th>
                                                     <th rowspan="1" colspan="1">Sub Category</th>
                                                     <th rowspan="1" colspan="1">Address</th>
-                                                    <th rowspan="1" colspan="1">Satus</th>
+                                                    <th rowspan="1" colspan="1">Calendar</th>
+                                                    <th rowspan="1" colspan="1">Status</th>
                                                     <th rowspan="1" colspan="1">Action</th>
                                                 </tr>
                                             </tfoot>
@@ -55,7 +57,13 @@
                                                         <td tabindex="0" class="sorting_1">@(++i)</td>
                                                         <td>Venue</td>
                                                         <td>@item.VenueType</td>
-                                                        <td>@item.Landmark ,@item.City ,@item.State</td>
+                                                        @if (item.Landmark != null || item.City != null || item.State != null)
+                                                        {<td>@item.Landmark ,@item.City ,@item.State</td>}
+                                                        else
+                                                        {
+                                                            <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
+                                                        }
+                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Venue">Manage Availability</a></td>
                                                         <td>@item.Status</td>
                                                         <td>
                                                             <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Venue&&subcategory=@item.VenueType">Edit</a>
@@ -70,7 +78,14 @@
                                                         <td tabindex="0" class="sorting_1">@(++i)</td>
                                                         <td>Catering</td>
                                                         <td>@item.CuisineType</td>
-                                                        <td>@item.Landmark ,@item.City ,@item.State</td>
+                                                        @if (item.Landmark == null || item.City == null || item.State == null)
+                                                        {
+                                                        <td>@item.Landmark ,@item.City ,@item.State</td>}
+                                                        else
+                                                        {
+                                                            <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
+                                                        }
+                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Catering">Manage Availability</a></td>
                                                         <td>@item.Status</td>
                                                         <td>
                                                             <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Catering&&subcategory=@item.CuisineType">Edit</a>
@@ -85,7 +100,14 @@
                                                         <td tabindex="0" class="sorting_1">@(++i)</td>
                                                         <td>Photography</td>
                                                         <td>@item.PhotographyType</td>
-                                                        <td>@item.Landmark ,@item.City ,@item.State</td>
+                                                        @if (item.Landmark == null || item.City == null || item.State == null)
+                                                        {
+                                                        <td>@item.Landmark ,@item.City ,@item.State</td>}
+                                                        else
+                                                        {
+                                                            <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
+                                                        }
+                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Photography">Manage Availability</a></td>
                                                         <td>@item.Status</td>
                                                         <td>
                                                             <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Photography&&subcategory=@item.PhotographyType">Edit</a>
@@ -100,7 +122,14 @@
                                                         <td tabindex="0" class="sorting_1">@(++i)</td>
                                                         <td>Decorator</td>
                                                         <td>@item.DecorationType</td>
-                                                        <td>@item.Landmark ,@item.City ,@item.State</td>
+                                                        @if (item.Landmark == null || item.City == null || item.State == null)
+                                                        {
+                                                        <td>@item.Landmark ,@item.City ,@item.State</td>}
+                                                        else
+                                                        {
+                                                            <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
+                                                        }
+                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Decorator">Manage Availability</a></td>
                                                         <td>@item.Status</td>
                                                         <td>
                                                             <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Decorator&&subcategory=@item.DecorationType">Edit</a>
@@ -115,7 +144,14 @@
                                                         <td tabindex="0" class="sorting_1">@(++i)</td>
                                                         <td>Other</td>
                                                         <td>@item.type</td>
-                                                        <td>@item.Landmark ,@item.City ,@item.State</td>
+                                                        @if (item.Landmark == null || item.City == null || item.State == null)
+                                                        {
+                                                        <td>@item.Landmark ,@item.City ,@item.State</td>}
+                                                        else
+                                                        {
+                                                            <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
+                                                        }
+                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Other">Manage Availability</a></td>
                                                         <td>@item.Status</td>
                                                         <td>
                                                             <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Other&&subcategory=@item.type">Edit</a>
@@ -137,4 +173,14 @@
             </div>
         </div>
     </div>
-</div>
+
+
+@section scripts{
+@if (ViewBag.msg != "" && ViewBag.msg != null)
+{
+    <script>
+        alertify.alert("@ViewBag.msg", function () {
+        });
+    </script>
+}
+}

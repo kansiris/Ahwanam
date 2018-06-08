@@ -37,6 +37,15 @@ namespace MaaAahwanam.Service
             }
             return "Failure";
         }
+        public string adddatecartitem(CartItem CartItemjson)
+        {
+            int l1 = cartItemRepoitory.adddatecartitem(CartItemjson);
+            if (l1 != 0)
+            {
+                return "Success";
+            }
+            return "Failure";
+        }
         public string Deletecartitem(long cartId)
         {
             return cartItemRepoitory.DeletecartItem(cartId);

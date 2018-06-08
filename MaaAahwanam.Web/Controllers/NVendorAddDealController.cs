@@ -13,23 +13,56 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorAddDeal
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
+
         public ActionResult Index(string id)
         {
+            try { 
+            if (TempData["Active"] != "")
+            {
+                ViewBag.msg = TempData["Active"];
+            }
             var deals = vendorProductsService.getvendorsubid(id);
             ViewBag.venuerecord = deals;
             ViewBag.vendormasterid = id;
             ViewBag.id = id;
             return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         public ActionResult adddeal(string id, string DealName, string OriginalPrice, string type, string foodtype, string DealPrice, string catogary,string minGuests,string maxGuests, string StartDate, string EndDate, string ddesc, string timeslot,string timeslot1)
         {
+            try { 
             if (type == "Select Type")
-            {     return Content("<script> alert('select type');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>");       }
+            {
+                TempData["Active"] = "Select Type";
+                return RedirectToAction("Index", "NVendorAddDeal",  new { id = id });
+            }
+            if (catogary == "Select Event")
+            {
+                TempData["Active"] = "Select Event";
+                return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
+            }
 
-            if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
-            { return Content("<script> alert('select timeslot');location.href='" + @Url.Action("Index", "NVendorAddDeal", new { id = id }) + "' </script>"); }
+            //if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
+            //{
+            //    TempData["Active"] = "Select Timeslot";
+            //    return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
+            //}
 
+            DateTime s = Convert.ToDateTime(StartDate);
+            DateTime e = Convert.ToDateTime(EndDate);
+
+            if (e < s)
+            {
+                TempData["Active"] = "Start Date should be lesser than End Date";
+                return RedirectToAction("Index", "NVendorAddDeal", new { id = id });
+            }
             string time = null;
             if (timeslot == null || timeslot == "")
             { time = timeslot1; }
@@ -39,14 +72,15 @@ namespace MaaAahwanam.Web.Controllers
 
             if (timeslot1 != null && timeslot != null)
             { time = timeslot + ',' + timeslot1; }
-            
-
-            DateTime date = DateTime.Now;
+            if (timeslot == null && timeslot1 == null || timeslot1 == "" || timeslot == "")
+            {
+                time = "Morning,Evening";
+            }
+                DateTime date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             string[] word = type.Split(',');
             string subid = word[0];
             string type1 = word[1];
             string subtype = word[2];
-
             NDeals deals = new NDeals();
             deals.DealName = DealName;
             deals.TimeSlot = time;
@@ -58,18 +92,25 @@ namespace MaaAahwanam.Web.Controllers
             deals.OriginalPrice = Decimal.Parse(OriginalPrice);
             deals.MinMemberCount = minGuests;
             deals.MaxMemberCount = maxGuests;
-            deals.FoodType = foodtype;
+            if (type1 == "Venue" || type1 == "Catering")
+            { 
+            deals.FoodType = foodtype; }
+
             deals.DealPrice =  decimal.Parse(DealPrice);
-            deals.DealStartDate = Convert.ToDateTime(StartDate);
-            deals.DealEndDate = Convert.ToDateTime(EndDate);
+            deals.DealStartDate = (Convert.ToDateTime(StartDate));
+            deals.DealEndDate = (Convert.ToDateTime(EndDate));
             deals.DealDescription = ddesc;
             deals.Category = catogary;
             deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";
             deals = vendorVenueSignUpService.adddeal(deals);
-
-
-            return Content("<script> alert('deal is saved');location.href='"+Url.Action("Index", "NVendorDeals", new {id = id }) + "'</script>");
+            ViewBag.id = id;
+            TempData["Active"] = "Deal is Saved";
+            return RedirectToAction("Index", "NVendorDeals", new { id = id });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
-
-        }
+      }
 }

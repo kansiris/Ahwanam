@@ -22,27 +22,32 @@
                 {
                     <div class="row mx-0 my-2">
                         <div class="form-group w-100">
-                            <input type="text" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" required />
+                            <input type="text" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" autofocus required />
                             @*<input type="text" class="form-control" name="" placeholder="User Name">*@
                         </div>
                     </div>
                     <div class="row mx-0 my-2">
-                        <div class="form-group w-100">
-                            <input type="password" class="form-control" placeholder="Password" name="Item1.Password" id="Item1_Password" required />
-                            @*<input type="password" class="form-control" name="" placeholder="Password">*@
+                            <div class="form-group w-100">
+                                <input type="password" class="form-control" placeholder="Password" name="Item1.Password" id="Item1_Password" required />
+                            </div>
                         </div>
-                    </div>
                     <div class="row mx-0 align-items-center">
                         <button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center" value="Login" name="command" onclick="testlogin()">Login</button>
+                        @*<span class="themeBgColorPrimary btnSecondary text-white text-center nextBtn">Next</span>*@
                         @*<span class="themeBgColorPrimary btnSecondary text-white text-center">Login</span>*@
                         <span class="themeColor ml-3 fontSize-18 forgotPasswordBtn"> Forgot Password</span>
                     </div>
                 }
+
                 <div class="row mx-0 align-items-center my-4">
                     <input type="hidden" id="auth-logoutlink">
                     <span class="fbBg btnSecondary text-white text-center" onclick="fbLogin()"><i class="fa fa-facebook mr-2" aria-hidden="true"></i> Facebook</span>
+                    @*<span class="gmailBg btnSecondary text-white ml-3 fontSize-18" id="login-button"><i class="fa fa-google mr-2" aria-hidden="true"></i> Gmail</span>*@
+
                     <span class="gmailBg btnSecondary text-white ml-3 fontSize-18" id="GoogleLogin" onclick="login()"><i class="fa fa-google mr-2" aria-hidden="true"></i> Gmail</span>
                 </div>
+                @*<div id="gSignIn"></div>*@
+
             </div>
 
             <div class="register p-5">
@@ -71,7 +76,7 @@
                     </div>
                     <div class="row mx-0 my-2">
                         <div class="form-group w-100">
-                            <input type="text" class="form-control" placeholder="Mobile Number" name="Item2.UserPhone" id="Item2_UserPhone" required />
+                            <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" name="Item2.UserPhone" id="Item2_UserPhone" required />
                             @*<input type="number" class="form-control" name="" placeholder="Mobile Number">*@
                         </div>
                     </div>
@@ -96,27 +101,37 @@
                         <div class="blackBorder"></div>
                     </h4>
                 </div>
-@using (Html.BeginForm("Index", "NUserRegistration", FormMethod.Post))
-{
-                <div class="row mx-0 my-2">
-                    <div class="form-group w-100">
-                        <input type="email" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" required />
+                @using (Html.BeginForm("Index", "NUserRegistration", FormMethod.Post))
+                {
+                    <div class="row mx-0 my-2">
+                        <div class="form-group w-100">
+                            <input type="email" class="form-control" placeholder="User Name" name="Item1.UserName" id="Item1_UserName" required />
+                        </div>
                     </div>
-                </div>
-                <div class="row mx-0 align-items-center">
-                    <button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center" name ="command" value="forgotpassword">Submit</button>
-                    <span class="themeColor ml-3 fontSize-18 loginBtn"> Login</span>
-                </div>
-}
+                    <div class="row mx-0 align-items-center">
+                        <button type="submit" class="themeBgColorPrimary btnSecondary text-white text-center" name="command" value="forgotpassword">Submit</button>
+                        <span class="themeColor ml-3 fontSize-18 loginBtn"> Login</span>
+                    </div>
+                }
             </div>
 
+            @*@using (Html.BeginForm("LoginBlocks", "NUserRegistration", FormMethod.Post))
+                {*@
+            <form method="post" id="LoginBlock">
+                <div class="userVendorLogin p-5">
 
+                    @{Html.RenderAction("LoginBlocks", "NUserRegistration");}
+                </div>
+            </form>
+            @*}*@
 
         </div>
     </div>
 </div>
 
 @section scripts{
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript">
         //$(document).ready(function () {
         //    $('body').attr("id", "userAuthentication");
@@ -129,6 +144,7 @@
         $(document).ready(function () {
             $('body').attr("id", "userAuthentication");
         });
+
         var regClick = $(".registerBtn"), loginClick = $(".loginBtn"), forgotClick = $(".forgotPasswordBtn"),
             loginBlock = $(".login"), regBlock = $(".register"), forgotBlock = $(".forgotPassword");
         $(regClick).click(function () {
@@ -149,39 +165,190 @@
 
     <script>
         function testlogin() {
+            //alert("Test Login Methos");
             var url = document.referrer;
+            //alert(url);
             //alert(url.split('://')[1].split('/')[1].split('?')[0]);
             if (url != '') {
                 var p = url.split('://')[1].split('/')[1].split('?')[0];
-                if (p == 'NParticularVendor' || p == 'NViewDeal') { $.post("/NUserRegistration/assignreturnurl", { ReturnUrl: url }, function (data) { }); }
+                if (p == 'NParticularVendor' || p == 'NViewDeal' || p == 'NResults') { $.post("/NUserRegistration/assignreturnurl", { ReturnUrl: url }, function (data) { }); }
             }
             //$.post("/NUserRegistration/assignreturnurl", { ReturnUrl: url }, function (data) { });
         }
     </script>
-    <script src="~/Scripts/gauth.js"></script>
-    <script src="~/Scripts/fauth.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    @*@if (ViewBag.Active != null)
-    {
-        <script>
-            /*-- Alerts --*/
-            //function alertmsgs(msg) {
-              //  alert(msg);
-                $.alertable.alert('HI', {
-                    show: function () {
-                        $(this.overlay).velocity('transition.fadeIn');
-                        $(this.modal).velocity('transition.flipBounceYIn');
-                    },
-                    hide: function () {
-                        $(this.overlay).velocity('transition.fadeOut');
-                        $(this.modal).velocity('transition.perspectiveUpOut');
-                    }
-                });
-            //}
-            /*-- Alerts --*/
 
-            //alertmsgs('@ViewBag.Active');
-        </script>
-    }*@
+    @*fblogin*@
+<script src="~/Scripts/fauth.js"></script>
+ 
+
+    @*gmail login*@
+
+
+    
+<script src="~/Scripts/gauth.js"></script>
+
+    <script type="text/javascript">
+        $(".login .nextBtn").click(function () {
+            var emailid = $('#Item1_UserName').val();
+            if (emailid != '') {
+                $(this).parents(".login").css("display", "none");
+                var url = '/NUserRegistration/LoginBlocks?email=' + emailid + '';
+                $(".userVendorLogin").empty().load(url);
+                $(".userVendorLogin").css("display", "block");
+            }
+            else {
+                $('#Item1_UserName').focus();
+                alertmsg("Please Enter Your Email ID");
+
+            }
+        });
+
+        //$(btnButtons).click(function () {
+        $(document).on('click', '.userVendorLogin > div.row div.block .buttons button', function () {
+            if ($(this).text() == "Select") {
+                $(this).parents(".block").prevAll(".block").find("button").html("Select");
+                $(this).parents(".block").nextAll(".block").find("button").html("Select");
+                $(this).parents(".block").find("input[type='password']").remove();
+                $(this).parents(".block").prevAll(".block").find("input[type='password']").remove();
+                $(this).parents(".block").nextAll(".block").find("input[type='password']").remove();
+                $(this).parents(".block").prevAll(".block").find("input[type='button']").removeAttr('id');
+                $(this).parents(".block").nextAll(".block").find("input[type='button']").removeAttr('id');
+                $(this).parents(".buttons").prev(".password").children(".form-group").append('<input type="password" name="Item1.Password" id="Item1_Password" class="form-control" name="" placeholder="Password here" required>');
+                $(this).parents(".buttons").prev(".password").css("display", "block");
+                $('#Item1_Password').focus();
+                $(this).html("Login").prop('id', 'loginredirect');//.attr('onclick', 'redirection()');
+                var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
+                $('#Item1_UserLoginId').val(loginid);
+                $('#LoginBlock').attr('action', '/NUserRegistration/Index?command=Login'); // action="/NUserRegistration/Index?command=Login")
+            } else {
+                $(this).html('Login');//.attr('onclick', 'testlogin()');
+            }
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '#loginredirect', function () {
+            
+            var passtxt = $('#Item1_Password').val();
+            if (passtxt != '') {
+                testlogin();
+                //$(this).attr('type', 'submit');
+                //var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
+                //location.href = '/NUserRegistration/LoginBlocks?email=' + $('#Item1_UserName').val() + '&&password=' + passtxt + '&&id=' + loginid;
+                this.form.submit();
+            }
+            else {
+                $('#Item1_Password').focus();
+                alertmsg("Please Enter Password");
+
+            }
+        });
+    </script>
+
+    <script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () { });
+        }
+    </script>
+
+
+    @*<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};HandleGoogleApiLibrary()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+            <script>
+
+        // Called when Google Javascript API Javascript is loaded
+        function HandleGoogleApiLibrary() {
+            // Load "client" & "auth2" libraries
+            gapi.load('client:auth2', {
+                callback: function() {
+                    // Initialize client library
+                    // clientId & scope is provided => automatically initializes auth2 library
+                    gapi.client.init({
+                        apiKey: 'OgwtDRPCLm9fielelhM8nRr6',
+                        clientId: '338948303270-j54e9moaql0b4m9qgshdp8242u6hfmht.apps.googleusercontent.com',
+                        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
+                    }).then(
+                        // On success
+                        function(success) {
+                            // After library is successfully loaded then enable the login button
+                            $("#login-button").removeAttr('disabled');
+                        },
+                        // On error
+                        function(error) {
+                            //alert('Error : Failed to Load Library');
+                        }
+                    );
+                },
+                onerror: function() {
+                    // Failed to load libraries
+                }
+            });
+        }
+
+        // Click on login button
+        $("#login-button").on('click', function() {
+            $("#login-button").attr('disabled', 'disabled');
+
+            // API call for Google login
+            gapi.auth2.getAuthInstance().signIn().then(
+                // On success
+                function(success) {
+                    // API call to get user information
+                    gapi.client.request({ path: 'https://www.googleapis.com/plus/v1/people/me' }).then(
+                        // On success
+                        function(success) {
+                            console.log(success);
+                            var user_info = JSON.parse(success.body);
+
+                            var data = {
+                                email: user_info.emails[0].value,
+                                name: user_info.displayName,
+                                lastname: user_info.name.familyName,
+                                firstname: user_info.name.givenName,
+                                Picture: user_info.image.url,
+                                id:user_info.id
+                            }
+                            $.ajax({
+                                url: '/UserRegistration/GoogleLogin/',
+                                type: 'POST',
+                                data: data,
+                                success: function (data) {
+                                    if (data == 'failed') {
+                                        alert('This email is registered as Vendor please login with Your Credentials')
+                                    }
+                                    if (data == 'success') {
+                                        var url1 = document.referrer;
+                                        window.location.href = url1;// "/NHomePage/Index/";
+                                    }
+                                },
+                            });
+                        },
+                        // On error
+                        function(error) {
+                            $("#login-button").removeAttr('disabled');
+                            alert('Error : Failed to get user user information');
+                        }
+                    );
+                },
+                // On error
+                function(error) {
+                    $("#login-button").removeAttr('disabled');
+                    alert('Error : Login Failed');
+                }
+            );
+        });
+
+         </script>*@
+    @*<script src="~/Scripts/gauth.js"></script>
+        <script src="~/Scripts/fauth.js"></script>*@
+
+    @*@if (ViewBag.Active != null)
+        {
+            <script>
+                alertify.alert("@ViewBag.Active", function () {
+                    //alertify.message('OK');
+                });
+            </script>
+        }*@
+
+
 }

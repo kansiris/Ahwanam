@@ -20,6 +20,15 @@ namespace MaaAahwanam.Repository
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long UserLoginId { get; set; }
+        public string ServiceType { get; set; }
+        public Nullable<System.DateTime> BookedDate { get; set; }
+        public string EventType { get; set; }
+        public string attribute { get; set; }
+        public long DealId { get; set; }
+        public string logo { get; set; }
+        public decimal PerunitPrice { get; set; }
+        public int Quantity { get; set; }
+        public string UserPhone { get; set; }
         public string username { get; set; }
         public string Isdeal { get; set; }
         public long Id { get; set; }
