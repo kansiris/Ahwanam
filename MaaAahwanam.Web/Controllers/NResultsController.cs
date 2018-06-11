@@ -107,15 +107,16 @@ namespace MaaAahwanam.Web.Controllers
                     selectedservices.Remove("Resort");
                     selectedservices.Remove("Convention Hall");
                 }
-                else {
+                else
+                {
                     var removetype = (stype.Split(',')[0] == "Convention-Hall" || stype.Split(',')[0] == "ConventionHall") ? "Convention Hall" : stype.Split(',')[0];
-                    if(removetype != "" && removetype != null) selectedservices.Remove(removetype);
+                    if (removetype != "" && removetype != null) selectedservices.Remove(removetype);
                     else selectedservices.Remove(stype.Split(',')[0]);
                 }
                 return PartialView();
             }
 
-            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "BanquetHall", "FunctionHall", "Banquet", "Function", "Banquet Hall", "Function Hall", "ConventionHall" }.Contains(type))
+            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "BanquetHall", "FunctionHall", "Banquet", "Function", "Banquet Hall", "Function Hall", "ConventionHall","Convention Hall" }.Contains(type))
             {
                 string type1 = type;
                 type1 = (type1 == "Convetion" || type1 == "Convention" || type1 == "ConventionHall") ? "Convention Hall" : type1;
@@ -131,7 +132,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.results = data;
                 type = (type == "Banquet Hall" || type == "Banquet") ? "BanquetHall" : type;
                 type = (type == "Function Hall" || type == "Function") ? "FunctionHall" : type;
-                type = (type == "Convetion" || type == "Convention") ? "ConventionHall" : type;
+                type = (type == "Convetion" || type == "Convention" || type == "Convention Hall") ? "ConventionHall" : type;
                 ViewBag.type = type;
 
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";

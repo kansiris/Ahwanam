@@ -404,7 +404,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 return Json("Login",JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return RedirectToAction("Index", "Nhomepage");
             }

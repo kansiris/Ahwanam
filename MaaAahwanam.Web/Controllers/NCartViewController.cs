@@ -1,7 +1,4 @@
-﻿using MaaAahwanam.Models;
-using MaaAahwanam.Repository;
-using MaaAahwanam.Service;
-using MaaAahwanam.Utility;
+﻿using MaaAahwanam.Utility;
 using MaaAahwanam.Web.Custom;
 using System;
 using System.Collections.Generic;
@@ -9,6 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
+using MaaAahwanam.Service;
 
 namespace MaaAahwanam.Web.Controllers
 {
