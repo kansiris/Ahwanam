@@ -229,8 +229,9 @@ namespace MaaAahwanam.Web.Controllers
                         string id = Convert.ToString(cartdetails.Id);
                         string did = Convert.ToString(cartdetails.DealId);
                         string timeslot = cartdetails.attribute;
-                        string etype1 = cartdetails.ServiceType;
+                        string etype1 = cartdetails.EventType;
                         string vid = Convert.ToString(cartdetails.subid);
+                        DateTime date = Convert.ToDateTime(cartdetails.eventstartdate);
                         if (type == "Photography" || type == "Decorator" || type == "Other")
                         {
                             totalprice = price;
@@ -284,7 +285,7 @@ namespace MaaAahwanam.Web.Controllers
                         orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                         orderDetail.UpdatedBy = user.UserId;
                         orderDetail.subid = long.Parse(vid);
-                        orderDetail.BookedDate = updateddate;
+                        orderDetail.BookedDate = date;
                         orderDetail.EventType = etype1;
                         orderDetail.DealId = long.Parse(did);
                         orderDetail.ExtraDate1 = cartdetails.c1date;
@@ -394,42 +395,54 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult multipledateinsert( string cartId,string price, string date, string total)
         {
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            if (user.UserType == "User")
-            {   var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-                var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartId)).FirstOrDefault();
-                var totalprice = cartdetails.TotalPrice;
-                var totalprice1 = totalprice + decimal.Parse(price);
-                string updateddate = DateTime.UtcNow.ToShortDateString();
-                CartItem cartItem = new CartItem();
-                var price2 = date + ',' + price;
-                if (cartdetails.c1date == null)
-                {
-                    cartItem.ExtraDate1 = price2;
-                }
-                else if (cartdetails.c2date == null)
-                {
-                    cartItem.ExtraDate1 = cartdetails.c1date;
-                    cartItem.ExtraDate2 = price2;
-                }
-                else if (cartdetails.c3date == null)
-                {
-                    cartItem.ExtraDate1 = cartdetails.c1date;
-                    cartItem.ExtraDate2 = cartdetails.c2date;
-                    cartItem.ExtraDate3 = price2; }
-             else if (cartdetails.c3date != null)
+            if (date == "")
+            { return Json("datenotsaved"); }
+            else
             {
-                    return Json("failed");
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                if (user.UserType == "User")
+                {
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                    ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                    var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                    var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartId)).FirstOrDefault();
+                    var totalprice = cartdetails.TotalPrice;
+                    var totalprice1 = totalprice + decimal.Parse(price);
+                    string updateddate = DateTime.UtcNow.ToShortDateString();
+                    CartItem cartItem = new CartItem();
+                    var price2 = date + ',' + price;
+                    if (cartdetails.c1date == null)
+                    {
+                        cartItem.ExtraDate1 = price2;
+                        cartItem.ExtraDate2 = cartdetails.c2date;
+                        cartItem.ExtraDate3 = cartdetails.c3date;
+                    }
+                    else if (cartdetails.c2date == null)
+                    {
+                        cartItem.ExtraDate1 = cartdetails.c1date;
+                        cartItem.ExtraDate3 = cartdetails.c3date;
+
+                        cartItem.ExtraDate2 = price2;
+                    }
+                    else if (cartdetails.c3date == null)
+                    {
+                        cartItem.ExtraDate1 = cartdetails.c1date;
+                        cartItem.ExtraDate2 = cartdetails.c2date;
+                        cartItem.ExtraDate3 = price2;
+                    }
+                    else if (cartdetails.c3date != null)
+                    {
+                        return Json("failed");
+                    }
+                    cartItem.TotalPrice = Convert.ToDecimal(totalprice1);
+                    cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                    cartItem.CartId = cartdetails.CartId;
+                    string mesaage = cartService.adddatecartitem(cartItem);
+                    return Json(mesaage);
                 }
-                cartItem.TotalPrice = Convert.ToDecimal(totalprice1);
-                cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
-                cartItem.CartId = cartdetails.CartId;
-                string mesaage = cartService.adddatecartitem(cartItem);
-                return Json(mesaage);
             }
-            return View();
+                return View();
+            
         }
 
         public ActionResult multipledatedelete(string cartId, string price, string date, string total)
@@ -451,10 +464,13 @@ namespace MaaAahwanam.Web.Controllers
                 if (cartdetails.c1date == price2)
                 {
                     cartItem.ExtraDate1 = null;
+                    cartItem.ExtraDate3 = cartdetails.c3date;
+                    cartItem.ExtraDate2 = cartdetails.c2date;
                 }
                 else if (cartdetails.c2date == price2)
                 {
                     cartItem.ExtraDate1 = cartdetails.c1date;
+                    cartItem.ExtraDate3 = cartdetails.c3date;
                     cartItem.ExtraDate2 = null;
                 }
                 else if (cartdetails.c3date == price2)

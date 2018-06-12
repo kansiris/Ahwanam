@@ -130,6 +130,7 @@ namespace MaaAahwanam.Repository.db
                 ord.BusinessName = vendor.BusinessName;
                 ord.Address = vendor.Address;
                 ord.City = vendor.City;
+                ord.State = vendor.State;
                 ord.Landmark = vendor.Landmark;
                 ord.ContactPerson = vendor.ContactPerson;
                 ord.ContactNumber = vendor.ContactNumber;
