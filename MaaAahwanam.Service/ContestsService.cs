@@ -28,6 +28,12 @@ namespace MaaAahwanam.Service
             return contestsRepoitory.RemoveContest(id);
         }
 
+        public Contest Activationcontest(Contest cont1,string command)
+        {
+
+            return contestsRepoitory.Activationcontest(cont1,command);
+        }
+
         public int UpdateContestName(ContestMaster contestMaster)
         {
             return contestsRepoitory.UpdateContestName(contestMaster);

@@ -27,7 +27,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string command, ContestMaster contestMaster, string id)
+        public ActionResult Index(string command, ContestMaster contestMaster,string id)
         {
             if (command == "Add")
             {
@@ -78,15 +78,41 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult AllEnteredContestes(string selectedcontest)
+        public ActionResult AllEnteredContestes(string selectedcontest, string id ,string command, string selectedcontest1)
         {
             var records = contestsService.GetAllContests();
             ViewBag.records = records;
-            if (selectedcontest != null)
+            if (selectedcontest != null && selectedcontest != "Select Contest")
             {
                 ViewBag.contests = contestsService.GetAllEntries(long.Parse(selectedcontest));
+                ViewBag.selectedcontest = selectedcontest;
+            }
+            if (id != "0" && id != null && command == null && selectedcontest != null)
+            {
+                ViewBag.selectedcontest = selectedcontest;
+
+                ViewBag.display =  id;
+                var contestdetails = contestsService.GetAllEntries(long.Parse(selectedcontest));
+                ViewBag.contestdetails = contestdetails.Where(m => m.ContestId == long.Parse(id)).FirstOrDefault();
+            }
+            if (id != "0" && id != null && command != null && selectedcontest1 != null)
+            {
+                ViewBag.selectedcontest = selectedcontest;
+
+                ViewBag.display = id;
+                var contestdetails = contestsService.GetAllEntries(long.Parse(selectedcontest1));
+                var cont1 = contestdetails.Where(m => m.ContestId == long.Parse(id) ).FirstOrDefault();
+                
+                contestsService.Activationcontest(cont1,command );
+                return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + command + "');location.href='" + @Url.Action("AllEnteredContestes", "ContestsManagement") + "'</script>");
+
             }
             return View();
         }
-    }
+
+        //public ActionResult BeautyServices([Bind(Prefix = "Item2")] VendorsBeautyService vendorsBeautyService, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
+        //{
+        //}
+
+        }
 }
