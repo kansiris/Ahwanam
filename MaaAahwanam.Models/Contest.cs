@@ -12,6 +12,7 @@ namespace MaaAahwanam.Models
         [Key]
         public long ContestId { get; set; }
         public long ContentMasterID { get; set; }
+        public long UserLoginID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string UploadedImage { get; set; }

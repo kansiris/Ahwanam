@@ -23,35 +23,7 @@
             <a class="navbar-brand text-white logo primaryFont" href="/NHomePage">Ahwanam</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
-                {
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active"> <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a> </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Signin / Signup </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                }
-                else
-                {
-                    var user = (CustomPrincipal)HttpContext.Current.User;
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active"> <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a> </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> @user.FirstName @user.LastName </a>
-                            @*<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>*@
-                        </li>
-                    </ul>
-                }
+                @{Html.RenderAction("Authenticate", "Contests"); }
             </div>
         </nav>
         <div class="w-100 bannerContent">

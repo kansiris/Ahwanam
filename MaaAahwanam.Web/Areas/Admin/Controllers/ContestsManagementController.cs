@@ -27,7 +27,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string command, ContestMaster contestMaster,string id)
+        public ActionResult Index(string command, ContestMaster contestMaster, string id)
         {
             if (command == "Add")
             {
@@ -88,7 +88,5 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             return View();
         }
-
-
     }
 }
