@@ -65,5 +65,11 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Contest.Where(m => m.ContentMasterID == id).ToList();
         }
+
+        //Vote Count
+        public List<ContestVote> GetAllVotes(long id)
+        {
+            return _dbContext.ContestVote.Where(m => m.ContestId == id).ToList();
+        }
     }
 }

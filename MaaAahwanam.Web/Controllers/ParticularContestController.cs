@@ -9,11 +9,13 @@ using System.Drawing;
 using System.IO;
 using Newtonsoft.Json;
 using MaaAahwanam.Utility;
+using MaaAahwanam.Web.Custom;
 
 namespace MaaAahwanam.Web.Controllers
 {
     public class ParticularContestController : Controller
     {
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         ContestsService contestsService = new ContestsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
@@ -24,6 +26,20 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
                 ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
+                var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id));
+                List<string> contestentries = new List<string>();
+                List<string> votecount = new List<string>();
+                foreach (var item in AvailableContestEntries)
+                {
+                    var date = TimeAgo(item.UpdatedDate);
+                    contestentries.Add(date);
+                    var count = contestsService.GetAllVotes(item.ContestId).Count;
+                    votecount.Add(count.ToString());
+                }
+                ViewBag.AvailableContestEntries = AvailableContestEntries;
+                ViewBag.count = AvailableContestEntries.Count();
+                ViewBag.time = contestentries;
+                ViewBag.voedcount = votecount;
             }
             else
                 ViewBag.contestname = "Particular Contest";
@@ -37,13 +53,17 @@ namespace MaaAahwanam.Web.Controllers
             {
                 if (command == "Add")
                 {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    //var response = userLoginDetailsService.GetUser((int)user.UserId);
+                    var userlogin = userLoginDetailsService.GetUserId((int)user.UserId);
                     contest.ContentMasterID = long.Parse(id);
                     contest.IPAddress = HttpContext.Request.UserHostAddress;
                     contest.SharedCount = 0;
+                    contest.UserLoginID = user.UserId;
                     string strm = sample_input.Replace("data:image/png;base64,", "");
 
                     //this is a simple white background image
-                    var myfilename = "user@gmail.com" + "_" + id + "_.jpeg";
+                    var myfilename = userlogin.UserName + "_" + id + "_.jpeg";
                     contest.UploadedImage = myfilename;
                     //Generate unique filename
                     string filepath = System.Web.HttpContext.Current.Server.MapPath(@"/ContestPics/" + myfilename);// "~/ProfilePictures/" + myfilename ;
@@ -63,24 +83,59 @@ namespace MaaAahwanam.Web.Controllers
             return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='/NUserRegistration/Index'</script>");
         }
 
-        [HttpPost]
-        public ActionResult UserAuthentication(string command, [Bind(Prefix = "Item1")]UserLogin userLogin)
-        {
-            if (command == "Login")
-            {
-                var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-                var userResponse1 = venorVenueSignUpService.GetUserLogdetails(userLogin);
+        //[HttpPost]
+        //public ActionResult UserAuthentication(string command, [Bind(Prefix = "Item1")]UserLogin userLogin)
+        //{
+        //    if (command == "Login")
+        //    {
+        //        var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
+        //        var userResponse1 = venorVenueSignUpService.GetUserLogdetails(userLogin);
 
-                if (userResponse != null)
-                {
-                    string userData = JsonConvert.SerializeObject(userResponse);
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                    return RedirectToAction("Index", "ParticularContest");
-                }
-                else
-                    return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "ParticularContest") + "'</script>");
+        //        if (userResponse != null)
+        //        {
+        //            string userData = JsonConvert.SerializeObject(userResponse);
+        //            ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+        //            return RedirectToAction("Index", "ParticularContest");
+        //        }
+        //        else
+        //            return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "ParticularContest") + "'</script>");
+        //    }
+        //    return View();
+        //}
+
+        public static string TimeAgo(DateTime dt)
+        {
+            TimeSpan span = DateTime.Now - dt;
+            if (span.Days > 365)
+            {
+                int years = (span.Days / 365);
+                if (span.Days % 365 != 0)
+                    years += 1;
+                return String.Format("about {0} {1} ago",
+                years, years == 1 ? "year" : "years");
             }
-            return View();
+            if (span.Days > 30)
+            {
+                int months = (span.Days / 30);
+                if (span.Days % 31 != 0)
+                    months += 1;
+                return String.Format("about {0} {1} ago",
+                months, months == 1 ? "month" : "months");
+            }
+            if (span.Days > 0)
+                return String.Format("about {0} {1} ago",
+                span.Days, span.Days == 1 ? "day" : "days");
+            if (span.Hours > 0)
+                return String.Format("about {0} {1} ago",
+                span.Hours, span.Hours == 1 ? "hour" : "hours");
+            if (span.Minutes > 0)
+                return String.Format("about {0} {1} ago",
+                span.Minutes, span.Minutes == 1 ? "minute" : "minutes");
+            if (span.Seconds > 5)
+                return String.Format("about {0} seconds ago", span.Seconds);
+            if (span.Seconds <= 5)
+                return "just now";
+            return string.Empty;
         }
     }
 }
