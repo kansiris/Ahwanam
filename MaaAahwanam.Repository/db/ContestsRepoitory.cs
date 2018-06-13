@@ -61,6 +61,21 @@ namespace MaaAahwanam.Repository.db
             return contest;
         }
 
+        public Contest Activationcontest(Contest cont1, string command)
+        {
+            var query =
+                from ord in _dbContext.Contest
+                where ord.ContestId == cont1.ContestId
+                select ord;
+
+            foreach (Contest ord in query)
+            {
+                ord.Status = command;
+                // Insert any additional changes to column values.
+            }
+            _dbContext.SaveChanges();
+            return cont1;
+        }
         public List<Contest> GetAllEntries(long id)
         {
             return _dbContext.Contest.Where(m => m.ContentMasterID == id).ToList();

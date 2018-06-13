@@ -49,58 +49,116 @@
                         <br />
                         <br />
                         <div class="panel-body">
-                            <div class="table-responsive">
-                                @if (ViewBag.contests != null)
+    <div class="table-responsive">
+        @if (ViewBag.contests != null)
+        {
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Created date</th>
+                        <th>Updated Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.contests)
+                    {
+                        <tr class="even gradeX">
+                            <td>
+                                @(++i)
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.CreatedDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.UpdatedDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                <a href="/Admin/ContestsManagement/AllEnteredContestes?id=@item.ContestId+&selectedcontest=@ViewBag.selectedcontest" class="btn btn-primary btn-xs"> View </a>
+                                <a href="/Admin/ContestsManagement/RemoveContest?id=@item.ContentMasterID" class="btn btn-danger btn-xs"> Delete </a>
+                                @*<a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-default btn-xs">Delete</a>
+                                    @*<input type="button" name="command" value="Delete" formaction="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-danger btn-xs" />*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+   
+
+                            @if (ViewBag.display != null)
+                            {
+                                if (ViewBag.contests != null)
                                 {
-                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                        <thead>
-                                            <tr>
-                                                <th>S.No</th>
-                                                <th>Name</th>
-                                                <th>Created date</th>
-                                                <th>Updated Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in ViewBag.contests)
-                                            {
-                                                <tr class="even gradeX">
-                                                    <td>
-                                                        @(++i)
-                                                    </td>
-                                                    <td>
-                                                        @item.Name
-                                                    </td>
-                                                    <td>
-                                                        @item.CreatedDate.ToShortDateString()
-                                                    </td>
-                                                    <td>
-                                                        @item.UpdatedDate.ToShortDateString()
-                                                    </td>
-                                                    <td>
-                                                        @item.Status
-                                                    </td>
-                                                    <td>
-                                                        <a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-primary btn-xs"> View </a>
-                                                        <a href="/Admin/ContestsManagement/RemoveContest?id=@item.ContentMasterID" class="btn btn-danger btn-xs"> Delete </a>
-                                                        @*<a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-default btn-xs">Delete</a>
-                                                            @*<input type="button" name="command" value="Delete" formaction="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-danger btn-xs" />*@
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                    foreach (var item in ViewBag.contests)
+                                    {
+                              
+
+                                <div class="form-group">
+                                    <label for="tags" class="control-label col-lg-4">@item.Name</label>
+                                    <p class="ml-3 mb-0"><span>@item.CreatedDate</span> days ago</p>
+                                    <p class="descrption">@item.Description</p>
+                                    <p class="status">@item.Status</p>
+                                    <input type="hidden" name="cid" id="cid"value="@item.ContestId" />
+
+                                   <input type="hidden" name="selectedcontest1" id="selectedcontest1"value="@ViewBag.selectedcontest" />
+                                    <div align="center">
+                                        <img src="/vendorimages/@item.UploadedImage" class="img-fluid" alt="Deals">
+                                    </div>
+                                    <div style="text-align:center" class="form-actions no-margin-bottom">
+
+                                        <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate contestant</button>
+                                        <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
+                                        <button type="submit" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline contestant</button>
+
+
+                                      
+                                    </div>
+                                    </div>
+
+                                    }
                                 }
-                            </div>
-                        </div>
+                            }
+                                    
                     </div>
-                </div>
             </div>
         </div>
     </div>
+            </div>
+        </div>
 }
+
+@*Query POPUP*@
+<div class="modal fade" id="querymodal" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        @*@using (Html.BeginForm("submitquery", "createvendor", FormMethod.Post))
+            {*@
+        <div class="modal-content">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+            <div class="modal-body">
+                @*<input id="Text1" type="text" name="txtOne"rows="5"  placeholder="Query.....?" style="width:100%;background-color:#eeeeee" />*@
+                <textarea rows="5" name="txtOne" id="txtone" type="text" placeholder="Query.....?" style="width:100%;background-color:#eeeeee"></textarea>
+            </div>
+            <div class="modal-footer" align="center">
+
+                <button type="submit" id="btnSubmitquery" class="btn text-muted text-center btn-success" value="submit">Submit Query</button>
+
+                <button type="button" name="Command" class="btn text-muted text-center btn-danger" id="cancelquery" value="cancel">Cancel</button>
+            </div>
+        </div>
+        @*}*@
+    </div>
+</div>
 <!--END PAGE CONTENT -->
 @section Bottom{
     <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
@@ -117,5 +175,43 @@
             }); @*{ "pageLength": 5 }*@
         });
     </script>
+<script>
+            //hide modal popup
+            $('#cancelquery').click(function () {
+
+                $('#querymodal').css('display', 'none').css('aria-hidden', 'true');
+            });
+
+            //Submit Query Script
+            $('#btnSubmitquery').click(function () {
+
+                //$('#form1').submit();
+
+
+                var txtone = $("#txtone").val();
+                var emailId = $("#Item1_EmailId").val();
+
+                $.ajax({
+                    url: '/CreateVendor/submitquery',
+                    type: "post",
+                    data: JSON.stringify({ emailid: emailId, txtone: txtone }),
+                    cache: false,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        //if (data == "exists") {
+                            alert("E-Mail  Sent!!!");
+                        //}
+                    },
+                    //failure: function (data) {
+                    //    alert("E-Mail ID not sent!!! Try Another");
+                    //},
+                    error: function (data)
+                    { alert("E-Mail not sent!!! Try again"); }
+                });
+
+            });
+
+</script>
 }
 
