@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+@using MaaAahwanam.Web.Custom
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>:: Ahwanam Contests ::</title>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="js/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/contest/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/newdesign/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/contest/css/customstyles.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    @RenderSection("css", required: false)
+</head>
+<body>
+    <div class="container-fluid indexBannerBg">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand text-white logo primaryFont" href="/NHomePage">Ahwanam</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
+                {
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"> <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a> </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Signin / Signup </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    var user = (CustomPrincipal)HttpContext.Current.User;
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active"> <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a> </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> @user.FirstName @user.LastName </a>
+                            @*<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>*@
+                        </li>
+                    </ul>
+                }
+            </div>
+        </nav>
+        <div class="w-100 bannerContent">
+            <h3 class="text-center primaryFont primaryTextColor bannerTextHead">Contests</h3>
+            <p class="text-white text-center fontWeight700 bannerText">Participate &amp Earn Exciting Prizes.</p>
+        </div>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="container-fluid secondaryBgColor py-4 text-center text-white">
+        <div class="primaryFont"><h3>News Letters</h3></div>
+        <p style="font-size: 17px;" class="mb-0">Showcase your love by posting most memorable pic with your father.</p>
+        <div class="row py-4 justify-content-center">
+            <div class="col-12 col-sm-7 col-md-5">
+                <form>
+                    <input class="form-control mr-0 p-3" type="search" placeholder="Subscribe Here" aria-label="Search">
+                    <button class="btn primaryBgColor my-2 my-sm-0 secondaryTextColor p-3 fontWeight700" type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <ul class="row justify-content-center pl-0">
+            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        </ul>
+        <div class="row justify-content-center fontWeight700" style="font-size: 17px;">2018 - Ahwanam, All Rights Reserved.</div>
+    </footer>
+    <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/jquery.js"></script>
+    <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/bootstrap.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

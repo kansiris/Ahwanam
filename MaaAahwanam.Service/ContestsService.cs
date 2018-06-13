@@ -22,5 +22,26 @@ namespace MaaAahwanam.Service
         {
             return contestsRepoitory.GetAllContests();
         }
+
+        public int RemoveContest(long id)
+        {
+            return contestsRepoitory.RemoveContest(id);
+        }
+
+        public int UpdateContestName(ContestMaster contestMaster)
+        {
+            return contestsRepoitory.UpdateContestName(contestMaster);
+        }
+
+        //Enter Contest
+        public Contest EnterContest(Contest contest)
+        {
+            return contestsRepoitory.EnterContest(contest);
+        }
+
+        public List<Contest> GetAllEntries(long id)
+        {
+            return contestsRepoitory.GetAllEntries(id);
+        }
     }
 }

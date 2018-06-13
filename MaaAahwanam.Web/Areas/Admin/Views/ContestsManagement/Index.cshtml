@@ -71,8 +71,10 @@
                                                     @item.Status
                                                 </td>
                                                 <td>
-                                                    <a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-default btn-xs"> View </a>
-                                                    @*<a href="#" class="btn btn-default btn-xs">Delete</a>*@
+                                                    <a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-primary btn-xs"> View </a>
+                                                    <a href="/Admin/ContestsManagement/RemoveContest?id=@item.ContentMasterID" class="btn btn-danger btn-xs"> Delete </a>
+                                                    @*<a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-default btn-xs">Delete</a>*@
+                                                    @*<input type="button" name="command" value="Delete" formaction="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-danger btn-xs" />*@
                                                 </td>
                                             </tr>
                                         }
@@ -90,12 +92,13 @@
                             <div class="col-lg-4">
                                 <input type="text" id="ContestName" name="ContestName" class="form-control" value="@ViewBag.contestname" />
                             </div>
-                            @if (ViewBag.contestname == null && ViewBag.contestname == "")
-                            {<input type="submit" id="btnsearch" value="Add" class="btn btn-success" />}
+                            @if (Request.QueryString["type"] == "New")
+                            {<input type="submit" id="btnsearch" name="command" value="Add" class="btn btn-success" />}
                             else
-                            {<input type="submit" id="btnsearch" value="Update" class="btn btn-primary" />}
+                            {<input type="submit" id="btnsearch" name="command" value="Update" class="btn btn-primary" />}
 
-                            <input type="submit" id="btnsearch" value="Add" class="btn btn-danger" />
+                            @*<input type="submit" name="command" value="Cancel" class="btn btn-danger" />*@
+                            <a href="/Admin/ContestsManagement/CancelContest" class="btn btn-danger">Cancel</a>
                         </div>
                     }
                     </div>

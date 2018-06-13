@@ -24,30 +24,46 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.ContestMaster.ToList();
         }
 
-        public string RemoveContest(long id)
+        public int RemoveContest(long id)
         {
-            try
-            {
-                var list = _dbContext.ContestMaster.FirstOrDefault(m => m.ContentMasterID == id);
-                _dbContext.ContestMaster.Remove(list);
-                _dbContext.SaveChanges();
-                return "Success";
-            }
-            catch
-            {
-                return "Failed";
-            }
+            int updatestatus;
+            var record = _dbContext.ContestMaster.SingleOrDefault(i => i.ContentMasterID == id);
+            ContestMaster contestMaster = new ContestMaster();
+            contestMaster = record;
+            contestMaster.Status = "Removed";
+            contestMaster.UpdatedDate = date;
+            _dbContext.Entry(record).CurrentValues.SetValues(contestMaster);
+            updatestatus = _dbContext.SaveChanges();
+            return updatestatus;
         }
 
         public int UpdateContestName(ContestMaster contestMaster)
         {
             int updatestatus;
             var record = _dbContext.ContestMaster.SingleOrDefault(i => i.ContentMasterID == contestMaster.ContentMasterID);
-            record.ContestName = contestMaster.ContestName;
-            record.UpdatedDate = date;
+            //record.ContestName = contestMaster.ContestName;
+            //record.UpdatedDate = date;
+            contestMaster.UpdatedDate = date;
+            contestMaster.CreatedDate = record.CreatedDate;
+            contestMaster.Status = record.Status;
             _dbContext.Entry(record).CurrentValues.SetValues(contestMaster);
             updatestatus = _dbContext.SaveChanges();
             return updatestatus;
+        }
+
+        //Enter Contest
+        public Contest EnterContest(Contest contest)
+        {
+            contest.CreatedDate = contest.UpdatedDate = date;
+            contest.Status = "Pending";
+            contest = _dbContext.Contest.Add(contest);
+            _dbContext.SaveChanges();
+            return contest;
+        }
+
+        public List<Contest> GetAllEntries(long id)
+        {
+            return _dbContext.Contest.Where(m => m.ContentMasterID == id).ToList();
         }
     }
 }
