@@ -102,30 +102,52 @@
                                 {
                                     foreach (var item in ViewBag.contests)
                                     {
-                              
-
-                                <div class="form-group">
-                                    <label for="tags" class="control-label col-lg-4">@item.Name</label>
-                                    <p class="ml-3 mb-0"><span>@item.CreatedDate</span> days ago</p>
-                                    <p class="descrption">@item.Description</p>
-                                    <p class="status">@item.Status</p>
-                                    <input type="hidden" name="cid" id="cid"value="@item.ContestId" />
-
-                                   <input type="hidden" name="selectedcontest1" id="selectedcontest1"value="@ViewBag.selectedcontest" />
-                                    <div align="center">
-                                        <img src="/vendorimages/@item.UploadedImage" class="img-fluid" alt="Deals">
-                                    </div>
-                                    <div style="text-align:center" class="form-actions no-margin-bottom">
-
-                                        <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate contestant</button>
-                                        <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
-                                        <button type="submit" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline contestant</button>
 
 
-                                      
-                                    </div>
-                                    </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div id="collapse2" class="body collapse in">
 
+                                                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4">Name</label>
+                                                                <input type="textbox" value="@item.Name" disabled />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-4">Description</label>
+                                                                <input type="textbox" value="@item.Description" disabled />
+                                                            </div>
+
+
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                          
+                                       
+
+                                           
+                                            @*<p class="descrption">@item.Description</p>
+                                                <p class="status">@item.Status</p>*@
+                                            <input type="hidden" name="cid" id="cid" value="@item.ContestId" />
+
+                                            <input type="hidden" name="selectedcontest1" id="selectedcontest1" value="@ViewBag.selectedcontest" />
+                                            <div align="center">
+                                                <img src="/ProfilePictures/@item.UploadedImage" class="img-fluid" alt="Deals">
+                                            </div>
+                                            <div style="text-align:center" class="form-actions no-margin-bottom">
+
+                                                <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate contestant</button>
+                                                <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
+                                                <button type="submit" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline contestant</button>
+
+
+
+                                            </div>
+                                        </div>
+
+                                            </div>
                                     }
                                 }
                             }
@@ -180,6 +202,7 @@
             $('#cancelquery').click(function () {
 
                 $('#querymodal').css('display', 'none').css('aria-hidden', 'true');
+                window.location.reload();
             });
 
             //Submit Query Script
@@ -190,11 +213,14 @@
 
                 var txtone = $("#txtone").val();
                 var emailId = $("#Item1_EmailId").val();
-
+                var cid = @Request.QueryString["id"];
+                var selectedcontest = @Request.QueryString["selectedcontest"]
+                //var selectedcontest = $("selectedcontest1").val();
+                
                 $.ajax({
-                    url: '/CreateVendor/submitquery',
+                    url: '/ContestsManagement/submitquery',
                     type: "post",
-                    data: JSON.stringify({ emailid: emailId, txtone: txtone }),
+                    data: JSON.stringify({ emailid: emailId, txtone: txtone, cid: cid, selectedcontest: selectedcontest }),
                     cache: false,
                     dataType: 'json',
                     contentType: 'application/json',
