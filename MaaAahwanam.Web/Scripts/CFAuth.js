@@ -1,7 +1,7 @@
 ﻿window.fbAsyncInit = function () {
     // FB JavaScript SDK configuration and setup
     FB.init({
-        appId: '1210420135768170', //'152565978688349',// FB App ID
+        appId: '152565978688349', //'152565978688349',// FB App ID
         cookie: true,  // enable cookies to allow the server to access the session
         xfbml: true,  // parse social plugins on this page
         version: 'v2.8' // use graph api version 2.8
@@ -26,12 +26,12 @@
 }(document, 'script', 'facebook-jssdk'));
 
 // Facebook login with JavaScript SDK
-function fbLogin() {
+function fbLogin(page) {
     FB.login(function (response) {
 
         if (response.authResponse) {
             // Get and display the user profile data
-            getFbUserData();
+            getFbUserData(page);
 
         } else {
             document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
@@ -40,7 +40,7 @@ function fbLogin() {
 }
 
 // Fetch the user profile data from facebook
-function getFbUserData() {
+function getFbUserData(page) {
     //FB.api('/me?fields=id,name,gender,email,birthday,first_name,currency,last_name,locale,timezone,verified,picture,age_range', function (me) {
     // FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picturename,birthday,currency,timezone,verified,age_range' },
     FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture,timezone,verified,age_range,name' },
@@ -62,12 +62,16 @@ function getFbUserData() {
                  agerange: response.age_range
              }
              $.ajax({
-                 url: '/Contests/facebookLogin/',
+                 url: '/' + page + '/facebookLogin/',
                  type: 'POST',
                  data: data,
                  success: function () {
                      if (data == 'failed') {
                          alert('Something Went Wrong!!! Try gain Later');
+                     }
+                     else if (data == 'voted') {
+                         alert('Voted');
+                         location.reload();
                      }
                      else {
                          var url1 = document.referrer;

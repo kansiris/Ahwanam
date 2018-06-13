@@ -55,5 +55,20 @@ namespace MaaAahwanam.Service
         {
             return contestsRepoitory.GetAllVotes(id);
         }
+
+        public ContestVote AddContestVote(ContestVote contestVote)
+        {
+            return contestsRepoitory.AddContestVote(contestVote);
+        }
+
+        public int RemoveContestVote(ContestVote contestVote)
+        {
+            return contestsRepoitory.RemoveContestVote(contestVote);
+        }
+
+        public ContestVote ParticularVote(long id)
+        {
+            return contestsRepoitory.ParticularVote(id);
+        }
     }
 }

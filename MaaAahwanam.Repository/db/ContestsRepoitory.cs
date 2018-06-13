@@ -86,5 +86,29 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ContestVote.Where(m => m.ContestId == id).ToList();
         }
+
+        public ContestVote AddContestVote(ContestVote contestVote)
+        {
+            contestVote.VotedDate = contestVote.UpdatedDate = date;
+            contestVote.Status = "Active";
+            contestVote = _dbContext.ContestVote.Add(contestVote);
+            _dbContext.SaveChanges();
+            return contestVote;
+        }
+
+        public int RemoveContestVote(ContestVote contestVote)
+        {
+            var record = _dbContext.ContestVote.SingleOrDefault(i => i.ContestVoteID == contestVote.ContestVoteID);
+            contestVote.UpdatedDate = date;
+            contestVote.Status = "InActive";
+            _dbContext.Entry(record).CurrentValues.SetValues(contestVote);
+            int count = _dbContext.SaveChanges();
+            return count;
+        }
+
+        public ContestVote ParticularVote(long id)
+        {
+            return _dbContext.ContestVote.Where(m => m.ContestVoteID == id).FirstOrDefault();
+        }
     }
 }

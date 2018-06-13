@@ -39,35 +39,20 @@
 </div>
 <div class="container margin-top-50 pages">
     <div class="row my-3 components" id="Home">
-        @*@foreach (var item in ViewBag.AvailableContestEntries)
-        {
-            <div class="col-12 col-sm-4 col-md-4 block mb-3">
-                <figure>
-                    <img src="~/ContestPics/@item.UploadedImage" class="img-fluid" alt="Happy Fathers Day" />
-                </figure>
-                <p class="contestants secondaryTextColor fontWeight700 mb-2">@item.Name</p>
-                <p class="ml-3 mb-0"><span>@item.CreatedDate</span> days ago</p>
-                <p class="descrption">@item.Description</p>
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><spana>350</spana> people loved</div>
-                    <div class="col-12 col-sm-6 col-md-6">
-                        <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right">Share</button>
-                    </div>
-                </div>
-            </div>
-        }*@
-
+        <input type="hidden" id="tcid" />
         @for (int i = 0; i < ViewBag.count; i++)
         {
             <div class="col-12 col-sm-4 col-md-4 block mb-3">
+                <input type="hidden" id="cid" value="@ViewBag.AvailableContestEntries[i].ContestId" />
                 <figure>
                     <img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />
                 </figure>
                 <p class="contestants secondaryTextColor fontWeight700 mb-2">@ViewBag.AvailableContestEntries[i].Name</p>
                 <p class="ml-3 mb-0">@ViewBag.time[i]</p>
                 <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
+
                 <div class="row">
-                    <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><spana>@ViewBag.voedcount[i]</spana> people loved</div>
+                    <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><span>@ViewBag.votecount[i]</span> people loved</div>
                     <div class="col-12 col-sm-6 col-md-6">
                         <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right">Share</button>
                     </div>
@@ -89,30 +74,32 @@
     </div>
     <div class="row my-3 components" id="Upload Image">
         <div class="col-12 col-sm-12 col-md-12">
-            @*@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
+            @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
             {
-                <form method="post" action="/ParticularContest/UserAuthentication?command=Login">
-                    <div class="w-100 mt-3">
-                        <div class="form-group col-12 col-sm-8 col-md-6">
-                            <label for="comment">Username:</label>
-                            <input type="text" id="Item1_UserName" name="Item1.UserName" class="form-control" required />
+                <form role="form">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Signin / Signup </button>
+                    @*<div class="w-100 mt-3">
+                            <div class="form-group col-12 col-sm-8 col-md-6">
+                                <label for="comment">Username:</label>
+                                <input type="text" id="Item1_UserName" name="Item1.UserName" class="form-control" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="w-100 mt-3">
-                        <div class="form-group col-12 col-sm-8 col-md-6">
-                            <label for="comment">Password:</label>
-                            <input type="password" class="form-control" id="Item1_Password" name="Item1.Password" required />
+                        <div class="w-100 mt-3">
+                            <div class="form-group col-12 col-sm-8 col-md-6">
+                                <label for="comment">Password:</label>
+                                <input type="password" class="form-control" id="Item1_Password" name="Item1.Password" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="w-100">
-                        <div class="col-12 col-sm-8 col-md-6">
-                            <button type="submit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Login">Login</button>
-                        </div>
-                    </div>
+                        <div class="w-100">
+                            <div class="col-12 col-sm-8 col-md-6">
+                                <button type="submit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Login">Login</button>
+                            </div>
+                        </div>*@
                 </form>
+
             }
             else
-            {*@
+            {
                 <form role="form" method="post">
                     <input id="sample_input" type="hidden" name="sample_input">
                     <div class="w-100 mt-3">
@@ -138,7 +125,7 @@
                         </div>
                     </div>
                 </form>
-            @*}*@
+            }
 
         </div>
     </div>
@@ -156,13 +143,30 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 fontWeight700 peopleLoved"><i class="fa fa-heart themeRedTextColor mr-2" aria-hidden="true"></i><span></span></div>
                 </div>
+
             </div>
             <div class="contentBottom">
                 <div class="w-100">
-                    <label class="py-2">
-                        <input type="checkbox" name="">
-                        <span>Vote</span>
-                    </label>
+                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <label class="py-2">
+
+                            @if (ViewBag.vote == "1")
+                            {<input type="checkbox" name="">
+                                <span>Vote</span>
+                            }
+                            else
+                            {<input type="checkbox" name="" checked>
+                                <span>UNVOTE</span>
+                            }
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="py-2">
+                            <span onclick="fbLogin('ParticularContest')">Vote</span>
+                        </label>
+                    }
                 </div>
                 <div class="w-100 socialIcons my-2">
                     <ul class="pl-0 mb-0 text-center">
@@ -201,6 +205,8 @@
         var $appendFigure = $(".blockPopup .block figure"), $appendDescrption = $(".blockPopup .block .totalContent .descrption"), $appendContestants = $(".blockPopup .block .totalContent .contestants"), $appendPeopleLove = $(".blockPopup .block .totalContent .peopleLoved span");
         $("#Home .block").click(function () {
             $(".blockPopup").css("display", "block");
+            var cid = $(this).find("figure").prevAll('#cid').val();
+            $('#tcid').val(cid);
             var $blockFigure = $(this).find("figure").html(), $blockDescrption = $(this).find(".descrption").contents().clone(true), $blockContestants = $(this).find('.contestants').contents().clone(true),
               $blockPeopleLoved = $(this).find('.descrption').next('.row').find('.peopleLoved').html();
             $($appendFigure).empty();
@@ -212,6 +218,7 @@
             $($appendPeopleLove).empty();
             //alert($(this).find('.descrption').next('.row').find('.peopleLoved').html());
             $($blockPeopleLoved).appendTo($appendPeopleLove);
+            //$(this).find('.tcid').html().empty().appendTo(cid);
         });
         $(".blockPopup .blockClose i").click(function () {
             $(".blockPopup").css("display", "none");
@@ -220,7 +227,8 @@
 
         /*-- Vote / Un Vote --*/
         var vote = $(".totalContent .contentBottom label");
-        $(vote).click(function () {
+
+        $(vote).on('click', function () {
             if ($(this).find("input[type='checkbox']").is(':checked')) {
                 $(this).find('span').empty();
                 $(this).find('span').append('UNVOTE');
@@ -228,7 +236,19 @@
                 $(this).find('span').empty();
                 $(this).find('span').append('VOTE');
             }
+            //voting(vote.text());
         });
+
+        $(vote).change(function () {
+            var checked = $(this).find("input[type='checkbox']").is(':checked');
+            if (!checked) {
+                voting("Remove")
+
+            }
+            else voting("Add")
+        });
+
+        //voting(vote.text());
         /*-- Vote / Un Vote --*/
 
         /*-- Pages Display --*/
@@ -250,6 +270,33 @@
         });
         /*-- Pages Display --*/
 
+    </script>
+
+    <script>
+        function voting(val) {
+            var id = $('#tcid').val();
+            var url = "";
+            if (val == 'Add') {
+                url = '/ParticularContest/Voting';
+            }
+            else if (val == 'Remove') {
+                url = '/ParticularContest/RemoveVote';
+            }
+            //alert(url);
+            $.ajax({
+                url: url,
+                type: "POST",
+                datatype: "json",
+                data: { id: id },
+                success: function (response) {
+                    alert(response);
+                    location.reload();
+                },
+                error: function (er) {
+                    alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
+                }
+            });
+        }
     </script>
 
 }

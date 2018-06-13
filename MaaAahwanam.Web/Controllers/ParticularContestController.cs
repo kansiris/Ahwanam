@@ -10,6 +10,7 @@ using System.IO;
 using Newtonsoft.Json;
 using MaaAahwanam.Utility;
 using MaaAahwanam.Web.Custom;
+using System.Web.Security;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -33,13 +34,26 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     var date = TimeAgo(item.UpdatedDate);
                     contestentries.Add(date);
-                    var count = contestsService.GetAllVotes(item.ContestId).Count;
+                    var count = contestsService.GetAllVotes(item.ContestId).Where(m => m.Status == "Active").Count();
                     votecount.Add(count.ToString());
                 }
                 ViewBag.AvailableContestEntries = AvailableContestEntries;
                 ViewBag.count = AvailableContestEntries.Count();
                 ViewBag.time = contestentries;
-                ViewBag.voedcount = votecount;
+                ViewBag.votecount = votecount;
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (userlogin.AlternativeEmailID == null)
+                    {
+                        var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                        userlogin.AlternativeEmailID = getdata.UserName;
+                    }
+                    var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+                    if (getVote == 0) ViewBag.vote = "1";
+                    else ViewBag.vote = "0";
+                }
             }
             else
                 ViewBag.contestname = "Particular Contest";
@@ -136,6 +150,111 @@ namespace MaaAahwanam.Web.Controllers
             if (span.Seconds <= 5)
                 return "just now";
             return string.Empty;
+        }
+
+        public JsonResult Voting(string id)
+        {
+            ContestVote contestVote = new ContestVote();
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                //var response = userLoginDetailsService.GetUser((int)user.UserId);
+                var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                if (userlogin.AlternativeEmailID == null)
+                {
+                    var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                    userlogin.AlternativeEmailID = getdata.UserName;
+                }
+                //if (command == "Add")
+                //{
+                //var votechecking = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID).Count();
+                contestVote.ContestId = long.Parse(id);
+                contestVote.Email = userlogin.AlternativeEmailID;
+                contestVote.IPAddress = HttpContext.Request.UserHostAddress;
+                contestVote.Name = userlogin.FirstName + " " + userlogin.LastName;
+                contestVote.Type = "Facebook";
+                //if (votechecking == 0)
+                    contestVote = contestsService.AddContestVote(contestVote);
+                //else
+                //    contestVote = contestsService.AddContestVote(contestVote);
+                //}
+                //if (command == "Remove")
+                //{
+                //    int count = contestsService.RemoveContestVote(contestVote);
+                //}
+            }
+            return Json("Voted", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult RemoveVote(string id)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                if (userlogin.AlternativeEmailID == null)
+                {
+                    var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                    userlogin.AlternativeEmailID = getdata.UserName;
+                }
+                var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID).FirstOrDefault();
+                ContestVote contestVote = getVote;
+                int count = contestsService.RemoveContestVote(contestVote);
+            }
+            return Json("UnVoted", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)
+        {
+            try
+            {
+                //Write your code here to access these paramerters
+                var response = "";
+                UserLogin userLogin = new UserLogin();
+                UserDetail userDetail = new UserDetail();
+                userDetail.FirstName = name;
+                userDetail.LastName = lastname;
+                userDetail.UserImgName = firstname;
+                userDetail.UserImgName = picture;
+                userLogin.UserName = email;
+                userLogin.Password = "Facebook";
+                userLogin.UserType = "User";
+                userLogin.Status = "Active";
+                UserLogin userlogin1 = new UserLogin();
+
+                userlogin1 = venorVenueSignUpService.GetUserLogdetails(userLogin); // checking where email id is registered or not.
+
+                if (userlogin1 == null)
+                {
+                    response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); // Adding user record to database
+                    //Adding Vote
+                    //ContestVote contestVote = new ContestVote();
+                    //contestVote.ContestId = long.Parse(Request.QueryString["id"]);
+                    //contestVote.Email = email;
+                    //contestVote.IPAddress = HttpContext.Request.UserHostAddress;
+                    //contestVote.Name = name;
+                    //contestVote.Type = "Facebook";
+                    //contestVote = contestsService.AddContestVote(contestVote);
+                }
+                var userResponse = venorVenueSignUpService.GetUserdetails(email);
+
+                if (userResponse.UserType == "User")
+                {
+                    FormsAuthentication.SetAuthCookie(email, false);
+                    string userData = JsonConvert.SerializeObject(userResponse); //creating identity
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                    return Json("success");
+                }
+                else
+                {
+                    return Json("failed");
+                    //  return Content("<script language='javascript' type='text/javascript'>alert('This email is registared as Vendor please login with Your Credentials');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
     }
 }
