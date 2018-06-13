@@ -52,7 +52,7 @@ function validateToken(token) {
     getUserInfo();
 
     $.get(VALIDURL + token, function (data, status) {
-        alert(data.email);
+       // alert(data.email);
 
         $.ajax({
             url: '/UserRegistration/GoogleLogin/',
@@ -60,7 +60,7 @@ function validateToken(token) {
             data: data,
             success: function () {
                 if (data == 'failed') {
-                    alertmsg('This email is registared as Vendor please login with Your Credentials')
+                    alert('This email is registared as Vendor please login with Your Credentials');
                 }
                 else {
                     var url1 = document.referrer;

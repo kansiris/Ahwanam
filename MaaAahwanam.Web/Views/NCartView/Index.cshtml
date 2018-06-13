@@ -61,10 +61,10 @@
                                                 <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
                                             </div>
                                             <div class="col-12 col-sm-4 col-md-4 float-left pr-0">
-                                                @if(@item.Isdeal = true){
-                                                <span class="flowBlock">Deals</span>
+                                                @if(@item.Isdeal == false){
+                                                <span class="flowBlock">Packages </span>
                                                 }
-                                                else{<span class="flowBlock">Packages</span>}
+                                                else{<span class="flowBlock"> Deals </span>}
                                                 <label class="mb-0 float-right">
                                                     <input name="cardid" value="@item.CartId" type="checkbox" checked>
                                                     <span class="mr-0"></span>
@@ -98,17 +98,17 @@
                                             }
                                             @if (@item.c1date != null && @item.c1date != "")
                                             {
-                                                <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span> @item.c1date.Split(',')[1]</span></li>
+                                                <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c1date.Split(',')[1]).Replace(".00", "")</span></li>
 
                                             }
                                             @if (item.c2date != null)
                                             {
 
-                                                <li><i class="fa fa-times"></i>@item.c2date.Split(',')[0] <br /> Rs <span> @item.c2date.Split(',')[1]</span></li>
+                                                <li><i class="fa fa-times"></i>@item.c2date.Split(',')[0] <br /> Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c2date.Split(',')[1]).Replace(".00", "")</span></li>
                                             }
                                             @if (@item.c3date != null)
                                             {
-                                                <li><i class="fa fa-times"></i>@item.c3date.Split(',')[0] <br /> Rs <span> @item.c3date.Split(',')[1]</span></li>
+                                                <li><i class="fa fa-times"></i>@item.c3date.Split(',')[0] <br /> Rs <span> @String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c3date.Split(',')[1]).Replace(".00", "")</span></li>
 
                                             }
                                         </ul>
@@ -249,7 +249,7 @@
                 //alert(total);
                 ////totalpr.append(total);
                 //alert(dateVal);
-                alert(price1);
+             //   alert(price1);
                 $.ajax({
                     url: '/NCartView/multipledateinsert?cartid=' + cartId + '&&price=' + price1 + '&&date=' + dateVal + '&&total=' + total,
                     type: 'POST',
@@ -263,8 +263,13 @@
                             alertify.alert("only four dates are allowed");
                           location.href = '/NCartView/Index'
                         }
-                        else {
-                            alertify.alert("not updated");
+                        else  if (data == "date not saved") {
+                            alertify.alert("date not entered");
+                            location.href = '/NCartView/Index'
+                        }
+
+                            else{
+                            alertify.alert("Order Placed successfully");
                             location.href = '/NCartView/Index'
                         }
                     },
@@ -358,7 +363,9 @@
                     }
 
                 }); /*-- Hover Function --*/
-            }); /*-- Each Block for Vendor title Close --*/
+            }); /*-- Each Block for Vendor title Close --*/
+
+
         });
 
         $(document).on('click', '.cartPage ul.customDates > li > i', function(){
