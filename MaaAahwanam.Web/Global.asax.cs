@@ -59,5 +59,18 @@ namespace MaaAahwanam.Web
             //}
 
         }
+
+        //protected void Application_Error()
+        //{
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw;
+        //    }
+        //}
     }
 }

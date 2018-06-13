@@ -49,5 +49,11 @@ namespace MaaAahwanam.Service
         {
             return contestsRepoitory.GetAllEntries(id);
         }
+
+        //Vote Count
+        public List<ContestVote> GetAllVotes(long id)
+        {
+            return contestsRepoitory.GetAllVotes(id);
+        }
     }
 }
