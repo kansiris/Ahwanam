@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -110,9 +111,23 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
 
-        //public ActionResult BeautyServices([Bind(Prefix = "Item2")] VendorsBeautyService vendorsBeautyService, [Bind(Prefix = "Item1")] Vendormaster vendorMaster, HttpPostedFileBase file, string Command, string id, string vid, string d, [Bind(Prefix = "Item3")]Deal deal)
-        //{
-        //}
+        [HttpPost]
+        public ActionResult submitquery(string emailid, string txtone, string cid ,string selectedcontest)
+        {
+            var contestdetails = contestsService.GetAllEntries(long.Parse(selectedcontest));
+            var cont1 = contestdetails.Where(m => m.ContestId == long.Parse(cid)).FirstOrDefault();
+            //   var userdetails = userLoginDetailsService.GetUser(id);
+            var typeid = cont1.UserLoginID;
 
+            UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+
+            var userlogin = userLoginDetailsService.GetUserId(Convert.ToInt32(typeid));
+            emailid = userlogin.UserName;
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Attention required");
+            return Json("success", JsonRequestBehavior.AllowGet);
         }
+
+
+    }
 }

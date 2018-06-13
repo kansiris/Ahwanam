@@ -910,7 +910,7 @@
         $(".bookNow").click(function () {
             var timeslot = '';
              var type = '@Request.QueryString["type"]';
-            if (type == 'Venue' || type == 'Catering' || type == 'venue' || type == 'Hotel' || type == 'Resort' || type == 'Convetion Hall' || type == 'Catering' || type == 'Hotel') {
+            if (type == 'Venue' || type == 'Catering' || type == 'venue' || type == 'Hotel' || type == 'Resort' || type == 'Convention Hall' || type == 'Catering' || type == 'Hotel') {
                 if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
                     var favorite = [];
@@ -992,17 +992,19 @@
             var pkgprice = $('#pkgprice').val();
             var members = $('#members').val();
             var totalVal = $('.totalVal').text();
-            if (pkgprice == '')
-            { pkgprice = $('#serviceprice').val(); }
+          
             //alert(pkgprice);
             //alert(members);
             //alert(totalVal);
-            if (pkgprice != '0' && pkgprice != '') {
+           if (pkgprice != '0' && pkgprice != '') {
                 totalVal = pkgprice * members;
             }
-            var checkLen = $(".slotTime input[type='checkbox']:checked").length,
+            var checkLen = $(".slotTime input[type='checkbox']:checked").length;
                 //totalVal = parseInt($(".totalVal").text()),
-                total = checkLen * totalVal;
+               
+            if (pkgprice == '')
+            { total = $('#serviceprice').val(); }
+            else { total = checkLen * totalVal; }
             $(".totalAmount span").empty().append(total);
         }
         $(".noOfPeoples input[type='number']").on('change', function () {
@@ -1012,7 +1014,9 @@
             if (pkgprice != '0' && pkgprice != '') {
                 price = pkgprice * members;
             }
-            total = price * members, placeholder = $("<div class='totalVal'></div>").insertAfter(el);
+            total = price * members;
+
+            placeholder = $("<div class='totalVal'></div>").insertAfter(el);
             $(".totalVal:not(:eq(0))").remove();
             $(placeholder).append(total).css('display', 'none');
             $(".slotTime input[type='checkbox']").prop("checked", false);
