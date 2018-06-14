@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web.Controllers
         ContestsService contestsService = new ContestsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
-        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+        
         // GET: ParticularContest
         public ActionResult Index(string id, string csid)
         {

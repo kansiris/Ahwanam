@@ -34,6 +34,7 @@
     <div class="row">
         <div class="col-md-6 totalUploadCount primaryFont">
             <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p> @*(@ViewBag.currenttime )*@
+
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
@@ -43,8 +44,13 @@
     </div>
 </div>
 <div class="container margin-top-50 pages">
+    @if (ViewBag.csid != "" && ViewBag.csid != null)
+    {
+        <p> <a href="http://www.ahwanam.com/ParticularContest?id=@ViewBag.cssid" class="btn btn-primary">View All Entries</a></p>
+    }
     <div class="row my-3 components" id="Home">
         <input type="hidden" id="tcid" />
+
         @for (int i = 0; i < ViewBag.count; i++)
         {
             <div class="col-12 col-sm-4 col-md-4 block mb-3">
@@ -53,11 +59,7 @@
                     <img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />
                 </figure>
                 <p class="contestants secondaryTextColor fontWeight700 mb-2">@ViewBag.AvailableContestEntries[i].Name</p>
-                @if(@ViewBag.csid != "")
-                {
-               <pclass="contestants secondaryTextColor fontWeight700 mb-2"> <a href="http://www.ahwanam.com/ParticularContest?id=@ViewBag.cssid" >See All</a></pclass="contestants>
 
-                }
 
                 <p class="ml-3 mb-0">@ViewBag.time[i]</p>
                 <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
