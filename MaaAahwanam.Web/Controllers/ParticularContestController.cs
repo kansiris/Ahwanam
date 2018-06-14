@@ -29,7 +29,8 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
                 ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
-                var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id)).Where(m => m.Status == "Active").ToList();
+                var allrecords = contestsService.GetAllEntries(long.Parse(id));
+                var AvailableContestEntries = allrecords.Where(m => m.Status == "Active").ToList();
                 List<string> contestentries = new List<string>();
                 List<string> votecount = new List<string>();
                 List<string> votedornot = new List<string>();
@@ -60,7 +61,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                    var userenties = AvailableContestEntries.Where(m => m.UserLoginID == user.UserId).ToList();
+                    var userenties = allrecords.Where(m => m.UserLoginID == user.UserId).ToList();
                     ViewBag.userenties = userenties;
                     List<string> myuploadedtime = new List<string>();
                     List<string> myvotes = new List<string>();
@@ -74,7 +75,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.mytime = myuploadedtime;
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
-                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id)).Count();
+                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
                 }
                 //ViewBag.vote = votedornot;
             }
@@ -131,7 +132,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.mytime = myuploadedtime;
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
-                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id)).Count();
+                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
                    
                 }
                 //ViewBag.vote = votedornot;
