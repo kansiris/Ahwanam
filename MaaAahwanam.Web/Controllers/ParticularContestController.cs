@@ -23,6 +23,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: ParticularContest
         public ActionResult Index(string id)
         {
+            ViewBag.id = id;
             if (id != null)
             {
                 var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
@@ -30,12 +31,26 @@ namespace MaaAahwanam.Web.Controllers
                 var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id));
                 List<string> contestentries = new List<string>();
                 List<string> votecount = new List<string>();
+                List<string> votedornot = new List<string>();
                 foreach (var item in AvailableContestEntries)
                 {
                     var date = TimeAgo(item.UpdatedDate);
                     contestentries.Add(date);
                     var count = contestsService.GetAllVotes(item.ContestId).Where(m => m.Status == "Active").Count();
                     votecount.Add(count.ToString());
+                    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                        var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                        if (userlogin.AlternativeEmailID == null)
+                        {
+                            var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                            userlogin.AlternativeEmailID = getdata.UserName;
+                        }
+                        var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+                        if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
+                        else votedornot.Add("0");//ViewBag.vote = "0";
+                    }
                 }
                 ViewBag.AvailableContestEntries = AvailableContestEntries;
                 ViewBag.count = AvailableContestEntries.Count();
@@ -44,17 +59,24 @@ namespace MaaAahwanam.Web.Controllers
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                    var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
-                    if (userlogin.AlternativeEmailID == null)
+                    var userenties = AvailableContestEntries.Where(m => m.UserLoginID == user.UserId).ToList();
+                    ViewBag.userenties = userenties;
+                    List<string> myuploadedtime = new List<string>();
+                    List<string> myvotes = new List<string>();
+                    foreach (var item in ViewBag.userenties)
                     {
-                        var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
-                        userlogin.AlternativeEmailID = getdata.UserName;
+                        var date1 = TimeAgo(item.UpdatedDate);
+                        myuploadedtime.Add(date1);
+                        var count1 = contestsService.GetAllVotes(long.Parse(id)).Where(m=>m.Status == "Active").Count();
+                        myvotes.Add(count1.ToString());
                     }
-                    var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
-                    if (getVote == 0) ViewBag.vote = "1";
-                    else ViewBag.vote = "0";
+                    ViewBag.mytime = myuploadedtime;
+                    ViewBag.myvotes = myvotes;
+                    ViewBag.mycount = userenties.Count();
+                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id)).Count();
                 }
-            }
+                    //ViewBag.vote = votedornot;
+                }
             else
                 ViewBag.contestname = "Particular Contest";
             return View();
@@ -186,23 +208,23 @@ namespace MaaAahwanam.Web.Controllers
             return Json("Voted", JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult RemoveVote(string id)
-        {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
-                if (userlogin.AlternativeEmailID == null)
-                {
-                    var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
-                    userlogin.AlternativeEmailID = getdata.UserName;
-                }
-                var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID).FirstOrDefault();
-                ContestVote contestVote = getVote;
-                int count = contestsService.RemoveContestVote(contestVote);
-            }
-            return Json("UnVoted", JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult RemoveVote(string id)
+        //{
+        //    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //    {
+        //        var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+        //        var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+        //        if (userlogin.AlternativeEmailID == null)
+        //        {
+        //            var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+        //            userlogin.AlternativeEmailID = getdata.UserName;
+        //        }
+        //        var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID).FirstOrDefault();
+        //        ContestVote contestVote = getVote;
+        //        int count = contestsService.RemoveContestVote(contestVote);
+        //    }
+        //    return Json("UnVoted", JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)
         {
@@ -255,6 +277,37 @@ namespace MaaAahwanam.Web.Controllers
             {
                 return RedirectToAction("Index", "Nhomepage");
             }
+        }
+
+        public PartialViewResult ParticularEntryView(string id,string tcid)
+        {
+            if (id != null && tcid != null)
+            {
+                var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id));
+                ViewBag.AvailableContestEntries = AvailableContestEntries.Where(m=>m.ContestId == long.Parse(tcid)).FirstOrDefault();
+                ViewBag.votecount = contestsService.GetAllVotes(long.Parse(tcid)).Where(m => m.Status == "Active").Count();
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (userlogin.AlternativeEmailID == null)
+                    {
+                        var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                        userlogin.AlternativeEmailID = getdata.UserName;
+                    }
+                    var getVote = contestsService.GetAllVotes(long.Parse(tcid)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+                    if (getVote == 0) ViewBag.vote = "1";
+                    else ViewBag.vote = "0";
+                }
+                ViewBag.display = "1";
+                ViewBag.id = id;
+            }
+            else
+            {
+                ViewBag.display = "0";
+            }
+
+            return PartialView("ParticularEntryView");
         }
     }
 }
