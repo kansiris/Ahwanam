@@ -83,7 +83,7 @@
                                 @item.Status
                             </td>
                             <td>
-                                <a href="/Admin/ContestsManagement/AllEnteredContestes?id=@item.ContestId+&selectedcontest=@ViewBag.selectedcontest" class="btn btn-primary btn-xs"> View </a>
+                                <a href="/Admin/ContestsManagement/AllEnteredContestes?id=@item.ContestId+&selectedcontest1=@ViewBag.selectedcontest" class="btn btn-primary btn-xs"> View </a>
                                 @*<a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-default btn-xs">Delete</a>
                                     @*<input type="button" name="command" value="Delete" formaction="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-danger btn-xs" />*@
                             </td>
@@ -95,11 +95,9 @@
     </div>
    
 
-                            @if (ViewBag.display != null)
-                            {
-                                if (ViewBag.contests != null)
+                          @if (ViewBag.selectedcontest1 != null)
                                 {
-                                    foreach (var item in ViewBag.contests)
+                                    foreach (var item in ViewBag.selectedcontest1)
                                     {
 
 
@@ -115,7 +113,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="control-label col-lg-4">Description</label>
-                                                                <input type="textbox" value="@item.Description" disabled />
+                                                                <input type="textarea" value="@item.Description" disabled />
                                                             </div>
 
 
@@ -131,7 +129,7 @@
                                                 <p class="status">@item.Status</p>*@
                                             <input type="hidden" name="cid" id="cid" value="@item.ContestId" />
 
-                                            <input type="hidden" name="selectedcontest1" id="selectedcontest1" value="@ViewBag.selectedcontest" />
+                                            <input type="hidden" name="selectedcontest1" id="selectedcontest1" value="@ViewBag.selectedcont1" />
                                             <div align="center">
                                                 <img src="/ContestPics/@item.UploadedImage" class="img-fluid" alt="contests">
                                             </div>
@@ -139,7 +137,7 @@
 
                                                 <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate contestant</button>
                                                 <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
-                                                <button type="submit" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline contestant</button>
+                                                <button type="submit" data-toggle="modal" data-target="#querymodal1"  name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline contestant</button>
 
 
 
@@ -149,7 +147,7 @@
                                             </div>
                                     }
                                 }
-                            }
+                            
                                     
                     </div>
             </div>
@@ -159,6 +157,26 @@
         </div>
 }
 
+<div class="modal fade" id="querymodal1" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        @*@using (Html.BeginForm("submitquery", "createvendor", FormMethod.Post))
+            {*@
+        <div class="modal-content">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+            <div class="modal-body">
+                @*<input id="Text1" type="text" name="txtOne"rows="5"  placeholder="Query.....?" style="width:100%;background-color:#eeeeee" />*@
+                <textarea rows="5" name="txtOne" id="txtone" type="text" placeholder="Query.....?" style="width:100%;background-color:#eeeeee"></textarea>
+            </div>
+            <div class="modal-footer" align="center">
+
+                <button type="submit" id="btnSubmitquery1" class="btn text-muted text-center btn-success" value="submit">Submit Query</button>
+
+                <button type="button" name="Command" class="btn text-muted text-center btn-danger" id="cancelquery1" value="cancel">Cancel</button>
+            </div>
+        </div>
+        @*}*@
+    </div>
+</div>
 @*Query POPUP*@
 <div class="modal fade" id="querymodal" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -199,8 +217,12 @@
 <script>
             //hide modal popup
             $('#cancelquery').click(function () {
-
                 $('#querymodal').css('display', 'none').css('aria-hidden', 'true');
+                window.location.reload();
+            });
+
+            $('#cancelquery1').click(function () {
+              $('#querymodal1').css('display', 'none').css('aria-hidden', 'true');
                 window.location.reload();
             });
 
@@ -213,7 +235,7 @@
                 var txtone = $("#txtone").val();
                 var emailId = $("#Item1_EmailId").val();
                 var cid = @Request.QueryString["id"];
-                var selectedcontest = @Request.QueryString["selectedcontest"]
+                var selectedcontest = @Request.QueryString["selectedcontest1"]
                 //var selectedcontest = $("selectedcontest1").val();
                 
                 $.ajax({
@@ -225,7 +247,8 @@
                     contentType: 'application/json',
                     success: function (data) {
                         //if (data == "exists") {
-                            alert("E-Mail  Sent!!!");
+                        alert("E-Mail  Sent!!!");
+                        windows.location.reload();
                         //}
                     },
                     //failure: function (data) {
@@ -236,6 +259,41 @@
                 });
 
             });
+
+    $('#btnSubmitquery1').click(function () {
+
+        //$('#form1').submit();
+
+
+        var txtone = $("#txtone").val();
+        var emailId = $("#Item1_EmailId").val();
+        var cid = @Request.QueryString["id"];
+        var selectedcontest = @Request.QueryString["selectedcontest1"]
+        //var selectedcontest = $("selectedcontest1").val();
+                
+        $.ajax({
+            url: '/ContestsManagement/submitquery1',
+            type: "post",
+            data: JSON.stringify({ emailid: emailId, txtone: txtone, cid: cid, selectedcontest: selectedcontest }),
+            cache: false,
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                //if (data == "exists") {
+                alert("E-Mail  Sent!!!");
+                windows.location.reload();
+
+                //}
+            },
+            //failure: function (data) {
+            //    alert("E-Mail ID not sent!!! Try Another");
+            //},
+            error: function (data)
+            { alert("E-Mail not sent!!! Try again"); }
+        });
+
+    });
+
 
 </script>
 }

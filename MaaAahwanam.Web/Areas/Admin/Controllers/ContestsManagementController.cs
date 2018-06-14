@@ -83,7 +83,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             var records = contestsService.GetAllContests();
             ViewBag.records = records;
-            if (selectedcontest != null && selectedcontest != "Select Contest")
+            if (selectedcontest != null && selectedcontest != "Select Contest" && selectedcontest1 == null)
             {
                 ViewBag.contests = contestsService.GetAllEntries(long.Parse(selectedcontest));
                 ViewBag.selectedcontest = selectedcontest;
@@ -98,14 +98,27 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             if (id != "0" && id != null && command != null && selectedcontest1 != null)
             {
-                ViewBag.selectedcontest = selectedcontest;
 
                 ViewBag.display = id;
                 var contestdetails = contestsService.GetAllEntries(long.Parse(selectedcontest1));
                 var cont1 = contestdetails.Where(m => m.ContestId == long.Parse(id) ).FirstOrDefault();
-                
+                ViewBag.selectedcontest = cont1;
+
                 contestsService.Activationcontest(cont1,command );
                 return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + command + "');location.href='" + @Url.Action("AllEnteredContestes", "ContestsManagement") + "'</script>");
+
+            }
+
+            if (id != "0" && id != null && selectedcontest1 != null)
+            {
+                ViewBag.selectedcont1 = selectedcontest1;
+                ViewBag.display = id;
+                var contestdetails = contestsService.GetAllEntries(long.Parse(selectedcontest1));
+                var cont1 = contestdetails.Where(m => m.ContestId == long.Parse(id)).ToList();
+                ViewBag.selectedcontest1 = cont1;
+
+               // contestsService.Activationcontest(cont1, command);
+               // return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + command + "');location.href='" + @Url.Action("AllEnteredContestes", "ContestsManagement") + "'</script>");
 
             }
             return View();
@@ -128,6 +141,28 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult submitquery1(string emailid, string txtone, string cid, string selectedcontest)
+        {
+            var contestdetails = contestsService.GetAllEntries(long.Parse(selectedcontest));
+            var cont1 = contestdetails.Where(m => m.ContestId == long.Parse(cid)).FirstOrDefault();
+            //   var userdetails = userLoginDetailsService.GetUser(id);
+            var typeid = cont1.UserLoginID;
 
+            UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+
+            var userlogin = userLoginDetailsService.GetUserId(Convert.ToInt32(typeid));
+            emailid = userlogin.UserName;
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Contestant Is declined");
+            ViewBag.display = cid;
+            var contestdetails1 = contestsService.GetAllEntries(long.Parse(selectedcontest));
+            var cont11 = contestdetails.Where(m => m.ContestId == long.Parse(cid)).FirstOrDefault();
+            ViewBag.selectedcontest = cont1;
+            string command = "InActive";
+            contestsService.Activationcontest(cont1, command);
+
+            return Json("success", JsonRequestBehavior.AllowGet);
+        }
     }
 }
