@@ -33,7 +33,8 @@
 <div class="container margin-top-50">
     <div class="row">
         <div class="col-md-6 totalUploadCount primaryFont">
-            <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p>
+            <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p> @*(@ViewBag.currenttime )*@
+
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
@@ -43,8 +44,13 @@
     </div>
 </div>
 <div class="container margin-top-50 pages">
+    @if (ViewBag.csid != "" && ViewBag.csid != null)
+    {
+        <p> <a href="http://www.ahwanam.com/ParticularContest?id=@ViewBag.cssid" class="btn btn-primary">View All Entries</a></p>
+    }
     <div class="row my-3 components" id="Home">
         <input type="hidden" id="tcid" />
+
         @for (int i = 0; i < ViewBag.count; i++)
         {
             <div class="col-12 col-sm-4 col-md-4 block mb-3">
@@ -53,11 +59,7 @@
                     <img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />
                 </figure>
                 <p class="contestants secondaryTextColor fontWeight700 mb-2">@ViewBag.AvailableContestEntries[i].Name</p>
-                @if(@ViewBag.csid != "")
-                {
-               <pclass="contestants secondaryTextColor fontWeight700 mb-2"> <a href="http://www.ahwanam.com/ParticularContest?id=@ViewBag.cssid" >See All</a></pclass="contestants>
 
-                }
 
                 <p class="ml-3 mb-0">@ViewBag.time[i]</p>
                 <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
@@ -75,13 +77,36 @@
         <div class="col-12 col-md-12">About Us Content</div>
     </div>
     <div class="row my-3 components" id="Rules">
-        <div class="col-12 col-md-12">Rules Content</div>
+        <div class="col-12 col-md-12">
+            <h4 class="col-12 col-md-12">RULES FOR THE CONTEST</h4>
+            <ul class="pl-5 mt-3 col-12 col-md-12">
+                <li>Images must be high quality in JPG | PNG Formats.</li>
+                <li>Basic editing, including colour enhancement, the use of filters, and cropping of the Photo(s) is acceptable, provided any such editing does not affect the authenticity and/or genuineness of the Photo(s).</li>
+                <li>Upload limit is only one image per user.</li>
+                <li>Uploading copyrighted images leads to legal consequences.</li>
+                <li>Advanced editing used to create illusions, deceptions and/or manipulations, and the adding and removing of significant elements within the frame is prohibited.</li>
+                <li>Photos that portray or otherwise include inappropriate and/or offensive content, including provocative nudity, violence, human rights and/or environmental violation, and/or any other contents deemed to be contrary to the law, religious, cultural &amp; moral traditions and practices of India, are strictly prohibited and will be immediately discarded.</li>
+                <li>Participant who submit such photographs will be banned permanently from further participating in any contests.</li>
+                <li>The winners are announced purely based on public voting.</li>
+            </ul>
+        </div>
     </div>
     <div class="row my-3 components" id="Prizes">
         <div class="col-12 col-md-12">Prizes Content</div>
     </div>
     <div class="row my-3 components" id="Sponsors">
-        <div class="col-12 col-md-12">Sponsors Content</div>
+        <div class="col-12 col-md-12">
+            <ul>
+                <li>
+                    <img src="http://www.ahwanam.com/vendorimages/Venue_10443_10329_1.jpg" alt="Sponsors">
+                    <span>Celebrity Resort</span>
+                </li>
+                <li>
+                    <img src="http://www.ahwanam.com/vendorimages/Venue_10475_10213_1.jpg" alt="Sponsors">
+                    <span>Dream Valley Resorts</span>
+                </li>
+            </ul>
+        </div>
     </div>
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == true)
     {
@@ -101,8 +126,8 @@
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><span>@ViewBag.myvotes[i]</span> people loved</div>
                             @*<div class="col-12 col-sm-6 col-md-6">
-                                <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right">Share</button>
-                            </div>*@
+                                    <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right">Share</button>
+                                </div>*@
                         </div>
                     </div>
                 }

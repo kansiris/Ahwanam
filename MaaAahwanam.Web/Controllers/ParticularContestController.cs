@@ -20,6 +20,7 @@ namespace MaaAahwanam.Web.Controllers
         ContestsService contestsService = new ContestsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        
         // GET: ParticularContest
         public ActionResult Index(string id, string csid)
         {
@@ -28,7 +29,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
                 ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
-                var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id));
+                var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id)).Where(m => m.Status == "Active").ToList();
                 List<string> contestentries = new List<string>();
                 List<string> votecount = new List<string>();
                 List<string> votedornot = new List<string>();
@@ -199,7 +200,9 @@ namespace MaaAahwanam.Web.Controllers
 
         public static string TimeAgo(DateTime dt)
         {
-            TimeSpan span = DateTime.Now - dt;
+            //DateTime uploadeddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now, INDIAN_ZONE);
+            //TimeSpan span = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now, INDIAN_ZONE) - dt;
+            TimeSpan span = DateTime.Now.AddHours(12).AddMinutes(30) - dt;
             if (span.Days > 365)
             {
                 int years = (span.Days / 365);
@@ -254,7 +257,7 @@ namespace MaaAahwanam.Web.Controllers
                 contestVote.Name = userlogin.FirstName + " " + userlogin.LastName;
                 contestVote.Type = "Facebook";
                 //if (votechecking == 0)
-                    contestVote = contestsService.AddContestVote(contestVote);
+                contestVote = contestsService.AddContestVote(contestVote);
                 //else
                 //    contestVote = contestsService.AddContestVote(contestVote);
                 //}
@@ -337,12 +340,12 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public PartialViewResult ParticularEntryView(string id,string tcid)
+        public PartialViewResult ParticularEntryView(string id, string tcid)
         {
             if (id != null && tcid != null)
             {
                 var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id));
-                ViewBag.AvailableContestEntries = AvailableContestEntries.Where(m=>m.ContestId == long.Parse(tcid)).FirstOrDefault();
+                ViewBag.AvailableContestEntries = AvailableContestEntries.Where(m => m.ContestId == long.Parse(tcid)).FirstOrDefault();
                 ViewBag.votecount = contestsService.GetAllVotes(long.Parse(tcid)).Where(m => m.Status == "Active").Count();
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
