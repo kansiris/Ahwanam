@@ -27,11 +27,18 @@
                                         <div class="question">
                                             Please Enter Location
                                         </div>
-                                        <div class="form-group w-100">
-                                            <div class="ui-widget" style="display:block">
-                                                <input id="loc" name="loc" class="ui-autocomplete-input" autocomplete="off" value="@ViewBag.selectedlocation" style="display:block">
+                                        @*<div class="form-group w-100">
+                                            <div class="ui-widget" style="display:block">*@
+                                                @*<input id="loc" name="loc" class="ui-autocomplete-input" autocomplete="off" value="@ViewBag.selectedlocation" style="display:block">*@
+                                                @*<span class="themeBgColorPrimaryPurple align-items-center text-white">Hyderabad</span>
+                                                <input type="hidden" id="loc" name="loc" value="Hyderabad" />
                                             </div>
+                                        </div>*@
+                                        <div class="topSearchArea ml-auto d-flex">
+                                            <span class="themeBgColorPrimaryPurple align-items-center text-white">Hyderabad</span>
+                                            <input type="hidden" id="loc" name="loc" value="Hyderabad" />
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -55,10 +62,10 @@
                                         <div class="question">
                                             Please Select Event Date
                                         </div>
-                                        <div class="form-group w-100" style="position: relative">
+                                        <div class="topSearchArea ml-auto d-flex">@*class="form-group w-100" style="position: relative">*@
                                             @*<div class="ui-widget" style="display:block">*@
-                                            <input type="text" id="date" class="form-control" name="date" value="@ViewBag.selectedoccasiondate" />
-                                            <i class="fa fa-calendar" aria-hidden="true" style="position: absolute;right: 1px;bottom: 7px;font-size: 24px;height: 25px;color: #573393;"></i>
+                                            <input type="text" id="date" class="form-control" name="date" value="@ViewBag.selectedoccasiondate" placeholder="Select Event Date"/>
+                                            @*<i class="fa fa-calendar" aria-hidden="true" style="position: absolute;right: 1px;bottom: 7px;font-size: 24px;height: 25px;color: #573393;"></i>*@
                                             @*</div>*@
                                         </div>
                                     </div>
@@ -133,7 +140,7 @@
                                                     <label class="d-inline-flex align-items-center">
                                                         <input type="radio" name="f2">
                                                         <span></span>
-                                                        <p class="mb-0">250000 - 1000000</p>
+                                                        <p class="mb-0"> > 1000000</p> 
                                                     </label>
                                                 </li>
                                             </ul>
@@ -548,8 +555,9 @@
 
     $('ul.f2 li').find('input:radio').change(function () {
         //alert($(this).nextAll('p').text().split('-')[1]);
-        var budget = $(this).nextAll('p').text().split('-')[1].trim();
+        var budget = $(this).nextAll('p').text().split('-')[1].split('>')[1].trim();
         $('#budget').val(budget);
+        alert(budget);
     });
 
     $('ul.f3 li').find('input:radio').change(function () {
