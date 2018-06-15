@@ -20,19 +20,19 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         @*<div class="panel-heading" align="left">
-                            <a href="/Admin/ContestsManagement?type=New" class="btn btn-primary btn-xs">Create New Contest</a>
-                        </div>
-                        <div class="panel-heading" align="right" style="display:none">
-                            <button type="button" data-toggle="tooltip" data-placement="top" title="Export to PDF" class="btn btn-default btn-circle">
-                                <i class="icon-check"></i>
-                            </button>
-                            <button type="button" data-toggle="tooltip" data-placement="top" title="Export to Exccel" class="btn btn-primary btn-circle">
-                                <i class="icon-list"></i>
-                            </button>
-                            <button type="button" data-toggle="tooltip" data-placement="top" title="Print" class="btn btn-success btn-circle">
-                                <i class="icon-link"></i>
-                            </button>
-                        </div>*@
+                                <a href="/Admin/ContestsManagement?type=New" class="btn btn-primary btn-xs">Create New Contest</a>
+                            </div>
+                            <div class="panel-heading" align="right" style="display:none">
+                                <button type="button" data-toggle="tooltip" data-placement="top" title="Export to PDF" class="btn btn-default btn-circle">
+                                    <i class="icon-check"></i>
+                                </button>
+                                <button type="button" data-toggle="tooltip" data-placement="top" title="Export to Exccel" class="btn btn-primary btn-circle">
+                                    <i class="icon-list"></i>
+                                </button>
+                                <button type="button" data-toggle="tooltip" data-placement="top" title="Print" class="btn btn-success btn-circle">
+                                    <i class="icon-link"></i>
+                                </button>
+                            </div>*@
                         <br />
                         <div class="form-group">
                             <label class="control-label col-lg-4">Select Contest</label>
@@ -49,112 +49,129 @@
                         <br />
                         <br />
                         <div class="panel-body">
-    <div class="table-responsive">
-        @if (ViewBag.contests != null)
-        {
-            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Name</th>
-                        <th>Created date</th>
-                        <th>Updated Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in ViewBag.contests)
-                    {
-                        <tr class="even gradeX">
-                            <td>
-                                @(++i)
-                            </td>
-                            <td>
-                                @item.Name
-                            </td>
-                            <td>
-                                @item.CreatedDate.ToShortDateString()
-                            </td>
-                            <td>
-                                @item.UpdatedDate.ToShortDateString()
-                            </td>
-                            <td>
-                                @item.Status
-                            </td>
-                            <td>
-                                <a href="/Admin/ContestsManagement/AllEnteredContestes?id=@item.ContestId+&selectedcontest1=@ViewBag.selectedcontest" class="btn btn-primary btn-xs"> View </a>
-                                @*<a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-default btn-xs">Delete</a>
-                                    @*<input type="button" name="command" value="Delete" formaction="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-danger btn-xs" />*@
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
-   
-
-                          @if (ViewBag.selectedcontest1 != null)
+                            <div class="table-responsive">
+                                @if (ViewBag.contests != null)
                                 {
-                                    foreach (var item in ViewBag.selectedcontest1)
-                                    {
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Name</th>
+                                                <th>Created date</th>
+                                                <th>Updated Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.contests)
+                    {
+                                                <tr class="even gradeX">
+                                                    <td>
+                                                        @(++i)
+                                                    </td>
+                                                    <td>
+                                                        @item.Name
+                                                    </td>
+                                                    <td>
+                                                        @item.CreatedDate.ToShortDateString()
+                                                    </td>
+                                                    <td>
+                                                        @item.UpdatedDate.ToShortDateString()
+                                                    </td>
+                                                    <td>
+                                                        @item.Status
+                                                    </td>
+                                                    <td>
+                                                        <a href="/Admin/ContestsManagement/AllEnteredContestes?id=@item.ContestId+&selectedcontest1=@ViewBag.selectedcontest" class="btn btn-primary btn-xs"> View </a>
+                                                        @*<a href="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-default btn-xs">Delete</a>
+                                                            @*<input type="button" name="command" value="Delete" formaction="/Admin/ContestsManagement?id=@item.ContentMasterID" class="btn btn-danger btn-xs" />*@
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
 
 
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div id="collapse2" class="body collapse in">
-
-                                                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                                                            <div class="form-group">
-                                                                <label class="control-label col-lg-4">Name</label>
-                                                                <input type="textbox" value="@item.Name" disabled />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-lg-4">Description</label>
-                                                                <input type="textarea" value="@item.Description" disabled />
-                                                            </div>
+                            @if (ViewBag.selectedcontest1 != null)
+                            {
+                                foreach (var item in ViewBag.selectedcontest1)
+                                {
 
 
-
-                                                        </form>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div id="collapse2" class="body collapse in">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Name</label>
+                                                        <div class="col-lg-4">
+                                                            <input type="text" class="form-control" width="50%" value="@item.Name" disabled />
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <br />
+                                                    
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Description</label>
+                                                        <div class="col-lg-4">
+                                                            <textarea rows="5" class="form-control" disabled>@item.Description</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="cid" id="cid" value="@item.ContestId" />
+                                                        <input type="hidden" name="selectedcontest1" id="selectedcontest1" value="@ViewBag.selectedcont1" />
+                                                        <label class="control-label col-lg-4">Uploaded Image</label>
+                                                        <div class="col-lg-4">
+                                                            <img src="/ContestPics/@item.UploadedImage" class="img-fluid" alt="contests">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                          
-                                       
+                                            </div>
+                                            <br />
+                                            <br />
 
-                                           
+
+
                                             @*<p class="descrption">@item.Description</p>
                                                 <p class="status">@item.Status</p>*@
-                                            <input type="hidden" name="cid" id="cid" value="@item.ContestId" />
-
-                                            <input type="hidden" name="selectedcontest1" id="selectedcontest1" value="@ViewBag.selectedcont1" />
-                                            <div align="center">
+                                            <br /><br />
+                                            <br /><br /><br />
+                                            <br /><br /><br /><br /><br /><br />
+                                            @*<div align="center">
                                                 <img src="/ContestPics/@item.UploadedImage" class="img-fluid" alt="contests">
-                                            </div>
+                                            </div>*@
                                             <div style="text-align:center" class="form-actions no-margin-bottom">
 
                                                 <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate contestant</button>
                                                 <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
-                                                <button type="submit" data-toggle="modal" data-target="#querymodal1"  name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline contestant</button>
+                                                <button type="submit" data-toggle="modal" data-target="#querymodal1" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline contestant</button>
 
+                                                <button type="button"  class="btn btn-success" onclick="window.location.href='/Admin/ContestsManagement/AllEnteredContestes'">Cancel</button>
 
 
                                             </div>
                                         </div>
 
-                                            </div>
-                                    }
+                                    </div>
                                 }
-                            
-                                    
+                            }
+
+
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
-            </div>
-        </div>
 }
 
 <div class="modal fade" id="querymodal1" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
@@ -214,87 +231,87 @@
             }); @*{ "pageLength": 5 }*@
         });
     </script>
-<script>
-            //hide modal popup
-            $('#cancelquery').click(function () {
-                $('#querymodal').css('display', 'none').css('aria-hidden', 'true');
-                window.location.reload();
-            });
-
-            $('#cancelquery1').click(function () {
-              $('#querymodal1').css('display', 'none').css('aria-hidden', 'true');
-                window.location.reload();
-            });
-
-            //Submit Query Script
-            $('#btnSubmitquery').click(function () {
-
-                //$('#form1').submit();
-
-
-                var txtone = $("#txtone").val();
-                var emailId = $("#Item1_EmailId").val();
-                var cid = @Request.QueryString["id"];
-                var selectedcontest = @Request.QueryString["selectedcontest1"]
-                //var selectedcontest = $("selectedcontest1").val();
-                
-                $.ajax({
-                    url: '/ContestsManagement/submitquery',
-                    type: "post",
-                    data: JSON.stringify({ emailid: emailId, txtone: txtone, cid: cid, selectedcontest: selectedcontest }),
-                    cache: false,
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        //if (data == "exists") {
-                        alert("E-Mail  Sent!!!");
-                        windows.location.reload();
-                        //}
-                    },
-                    //failure: function (data) {
-                    //    alert("E-Mail ID not sent!!! Try Another");
-                    //},
-                    error: function (data)
-                    { alert("E-Mail not sent!!! Try again"); }
-                });
-
-            });
-
-    $('#btnSubmitquery1').click(function () {
-
-        //$('#form1').submit();
-
-
-        var txtone = $("#txtone").val();
-        var emailId = $("#Item1_EmailId").val();
-        var cid = @Request.QueryString["id"];
-        var selectedcontest = @Request.QueryString["selectedcontest1"]
-        //var selectedcontest = $("selectedcontest1").val();
-                
-        $.ajax({
-            url: '/ContestsManagement/submitquery1',
-            type: "post",
-            data: JSON.stringify({ emailid: emailId, txtone: txtone, cid: cid, selectedcontest: selectedcontest }),
-            cache: false,
-            dataType: 'json',
-            contentType: 'application/json',
-            success: function (data) {
-                //if (data == "exists") {
-                alert("E-Mail  Sent!!!");
-                windows.location.reload();
-
-                //}
-            },
-            //failure: function (data) {
-            //    alert("E-Mail ID not sent!!! Try Another");
-            //},
-            error: function (data)
-            { alert("E-Mail not sent!!! Try again"); }
+    <script>
+        //hide modal popup
+        $('#cancelquery').click(function () {
+            $('#querymodal').css('display', 'none').css('aria-hidden', 'true');
+            window.location.reload();
         });
 
-    });
+        $('#cancelquery1').click(function () {
+            $('#querymodal1').css('display', 'none').css('aria-hidden', 'true');
+            window.location.reload();
+        });
+
+        //Submit Query Script
+        $('#btnSubmitquery').click(function () {
+
+            //$('#form1').submit();
 
 
-</script>
+            var txtone = $("#txtone").val();
+            var emailId = $("#Item1_EmailId").val();
+            var cid = @Request.QueryString["id"];
+            var selectedcontest = @Request.QueryString["selectedcontest1"]
+            //var selectedcontest = $("selectedcontest1").val();
+
+            $.ajax({
+                url: '/ContestsManagement/submitquery',
+                type: "post",
+                data: JSON.stringify({ emailid: emailId, txtone: txtone, cid: cid, selectedcontest: selectedcontest }),
+                cache: false,
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //if (data == "exists") {
+                    alert("E-Mail  Sent!!! and the contest is declined");
+                    windows.location.reload();
+                    //}
+                },
+                //failure: function (data) {
+                //    alert("E-Mail ID not sent!!! Try Another");
+                //},
+                error: function (data)
+                { alert("E-Mail not sent!!! Try again"); }
+            });
+
+        });
+
+        $('#btnSubmitquery1').click(function () {
+
+            //$('#form1').submit();
+
+
+            var txtone = $("#txtone").val();
+            var emailId = $("#Item1_EmailId").val();
+            var cid = @Request.QueryString["id"];
+            var selectedcontest = @Request.QueryString["selectedcontest1"]
+            //var selectedcontest = $("selectedcontest1").val();
+
+            $.ajax({
+                url: '/ContestsManagement/submitquery1',
+                type: "post",
+                data: JSON.stringify({ emailid: emailId, txtone: txtone, cid: cid, selectedcontest: selectedcontest }),
+                cache: false,
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //if (data == "exists") {
+                    alert("E-Mail  Sent!!!");
+                    windows.location.reload();
+
+                    //}
+                },
+                //failure: function (data) {
+                //    alert("E-Mail ID not sent!!! Try Another");
+                //},
+                error: function (data)
+                { alert("E-Mail not sent!!! Try again"); }
+            });
+
+        });
+
+
+    </script>
 }
 

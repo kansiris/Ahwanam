@@ -59,31 +59,33 @@
     <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/bootstrap.js"></script>
     <script src="~/Scripts/CFAuth.js"></script>
     <script>
-        /* ------------------ To save the subscriber -----------------------------  */
-        function SaveSubscriber() {
-            var Subscription = {};
-            Subscription.EmailId = $('#emailid').val();
-            Subscription.Status = null;
-            $.ajax({
-                type: "POST",
-                url: "/Contests/SubmittingSubscriber",
-                content: "application/json; charset=utf-8",
-                dataType: "json",
-                data: {},
-                //data: JSON.stringify(Subscription),
-                data: Subscription,
-                success: function (data) {
-                    alert(data);
-                    //if (data == 'success')
-                    //    alert('subscribed successfully');
-                    //if (data == 'failed')
-                    //    alert('subscription failed');
-                },
-                //error: function (data) {
-                //    alert("Exception as occured");
-                //}
-            });
-        }
+        
+          /* ------------------ To save the subscriber -----------------------------  */
+          function SaveSubscriber() {
+              // var Subscription = {};
+              // Subscription.EmailId = $('#emailid').val();
+              // Subscription.Status = null;
+              var EmailId = $('#emailid').val();
+              $.ajax({
+                  url: '/Contests/SubmittingSubscriber?email=' + EmailId,
+                  type: 'POST',
+                  // data: JSON.stringify({ customerPhone, RestCode, CustomerRequest, DeliverTime, Totalamount,cgst1,sgst1,deliveryamount }),
+                  dataType: 'json',
+                  contentType: 'application/json',
+                  success: function (data) {
+                      if (data == "success") {
+                          alert('subscribed successfully');
+                          window.location.reload()
+                      }
+                      else {
+                          alert("not updated");
+                      }
+                  },
+                  error: function (data) {
+                      alert('subscription failed');
+                  }
+              });
+          }
     </script>
     @RenderSection("scripts", required: false)
 </body>
