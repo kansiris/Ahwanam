@@ -25,5 +25,10 @@ namespace MaaAahwanam.Service
             }
             return response;
         }
+        public long checkmail(string email)
+        {
+            SubscribeRepository subscribeRepository = new SubscribeRepository();
+            return   subscribeRepository.checkmail(email);
+        }
     }
 }

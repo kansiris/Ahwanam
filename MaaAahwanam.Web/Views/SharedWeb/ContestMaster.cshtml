@@ -42,8 +42,9 @@
             <div class="col-12 col-sm-7 col-md-5">
                 <form>
                     <input class="form-control mr-0 p-3" type="search" id="emailid" name="emailid" placeholder="email@yourdomain.com" aria-label="Search">
-                    <button class="btn primaryBgColor my-2 my-sm-0 secondaryTextColor p-3 fontWeight700" type="submit"  value="Subscribe" onclick="SaveSubscriber()">Subscribe</button>
+                    <button class="btn primaryBgColor my-2 my-sm-0 secondaryTextColor p-3 fontWeight700" type="button"  value="Subscribe" onclick="SaveSubscriber()">Subscribe</button>
                 </form>
+                <p id="submsg"></p>
             </div>
         </div>
         <ul class="row justify-content-center pl-0">
@@ -74,8 +75,14 @@
                   contentType: 'application/json',
                   success: function (data) {
                       if (data == "success") {
-                          alert('subscribed successfully');
-                          window.location.reload()
+                          $("p#submsg").append("<b>Subscribed Successfully</b>");
+                          //alert('subscribed successfully');
+                          //window.location.reload()
+                      } else if (data == "exits") {
+                          //alert('email already subscribed');
+                          //window.location.reload()
+                          $("p#submsg").append("<b>E-mail is already subscribed</b>");
+
                       }
                       else {
                           alert("not updated");

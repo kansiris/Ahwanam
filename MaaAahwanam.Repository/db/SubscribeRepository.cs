@@ -15,5 +15,14 @@ namespace MaaAahwanam.Repository.db
             _dbContext.Subscription.Add(subscription);
             _dbContext.SaveChanges();
         }
+        public long checkmail(string email)
+        {
+            var count = _dbContext.Subscription.Where(m => m.EmailId == email).FirstOrDefault();
+            if (count != null)
+                return count.SubscriptionId;
+            else
+                //count.UserLoginId = 0;
+                return 0;
+        }
     }
 }

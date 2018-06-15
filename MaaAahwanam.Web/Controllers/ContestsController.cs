@@ -53,11 +53,18 @@ namespace MaaAahwanam.Web.Controllers
                 Subscription Subscription = new Subscription();
              Subscription.EmailId = email;
             Subscription.Status = null;
+
             SubscriptionService subscriptionService = new SubscriptionService();
-                subscriptionService.addsubscription(Subscription);
-                EmailSendingUtility EmailSend = new EmailSendingUtility();
-                EmailSend.Email_maaaahwanam(Subscription.EmailId, "Thank you for subscribing to Maa-Aahwanam", "Confirmation Subscription");
-                message = "success";
+            long   data = subscriptionService.checkmail(email);
+                if (data == 0)
+                {
+                    subscriptionService.addsubscription(Subscription);
+                    EmailSendingUtility EmailSend = new EmailSendingUtility();
+                    EmailSend.Email_maaaahwanam(Subscription.EmailId, "Thank you for subscribing to Maa-Aahwanam", "Confirmation Subscription");
+                    message = "success";
+                }
+                else { message = "exits"; }
+                
             }
             catch
             {
