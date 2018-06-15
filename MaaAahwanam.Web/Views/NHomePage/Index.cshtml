@@ -173,7 +173,7 @@
                     </div>
                     <div class="row mx-0 mt-3 topServiceType">
                         <select class="border-0 ml-auto" id="selectedservice">
-                            <option value="">Select Service Type</option>
+                            <option value="" selected>Select Service Type</option>
                             @*<option value="Venue">Venue</option>*@
                             <option value="Hotel">Hotel</option>
                             <option value="Resort">Resort</option>
@@ -340,7 +340,7 @@
         <div class="margin-top-50">
                 <div class="row mx-0">
                     <h3 class="noteWorthybold">
-                        Music & Artists
+                        Music & Artists (COMMING SOON)
                         <div class="blackBorder"></div>
                     </h3>
                 </div>
@@ -430,7 +430,7 @@
             <div class="w-100 text-center">
                 <h2 class="noteWorthybold">Frame your memories with us.</h2>
                 <br />
-                <span class="themeBgColorPrimary btnPrimary text-white">Let's Celebrate with us</span>
+                <span onclick='location.href = "/Contests"' class="themeBgColorPrimary btnPrimary text-white">Participate Now</span>
             </div>
         </div>
     </div>
@@ -479,27 +479,27 @@
                 <div class="row">
                     <div class="col-12 col-md-12">
                         <div class="owl-carousel owl-theme mt-3">
-                            <a href="#" class="item">
+                            <a href="/NQuestionNaire?servicetype=Catering" class="item">
                                 <img src="http://design.maa-aahwanam.com/newdesign/images/indian.jpg" alt="Thumb" />
                                 <span class="d-block mt-2 themeFontColor">Indian</span>
                             </a>
-                            <a href="#" class="item">
+                            <a href="/NQuestionNaire?servicetype=Catering" class="item">
                                 <img src="http://design.maa-aahwanam.com/newdesign/images/chinese.jpg" alt="Thumb" />
                                 <span class="d-block mt-2 themeFontColor">Chinese</span>
                             </a>
-                            <a href="#" class="item">
+                            <a href="/NQuestionNaire?servicetype=Catering" class="item">
                                 <img src="http://design.maa-aahwanam.com/newdesign/images/mexican.jpg" alt="Thumb" />
                                 <span class="d-block mt-2 themeFontColor">Mexican</span>
                             </a>
-                            <a href="#" class="item">
+                            <a href="/NQuestionNaire?servicetype=Catering" class="item">
                                 <img src="http://design.maa-aahwanam.com/newdesign/images/southindian.jpg" alt="Thumb" />
                                 <span class="d-block mt-2 themeFontColor">South Indian</span>
                             </a>
-                            <a href="#" class="item">
+                            <a href="/NQuestionNaire?servicetype=Catering" class="item">
                                 <img src="http://design.maa-aahwanam.com/newdesign/images/continent.jpg" alt="Thumb" />
                                 <span class="d-block mt-2 themeFontColor">Continental</span>
                             </a>
-                            <a href="#" class="item">
+                            <a href="/NQuestionNaire?servicetype=Catering" class="item">
                                 <img src="http://design.maa-aahwanam.com/newdesign/images/fastfood.jpg" alt="Thumb" />
                                 <span class="d-block mt-2 themeFontColor">Fast Food</span>
                             </a>
@@ -510,7 +510,7 @@
         <div class="margin-top-50">
                 <div class="row mx-0">
                     <h3 class="noteWorthybold">
-                        Other Services
+                        Other Services (COMMING SOON)
                         <div class="blackBorder"></div>
                     </h3>
                 </div>
@@ -849,9 +849,9 @@
         var areaSpan = $(".topSearchArea").find("span:last-child"),
             topThisUiWidget = $(".topSearchArea").next(".ui-widget").find('input');
         $(".topSearchArea").click(function (event) {
-            $(areaSpan).css({ "display": "none" });
-            $(topThisUiWidget).css({ "display": "block" });
-            $(topThisUiWidget).focus();
+            //$(areaSpan).css({ "display": "none" });
+            //$(topThisUiWidget).css({ "display": "block" });
+            //$(topThisUiWidget).focus();
         });
 
         $(topThisUiWidget).on('blur', function () {
@@ -882,9 +882,9 @@
         venueSearchSpan = $(".venueSearch").find("span:first-of-type"),
         venueUiWidge = $(".venueSearch").find(".ui-widget").find('input');;
         $(venueSearch).click(function () {
-            $(venueSearchSpan).css({ "display": "none" });
-            $(venueUiWidge).css({ "display": "block" });
-            $(venueUiWidge).focus();
+            //$(venueSearchSpan).css({ "display": "none" });
+            //$(venueUiWidge).css({ "display": "block" });
+            //$(venueUiWidge).focus();
         });
         $(venueUiWidge).on('blur', function () {
             if ($(this).val() == '') {
@@ -966,8 +966,14 @@
             catgSearchSpanFirst = $(".categorySearch > span:first-child"),
             catResults = $(".categorySearch .categoryResults")
         $(catgSearch).click(function () {
+           // e.stopPropagation(); //New Line Added
             $(catResults).css("display", "block");
         });
+        /*-- New Script Added --*/
+        //$(document).click(function () {
+        //    $(catResults).hide();
+        //});
+        /*-- New Script Added --*/
         $(catResults).find('li').click(function () {
             //alert($(this).children('label').prop("for"));
             var catResultsText = $(this).children('label').prop("for");
@@ -998,7 +1004,7 @@
             var occasiondate = $('#datetimepicker').val();
             if (location == '') { location = 'Hyderabad'; }
             if (servicetype == '') { alertmsg("Select Service Type"); }
-            if (occasiondate == '') { alertmsg("Select Occasion Date"); }
+            if (servicetype != '') { if (occasiondate == '') { alertmsg("Select Occasion Date"); } }
             //alert("location=" + location + ",servicetype=" + servicetype + ",occasiondate=" + occasiondate + "");
             if (servicetype != '' && occasiondate != '') {
                 window.location.href = '/NQuestionNaire?location=' + location + '&&servicetype=' + servicetype + '&&occasiondate=' + occasiondate;

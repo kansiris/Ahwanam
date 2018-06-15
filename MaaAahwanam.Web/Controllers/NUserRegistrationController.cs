@@ -77,12 +77,19 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult Index()
         {
-            if (TempData["Active"] != "")
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
             {
-                ViewBag.Active = TempData["Active"];
+                if (TempData["Active"] != "")
+                {
+                    ViewBag.Active = TempData["Active"];
+                }
+                perfecturl = "";
+                return View();
             }
-            perfecturl = "";
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
         }
 
         [HttpPost]
@@ -139,22 +146,22 @@ namespace MaaAahwanam.Web.Controllers
 
                     if (userResponse != null)
                     {
-                        //if (userResponse1.Status == "Active")
-                        //{
-                        vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
-                        string userData = JsonConvert.SerializeObject(userResponse);
-                        ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                        if (perfecturl != null && perfecturl != "")
-                            return Redirect(perfecturl);
-                        if (userResponse.UserType == "Vendor")
+                        if (userResponse1.Status == "Active")
                         {
-                            var vnid = userResponse.UserLoginId;
-                            return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+                            vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                            string userData = JsonConvert.SerializeObject(userResponse);
+                            ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                            if (perfecturl != null && perfecturl != "")
+                                return Redirect(perfecturl);
+                            if (userResponse.UserType == "Vendor")
+                            {
+                                var vnid = userResponse.UserLoginId;
+                                return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+                            }
+                            else
+                                ViewBag.userid = userResponse.UserLoginId;
+                            return RedirectToAction("Index", "NHomePage");
                         }
-                        else
-                            ViewBag.userid = userResponse.UserLoginId;
-                        return RedirectToAction("Index", "NHomePage");
-                        //}
                         //TempData["Active"] = "Please check Your email to verify Email ID";
                         //return RedirectToAction("Index", "NUserRegistration");
                     }
@@ -567,7 +574,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult SignOut()
         {
-   Response.Cookies.Clear();
+            Response.Cookies.Clear();
 
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "NHomePage");
