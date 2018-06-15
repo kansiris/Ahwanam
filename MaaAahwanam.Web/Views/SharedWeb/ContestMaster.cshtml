@@ -41,8 +41,8 @@
         <div class="row py-4 justify-content-center">
             <div class="col-12 col-sm-7 col-md-5">
                 <form>
-                    <input class="form-control mr-0 p-3" type="search" placeholder="Subscribe Here" aria-label="Search">
-                    <button class="btn primaryBgColor my-2 my-sm-0 secondaryTextColor p-3 fontWeight700" type="submit">Subscribe</button>
+                    <input class="form-control mr-0 p-3" type="search" id="emailid" name="emailid" placeholder="email@yourdomain.com" aria-label="Search">
+                    <button class="btn primaryBgColor my-2 my-sm-0 secondaryTextColor p-3 fontWeight700" type="submit"  value="Subscribe" onclick="SaveSubscriber()">Subscribe</button>
                 </form>
             </div>
         </div>
@@ -58,6 +58,33 @@
     <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/jquery.js"></script>
     <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/bootstrap.js"></script>
     <script src="~/Scripts/CFAuth.js"></script>
+    <script>
+        /* ------------------ To save the subscriber -----------------------------  */
+        function SaveSubscriber() {
+            var Subscription = {};
+            Subscription.EmailId = $('#emailid').val();
+            Subscription.Status = null;
+            $.ajax({
+                type: "POST",
+                url: "/Contests/SubmittingSubscriber",
+                content: "application/json; charset=utf-8",
+                dataType: "json",
+                data: {},
+                //data: JSON.stringify(Subscription),
+                data: Subscription,
+                success: function (data) {
+                    alert(data);
+                    //if (data == 'success')
+                    //    alert('subscribed successfully');
+                    //if (data == 'failed')
+                    //    alert('subscription failed');
+                },
+                //error: function (data) {
+                //    alert("Exception as occured");
+                //}
+            });
+        }
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

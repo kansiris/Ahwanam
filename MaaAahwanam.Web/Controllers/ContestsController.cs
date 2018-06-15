@@ -44,7 +44,24 @@ namespace MaaAahwanam.Web.Controllers
             }
             return PartialView("Authenticate");
         }
-
+        [HttpPost]
+        public JsonResult SubmittingSubscriber(Subscription Subscription)
+        {
+            string message = string.Empty;
+            //try
+            //{
+                SubscriptionService subscriptionService = new SubscriptionService();
+                subscriptionService.addsubscription(Subscription);
+                EmailSendingUtility EmailSend = new EmailSendingUtility();
+                EmailSend.Email_maaaahwanam(Subscription.EmailId, "Thank you for subscribing to Maa-Aahwanam", "Confirmation Subscription");
+                message = "subscribed successfully";
+            //}
+            //catch
+            //{
+            //    message = "subscription failed";
+            //}
+            return Json(String.Format(message));
+        }
         public ActionResult facebookLogin(string email, string id, string name, string gender, string firstname, string lastname, string picture, string currency, string timezone, string agerange)
         {
             try
