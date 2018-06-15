@@ -113,7 +113,7 @@
             <div>
                 <img src="~/2nd-prize-winner.png" />
             </div>
-            <br/>
+            <br />
             <div>
                 <img src="~/1st-prize.png" />
             </div>
@@ -170,7 +170,7 @@
             }
             else
             {
-                if (ViewBag.uploadimage == 0)
+                if (ViewBag.uploadimage != 0)
                 {
                     <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
                         <input id="sample_input" type="hidden" name="sample_input">
@@ -188,7 +188,7 @@
                         </div>
                         <div class="w-100 mt-3">
                             <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                                <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">Terms & Conditions</label>
+                                <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">By Clicking this you are Accepting all Terms & Conditions</label>
                             </div>
                         </div>
                         <div class="w-100">
@@ -197,6 +197,7 @@
                             </div>
                         </div>
                     </form>
+                    <text>Any Queries, mail us <a href="mailto:info@ahwanam.com">info@ahwanam.com</a> </text>
                 }
                 else
                 {
@@ -232,7 +233,7 @@
         $('#Item2_Name').on('change', function () {
             var image = $('#sample_input').val();
             if (image == '')
-            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alert("Upload Image")}
+            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alert("Upload Image") }
         });
 
         $('#Item2_Description').on('change', function () {
@@ -265,9 +266,11 @@
             var image = $('#sample_input').val().trim();
             var name = $('#Item2_Name').val().trim();
             var desc = $('#Item2_Description').val().trim();
-            var terms = $('#Item2_TermsAndConditions').val().trim();
+            var terms = $('#Item2_TermsAndConditions').is(':checked');
+            //alert(terms);
             if (image == '') { alert("Upload Image"); }
-            if (image != '' && name != '' && desc != '' && terms != 1) {
+            if (image != '' && name != '' && desc != '' && terms == true) {
+                //alert("hi");
                 this.form.submit();
             }
         });

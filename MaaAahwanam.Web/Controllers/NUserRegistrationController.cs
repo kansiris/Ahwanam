@@ -162,13 +162,14 @@ namespace MaaAahwanam.Web.Controllers
                                 ViewBag.userid = userResponse.UserLoginId;
                             return RedirectToAction("Index", "NHomePage");
                         }
-                        //TempData["Active"] = "Please check Your email to verify Email ID";
-                        //return RedirectToAction("Index", "NUserRegistration");
+                        TempData["Active"] = "Please check Your email to verify Email ID";
+                        return RedirectToAction("Index", "NUserRegistration");
                     }
                     else
                     {
-                        int query = vendorMasterService.checkemail(userLogin.UserName);
-                        if (query == 0)
+                        //int query = vendorMasterService.checkemail(userLogin.UserName);
+                        int userlogintablecheck = (int)userResponse1.UserLoginId;
+                        if (userlogintablecheck == 0)
                             TempData["Active"] = "User Record Not Available"; //return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                         else
                             TempData["Active"] = "Wrong Credentials,Check Username and password"; //return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
