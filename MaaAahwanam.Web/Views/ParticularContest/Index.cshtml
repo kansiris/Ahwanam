@@ -161,7 +161,7 @@
             }
             else
             {
-                if (ViewBag.uploadimage == 0)
+                if (ViewBag.uploadimage != 0)
                 {
                     <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
                         <input id="sample_input" type="hidden" name="sample_input">
@@ -213,16 +213,31 @@
             $('#sample_input').awesomeCropper(
             { width: 250, height: 250, debug: true }//, disable()
             );//.on('change',function () { disable() });
-            $(".awesome-cropper > input[type='file']").attr('required', 'required');
+            $(".awesome-cropper > input[type='file']").attr('required', 'required').attr('id','fileupload');
 
             //function disable() {
             //    alert("disable");
             //}
         });
 
-        $('#Item2_Description').on('change', function () {
+        //$('#Item2_Description').on('change', function () {
+        //    $(".awesome-cropper > input[type='file']").css('display', 'none');
+        //});
+
+        //$("#fileupload").change(function () {
+        //    pop();
+        //});
+
+        $(document).on('change', '#fileupload', function () {
             $(".awesome-cropper > input[type='file']").css('display', 'none');
         });
+
+        //function pop() {
+        //    alert("file upload triggered");
+        //}
+        //$('#sample_input').blur(function () {
+        //    $(".awesome-cropper > input[type='file']").css('display', 'none');
+        //});
 
         $('#Item2_TermsAndConditions').on('change', function () {
             //$(".awesome-cropper > input[type='file']").css('display', 'none');
