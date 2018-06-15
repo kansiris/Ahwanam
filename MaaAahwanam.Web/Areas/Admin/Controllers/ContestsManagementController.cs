@@ -88,7 +88,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 ViewBag.contests = contestsService.GetAllEntries(long.Parse(selectedcontest));
                 ViewBag.selectedcontest = selectedcontest;
             }
-            if (id != "0" && id != null && command == null && selectedcontest != null)
+            if (id != "0" && id != null && command == null && selectedcontest != null && selectedcontest != "Select Contest")
             {
                 ViewBag.selectedcontest = selectedcontest;
 
