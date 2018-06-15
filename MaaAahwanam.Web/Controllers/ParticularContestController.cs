@@ -76,6 +76,8 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
                     ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
+                    //ViewBag.uploadimage = uploadimage;
+                    
                 }
                 //ViewBag.vote = votedornot;
             }
