@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "PreLaunch", action = "Index", id = UrlParameter.Optional },
+                defaults: new { controller = "NHomePage", action = "Index", id = UrlParameter.Optional },
                  namespaces: new string[] { "MaaAahwanam.Web.Controllers" }
             );           
         }
