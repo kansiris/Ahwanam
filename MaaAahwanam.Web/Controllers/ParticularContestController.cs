@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web.Controllers
         ContestsService contestsService = new ContestsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
-        
+
         // GET: ParticularContest
         public ActionResult Index(string id, string csid)
         {
@@ -49,7 +49,7 @@ namespace MaaAahwanam.Web.Controllers
                             var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
                             userlogin.AlternativeEmailID = getdata.UserName;
                         }
-                        var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+                        var getVote = contestsService.GetAllVotes(item.ContestId).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
                         if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
                         else votedornot.Add("0");//ViewBag.vote = "0";
                     }
@@ -77,12 +77,13 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.mycount = userenties.Count();
                     ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
                     //ViewBag.uploadimage = uploadimage;
-                    
+
                 }
-                //ViewBag.vote = votedornot;
+                ViewBag.votestatus = votedornot;
             }
             else if (id != null && csid != null)
-            { var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
+            {
+                var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
                 ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
 
                 var AvailableContestEntries1 = contestsService.GetAllEntries(long.Parse(id));
@@ -135,12 +136,12 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
                     ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
-                   
+
                 }
-                //ViewBag.vote = votedornot;
+                ViewBag.votestatus = votedornot;
             }
-                else
-                    ViewBag.contestname = "Particular Contest";
+            else
+                ViewBag.contestname = "Particular Contest";
             return View();
         }
 
@@ -181,6 +182,62 @@ namespace MaaAahwanam.Web.Controllers
             return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='/NUserRegistration/Index'</script>");
         }
 
+        //public PartialViewResult LoadMore(string id, string L1)
+        //{
+        //    var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
+        //    ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
+        //    var allrecords = contestsService.GetAllEntries(long.Parse(id));
+        //    var AvailableContestEntries = allrecords.Where(m => m.Status == "Active").ToList();
+        //    List<string> contestentries = new List<string>();
+        //    List<string> votecount = new List<string>();
+        //    List<string> votedornot = new List<string>();
+        //    foreach (var item in AvailableContestEntries)
+        //    {
+        //        var date = TimeAgo(item.UpdatedDate);
+        //        contestentries.Add(date);
+        //        var count = contestsService.GetAllVotes(item.ContestId).Where(m => m.Status == "Active").Count();
+        //        votecount.Add(count.ToString());
+        //        if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //        {
+        //            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+        //            var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+        //            if (userlogin.AlternativeEmailID == null)
+        //            {
+        //                var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+        //                userlogin.AlternativeEmailID = getdata.UserName;
+        //            }
+        //            var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+        //            if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
+        //            else votedornot.Add("0");//ViewBag.vote = "0";
+        //        }
+        //    }
+        //    ViewBag.AvailableContestEntries = AvailableContestEntries;
+        //    ViewBag.count = AvailableContestEntries.Count();
+        //    ViewBag.time = contestentries;
+        //    ViewBag.votecount = votecount;
+        //    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //    {
+        //        var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+        //        var userenties = allrecords.Where(m => m.UserLoginID == user.UserId).ToList();
+        //        ViewBag.userenties = userenties;
+        //        List<string> myuploadedtime = new List<string>();
+        //        List<string> myvotes = new List<string>();
+        //        foreach (var item in ViewBag.userenties)
+        //        {
+        //            var date1 = TimeAgo(item.UpdatedDate);
+        //            myuploadedtime.Add(date1);
+        //            var count1 = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Status == "Active").Count();
+        //            myvotes.Add(count1.ToString());
+        //        }
+        //        ViewBag.mytime = myuploadedtime;
+        //        ViewBag.myvotes = myvotes;
+        //        ViewBag.mycount = userenties.Count();
+        //        ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
+        //        //ViewBag.uploadimage = uploadimage;
+        //    }
+        //    return PartialView("LoadMore");
+        //}
+
         //[HttpPost]
         //public ActionResult UserAuthentication(string command, [Bind(Prefix = "Item1")]UserLogin userLogin)
         //{
@@ -189,17 +246,17 @@ namespace MaaAahwanam.Web.Controllers
         //        var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
         //        var userResponse1 = venorVenueSignUpService.GetUserLogdetails(userLogin);
 
-        //        if (userResponse != null)
-        //        {
-        //            string userData = JsonConvert.SerializeObject(userResponse);
-        //            ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-        //            return RedirectToAction("Index", "ParticularContest");
-        //        }
-        //        else
-        //            return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "ParticularContest") + "'</script>");
-        //    }
-        //    return View();
-        //}
+            //        if (userResponse != null)
+            //        {
+            //            string userData = JsonConvert.SerializeObject(userResponse);
+            //            ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+            //            return RedirectToAction("Index", "ParticularContest");
+            //        }
+            //        else
+            //            return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "ParticularContest") + "'</script>");
+            //    }
+            //    return View();
+            //}
 
         public static string TimeAgo(DateTime dt)
         {
