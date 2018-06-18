@@ -61,7 +61,7 @@ namespace MaaAahwanam.Web
 
         }
 
-        void Application_Error(object sender, EventArgs e)
+        protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = Server.GetLastError();
             Response.Clear();
@@ -72,27 +72,31 @@ namespace MaaAahwanam.Web
             if (httpException != null)
             {
                 string action;
-                string email = "sireesh.k@xsilica.com,maaaahwanamtest@gmail.com,rameshsai@xsilica.com,info @ahwanam.com";
+                string email = "sireesh.k@xsilica.com,maaaahwanamtest@gmail.com,rameshsai@xsilica.com";  //,info @ahwanam.com";
                 switch (httpException.GetHttpCode())
                 {
                     case 404:
                         // page not found
-                        action = "HttpError404";
+                        action = " Error occured in application HttpError404";
                         break;
                     case 500:
                         // server error
-                        action = "HttpError500";
+                        action = "Error occured in application HttpError500";
                         break;
                     default:
-                        action = "General";
+                        action = "Error occured in application General";
                         break;
                 }
                 EmailSendingUtility EmailSend = new EmailSendingUtility();
-                EmailSend.Email_maaaahwanam(email,txt, "Error occured in application");
+                EmailSend.Email_maaaahwanam(email,txt , action);
                 // clear error on server
                 Server.ClearError();
 
-                Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
+                //  Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
+                // return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                Response.Write("<script language='javascript'>window.alert('Some thing went wrong please try again after some time click OK to continue!!!');window.location='/nhomepage/index';</script>");
+
+
             }
         }
     }

@@ -145,6 +145,10 @@ namespace MaaAahwanam.Web.Controllers
             var pricenew = "";
             var ISdeal = cartdetails.Isdeal;
             var sertype = cartdetails.ServiceType;
+            var timeslot = cartdetails.attribute;
+
+            var timeslot1 = timeslot.Split(',');
+            var times = timeslot1.Length;
 
             if (ISdeal == false)
             {
