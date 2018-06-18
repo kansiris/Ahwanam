@@ -162,12 +162,12 @@ namespace MaaAahwanam.Web.Controllers
                     VendorProductsService vendorProductsService = new VendorProductsService();
                     var vendorcost = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
                     //   int query = vendorMasterService.checkemail(emailid);
-                    if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
-                    { pricenew = Convert.ToString( Convert.ToDecimal(vendorcost) * nofguests);  }
-                    else
-                    {
+                    //if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
+                    //{ pricenew = Convert.ToString( Convert.ToDecimal(vendorcost) * nofguests);  }
+                    //else
+                    //{
                         pricenew = vendorcost;
-                    }
+                  //  }
 
                 }
             else
@@ -204,7 +204,11 @@ namespace MaaAahwanam.Web.Controllers
                
                
             }
-                if (pricenew != "0")
+            if (pricenew == "" || pricenew == null)
+            {
+                pricenew = "0";
+            }
+                if (pricenew != "0" || pricenew == "0")
             {
                 return Json(pricenew, JsonRequestBehavior.AllowGet);
             }
