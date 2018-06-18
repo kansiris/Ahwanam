@@ -12,6 +12,7 @@ using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
 using System.Security.Principal;
 using System.Web.Helpers;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web
 {
@@ -60,17 +61,39 @@ namespace MaaAahwanam.Web
 
         }
 
-        //protected void Application_Error()
-        //{
-        //    try
-        //    {
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            Response.Clear();
 
-        //    }
-        //    catch (Exception ex)
-        //    {
+            HttpException httpException = exception as HttpException;
 
-        //        throw;
-        //    }
-        //}
+            string txt = Convert.ToString(httpException);
+            if (httpException != null)
+            {
+                string action;
+                string email = "sireesh.k@xsilica.com,maaaahwanamtest@gmail.com,rameshsai@xsilica.com,info @ahwanam.com";
+                switch (httpException.GetHttpCode())
+                {
+                    case 404:
+                        // page not found
+                        action = "HttpError404";
+                        break;
+                    case 500:
+                        // server error
+                        action = "HttpError500";
+                        break;
+                    default:
+                        action = "General";
+                        break;
+                }
+                EmailSendingUtility EmailSend = new EmailSendingUtility();
+                EmailSend.Email_maaaahwanam(email,txt, "Error occured in application");
+                // clear error on server
+                Server.ClearError();
+
+                Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
+            }
+        }
     }
 }

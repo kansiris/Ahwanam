@@ -18,6 +18,8 @@ namespace MaaAahwanam.Web.Controllers
         VendorMasterService vendorMasterService = new VendorMasterService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         ContestsService contestsService = new ContestsService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
         // GET: Contests
         public ActionResult Index()
         {
@@ -53,10 +55,11 @@ namespace MaaAahwanam.Web.Controllers
                 Subscription Subscription = new Subscription();
              Subscription.EmailId = email;
             Subscription.Status = null;
-
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                Subscription.UpdatedDate = updateddate;
             SubscriptionService subscriptionService = new SubscriptionService();
             long   data = subscriptionService.checkmail(email);
-                if (data == 0)
+               if (data == 0)
                 {
                     subscriptionService.addsubscription(Subscription);
                     EmailSendingUtility EmailSend = new EmailSendingUtility();
