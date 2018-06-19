@@ -107,6 +107,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                 var username = cont1.Name;
                 var typeid = cont1.UserLoginID;
+                username = Capitalise(username);
 
                 UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
 
@@ -151,6 +152,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
 
+
+        public string Capitalise(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
+        }
+
         [HttpPost]
         public ActionResult submitquery(string emailid, string txtone, string cid ,string selectedcontest)
         {
@@ -164,6 +173,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             var userlogin = userLoginDetailsService.GetUserId(Convert.ToInt32(typeid));
             var username = cont1.Name;
 
+            username = Capitalise(username);
 
             emailid = userlogin.UserName;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
@@ -197,6 +207,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             var typeid = cont1.UserLoginID;
             var username = cont1.Name;
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+            username = Capitalise(username);
 
             var userlogin = userLoginDetailsService.GetUserId(Convert.ToInt32(typeid));
 
