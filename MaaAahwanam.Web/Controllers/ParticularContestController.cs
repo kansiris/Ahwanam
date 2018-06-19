@@ -252,17 +252,17 @@ namespace MaaAahwanam.Web.Controllers
         //        var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
         //        var userResponse1 = venorVenueSignUpService.GetUserLogdetails(userLogin);
 
-            //        if (userResponse != null)
-            //        {
-            //            string userData = JsonConvert.SerializeObject(userResponse);
-            //            ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-            //            return RedirectToAction("Index", "ParticularContest");
-            //        }
-            //        else
-            //            return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "ParticularContest") + "'</script>");
-            //    }
-            //    return View();
-            //}
+        //        if (userResponse != null)
+        //        {
+        //            string userData = JsonConvert.SerializeObject(userResponse);
+        //            ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+        //            return RedirectToAction("Index", "ParticularContest");
+        //        }
+        //        else
+        //            return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "ParticularContest") + "'</script>");
+        //    }
+        //    return View();
+        //}
 
         public static string TimeAgo(DateTime dt)
         {
@@ -316,22 +316,23 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 //if (command == "Add")
                 //{
-                //var votechecking = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID).Count();
+                var votechecking = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID).Count();
                 contestVote.ContestId = long.Parse(id);
                 contestVote.Email = userlogin.AlternativeEmailID;
                 contestVote.IPAddress = HttpContext.Request.UserHostAddress;
                 contestVote.Name = userlogin.FirstName + " " + userlogin.LastName;
                 contestVote.Type = "Facebook";
-                //if (votechecking == 0)
-                contestVote = contestsService.AddContestVote(contestVote);
-                //else
+                if (votechecking == 0)
+                { contestVote = contestsService.AddContestVote(contestVote); return Json("Voted", JsonRequestBehavior.AllowGet); }
+                else
+                    return Json("Already Voted", JsonRequestBehavior.AllowGet);
                 //    contestVote = contestsService.AddContestVote(contestVote);
                 //}
                 //if (command == "Remove")
                 //{
                 //    int count = contestsService.RemoveContestVote(contestVote);
                 //}
-                return Json("Voted", JsonRequestBehavior.AllowGet);
+
             }
             return Json("Please Login To Vote", JsonRequestBehavior.AllowGet);
         }

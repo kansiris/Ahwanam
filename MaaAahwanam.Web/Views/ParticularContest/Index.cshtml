@@ -68,10 +68,10 @@
 
             @for (int i = 0; i < ViewBag.count; i++)
             {
-                <div class="col-12 col-sm-4 col-md-4  block mb-3">
+                <div class="block mb-3">
                     <input type="hidden" id="cid" value="@ViewBag.AvailableContestEntries[i].ContestId" />
                     <figure style="background:url('/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage')">
-                        @*<img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />*@
+                        @*<img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day"/>*@
                     </figure>
                     <div class="voteBlock">
                         @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
@@ -169,18 +169,28 @@
 
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == true)
     {
-        <div class="container">
-            <div class="row my-3 components" id="My Entries">
+        <div class="container" style="background: transparent;">
+            <div class="row my-3 components MyEntries" id="My Entries">
 
                 @for (int i = 0; i < ViewBag.mycount; i++)
                 {
                     @*<div class="col-12 col-md-12">*@
-                    <div class="col-12 col-sm-4 col-md-4 block mb-3">
+                    <div class="block mb-3">
                         <input type="hidden" id="cid" value="@ViewBag.userenties[i].ContestId" />
-                        <figure>
-                            <img src="~/ContestPics/@ViewBag.userenties[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />
+                        <figure  style="background:url('ContestPics/@ViewBag.userenties[i].UploadedImage')">
+                            @*<img src="~/ContestPics/@ViewBag.userenties[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />*@
                         </figure>
-                        <p class="contestants secondaryTextColor fontWeight700 mb-2">@ViewBag.userenties[i].Name (Approval Pending)</p>
+                        @*<div class="voteBlock"> 
+                            @if (ViewBag.votestatus[i] == "1")
+                            {<i class="fa fa-heart-o" aria-hidden="true"></i> }
+                            else
+                            {
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            }
+                        </div>*@
+                        <div class="w-100 approval">Pending Approval</div>
+                        @*<div class="hoverBlock"> <i class="fa fa-eye" aria-hidden="true"></i> </div>*@
+                        <p class="contestants secondaryTextColor fontWeight700 mb-2">@ViewBag.userenties[i].Name</p>
                         <p class="ml-3 mb-0">@ViewBag.mytime[i]</p>
                         <p class="descrption">@ViewBag.userenties[i].Description</p>
 
@@ -206,7 +216,7 @@
                 }
                 else
                 {
-                    if (ViewBag.uploadimage == 0)
+                    if (ViewBag.uploadimage != 0)
                     {
                         <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
                             <input id="sample_input" type="hidden" name="sample_input">
@@ -270,13 +280,13 @@
         $('#Item2_Name').on('change', function () {
             var image = $('#sample_input').val();
             if (image == '')
-            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alert("Upload Image") }
+            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
         });
 
         $('#Item2_Description').on('change', function () {
             var image = $('#sample_input').val();
             if (image == '')
-            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alert("Upload Image") }
+            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
         });
 
         //$("#fileupload").change(function () {
@@ -294,7 +304,7 @@
         $('#Item2_TermsAndConditions').on('change', function () {
             var image = $('#sample_input').val();
             if (image == '')
-            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alert("Upload Image") }
+            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
         });
 
         //});
@@ -305,7 +315,7 @@
             var desc = $('#Item2_Description').val().trim();
             var terms = $('#Item2_TermsAndConditions').is(':checked');
             //alert(terms);
-            if (image == '') { alert("Upload Image"); }
+            if (image == '') { alertmsg("Upload Image"); }
             if (image != '' && name != '' && desc != '' && terms == true) {
                 //alert("hi");
                 this.form.submit();
@@ -318,7 +328,7 @@
         /*-- popUp Display Block / None --*/
 
         //var $appendFigure = $(".blockPopup .block figure"), $appendDescrption = $(".blockPopup .block .totalContent .descrption"), $appendContestants = $(".blockPopup .block .totalContent .contestants"), $appendPeopleLove = $(".blockPopup .block .totalContent .peopleLoved span");
-        $("#Home .hoverBlock").click(function () {
+        $("#Home .hoverBlock, .MyEntries .hoverBlock").click(function () {
             $(".blockPopup").css("display", "block");
 
             var cid = $(this).prevAll('#cid').val();
@@ -369,7 +379,7 @@
         /*-- Vote / Un Vote --*/
 
         /*-- Vote In Block --*/
-        var voteClick = $("#Home .block figure + .voteBlock");
+        var voteClick = $("#Home .block figure + .voteBlock, .MyEntries .block figure + .voteBlock");
         $(voteClick).click(function () {
             //    $(this).find('i').removeClass('fa-heart-o').addClass(' fa-heart');
             var cid = $(this).prevAll('#cid').val();
@@ -415,16 +425,19 @@
                     data: { id: id },
                     success: function (response) {
                         if (response == "Please Login To Vote") {
-                            alert(response);
+                            alertmsg(response);
                         }
                         else if (response == "Voted") {
-                            alert(response);
+                            alertmsg(response);
                             location.reload();
+                        }
+                        else if (response == "Already Voted") {
+                            alertmsg(response);
                         }
                         
                     },
                     error: function (er) {
-                        alert("System Encountered Internal Error!!! Try Again After Some Time");
+                        alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
                     }
                 });
             }
