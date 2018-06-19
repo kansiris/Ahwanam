@@ -61,23 +61,34 @@ namespace MaaAahwanam.Web.Controllers
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (userlogin.AlternativeEmailID == null)
+                    {
+                        var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                        userlogin.AlternativeEmailID = getdata.UserName;
+                    }
                     var userenties = allrecords.Where(m => m.UserLoginID == user.UserId).ToList();
                     ViewBag.userenties = userenties;
                     List<string> myuploadedtime = new List<string>();
                     List<string> myvotes = new List<string>();
+                    List<string> myvotedornot = new List<string>();
                     foreach (var item in ViewBag.userenties)
                     {
                         var date1 = TimeAgo(item.UpdatedDate);
                         myuploadedtime.Add(date1);
                         var count1 = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Status == "Active").Count();
                         myvotes.Add(count1.ToString());
+                        var mygetVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+                        if (mygetVote == 0) myvotedornot.Add("1"); //ViewBag.vote = "1";
+                        else myvotedornot.Add("0");//ViewBag.vote = "0";
                     }
                     ViewBag.mytime = myuploadedtime;
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
+                    ViewBag.myvotedornot = myvotedornot;
                     ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
                     //ViewBag.uploadimage = uploadimage;
-                   
+
                 }
                 var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
 
@@ -88,7 +99,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
                 ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
-
+                var allrecords = contestsService.GetAllEntries(long.Parse(id));
                 var AvailableContestEntries1 = contestsService.GetAllEntries(long.Parse(id));
                 var AvailableContestEntries = AvailableContestEntries1.Where(m => m.ContestId == long.Parse(csid)).ToList();
 
@@ -123,24 +134,35 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.cssid = id;
                 var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
 
-           ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl ;
+                ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                    var userenties = AvailableContestEntries.Where(m => m.UserLoginID == user.UserId).ToList();
+                    var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (userlogin.AlternativeEmailID == null)
+                    {
+                        var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                        userlogin.AlternativeEmailID = getdata.UserName;
+                    }
+                    var userenties = allrecords.Where(m => m.UserLoginID == user.UserId).ToList();
                     ViewBag.userenties = userenties;
                     List<string> myuploadedtime = new List<string>();
                     List<string> myvotes = new List<string>();
+                    List<string> myvotedornot = new List<string>();
                     foreach (var item in ViewBag.userenties)
                     {
                         var date1 = TimeAgo(item.UpdatedDate);
                         myuploadedtime.Add(date1);
                         var count1 = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Status == "Active").Count();
                         myvotes.Add(count1.ToString());
+                        var mygetVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+                        if (mygetVote == 0) myvotedornot.Add("1"); //ViewBag.vote = "1";
+                        else myvotedornot.Add("0");//ViewBag.vote = "0";
                     }
                     ViewBag.mytime = myuploadedtime;
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
+                    ViewBag.myvotedornot = myvotedornot;
                     ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
 
                 }

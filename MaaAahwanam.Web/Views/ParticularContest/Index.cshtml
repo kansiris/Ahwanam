@@ -76,7 +76,7 @@
                     <div class="voteBlock">
                         @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
                         {
-                            <i class="fa fa-heart-o" aria-hidden="true" data-toggle="modal" data-target="#myModal" href="#"></i> 
+                            <i class="fa fa-heart-o" aria-hidden="true" data-toggle="modal" data-target="#myModal" href="#"></i>
                         }
                         else
                         {
@@ -177,18 +177,30 @@
                     @*<div class="col-12 col-md-12">*@
                     <div class="block mb-3">
                         <input type="hidden" id="cid" value="@ViewBag.userenties[i].ContestId" />
-                        <figure  style="background:url('ContestPics/@ViewBag.userenties[i].UploadedImage')">
+                        <figure style="background:url('ContestPics/@ViewBag.userenties[i].UploadedImage')">
                             @*<img src="~/ContestPics/@ViewBag.userenties[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />*@
                         </figure>
-                        @*<div class="voteBlock"> 
-                            @if (ViewBag.votestatus[i] == "1")
-                            {<i class="fa fa-heart-o" aria-hidden="true"></i> }
-                            else
-                            {
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                            }
-                        </div>*@
-                        <div class="w-100 approval">Pending Approval</div>
+                        @*<div class="voteBlock">
+                                @if (ViewBag.myvotedornot[i] == "1")
+                                {<i class="fa fa-heart-o" aria-hidden="true"></i> }
+                                else
+                                {
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                }
+                            </div>*@
+                        @if (ViewBag.userenties[i].Status == "InActive")
+                        {
+                            <div class="w-100 approval">Declined</div>
+                        }
+                        else if (ViewBag.userenties[i].Status == "Pending")
+                        {
+                            <div class="w-100 approval">Pending Approval</div>
+                        }
+                        else if (ViewBag.userenties[i].Status == "Active")
+                        {
+                            <div class="w-100 approval">Entry Accepted</div>
+                        }
+
                         @*<div class="hoverBlock"> <i class="fa fa-eye" aria-hidden="true"></i> </div>*@
                         <p class="contestants secondaryTextColor fontWeight700 mb-2">@ViewBag.userenties[i].Name</p>
                         <p class="ml-3 mb-0">@ViewBag.mytime[i]</p>
@@ -434,7 +446,7 @@
                         else if (response == "Already Voted") {
                             alertmsg(response);
                         }
-                        
+
                     },
                     error: function (er) {
                         alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
