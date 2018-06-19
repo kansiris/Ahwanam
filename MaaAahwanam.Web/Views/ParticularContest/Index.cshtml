@@ -99,8 +99,8 @@
                     <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><span>@ViewBag.votecount[i]</span> people loved</div>
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right" id="viewPopup">View</button>
+                        <div class="col-12 col-sm-6 col-md-6"> 
+                            <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right viewPopup">View</button>
                         </div>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
                 }
                 else
                 {
-                    if (ViewBag.uploadimage != 0)
+                    if (ViewBag.uploadimage == 0)
                     {
                         <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
                             <input id="sample_input" type="hidden" name="sample_input">
@@ -385,12 +385,24 @@
         /*-- popUp Display Block / None --*/
 
         //var $appendFigure = $(".blockPopup .block figure"), $appendDescrption = $(".blockPopup .block .totalContent .descrption"), $appendContestants = $(".blockPopup .block .totalContent .contestants"), $appendPeopleLove = $(".blockPopup .block .totalContent .peopleLoved span");
-        $("#Home .hoverBlock, .MyEntries .hoverBlock, #viewPopup").click(function () {
+        $("#Home .hoverBlock, .MyEntries .hoverBlock").click(function () {
             $(".blockPopup").css("display", "block");
 
             var cid = $(this).prevAll('#cid').val();
             var id = '@ViewBag.id';
 
+            var url = '/ParticularContest/ParticularEntryView?id=@ViewBag.id&&tcid=' + cid;
+            $('#popup').empty().load(url);
+            //alert(cid);
+            $('#tcid').val(cid);
+        });
+
+        $("#Home .viewPopup").click(function () {
+            $(".blockPopup").css("display", "block");
+
+            var cid = $(this).parents(".row").prevAll("figure").prevAll("#cid").val();
+            var id = '@ViewBag.id';
+            //alert(cid);
             var url = '/ParticularContest/ParticularEntryView?id=@ViewBag.id&&tcid=' + cid;
             $('#popup').empty().load(url);
             //alert(cid);

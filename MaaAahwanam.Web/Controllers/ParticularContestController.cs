@@ -536,7 +536,7 @@ namespace MaaAahwanam.Web.Controllers
             readFile = readFile.Replace("[Message]", "Thanks For Entering the Contest.Your Entry is Sent For Approval.You Will Receive an update after Admin Approves your Entry");
 
             string txtmessage = readFile;//readFile + body;
-            string subj = "Thanks for your Enrty";
+            string subj = "Thanks for your Entry";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
         }
