@@ -511,7 +511,8 @@ namespace MaaAahwanam.Web.Controllers
             var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
 
             ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
-            return View();
+        
+                 return RedirectToAction("Index", "ParticularContest", new { id = id ,csid = csid });
         }
 
     }
