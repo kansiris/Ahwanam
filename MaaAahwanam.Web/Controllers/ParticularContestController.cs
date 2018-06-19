@@ -77,8 +77,11 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.mycount = userenties.Count();
                     ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
                     //ViewBag.uploadimage = uploadimage;
-
+                   
                 }
+                var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
+
+                ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
                 ViewBag.votestatus = votedornot;
             }
             else if (id != null && csid != null)
@@ -118,6 +121,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.votecount = votecount;
                 ViewBag.csid = csid;
                 ViewBag.cssid = id;
+                var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
+
+           ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl ;
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -424,6 +430,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.display = "1";
                 ViewBag.id = id;
                 ViewBag.csid = tcid;
+                //var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=tcid";
+
+                //ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
             }
             else
             {
