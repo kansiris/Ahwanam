@@ -345,7 +345,11 @@ namespace MaaAahwanam.Web.Controllers
                 contestVote.Name = userlogin.FirstName + " " + userlogin.LastName;
                 contestVote.Type = "Facebook";
                 if (votechecking == 0)
-                { contestVote = contestsService.AddContestVote(contestVote); return Json("Voted", JsonRequestBehavior.AllowGet); }
+                {
+                    contestVote = contestsService.AddContestVote(contestVote);
+
+                    return Json("Voted", JsonRequestBehavior.AllowGet);
+                }
                 else
                     return Json("Already Voted", JsonRequestBehavior.AllowGet);
                 //    contestVote = contestsService.AddContestVote(contestVote);
@@ -515,5 +519,9 @@ namespace MaaAahwanam.Web.Controllers
                  return RedirectToAction("Index", "ParticularContest", new { id = id ,csid = csid });
         }
 
+        public void SendEmail()
+        {
+            string txtto = "";
+        }
     }
 }

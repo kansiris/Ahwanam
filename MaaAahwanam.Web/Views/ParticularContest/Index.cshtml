@@ -68,7 +68,7 @@
 
             @for (int i = 0; i < ViewBag.count; i++)
             {
-                <div class="block mb-3">
+                <div class="block mb-1">
                     <input type="hidden" id="cid" value="@ViewBag.AvailableContestEntries[i].ContestId" />
                     <figure style="background:url('/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage')">
                         @*<img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day"/>*@
@@ -94,13 +94,13 @@
                     <div class="hoverBlock">
                         <i class="fa fa-eye" aria-hidden="true"></i>
                     </div>
-                    <p class="contestants secondaryTextColor fontWeight700 mb-2">@ViewBag.AvailableContestEntries[i].Name</p>
-                    <p class="ml-3 mb-0">@ViewBag.time[i]</p>
+                    <p class="contestants secondaryTextColor fontWeight700 mb-0">@ViewBag.AvailableContestEntries[i].Name</p>
+                    <p class="mb-0 mt-2">@ViewBag.time[i]</p>
                     <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><span>@ViewBag.votecount[i]</span> people loved</div>
                         <div class="col-12 col-sm-6 col-md-6">
-                            <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right">Share</button>
+                            <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right" id="viewPopup">View</button>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
     </div>
     <div class="container">
         <div class="row my-3 components" id="Prizes">
-            <div class="col-12 col-md-12">
+            @*<div class="col-12 col-md-12">
                 <div>
                     <img src="~/3rd-prize-banner.png" />
                 </div>
@@ -145,15 +145,30 @@
                 <div>
                     <img src="~/1st-prize.png" />
                 </div>
+            </div>*@
+            <div class="row w-100 mx-0 text-center">
+                <div class="col-12 col-md-12">
+                    <img src="~/3rd-prize-banner.png" alt="3rd Prize">
+                </div>
+            </div>
+            <div class="row w-100 mx-0 text-center">
+                <div class="col-12 col-md-12">
+                    <img src="~/2nd-prize-winner.png" alt="2nd Prize">
+                </div>
+            </div>
+            <div class="row w-100 mx-0 text-center">
+                <div class="col-12 col-md-12">
+                    <img src="~/1st-prize.png" alt="1st Prize">
+                </div>
             </div>
         </div>
     </div>
 
     <div class="container">
         <div class="row my-3 components" id="Sponsors">
-            <div class="col-12 col-md-12">
+            @*<div class="col-12 col-md-12">
                 Sponsers Content
-                @*<ul>
+                <ul>
                         <li>
                             <img src="http://www.ahwanam.com/vendorimages/Venue_10443_10329_1.jpg" alt="Sponsors">
                             <span>Celebrity Resort <text style="display:none">Calebrity</text></span>
@@ -162,8 +177,38 @@
                             <img src="http://www.ahwanam.com/vendorimages/Venue_10475_10213_1.jpg" alt="Sponsors">
                             <span>Dream Valley Resorts</span>
                         </li>
-                    </ul>*@
+                    </ul>
+            </div>*@
+            <div class="row mx-0">
+                <div class="col-12 col-sm-5 col-md-5">
+                    <figure class="text-center">
+                        <img src="http://design.maa-aahwanam.com/contest/images/celebrity.png" alt="Celebrity">
+                    </figure>
+                </div>
+                <div class="col-12 col-sm-7 col-md-7">
+                    <p class="mb-0">Celebrity Hospitality Services, has been providing unparalleled service in the hospitality industry for more than 15 years. Its team of dedicated employees, guided by the Board of Directors of Prajay, has been striving hard to provide our clients comfort and satisfaction.</p>
+                </div>
             </div>
+            <div class="row mx-0">
+                <div class="col-12 col-sm-5 col-md-5">
+                    <figure class="text-center">
+                        <img src="http://design.maa-aahwanam.com/contest/images/solotaire.png" alt="Solotaire">
+                    </figure>
+                </div>
+                <div class="col-12 col-sm-7 col-md-7">
+                    <p class="mb-0">A place where a word as simple as recuperate takes a whole new meaning , a place not only to entertain but also to get entertained .a place where a top of the line Single malt served to you just the way you want it waits your just as much you or your partner awaits an exciting bottle of the finest Chenin blanc after a hard days work.</p>
+                </div>
+            </div>
+            <div class="row mx-0">
+                <div class="col-12 col-sm-5 col-md-5">
+                    <figure class="text-center">
+                        <img src="http://design.maa-aahwanam.com/contest/images/DreamVallyResortHyderabad.png" alt="Dream Valley">
+                    </figure>
+                </div>
+                <div class="col-12 col-sm-7 col-md-7">
+                    <p class="mb-0">Every great dream begins with a dreamer. Dream Valley found its origins in the dreamy eyes of —— who hoped for a place where people can come close to nature and experience a connection between the vivid colourfulness of natural flora and their soul. Whether it is the spacious rooms that open to green lawns or the airy balconies that give you a breath taking view of the landscape, Dream Valley is a re-imagination of comfort amidst nature.</p>
+                </div>
+            </div> 
         </div>
     </div>
 
@@ -340,7 +385,7 @@
         /*-- popUp Display Block / None --*/
 
         //var $appendFigure = $(".blockPopup .block figure"), $appendDescrption = $(".blockPopup .block .totalContent .descrption"), $appendContestants = $(".blockPopup .block .totalContent .contestants"), $appendPeopleLove = $(".blockPopup .block .totalContent .peopleLoved span");
-        $("#Home .hoverBlock, .MyEntries .hoverBlock").click(function () {
+        $("#Home .hoverBlock, .MyEntries .hoverBlock, #viewPopup").click(function () {
             $(".blockPopup").css("display", "block");
 
             var cid = $(this).prevAll('#cid').val();
