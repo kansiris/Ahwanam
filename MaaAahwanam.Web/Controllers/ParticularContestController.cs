@@ -428,8 +428,11 @@ namespace MaaAahwanam.Web.Controllers
                     else ViewBag.vote = "0";
                 }
                 ViewBag.display = "1";
+                string fbid = id +"a"+tcid;
+
                 ViewBag.id = id;
                 ViewBag.csid = tcid;
+                ViewBag.fbid = fbid;
                 //var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=tcid";
 
                 //ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
@@ -441,5 +444,52 @@ namespace MaaAahwanam.Web.Controllers
 
             return PartialView("ParticularEntryView");
         }
+
+        public ActionResult Fbshareit(string fbid)
+        {
+            string[] sid = fbid.Split('a');
+            string id = sid[0];
+            string csid = sid[1];
+            var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
+            ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
+
+            var AvailableContestEntries1 = contestsService.GetAllEntries(long.Parse(id));
+            var AvailableContestEntries = AvailableContestEntries1.Where(m => m.ContestId == long.Parse(csid)).ToList();
+
+            List<string> contestentries = new List<string>();
+            List<string> votecount = new List<string>();
+            List<string> votedornot = new List<string>();
+            foreach (var item in AvailableContestEntries)
+            {
+                var date = TimeAgo(item.UpdatedDate);
+                contestentries.Add(date);
+                var count = contestsService.GetAllVotes(item.ContestId).Where(m => m.Status == "Active").Count();
+                votecount.Add(count.ToString());
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (userlogin.AlternativeEmailID == null)
+                    {
+                        var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+                        userlogin.AlternativeEmailID = getdata.UserName;
+                    }
+                    var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+                    if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
+                    else votedornot.Add("0");//ViewBag.vote = "0";
+                }
+            }
+            ViewBag.AvailableContestEntries = AvailableContestEntries;
+            ViewBag.count = AvailableContestEntries.Count();
+            ViewBag.time = contestentries;
+            ViewBag.votecount = votecount;
+            ViewBag.csid = csid;
+            ViewBag.cssid = id;
+            var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
+
+            ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
+            return View();
+        }
+
     }
 }
