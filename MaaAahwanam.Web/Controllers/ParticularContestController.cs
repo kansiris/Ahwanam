@@ -201,6 +201,7 @@ namespace MaaAahwanam.Web.Controllers
                         imageFile.Flush();
                     }
                     contest = contestsService.EnterContest(contest);
+                    SendEmail(userlogin.UserName, (int)user.UserId);
                 }
                 if (contest.ContestId != 0)
                     return Content("<script language='javascript' type='text/javascript'>alert('Your Entry Recorded and Sent For Approval');location.href='/Contests/Index'</script>");
@@ -347,7 +348,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (votechecking == 0)
                 {
                     contestVote = contestsService.AddContestVote(contestVote);
-
+                    
                     return Json("Voted", JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -439,8 +440,10 @@ namespace MaaAahwanam.Web.Controllers
             if (id != null && tcid != null)
             {
                 var AvailableContestEntries = contestsService.GetAllEntries(long.Parse(id));
-                ViewBag.AvailableContestEntries = AvailableContestEntries.Where(m => m.ContestId == long.Parse(tcid)).FirstOrDefault();
+                var record = AvailableContestEntries.Where(m => m.ContestId == long.Parse(tcid)).FirstOrDefault();
+                ViewBag.AvailableContestEntries = record;
                 ViewBag.votecount = contestsService.GetAllVotes(long.Parse(tcid)).Where(m => m.Status == "Active").Count();
+                ViewBag.timeago = TimeAgo(record.UpdatedDate);
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -519,9 +522,30 @@ namespace MaaAahwanam.Web.Controllers
                  return RedirectToAction("Index", "ParticularContest", new { id = id ,csid = csid });
         }
 
-        public void SendEmail()
+        public void SendEmail(string txtto,int userid)
         {
-            string txtto = "";
+            //txtto = "rameshsai@xsilica.com";
+            var userdetails = userLoginDetailsService.GetUser(userid);
+            string name = userdetails.FirstName;
+            name = Capitalise(name);
+            string url = "http://www.ahwanam.com/Contests"; //Request.Url.Scheme + "://" + Request.Url.Authority;
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/Contest.html"));
+            string readFile = File.OpenText().ReadToEnd();
+            readFile = readFile.Replace("[ActivationLink]", url);
+            readFile = readFile.Replace("[name]", name);
+            readFile = readFile.Replace("[Message]", "Thanks For Entering the Contest.Your Entry is Sent For Approval.You Will Receive an update after Admin Approves your Entry");
+
+            string txtmessage = readFile;//readFile + body;
+            string subj = "Thanks for your Enrty";
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+        }
+
+        public string Capitalise(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
     }
 }
