@@ -118,7 +118,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 string readFile = File.OpenText().ReadToEnd();
                 var txtone = " Your contest is activated";
                 readFile = readFile.Replace("[Message]", txtone);
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Contests";
 
+                readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", username);
                 string txtmessage = readFile;//readFile + body;
 
@@ -169,6 +171,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/Contest.html"));
             string readFile = File.OpenText().ReadToEnd();
             readFile = readFile.Replace("[Message]", txtone);
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Contests";
+
+            readFile = readFile.Replace("[ActivationLink]", url);
 
             readFile = readFile.Replace("[name]", username);
             string txtmessage = readFile;//readFile + body;
@@ -197,10 +202,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             emailid = userlogin.UserName;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Contests";
 
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/Contest.html"));
             string readFile = File.OpenText().ReadToEnd();
             readFile = readFile.Replace("[Message]", txtone);
+            readFile = readFile.Replace("[ActivationLink]", url);
 
             readFile = readFile.Replace("[name]", username);
             string txtmessage = readFile;//readFile + body;
