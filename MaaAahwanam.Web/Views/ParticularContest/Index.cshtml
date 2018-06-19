@@ -54,10 +54,10 @@
                 <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p>
             </div>
             @*<div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="search" class="form-control" name="" placeholder="Search Here" />
-                </div>
-            </div>*@
+                    <div class="form-group mb-0">
+                        <input type="search" class="form-control" name="" placeholder="Search Here" />
+                    </div>
+                </div>*@
         </div>
         @if (ViewBag.csid != "" && ViewBag.csid != null)
         {
@@ -76,7 +76,7 @@
                     <div class="voteBlock">
                         @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
                         {
-                            <i class="fa fa-heart-o" aria-hidden="true" onclick="fbLogin('ParticularContest')"></i>
+                            <i class="fa fa-heart-o" aria-hidden="true" data-toggle="modal" data-target="#myModal" href="#"></i> 
                         }
                         else
                         {
@@ -371,7 +371,7 @@
         /*-- Vote In Block --*/
         var voteClick = $("#Home .block figure + .voteBlock");
         $(voteClick).click(function () {
-        //    $(this).find('i').removeClass('fa-heart-o').addClass(' fa-heart');
+            //    $(this).find('i').removeClass('fa-heart-o').addClass(' fa-heart');
             var cid = $(this).prevAll('#cid').val();
             $('#tcid').val(cid);
             voting("Add");
@@ -414,8 +414,14 @@
                     datatype: "json",
                     data: { id: id },
                     success: function (response) {
-                        alert(response);
-                        location.reload();
+                        if (response == "Please Login To Vote") {
+                            alert(response);
+                        }
+                        else if (response == "Voted") {
+                            alert(response);
+                            location.reload();
+                        }
+                        
                     },
                     error: function (er) {
                         alert("System Encountered Internal Error!!! Try Again After Some Time");

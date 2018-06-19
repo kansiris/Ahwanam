@@ -325,8 +325,9 @@ namespace MaaAahwanam.Web.Controllers
                 //{
                 //    int count = contestsService.RemoveContestVote(contestVote);
                 //}
+                return Json("Voted", JsonRequestBehavior.AllowGet);
             }
-            return Json("Voted", JsonRequestBehavior.AllowGet);
+            return Json("Please Login To Vote", JsonRequestBehavior.AllowGet);
         }
 
         //public JsonResult RemoveVote(string id)
