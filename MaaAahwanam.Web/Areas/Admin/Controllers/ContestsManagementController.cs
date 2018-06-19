@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Utility;
+using System.IO;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -104,6 +105,32 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 var cont1 = contestdetails.Where(m => m.ContestId == long.Parse(id) ).FirstOrDefault();
                 ViewBag.selectedcontest = cont1;
 
+                var username = cont1.Name;
+                var typeid = cont1.UserLoginID;
+
+                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+
+                var userlogin = userLoginDetailsService.GetUserId(Convert.ToInt32(typeid));
+                var emailid = userlogin.UserName;
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/Contest.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                var txtone = " Your contest is activated";
+                readFile = readFile.Replace("[Message]", txtone);
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Contests";
+
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", username);
+                string txtmessage = readFile;//readFile + body;
+
+                string subj = "Attention required";
+
+                emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
+
+
+
+
                 contestsService.Activationcontest(cont1,command );
                 return Content("<script language='javascript' type='text/javascript'>alert('Vendor is " + command + "');location.href='" + @Url.Action("AllEnteredContestes", "ContestsManagement") + "'</script>");
 
@@ -135,9 +162,29 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
 
             var userlogin = userLoginDetailsService.GetUserId(Convert.ToInt32(typeid));
+            var username = cont1.Name;
+
+
             emailid = userlogin.UserName;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Attention required");
+
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/Contest.html"));
+            string readFile = File.OpenText().ReadToEnd();
+            readFile = readFile.Replace("[Message]", txtone);
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Contests";
+
+            readFile = readFile.Replace("[ActivationLink]", url);
+
+            readFile = readFile.Replace("[name]", username);
+            string txtmessage = readFile;//readFile + body;
+
+            string subj = "Attention required";
+
+            emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
+
+
+
+         
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 
@@ -148,13 +195,28 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             var cont1 = contestdetails.Where(m => m.ContestId == long.Parse(cid)).FirstOrDefault();
             //   var userdetails = userLoginDetailsService.GetUser(id);
             var typeid = cont1.UserLoginID;
-
+            var username = cont1.Name;
             UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
 
             var userlogin = userLoginDetailsService.GetUserId(Convert.ToInt32(typeid));
+
             emailid = userlogin.UserName;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Contestant Is declined");
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Contests";
+
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/Contest.html"));
+            string readFile = File.OpenText().ReadToEnd();
+            readFile = readFile.Replace("[Message]", txtone);
+            readFile = readFile.Replace("[ActivationLink]", url);
+
+            readFile = readFile.Replace("[name]", username);
+            string txtmessage = readFile;//readFile + body;
+
+            string subj = "Contestant Is declined";
+
+            emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
+
+
             ViewBag.display = cid;
             var contestdetails1 = contestsService.GetAllEntries(long.Parse(selectedcontest));
             var cont11 = contestdetails.Where(m => m.ContestId == long.Parse(cid)).FirstOrDefault();
