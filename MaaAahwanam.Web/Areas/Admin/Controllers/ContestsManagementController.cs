@@ -129,7 +129,16 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                 emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
 
+                var email1 = "prabodh.dasari@xsilica.com";
+                var txtmes = "Contestant is activated";
+                readFile = readFile.Replace("[Message]", txtmes);
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", username);
+                string txtmessage1 = readFile;//readFile + body;
 
+                string subj1 = "Contestant is activated";
+
+                emailSendingUtility.Email_maaaahwanam(email1, txtmessage1, subj1);
 
 
                 contestsService.Activationcontest(cont1,command );
