@@ -348,7 +348,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (votechecking == 0)
                 {
                     contestVote = contestsService.AddContestVote(contestVote);
-                    
+
                     return Json("Voted", JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -458,7 +458,7 @@ namespace MaaAahwanam.Web.Controllers
                     else ViewBag.vote = "0";
                 }
                 ViewBag.display = "1";
-                string fbid = id +"a"+tcid;
+                string fbid = id + "a" + tcid;
 
                 ViewBag.id = id;
                 ViewBag.csid = tcid;
@@ -480,50 +480,49 @@ namespace MaaAahwanam.Web.Controllers
             string[] sid = fbid.Split('a');
             string id = sid[0];
             string csid = sid[1];
-            var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
-            ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
+            //var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
+            //ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
 
-            var AvailableContestEntries1 = contestsService.GetAllEntries(long.Parse(id));
-            var AvailableContestEntries = AvailableContestEntries1.Where(m => m.ContestId == long.Parse(csid)).ToList();
+            //var AvailableContestEntries1 = contestsService.GetAllEntries(long.Parse(id));
+            //var AvailableContestEntries = AvailableContestEntries1.Where(m => m.ContestId == long.Parse(csid)).ToList();
 
-            List<string> contestentries = new List<string>();
-            List<string> votecount = new List<string>();
-            List<string> votedornot = new List<string>();
-            foreach (var item in AvailableContestEntries)
-            {
-                var date = TimeAgo(item.UpdatedDate);
-                contestentries.Add(date);
-                var count = contestsService.GetAllVotes(item.ContestId).Where(m => m.Status == "Active").Count();
-                votecount.Add(count.ToString());
-                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                {
-                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                    var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
-                    if (userlogin.AlternativeEmailID == null)
-                    {
-                        var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
-                        userlogin.AlternativeEmailID = getdata.UserName;
-                    }
-                    var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
-                    if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
-                    else votedornot.Add("0");//ViewBag.vote = "0";
-                }
-            }
-            ViewBag.AvailableContestEntries = AvailableContestEntries;
-            ViewBag.count = AvailableContestEntries.Count();
-            ViewBag.time = contestentries;
-            ViewBag.votecount = votecount;
-            ViewBag.csid = csid;
-            ViewBag.cssid = id;
-            var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
+            //List<string> contestentries = new List<string>();
+            //List<string> votecount = new List<string>();
+            //List<string> votedornot = new List<string>();
+            //foreach (var item in AvailableContestEntries)
+            //{
+            //    var date = TimeAgo(item.UpdatedDate);
+            //    contestentries.Add(date);
+            //    var count = contestsService.GetAllVotes(item.ContestId).Where(m => m.Status == "Active").Count();
+            //    votecount.Add(count.ToString());
+            //    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            //    {
+            //        var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            //        var userlogin = userLoginDetailsService.GetUser((int)user.UserId);
+            //        if (userlogin.AlternativeEmailID == null)
+            //        {
+            //            var getdata = userLoginDetailsService.GetUserId((int)user.UserId);
+            //            userlogin.AlternativeEmailID = getdata.UserName;
+            //        }
+            //        var getVote = contestsService.GetAllVotes(long.Parse(id)).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
+            //        if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
+            //        else votedornot.Add("0");//ViewBag.vote = "0";
+            //    }
+            //}
+            //ViewBag.AvailableContestEntries = AvailableContestEntries;
+            //ViewBag.count = AvailableContestEntries.Count();
+            //ViewBag.time = contestentries;
+            //ViewBag.votecount = votecount;
+            //ViewBag.csid = csid;
+            //ViewBag.cssid = id;
+            //var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
 
-            ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
+            //ViewBag.fburl = "http://tinyurl.com/api-create.php?url=" + fburl;
 
-           return RedirectToAction("Index", "ParticularContest", new { id = id ,csid = csid });
-           // return View();
+            return RedirectToAction("Index", "ParticularContest", new { id = id, csid = csid });
         }
 
-        public void SendEmail(string txtto,int userid)
+        public void SendEmail(string txtto, int userid)
         {
             //txtto = "rameshsai@xsilica.com";
             var userdetails = userLoginDetailsService.GetUser(userid);
@@ -536,10 +535,19 @@ namespace MaaAahwanam.Web.Controllers
             readFile = readFile.Replace("[name]", name);
             readFile = readFile.Replace("[Message]", "Thanks For Entering the Contest.Your Entry is Sent For Approval.You Will Receive an update after Admin Approves your Entry");
 
+            // Email Copy to User
             string txtmessage = readFile;//readFile + body;
             string subj = "Thanks for your Entry";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            string msg = "Manage " + name + " Approval in Admin Login";
+            string emails = "prabodh.dasari@xsilica.com,ramadevi.s@xsilica.com,amit.saxena@ahwanam.com,rameshsai@xsilica.com"; // Add copy Mails Here
+            int emailcount = emails.Split(',').Count();
+            for (int i = 0; i < emailcount; i++)
+            {
+                emailSendingUtility.Email_maaaahwanam(emails.Split(',')[i], msg, "User Need Approval to Enter Contest");
+            }
+            
         }
 
         public string Capitalise(string str)

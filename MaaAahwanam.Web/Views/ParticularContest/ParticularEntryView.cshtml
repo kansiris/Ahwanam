@@ -1,13 +1,15 @@
 ﻿@if (ViewBag.display != "0")
 {
-    <meta property="og:image" content="http://www.ahwanam.com/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage" />
-    <meta property="og:url" content="http://www.ahwanam.com/ParticularContest?id=@ViewBag.id&&csid=@ViewBag.csid" />
-
     <div class="row block">
+        <input type="hidden" id="contestimage" value="http://www.ahwanam.com/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage" />
+        <input type="hidden" id="contestdesc" value="@ViewBag.AvailableContestEntries.Description" />
+        <input type="hidden" id="contesturl" value="http://www.ahwanam.com/ParticularContest/Fbshareit?fbid=@ViewBag.fbid" />
         <div class="col-12 col-sm-6 col-md-7 pl-0">
+            
             <figure class="mb-0" style="background:url('/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage');">
-                <img src="~/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage" class="img-fluid" alt="Happy Fathers Day" style="display:none"/>
+                @*<img src="~/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage" class="img-fluid" alt="Happy Fathers Day" style="display:none"/>*@
             </figure>
+            <img src="~/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage" class="img-fluid" alt="Happy Fathers Day" style="display:none" />
         </div>
         <div class="col-12 col-sm-6 col-md-5 totalContent">
             <div class="contentTop">
@@ -50,10 +52,13 @@
                         <li class="faceBook">
                             @*<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://tinyurl.com/api-create.php?url=http://www.ahwanam.com/ParticularContest?id=@ViewBag.id&amp;csid=@ViewBag.csid" class="fb-xfbml-parse-ignore"><i class="fa fa-facebook" aria-hidden="true"></i></a>*@
 
-
-                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.ahwanam.com/ParticularContest/Fbshareit?fbid=@ViewBag.fbid" class="fb-xfbml-parse-ignore"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            @* onclick="shareOverrideOGMeta('http://www.ahwanam.com/ParticularContest/Fbshareit?fbid=@ViewBag.fbid',':: Ahwanam Contests ::','@ViewBag.AvailableContestEntries.Description','http://www.ahwanam.com/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage')"*@
+                            @*<a href="#" onclick="shareOverrideOGMeta('http://www.ahwanam.com/ParticularContest/Fbshareit?fbid=@ViewBag.fbid',':: Ahwanam Contests ::','@ViewBag.AvailableContestEntries.Description','http://www.ahwanam.com/ContestPics/@ViewBag.AvailableContestEntries.UploadedImage')"  class="fb-xfbml-parse-ignore"><i class="fa fa-facebook" aria-hidden="true"></i></a>*@
                             @*<div class="fb-share-button" data-href="http://www.ahwanam.com/ParticularContest?id=@ViewBag.id&&csid=@ViewBag.csid" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>*@
+                            <span class="fbBg btnSecondary text-white text-center" id="fbauth"><i class="fa fa-facebook mr-2" aria-hidden="true"></i> Facebook</span>
+                            
                         </li>
+                        
                     </ul>
                 </div>
                 <p class="w-100 mb-0 text-center fontWeight700" style="font-size: 14px;">SHARE WITH YOUR FRIENDS</p>
