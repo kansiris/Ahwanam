@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Utility;
 using System.IO;
+using System.Net.Mail;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -129,7 +130,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                 emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
 
+               
+                string txtmessage1 = username +" "+ "is activated for father's day contest";
 
+                string subj1 = "Contestant is activated";
+
+                emailSendingUtility.Email_maaaahwanam("prabodh.dasari@xsilica.com", txtmessage1, subj1);
 
 
                 contestsService.Activationcontest(cont1,command );
