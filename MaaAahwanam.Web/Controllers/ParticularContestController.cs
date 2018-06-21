@@ -27,9 +27,9 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.id = id;
             if (id != null && csid == null)
             {
-                var contests = contestsService.GetAllContests().Where(m => m.Status == "Active");
+                var contests = contestsService.GetAllContests().Where(m => m.Status == "Active"); // Getting Live Contests
                 ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
-                var allrecords = contestsService.GetAllEntries(long.Parse(id));
+                var allrecords = contestsService.GetAllEntries(long.Parse(id)).OrderByDescending(m=>m.ContestId).ToList();
                 var AvailableContestEntries = allrecords.Where(m => m.Status == "Active").ToList();
                 List<string> contestentries = new List<string>();
                 List<string> votecount = new List<string>();
@@ -86,7 +86,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
                     ViewBag.myvotedornot = myvotedornot;
-                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
+                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId && m.Status != "InActive").Count();
                     //ViewBag.uploadimage = uploadimage;
 
                 }

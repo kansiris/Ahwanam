@@ -13,6 +13,20 @@
     <meta name="url" property="og:url" content="" />
     <meta name="title" property="og:title" content="" />
     <meta name="description" property="og:description" content="" />
+
+    <style>
+        .overlay {
+            background: no-repeat scroll center center #FFF;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999999;
+            background-color: rgba(0,0,0,0.8);
+            /* END EXTERNAL S */
+        }
+    </style>
 }
 
 
@@ -28,12 +42,17 @@
             </div>
         </nav>
         <div class="w-100 bannerContent">
-            <h3 class="text-center primaryFont primaryTextColor bannerTextHead">FATHER'S LOVE</h3>
+            <h3 class="text-center primaryFont primaryTextColor bannerTextHead">@ViewBag.contestname</h3>
             <p class="text-white text-center fontWeight700 bannerText">Showcase your love by posting most memorable pic with your father.</p>
         </div>
     </div>
 }
-
+<div class="overlay" style="display: none;">
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+        <img src="~/CSSWeb/images/Loader2.gif" /><br>
+        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Voting in progress...</p>
+    </div>
+</div>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light secondNav">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
@@ -46,7 +65,7 @@
                 <li class="nav-item"><a class="nav-link">Sponsors</a></li>
                 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == true)
                 {
-                <li class="nav-item"><a class="nav-link">My Entries</a></li>
+                    <li class="nav-item"><a class="nav-link">My Entries</a></li>
                 }
                 <li class="nav-item"><a class="nav-link">Upload Image</a></li>
 
@@ -59,7 +78,15 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col-md-6 totalUploadCount primaryFont">
-                <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p>
+                @if (ViewBag.count != 0)
+                {
+                    <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p>
+                }
+                else
+                {
+                    <p class="mb-sm-4 mb-md-0">Be first To Upload Image</p>
+                }
+
             </div>
             @*<div class="col-md-6">
                     <div class="form-group mb-0">
@@ -69,23 +96,23 @@
         </div>
         @if (ViewBag.csid != "" && ViewBag.csid != null)
         {
-        <p> <a href="http://www.ahwanam.com/ParticularContest?id=@ViewBag.cssid" class="btn btn-primary">View All Entries</a></p>
+            <p> <a href="http://www.ahwanam.com/ParticularContest?id=@ViewBag.cssid" class="btn btn-primary">View All Entries</a></p>
         }
         <div class="row my-3 components" id="Home">
             <input type="hidden" id="tcid" />
 
             @for (int i = 0; i < ViewBag.count; i++)
             {
-            <div class="block mb-1">
-                <input type="hidden" id="cid" value="@ViewBag.AvailableContestEntries[i].ContestId" />
-                <figure style="background:url('/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage')">
-                    <img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" style="display:none"/>
-                </figure>
+                <div class="block mb-1">
+                    <input type="hidden" id="cid" value="@ViewBag.AvailableContestEntries[i].ContestId" />
+                    <figure style="background:url('/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage')">
+                        <img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" style="display:none" />
+                    </figure>
 
-                <div class="voteBlock">
-                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
+                    <div class="voteBlock">
+                        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
                         {
-                        <i class="fa fa-heart-o" aria-hidden="true" data-toggle="modal" data-target="#myModal" href="#"></i>
+                            <i class="fa fa-heart-o" aria-hidden="true" data-toggle="modal" data-target="#myModal" href="#"></i>
                         }
                         else
                         {
@@ -93,26 +120,26 @@
                             {<i class="fa fa-heart-o" aria-hidden="true"></i> }
                             else
                             {
-                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                <i class="fa fa-heart" aria-hidden="true"></i>
                             }
                         }
 
 
 
-                </div>
-                <div class="hoverBlock">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
-                </div>
-                <p class="contestants secondaryTextColor fontWeight700 mb-0">@ViewBag.AvailableContestEntries[i].Name</p>
-                <p class="mb-0 mt-2">@ViewBag.time[i]</p>
-                <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><span>@ViewBag.votecount[i]</span> people loved</div>
-                    <div class="col-12 col-sm-6 col-md-6">
-                        <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right viewPopup">View</button>
+                    </div>
+                    <div class="hoverBlock">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </div>
+                    <p class="contestants secondaryTextColor fontWeight700 mb-0">@ViewBag.AvailableContestEntries[i].Name</p>
+                    <p class="mb-0 mt-2">@ViewBag.time[i]</p>
+                    <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 themeRedTextColor fontWeight700 peopleLoved"><span>@ViewBag.votecount[i]</span> people loved</div>
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right viewPopup">View</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
     </div>
@@ -218,41 +245,51 @@
                     <p class="mb-0">Every great dream begins with a dreamer. Dream Valley found its origins in the dreamy eyes of —— who hoped for a place where people can come close to nature and experience a connection between the vivid colourfulness of natural flora and their soul. Whether it is the spacious rooms that open to green lawns or the airy balconies that give you a breath taking view of the landscape, Dream Valley is a re-imagination of comfort amidst nature.</p>
                 </div>
             </div>
+            <div class="row mx-0">
+                <div class="col-12 col-sm-5 col-md-5">
+                    <figure class="text-center">
+                        <img src="http://ankapurchicken.com/logo/logo.png" alt="Ankapur Chicken">
+                    </figure>
+                </div>
+                <div class="col-12 col-sm-7 col-md-7">
+                    <p class="mb-0">Ankapur Chicken is a home-style carryout modern kitchen. Our service is all about authentic food, cooked with all natural ingredients and home-made spices, served fresh and hot. We specialize in Village Style Cooking, particularly ANKAPUR Country Chicken (Naatu Kodi) also known as "Ankapur Chicken".</p>
+                </div>
+            </div>
         </div>
     </div>
 
     @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == true)
     {
-    <div class="container" style="background: transparent;">
-        <div class="row my-3 components MyEntries" id="My Entries">
+        <div class="container" style="background: transparent;">
+            <div class="row my-3 components MyEntries" id="My Entries">
 
-            @for (int i = 0; i < ViewBag.mycount; i++)
+                @for (int i = 0; i < ViewBag.mycount; i++)
                 {
-                @*<div class="col-12 col-md-12">*@
-                <div class="block mb-3">
-                    <input type="hidden" id="cid" value="@ViewBag.userenties[i].ContestId" />
-                    <figure style="background:url('ContestPics/@ViewBag.userenties[i].UploadedImage')">
-                        @*<img src="~/ContestPics/@ViewBag.userenties[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />*@
-                    </figure>
-                    @*<div class="voteBlock">
-                            @if (ViewBag.myvotedornot[i] == "1")
-                            {<i class="fa fa-heart-o" aria-hidden="true"></i> }
-                            else
-                            {
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                            }
-                        </div>*@
-                    @if (ViewBag.userenties[i].Status == "InActive")
+                    @*<div class="col-12 col-md-12">*@
+                    <div class="block mb-3">
+                        <input type="hidden" id="cid" value="@ViewBag.userenties[i].ContestId" />
+                        <figure style="background:url('ContestPics/@ViewBag.userenties[i].UploadedImage')">
+                            @*<img src="~/ContestPics/@ViewBag.userenties[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />*@
+                        </figure>
+                        @*<div class="voteBlock">
+                                @if (ViewBag.myvotedornot[i] == "1")
+                                {<i class="fa fa-heart-o" aria-hidden="true"></i> }
+                                else
+                                {
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                }
+                            </div>*@
+                        @if (ViewBag.userenties[i].Status == "InActive")
                         {
-                        <div class="w-100 approval">Declined</div>
+                            <div class="w-100 approval">Declined</div>
                         }
                         else if (ViewBag.userenties[i].Status == "Pending")
                         {
-                        <div class="w-100 approval">Pending Approval</div>
+                            <div class="w-100 approval">Pending Approval</div>
                         }
                         else if (ViewBag.userenties[i].Status == "Active")
                         {
-                        <div class="w-100 approval">Entry Accepted</div>
+                            <div class="w-100 approval">Entry Accepted</div>
                         }
 
                         @*<div class="hoverBlock"> <i class="fa fa-eye" aria-hidden="true"></i> </div>*@
@@ -270,53 +307,53 @@
                     @*</div>*@
                 }
 
+            </div>
         </div>
-    </div>
     }
     <div class="container">
         <div class="row my-3 components text-center" id="Upload Image">
             <div class="col-12 col-sm-12 col-md-12">
                 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
             {
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Signin / Signup </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Signin / Signup </button>
                 }
                 else
                 {
                     if (ViewBag.uploadimage == 0)
                     {
-                <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
-                    <input id="sample_input" type="hidden" name="sample_input">
-                    <div class="w-100 mt-3">
-                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                            <label for="comment">Your Name:</label>
-                            <input type="text" id="Item2_Name" name="Item2.Name" class="form-control" required />
-                        </div>
-                    </div>
-                    <div class="w-100 mt-3">
-                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                            <label for="comment">Description:</label>
-                            <textarea class="form-control" rows="5" id="Item2_Description" name="Item2.Description" required></textarea>
-                        </div>
-                    </div>
-                    <div class="w-100 mt-3">
-                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                            <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">By Clicking this you are Accepting all Terms & Conditions</label>
-                        </div>
-                    </div>
-                    <div class="w-100">
-                        <div class="col-12 col-sm-8 col-md-6 mx-auto">
-                            <button type="submit" id="btnsubmit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Add">Enter Contest</button>
-                        </div>
-                    </div>
-                </form>
-                <text>Any Queries, mail us <a href="mailto:info@ahwanam.com">info@ahwanam.com</a> </text>
+                        <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
+                            <input id="sample_input" type="hidden" name="sample_input">
+                            <div class="w-100 mt-3">
+                                <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                                    <label for="comment">Your Name:</label>
+                                    <input type="text" id="Item2_Name" name="Item2.Name" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="w-100 mt-3">
+                                <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                                    <label for="comment">Description:</label>
+                                    <textarea class="form-control" rows="5" id="Item2_Description" name="Item2.Description" required></textarea>
+                                </div>
+                            </div>
+                            <div class="w-100 mt-3">
+                                <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                                    <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">By Clicking this you are Accepting all Terms & Conditions</label>
+                                </div>
+                            </div>
+                            <div class="w-100">
+                                <div class="col-12 col-sm-8 col-md-6 mx-auto">
+                                    <button type="submit" id="btnsubmit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Add">Enter Contest</button>
+                                </div>
+                            </div>
+                        </form>
+                        <text>Any Queries, mail us <a href="mailto:info@ahwanam.com">info@ahwanam.com</a> </text>
                     }
                     else
                     {
-                @*<form role="form">*@
-                @*<button type="button" class="btn btn-primary">Thanks for your participation </button>*@
-                <p>Thanks for your participation.Manage your Entry in My Entries Tab</p>
-                @*</form>*@
+                        @*<form role="form">*@
+                        @*<button type="button" class="btn btn-primary">Thanks for your participation </button>*@
+                        <p>Thanks for your participation.Manage your Entry in My Entries Tab</p>
+                        @*</form>*@
                     }
                 }
 
@@ -375,19 +412,19 @@
 
         //});
 
-        
 
-            $('#Item2_Description').keyup(function () {
-                var yourInput = $(this).val();
-                re = /[`~!@@#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gi;
-                var isSplChar = re.test(yourInput);
-                if (isSplChar) {
-                    var no_spl_char = yourInput.replace(/[`~!@@#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gi, '');
-                    $(this).val(no_spl_char);
-                }
-            });
 
-        
+        //$('#Item2_Description').keyup(function () {
+        //    var yourInput = $(this).val();
+        //    re = /[`~!@@#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gi;
+        //    var isSplChar = re.test(yourInput);
+        //    if (isSplChar) {
+        //        var no_spl_char = yourInput.replace(/[`~!@@#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gi, '');
+        //        $(this).val(no_spl_char);
+        //    }
+        //});
+
+
 
         $('#btnsubmit').on('click', function () {
             var image = $('#sample_input').val().trim();
@@ -415,24 +452,24 @@
             shareOverrideOGMeta(curl, "Ahwanam Contests", cdesc, cimage);
         });
 
-        function shareOverrideOGMeta(overrideLink, overrideTitle, overrideDescription, overrideImage) {
-            //alert(overrideLink);
-            FB.ui({
-                method: 'share_open_graph',
-                action_type: 'og.shares',
-                action_properties: JSON.stringify({
-                    object: {
-                        'og:url': overrideLink,
-                        'og:title': overrideTitle,
-                        'og:description': overrideDescription,
-                        'og:image': overrideImage
-                    }
-                })
-            },
-            function (response) {
-                // Action after response
-            });
-        }
+        //function shareOverrideOGMeta(overrideLink, overrideTitle, overrideDescription, overrideImage) {
+        //    //alert(overrideLink);
+        //    FB.ui({
+        //        method: 'share_open_graph',
+        //        action_type: 'og.shares',
+        //        action_properties: JSON.stringify({
+        //            object: {
+        //                'og:url': overrideLink,
+        //                'og:title': overrideTitle,
+        //                'og:description': overrideDescription,
+        //                'og:image': overrideImage
+        //            }
+        //        })
+        //    },
+        //    function (response) {
+        //        // Action after response
+        //    });
+        //}
     </script>
 
     <script type="text/javascript">
@@ -480,7 +517,7 @@
         //    //voting(vote.text());
         //});
 
-        
+
         //$(vote).change(function () {
         $(document).on('change', ".totalContent .contentBottom label", function () {
             var checked = $(this).find("input[type='checkbox']").is(':checked');
@@ -497,10 +534,11 @@
         /*-- Vote In Block --*/
         var voteClick = $("#Home .block figure + .voteBlock, .MyEntries .block figure + .voteBlock");
         $(voteClick).click(function () {
-            //    $(this).find('i').removeClass('fa-heart-o').addClass(' fa-heart');
             var cid = $(this).prevAll('#cid').val();
             $('#tcid').val(cid);
+            $(".overlay").show();
             voting("Add");
+
         });
         /*-- Vote In Block --*/
 
@@ -541,13 +579,22 @@
                     data: { id: id },
                     success: function (response) {
                         if (response == "Please Login To Vote") {
+                            $(".overlay").hide();
                             alertmsg(response);
                         }
                         else if (response == "Voted") {
-                            alertmsg(response);
-                            location.reload();
+                            $(".overlay").hide();
+                            //alertmsg(response);
+                            //location.reload();
+                            alertify.success('Great');
+                            alertify.alert().setting({
+                                'label': 'OK',
+                                'message': response,
+                                'onok': function () { location.reload(); }
+                            }).show();
                         }
                         else if (response == "Already Voted") {
+                            $(".overlay").hide();
                             alertmsg(response);
                         }
 
