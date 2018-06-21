@@ -81,6 +81,22 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.Contest.Where(m => m.ContentMasterID == id).ToList();
         }
 
+        public int UpdateContestImage(long id,string image)
+        {
+            var record = from ord in _dbContext.Contest
+                         where ord.ContestId == id
+                         select ord;
+            foreach (Contest ord in record)
+            {
+                ord.UploadedImage = image;
+                // Insert any additional changes to column values.
+            }
+            int count =_dbContext.SaveChanges();
+            //record.UploadedImage = contest.UploadedImage;
+            //_dbContext.Entry(contest).CurrentValues.SetValues(record);
+            return count;
+        }
+
         //Vote Count
         public List<ContestVote> GetAllVotes(long id)
         {

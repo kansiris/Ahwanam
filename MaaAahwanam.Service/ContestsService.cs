@@ -50,6 +50,11 @@ namespace MaaAahwanam.Service
             return contestsRepoitory.GetAllEntries(id);
         }
 
+        public int UpdateContestImage(long id,string image)
+        {
+            return contestsRepoitory.UpdateContestImage(id,image);
+        }
+
         //Vote Count
         public List<ContestVote> GetAllVotes(long id)
         {

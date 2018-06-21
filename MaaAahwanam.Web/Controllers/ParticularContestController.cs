@@ -29,7 +29,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var contests = contestsService.GetAllContests().Where(m => m.Status == "Active"); // Getting Live Contests
                 ViewBag.contestname = contests.Where(m => m.ContentMasterID == long.Parse(id)).FirstOrDefault().ContestName;
-                var allrecords = contestsService.GetAllEntries(long.Parse(id)).OrderByDescending(m=>m.ContestId).ToList();
+                var allrecords = contestsService.GetAllEntries(long.Parse(id)).OrderByDescending(m => m.ContestId).ToList();
                 var AvailableContestEntries = allrecords.Where(m => m.Status == "Active").ToList();
                 List<string> contestentries = new List<string>();
                 List<string> votecount = new List<string>();
@@ -187,24 +187,26 @@ namespace MaaAahwanam.Web.Controllers
                     contest.IPAddress = HttpContext.Request.UserHostAddress;
                     contest.SharedCount = 0;
                     contest.UserLoginID = user.UserId;
-                    string strm = sample_input.Replace("data:image/png;base64,", "");
-
-                    //this is a simple white background image
-                    var myfilename = userlogin.UserName + "_" + id + "_.jpeg";
-                    contest.UploadedImage = myfilename;
-                    //Generate unique filename
-                    string filepath = System.Web.HttpContext.Current.Server.MapPath(@"/ContestPics/" + myfilename);// "~/ProfilePictures/" + myfilename ;
-                    var bytess = Convert.FromBase64String(strm);
-                    using (var imageFile = new FileStream(filepath, FileMode.Create))
-                    {
-                        imageFile.Write(bytess, 0, bytess.Length);
-                        imageFile.Flush();
-                    }
                     contest = contestsService.EnterContest(contest);
-                    SendEmail(userlogin.UserName, (int)user.UserId);
+                    if (contest.ContestId != 0)
+                    {
+                        string strm = sample_input.Replace("data:image/png;base64,", "");
+                        //this is a simple white background image
+                        var myfilename = userlogin.UserName + "_" + id + "_" + contest.ContestId + "_.jpeg";
+                        contest.UploadedImage = myfilename;
+                        //Generate unique filename
+                        string filepath = System.Web.HttpContext.Current.Server.MapPath(@"/ContestPics/" + myfilename);// "~/ProfilePictures/" + myfilename ;
+                        var bytess = Convert.FromBase64String(strm);
+                        using (var imageFile = new FileStream(filepath, FileMode.Create))
+                        {
+                            imageFile.Write(bytess, 0, bytess.Length);
+                            imageFile.Flush();
+                        }
+                        int count = contestsService.UpdateContestImage(contest.ContestId,contest.UploadedImage);
+                        SendEmail(userlogin.UserName, (int)user.UserId);
+                        return Content("<script language='javascript' type='text/javascript'>alert('Your Entry Recorded and Sent For Approval');location.href='/Contests/Index'</script>");
+                    }
                 }
-                if (contest.ContestId != 0)
-                    return Content("<script language='javascript' type='text/javascript'>alert('Your Entry Recorded and Sent For Approval');location.href='/Contests/Index'</script>");
                 else
                     return Content("<script language='javascript' type='text/javascript'>alert('Failed To Add New Entry!!! Try Again Later');location.href='/Contests/Index'</script>");
             }
@@ -547,7 +549,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 emailSendingUtility.Email_maaaahwanam(emails.Split(',')[i], msg, "User Need Approval to Enter Contest");
             }
-            
+
         }
 
         public string Capitalise(string str)

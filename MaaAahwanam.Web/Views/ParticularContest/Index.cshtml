@@ -315,45 +315,45 @@
             <div class="col-12 col-sm-12 col-md-12">
                 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
             {
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Signin / Signup </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Signin / Signup </button>
                 }
                 else
                 {
                     if (ViewBag.uploadimage == 0)
                     {
-                        <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
-                            <input id="sample_input" type="hidden" name="sample_input">
-                            <div class="w-100 mt-3">
-                                <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                                    <label for="comment">Your Name:</label>
-                                    <input type="text" id="Item2_Name" name="Item2.Name" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="w-100 mt-3">
-                                <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                                    <label for="comment">Description:</label>
-                                    <textarea class="form-control" rows="5" id="Item2_Description" name="Item2.Description" required></textarea>
-                                </div>
-                            </div>
-                            <div class="w-100 mt-3">
-                                <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                                    <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">By Clicking this you are Accepting all Terms & Conditions</label>
-                                </div>
-                            </div>
-                            <div class="w-100">
-                                <div class="col-12 col-sm-8 col-md-6 mx-auto">
-                                    <button type="submit" id="btnsubmit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Add">Enter Contest</button>
-                                </div>
-                            </div>
-                        </form>
-                        <text>Any Queries, mail us <a href="mailto:info@ahwanam.com">info@ahwanam.com</a> </text>
+                <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
+                    <input id="sample_input" type="hidden" name="sample_input">
+                    <div class="w-100 mt-3">
+                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                            <label for="comment">Your Name:</label>
+                            <input type="text" id="Item2_Name" name="Item2.Name" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="w-100 mt-3">
+                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                            <label for="comment">Description:</label>
+                            <textarea class="form-control" rows="5" id="Item2_Description" name="Item2.Description" required></textarea>
+                        </div>
+                    </div>
+                    <div class="w-100 mt-3">
+                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                            <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">By Clicking this you are Accepting all Terms & Conditions</label>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div class="col-12 col-sm-8 col-md-6 mx-auto">
+                            <button type="submit" id="btnsubmit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Add">Enter Contest</button>
+                        </div>
+                    </div>
+                </form>
+                <text>Any Queries, mail us <a href="mailto:info@ahwanam.com">info@ahwanam.com</a> </text>
                     }
                     else
                     {
-                        @*<form role="form">*@
-                        @*<button type="button" class="btn btn-primary">Thanks for your participation </button>*@
-                        <p>Thanks for your participation.Manage your Entry in My Entries Tab</p>
-                        @*</form>*@
+                @*<form role="form">*@
+                @*<button type="button" class="btn btn-primary">Thanks for your participation </button>*@
+                <p>Thanks for your participation.Manage your Entry in My Entries Tab</p>
+                @*</form>*@
                     }
                 }
 
@@ -477,12 +477,18 @@
         /*-- popUp Display Block / None --*/
 
         $("#Home .hoverBlock, .MyEntries .hoverBlock").click(function () {
-            $(".blockPopup").css("display", "block");
-            var cid = $(this).prevAll('#cid').val();
-            var id = '@ViewBag.id';
-            var url = '/ParticularContest/ParticularEntryView?id=@ViewBag.id&&tcid=' + cid;
-            $('#popup').empty().load(url);
-            $('#tcid').val(cid);
+            var mobPopup = window.matchMedia("(max-width: 576px)");
+            if (mobPopup.matches) {
+                $(".blockPopup").css("display", "none");
+                $("#Home .block figure ~ .hoverBlock").css("display", "none");
+            } else {
+                $(".blockPopup").css("display", "block");
+                var cid = $(this).prevAll('#cid').val();
+                var id = '@ViewBag.id';
+                var url = '/ParticularContest/ParticularEntryView?id=@ViewBag.id&&tcid=' + cid;
+                $('#popup').empty().load(url);
+                $('#tcid').val(cid);
+            }
         });
 
         $("#Home .viewPopup").click(function () {
@@ -586,7 +592,7 @@
                             $(".overlay").hide();
                             //alertmsg(response);
                             //location.reload();
-                            alertify.success('Great');
+                            alertify.success('Thanks For Voting!!!');
                             alertify.alert().setting({
                                 'label': 'OK',
                                 'message': response,
