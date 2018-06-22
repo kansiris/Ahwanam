@@ -138,58 +138,59 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult getprice(string cartid)
         {
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-            var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid)).FirstOrDefault();
-            var nofguests = cartdetails.Quantity;
-            var pricenew = "";
-            var ISdeal = cartdetails.Isdeal;
-            var sertype = cartdetails.ServiceType;
-            var timeslot = cartdetails.attribute;
+           
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid)).FirstOrDefault();
+                var nofguests = cartdetails.Quantity;
+                var pricenew = "";
+                var ISdeal = cartdetails.Isdeal;
+                var sertype = cartdetails.ServiceType;
+                var timeslot = cartdetails.attribute;
 
-            var timeslot1 = timeslot.Split(',');
-            var times = timeslot1.Length;
+                var timeslot1 = timeslot.Split(',');
+                var times = timeslot1.Length;
 
-            if (ISdeal == false)
-            {
-                var dealid1 = cartdetails.DealId;
-                if (dealid1 == 0)
+                if (ISdeal == false)
                 {
-                    // var pricenew = cartdetails.TotalPrice;
-                    var servicetype = cartdetails.ServiceType;
-                    var vendorid = cartdetails.Id;
-                    var vendorsubid = cartdetails.subid;
-                    VendorProductsService vendorProductsService = new VendorProductsService();
-                    var vendorcost = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
-                    //   int query = vendorMasterService.checkemail(emailid);
-                    //if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
-                    //{ pricenew = Convert.ToString( Convert.ToDecimal(vendorcost) * nofguests);  }
-                    //else
-                    //{
+                    var dealid1 = cartdetails.DealId;
+                    if (dealid1 == 0)
+                    {
+                        // var pricenew = cartdetails.TotalPrice;
+                        var servicetype = cartdetails.ServiceType;
+                        var vendorid = cartdetails.Id;
+                        var vendorsubid = cartdetails.subid;
+                        VendorProductsService vendorProductsService = new VendorProductsService();
+                        var vendorcost = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
+                        //   int query = vendorMasterService.checkemail(emailid);
+                        //if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
+                        //{ pricenew = Convert.ToString( Convert.ToDecimal(vendorcost) * nofguests);  }
+                        //else
+                        //{
                         pricenew = vendorcost;
-                  //  }
+                        //  }
 
-                }
-            else
-            {
-                    var deal1 = cartdetails.DealId;
-
-                    var type = cartdetails.ServiceType;
-                var vendorid = cartdetails.Id;
-                var vendorsubid = cartdetails.subid;
-                var packPrice = vendorProductsService.getvendorpkgs(Convert.ToString(vendorid)).Where(p => p.VendorSubId == (vendorsubid) && p.PackageID == deal1).FirstOrDefault().PackagePrice;
-                    if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
-                    { pricenew = Convert.ToString(Convert.ToDecimal(packPrice) * nofguests); }
+                    }
                     else
                     {
-                        pricenew = packPrice;
+                        var deal1 = cartdetails.DealId;
+
+                        var type = cartdetails.ServiceType;
+                        var vendorid = cartdetails.Id;
+                        var vendorsubid = cartdetails.subid;
+                        var packPrice = vendorProductsService.getvendorpkgs(Convert.ToString(vendorid)).Where(p => p.VendorSubId == (vendorsubid) && p.PackageID == deal1).FirstOrDefault().PackagePrice;
+                        if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
+                        { pricenew = Convert.ToString(Convert.ToDecimal(packPrice) * nofguests); }
+                        else
+                        {
+                            pricenew = packPrice;
+                        }
                     }
                 }
-        }
-            else if (ISdeal == true)
-            {
-                var dealid = cartdetails.DealId;
-               
+                else if (ISdeal == true)
+                {
+                    var dealid = cartdetails.DealId;
+
                     DateTime ddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                     var data = NdealService.GetdealDetails((dealid));
                     var pric1 = (data.DealPrice);
@@ -201,18 +202,19 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         pricenew = Convert.ToString(pric1);
                     }
-               
-               
-            }
-            if (pricenew == "" || pricenew == null)
-            {
-                pricenew = "0";
-            }
+
+
+                }
+                if (pricenew == "" || pricenew == null)
+                {
+                    pricenew = "0";
+                }
                 if (pricenew != "0" || pricenew == "0")
-            {
-                return Json(pricenew, JsonRequestBehavior.AllowGet);
-            }
-            return Json("exists", JsonRequestBehavior.AllowGet);
+                {
+                    return Json(pricenew, JsonRequestBehavior.AllowGet);
+                }
+                return Json("exists", JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult booknow(string cartnos)
@@ -403,54 +405,58 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult multipledateinsert( string cartId,string price, string date, string total)
         {
-            if (date == "")
-            { return Json("datenotsaved"); }
-            else
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "User")
+                if (date == "")
+                { return Json("datenotsaved"); }
+                else
                 {
-                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-                    var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartId)).FirstOrDefault();
-                    var totalprice = cartdetails.TotalPrice;
-                    var totalprice1 = totalprice + decimal.Parse(price);
-                    string updateddate = DateTime.UtcNow.ToShortDateString();
-                    CartItem cartItem = new CartItem();
-                    var price2 = date + ',' + price;
-                    if (cartdetails.c1date == null)
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    if (user.UserType == "User")
                     {
-                        cartItem.ExtraDate1 = price2;
-                        cartItem.ExtraDate2 = cartdetails.c2date;
-                        cartItem.ExtraDate3 = cartdetails.c3date;
-                    }
-                    else if (cartdetails.c2date == null)
-                    {
-                        cartItem.ExtraDate1 = cartdetails.c1date;
-                        cartItem.ExtraDate3 = cartdetails.c3date;
+                        var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                        ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                        var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                        var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartId)).FirstOrDefault();
+                        var totalprice = cartdetails.TotalPrice;
+                        var totalprice1 = totalprice + decimal.Parse(price);
+                        string updateddate = DateTime.UtcNow.ToShortDateString();
+                        CartItem cartItem = new CartItem();
+                        var price2 = date + ',' + price;
+                        if (cartdetails.c1date == null)
+                        {
+                            cartItem.ExtraDate1 = price2;
+                            cartItem.ExtraDate2 = cartdetails.c2date;
+                            cartItem.ExtraDate3 = cartdetails.c3date;
+                        }
+                        else if (cartdetails.c2date == null)
+                        {
+                            cartItem.ExtraDate1 = cartdetails.c1date;
+                            cartItem.ExtraDate3 = cartdetails.c3date;
 
-                        cartItem.ExtraDate2 = price2;
+                            cartItem.ExtraDate2 = price2;
+                        }
+                        else if (cartdetails.c3date == null)
+                        {
+                            cartItem.ExtraDate1 = cartdetails.c1date;
+                            cartItem.ExtraDate2 = cartdetails.c2date;
+                            cartItem.ExtraDate3 = price2;
+                        }
+                        else if (cartdetails.c3date != null)
+                        {
+                            return Json("failed");
+                        }
+                        cartItem.TotalPrice = Convert.ToDecimal(totalprice1);
+                        cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                        cartItem.CartId = cartdetails.CartId;
+                        string mesaage = cartService.adddatecartitem(cartItem);
+                        return Json(mesaage);
                     }
-                    else if (cartdetails.c3date == null)
-                    {
-                        cartItem.ExtraDate1 = cartdetails.c1date;
-                        cartItem.ExtraDate2 = cartdetails.c2date;
-                        cartItem.ExtraDate3 = price2;
-                    }
-                    else if (cartdetails.c3date != null)
-                    {
-                        return Json("failed");
-                    }
-                    cartItem.TotalPrice = Convert.ToDecimal(totalprice1);
-                    cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
-                    cartItem.CartId = cartdetails.CartId;
-                    string mesaage = cartService.adddatecartitem(cartItem);
-                    return Json(mesaage);
                 }
             }
-                return View();
-            
+
+            return Json("Login");
+
         }
 
         public ActionResult multipledatedelete(string cartId, string price, string date, string total)
