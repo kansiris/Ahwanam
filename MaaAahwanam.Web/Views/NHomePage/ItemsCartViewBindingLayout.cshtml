@@ -2,6 +2,8 @@
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
     var user = (CustomPrincipal)HttpContext.Current.User;
+    if (user.UserType == "Admin")
+    { Response.Redirect("/Admin/Login"); }
     if (user.UserType == "Vendor")
     {
         Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");

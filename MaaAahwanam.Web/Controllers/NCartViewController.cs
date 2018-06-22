@@ -136,60 +136,62 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getprice(string cartid)
+        public ActionResult getprice(string cartid)
         {
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-            var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid)).FirstOrDefault();
-            var nofguests = cartdetails.Quantity;
-            var pricenew = "";
-            var ISdeal = cartdetails.Isdeal;
-            var sertype = cartdetails.ServiceType;
-            var timeslot = cartdetails.attribute;
-
-            var timeslot1 = timeslot.Split(',');
-            var times = timeslot1.Length;
-
-            if (ISdeal == false)
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                var dealid1 = cartdetails.DealId;
-                if (dealid1 == 0)
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid)).FirstOrDefault();
+                var nofguests = cartdetails.Quantity;
+                var pricenew = "";
+                var ISdeal = cartdetails.Isdeal;
+                var sertype = cartdetails.ServiceType;
+                var timeslot = cartdetails.attribute;
+
+                var timeslot1 = timeslot.Split(',');
+                var times = timeslot1.Length;
+
+                if (ISdeal == false)
                 {
-                    // var pricenew = cartdetails.TotalPrice;
-                    var servicetype = cartdetails.ServiceType;
-                    var vendorid = cartdetails.Id;
-                    var vendorsubid = cartdetails.subid;
-                    VendorProductsService vendorProductsService = new VendorProductsService();
-                    var vendorcost = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
-                    //   int query = vendorMasterService.checkemail(emailid);
-                    //if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
-                    //{ pricenew = Convert.ToString( Convert.ToDecimal(vendorcost) * nofguests);  }
-                    //else
-                    //{
+                    var dealid1 = cartdetails.DealId;
+                    if (dealid1 == 0)
+                    {
+                        // var pricenew = cartdetails.TotalPrice;
+                        var servicetype = cartdetails.ServiceType;
+                        var vendorid = cartdetails.Id;
+                        var vendorsubid = cartdetails.subid;
+                        VendorProductsService vendorProductsService = new VendorProductsService();
+                        var vendorcost = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
+                        //   int query = vendorMasterService.checkemail(emailid);
+                        //if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
+                        //{ pricenew = Convert.ToString( Convert.ToDecimal(vendorcost) * nofguests);  }
+                        //else
+                        //{
                         pricenew = vendorcost;
-                  //  }
+                        //  }
 
-                }
-            else
-            {
-                    var deal1 = cartdetails.DealId;
-
-                    var type = cartdetails.ServiceType;
-                var vendorid = cartdetails.Id;
-                var vendorsubid = cartdetails.subid;
-                var packPrice = vendorProductsService.getvendorpkgs(Convert.ToString(vendorid)).Where(p => p.VendorSubId == (vendorsubid) && p.PackageID == deal1).FirstOrDefault().PackagePrice;
-                    if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
-                    { pricenew = Convert.ToString(Convert.ToDecimal(packPrice) * nofguests); }
+                    }
                     else
                     {
-                        pricenew = packPrice;
+                        var deal1 = cartdetails.DealId;
+
+                        var type = cartdetails.ServiceType;
+                        var vendorid = cartdetails.Id;
+                        var vendorsubid = cartdetails.subid;
+                        var packPrice = vendorProductsService.getvendorpkgs(Convert.ToString(vendorid)).Where(p => p.VendorSubId == (vendorsubid) && p.PackageID == deal1).FirstOrDefault().PackagePrice;
+                        if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
+                        { pricenew = Convert.ToString(Convert.ToDecimal(packPrice) * nofguests); }
+                        else
+                        {
+                            pricenew = packPrice;
+                        }
                     }
                 }
-        }
-            else if (ISdeal == true)
-            {
-                var dealid = cartdetails.DealId;
-               
+                else if (ISdeal == true)
+                {
+                    var dealid = cartdetails.DealId;
+
                     DateTime ddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                     var data = NdealService.GetdealDetails((dealid));
                     var pric1 = (data.DealPrice);
@@ -201,18 +203,22 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         pricenew = Convert.ToString(pric1);
                     }
-               
-               
-            }
-            if (pricenew == "" || pricenew == null)
-            {
-                pricenew = "0";
-            }
+
+
+                }
+                if (pricenew == "" || pricenew == null)
+                {
+                    pricenew = "0";
+                }
                 if (pricenew != "0" || pricenew == "0")
-            {
-                return Json(pricenew, JsonRequestBehavior.AllowGet);
+                {
+                    return Json(pricenew, JsonRequestBehavior.AllowGet);
+                }
+                return Json("exists", JsonRequestBehavior.AllowGet);
             }
-            return Json("exists", JsonRequestBehavior.AllowGet);
+            else
+                return RedirectToAction("Index", "Nuserregistration");
+                //return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully');location.href='/NUserRegistration'</script>");
         }
 
         public ActionResult booknow(string cartnos)
