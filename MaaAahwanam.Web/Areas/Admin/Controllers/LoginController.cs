@@ -15,8 +15,18 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
     public class LoginController : Controller
     {
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         public ActionResult Index()
         {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var userResponse = userLoginDetailsService.GetUser((int)user.UserId);
+                if (user.UserType == "Admin")
+                {
+                    return RedirectToAction("dashboard", "dashboard", new { id = userResponse.UserLoginId });
+                }
+            }
             return View();
         }
 
@@ -25,7 +35,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             if (command == "Register")
             {
-                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                
                 userLogin.UserType = "Admin";
                 var response = userLoginDetailsService.AddUserDetails(userLogin, userDetails);
                 if (response == "sucess")
