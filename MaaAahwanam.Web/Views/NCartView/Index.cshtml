@@ -88,9 +88,12 @@
                                             </div>
                                         </div>
                                         <ul class="pl-0 row mx-0 customDates float-left">
-                                            @if (@item.ServiceType == "Venue" || @item.ServiceType == "Catering")
+                                            @if ((@item.ServiceType == "Venue" || @item.ServiceType == "Catering" )&& @item.DealId =='0' )
                                             {
                                                 <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt64(@item.Perunitprice) * @item.Quantity )).Replace(".00", "")</span></li>
+                                            } else if ((@item.ServiceType == "Venue" || @item.ServiceType == "Catering" )&& @item.DealId!= '0')
+                                            {
+                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt64(@item.Perunitprice))).Replace(".00", "")</span></li>
                                             }
                                             else
                                             {
@@ -249,36 +252,42 @@
                 //alert(total);
                 ////totalpr.append(total);
                 //alert(dateVal);
-             //   alert(price1);
+                //   alert(price1);
                 $.ajax({
                     url: '/NCartView/multipledateinsert?cartid=' + cartId + '&&price=' + price1 + '&&date=' + dateVal + '&&total=' + total,
                     type: 'POST',
                     dataType : 'json',
                     success: function (data) {
-                        if (data == "success") {
-                            alertify.alert("Order Placed successfully");
+                        if (data == "Success") {
+                            alertify.alert("Date is added to the cartitem");
                             location.href = '/NCartView/Index'
                         }
                         else if (data == "failed") {
                             alertify.alert("only four dates are allowed");
-                          location.href = '/NCartView/Index'
+                            location.href = '/NCartView/Index'
                         }
                         else  if (data == "date not saved") {
                             alertify.alert("date not entered");
                             location.href = '/NCartView/Index'
                         }
+                        else  if (data == "Login") {
+                            alertify.alert("Login expired please login again");
+                            location.href = '/NUserRegistration/SignOut'
+                        }
 
-                            else{
-                            alertify.alert("Order Placed successfully");
+                        else{
+                            alertify.alert("Date is added to the cartitem");
                             location.href = '/NCartView/Index'
                         }
                     },
                     error: function (data) {
                         alertify.alert("Error in placing the order.");
-                       location.href = '/NCartView/Index'
+                        location.href = '/NCartView/Index'
 
                     }
                 })
+           
+           
             });
 
 
@@ -374,7 +383,7 @@
                 var thisLiVal = parseInt($(this).parent('li').find("span").text());
                 var spanTxt = parseInt($(this).parents("ul.customDates").prev(".address").find(".total").find("span").text());
                 total=spanTxt - thisLiVal;
-                $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
+              //  $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
             });
 
             /*-- Hidden Field Value --*/
@@ -390,14 +399,16 @@
             //alert("Price : " + LiPrice);
 
             /*-- Total Price Decrease --*/
-            $(this).parent('li').remove();
+            alertify.confirm("Are you sure You want to delete.",
+                   function () {
+                       $(this).parent('li').remove();
 
             $.ajax ({
                 url: '/NCartView/multipledatedelete?cartid=' + cartId + '&&price=' + LiPrice + '&&date=' + LiDate + '&&total=' + total,
             type: 'POST',
             dataType : 'json',
             success: function (data) {
-                if (data == "success") {
+                if (data == "sSuccess") {
                     alertify.alert("Date is deleted successfully");
                    location.href = '/NCartView/Index'
                 }
@@ -417,7 +428,10 @@
             }
         })
 
-
+                   },
+         function () {
+         //    location.href = '/NCartView/Index'
+         });
 
 
         });

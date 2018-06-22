@@ -41,8 +41,8 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.cartCount = cartService.CartItemsCount(0);
                         return PartialView("ItemsCartViewBindingLayout");
                     }
-                    ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-                    List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                    ViewBag.cartCount = cartService.CartItemsCount1((int)user.UserId);
+                   var cartlist = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
                     decimal total = cartlist.Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist;
                     ViewBag.Total = total;
@@ -111,11 +111,17 @@ namespace MaaAahwanam.Web.Controllers
                             ViewBag.cartCount = cartService.CartItemsCount(0);
                             return PartialView("ItemsCartViewBindingLayout");
                         }
-                        ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-                        List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                        decimal total = cartlist.Sum(s => s.TotalPrice);
+
+
+                        ViewBag.cartCount = cartService.CartItemsCount1((int)user.UserId);
+                        //   List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                        var cartlist = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
+                        var cartlist1 = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
+
+                        //  decimal total = (cartlist1.TotalPrice) .Sum(s => s.TotalPrice);
                         ViewBag.cartitems = cartlist;
-                        ViewBag.Total = total;
+                        // ViewBag.Total = total;
+                        ViewBag.Total = "0";
                     }
                 }
                 else
@@ -147,11 +153,13 @@ namespace MaaAahwanam.Web.Controllers
                             return PartialView("ItemsCartdetails");
                         }
                         ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                        var cartlist1 = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
 
-                        List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                        decimal total = cartlist.Sum(s => s.TotalPrice);
-                        ViewBag.cartitems = cartlist;
-                        ViewBag.Total = total;
+                        // List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                        decimal total = cartlist1.Select(m => m.TotalPrice).Sum();
+                        ViewBag.cartitems = cartlist1;
+                         ViewBag.Total = total;
+                      //  ViewBag.Total = "0";
                     }
                 }
                 else
