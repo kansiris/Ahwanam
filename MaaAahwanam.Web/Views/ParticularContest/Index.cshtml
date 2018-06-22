@@ -104,6 +104,9 @@
             @for (int i = 0; i < ViewBag.count; i++)
             {
                 <div class="block mb-1">
+                    <input type="hidden" id="contestimage" value="http://www.ahwanam.com/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" />
+                    <input type="hidden" id="contestdesc" value="@ViewBag.AvailableContestEntries[i].Description" />
+                    <input type="hidden" id="contesturl" value="http://www.ahwanam.com/ParticularContest/Fbshareit?fbid=@ViewBag.fbid[i]" />
                     <input type="hidden" id="cid" value="@ViewBag.AvailableContestEntries[i].ContestId" />
                     <figure style="background:url('/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage')">
                         <img src="~/ContestPics/@ViewBag.AvailableContestEntries[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" style="display:none" />
@@ -131,6 +134,7 @@
                         <i class="fa fa-eye" aria-hidden="true"></i>
                     </div>
                     <p class="contestants secondaryTextColor fontWeight700 mb-0">@ViewBag.AvailableContestEntries[i].Name</p>
+                    <p>@ViewBag.fbid[i]</p>
                     <p class="mb-0 mt-2">@ViewBag.time[i]</p>
                     <p class="descrption">@ViewBag.AvailableContestEntries[i].Description</p>
                     <div class="row">
@@ -139,14 +143,15 @@
                             <button class="btn themeRedBgColor text-white shareBtn py-2 px-4 float-right">Share</button>
                         </div>
                     </div>
+                    
                     <div class="row shareLinkInput">
                         <div class="col-12 col-sm-12 col-md-12 px-0">
                             <div class="row form-group mb-0 mx-0">
-                                <input type="text" class="form-control"  name="" placeholder="Shared Link here">
+                                <input type="text" class="form-control" value="http://www.ahwanam.com/ParticularContest?id=@ViewBag.id&&csid=@ViewBag.AvailableContestEntries[i].ContestId" name="" placeholder="Shared Link here">
                             </div>
                             <ul class="row pl-0 mt-2 mb-0 mx-0">
-                                <li class="faceBook"><span><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</span></li>
-                                <li class="twitter"><span><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</span></li>
+                                <li class="faceBook" id="fbshare"><span><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</span></li>
+                                @*<li class="twitter"><span><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</span></li>*@
                             </ul>
                         </div>
                         <div class="arrow"></div>
@@ -584,15 +589,35 @@
         /*-- Share Button --*/
         $(".shareBtn, .shareLinkInput").click(function (event) {
             event.stopPropagation();
-            $(".shareLinkInput").css("left", "55px");
+            var current = $(this), parentRowNext = $(current).parents(".row").next(".shareLinkInput");
+            $(parentRowNext).css("left", "55px");
         });
-        $(".shareLinkInput")
+        $(".shareLinkInput input[type='text']").click(function () {
+            $(this).select();
+        });
 
         $(document).click(function () {
             $(".shareLinkInput").css("left", "386px")
         });
         /*-- Share Button --*/
 
+        //$(document).on('click', '#fbshare', function () {
+        //    alert("hi");
+        //    //var curl = $(this).parents(".block").find("#contesturl").val();
+        //    //var cdesc = $(this).parents(".block").find("#contestdesc").val();
+        //    //var cimage = $(this).parents(".block").find("#contestimage").val();
+        //    //alert(curl); alert(cdesc); alert(cimage);
+        //    //shareOverrideOGMeta(curl, "Ahwanam Contests", cdesc, cimage);
+        //});
+
+        $(".shareLinkInput ul li span").click(function () {
+            //alert("hi");
+            var curl = $(this).parents(".block").find("#contesturl").val();
+            var cdesc = $(this).parents(".block").find("#contestdesc").val();
+            var cimage = $(this).parents(".block").find("#contestimage").val();
+            alert(curl); alert(cdesc); alert(cimage);
+            shareOverrideOGMeta(curl, "Ahwanam Contests", cdesc, cimage);
+        });
     </script>
 
     <script>
