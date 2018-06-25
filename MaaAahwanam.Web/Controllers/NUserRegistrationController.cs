@@ -84,6 +84,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.Active = TempData["Active"];
                 }
                 perfecturl = "";
+              
                 return View();
             }
             else
@@ -333,6 +334,7 @@ namespace MaaAahwanam.Web.Controllers
                         string email = userLogin.UserName;
                         var userid = userResponse.UserLoginId;
                         userLoginDetailsService.changestatus(userLogin, userDetails, (int)userid);
+                        TempData["Active"] = "Thanks for Verifying the Email";
                         return RedirectToAction("Index", "NUserRegistration");
                     }
                 }
