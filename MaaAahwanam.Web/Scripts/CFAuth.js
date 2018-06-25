@@ -119,5 +119,6 @@ function shareOverrideOGMeta(overrideLink, overrideTitle, overrideDescription, o
     },
     function (response) {
         // Action after response
+        alert("Shared with FB")
     });
 }
