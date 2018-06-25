@@ -34,6 +34,7 @@ namespace MaaAahwanam.Web.Controllers
                 List<string> contestentries = new List<string>();
                 List<string> votecount = new List<string>();
                 List<string> votedornot = new List<string>();
+                List<string> fbid = new List<string>();
                 foreach (var item in AvailableContestEntries)
                 {
                     var date = TimeAgo(item.UpdatedDate);
@@ -52,8 +53,11 @@ namespace MaaAahwanam.Web.Controllers
                         var getVote = contestsService.GetAllVotes(item.ContestId).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
                         if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
                         else votedornot.Add("0");//ViewBag.vote = "0";
+                        
                     }
+                    fbid.Add(id + "a" + item.ContestId);
                 }
+                ViewBag.fbid = fbid;
                 ViewBag.AvailableContestEntries = AvailableContestEntries;
                 ViewBag.count = AvailableContestEntries.Count();
                 ViewBag.time = contestentries;
