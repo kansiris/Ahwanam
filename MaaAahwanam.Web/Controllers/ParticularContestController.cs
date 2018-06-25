@@ -90,9 +90,11 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
                     ViewBag.myvotedornot = myvotedornot;
-                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId && m.Status != "InActive").Count();
+                    var restriction = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId);
+                    ViewBag.uploadimage = restriction.Where(m=>m.Status != "InActive").Count();
+                    ViewBag.restriction = restriction.Count();
                     //ViewBag.uploadimage = uploadimage;
-
+                    
                 }
                 var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
 
@@ -170,8 +172,10 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.myvotes = myvotes;
                     ViewBag.mycount = userenties.Count();
                     ViewBag.myvotedornot = myvotedornot;
-                    ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
-
+                    //ViewBag.uploadimage = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId).Count();
+                    var restriction = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId);
+                    ViewBag.uploadimage = restriction.Where(m => m.Status != "InActive").Count();
+                    ViewBag.restriction = restriction.Count();
                 }
                 ViewBag.votestatus = votedornot;
             }
