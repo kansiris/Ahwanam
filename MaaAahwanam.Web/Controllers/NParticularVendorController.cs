@@ -75,7 +75,7 @@ namespace MaaAahwanam.Web.Controllers
                 string price = "";
                 if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue" || type == "Banquet Hall" || type == "Function Hall" || type == "Venue")
                 {
-                    if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.ServiceCost.ToString(); };
+                    if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.VegLunchCost.ToString(); };
                     ViewBag.location = ViewBag.particularVenue;
                 }
                 else if (type == "Catering")
