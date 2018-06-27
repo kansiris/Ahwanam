@@ -6,8 +6,48 @@
 
 @section css{
     <!-- Image Cropper CSS -->
-    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/contest/css/imgareaselect-default.css">
-    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/contest/css/jquery.awesome-cropper.css">
+    @*<link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/contest/css/imgareaselect-default.css">
+        <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/contest/css/jquery.awesome-cropper.css">*@
+
+    <!-- Image Cropper CSS -->
+    <link rel="stylesheet" type="text/css" href="http://design.maa-aahwanam.com/contest/css/cropper.min.css">
+    <style type="text/css">
+        .box {
+            padding: 0.5em;
+            width: 100%;
+            margin: 0.5em;
+        }
+
+        .box-2 {
+            padding: 0.5em;
+            width: calc(100%/2 - 1em);
+        }
+
+        .options label,
+        .options input {
+            width: 4em;
+            padding: 0.5em 1em;
+        }
+
+        .btn {
+            color: black;
+            padding: 0.5em 1em;
+            text-decoration: none;
+            margin: 0.8em 0.3em;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    </style>
+    <!-- Image Cropper CSS -->
+
 
     <meta name="image" property="og:image" content="" />
     <meta name="url" property="og:url" content="" />
@@ -55,6 +95,7 @@
 </div>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light secondNav">
+        <a class="navbar-brand text-white d-md-none" href="#">Upload Image</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav m-auto">
@@ -65,10 +106,10 @@
                 <li class="nav-item"><a class="nav-link">Sponsors</a></li>
                 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == true)
                 {
-                <li class="nav-item"><a class="nav-link">My Entries</a></li>
+                    <li class="nav-item"><a class="nav-link">My Entries</a></li>
                 }
                 @*<li class="nav-item"><a class="nav-link">Upload Image</a></li>*@
-                <li class="nav-item ml-0 ml-md-3"><a class="nav-link pl-2">Upload Image</a></li>
+                <li class="nav-item ml-0 ml-md-3 d-sm-block"><a class="nav-link pl-2">Upload Image</a></li>
             </ul>
         </div>
     </nav>
@@ -80,11 +121,11 @@
             <div class="col-md-6 totalUploadCount primaryFont">
                 @if (ViewBag.count != 0)
                 {
-                <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p>
+                    <p class="mb-sm-4 mb-md-0"><span>@ViewBag.count</span> Images Uploaded</p>
                 }
                 else
                 {
-                <p class="mb-sm-4 mb-md-0">Be first To Upload Image</p>
+                    <p class="mb-sm-4 mb-md-0">Be first To Upload Image</p>
                 }
 
             </div>
@@ -283,31 +324,31 @@
 
                 @for (int i = 0; i < ViewBag.mycount; i++)
                 {
-                @*<div class="col-12 col-md-12">*@
-                <div class="block mb-3">
-                    <input type="hidden" id="cid" value="@ViewBag.userenties[i].ContestId" />
-                    <figure style="background:url('ContestPics/@ViewBag.userenties[i].UploadedImage')">
-                        @*<img src="~/ContestPics/@ViewBag.userenties[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />*@
-                    </figure>
-                    @*<div class="voteBlock">
-                            @if (ViewBag.myvotedornot[i] == "1")
-                            {<i class="fa fa-heart-o" aria-hidden="true"></i> }
-                            else
-                            {
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                            }
-                        </div>*@
-                    @if (ViewBag.userenties[i].Status == "InActive")
+                    @*<div class="col-12 col-md-12">*@
+                    <div class="block mb-3">
+                        <input type="hidden" id="cid" value="@ViewBag.userenties[i].ContestId" />
+                        <figure style="background:url('ContestPics/@ViewBag.userenties[i].UploadedImage')">
+                            @*<img src="~/ContestPics/@ViewBag.userenties[i].UploadedImage" class="img-fluid" alt="Happy Fathers Day" />*@
+                        </figure>
+                        @*<div class="voteBlock">
+                                @if (ViewBag.myvotedornot[i] == "1")
+                                {<i class="fa fa-heart-o" aria-hidden="true"></i> }
+                                else
+                                {
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                }
+                            </div>*@
+                        @if (ViewBag.userenties[i].Status == "InActive")
                         {
-                        <div class="w-100 approval">Declined</div>
+                            <div class="w-100 approval">Declined</div>
                         }
                         else if (ViewBag.userenties[i].Status == "Pending")
                         {
-                        <div class="w-100 approval">Pending Approval</div>
+                            <div class="w-100 approval">Pending Approval</div>
                         }
                         else if (ViewBag.userenties[i].Status == "Active")
                         {
-                        <div class="w-100 approval">Entry Accepted</div>
+                            <div class="w-100 approval">Entry Accepted</div>
                         }
 
                         @*<div class="hoverBlock"> <i class="fa fa-eye" aria-hidden="true"></i> </div>*@
@@ -347,6 +388,45 @@
                         {
                             <form method="post" action="/ParticularContest?command=Add&&id=@ViewBag.id">
                                 <input id="sample_input" type="hidden" name="sample_input">
+                                <main class="page">
+                                    <!-- <h2>Upload ,Crop and save.</h2> -->
+                                    <!-- input file -->
+                                    <div class="box">
+                                        <input type="file" id="file-input" required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <!-- leftbox -->
+                                            <div class="">
+                                                <div class="result"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <!--rightbox-->
+                                            <div class="img-result hide">
+                                                <!-- result of crop -->
+                                                <img class="cropped" src="" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input file -->
+                                    <div class="box">
+                                        <div class="options hide d-none">
+                                            <label> Width</label>
+                                            <input type="number" class="img-w" value="500" min="100" max="1200" />
+                                        </div>
+                                        <!-- save btn -->
+                                        <button class="btn save hide">Crop</button>
+                                        <!-- download btn -->
+                                        @*<a href="" class="btn download hide">Download</a>*@
+                                    </div>
+                                </main>
+
+
+
+
+
+
                                 <div class="w-100 mt-3">
                                     <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
                                         <label for="comment">Your Name:</label>
@@ -389,47 +469,116 @@
 @section scripts{
     <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/jquery.imgareaselect.js"></script>
     <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/jquery.awesome-cropper.js"></script>
+
+    <!-- Image Cropper Scripts -->
+    <script type="text/javascript" src="http://design.maa-aahwanam.com/contest/js/cropper.min.js"></script>
+
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sample_input').awesomeCropper(
-            { width: 250, height: 250, debug: true }//, disable()
-            );//.on('change',function () { disable() });
-            $(".awesome-cropper > input[type='file']").attr('required', 'required').attr('id', 'fileupload');
+        // vars
+        let result = document.querySelector('.result'),
+        img_result = document.querySelector('.img-result'),
+        img_w = document.querySelector('.img-w'),
+        img_h = document.querySelector('.img-h'),
+        options = document.querySelector('.options'),
+        save = document.querySelector('.save'),
+        cropped = document.querySelector('.cropped'),
+        dwn = document.querySelector('.download'),
+        upload = document.querySelector('#file-input'),
+        cropper = '';
 
-            //function disable() {
-            //    alert("disable");
-            //}
+        // on change show image with crop options
+        upload.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        let img = document.createElement('img');
+                        img.id = 'image';
+                        img.src = e.target.result
+                        
+                        // clean result before
+                        result.innerHTML = '';
+                        // append new image
+                        result.appendChild(img);
+                        // show save btn and options
+                        save.classList.remove('hide');
+                        options.classList.remove('hide');
+                        // init cropper
+                        cropper = new Cropper(img);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
         });
 
-        $('#Item2_Name').on('change', function () {
-            var image = $('#sample_input').val();
-            if (image == '')
-            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
+        // save on click
+        save.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc = cropper.getCroppedCanvas({
+                width: img_w.value // input value
+            }).toDataURL();
+            // remove hide class of img
+            cropped.classList.remove('hide');
+            img_result.classList.remove('hide');
+            // show image cropped
+            cropped.src = imgSrc;
+            $('#sample_input').val(imgSrc);
+            dwn.classList.remove('hide');
+            dwn.download = 'imagename.png';
+            dwn.setAttribute('href', imgSrc);
         });
 
-        $('#Item2_Description').on('change', function () {
-            var image = $('#sample_input').val();
-            if (image == '')
-            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
-        });
 
-        //$("#fileupload").change(function () {
-        //    pop();
+    </script>
+    <!-- Image Cropper Scripts -->
+
+
+
+
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $('#sample_input').awesomeCropper(
+        //    { width: 250, height: 250, debug: true }//, disable()
+        //    );//.on('change',function () { disable() });
+        //    $(".awesome-cropper > input[type='file']").attr('required', 'required').attr('id', 'fileupload');
+
+        //    //function disable() {
+        //    //    alert("disable");
+        //    //}
         //});
 
-        $(document).on('change', '#fileupload', function () {
-            $(".awesome-cropper > input[type='file']").css('display', 'none');
-        });
+        //$('#Item2_Name').on('change', function () {
+        //    var image = $('#sample_input').val();
+        //    if (image == '')
+        //    { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
+        //});
 
-        //$('#sample_input').blur(function () {
+        //$('#Item2_Description').on('change', function () {
+        //    var image = $('#sample_input').val();
+        //    if (image == '')
+        //    { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
+        //});
+
+        ////$("#fileupload").change(function () {
+        ////    pop();
+        ////});
+
+        //$(document).on('change', '#fileupload', function () {
         //    $(".awesome-cropper > input[type='file']").css('display', 'none');
         //});
 
-        $('#Item2_TermsAndConditions').on('change', function () {
-            var image = $('#sample_input').val();
-            if (image == '')
-            { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
-        });
+        ////$('#sample_input').blur(function () {
+        ////    $(".awesome-cropper > input[type='file']").css('display', 'none');
+        ////});
+
+        //$('#Item2_TermsAndConditions').on('change', function () {
+        //    var image = $('#sample_input').val();
+        //    if (image == '')
+        //    { $(".awesome-cropper > input[type='file']").css('display', 'block'); alertmsg("Upload Image") }
+        //});
 
         //});
 
@@ -447,18 +596,18 @@
 
 
 
-        $('#btnsubmit').on('click', function () {
-            var image = $('#sample_input').val().trim();
-            var name = $('#Item2_Name').val().trim();
-            var desc = $('#Item2_Description').val().trim();
-            var terms = $('#Item2_TermsAndConditions').is(':checked');
-            //alert(terms);
-            if (image == '') { alertmsg("Upload Image"); }
-            if (image != '' && name != '' && desc != '' && terms == true) {
-                //alert("hi");
-                this.form.submit();
-            }
-        });
+        //$('#btnsubmit').on('click', function () {
+        //    var image = $('#sample_input').val().trim();
+        //    var name = $('#Item2_Name').val().trim();
+        //    var desc = $('#Item2_Description').val().trim();
+        //    var terms = $('#Item2_TermsAndConditions').is(':checked');
+        //    //alert(terms);
+        //    if (image == '') { alertmsg("Upload Image"); }
+        //    if (image != '' && name != '' && desc != '' && terms == true) {
+        //        //alert("hi");
+        //        this.form.submit();
+        //    }
+        //});
     </script>
 
 
@@ -588,6 +737,19 @@
                 }
             });
         });
+
+        $("nav.secondNav > a").click(function () {
+            var anchorTxt = $(this).text();
+            $(".pages div.container").each(function () {
+                var pageId = $(this).find("div.components").attr('id');
+                //alert("Page Text : " + pageId);
+                if (anchorTxt == pageId) {
+                    $(this).prevAll().css('display', 'none');
+                    $(this).nextAll().css('display', 'none');
+                    $(this).css('display', 'block');
+                }
+            });
+        });
         /*-- Pages Display --*/
 
         /*-- Share Button --*/
@@ -601,7 +763,7 @@
         });
 
         $(document).click(function () {
-            $(".shareLinkInput").css("left", "386px")
+            $(".shareLinkInput").css("left", "400px")
         });
         /*-- Share Button --*/
 

@@ -51,12 +51,14 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult BlockOnePartial(string type, string loc, string budget, string stype, string date, string count, string L1)  //string f1, string f2, string f3, string f4, string f5, string f6, string f7, string f8, string f9,
         {
+
             //try
             //{
             loc = (loc != "undefined" && loc != "") ? loc : "Hyderabad";
             budget = (budget != "undefined" && budget != "") ? budget : "100";
             count = (count != "undefined" && count != "") ? count : "10";
             int takecount = (L1 != null) ? int.Parse(L1) : 6;
+            
             //if (new string[] { "Wedding", "Party", "Corporate", "BabyFunction", "Birthday", "Engagement" }.Contains(type))
             if (stype != null && stype != "")
             {
@@ -101,6 +103,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.count = (recordcount >= takecount) ? "1" : "0";
                     ViewBag.recordcount = recordcount;
                 }
+
                 if (new string[] { "Hotel", "Resort", "Convetion" }.Contains(stype.Split(',')[0]))
                 {
                     selectedservices.Remove("Hotel");
@@ -116,7 +119,7 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView();
             }
 
-            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "BanquetHall", "FunctionHall", "Banquet", "Function", "Banquet Hall", "Function Hall", "ConventionHall","Convention Hall" }.Contains(type))
+            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "BanquetHall", "FunctionHall", "Banquet", "Function", "Banquet Hall", "Function Hall", "ConventionHall", "Convention Hall" }.Contains(type))
             {
                 string type1 = type;
                 type1 = (type1 == "Convetion" || type1 == "Convention" || type1 == "ConventionHall") ? "Convention Hall" : type1;
@@ -418,7 +421,9 @@ namespace MaaAahwanam.Web.Controllers
                     services.Remove("Resort");
                     services.Remove("Convention Hall");
                 }
-                else { services.Remove(services[0]); };
+                else {
+                    services.Remove(services[0]);
+                }
             }
             if (stypecount <= 4)
             {

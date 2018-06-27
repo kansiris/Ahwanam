@@ -201,7 +201,7 @@ namespace MaaAahwanam.Web.Controllers
                     contest = contestsService.EnterContest(contest);
                     if (contest.ContestId != 0)
                     {
-                        string strm = sample_input.Replace("data:image/png;base64,", "");
+                        string strm = sample_input.Replace("data:image/png;base64,", "").Replace("data:image/jpeg;base64,", "");
                         //this is a simple white background image
                         var myfilename = userlogin.UserName + "_" + id + "_" + contest.ContestId + "_.jpeg";
                         contest.UploadedImage = myfilename;
@@ -213,7 +213,7 @@ namespace MaaAahwanam.Web.Controllers
                             imageFile.Write(bytess, 0, bytess.Length);
                             imageFile.Flush();
                         }
-                        int count = contestsService.UpdateContestImage(contest.ContestId,contest.UploadedImage);
+                        int count = contestsService.UpdateContestImage(contest.ContestId, contest.UploadedImage);
                         SendEmail(userlogin.UserName, (int)user.UserId);
                         return Content("<script language='javascript' type='text/javascript'>alert('Your Entry Recorded and Sent For Approval');location.href='/Contests/Index'</script>");
                     }
