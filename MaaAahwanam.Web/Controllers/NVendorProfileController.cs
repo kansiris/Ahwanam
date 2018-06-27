@@ -50,8 +50,8 @@ namespace MaaAahwanam.Web.Controllers
 
             userLoginDetailsService.Updatevendordetailsnew(vendor, email);
             Int64 id = vendor.Id;
-            TempData["Active"] = "Package added";
-            return RedirectToAction("Index", "NVendorDashboard", new { id = id });
+            TempData["Active"] = "Profile updated";
+            return RedirectToAction("Index", "NVendorProfile", new { id = id });
             }
             catch (Exception)
             {
