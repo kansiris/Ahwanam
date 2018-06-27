@@ -30,10 +30,10 @@
         }
 
         .btn {
-            color: black;
+            /*color: black;*/
             padding: 0.5em 1em;
             text-decoration: none;
-            margin: 0.8em 0.3em;
+            /*margin: 0.8em 0.3em;*/
             display: inline-block;
             cursor: pointer;
         }
@@ -374,7 +374,12 @@
             <div class="col-12 col-sm-12 col-md-12">
                 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated == false)
             {
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Signin / Signup </button>
+                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" href="#">Signin / Signup </button>*@
+                    <p>
+                        Signin / Signup with <span onclick="fbLogin('Contests')" style="font-size: 16px;padding: 7px 25px;cursor: pointer;border: none;background-color: #36539b;color: #fff !important; text-align: center !important;">
+                            <i class="fa fa-facebook mr-2" aria-hidden="true"></i> Facebook
+                        </span>
+                    </p>
                 }
                 else
                 {
@@ -485,33 +490,81 @@
         dwn = document.querySelector('.download'),
         upload = document.querySelector('#file-input'),
         cropper = '';
+        let allowedfiles = [".jpg", ".jpeg", ".png"],
+         fileupload = upload;
+         //regex = new regexp("([a-za-z0-9\s_\\.\-:])+(" + allowedfiles.join('|') + ")$");
+        //var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg)$/;
+
+        $('#file-input').on('change', function (e) {
+            var allowedFiles = [".jpg", ".jpeg", ".png"];
+            var fileUpload = document.getElementById("file-input");
+            var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+            //alert(fileUpload.value);
+            if (!regex.test(fileUpload.value.toLowerCase()) == false) {
+                //alert("Correct Format");
+                if (e.target.files.length) {
+                    // start file reader
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        if (e.target.result) {
+                            // create new image
+                            let img = document.createElement('img');
+                            img.id = 'image';
+                            img.src = e.target.result
+
+                            // clean result before
+                            result.innerHTML = '';
+                            // append new image
+                            result.appendChild(img);
+                            // show save btn and options
+                            save.classList.remove('hide');
+                            options.classList.remove('hide');
+                            // init cropper
+                            cropper = new Cropper(img);
+                        }
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+                return false;
+            }
+            else {
+                alert("Only JPG | PNG Formats Allowed");
+            }
+            //if (regex.test(file[0].name.toLowerCase())) {
+            //    alert("Correct Format");
+            //} else {
+            //    alert("Wrong format");
+            //}
+        });
+
+
 
         // on change show image with crop options
-        upload.addEventListener('change', (e) => {
-            if (e.target.files.length) {
-                // start file reader
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    if (e.target.result) {
-                        // create new image
-                        let img = document.createElement('img');
-                        img.id = 'image';
-                        img.src = e.target.result
-                        
-                        // clean result before
-                        result.innerHTML = '';
-                        // append new image
-                        result.appendChild(img);
-                        // show save btn and options
-                        save.classList.remove('hide');
-                        options.classList.remove('hide');
-                        // init cropper
-                        cropper = new Cropper(img);
-                    }
-                };
-                reader.readAsDataURL(e.target.files[0]);
-            }
-        });
+        //upload.addEventListener('change', (e) => {
+        //        if (e.target.files.length) {
+        //            // start file reader
+        //            const reader = new FileReader();
+        //            reader.onload = (e) => {
+        //                if (e.target.result) {
+        //                    // create new image
+        //                    let img = document.createElement('img');
+        //                    img.id = 'image';
+        //                    img.src = e.target.result
+
+        //                    // clean result before
+        //                    result.innerHTML = '';
+        //                    // append new image
+        //                    result.appendChild(img);
+        //                    // show save btn and options
+        //                    save.classList.remove('hide');
+        //                    options.classList.remove('hide');
+        //                    // init cropper
+        //                    cropper = new Cropper(img);
+        //                }
+        //            };
+        //            reader.readAsDataURL(e.target.files[0]);
+        //        }
+        //});
 
         // save on click
         save.addEventListener('click', (e) => {
@@ -749,7 +802,8 @@
                     $(this).css('display', 'block');
                 }
             });
-        });
+        });
+
         /*-- Pages Display --*/
 
         /*-- Share Button --*/

@@ -74,8 +74,9 @@ function getFbUserData(page) {
                          location.reload();
                      }
                      else {
-                         var url1 = location.href;
-                         window.location.href = url1;// "/NHomePage/Index/";
+                         //var url1 = location.href;
+                         //window.location.href = url1;// "/NHomePage/Index/";
+                         location.reload();
                      }
                  },
              });
@@ -119,6 +120,6 @@ function shareOverrideOGMeta(overrideLink, overrideTitle, overrideDescription, o
     },
     function (response) {
         // Action after response
-        alert("Shared with FB")
+        //alert("Shared with FB")
     });
 }

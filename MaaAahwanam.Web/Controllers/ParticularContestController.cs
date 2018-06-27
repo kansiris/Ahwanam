@@ -53,7 +53,7 @@ namespace MaaAahwanam.Web.Controllers
                         var getVote = contestsService.GetAllVotes(item.ContestId).Where(m => m.Email == userlogin.AlternativeEmailID && m.Status == "Active").Count();
                         if (getVote == 0) votedornot.Add("1"); //ViewBag.vote = "1";
                         else votedornot.Add("0");//ViewBag.vote = "0";
-                        
+
                     }
                     fbid.Add(id + "a" + item.ContestId);
                 }
@@ -91,10 +91,10 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.mycount = userenties.Count();
                     ViewBag.myvotedornot = myvotedornot;
                     var restriction = userenties.Where(m => m.ContentMasterID == long.Parse(id) && m.UserLoginID == user.UserId);
-                    ViewBag.uploadimage = restriction.Where(m=>m.Status != "InActive").Count();
+                    ViewBag.uploadimage = restriction.Where(m => m.Status != "InActive").Count();
                     ViewBag.restriction = restriction.Count();
                     //ViewBag.uploadimage = uploadimage;
-                    
+
                 }
                 var fburl = "http://www.ahwanam.com/ParticularContest?id=id&csid=csid";
 
@@ -189,6 +189,10 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                if (sample_input == "" && sample_input == null)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Please Click Crop after Uploading Image');location.href='/ParticularContest/Index?id=" + id + "'</script>");
+                }
                 if (command == "Add")
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
