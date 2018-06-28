@@ -108,31 +108,40 @@
             // Subscription.EmailId = $('#emailid').val();
             // Subscription.Status = null;
             var EmailId = $('#emailid').val();
-            $.ajax({
-                url: '/Contests/SubmittingSubscriber?email=' + EmailId,
-                type: 'POST',
-                // data: JSON.stringify({ customerPhone, RestCode, CustomerRequest, DeliverTime, Totalamount,cgst1,sgst1,deliveryamount }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == "success") {
-                        $("p#submsg").empty().append("<b>Subscribed Successfully</b>");
-                        //alert('subscribed successfully');
-                        //window.location.reload()
-                    } else if (data == "exits") {
-                        //alert('email already subscribed');
-                        //window.location.reload()
-                        $("p#submsg").empty().append("<b>E-mail is already subscribed</b>");
+            //alert(EmailId);
+            if (EmailId == '' || EmailId == null) {
+                alert("Enter Your Email-ID");
+                $('#emailid').focus();
+                //$("p#submsg").append("Enter Your Email-ID");
+            }
+            else {
+                $.ajax({
+                    url: '/Contests/SubmittingSubscriber?email=' + EmailId,
+                    type: 'POST',
+                    // data: JSON.stringify({ customerPhone, RestCode, CustomerRequest, DeliverTime, Totalamount,cgst1,sgst1,deliveryamount }),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data == "success") {
+                            $("p#submsg").empty().append("<b>Subscribed Successfully</b>");
+                            //alert('subscribed successfully');
+                            //window.location.reload()
+                        } else if (data == "exits") {
+                            //alert('email already subscribed');
+                            //window.location.reload()
+                            $("p#submsg").empty().append("<b>E-mail is already subscribed</b>");
 
+                        }
+                        else {
+                            alert("not updated");
+                        }
+                    },
+                    error: function (data) {
+                        alert('subscription failed');
                     }
-                    else {
-                        alert("not updated");
-                    }
-                },
-                error: function (data) {
-                    alert('subscription failed');
-                }
-            });
+                });
+            }
+            
         }
     </script>
 

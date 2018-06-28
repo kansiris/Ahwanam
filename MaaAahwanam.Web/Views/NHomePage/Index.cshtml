@@ -95,48 +95,6 @@
                         </ul>
                     </div>
 
-                    if (ViewBag.cartCount != 0)
-                    {
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="cartBlock p-2">
-                                    <div class="arrow"></div>
-                                    <ul class="pl-0">
-
-                                        @foreach (var item in ViewBag.cartitems)
-                                        {
-                                            <li>
-                                                <div class="d-inline-block image">
-                                                    @if (item.image != null)
-                            {
-                                                        <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
-
-                                                    }
-                                                    else if (item.image == null)
-                                                    {
-                                                        <img width="100" height="100" src="~/noimages.png" />
-                                                    }
-                                                </div>
-                                                <div class="d-inline-block title">
-                                                    <p>@item.BusinessName</p>
-                                                </div>
-                                                <div class="d-inline-block price">
-                                                    <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
-                                                </div>
-                                                <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                            </li>
-                                        }
-
-                                    </ul>
-                                    <div class="w-100 d-flex justify-content-center">
-                                        <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2" onclick="location.href='/NCartView/Index'">Checkout</span>
-                                        <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@ViewBag.Total</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-
                 }
             }
             else
@@ -161,6 +119,47 @@
 
         </nav>
     </div>
+    @if (ViewBag.cartCount != 0)
+    {
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cartBlock p-2">
+                <div class="arrow"></div>
+                <ul class="pl-0">
+
+                    @foreach (var item in ViewBag.cartitems)
+                    {
+                        <li>
+                            <div class="d-inline-block image">
+                                @if (item.image != null)
+                                {
+                                    <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
+
+                                }
+                                else if (item.image == null)
+                                {
+                                    <img width="100" height="100" src="~/noimages.png" />
+                                }
+                            </div>
+                            <div class="d-inline-block title">
+                                <p>@item.BusinessName</p>
+                            </div>
+                            <div class="d-inline-block price">
+                                <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
+                            </div>
+                            <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        </li>
+                    }
+
+                </ul>
+                <div class="w-100 d-flex justify-content-center">
+                    <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2" onclick="location.href='/NCartView/Index'">Checkout</span>
+                    <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@ViewBag.Total</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
 
     <div class="container-fluid mainBg">
         @*<text>@ViewBag.currenttme</text>*@
@@ -282,9 +281,14 @@
     </div>
     <div class="container normalSearch margin-top-50 margin-bottom-50">
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-sm-6 col-md-4 offset-md-1 mb-2">
-                <input type="text" class="w-100" placeholder="Search Here" id="searchvendors">
+            <div class="col-12 col-sm-6 col-md-3 offset-md-1 venueSearch d-flex mb-2">
+                <div class="ui-widget">
+                    <input id="tags1" class="ui-autocomplete-input" autocomplete="off" />
+                </div>
+                <span class="themeBgColorPrimaryPurple align-items-center justify-content-center text-white w-100">Hyderabad</span>
+                <span class="themeBgColorSecondaryYellow d-flex"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
             </div>
+            
             <div class="col-12 col-sm-3 col-md-2 categorySearch d-flex mb-2 pr-sm-0 pr-md-0">
                 <span class="themeBgColorPrimaryPurple d-flex align-items-center justify-content-center text-white w-100" id="searchvendortype">Hotel</span>
                 <span class="themeBgColorSecondaryYellow d-flexs"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
@@ -303,12 +307,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-3 venueSearch d-flex mb-2">
-                <div class="ui-widget">
-                    <input id="tags1" class="ui-autocomplete-input" autocomplete="off" />
-                </div>
-                <span class="themeBgColorPrimaryPurple align-items-center justify-content-center text-white w-100">Hyderabad</span>
-                <span class="themeBgColorSecondaryYellow d-flex"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+            <div class="col-12 col-sm-6 col-md-4 mb-2 pl-4">
+                <input type="text" class="w-100" placeholder="Search Here" id="searchvendors">
             </div>
         </div>
         <div class="row justify-content-center normalSearchResult" id="sortedvendorlist">
@@ -983,14 +983,14 @@
         var catgSearch = $(".categorySearch > span"),
             catgSearchSpanFirst = $(".categorySearch > span:first-child"),
             catResults = $(".categorySearch .categoryResults")
-        $(catgSearch).click(function () {
-            // e.stopPropagation(); //New Line Added
+        $(catgSearch).click(function (e) {
+             e.stopPropagation(); //New Line Added
             $(catResults).css("display", "block");
         });
         /*-- New Script Added --*/
-        //$(document).click(function () {
-        //    $(catResults).hide();
-        //});
+        $(document).click(function () {
+            $(catResults).hide();
+        });
         /*-- New Script Added --*/
 
         $(catResults).find('li').click(function () {
@@ -1102,6 +1102,11 @@
             var type = $('#searchvendortype').html();
             location.href = '/NParticularVendor?type=' + type + '&&id=' + id + '&&vid=' + subid + '';
         }
+
+        $('button.navbar-toggler-right').click(function () {
+            $(this).nextAll(".navbar-collapse").removeClass('in').toggleClass(' show');
+        });
+
     </script>
 </body>
 </html>

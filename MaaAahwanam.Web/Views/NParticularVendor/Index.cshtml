@@ -242,6 +242,32 @@
                         </dd>
                         <dt>Gallery / Portfolio</dt>
                         <dd class="p-2">
+                            @*<div class="w-100 vrResponsiveTabs">
+                                    <p>Photos</p>
+                                    <span>
+                                        <div class="row gallery">
+                                            @foreach (var item in ViewBag.allimages)
+                                            {
+                                                <div class="text-center block">
+                                                    <img src="~/vendorimages/@item.ImageName" class="mw-100" alt="@item.ImageName">
+                                                    <span class="themeColor mt-1 d-block">
+                                                        @if (item.Imagedescription != null)
+                                                        { @item.Imagedescription }
+                                                        else
+                                                        { <p>No Description</p>}
+                                                    </span>
+                                                </div>
+                                            }
+                                            @if (ViewBag.allimages.Count == 0)
+                                            {
+                                                <p>No Images Available</p>
+                                            }
+                                        </div>
+                                    </span>
+                                    <p>Videos</p>
+                                    <span>No Videos Available</span>
+                                </div>
+                                <div class="appendedData"></div>*@
                             <div class="w-100 vrResponsiveTabs">
                                 <p>Photos</p>
                                 <span>
@@ -249,19 +275,20 @@
                                         @foreach (var item in ViewBag.allimages)
                                         {
                                             <div class="text-center block">
-                                                <img src="~/vendorimages/@item.ImageName" class="img-fluid" alt="@item.ImageName">
+                                                <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" />
                                                 <span class="themeColor mt-1 d-block">
-                                                    @if (item.Imagedescription != null)
-                                                    { @item.Imagedescription }
-                                                    else
-                                                    { <p>No Description</p>}
+                                                @if (item.Imagedescription != null)
+                                                { @item.Imagedescription }
+                                                else
+                                                { <p>No Description</p>}
                                                 </span>
                                             </div>
                                         }
                                         @if (ViewBag.allimages.Count == 0)
                                         {
-                                            <span>No Images Available</span>
-                                        }
+                                            <div class="text-center block">
+                                                <span>No Images Available</span>
+                                            </div>                                        }
                                     </div>
                                 </span>
                                 <p>Videos</p>
@@ -333,13 +360,13 @@
                                         <div class="col-12 colmd-12 packageDetails">
                                             <div class="w-100 float-left">
                                                 @if (item.VenueType != "" && item.VenueType != null)
-                                                    {
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">@item.VenueType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
+                                                }
+                                                else
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Venue&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                    }
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.ServiceCost</span></p>
                                                 </div>
@@ -364,13 +391,13 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>*@
                                                 @if (item.CuisineType != "" && item.CuisineType != null)
-                                                    {
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">@item.CuisineType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
+                                                }
+                                                else
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Catering&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                    }
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.Veg</span></p>
                                                 </div>
@@ -395,13 +422,13 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>*@
                                                 @if (item.DecorationType != "" && item.DecorationType != null)
-                                                    {
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">@item.DecorationType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
+                                                }
+                                                else
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Decorator&&id=@item.VendorMasterId&&vid=@item.Id">Venue</a></p></div>
-                                                    }
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p> @*.Replace(".00", "")*@
                                                 </div>
@@ -426,13 +453,13 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>*@
                                                 @if (item.PhotographyType != "" && item.PhotographyType != null)
-                                                    {
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">@item.PhotographyType</a></p></div>
-                                                    }
-                                                    else
-                                                    {
+                                                }
+                                                else
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Photography&&id=@item.VendorMasterId&&vid=@item.Id">Photography</a></p></div>
-                                                    }
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.StartingPrice</span></p>
                                                 </div>
@@ -457,13 +484,13 @@
                                             <div class="w-100 float-left">
                                                 @*<div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>*@
                                                 @if (item.type != "" && item.type != null)
-                                                    {
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">@item.type</a></p></div>
-                                                    }
-                                                    else
-                                                    {
+                                                }
+                                                else
+                                                {
                                                     <div class="float-left"><p class="mb-0 packageName"><a href="/NParticularVendor?type=Other&&id=@item.VendorMasterId&&vid=@item.Id">Other</a></p></div>
-                                                    }
+                                                }
                                                 <div class="float-right">
                                                     <p class="mb-0 mr-2">INR <span>@item.ItemCost</span></p>
                                                 </div>
@@ -520,7 +547,7 @@
                                     </select>
                                 </div>*@
 
-                            <div class="w-100 mt-3 noOfPeoples"  id="people">
+                            <div class="w-100 mt-3 noOfPeoples" id="people">
                                 <div class="form-group mb-0">
                                     <input type="number" class="form-control nexaBold" placeholder="No of Guests" id="members" name="members" onkeyup="this.value = minmax(this.value, 0, 70)">
                                 </div>
@@ -667,16 +694,15 @@
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script type="text/javascript">
-    function minmax(value, min, max)
-    {
-        if(parseInt(value) < 0 || isNaN(value))
-            return 0;
-        else if(parseInt(value) > 10000)
-            return 10000;
-        else return value;
-    }
-</script>
+    <script type="text/javascript">
+        function minmax(value, min, max) {
+            if (parseInt(value) < 0 || isNaN(value))
+                return 0;
+            else if (parseInt(value) > 10000)
+                return 10000;
+            else return value;
+        }
+    </script>
     <script type="text/javascript">
         /*--- Date and Time ----*/
         $('#datetimepicker').datetimepicker({
@@ -924,7 +950,7 @@
     <script>
         $(".bookNow").click(function () {
             var timeslot = '';
-             var type = '@Request.QueryString["type"]';
+            var type = '@Request.QueryString["type"]';
             if (type == 'Venue' || type == 'Catering' || type == 'venue' || type == 'Hotel' || type == 'Resort' || type == 'Convention Hall' || type == 'Catering' || type == 'Hotel') {
                 if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
@@ -954,9 +980,9 @@
             }
                 //}
                 //else if ($(".slotTime input[type='checkbox']").is(':checked')) {
-            //else if (timeslot =''){
-            //    alertmsg("Please select time slot");}
-            else{
+                //else if (timeslot =''){
+                //    alertmsg("Please select time slot");}
+            else {
 
                 //alert(timeslot);
                 var eventtype = $("#eventtype").val();
@@ -969,7 +995,7 @@
                 var totalprice = price * nop;
                 var total = $('#selectedprice').html();
                 var selectedtype = $('#selectedtype').val();
-               url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total='+ total;
+                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total=' + total;
 
                 $.ajax({
                     url: url1,
@@ -1008,28 +1034,27 @@
             var pkgprice = $('#pkgprice').val();
             var members = $('#members').val();
             var totalVal = $('.totalVal').text();
-          
+
             //alert(pkgprice);
             //alert(members);
             //alert(totalVal);
-           if (pkgprice != '0' && pkgprice != '') {
+            if (pkgprice != '0' && pkgprice != '') {
                 totalVal = pkgprice * members;
             }
             var checkLen = $(".slotTime input[type='checkbox']:checked").length;
-                //totalVal = parseInt($(".totalVal").text()),
-               //service cost
+            //totalVal = parseInt($(".totalVal").text()),
+            //service cost
             //if (pkgprice == '')
             //{
             //    total1 = $('#serviceprice').val();
             //    totalVal = total1 * members
             //}
             //else { total = checkLen * totalVal; }
-            if (pkgprice == '')
-            {
+            if (pkgprice == '') {
                 total1 = $('#serviceprice').val();
                 totalVal = total1 * members
             }
-            total = checkLen * totalVal; 
+            total = checkLen * totalVal;
 
 
             $(".totalAmount span").empty().append(total);

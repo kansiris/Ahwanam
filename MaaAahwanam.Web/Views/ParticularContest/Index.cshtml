@@ -421,7 +421,7 @@
                                             <input type="number" class="img-w" value="500" min="100" max="1200" />
                                         </div>
                                         <!-- save btn -->
-                                        <button class="btn save hide">Crop</button>
+                                        <button class="btn save hide">Apply</button>
                                         <!-- download btn -->
                                         @*<a href="" class="btn download hide">Download</a>*@
                                     </div>
@@ -430,31 +430,34 @@
 
 
 
+                                <div id="contestdetailsdiv" style="display:none">
 
-
-                                <div class="w-100 mt-3">
-                                    <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                                        <label for="comment">Your Name:</label>
-                                        <input type="text" id="Item2_Name" name="Item2.Name" class="form-control" required />
+                                    <div class="w-100 mt-3">
+                                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                                            <label for="comment">Your Name:</label>
+                                            <input type="text" id="Item2_Name" name="Item2.Name" class="form-control" required />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="w-100 mt-3">
-                                    <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                                        <label for="comment">Description:</label>
-                                        <textarea class="form-control" rows="5" id="Item2_Description" name="Item2.Description" required></textarea>
+                                    <div class="w-100 mt-3">
+                                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                                            <label for="comment">Description:</label>
+                                            <textarea class="form-control" rows="5" id="Item2_Description" name="Item2.Description" required></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="w-100 mt-3">
-                                    <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
-                                        <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">By Clicking this you are Accepting all Terms & Conditions</label>
+                                    @*<div class="w-100 mt-3">
+                                        <div class="form-group col-12 col-sm-8 col-md-6 mx-auto">
+                                            <input type="checkbox" id="Item2_TermsAndConditions" name="Item2.TermsAndConditions" value="1" required /> <label for="Item2_TermsAndConditions">By Clicking on Enter Contest you are Accepting all Terms & Conditions</label>
+                                        </div>
+                                    </div>*@
+                                    <div class="w-100">
+                                        <div class="col-12 col-sm-8 col-md-6 mx-auto">
+                                            <button type="submit" id="btnsubmit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Add">Enter Contest</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="w-100">
-                                    <div class="col-12 col-sm-8 col-md-6 mx-auto">
-                                        <button type="submit" id="btnsubmit" class="btn themeRedBgColor text-white shareBtn py-2 px-4" name="command" value="Add">Enter Contest</button>
-                                    </div>
+                                    <p>By Clicking on Enter Contest you are Accepting all Terms & Conditions</p>
                                 </div>
                             </form>
+                            
                             <text>Any Queries, mail us <a href="mailto:info@ahwanam.com">info@ahwanam.com</a> </text>
                         }
                         else
@@ -494,6 +497,12 @@
          fileupload = upload;
          //regex = new regexp("([a-za-z0-9\s_\\.\-:])+(" + allowedfiles.join('|') + ")$");
         //var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg)$/;
+
+        $(save).click(function () {
+            //alert("Image Cropped SuccessFully!!! Enter Details Below");
+            alertify.success('Image Cropped SuccessFully!!! Enter Details Below' + '<i class="fa fa-arrow-circle-down text-white ml-2 fa-lg" aria-hidden="true"></i>');
+            $('#contestdetailsdiv').show(); 
+        });
 
         $('#file-input').on('change', function (e) {
             var allowedFiles = [".jpg", ".jpeg", ".png"];

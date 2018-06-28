@@ -201,6 +201,7 @@ namespace MaaAahwanam.Web.Controllers
                     contest.ContentMasterID = long.Parse(id);
                     contest.IPAddress = HttpContext.Request.UserHostAddress;
                     contest.SharedCount = 0;
+                    contest.TermsAndConditions = 1;
                     contest.UserLoginID = user.UserId;
                     contest = contestsService.EnterContest(contest);
                     if (contest.ContestId != 0)
