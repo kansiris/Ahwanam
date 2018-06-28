@@ -215,7 +215,7 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult DealsSection(string type, string L1)
+        public ActionResult DealsSection(string type, string L1,string vid)
         {
             try
             {
@@ -225,10 +225,10 @@ namespace MaaAahwanam.Web.Controllers
                 if (type != null) if (type.Split(',').Count() > 1) type = "Venue";
                 if (type == "Conventions" || type == "Resorts" || type == "Hotels" || type == "Venues" || type == "Banquet Hall" || type == "Function Hall" || type == "Banquet" || type == "Function")
                     type = "Venue";
-                if (type == "Mehendi" || type == "Pandit")
-                    type = "Other";
+                //if (type == "Mehendi" || type == "Pandit")
+                //    type = "Other";
                 ViewBag.type = type;
-                var records = vendorProductsService.Getvendorproducts_Result(type);
+                var records = vendorProductsService.Getvendorproducts_Result(type).Where(m=>m.subid != vid);
                 ViewBag.deal = records.Take(takecount).ToList();
                 int count = records.Count();
 
