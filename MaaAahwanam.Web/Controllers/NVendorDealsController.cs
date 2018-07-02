@@ -82,11 +82,14 @@ namespace MaaAahwanam.Web.Controllers
                 deals.DealDescription = ddesc;
                 deals.TermsConditions = "TAXES EXTRA @ 18% PER PERSON / PER ROOM";
                 deals = vendorVenueSignUpService.updatedeal(long.Parse(id),deals);
-                TempData["Active"] = "Deal Updated";
-                return RedirectToAction ("Index", "NVendorDeals", new { id = vid });
-            }
-            TempData["Active"] = "Please Login";
-            return RedirectToAction("Index", "Nhomepage", new { id = vid });
+                    //  TempData["Active"] = "Deal Updated";
+                    //  return RedirectToAction ("Index", "NVendorDeals", new { id = vid });
+                    return Content("<script language='javascript' type='text/javascript'>alert('Deal Updated successfully');location.href='" + @Url.Action("Index", "NVendorDeals", new { id = vid }) + "'</script>");
+
+                }
+            return Content ("<script> alert('Please Login');location.href='"+ @Url.Action("Index","Nhomepage",new { id = vid})+"'</script>");
+            //    TempData["Active"] = "Please Login";
+            //return RedirectToAction("Index", "Nhomepage", new { id = vid });
             }
             catch (Exception)
             {
@@ -103,12 +106,16 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.vendormasterid = id;
                 if (message == "success")
                 {
-                    TempData["Active"] = "Deal Deleted";
-                    return RedirectToAction("Index", "NVendorDeals", new { id = vid });
+                        return Content("<script> alert('Deal Deleted');location.href='" + @Url.Action("Index", "NVendorDeals", new { id = vid }) + "'</script>");
+
+                      //  TempData["Active"] = "Deal Deleted";
+                   // return RedirectToAction("Index", "NVendorDeals", new { id = vid });
                 }
             }
-            TempData["Active"] = "Please login";
-            return RedirectToAction("Index", "Nhomepage", new { id = vid });
+                return Content("<script> alert('Please login');location.href='" + @Url.Action("Index", "Nhomepage", new { id = vid }) + "'</script>");
+
+            //    TempData["Active"] = "Please login";
+            //return RedirectToAction("Index", "Nhomepage", new { id = vid });
             }
             catch (Exception)
             {
