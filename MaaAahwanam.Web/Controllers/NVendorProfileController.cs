@@ -50,8 +50,11 @@ namespace MaaAahwanam.Web.Controllers
 
             userLoginDetailsService.Updatevendordetailsnew(vendor, email);
             Int64 id = vendor.Id;
-            TempData["Active"] = "Profile updated";
-            return RedirectToAction("Index", "NVendorProfile", new { id = id });
+            //TempData["Active"] = "Profile updated";
+
+              return Content("<script language='javascript' type='text/javascript'>alert('Profile updated sucessfully');location.href='" + @Url.Action("Index", "NVendorProfile", new { id = id }) + "'</script>");
+
+                //return RedirectToAction("Index", "NVendorProfile", new { id = id });
             }
             catch (Exception)
             {

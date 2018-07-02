@@ -62,9 +62,9 @@ namespace MaaAahwanam.Web.Controllers
                 string msg = vendorVenueSignUpService.RemoveVendorService(vid, type);
                 string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
 
-                TempData["Active"] = "Service " + msg + "";
-                return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-              //  return Content("<script language='javascript' type='text/javascript'>alert('Service " + msg + "');location.href='/NVendorStoreFront/Index?id=" + id +"'</script>");
+              //  TempData["Active"] = "Service " + msg + "";
+               // return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
+                return Content("<script language='javascript' type='text/javascript'>alert('Service " + msg + "');location.href='/NVendorStoreFront/Index?id=" + id +"'</script>");
             }
             else
             {
@@ -72,15 +72,16 @@ namespace MaaAahwanam.Web.Controllers
                 string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
                 if (value > 0)
                 {
-                    TempData["Active"] = "Service Removed";
-                    return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                }
-                // return Content("<script language='javascript' type='text/javascript'>alert('Service Removed');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
-                else
+                    //TempData["Active"] = "Service Removed";
+                   // return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
+                    return Content("<script language='javascript' type='text/javascript'>alert('Service Removed');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
 
-                    TempData["Active"] = "Something Went Wrong!!! Try Again After Some Time";
-                return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                //return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+                    }
+                    else
+
+                   // TempData["Active"] = "Something Went Wrong!!! Try Again After Some Time";
+                //return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
+                return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
             }
             }
             catch (Exception)

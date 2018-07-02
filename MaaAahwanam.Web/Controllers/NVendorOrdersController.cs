@@ -67,15 +67,19 @@ namespace MaaAahwanam.Web.Controllers
                         {
                             order.Status = "Vendor Declined";
                             orderdetail.Status = "Vendor Declined";
-                            TempData["Active"] = "Order Cancelled";
+                           // TempData["Active"] = "Order Cancelled";
                         }
                         order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
                         //SendEmail(int.Parse(orders.FirstOrDefault().UserLoginId.ToString()), orderid, id, command, orders.FirstOrDefault().BusinessName);
-                        return RedirectToAction("Index", "NVendorOrders", new { id = id });
+                        // return RedirectToAction("Index", "NVendorOrders", new { id = id });
+                        return Content("<script language='javascript' type='text/javascript'>alert('Order Cancelled');location.href='" + @Url.Action("Index", "NVendorOrders", new { id = id }) + "'</script>");
+
                     }
                 }
-                TempData["Active"] = "Please Login";
-                return RedirectToAction("Index", "NVendorOrders", new { id = id });
+                //TempData["Active"] = "Please Login";
+                //return RedirectToAction("Index", "NVendorOrders", new { id = id });
+                return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NVendorOrders", new { id = id }) + "'</script>");
+
             }
             catch (Exception)
             {
