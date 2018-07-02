@@ -15,11 +15,15 @@ namespace MaaAahwanam.Web.Controllers
         {
             ViewBag.service = servicetype;
             if (servicetype == "Hotels")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Hotel");//.Where(m => m.subtype == "Hotel");
+            { ViewBag.records = vendorProductsService.Getvendorproducts_Result("Hotel"); ViewBag.service = "Hotel"; }
             else if (servicetype == "Resorts")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Resort");//.Where(m => m.subtype == "Resort");
+            { ViewBag.records = vendorProductsService.Getvendorproducts_Result("Resort"); ViewBag.service = "Resort"; }
             else if (servicetype == "Conventions")
-                ViewBag.records = vendorProductsService.Getvendorproducts_Result("Convention Hall");//.Where(m => m.subtype == "Convention Hall");
+            { ViewBag.records = vendorProductsService.Getvendorproducts_Result("Convention Hall"); ViewBag.service = "Convention Hall"; }
+            else if (servicetype == "BanquetHall")
+            { ViewBag.records = vendorProductsService.Getvendorproducts_Result("Banquet Hall"); ViewBag.service = "Banquet Hall"; }
+            else if (servicetype == "FunctionHall")
+            { ViewBag.records = vendorProductsService.Getvendorproducts_Result("Function Hall"); ViewBag.service = "Function Hall"; }
             else
                 ViewBag.records = vendorProductsService.Getvendorproducts_Result(servicetype);
             return View();
