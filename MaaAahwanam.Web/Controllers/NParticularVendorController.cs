@@ -374,7 +374,10 @@ namespace MaaAahwanam.Web.Controllers
                     CartItem cartItem = new CartItem();
                     cartItem.VendorId = Int32.Parse(id);
                     cartItem.ServiceType = type;
-                    cartItem.TotalPrice = decimal.Parse(total);
+                    if (type != "Mehendi" || type != "Pandit" || type != "Decorator" || type != "Other")
+                        cartItem.TotalPrice = decimal.Parse(total) * decimal.Parse(guest);
+                    else
+                        cartItem.TotalPrice = decimal.Parse(total);
                     cartItem.Orderedby = user.UserId;
                     cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
                     cartItem.Perunitprice = decimal.Parse(price);

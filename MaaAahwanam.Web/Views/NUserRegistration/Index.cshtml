@@ -21,7 +21,7 @@
                                 <p class="mb-0">Are you a new user ? <span class="themeColor cursorPointer registerBtn">Register</span></p>
                             </div>
                             @using (Html.BeginForm("Index", "NUserRegistration", FormMethod.Post))
-                {
+                            {
                                 <div class="row mx-0 my-2">
                                     <div class="form-group w-100">
                                         <input type="text" class="form-control" placeholder="Email ID" name="Item1.UserName" id="Item1_UserName" autofocus required />
@@ -218,7 +218,7 @@
                 $(this).parents(".buttons").prev(".password").children(".form-group").append('<input type="password" name="Item1.Password" id="Item1_Password" class="form-control" name="" placeholder="Password here" required>');
                 $(this).parents(".buttons").prev(".password").css("display", "block");
                 $('#Item1_Password').focus();
-                $(this).html("Login").prop('id', 'loginredirect');//.attr('onclick', 'redirection()');
+                $(this).html("Login").prop('id', 'loginredirect').focus();//.attr('onclick', 'redirection()');
                 var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
                 $('#Item1_UserLoginId').val(loginid);
                 $('#LoginBlock').attr('action', '/NUserRegistration/Index?command=Login'); // action="/NUserRegistration/Index?command=Login")
@@ -232,8 +232,11 @@
         $(document).on('click', '#loginredirect', function () {
             
             var passtxt = $('#Item1_Password').val();
+            alert(passtxt);
             if (passtxt != '') {
+                //alert("success");
                 testlogin();
+                //alert("form submit");
                 //$(this).attr('type', 'submit');
                 //var loginid = $(this).parents('.block').children('.userBlock').children('input#typeid').val();
                 //location.href = '/NUserRegistration/LoginBlocks?email=' + $('#Item1_UserName').val() + '&&password=' + passtxt + '&&id=' + loginid;
@@ -253,6 +256,8 @@
         }
     </script>
 
+
+    
 
     @*<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};HandleGoogleApiLibrary()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
             <script>
