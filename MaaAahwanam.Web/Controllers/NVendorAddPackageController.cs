@@ -45,10 +45,12 @@ namespace MaaAahwanam.Web.Controllers
             {
                 if (type == "Type")
                 {
-                    TempData["Active"] = "Select Type";
-                    return RedirectToAction("Index", "NVendorAddPackage", new { id = id });
-                }
-                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                  //  TempData["Active"] = "Select Type";
+                  //  return RedirectToAction("Index", "NVendorAddPackage", new { id = id });
+           return Content("<script language='javascript' type='text/javascript'>alert('Select Type');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
+
+                    }
+                    DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 string[] words = type.Split(',');
                 string subid = words[0];
                 string type1 = words[1];
@@ -65,9 +67,9 @@ namespace MaaAahwanam.Web.Controllers
                 package.UpdatedDate = updateddate;
                 package = vendorVenueSignUpService.addpack(package);
                 ViewBag.vendormasterid = id;
-                TempData["Active"] = "Package added";
-                return RedirectToAction("Index", "NVendorPkgs", new { id = id });
-              //  return Content("<script language='javascript' type='text/javascript'>alert('package added');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
+              //  TempData["Active"] = "Package added";
+              //  return RedirectToAction("Index", "NVendorPkgs", new { id = id });
+                return Content("<script language='javascript' type='text/javascript'>alert('Package added successfully');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
             }
             else
             {
