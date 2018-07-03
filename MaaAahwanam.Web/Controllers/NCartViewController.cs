@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Repository;
 using MaaAahwanam.Service;
+using Razorpay;
+using Razorpay.Api;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -215,7 +217,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json("exists", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult booknow(string cartnos)
+        public ActionResult booknow(string cartnos, string paymentid,string amountpaid)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -253,7 +255,7 @@ namespace MaaAahwanam.Web.Controllers
                         int userid = Convert.ToInt32(user.UserId);
                         //Saving Record in order Table
                         OrderService orderService = new OrderService();
-                        Order order = new Order();
+                        MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
                         order.TotalPrice = Convert.ToDecimal(totalprice);
                         order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
                         order.UpdatedBy = (Int64)user.UserId;
@@ -264,6 +266,14 @@ namespace MaaAahwanam.Web.Controllers
 
 
                         //Payment Section
+                        RazorpayClient client = new RazorpayClient("rzp_test_3OHEkrM9aPMz5u", "WUA3WciyAExRDwRwxMIqU5Yb");
+                        Payment payment = client.Payment.Fetch(paymentid);
+
+                        Dictionary<string, object> options = new Dictionary<string, object>();
+                        options.Add("amount", Convert.ToInt32(amountpaid));
+
+                        Payment paymentCaptured = payment.Capture(options);
+
                         Payment_orderServices payment_orderServices = new Payment_orderServices();
                         Payment_Orders payment_Orders = new Payment_Orders();
                         payment_Orders.cardnumber = "4222222222222";
