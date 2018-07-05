@@ -14,7 +14,7 @@
                 </div>
                 <ul class="px-0 py-2 mb-0">
                     @foreach (var item in ViewBag.stype)
-                {
+                    {
                         <li id="@item[0]">@item[1]</li>
                     }
                 </ul>
@@ -451,7 +451,7 @@
             $(this).find(".vendorPrice").children("p").clone().appendTo(vendorPrice);
             $(vendorPrice).find(".maxMin").remove();
             $(this).find(".maxMin").clone().appendTo(vendorPrice);
-            
+
             $('#serviceprice').val(vendorPrice.find('span').text().replace(',', ''));
             //alert(vendorPrice.find('span').text().replace(',', ''));
 
@@ -490,7 +490,7 @@
 
         //$(".addtoCart").click(function () {
         $(document).on('click', '.addtoCart', function () {
-            var attrId = $(this).parents(".resultsPopUp").attr("id").replace("Partial","");
+            var attrId = $(this).parents(".resultsPopUp").attr("id").replace("Partial", "");
             //alert(attrId);
             $(".selectedServices ul li").each(function () {
                 var liId = $(this).attr("id");
@@ -533,30 +533,30 @@
                 var selectedtype = 'sprice';//$('#selectedtype').val();
                 url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total=' + total;
                 //alert(url1);
-                    $.ajax({
-                        url: url1,
-                        success: function (data) {
-                            if (data == "Success") {
-                                alertify.alert("Added To Cart", function () {
-                                    $(".resultsPopUp").css("display", "none");
-                                    var url = '/NHomePage/ItemsCartViewBindingLayout';
-                                    $('#navbarSupportedContent').empty().load(url);
-                                }); //location.href = '/NCartView/Index';
-                            }
-                            else if (data == "failed") {
-                                alertmsg("Failed To add item to the cart");
-                            }
-                            else if (data == "Exists") {
-                                alertmsg("This Service Already Exists in Cart");
-                            }
-                            else if (data == "Login") {
-                                //alertmsg("Login/Register to Add this Sevice to Cart");
-                                alertify.alert("Login/Register to Add this Sevice to Cart", function () {
-                                    location.href = '/NUserRegistration/Index';
-                                });
-                            }
+                $.ajax({
+                    url: url1,
+                    success: function (data) {
+                        if (data == "Success") {
+                            alertify.alert("Added To Cart", function () {
+                                $(".resultsPopUp").css("display", "none");
+                                var url = '/NHomePage/ItemsCartViewBindingLayout';
+                                $('#navbarSupportedContent').empty().load(url);
+                            }); //location.href = '/NCartView/Index';
                         }
-                    });
+                        else if (data == "failed") {
+                            alertmsg("Failed To add item to the cart");
+                        }
+                        else if (data == "Exists") {
+                            alertmsg("This Service Already Exists in Cart");
+                        }
+                        else if (data == "Login") {
+                            //alertmsg("Login/Register to Add this Sevice to Cart");
+                            alertify.alert("Login/Register to Add this Sevice to Cart", function () {
+                                location.href = '/NUserRegistration/Index';
+                            });
+                        }
+                    }
+                });
             }
             else {
                 alertmsg("Please select time slot");
