@@ -265,6 +265,20 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                     var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartnos1 = cartnos.Split(',');
+
+                     //Payment Section
+                        RazorpayClient client = new RazorpayClient("rzp_test_3OHEkrM9aPMz5u", "WUA3WciyAExRDwRwxMIqU5Yb");
+                        Payment payme1 = client.Payment.Fetch(paymentid);
+
+
+                        Dictionary<string, object> options = new Dictionary<string, object>();
+                        options.Add("amount", Convert.ToInt32(amountpaid));
+
+                        Payment paymentCaptured = payme1.Capture(options);
+                        Payment payme2 = client.Payment.Fetch(paymentid);
+                        var ks = JsonConvert.SerializeObject(payme2.Attributes);
+
+                        payees paymentArray = JsonConvert.DeserializeObject<payees>(ks);
                     for (int i = 0; i < cartnos1.Count(); i++)
                     {
                         string cartno2 = cartnos1[i];
@@ -303,27 +317,35 @@ namespace MaaAahwanam.Web.Controllers
 
 
                         //Payment Section
-                        RazorpayClient client = new RazorpayClient("rzp_test_3OHEkrM9aPMz5u", "WUA3WciyAExRDwRwxMIqU5Yb");
-                        Payment payme1 = client.Payment.Fetch(paymentid);
-                        var ks = JsonConvert.SerializeObject(payme1.Attributes);
-
-                        payees paymentArray = JsonConvert.DeserializeObject<payees>(ks);
-
-                        Dictionary<string, object> options = new Dictionary<string, object>();
-                        options.Add("amount", Convert.ToInt32(amountpaid));
-
-                        Payment paymentCaptured = payme1.Capture(options);
-
+                      
 
                         Payment_orderServices payment_orderServices = new Payment_orderServices();
                         Payment_Orders payment_Orders = new Payment_Orders();
 
-                        payment_Orders.cardnumber = paymentArray.method;
+                        payment_Orders.cardnumber = paymentArray.card_id;
                         payment_Orders.CVV = "razorpay";
-                        payment_Orders.paidamount = decimal.Parse(totalprice);
-                        payment_Orders.PaymentID = Convert.ToInt16(paymentArray.id);
+                        payment_Orders.paidamount = Convert.ToDecimal(Convert.ToDouble(paymentArray.amount)* 0.01);
+                        payment_Orders.Gateway_ID = paymentArray.id;
                         payment_Orders.Paiddate = Convert.ToDateTime(updateddate);
                         payment_Orders.OrderID = order.OrderId;
+                        payment_Orders.Amount = totalprice;
+                        payment_Orders.Bank = paymentArray.bank;
+                        payment_Orders.Card_ID = paymentArray.card_id;
+                        payment_Orders.Currency = paymentArray.currency;
+                        payment_Orders.Customer_Email = paymentArray.email;
+                        payment_Orders.Customer_Contact = paymentArray.contact;
+                        payment_Orders.Error_Code = paymentArray.error_code;
+                        payment_Orders.Error_Description = paymentArray.error_description;
+                        payment_Orders.Fee = Convert.ToString(Convert.ToDouble(paymentArray.fee) *0.01);
+                        payment_Orders.Tax = Convert.ToString(Convert.ToDouble(paymentArray.tax) * 0.01);
+                        payment_Orders.Payment_Captured = paymentArray.captured;
+                        payment_Orders.Payment_Status = paymentArray.status;
+                        payment_Orders.Refunded_Amount = paymentArray.amount_refunded;
+                        payment_Orders.Refund_Status = paymentArray.refund_status;
+                        payment_Orders.Wallet = paymentArray.wallet;
+                        payment_Orders.International = paymentArray.international;
+                        payment_Orders.Payment_Method = paymentArray.method;
+
                         payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
 
 
