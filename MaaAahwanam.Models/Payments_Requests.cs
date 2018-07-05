@@ -16,7 +16,7 @@ namespace MaaAahwanam.Models
         public string cardnumber { get; set; }
         public string CVV { get; set; }
         public DateTime Paiddate { get; set; }
-        public string Amount { get; set; }
+        public string TotalAmount { get; set; }
         public string Currency { get; set; }
         public string International { get; set; }
         public string Payment_Method { get; set; }
