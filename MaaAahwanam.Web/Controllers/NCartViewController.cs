@@ -265,6 +265,20 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                     var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartnos1 = cartnos.Split(',');
+
+                     //Payment Section
+                        RazorpayClient client = new RazorpayClient("rzp_test_3OHEkrM9aPMz5u", "WUA3WciyAExRDwRwxMIqU5Yb");
+                        Payment payme1 = client.Payment.Fetch(paymentid);
+
+
+                        Dictionary<string, object> options = new Dictionary<string, object>();
+                        options.Add("amount", Convert.ToInt32(amountpaid));
+
+                        Payment paymentCaptured = payme1.Capture(options);
+                        Payment payme2 = client.Payment.Fetch(paymentid);
+                        var ks = JsonConvert.SerializeObject(payme2.Attributes);
+
+                        payees paymentArray = JsonConvert.DeserializeObject<payees>(ks);
                     for (int i = 0; i < cartnos1.Count(); i++)
                     {
                         string cartno2 = cartnos1[i];
@@ -303,26 +317,15 @@ namespace MaaAahwanam.Web.Controllers
 
 
                         //Payment Section
-                        RazorpayClient client = new RazorpayClient("rzp_test_3OHEkrM9aPMz5u", "WUA3WciyAExRDwRwxMIqU5Yb");
-                        Payment payme1 = client.Payment.Fetch(paymentid);
-
-
-                        Dictionary<string, object> options = new Dictionary<string, object>();
-                        options.Add("amount", Convert.ToInt32(amountpaid));
-
-                        Payment paymentCaptured = payme1.Capture(options);
-                        Payment payme2 = client.Payment.Fetch(paymentid);
-                        var ks = JsonConvert.SerializeObject(payme2.Attributes);
-
-                        payees paymentArray = JsonConvert.DeserializeObject<payees>(ks);
+                      
 
                         Payment_orderServices payment_orderServices = new Payment_orderServices();
                         Payment_Orders payment_Orders = new Payment_Orders();
 
                         payment_Orders.cardnumber = paymentArray.card_id;
                         payment_Orders.CVV = "razorpay";
-                        payment_Orders.paidamount = decimal.Parse(totalprice);
-                        payment_Orders.PaymentID = Convert.ToInt16(paymentArray.id);
+                        payment_Orders.paidamount = Convert.ToDecimal(Convert.ToDouble(paymentArray.amount)* 0.01);
+                        payment_Orders.Gateway_ID = paymentArray.id;
                         payment_Orders.Paiddate = Convert.ToDateTime(updateddate);
                         payment_Orders.OrderID = order.OrderId;
                         payment_Orders.Amount = totalprice;
@@ -333,8 +336,8 @@ namespace MaaAahwanam.Web.Controllers
                         payment_Orders.Customer_Contact = paymentArray.contact;
                         payment_Orders.Error_Code = paymentArray.error_code;
                         payment_Orders.Error_Description = paymentArray.error_description;
-                        payment_Orders.Fee = paymentArray.fee;
-                        payment_Orders.Tax = paymentArray.tax;
+                        payment_Orders.Fee = Convert.ToString(Convert.ToDouble(paymentArray.fee) *0.01);
+                        payment_Orders.Tax = Convert.ToString(Convert.ToDouble(paymentArray.tax) * 0.01);
                         payment_Orders.Payment_Captured = paymentArray.captured;
                         payment_Orders.Payment_Status = paymentArray.status;
                         payment_Orders.Refunded_Amount = paymentArray.amount_refunded;
