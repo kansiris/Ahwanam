@@ -344,7 +344,7 @@ namespace MaaAahwanam.Web.Controllers
                         payment_Orders.Refund_Status = paymentArray.refund_status;
                         payment_Orders.Wallet = paymentArray.wallet;
                         payment_Orders.International = paymentArray.international;
-                        
+                        payment_Orders.Payment_Method = paymentArray.method;
 
                         payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
 
