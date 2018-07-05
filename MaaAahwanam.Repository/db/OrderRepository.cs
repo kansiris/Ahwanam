@@ -68,7 +68,7 @@ namespace MaaAahwanam.Repository.db
             {
                 _dbContext.SaveChanges();
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
 
             }

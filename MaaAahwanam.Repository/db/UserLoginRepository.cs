@@ -59,7 +59,7 @@ namespace MaaAahwanam.Repository.db
             {
                 _dbContext.SaveChanges();
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
 
             }
@@ -96,7 +96,7 @@ namespace MaaAahwanam.Repository.db
             {
                 _dbContext.SaveChanges();
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
 
             }
@@ -140,7 +140,7 @@ namespace MaaAahwanam.Repository.db
             {
                 _dbContext.SaveChanges();
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
                 return 0;
             }

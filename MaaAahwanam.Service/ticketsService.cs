@@ -38,7 +38,7 @@ namespace MaaAahwanam.Service
                 issueTicketRepository.Insertissueticket(issueTicket);
                 message = "Success";
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
                 message = "Success";
             }
