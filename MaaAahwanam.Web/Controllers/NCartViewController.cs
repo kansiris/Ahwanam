@@ -219,7 +219,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json("exists", JsonRequestBehavior.AllowGet);
         }
-        class Student
+        class payees
         {
             public string id { get; set; }
             public string entity { get; set; }
@@ -307,7 +307,7 @@ namespace MaaAahwanam.Web.Controllers
                         Payment payme1 = client.Payment.Fetch(paymentid);
                         var ks = JsonConvert.SerializeObject(payme1.Attributes);
 
-                        Student studentArray = JsonConvert.DeserializeObject<Student>(ks);
+                        payees paymentArray = JsonConvert.DeserializeObject<payees>(ks);
 
                         Dictionary<string, object> options = new Dictionary<string, object>();
                         options.Add("amount", Convert.ToInt32(amountpaid));
@@ -318,10 +318,10 @@ namespace MaaAahwanam.Web.Controllers
                         Payment_orderServices payment_orderServices = new Payment_orderServices();
                         Payment_Orders payment_Orders = new Payment_Orders();
 
-                        payment_Orders.cardnumber = "4222222222222";
-                        payment_Orders.CVV = "214";
+                        payment_Orders.cardnumber = paymentArray.method;
+                        payment_Orders.CVV = "razorpay";
                         payment_Orders.paidamount = decimal.Parse(totalprice);
-                        //payment_Orders.PaymentID = orderRequest.PaymentId;
+                        payment_Orders.PaymentID = Convert.ToInt16(paymentArray.id);
                         payment_Orders.Paiddate = Convert.ToDateTime(updateddate);
                         payment_Orders.OrderID = order.OrderId;
                         payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
