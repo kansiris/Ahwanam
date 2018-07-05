@@ -155,7 +155,8 @@
                   
                 @if (@ViewBag.cartCount != 0)
                 {<div class="row mt-3 d-flex justify-content-center">
-                            <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow" disabled>Book Now</button>
+                     @*id="rzp-button1"*@
+                            <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow"   disabled>Book Now</button>
                         </div>
                 }
                 else
@@ -199,6 +200,9 @@
 
 
         </script>
+
+
+               
 
         <script type="text/javascript">
 
@@ -286,8 +290,8 @@
 
                     }
                 })
-           
-           
+
+
             });
 
 
@@ -351,7 +355,7 @@
             checkFun();
             //    $("ul.customDates").append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ 3500 + "</span>" +  "</li>");
             /*-- Each Block for Vendor title Start --*/
-    
+
             $(".totalBlocks .block").each(function(){
                 var title = $(this).find(".titleBlock").find("h4").text();
                 var titleOrg = $(this).find(".titleBlock").find("h4").text();
@@ -441,54 +445,60 @@
         $(".cartPage .block").find("input[type='checkbox']").change(function () {
             checkFun();
 
-         
+
         });
 
         /*-- Checkbox Fun for Book Now Button --*/
 
-        /*-- Book Now Button --*/
-        $(".cartPage .bookNow").click(function () {
-            //  alert("Yes");
-            var cartnos = '';
-            //if ($(".cartselect input[type='checkbox']").is(':checked')) {
+        ///*-- Book Now Button --*/
+        //$(".cartPage .bookNow").click(function () {
+        //    //  alert("Yes");
+        //    var cartnos = '';
+        //    //if ($(".cartselect input[type='checkbox']").is(':checked')) {
 
-            //    var favorite = [];
-            //    $.each($("input[name='cardid']:checked"), function () {
-            //        favorite.push($(this).val());
-            //        cartnos = favorite.join(", ");
-            //    })
-            //}
+        //    //    var favorite = [];
+        //    //    $.each($("input[name='cardid']:checked"), function () {
+        //    //        favorite.push($(this).val());
+        //    //        cartnos = favorite.join(", ");
+        //    //    })
+        //    //}
 
-            var checkBoxVal = [];
-            $(".cartPage .block").each(function () {
-                if (($(this).find("input[type='checkbox']")).is(':checked')) {
-                    checkBoxVal.push($(this).find("input[type='checkbox']").val());
-                    //alert(checkBoxVal);
-                    cartnos = checkBoxVal;
-                }
-            });
+        //    var checkBoxVal = [], totalPrice = [];
+        //    $(".cartPage .block").each(function () {
+        //        if (($(this).find("input[type='checkbox']")).is(':checked')) {
+        //            checkBoxVal.push($(this).find("input[type='checkbox']").val());
+        //            //alert(checkBoxVal);
+        //            cartnos = checkBoxVal;
+        //            totalPrice.push($(this).find("p.total span").text());
+        //            alert(totalPrice);
+        //        }
+        //    });
         // alert(cartnos)
+        //    /*-- Checkbox Fun for Book Now Button --*/
+        //    /*-- payment gateway --*/
+      
 
-            url1 = '/NCartView/booknow?cartnos=' +cartnos;
-            $.ajax({
-                url: url1,
-                success: function (data) {
-                    if (data == "Success") {
-                        //  alert("Sucessfully Added to cart")
-                        alertify.alert("Sucessfully booked");
+        ////    /*-- payment gateway --*/
+        //// url1 = '/NCartView/booknow?cartnos=' +cartnos;
+        ////    $.ajax({
+        ////        url: url1,
+        ////        success: function (data) {
+        ////            if (data == "Success") {
+        ////                //  alert("Sucessfully Added to cart")
+        ////                alertify.alert("Sucessfully booked");
 
-                        if (data != null) {
-                            window.location.reload();
-                        }
-                    }
-                    else if (data == "failed") {
-                        //   alert("login to the cart");
-                        alertify.alertmsg("Login to the cart");
-                    }
-                }
-            });
+        ////                if (data != null) {
+        ////                    window.location.reload();
+        ////                }
+        ////            }
+        ////            else if (data == "failed") {
+        ////                //   alert("login to the cart");
+        ////                alertify.alertmsg("Login to the cart");
+        ////            }
+        ////        }
+        ////    });
 
-        });
+        ////});
 
         /*-- Book Now Button --*/
 
@@ -582,6 +592,93 @@
          function () {
          });
         }
-        </script>
+</script>
+
+
+
+
+<script>
+    /*-- payment gateway --*/
+
+
+
+
+
+ $(".cartPage .bookNow").click(function() {
+     var tot1 = parseInt(0);
+     var cartnos = '';
+
+
+    var checkBoxVal = [], totalPrice = [];
+    $(".cartPage .block").each(function () {
+        if (($(this).find("input[type='checkbox']")).is(':checked')) {
+            checkBoxVal.push($(this).find("input[type='checkbox']").val());
+            //alert(checkBoxVal);
+            cartnos = checkBoxVal;
+            totalPrice.push($(this).find("p.total span").text().split(',').join(''));
+            alert(totalPrice);
+        }
+    });
+    alert(cartnos)
+    var i ;
+
+    for (i=0;i<totalPrice.length;i++)
+    {
+        var tot = parseInt(totalPrice[i]);
+        tot1 = tot1 + tot;
+        alert(tot1);
+
+    }
+   // rzp1.open();
+    var tot2 = parseInt(tot1 + '00');
+    alert(tot2);
+ //   var rzp1 = new Razorpay(options);
+    var options = {
+        "key": "rzp_test_3OHEkrM9aPMz5u",
+        "amount": tot2, // 2000 paise = INR 20
+        "name": "ahwanam",
+        "description": "ahwanam.com",
+        "image": "/your_logo.png",
+        "handler": function (response) {
+            alert(response.razorpay_payment_id);
+            url1 = '/NCartView/booknow?cartnos=' + cartnos + '&&paymentid=' + response.razorpay_payment_id + '&&amountpaid=' + tot2;
+                     $.ajax({
+                         url: url1,
+                         success: function (data) {
+                             if (data == "Success") {
+                                 //  alert("Sucessfully Added to cart")
+                                 alertify.alert("Sucessfully booked");
+
+                                 if (data != null) {
+                                     window.location.reload();
+                                 }
+                             }
+                             else if (data == "failed") {
+                                 //   alert("login to the cart");
+                                 alertify.alertmsg("Login to the cart");
+                             }
+                         }
+                     });
+
+        },
+        "prefill": {
+            "name": "Harshil Mathur",
+            "email": "harshil@razorpay.com"
+        },
+        "notes": {
+            // "address": "Hello World"
+            "order_id": cartnos
+        },
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+
+
+ });
+</script>
+
     }
 

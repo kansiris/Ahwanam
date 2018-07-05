@@ -19,7 +19,8 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorManageStoreFront
         public ActionResult Index(string id, string vid, string category, string subcategory)
         {
-            try { 
+            try
+            { 
             ViewBag.id = id;
             ViewBag.vid = vid;
             ViewBag.category = category;
@@ -78,17 +79,40 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(string id, string command, string serviceselection, string subcategory, string vid)
         {
-            try { 
-            long count = 0;
-            if (command == "add")
-                count = addservice(serviceselection, subcategory, long.Parse(id));
-            else if (command == "update")
-                count = updateservice(serviceselection, subcategory, long.Parse(id), long.Parse(vid));
-            string msg = "";
-            if (count > 0) msg = "Service Added Successfully";
-            else msg = "Failed To Add Sevice";
-            return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "&&vid=" + count + "&&category=" + serviceselection + "&&subcategory=" + subcategory + "'</script>");
+            try
+            {
+                string msg = "";
+
+                if (subcategory != "Select Sub-Category")
+                {
+                    long count = 0;
+                    if (command == "add")
+                        count = addservice(serviceselection, subcategory, long.Parse(id));
+                    else if (command == "update")
+                        count = updateservice(serviceselection, subcategory, long.Parse(id), long.Parse(vid));
+                    if (count > 0) msg = "Service Added Successfully";
+                    else if (serviceselection == "Select Service Type")
+                    {
+                        msg = "Failed To Add Sevice";
+
+                        return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "'</script>");
+                    }
+
+
+                    else
+                        msg = "Failed To Add Sevice";
+
+                    return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "&&vid=" + count + "&&category=" + serviceselection + "&&subcategory=" + subcategory + "'</script>");
+
+                }
+            
+                msg = "Failed To Add Sub Sevice";
+
+                return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "'</script>");
+            
             }
+                  
+
             catch (Exception)
             {
                 return RedirectToAction("Index", "Nhomepage");
