@@ -18,15 +18,15 @@
     })
 }
 
-function GetNewQuote(quotationsList) {
+function GetNewQuote(quotationsList,url) {
     $.ajax({
         url: '/NVendors/GetQuote',
         type: "POST",
         datatype: "json",
-        data: { quotationsList: quotationsList },
+        data: { quotationsList: quotationsList,url : url },
         success: function (response) {
             if (response == "Success")
-            { alert("Quotation Sent to Vendor"); $(".view-details-alert").css("display", "none"); }
+            { alertmsg("Quotation Raised.Our Support Team Will Get Back To you Shortly"); $(".getQuoteBlock").css("display", "none"); }
             else if (response == "exceeded")
                 alert("Quotation Limit Exceeded!!! please Login/Sign up to Raise Quotation");
             else if (response == "Fail")
