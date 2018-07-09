@@ -27,5 +27,6 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedTime { get; set; }
         public string Status { get; set; }
         public string IPaddress { get; set; }
+        public string Description { get; set; }
     }
 }

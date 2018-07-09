@@ -8,129 +8,226 @@
 <link href="~/newdesign/css/jquery-ui.css" rel="stylesheet" />
 <link href="~/newdesign/css/daterangepicker.css" rel="stylesheet" />
 
-<div class="container margin-top-100">
+<div class="container">
     <input type="hidden" id="particularvendor" />
-    <br />
-    <div class="row">
-        <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-0 margin-bottom-30">Available @ViewBag.service Partners</h3>
-    </div>
-    <br />
-    <div class="row">
+    <input type="hidden" id="BusinessName" />
+    <div class="row innerPagesBg">
+        <div class="col-12 col-sm-12 col-md-12 mb-2 mb-sm-0 mb-md-0 bgWhite">
+            <div class="totalDealsBlock py-3">
+                <div class="row mx-0">
+                    <h3 class="noteWorthybold px-15">
+                        Available @ViewBag.service Partners
+                        <div class="blackBorder"></div>
+                    </h3>
+                </div>
+                <div class="row mx-0 my-4">
+                    @foreach (var item in ViewBag.records)
+                    {
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 defaultResultBlock mb-3">
+                            <a href="/NParticularVendor/Index?type=@ViewBag.service&&id=@item.id&&vid=@item.subid">
+                                @if (item.logo != null && item.logo != "")
+                                { <div class="w-100 vendorImg" style="background:url('/vendorimages/@item.logo')"></div> }
+                                else if (item.image != null && item.image != "")
+                                { <div class="w-100 vendorImg" style="background:url('/vendorimages/@item.image')"></div> }
+                                else
+                                { <div class="w-100 vendorImg" style="background:url('/noimages.png')"></div> }
+                            </a>
+                            <div class="w-100">
+                                <div class="row mx-0 my-2 px-2 d-flex align-items-center">
+                                    @*<a class="productName mb-0" href="#">@item.businessname</a>*@
+                                    @if (item.businessname != "" && item.businessname != null)
+                                    {<a href="/NParticularVendor/Index?type=@ViewBag.service&&id=@item.id&&vid=@item.subid" class="productName mb-0">@item.businessname.Replace("amp;", "")</a>}
+                                    else
+                                    { <a href="/NParticularVendor/Index?type=@ViewBag.service&&id=@item.id&&vid=@item.subid" class="productName mb-0">@item.businessname</a>}
+                                    
+                                </div>
+                            </div>
+                            <div class="w-100 mb-2">
+                                <div class="row px-2 d-flex align-items-center prices">
+                                    <div class="col-12 col-md-12">
+                                        @if (ViewBag.service == "Decorator" || ViewBag.service == "Photography" || ViewBag.service == "Other")
+                                        {
+                                            <p class="mb-0 d-inline">* Prior Booking Days</p>
+                                            <div class="maxMin float-right">
+                                                @if (item.PriorBookingsDays != null && item.PriorBookingsDays != "")
+                                                {<p class="productMinPrice mb-0 ml-2 themeColor d-inline">@item.PriorBookingsDays</p>}
+                                                else
+                                                { <p>N/A</p>}
+                                            </div>
+                                        }
+                                        @if (ViewBag.service == "Catering" || ViewBag.service == "Venue" || ViewBag.service == "Hotel" || ViewBag.service == "Resort" || ViewBag.service == "Convention Hall")
+                                        {
+                                            <p class="mb-0 d-inline">* Price Starts From</p>
+                                            <div class="maxMin float-right">
+                                                @if (item.cost != null && item.cost != "")
+                                                {<p class="productMinPrice mb-0 ml-2 themeColor d-inline">Rs.@item.cost</p>}
+                                                else
+                                                { <p class="productMinPrice mb-0 ml-2 themeColor d-inline">Rs.0</p>}
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
 
-        @foreach (var item in ViewBag.records)
-        {
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 productBlock">
-                <div class="w-100">
-                    <a href="/NParticularVendor/Index?type=@ViewBag.service&&id=@item.id&&vid=@item.subid">
-                        @if (item.logo != null && item.logo != "")
-                        {<img src="~/vendorimages/@item.logo" alt="@item.logo">}
-                        else if (item.image != null && item.image != "")
-                        {<img src="~/vendorimages/@item.image" alt="@item.image">}
-                        else
-                        { <img src="~/noimages.png" alt="No Image Available">}
-                        @*@if (item.image != null && item.image != "")
-                        {<img src="~/vendorimages/@item.image" alt="@item.image">}
-                        else
-                        { <img src="~/noimages.png" alt="No Image Available">}*@
-                    </a>
-                </div>
-                <div class="w-100">
-                    <div class="row mx-0 my-2 px-2 d-flex align-items-center">
-                        @*<p class="productName mb-0">Westin</p>*@
-                        @if (item.businessname != "" && item.businessname != null)
-                        {<a href="/NParticularVendor/Index?type=@ViewBag.service&&id=@item.id&&vid=@item.subid"><p class="productName mb-0">@item.businessname.Replace("amp;", "")</p></a>}
-                        else
-                        { <a href="/NParticularVendor/Index?type=@ViewBag.service&&id=@item.id&&vid=@item.subid"><p class="productName mb-0">@item.businessname</p></a>}
-                        <span class="ml-auto"><i class="fa fa-plus addCartIcn" aria-hidden="true"></i></span>
-                    </div>
-                </div>
-                <div class="w-100">
-                    <div class="row px-2 d-flex align-items-center prices">
-                        <div class="col-12 col-md-12">
-                            @if (ViewBag.service == "Decorator" || ViewBag.service == "Photography" || ViewBag.service == "Other")
-                            {
-                                <p class="mb-0 d-inline">* Prior Booking Days</p>
-                                <div class="maxMin float-right">
-                                    @if (item.PriorBookingsDays != null && item.PriorBookingsDays != "")
-                                    {<p class="productMinPrice mb-0 ml-2 themeColor d-inline">@item.PriorBookingsDays</p>}
-                                    else
-                                    { <p>N/A</p>}
+                            <div class="w-100">
+                                <div class="row mx-0">
+                                    <span class="getQuoteBtn text-center">Get Quote</span>
                                 </div>
-                            }
-                            @if (ViewBag.service == "Catering" || ViewBag.service == "Venue" || ViewBag.service == "Hotel" || ViewBag.service == "Resort" || ViewBag.service == "Convention Hall")
-                            {
-                                <p class="mb-0 d-inline">* Price Starts From</p>
-                                <div class="maxMin float-right">
-                                    @if (item.cost != null && item.cost != "")
-                                    {<p class="productMinPrice mb-0 ml-2 themeColor d-inline">Rs.@item.cost</p>}
-                                    else
-                                    { <p>Rs.0</p>}
-                                </div>
-                            }
+                            </div>
+                            @*<div class="w-100 d-inline-block">
+                                <p class="productMaxPrice strikePrice mb-0 greyColor d-block float-right"> ( <span>1,24,000</span> <small>k</small> ) </p>
+                            </div>*@
+                            <div class="row">
+                                <div class="col-12 col-md-12 vendorDescrption">@item.description</div>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
-                @*<div class="w-100 d-inline-block">
-                    <div class="d-inline float-right yellowFont pr-2 totalReviewCount"> (<span>162</span>) </div>
+                @*<div class="row py-2 moreButton">
+                    <div class="mx-auto d-inline-flex"> <span class="themeBgColorPrimary btnSecondary text-white"><i class="fa fa-plus mr-1" aria-hidden="true"></i>More</span> </div>
                 </div>*@
             </div>
-        }
+        </div>
     </div>
 </div>
+
+
+<div class="container-fluid getQuoteBlock">
+    <div class="row">
+        <div class="col-12 col-sm-8 col-md-6 mx-auto bgWhite getQuoteBlockPopup py-3">
+            <div class="row mx-0">
+                <div class="col-12 col-sm-6 col-md-6">
+                    <div class="default-details w-100 float-left">
+                        <h3 class="margin-top-0 mb-3 pb-2"></h3>
+                        <p class="allPrices"></p>
+                        <h6 style="font-weight:bold;">Description</h6>
+                        <div class="descrption"></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 checkin-out">
+                    <div class="form-group">
+                        <label for="check-in">Occasion Date</label>
+                        <input type="text" class="some_class form-control check-in" value="" id="checkindate" placeholder="Select Occasion Date"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="check-in">Email Id</label>
+                        <input type="email" class="some_class form-control" value="" id="quote_email" placeholder="Enter your Email ID">
+                    </div>
+                    <div class="form-group">
+                            <label for="persons">Name</label>
+                            <input type="text" class="form-control" id="quote_name" placeholder="Enter Your Name">
+                    </div>
+                    @*<div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="check-in">Check In</label>
+                                <input type="text" class="some_class form-control check-in" value="" id="checkindate" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="check-in">Check In Time</label>
+                                <input type="text" class="some_class form-control check-in" value="" id="checkintime" />
+                            </div>
+                        </div>
+                    </div>*@
+                    <!--check out element-->
+                    @*<div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="check-in">Check Out</label>
+                                <input type="text" class="some_class form-control check-in" value="" id="checkoutdate" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="check-in">Check Out Time</label>
+                                <input type="text" class="some_class form-control check-in" value="" id="checkouttime" />
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="row">
+                        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                            <label for="persons">Guests Count</label>
+                            <input type="number" class="form-control persons" id="quote_persons" placeholder="Guests Count">
+                        </div>
+                        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                            <label for="extra-persons">Phone</label>
+                            <input type="number" class="form-control" id="quote_phone" placeholder="Phone Number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="persons">Requirements(Optional)</label>
+                        <textarea rows="4" class="form-control" id="Description" placeholder="Enter your Requirements"></textarea>
+                    </div>
+                    <div class="form-group text-center">
+                        <button name="Submit" href="#" class="btn text-white themeBgColorPrimaryPurple" id="SendQuote">Send Details</button>
+                    </div>
+                </div>
+            </div>
+            <i class="fa fa-times themeBgColorPrimaryPurple text-white" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 @*<div class="container-fluid view-details-alert">
-    <div class="content">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0">
-            <div class="default-details w-100 float-left">
-                <h3 style="font-size:14px;font-weight:bold" class="margin-top-0"></h3>
+        <div class="content">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0">
+                <div class="default-details w-100 float-left">
+                    <h3 style="font-size:14px;font-weight:bold" class="margin-top-0"></h3>
+                </div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 checkin-out">
+                <div class="form-group">
+                    <label for="check-in">Email Id</label>
+                    <input type="email" class="some_class form-control" value="" id="quote_email" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                    <label for="persons">Name</label>
+                    <input type="text" class="form-control" id="quote_name" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                    <label for="extra-persons">Phone</label>
+                    <input type="text" class="form-control" id="quote_phone" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                    <label for="check-in">Check In Date</label>
+                    <input type="text" class="form-control" id="checkindate" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                    <label for="extra-persons">Check In Time</label>
+                    <input type="text" class="form-control" id="checkintime" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                    <label for="check-in">Check Out Date</label>
+                    <input type="text" class="form-control" id="checkoutdate" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                    <label for="extra-persons">Check Out Time</label>
+                    <input type="text" class="form-control" id="checkouttime" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
+                    <label for="persons">Persons</label>
+                    <input type="text" class="form-control persons" id="quote_persons" />
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
+                    <label for="extra-persons">Extra Persons</label>
+                    <input type="text" class="form-control extra-persons" id="quote_extrapersons" />
+                </div>
+                <div class="form-group text-center">
+                    <button name="Submit" href="#" class="btn btn-sm btn-default book-now theme-bg white" id="SendQuote">Send Details</button>
+                </div>
+            </div>
+            <i class="fa fa-times" aria-hidden="true"></i>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 checkin-out">
-            <div class="form-group">
-                <label for="check-in">Email Id</label>
-                <input type="email" class="some_class form-control" value="" id="quote_email" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
-                <label for="persons">Name</label>
-                <input type="text" class="form-control" id="quote_name" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
-                <label for="extra-persons">Phone</label>
-                <input type="text" class="form-control" id="quote_phone" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
-                <label for="check-in">Check In Date</label>
-                <input type="text" class="form-control" id="checkindate" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
-                <label for="extra-persons">Check In Time</label>
-                <input type="text" class="form-control" id="checkintime" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
-                <label for="check-in">Check Out Date</label>
-                <input type="text" class="form-control" id="checkoutdate" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
-                <label for="extra-persons">Check Out Time</label>
-                <input type="text" class="form-control" id="checkouttime" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-10">
-                <label for="persons">Persons</label>
-                <input type="text" class="form-control persons" id="quote_persons" />
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-left-0 padding-right-0">
-                <label for="extra-persons">Extra Persons</label>
-                <input type="text" class="form-control extra-persons" id="quote_extrapersons" />
-            </div>
-            <div class="form-group text-center">
-                <button name="Submit" href="#" class="btn btn-sm btn-default book-now theme-bg white" id="SendQuote">Send Details</button>
-            </div>
-        </div>
-        <i class="fa fa-times" aria-hidden="true"></i>
     </div>
-</div>
-<div class="container-fluid" id="topicon">
-    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-</div>*@
+    <div class="container-fluid" id="topicon">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </div>*@
 
 <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
 <script src="~/newdesign/js/jquery-ui-1.12.1.js"></script>
@@ -138,17 +235,19 @@
 <script src="~/newdesign/js/daterangepicker.js"></script>
 <script src="~/Scripts/Quote.js"></script>
 <script type="text/javascript">
-        //$(document).ready(function () {
-        //    $('body').attr("id", "userAuthentication");
-        //});
-        //$('.container').hide();
-        $('.search').hide();
+    //$(document).ready(function () {
+    //    $('body').attr("id", "userAuthentication");
+    //});
+    //$('.container').hide();
+    $('.search').hide();
 </script>
 <script>
     /*-------- Get Quote Alert --------*/
     $("a.view-details").click(function () {
         var url = $(this).parents(".venue-details").find("a").attr("href");
         $('#particularvendor').val(url);
+        //alert($(this).parents(".venue-footer").find(".card-title").find("h4").text());
+        //$('#BusinessName').val();
         $(".view-details-alert").css("display", "block");
         //alert($(this).parents(".venue-footer").find(".bottom-content.text-center").find(".content").length);
         $(".view-details-alert > .content .default-details > h3").empty().append($(this).parents(".venue-footer").find(".card-title").find("h4").text());
@@ -184,15 +283,37 @@
             ServiceType: servicetype,
             PhoneNo: $('#quote_phone').val(),
             EventStartDate: $('#checkindate').val(),
-            EventStartTime: $('#checkintime').val(),
-            EventEnddate: $('#checkoutdate ').val(),
-            EventEndtime: $('#checkouttime').val(),
             VendorId: vendorid,
             VendorMasterId: vendormasterid,
             Persons: $('#quote_persons').val(),
-            ExtraPersons: $('#quote_extrapersons').val(),
+            Description: $('#Description').val(),
         }
-        GetQuote(quotationsList);
+
+        if ($('#checkindate').val() == '') {
+            $('#checkindate').focus();
+            alertmsg("Please Select Occasion Date");
+        }
+        else if ($('#quote_email').val() == '') {
+            $('#quote_email').focus();
+            alertmsg("Please Enter Your Email ID");
+        }
+        else if ($('#quote_name').val() == '') {
+            $('#quote_name').focus();
+            alertmsg("Please Enter Your Name");
+        }
+        else if ($('#quote_persons').val() == '') {
+            $('#quote_persons').focus();
+            alertmsg("Please Enter Guests Count");
+        }
+        else if ($('#quote_phone').val() == '') {
+            $('#quote_phone').focus();
+            alertmsg("Please Enter Your Phone Number");
+        }
+        
+        else {
+            GetNewQuote(quotationsList,url);
+        }
+        //GetNewQuote(quotationsList);
         //alert('servicetype:' + servicetype + ',vendorid:' + vendorid + ',vendormasterid:' + vendormasterid);
     });
 
@@ -200,26 +321,103 @@
         timepicker: false,
         datepicker: true,
         format: 'd/m/Y',
+        minDate:new Date(),
         //formatDate:'Y/m/d',
     });
-    $("#checkintime").datetimepicker({
-        datepicker: false,
-        timepicker: true,
-        format: 'H:i',
-        //formatDate:'Y/m/d',
-    });
-    $("#checkoutdate").datetimepicker({
-        timepicker: false,
-        datepicker: true,
-        format: 'd/m/Y',
-        //formatDate:'Y/m/d',
-    });
-    $("#checkouttime").datetimepicker({
-        datepicker: false,
-        timepicker: true,
-        format: 'H:i',
-        //formatDate:'Y/m/d',
-    });
+    //$("#checkintime").datetimepicker({
+    //    datepicker: false,
+    //    timepicker: true,
+    //    format: 'H:i', step: 15, minDate: new Date().getTime(),
+    //    //formatDate:'Y/m/d',
+    //});
+    //$("#checkoutdate").datetimepicker({
+    //    timepicker: false,
+    //    datepicker: true,
+    //    format: 'd/m/Y',
+    //    minDate: $("#checkindate").val(),
+    //    //formatDate:'Y/m/d',
+    //});
+    //$("#checkouttime").datetimepicker({
+    //    datepicker: false,
+    //    timepicker: true,
+    //    format: 'H:i', step: 15,
+    //    //formatDate:'Y/m/d',
+    //});
 </script>
 
+<script>
+        function alertmsg(msg) {
+            alertify.alert("" + msg + "", function () {
+                //alertify.message('OK');
+            });
+        }
+</script>
+
+<script type="text/javascript">
+  /*-- Popup Block / None  and Append Values to Popup--*/
+  var popupTitle = $(".getQuoteBlockPopup .default-details > h3:first-child"), popupDescrption = $(".getQuoteBlockPopup .default-details .descrption");
+  $(".defaultResultBlock span.getQuoteBtn").click(function () {
+  $(".getQuoteBlock").css("display","block");
+  var url = $(this).parents(".defaultResultBlock").find("a").attr("href");
+  $('#particularvendor').val(url);
+
+  //Title
+  var blockTitle = $(this).parents(".w-100").prevAll(".w-100").find(".productName").clone();
+  $(popupTitle).empty();
+  $(blockTitle).appendTo(popupTitle);
+
+  //Descrption
+  var blockDescrption = $(this).parents(".w-100").nextAll(".row").find(".vendorDescrption").clone();
+  $(popupDescrption).empty();
+  $(blockDescrption).appendTo(popupDescrption);
+  $(popupDescrption).find("div").addClass(" px-0");
+});
+
+$(".getQuoteBlock .getQuoteBlockPopup i.fa-times").click(function(){
+  $(".getQuoteBlock").css("display","none");
+});
+  /*-- Popup Block / None  and Append Values to Popup--*/
+
+  /*-- Check in, Check out Calender --*/
+
+  $('body').on('click', '.xdsoft_datetimepicker .xdsoft_calendar td > div', function(){
+    alert("Select");
+    });
+
+  $("#some_class_1").datetimepicker({
+  timepicker:false,
+  format:'d/m/Y',
+  formatDate:'Y/m/d',
+        });
+      $("#some_class_2").datetimepicker({
+        timepicker:false,
+  format:'d/m/Y',
+  formatDate:'Y/m/d',
+           onSelect: function () {
+              myfunc();
+            }
+        });
+      $('#datetimepicker1').datetimepicker({
+  datepicker:false,
+  timepicker: true,
+  format:'H:i',
+  step:5
+});
+      $('#datetimepicker2').datetimepicker({
+  datepicker:false,
+  timepicker: true,
+  format:'H:i',
+  step:5
+});
+
+       function myfunc(){
+       alert("HI");
+       var start= $("#some_class_1").datetimepicker("getDate");
+      var end= $("#some_class_2").datetimepicker("getDate");
+      var days = (end- start) / (1000 * 60 * 60 * 24);
+       alert(Math.round(days));
+       }
+/*-- Check in, Check out Calender --*/
+
+</script>
 

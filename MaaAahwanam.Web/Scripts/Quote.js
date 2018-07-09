@@ -17,3 +17,23 @@
         }
     })
 }
+
+function GetNewQuote(quotationsList,url) {
+    $.ajax({
+        url: '/NVendors/GetQuote',
+        type: "POST",
+        datatype: "json",
+        data: { quotationsList: quotationsList,url : url },
+        success: function (response) {
+            if (response == "Success")
+            { alertmsg("Quotation Raised.Our Support Team Will Get Back To you Shortly"); $(".getQuoteBlock").css("display", "none"); }
+            else if (response == "exceeded")
+                alert("Quotation Limit Exceeded!!! please Login/Sign up to Raise Quotation");
+            else if (response == "Fail")
+                alert("Cannot Raise Quotation at the moment")
+        },
+        error: function (er) {
+            errormsg("Something Went Wrong!!!Try Again Later");
+        }
+    })
+}
