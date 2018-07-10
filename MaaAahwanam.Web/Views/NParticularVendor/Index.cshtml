@@ -29,7 +29,7 @@
                 </div>
                 <div class="row w-100 mx-0 my-15">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 dealProfileName">
-                        <div class="w-100 title">@ViewBag.Productinfo.BusinessName</div><div class="w-100">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)).Replace(".00", "") </text> / -</div>
+                        <div class="float-left title">@ViewBag.Productinfo.BusinessName</div><div class="float-right">Price:<text id="sprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.servicetypeprice)).Replace(".00", "") </text> / -</div>
                         @*<p>@ViewBag.vendoravailabledates</p>*@
                         @*<div class="w-100 tags my-15">
                                 @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
@@ -160,6 +160,156 @@
                         <dt>Packages / Deals</dt>
                         <dd>
                             <div class="w-100 vrResponsiveTabs">
+                                @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall", "Venue","Catering" }.Contains(Request.QueryString["type"]))
+                                {
+                                    <p>Prices</p>
+                                    <span>
+                                        @*<p>No Packages Available</p>*@
+                                        <div class="row packages">
+                                            @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall", "Venue" }.Contains(Request.QueryString["type"]))
+                                            {
+                                                <div class="col-12 colmd-12 packageDetails">
+                                                    <div class="w-100 float-left">
+                                                        <div class="float-left"><p class="mb-0 packageName">Veg Lunch Cost</p></div>
+                                                        <div class="float-right packageCheckbox">
+                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <label>
+                                                                <input type="checkbox" name="">
+                                                                <p>Select</p>
+                                                            </label>
+                                                        </div>
+                                                        <div class="float-right">
+                                                            <p class="mb-0 mr-2"> INR <span>@ViewBag.particularVenue.VegLunchCost</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <hr />
+                                                    <div class="w-100">
+                                                        <p class="packageContent">
+                                                            Veg Lunch Per Plate is : @ViewBag.particularVenue.VegLunchCost
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 colmd-12 packageDetails">
+                                                    <div class="w-100 float-left">
+                                                        <div class="float-left"><p class="mb-0 packageName">Non-Veg Lunch Cost</p></div>
+                                                        <div class="float-right packageCheckbox">
+                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <label>
+                                                                <input type="checkbox" name="">
+                                                                <p>Select</p>
+                                                            </label>
+                                                        </div>
+                                                        <div class="float-right">
+                                                            <p class="mb-0 mr-2"> INR <span>@ViewBag.particularVenue.NonVegLunchCost</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <hr />
+                                                    <div class="w-100">
+                                                        <p class="packageContent">
+                                                            Non - Veg Lunch Per Plate is : @ViewBag.particularVenue.NonVegLunchCost
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 colmd-12 packageDetails">
+                                                    <div class="w-100 float-left">
+                                                        <div class="float-left"><p class="mb-0 packageName">Veg Dinner Cost</p></div>
+                                                        <div class="float-right packageCheckbox">
+                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <label>
+                                                                <input type="checkbox" name="">
+                                                                <p>Select</p>
+                                                            </label>
+                                                        </div>
+                                                        <div class="float-right">
+                                                            <p class="mb-0 mr-2"> INR <span>@ViewBag.particularVenue.VegDinnerCost</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <hr />
+                                                    <div class="w-100">
+                                                        <p class="packageContent">
+                                                            Veg Dinner Per Plate is : @ViewBag.particularVenue.VegDinnerCost
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 colmd-12 packageDetails">
+                                                    <div class="w-100 float-left">
+                                                        <div class="float-left"><p class="mb-0 packageName">Non - Veg Dinner Cost</p></div>
+                                                        <div class="float-right packageCheckbox">
+                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <label>
+                                                                <input type="checkbox" name="">
+                                                                <p>Select</p>
+                                                            </label>
+                                                        </div>
+                                                        <div class="float-right">
+                                                            <p class="mb-0 mr-2"> INR <span>@ViewBag.particularVenue.NonVegDinnerCost</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <hr />
+                                                    <div class="w-100">
+                                                        <p class="packageContent">
+                                                            Non - Veg Lunch Per Plate is : @ViewBag.particularVenue.NonVegDinnerCost
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            @if (ViewBag.type == "Catering")
+                                            {
+                                                <div class="col-12 colmd-12 packageDetails">
+                                                    <div class="w-100 float-left">
+                                                        <div class="float-left"><p class="mb-0 packageName">Veg Cost</p></div>
+                                                        <div class="float-right packageCheckbox">
+                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <label>
+                                                                <input type="checkbox" name="">
+                                                                <p>Select</p>
+                                                            </label>
+                                                        </div>
+                                                        <div class="float-right">
+                                                            <p class="mb-0 mr-2"> INR <span>@ViewBag.particularCatering.Veg</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <hr />
+                                                    <div class="w-100">
+                                                        <p class="packageContent">
+                                                            Veg Per Plate is : @ViewBag.particularCatering.Veg
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 colmd-12 packageDetails">
+                                                    <div class="w-100 float-left">
+                                                        <div class="float-left"><p class="mb-0 packageName">Non-Veg Cost</p></div>
+                                                        <div class="float-right packageCheckbox">
+                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <label>
+                                                                <input type="checkbox" name="">
+                                                                <p>Select</p>
+                                                            </label>
+                                                        </div>
+                                                        <div class="float-right">
+                                                            <p class="mb-0 mr-2"> INR <span>@ViewBag.particularCatering.NonVeg</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <hr />
+                                                    <div class="w-100">
+                                                        <p class="packageContent">
+                                                            Non - Veg Per Plate is : @ViewBag.particularCatering.NonVeg
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </span>
+                                }
+
                                 <p>Packages</p>
                                 <span>
                                     @*<p>No Packages Available</p>*@
@@ -277,10 +427,10 @@
                                             <div class="text-center block">
                                                 <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" />
                                                 <span class="themeColor mt-1 d-block">
-                                                @if (item.Imagedescription != null)
-                                                { @item.Imagedescription }
-                                                else
-                                                { <p>No Description</p>}
+                                                    @if (item.Imagedescription != null)
+                                                    { @item.Imagedescription }
+                                                    else
+                                                    { <p>No Description</p>}
                                                 </span>
                                             </div>
                                         }

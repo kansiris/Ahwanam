@@ -18,13 +18,13 @@
                         @if (Request.QueryString["stype"] != "")
                         {
                             @*<a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid">*@
-                            if (item.logo != null && item.logo != "")
-                            {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
-                            else if (item.image != null && item.image != "")
-                            {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
-                            else
-                            { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
-                            @*</a>*@
+                        if (item.logo != null && item.logo != "")
+                        {<img src="~/vendorimages/@item.logo" alt="@item.logo" class="img-fluid">}
+                        else if (item.image != null && item.image != "")
+                        {<img src="~/vendorimages/@item.image" alt="@item.image" class="img-fluid">}
+                        else
+                        { <img src="~/noimages.png" alt="No Image Available" class="img-fluid">}
+                        @*</a>*@
                         }
                         else
                         {
@@ -40,89 +40,107 @@
                     </div>
 
                     <div class="col-6 col-sm-6 col-md-12 col-lg-12 col-xl-6 px-xl-0 topVenueDetails">
-                        <p class="mb-0">
-                            @if (Request.QueryString["stype"] != "")
-                            {
-                            <p class="productName">@item.businessname</p>
 
-                            }
-                            else
-                            {
-                                <a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid">
-                                    @item.businessname
-                                </a>
-                            }
-                            <div class="w-100 vendorPrice">
-                                <p class="productMinPrice mb-0 themeColor d-inline">Rs. <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost)).Replace(".00", "") </span></p>
+
+                        @if (Request.QueryString["stype"] != "")
+                        {
+                            @*<p class="mb-0">*@
+                            <p class="productName mb-0">@item.businessname</p>
+                            @*</p>*@
+                        }
+                        else
+                        {
+                            @*<p class="mb-0">*@
+                            <a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid">
+                                @item.businessname
+                            </a>
+                            @*</p>*@
+                        }
+                        @*<p class="mb-0 d-inline">* Veg Price/Plate Starts from</p>*@
+
+                        @if (ViewBag.type == "Resort" || ViewBag.type == "Hotel" || ViewBag.type == "ConventionHall" || ViewBag.type == "Catering")
+                        {
+                            <p class="mb-0 d-inline">* Veg Price/Plate Starts from</p>
+                        }
+                        @if (ViewBag.type == "Decorator" || ViewBag.type == "Photography" || ViewBag.type == "Mehendi" || ViewBag.type == "Pandit")
+                        {
+                            <p class="mb-0 d-inline">* Basic Price Starts from</p>
+                        }
+
+                        <div class="row mx-0 mt-2">
+                            <div class="vendorPrice" style="width:calc(100% - 40px);">
+                                <p class="productMinPrice mb-0 themeColor d-inline">Rs. <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost)).Replace(".00", "") </span>  </p>
                             </div>
-                            <div class="row mx-0">
-                                @*<div class="col-12 col-md-12 col-lg-12 col-xl-8 pr-xl-0 pl-0">
-                                    <div class="starRating pl-0">
-                                        <div class="emptyStar"></div>
-                                        <div class="scoreStar yellowFont" style="width:51%"></div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-12 col-xl-4 pr-xl-0 pl-0">
-                                    <div class="d-inline float-left yellowFont pr-xl-0 pr-2 totalReviewCount"> (<span>162</span>) </div>
-                                </div>*@
-                            </div>
-                            <div class="row mx-0 d-block float-right">
+                            <div class="mx-0 d-block ml-3">
                                 <i class="fa fa-plus addCartIcn" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-12 vendorDescrption">@item.description</div>
+
+                        <div class="row mx-0">
+                            @*<div class="col-12 col-md-12 col-lg-12 col-xl-8 pr-xl-0 pl-0">
+                    <div class="starRating pl-0">
+                        <div class="emptyStar"></div>
+                        <div class="scoreStar yellowFont" style="width:51%"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12 col-xl-4 pr-xl-0 pl-0">
+                    <div class="d-inline float-left yellowFont pr-xl-0 pr-2 totalReviewCount"> (<span>162</span>) </div>
+                </div>*@
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-12 vendorAmenities">
-                                @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12 vendorDescrption">@item.description</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12 vendorAmenities">
+                            @if (new string[] { "Venues", "Hotel", "Resort", "Convention Hall" }.Contains(Request.QueryString["type"]))
                                 {
-                                    <ul>
-                                        @if (item.Halltype != null && item.Halltype != "")
+                                <ul>
+                                    @if (item.Halltype != null && item.Halltype != "")
                                         {
-                                            <li>HallType</li>
+                                        <li>HallType</li>
                                         }
-                                        @if (item.Wifi != null && item.Wifi != "")
+                                    @if (item.Wifi != null && item.Wifi != "")
                                         {
-                                            <li>Wifi</li>
+                                        <li>Wifi</li>
                                         }
-                                        @if (item.Rooms != null && item.Rooms != "")
+                                    @if (item.Rooms != null && item.Rooms != "")
                                         {
-                                            <li>Rooms</li>
+                                        <li>Rooms</li>
                                         }
-                                        @if (item.Food != null && item.Food != "")
+                                    @if (item.Food != null && item.Food != "")
                                         {
-                                            <li>Food</li>
+                                        <li>Food</li>
                                         }
-                                    </ul>
+                                </ul>
                                 }
-                                @if (new string[] { "Catering" }.Contains(Request.QueryString["type"]))
+                            @if (new string[] { "Catering" }.Contains(Request.QueryString["type"]))
                                 {
-                                    <ul>
-                                        @if (item.Livecooking != null && item.Livecooking != "")
+                                <ul>
+                                    @if (item.Livecooking != null && item.Livecooking != "")
                                         {
-                                            <li>LiveCookingStation</li>
+                                        <li>LiveCookingStation</li>
                                         }
-                                    </ul>
+                                </ul>
                                 }
-                                @if (new string[] { "Photography" }.Contains(Request.QueryString["type"]))
+                            @if (new string[] { "Photography" }.Contains(Request.QueryString["type"]))
                                 {
-                                    <ul>
-                                        @if (item.Preweddingshoot != null && item.Preweddingshoot != "")
+                                <ul>
+                                    @if (item.Preweddingshoot != null && item.Preweddingshoot != "")
                                         {
-                                            <li>Pre-Wedding Shoot</li>
+                                        <li>Pre-Wedding Shoot</li>
                                         }
-                                    </ul>
+                                </ul>
                                 }
-                            </div>
                         </div>
+                    </div>
                     <div class="row">
                         <a href="/NParticularVendor?type=@ViewBag.type&&id=@item.id&&vid=@item.subid" class="themeBgColorPrimary btnSecondary text-white text-center w-100 vendorViewMore"> View More </a>
                     </div>
                     <div class="row">
                         <span class="themeBgColorPrimary btnSecondary text-white text-center w-100 vendorAddtoCart">Add to Cart</span>
                     </div>
-                    </div>
+                </div>
             }
         </div>
 
