@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 //ViewBag.singledeal = vendorProductsService.getparticulardeal(Int32.Parse(id), type).FirstOrDefault();
                 ViewBag.singledeal = vendorProductsService.getpartvendordeal(id, type,date).FirstOrDefault();
+                if(ViewBag.singledeal == null) return RedirectToAction("Index", "ErrorPage");
                 if (eve != "")
                 {
                     var data = vendorProductsService.getpartvendordeal(id, type, date).Where(m => m.Category == eve);

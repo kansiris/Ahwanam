@@ -78,27 +78,27 @@ namespace MaaAahwanam.Web.Controllers
                 string price = "";
                 if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue" || type == "Banquet Hall" || type == "Function Hall" || type == "Venue")
                 {
-                    if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.VegLunchCost.ToString(); };
+                    if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.VegLunchCost.ToString(); } else { return RedirectToAction("Index","ErrorPage"); }
                     ViewBag.location = ViewBag.particularVenue;
                 }
                 else if (type == "Catering")
                 {
-                    if (ViewBag.particularCatering != null) { price = ViewBag.particularCatering.Veg.ToString(); };
+                    if (ViewBag.particularCatering != null) { price = ViewBag.particularCatering.Veg.ToString(); } else { return RedirectToAction("Index", "ErrorPage"); }
                     ViewBag.location = ViewBag.particularCatering;
                 }
                 else if (type == "Photography")
                 {
-                    if (ViewBag.particularPhotography != null) { price = ViewBag.particularPhotography.StartingPrice.ToString(); };
+                    if (ViewBag.particularPhotography != null) { price = ViewBag.particularPhotography.StartingPrice.ToString(); } else { return RedirectToAction("Index", "ErrorPage"); }
                     ViewBag.location = ViewBag.particularPhotography;
                 }
                 else if (type == "Decorator")
                 {
-                    if (ViewBag.particularDecorator != null) { price = ViewBag.particularDecorator.StartingPrice.ToString(); };
+                    if (ViewBag.particularDecorator != null) { price = ViewBag.particularDecorator.StartingPrice.ToString(); } else { return RedirectToAction("Index", "ErrorPage"); }
                     ViewBag.location = ViewBag.particularDecorator;
                 }
                 else if (type == "Mehendi" || type == "Pandit" || type == "Other")
                 {
-                    if (ViewBag.particularOther != null) { price = ViewBag.particularOther.ItemCost.ToString(); };
+                    if (ViewBag.particularOther != null) { price = ViewBag.particularOther.ItemCost.ToString(); } else { return RedirectToAction("Index", "ErrorPage"); }
                     ViewBag.location = ViewBag.particularOther;
                 }
                 if(ViewBag.location == null)

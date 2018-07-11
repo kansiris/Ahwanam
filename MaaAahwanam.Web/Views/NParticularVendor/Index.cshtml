@@ -10,6 +10,28 @@
 }
 @using System.Globalization
 
+<style>
+    .overlay {
+        background: no-repeat scroll center center #FFF;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999999;
+        background-color: rgba(0,0,0,0.8);
+        /* END EXTERNAL S */
+    }
+</style>
+
+
+<div class="overlay" style="display: none;">
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+        <img src="~/CSSWeb/images/Loader2.gif" /><br>
+        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Adding to Cart.....</p>
+        <p style="color: white; font-family:serif;">If this is taking more time click <a href="@Request.Url">here</a> </p>
+    </div>
+</div>
 <div class="container-fluid dealProfile">
     <div class="row innerPagesBg py-2">
         <input type="hidden" id="L1" name="L1" value="@ViewBag.count" />
@@ -945,6 +967,11 @@
 
         //<!-- hr Responsive Tabs -->
         $(document).ready(function () {
+            @*var price = '@ViewBag.servicetypeprice';
+            var members = $('#members').val();
+            var calculateprice = price * members;
+            alert(calculateprice);*@
+            //$('#selectedprice').html(price);
 
             // data based on type
             var vtype = '@Request.QueryString["type"]';
@@ -1101,6 +1128,7 @@
         $(".bookNow").click(function () {
             var timeslot = '';
             var type = '@Request.QueryString["type"]';
+            var finalprice =$('#selectedprice').html();
             if (type == 'Venue' || type == 'Catering' || type == 'venue' || type == 'Hotel' || type == 'Resort' || type == 'Convention Hall' || type == 'Catering' || type == 'Hotel') {
                 if ($(".slotTime input[type='checkbox']").is(':checked')) {
 
@@ -1128,12 +1156,15 @@
                 //   alert("Please Enter Members Count");
                 alertmsg("Please Enter Members Count");
             }
+            else if (finalprice == '0' || finalprice == '') {
+                alertmsg("Please Select Price in Packages/Deals Section");
+            }
                 //}
                 //else if ($(".slotTime input[type='checkbox']").is(':checked')) {
                 //else if (timeslot =''){
                 //    alertmsg("Please select time slot");}
             else {
-
+                $(".overlay").show();
                 //alert(timeslot);
                 var eventtype = $("#eventtype").val();
                 var id = '@Request.QueryString["id"]';
@@ -1152,12 +1183,15 @@
                     success: function (data) {
                         //alert(data);
                         if (data == "Success") {
+                            $(".overlay").hide();
                             alertify.alert("Added To Cart", function () { location.href = '/NCartView/Index'; });
                         }
                         else if (data == "failed") {
+                            $(".overlay").hide();
                             alertmsg("Failed To add item to the cart");
                         }
                         else if (data == "Exists") {
+                            $(".overlay").hide();
                             alertmsg("This Service Already Exists in Cart");
                         }
 

@@ -10,7 +10,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="row">
                 <div class="col-sm-6 col-md-2">
-                    <a class="btn btn-block btn-primary" href="/NVendorManageStoreFront?id=@ViewBag.id">Add store</a>
+                    <a class="btn btn-outline btn-primary" href="/NVendorManageStoreFront?id=@ViewBag.id">Add store</a>
                 </div>
             </div>
             <div class="row">
@@ -33,22 +33,22 @@
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 150px;" aria-label="Position: activate to sort column ascending">Category</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 135px;" aria-label="Office: activate to sort column ascending">Sub Category</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 200px;" aria-label="Age: activate to sort column ascending">Address</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 149px;" aria-label="Date: activate to sort column ascending">Calendar</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 149px;" aria-label="Date: activate to sort column ascending">Manage Booking Dates</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 149px;" aria-label="Date: activate to sort column ascending">Status</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 118px;" aria-label="Salary: activate to sort column ascending">Actions</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
+                                            @*<tfoot>
                                                 <tr>
                                                     <th rowspan="1" colspan="1">Sno</th>
                                                     <th rowspan="1" colspan="1">Category</th>
                                                     <th rowspan="1" colspan="1">Sub Category</th>
                                                     <th rowspan="1" colspan="1">Address</th>
-                                                    <th rowspan="1" colspan="1">Calendar</th>
+                                                    <th rowspan="1" colspan="1">Manage Availability</th>
                                                     <th rowspan="1" colspan="1">Status</th>
                                                     <th rowspan="1" colspan="1">Action</th>
                                                 </tr>
-                                            </tfoot>
+                                            </tfoot>*@
                                             <tbody>
                                                 @*Venue Records*@
                                                 @foreach (var item in ViewBag.venues)
@@ -63,11 +63,17 @@
                                                         {
                                                             <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
                                                         }
-                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Venue">Manage Availability</a></td>
+                                                        <td>
+                                                        @*<a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Venue">Manage Availability</a>*@
+                                                            <a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Venue" class="btn btn-icon btn-outline btn-primary btn-sm tooltip-primary tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Manage Booking Dates" title=""><i class="icon wb-calendar" aria-hidden="true"></i></a>
+                                                        </td>
                                                         <td>@item.Status</td>
                                                         <td>
-                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Venue&&subcategory=@item.VenueType">Edit</a>
-                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Venue">Delete</a>
+                                                            @*<a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Venue&&subcategory=@item.VenueType">Edit</a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Venue">Delete</a>*@
+                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Venue&&subcategory=@item.VenueType" class="btn btn-icon btn-outline btn-success btn-round tooltip-success tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Edit" title=""><i class="icon wb-pencil" aria-hidden="true"></i></a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Venue" class="btn btn-icon btn-outline btn-danger btn-round tooltip-danger tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Delete" title=""><i class="icon wb-close" aria-hidden="true"></i></a>
+                                                            @*<button type="button" class="btn btn-success tooltip-success tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Edit" title="">Scale</button>*@
                                                         </td>
                                                     </tr>
                                                 }
@@ -85,11 +91,16 @@
                                                         {
                                                             <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
                                                         }
-                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Catering">Manage Availability</a></td>
+                                                        <td>
+                                                            @*<a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Catering">Manage Availability</a>*@
+                                                            <a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Catering" class="btn btn-icon btn-outline btn-primary btn-sm tooltip-primary tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Manage Booking Dates" title=""><i class="icon wb-calendar" aria-hidden="true"></i></a>
+                                                        </td>
                                                         <td>@item.Status</td>
                                                         <td>
-                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Catering&&subcategory=@item.CuisineType">Edit</a>
-                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Catering">Delete</a>
+                                                            @*<a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Catering&&subcategory=@item.CuisineType">Edit</a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Catering">Delete</a>*@
+                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Catering&&subcategory=@item.CuisineType" class="btn btn-icon btn-outline btn-success btn-round tooltip-success tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Edit" title=""><i class="icon wb-pencil" aria-hidden="true"></i></a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Catering" class="btn btn-icon btn-outline btn-danger btn-round tooltip-danger tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Delete" title=""><i class="icon wb-close" aria-hidden="true"></i></a>
                                                         </td>
                                                     </tr>
                                                 }
@@ -107,11 +118,16 @@
                                                         {
                                                             <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
                                                         }
-                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Photography">Manage Availability</a></td>
+                                                        <td>
+                                                        @*<a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Photography">Manage Availability</a>*@
+                                                            <a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Photography" class="btn btn-icon btn-outline btn-primary btn-sm tooltip-primary tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Manage Booking Dates" title=""><i class="icon wb-calendar" aria-hidden="true"></i></a>
+                                                        </td>
                                                         <td>@item.Status</td>
                                                         <td>
-                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Photography&&subcategory=@item.PhotographyType">Edit</a>
-                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Photography">Delete</a>
+                                                            @*<a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Photography&&subcategory=@item.PhotographyType">Edit</a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Photography">Delete</a>*@
+                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Photography&&subcategory=@item.PhotographyType" class="btn btn-icon btn-outline btn-success btn-round tooltip-success tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Edit" title=""><i class="icon wb-pencil" aria-hidden="true"></i></a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Photography" class="btn btn-icon btn-outline btn-danger btn-round tooltip-danger tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Delete" title=""><i class="icon wb-close" aria-hidden="true"></i></a>
                                                         </td>
                                                     </tr>
                                                 }
@@ -129,11 +145,16 @@
                                                         {
                                                             <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
                                                         }
-                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Decorator">Manage Availability</a></td>
+                                                        <td>
+                                                        @*<a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Decorator">Manage Availability</a>*@
+                                                            <a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Decorator" class="btn btn-icon btn-outline btn-primary btn-sm tooltip-primary tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Manage Booking Dates" title=""><i class="icon wb-calendar" aria-hidden="true"></i></a>
+                                                        </td>
                                                         <td>@item.Status</td>
                                                         <td>
-                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Decorator&&subcategory=@item.DecorationType">Edit</a>
-                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Decorator">Delete</a>
+                                                            @*<a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Decorator&&subcategory=@item.DecorationType">Edit</a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Decorator">Delete</a>*@
+                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Decorator&&subcategory=@item.DecorationType" class="btn btn-icon btn-outline btn-success btn-round tooltip-success tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Edit" title=""><i class="icon wb-pencil" aria-hidden="true"></i></a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Decorator" class="btn btn-icon btn-outline btn-danger btn-round tooltip-danger tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Delete" title=""><i class="icon wb-close" aria-hidden="true"></i></a>
                                                         </td>
                                                     </tr>
                                                 }
@@ -151,11 +172,16 @@
                                                         {
                                                             <td>@ViewBag.Vendor.Landmark ,@ViewBag.Vendor.City ,@ViewBag.Vendor.State</td>
                                                         }
-                                                        <td><a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Other">Manage Availability</a></td>
+                                                        <td>
+                                                        @*<a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Other">Manage Availability</a>*@
+                                                            <a href="/NVendorCalendar?id=@item.VendorMasterId&&vid=@item.Id&&type=Other" class="btn btn-icon btn-outline btn-primary btn-sm tooltip-primary tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Manage Booking Dates" title=""><i class="icon wb-calendar" aria-hidden="true"></i></a>
+                                                        </td>
                                                         <td>@item.Status</td>
                                                         <td>
-                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Other&&subcategory=@item.type">Edit</a>
-                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Other">Delete</a>
+                                                            @*<a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Other&&subcategory=@item.type">Edit</a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Other">Delete</a>*@
+                                                            <a href="/NVendorManageStoreFront/Index?id=@item.VendorMasterId&&vid=@item.Id&&category=Other&&subcategory=@item.type" class="btn btn-icon btn-outline btn-success btn-round tooltip-success tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Edit" title=""><i class="icon wb-pencil" aria-hidden="true"></i></a>
+                                                            <a href="/NVendorStoreFront/deleteservice?id=@item.VendorMasterId&&vid=@item.Id&&type=Other" class="btn btn-icon btn-outline btn-danger btn-round tooltip-danger tooltip-scale" data-toggle="tooltip" data-placement="top" data-original-title="Delete" title=""><i class="icon wb-close" aria-hidden="true"></i></a>
                                                         </td>
                                                     </tr>
                                                 }
