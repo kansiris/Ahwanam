@@ -18,28 +18,30 @@ namespace MaaAahwanam.Web.Controllers
         string type = "";
         public ActionResult Index()
         {
-            try { 
-            if (TempData["Active"] != "")
-            {
-                ViewBag.Active = TempData["Active"];
-            }
-            return View();
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Index", "Nhomepage");
-            }
+            //try
+            //{
+                if (TempData["Active"] != null)
+                {
+                    ViewBag.Active = TempData["Active"];
+                }
+                return View();
+            //}
+            //catch (Exception)
+            //{
+            //    return RedirectToAction("Index", "Nhomepage");
+            //}
         }
 
         [HttpPost]
         public ActionResult Index([Bind(Prefix = "Item1")]UserLogin userLogin, [Bind(Prefix = "Item2")] Vendormaster vendorMaster, string command)
         {
-            try { 
-            //if (command == "VendorReg")
-            //{
+            try
+            {
+                //if (command == "VendorReg")
+                //{
                 int query = vendorMasterService.checkemail(vendorMaster.EmailId);
 
-                if (query == 0)
+                if (query != 0)
                 {
                     if (vendorMaster.ServicType == "Mehendi" || vendorMaster.ServicType == "Pandit")
                     {
@@ -58,7 +60,7 @@ namespace MaaAahwanam.Web.Controllers
                     userDetail = venorVenueSignUpService.AddUserDetail(userDetail, vendorMaster);
                     addservice(vendorMaster);
 
-                 string activationcode = userLogin1.ActivationCode;
+                    string activationcode = userLogin1.ActivationCode;
                     string txtto = userLogin1.UserName;
                     string username = userDetail.FirstName;
                     string emailid = userLogin1.UserName;
@@ -73,9 +75,9 @@ namespace MaaAahwanam.Web.Controllers
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
 
                     TempData["Active"] = "Check your email to active your account to login";
-                    return RedirectToAction("Index", "NUserRegistration");
+                    return RedirectToAction("Index", "NVendorSignUp");
 
-                   // return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                    // return Content("<script language='javascript' type='text/javascript'>alert('Check your email to active your account to login');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
                     //if (vendorMaster.Id != 0)
                     //{
                     //    return Content("<script language='javascript' type='text/javascript'>alert('Registered Successfully!!! Our back office executive will get back to you as soon as possible');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
@@ -83,7 +85,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                     TempData["Active"] = "E-Mail ID Already Taken!!! Try Another";
-                return RedirectToAction("Index", "NUserRegistration");
+                return RedirectToAction("Index", "NVendorSignUp");
                 // return Content("<script language='javascript' type='text/javascript'>alert('E-Mail ID Already Taken!!! Try Another');location.href='" + @Url.Action("Index", "NVendorSignUp") + "'</script>");
                 //}
                 // return View();

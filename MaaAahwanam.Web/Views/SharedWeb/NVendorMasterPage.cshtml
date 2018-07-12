@@ -3,11 +3,14 @@
 <head>
     <!-- Google Tag Manager -->
     <script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KD2HPX6');</script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KD2HPX6');</script>
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,6 +64,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script>
         Breakpoints();
     </script>
+    @*<script>alertify.confirm('Confirm Message', function () { alertify.success('Ok') });</script>*@
+    @using MaaAahwanam.Web.Custom
+    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        //var user = (CustomPrincipal)HttpContext.Current.User;
+        //var id = Request.Url.Segments[3];
+        //if (user.UserId != long.Parse(id))
+        //{
+        //    Response.Redirect("/NVendorDashboard/index?id=" + user.UserId + "");
+        //}
+        //Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
+    }
+    else
+    {
+        <script>
+            alert('Session TimeOut!!!Login Again');
+            location.href = '/NUserRegistration/Index';
+        </script>
+    }
 </head>
 
 <body class="dashboard">
@@ -331,29 +353,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         </li>*@
                     @{Html.RenderAction("VendorAuth", "NVendorDashboard");}
                     @*<li class="dropdown">
-                        <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"
-                           data-animation="scale-up" role="button">
-                            <span class="avatar avatar-online">
-                                <img src="~/VendorStyles/global/portraits/5.jpg" alt="...">
-                                <i></i>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation">
-                                <a href="/NVendorDashboard?id=@ViewBag.id" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-payment" aria-hidden="true"></i> Billing</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
-                            </li>
-                            <li class="divider" role="presentation"></li>
-                            <li role="presentation">
-                                <a href="/NUserRegistration/SignOut" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
-                            </li>
-                        </ul>
-                    </li>*@
+                            <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"
+                               data-animation="scale-up" role="button">
+                                <span class="avatar avatar-online">
+                                    <img src="~/VendorStyles/global/portraits/5.jpg" alt="...">
+                                    <i></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation">
+                                    <a href="/NVendorDashboard?id=@ViewBag.id" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="javascript:void(0)" role="menuitem"><i class="icon wb-payment" aria-hidden="true"></i> Billing</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
+                                </li>
+                                <li class="divider" role="presentation"></li>
+                                <li role="presentation">
+                                    <a href="/NUserRegistration/SignOut" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>*@
                     @*<li class="dropdown">
                             <a data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false"
                                data-animation="scale-up" role="button">
@@ -592,7 +614,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                 <span class="site-menu-title">Deals</span>
                             </a>
                         </li>
-                        
+
                         @*<li class="site-menu-item">
                                 <a href="javascript:void(0)">
                                     <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
@@ -694,14 +716,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script src="~/VendorStyles/base/assets/examples/js/tables/datatable.js"></script>
     <script src="~/newdesign/js/alertify.js"></script>
     @*@if (ViewBag.Active != null)
-    {
-        <script>
-            alertify.alert("@ViewBag.Active", function () {
-                //alertify.message('OK');
-            });
-        </script>
-    }*@
-    @RenderSection("scripts",required:false)
+        {
+            <script>
+                alertify.alert("@ViewBag.Active", function () {
+                    //alertify.message('OK');
+                });
+            </script>
+        }*@
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

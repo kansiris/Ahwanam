@@ -4,7 +4,27 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
 }
+<style>
+    .overlay {
+        background: no-repeat scroll center center #FFF;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999999;
+        background-color: rgba(0,0,0,0.8);
+        /* END EXTERNAL S */
+    }
+</style>
 
+<div class="overlay" style="display: none;">
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+        <img src="~/CSSWeb/images/Loader2.gif" /><br>
+        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Registering in Process...</p>
+        <p style="color: white; font-family:serif;">&nbsp; If this is taking more time Click <a href="/NVendorSignUp">here</a>.</p>
+    </div>
+</div>
 <form method="post" id="vendorregister">
     <div class="container-fluid questionery">
         <div class="row py-2 justify-content-center">
@@ -262,7 +282,9 @@
                     $('#Item1_Password').focus();
                 }
                 else {
+                    //$(this).attr('disabled', 'disabled');
                     //this.form.submit();
+                    $(".overlay").show();
                     $('#vendorregister').submit();
                 }
                 // alert("Redirect");
