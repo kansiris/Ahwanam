@@ -20,6 +20,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         AdminDashboardService dashboardService = new AdminDashboardService();
         OrderService orderService = new OrderService();
         OthersService othersService = new OthersService();
+        QuotationListsService quotationListsService = new QuotationListsService();
         public ActionResult dashboard(string id)
         {
             ViewBag.vendorcount = dashboardService.VendorsCountService();
@@ -29,6 +30,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             ViewBag.orders = orderService.OrderList().OrderByDescending(m=>m.OrderId).Take(10);
             ViewBag.users = othersService.AllRegisteredUsersDetails().OrderByDescending(m=>m.UserLoginId).Take(4);
             ViewBag.notificationcount = othersService.Notifications().Count();
+            ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.Status == "Active").Count();
             //UserDetail userdetail = dashboardService.AdminNameService(long.Parse(id));
             //ViewBag.admin = userdetail.FirstName + " " + userdetail.LastName;
             ViewBag.admin = "admin";

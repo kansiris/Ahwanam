@@ -97,7 +97,6 @@ namespace MaaAahwanam.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index(string command, [Bind(Prefix = "Item1")] UserLogin userLogin, [Bind(Prefix = "Item2")] UserDetail userDetail, string ReturnUrl)
         {
-
             try
             {
                 if (command == "UserReg")

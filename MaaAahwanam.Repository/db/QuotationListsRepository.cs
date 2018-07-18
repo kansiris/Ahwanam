@@ -22,5 +22,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.QuotationsList.Where(m => m.IPaddress == IP).ToList();
         }
+
+        public List<QuotationsList> GetAllQuotations()
+        {
+            return _dbContext.QuotationsList.ToList();
+        }
     }
 }

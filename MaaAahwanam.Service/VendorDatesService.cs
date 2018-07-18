@@ -42,5 +42,10 @@ namespace MaaAahwanam.Service
         {
             return vendorDatesRepository.GetCurrentMonthDates(id);
         }
+
+        public List<filtervendordates_Result> GetVendorsByService()
+        {
+            return vendorDatesRepository.GetVendorsByService();
+        }
     }
 }

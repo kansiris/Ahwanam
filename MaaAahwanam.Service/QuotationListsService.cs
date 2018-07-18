@@ -22,5 +22,10 @@ namespace MaaAahwanam.Service
         {
             return quotationListsRepository.GetQuotationsList(IP);
         }
+
+        public List<QuotationsList> GetAllQuotations()
+        {
+            return quotationListsRepository.GetAllQuotations();
+        }
     }
 }

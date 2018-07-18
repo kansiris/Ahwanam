@@ -27,6 +27,8 @@ function GetNewQuote(quotationsList,url) {
         success: function (response) {
             if (response == "Success")
             { alertmsg("Quotation Raised.Our Support Team Will Get Back To you Shortly"); $(".getQuoteBlock").css("display", "none"); }
+            //else if (response == "Login")
+            //{ alertmsg("Please Login"); $(".getQuoteBlock").css("display", "none"); }
             else if (response == "exceeded")
                 alert("Quotation Limit Exceeded!!! please Login/Sign up to Raise Quotation");
             else if (response == "Fail")

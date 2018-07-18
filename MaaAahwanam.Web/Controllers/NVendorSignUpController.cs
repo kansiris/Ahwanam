@@ -41,7 +41,7 @@ namespace MaaAahwanam.Web.Controllers
                 //{
                 int query = vendorMasterService.checkemail(vendorMaster.EmailId);
 
-                if (query != 0)
+                if (query == 0)
                 {
                     if (vendorMaster.ServicType == "Mehendi" || vendorMaster.ServicType == "Pandit")
                     {

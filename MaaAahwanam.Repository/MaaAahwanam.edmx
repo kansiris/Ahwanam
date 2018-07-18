@@ -18,6 +18,7 @@
         <Function Name="Deal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="type" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="filtervendordates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="filtervendors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="type" Type="varchar" Mode="In" />
           <Parameter Name="f1" Type="varchar" Mode="In" />
@@ -391,8 +392,9 @@
           </FunctionImport>
           <FunctionImport Name="sp_userorddisplay" ReturnType="Collection(MaaAahwanamModel.sp_userorddisplay_Result)" />
           <FunctionImport Name="GetCartItems" ReturnType="Collection(MaaAahwanamModel.GetCartItems_Result)">
-            <Parameter Name="VID" Mode="In" Type="Int32" />
+          <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="filtervendordates" ReturnType="Collection(MaaAahwanamModel.filtervendordates_Result)" />
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -1286,6 +1288,16 @@
           <Property Type="DateTime" Name="eventstartdate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="eventenddate" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="eventid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="filtervendordates_Result">
+          <Property Type="Int64" Name="masterid" Nullable="false" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="String" Name="VenueType" Nullable="true" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Type" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2412,6 +2424,20 @@
                 <ScalarProperty Name="eventstartdate" ColumnName="eventstartdate" />
                 <ScalarProperty Name="eventenddate" ColumnName="eventenddate" />
                 <ScalarProperty Name="eventid" ColumnName="eventid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="filtervendordates" FunctionName="MaaAahwanamModel.Store.filtervendordates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.filtervendordates_Result">
+                <ScalarProperty Name="masterid" ColumnName="masterid" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="VenueType" ColumnName="VenueType" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

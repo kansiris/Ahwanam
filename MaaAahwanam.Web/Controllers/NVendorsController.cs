@@ -49,7 +49,7 @@ namespace MaaAahwanam.Web.Controllers
             //string hostName = Dns.GetHostName();
             quotationsList.IPaddress = ip;//Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
             quotationsList.UpdatedTime = DateTime.UtcNow;
-            quotationsList.Status = "Active";
+            quotationsList.Status = "Pending";
             quotationsList.EventStartDate = quotationsList.EventStartDate.Date;
             quotationsList.EventEnddate = quotationsList.EventStartTime = quotationsList.EventEndtime = quotationsList.EventStartDate;
             int count = quotationListsService.GetVendorVenue(quotationsList.IPaddress).Count;

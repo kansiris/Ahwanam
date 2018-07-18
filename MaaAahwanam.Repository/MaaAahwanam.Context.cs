@@ -649,5 +649,10 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
         }
+    
+        public virtual ObjectResult<filtervendordates_Result> filtervendordates()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendordates_Result>("filtervendordates");
+        }
     }
 }

@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Repository.db
 {
     public class VendorDatesRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
+
         public VendorDates SaveVendorDates(VendorDates vendorDates)
         {
             vendorDates = _dbContext.VendorDates.Add(vendorDates);
@@ -58,6 +61,11 @@ namespace MaaAahwanam.Repository.db
             var last = first.AddMonths(1).AddDays(-1);
             return _dbContext.VendorDates.Where(m => m.VendorId == id && m.StartDate > first && m.EndDate <= last).ToList();
             //return _dbContext.Availabledates.Where(m => m.vendorId == id).ToList();
+        }
+
+        public List<filtervendordates_Result> GetVendorsByService()
+        {
+            return maaAahwanamEntities.filtervendordates().ToList();
         }
     }
 }

@@ -1,0 +1,60 @@
+﻿
+@if (ViewBag.vendors.Count != 0)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" align="right" style="display:none">
+                    <button type="button" data-toggle="tooltip" data-placement="top" title="Export to PDF" class="btn btn-default btn-circle"><i class="icon-check"></i> </button>
+                    <button type="button" data-toggle="tooltip" data-placement="top" title="Export to Exccel" class="btn btn-primary btn-circle"><i class="icon-list"></i> </button>
+                    <button type="button" data-toggle="tooltip" data-placement="top" title="Print" class="btn btn-success btn-circle"><i class="icon-link"></i> </button>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>BusinessName</th>
+                                    <th>Category</th>
+                                    <th>Sub-Category</th>
+                                    <th>Available dates</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var i = 0;}
+                                @foreach (var item in ViewBag.vendors)
+                                {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td>@item.BusinessName</td>
+                                        <td>@item.ServiceType</td>
+                                        <td>@item.VenueType</td>
+                                        <td>
+                                            <p>Start Date : @item.StartDate</p>
+                                            <p>End Date : @item.EndDate</p>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary">Select</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+                                    }
+                                    else if (ViewBag.novendor != null)
+                                    {
+                                        <h2>@ViewBag.novendor</h2>
+                                    }
+                                    else
+                                    {
+                                        <h2>Select Service Type & Date To View Vendors</h2>
+                                    }

@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "QuoteReply";
+    Layout = "~/Areas/Admin/Views/Shared/MainMaster.cshtml";
+}
+
+@section header{
+    <link href="~/Assets/plugins/datepicker/css/datepicker.css" rel="stylesheet" />
+}
+
+@*<h2>QuoteReply</h2>
+
+    <p>Quotation Requested Date : @ViewBag.quotations.EventStartDate.ToString("dd/MM/yyyy")</p>*@
+
+@*<p> Select Date: <input type="text" class="form-control" id="datetimepicker"/> </p>*@
+
+<div id="content">
+    <div class="inner">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 style="text-align:center">Replying To @ViewBag.quotations.Name Quote</h2><input type="hidden" id="type" value="Photography" />
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="tab-content" id="images">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div id="collapse2" class="body collapse in">
+                                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                                            @*----------common---------*@
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Quotation Requested Date</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="businame" name="name" placeholder="Business Name" class="form-control">*@
+                                                    <h4>@ViewBag.quotations.EventStartDate.ToString("dd/MM/yyyy")</h4>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Select Service Type</label>
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="selectedservice">
+                                                        <option value="" selected="">Select Service Type</option>
+                                                        <option value="Venue">Venue</option>
+                                                        <option value="Catering">Catering</option>
+                                                        <option value="Photography">Photography</option>
+                                                        <option value="Decorator">Decorator</option>
+                                                        <option value="Mehendi">Mehendi Artists</option>
+                                                        <option value="Pandit">Pandits</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Select Date</label>
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="dp1" name="name" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="tooltip-demo" align="center">
+                                                <button type="button" id="btnsearch" class="btn btn-primary" tooltip="Select Service Type & Date" onclick="sortvendors()" disabled>Search Vendors</button>
+                                                @*<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top">Tooltip on top</button>*@
+                                            </div>
+
+                                            <div id="sortvendors">
+                                                @{Html.RenderAction("FilteredVendors", "Quotations");}
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Bottom{
+    <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
+    <script src="~/Assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Assets/js/notifications.js"></script>
+    <script>
+        $(function () { Notifications(); });
+        //$('#dp1').val(new Date().toLocaleDateString().toString("dd-MM-yyyy"));
+        $('#dp1').datepicker({
+            format: 'dd-mm-yyyy'
+        }).on('changeDate', function (ev) {
+            $('.datepicker').hide();
+            $('#btnsearch').removeAttr('disabled');
+        });
+
+        function sortvendors() {
+            var type = $('#selectedservice').val();
+            var date = $('#dp1').val();
+            var url = '/Admin/Quotations/FilteredVendors?type=' + type + '&&date=' + date;
+            $('#sortvendors').empty().load(url);
+        }
+    </script>
+}

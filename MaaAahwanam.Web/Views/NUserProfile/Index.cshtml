@@ -51,45 +51,44 @@
                                 </div>
                             </div>
                             <div class="row mx-0 mt-2 tableData" id="currentTickets">
-
-                                @if (ViewBag.order != null)
-                                {
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>S.No</th>
-                                                <th>OrderID</th>
-                                                <th>Vendor Details</th>
-                                                <th>Order Date</th>
-                                                <th>Status</th>
-                                                <th>Price</th>
-                                                <th>Event Type</th>
-                                                <th>Booking date</th>
-                                                <th>Timeslot</th>
-                                                <th>Action</th>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>OrderID</th>
+                                            <th>Vendor Details</th>
+                                            <th>Order Date</th>
+                                            <th>Status</th>
+                                            <th>Price</th>
+                                            <th>Event Type</th>
+                                            <th>Booking date</th>
+                                            <th>Timeslot</th>
+                                            <th>Action</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in ViewBag.order)
+                                        @if (ViewBag.order.Count != 0)
                                         {
-                                            <tr>
-                                                <td>@(++i)</td>
-                                                <td>@item.OrderId</td>
-                                                <td>
-                                                    <p class="productName mb-0">@item.BusinessName</p>
-                                                </td>
-                                                <td>
-                                                    <div class="event-date-time">
-                                                        <div class="event-dates">
-                                                            @item.OrderDate.ToString("dd MMM yyyy")
+                                            foreach (var item in ViewBag.order)
+                                            {
+                                                <tr>
+                                                    <td>@(++i)</td>
+                                                    <td>@item.OrderId</td>
+                                                    <td>
+                                                        <p class="productName mb-0">@item.BusinessName</p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="event-date-time">
+                                                            <div class="event-dates">
+                                                                @item.OrderDate.ToString("dd MMM yyyy")
+                                                            </div>
+                                                    </td>
+                                                    <td>@item.Status</td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span></p>
                                                         </div>
-                                                </td>
-                                                <td>@item.Status</td>
-                                                <td>
-                                                    <div class="item-price">
-                                                        <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span></p>
-                                                    </div>
 
                                                     </td>
                                                     <td>
@@ -109,93 +108,101 @@
                                                             <p>@item.attribute</p>
                                                         </div>
 
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            <a onclick="alert1(@item.OrderId)"><i class="fa fa-close"></i></a>&nbsp;&nbsp;<a onclick="alert11(@item.OrderId)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <p>No Current Orders</p>
                                                 </td>
-                                                <td>
-                                                    <div class="item-price">
-                                                        <a  onclick="alert1(@item.OrderId)" ><i class="fa fa-close"></i></a>&nbsp;&nbsp;<a onclick="alert11(@item.OrderId)"><i class="fa fa-trash" aria-hidden="true"></i></a>
-</div>
-</td>
                                             </tr>
-                                          
                                         }
                                     </tbody>
                                 </table>
-                            }
-                        </div>
-                        <div class="row mx-0 mt-2 tableData" id="bookingHistory">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>OrderID</th>
-                                        <th>Vendor Details</th>
-                                        <th>Order Date</th>
-                                        <th>Event Type</th>
-                                        <th>Booking date</th>
-                                        <th>Timeslot</th>
-                                        <th>Status</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (ViewBag.orderhistory.Count != 0)
-                                    {
-                                        foreach (var item in ViewBag.orderhistory)
+                            </div>
+                            <div class="row mx-0 mt-2 tableData" id="bookingHistory">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>OrderID</th>
+                                            <th>Vendor Details</th>
+                                            <th>Order Date</th>
+                                            <th>Event Type</th>
+                                            <th>Booking date</th>
+                                            <th>Timeslot</th>
+                                            <th>Status</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (ViewBag.orderhistory.Count != 0)
+                                        {
+                                            foreach (var item in ViewBag.orderhistory)
+                                            {
+                                                <tr>
+                                                    <td>@(++j)</td>
+                                                    <td>@item.OrderId</td>
+                                                    <td>
+                                                        <p class="productName mb-0">@item.BusinessName</p>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="event-date-time">
+                                                            <div class="event-dates">
+                                                                @item.OrderDate.ToString("dd MMM yyyy")
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            <p>@item.EventType</p>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            <p>@item.BookedDate.ToString("dd MMM yyyy")</p>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            <p>@item.attribute</p>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>@item.Status</td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</span></p>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
                                         {
                                             <tr>
-                                                <td>@(++j)</td>
-                                                <td>@item.OrderId</td>
-                                                <td>
-                                                    <p class="productName mb-0">@item.BusinessName</p>
-
-                                                </td>
-                                                <td>
-                                                    <div class="event-date-time">
-                                                        <div class="event-dates">
-                                                            @item.OrderDate.ToString("dd MMM yyyy")
-                                                        </div>
-                                                </td>
-                                                <td>
-                                                    <div class="item-price">
-                                                        <p>@item.EventType</p>
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="item-price">
-                                                        <p>@item.BookedDate.ToString("dd MMM yyyy")</p>
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="item-price">
-                                                        <p>@item.attribute</p>
-                                                    </div>
-
-                                                </td>
-                                                <td>@item.Status</td>
-                                                <td>
-                                                    <div class="item-price">
-                                                        <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</span></p>
-                                                    </div>
-
+                                                <td colspan="9">
+                                                    <p>No Past Orders</p>
                                                 </td>
                                             </tr>
                                         }
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td colspan="6">
-                                                <p>No Past Orders</p>
-                                            </td>
-                                        </tr>
-                                    }
-                                        </tbody>
-                                    </table>
-                                
+                                    </tbody>
+                                </table>
+
                             </div>
-                       
+
                             <div class="row mx-0 mt-2 tableData" id="wishList">
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -352,8 +359,8 @@
             function load(userdetails) {
                 var user = document.getElementById("username").value;
                 var phoneno = document.getElementById("phoneno").value;
-                if ( user == "") { alertify.alert("Enter username"); }
-                else if (phoneno == "") {  alertify.alert("enter Phone no"); }
+                if (user == "") { alertify.alert("Enter username"); }
+                else if (phoneno == "") { alertify.alert("enter Phone no"); }
                 else {
                     var userdet = {
                         FirstName: document.getElementById("username").value,
@@ -378,8 +385,8 @@
 
             function load1() {
                 //alert("ggg");
-               var Password = document.getElementById("Password").value;
-               var Password1 = document.getElementById("Password1").value;
+                var Password = document.getElementById("Password").value;
+                var Password1 = document.getElementById("Password1").value;
                 if (Password == "")
 
                 { alertify.alert("Enter Password"); }
@@ -387,8 +394,8 @@
 
                 { alertify.alert("Enter confirm Password"); }
 
-               else if (Password != Password1) {
-                   alertify.alert("passwords  are not match");
+                else if (Password != Password1) {
+                    alertify.alert("passwords  are not match");
                 }
                 else {
                     var userLogin = {
@@ -413,32 +420,32 @@
         <script>
 
 
-    function alert11(paid) {
-        //var paid = $(this).find('input#pid').val();
-        alertify.confirm("Are you sure You want to delete " + paid + " ?",
-          function () {
-         //     alertify.success('Deleted');
-              location.href = '/NUserProfile/orderdelete?orderid=' + paid + '&vid= @ViewBag.id'
-          },
-          function () {
-          });
-    }
-            function alert1(paid) {
+            function alert11(paid) {
                 //var paid = $(this).find('input#pid').val();
-                alertify.confirm("Are you sure You want to cancel orderid " +paid+ " ?",
+                alertify.confirm("Are you sure You want to delete " + paid + " ?",
                   function () {
                       //     alertify.success('Deleted');
-               
+                      location.href = '/NUserProfile/orderdelete?orderid=' + paid + '&vid= @ViewBag.id'
+                  },
+                  function () {
+                  });
+            }
+            function alert1(paid) {
+                //var paid = $(this).find('input#pid').val();
+                alertify.confirm("Are you sure You want to cancel orderid " + paid + " ?",
+                  function () {
+                      //     alertify.success('Deleted');
+
                       location.href = '/NUserProfile/ordercancel?orderid=' + paid + '&vid= @ViewBag.id'
                   },
                   function () {
                   });
             }
 
-</script>
+        </script>
 
 
-}
+    }
 }
 
 }

@@ -28,5 +28,6 @@ namespace MaaAahwanam.Models
         public string Status { get; set; }
         public string IPaddress { get; set; }
         public string Description { get; set; }
+        public string TimeSlot { get; set; }
     }
 }

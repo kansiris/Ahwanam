@@ -68,10 +68,12 @@ namespace MaaAahwanam.Web.Controllers
             {
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 Vendormaster vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                ViewBag.vendorid = vendorMaster.Id;
+                
                 //return View("AvailableServices", vendorMaster.Id);
-                return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+                //return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
             }
-            return RedirectToAction("SignOut", "NVendorDashboard");
+            return RedirectToAction("SignOut", "NUserRegistration");
         }
     }
 }
