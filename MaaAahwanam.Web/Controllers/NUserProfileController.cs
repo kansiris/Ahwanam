@@ -16,54 +16,56 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class NUserProfileController : Controller
     {
-
+        QuotationListsService quotationListsService = new QuotationListsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
         // GET: NUserProfile
         public ActionResult Index()
         {
-            try { 
-            if (TempData["Active"] != "")
+            try
             {
-                ViewBag.Active = TempData["Active"];
-            }
-
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "Vendor")
+                if (TempData["Active"] != "")
                 {
-                    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
+                    ViewBag.Active = TempData["Active"];
                 }
-                if (user.UserType == "User")
+
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    if (userdata.FirstName != "" && userdata.FirstName != null)
-                        ViewBag.username = userdata.FirstName;
-                    else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
-                        ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
-                    else
-                        ViewBag.username = userdata.AlternativeEmailID;
-                    ViewBag.phoneno = userdata.UserPhone;
-                    var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
-                    ViewBag.emailid = userdata1.UserName;
-                    var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                    ViewBag.order = orders.OrderByDescending(m=>m.OrderId).Where(m => m.Status == "Pending"||m.Status == "Vendor Declined" ||m.Status == "Active").ToList();
-                    ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m=>m.Status == "InActive" || m.Status == "Cancelled").ToList();
-                    WhishListService whishListService = new WhishListService();
-                    ViewBag.whishlists = whishListService.GetWhishList(user.UserId.ToString());
-                    // OrderByDescending(m => m.OrderId).Take(10);
-                    //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
-                    //decimal total = cartlist.Sum(s => s.TotalPrice);
-                    //ViewBag.Cartlist = cartlist;
-                    // ViewBag.Total = total;
-                    return View();
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    if (user.UserType == "Vendor")
+                    {
+                        Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
+                    }
+                    if (user.UserType == "User")
+                    {
+                        var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                        if (userdata.FirstName != "" && userdata.FirstName != null)
+                            ViewBag.username = userdata.FirstName;
+                        else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
+                            ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
+                        else
+                            ViewBag.username = userdata.AlternativeEmailID;
+                        ViewBag.phoneno = userdata.UserPhone;
+                        var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
+                        ViewBag.emailid = userdata1.UserName;
+                        var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
+                        ViewBag.order = orders.OrderByDescending(m => m.OrderId).Where(m => m.Status == "Pending" || m.Status == "Vendor Declined" || m.Status == "Active").ToList();
+                        ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m => m.Status == "InActive" || m.Status == "Cancelled").ToList();
+                        WhishListService whishListService = new WhishListService();
+                        ViewBag.whishlists = whishListService.GetWhishList(user.UserId.ToString());
+                        ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.EmailId == "rameshsai@xsilica.com").ToList();
+                        // OrderByDescending(m => m.OrderId).Take(10);
+                        //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
+                        //decimal total = cartlist.Sum(s => s.TotalPrice);
+                        //ViewBag.Cartlist = cartlist;
+                        // ViewBag.Total = total;
+                        return View();
+                    }
+                    TempData["Active"] = "Please Login";
+                    return RedirectToAction("Index", "NUserRegistration");
                 }
                 TempData["Active"] = "Please Login";
                 return RedirectToAction("Index", "NUserRegistration");
-            }
-            TempData["Active"] = "Please Login";
-            return RedirectToAction("Index", "NUserRegistration");
             }
             catch (Exception)
             {
@@ -72,31 +74,32 @@ namespace MaaAahwanam.Web.Controllers
         }
         public ActionResult orderdelete(string orderid)
         {
-            try { 
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            try
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "Vendor")
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
-                }
-                if (user.UserType == "User")
-                {
-                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    var orders = orderService.userOrderList().Where(m => m.OrderId  == Convert.ToInt64(orderid));
-                    Order order = new Order();
-                    OrderDetail orderdetail = new OrderDetail();
-                    order.Status = "Removed";
-                    orderdetail.Status = "Removed";
-                    order = orderService.updateOrderstatus(order , orderdetail, Convert.ToInt64(orderid));
-                    TempData["Active"] = "Order Deleted";
-                    return RedirectToAction("Index", "NUserProfile");
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    if (user.UserType == "Vendor")
+                    {
+                        Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
+                    }
+                    if (user.UserType == "User")
+                    {
+                        var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                        var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
+                        Order order = new Order();
+                        OrderDetail orderdetail = new OrderDetail();
+                        order.Status = "Removed";
+                        orderdetail.Status = "Removed";
+                        order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+                        TempData["Active"] = "Order Deleted";
+                        return RedirectToAction("Index", "NUserProfile");
+                    }
+                    TempData["Active"] = "Please Login";
+                    return RedirectToAction("Index", "NUserRegistration");
                 }
                 TempData["Active"] = "Please Login";
                 return RedirectToAction("Index", "NUserRegistration");
-            }
-            TempData["Active"] = "Please Login";
-            return RedirectToAction("Index", "NUserRegistration");
             }
             catch (Exception)
             {
@@ -106,31 +109,32 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult ordercancel(string orderid)
         {
-            try { 
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            try
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                if (user.UserType == "Vendor")
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
-                }
-                if (user.UserType == "User")
-                {
-                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
-                    Order order = new Order();
-                    OrderDetail orderdetail = new OrderDetail();
-                    order.Status = "Cancelled";
-                    orderdetail.Status = "Cancelled";
-                    order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
-                    TempData["Active"] = "Order Cancelled";
-                    return RedirectToAction("Index", "NUserProfile");
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    if (user.UserType == "Vendor")
+                    {
+                        Response.Redirect("/AvailableServices/changeid?id=" + user.UserId + "");
+                    }
+                    if (user.UserType == "User")
+                    {
+                        var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                        var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
+                        Order order = new Order();
+                        OrderDetail orderdetail = new OrderDetail();
+                        order.Status = "Cancelled";
+                        orderdetail.Status = "Cancelled";
+                        order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+                        TempData["Active"] = "Order Cancelled";
+                        return RedirectToAction("Index", "NUserProfile");
+                    }
+                    TempData["Active"] = "Please Login";
+                    return RedirectToAction("Index", "NUserRegistration");
                 }
                 TempData["Active"] = "Please Login";
                 return RedirectToAction("Index", "NUserRegistration");
-            }
-            TempData["Active"] = "Please Login";
-            return RedirectToAction("Index", "NUserRegistration");
             }
             catch (Exception)
             {
@@ -141,11 +145,12 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult changepassword(UserLogin userLogin)
         {
-            try { 
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            var userdata12 = userLoginDetailsService.GetUserId((int)user.UserId);
-            userLoginDetailsService.changepassword(userLogin, (int)user.UserId);
-            return Json("success");
+            try
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                var userdata12 = userLoginDetailsService.GetUserId((int)user.UserId);
+                userLoginDetailsService.changepassword(userLogin, (int)user.UserId);
+                return Json("success");
             }
             catch (Exception)
             {
@@ -155,10 +160,11 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult updatedetails(UserDetail userdetail)
         {
-            try { 
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            userLoginDetailsService.UpdateUserdetailsnew(userdetail, (int)user.UserId);
-            return Json("success");
+            try
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                userLoginDetailsService.UpdateUserdetailsnew(userdetail, (int)user.UserId);
+                return Json("success");
             }
             catch (Exception)
             {

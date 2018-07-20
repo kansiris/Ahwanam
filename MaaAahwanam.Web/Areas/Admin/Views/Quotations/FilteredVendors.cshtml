@@ -11,13 +11,14 @@
                         <button type="button" data-toggle="tooltip" data-placement="top" title="Export to Exccel" class="btn btn-primary btn-circle"><i class="icon-list"></i> </button>
                         <button type="button" data-toggle="tooltip" data-placement="top" title="Print" class="btn btn-success btn-circle"><i class="icon-link"></i> </button>
                     </div>
-
+                    @*<input type="hidden" id="selectedids" />*@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
                                         <th>Actions</th>
+                                        <td style="display:none">ID</td>
                                         <th>BusinessName</th>
                                         <th>Category</th>
                                         <th>Sub-Category</th>
@@ -47,12 +48,13 @@
                                         <tr>
                                             <td>
                                                 @*<button class="btn btn-primary">Select</button>*@
-                                                @*<input type="checkbox" class="success" />*@
-                                                <div class="checkbox anim-checkbox">
-                                                    <input type="checkbox" id="ch3" class="form-control success">
-                                                    <label for="ch3">Select</label>
-                                                </div>
+                                                <input type="checkbox" class="form-control call-checkbox" value="@ViewBag.records[j][0]#@ViewBag.records[j][1]" />
+                                                @*<div class="checkbox anim-checkbox">
+                                                        <input type="checkbox" id="ch3" class="form-control success">
+                                                        <label for="ch3">Select</label>
+                                                    </div>*@
                                             </td>
+                                            <td style="display:none">@ViewBag.records[j][0],@ViewBag.records[j][1]</td>
                                             <td>@ViewBag.records[j][3]</td>
                                             <td>@ViewBag.records[j][4]</td>
                                             <td>@ViewBag.records[j][5]</td>
@@ -65,23 +67,23 @@
                             </table>
                         </div>
                     </div>
-                    
+
                 </div>
-                <div align="center"><button class="btn btn-primary">Reply Quotation</button></div>
+                <div align="center"><button class="btn btn-primary" id="replyquote" type="button">Reply Quotation</button></div>
             </div>
         </div>
-                                        }
-                                        else
-                                        {
-                                            <br /> <br />
-                                            <h2 style="text-align:center">No Vendors Available</h2>
-                                            }
+    }
+    else
+    {
+        <br /> <br />
+        <h2 style="text-align:center">No Vendors Available</h2>
+    }
 
-                                        }
-                                        else if (ViewBag.novendor != null)
-                                        {
-                                            <h2 style="text-align:center">@ViewBag.novendor</h2>
-                                        }
+}
+else if (ViewBag.novendor != null)
+{
+    <h2 style="text-align:center">@ViewBag.novendor</h2>
+}
 
 
 <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
@@ -90,6 +92,36 @@
     $(document).ready(function () {
         $('#dataTables-example').DataTable({
             "order": [[0, "desc"]]
+        });
+
+        $('#replyquote').click(function () {
+            var oTable = $('#dataTables-example').dataTable();
+            var ids = '';
+            var rowcollection = oTable.$(".call-checkbox:checked", { "page": "all" });
+            rowcollection.each(function (index, elem) {
+                var checkbox_value = $(elem).val();
+                if (ids != '')
+                { ids = ids + "," + checkbox_value; }
+                else { ids = checkbox_value; }
+            });
+            //alert(ids);
+            //$('#selectedids').val(ids);
+
+            var QuoteID = '@ViewBag.id';
+            var id = ids;
+           
+            $.ajax({
+                url: '/Admin/Quotations/ParticularQuoteReply',//?QuoteID=' + QuoteID + '&&id=' + ids,
+                dataType: 'json',
+                type: 'post',
+                data: { QuoteID: QuoteID, id: ids },
+                success: function (data) {
+                    alert("Quote Replied Sucessfully!!!")
+                },
+                error: function (data) {
+                    alert("Something Went Wrong Try Again Later!!!")
+                }
+            });
         });
     });
 </script>

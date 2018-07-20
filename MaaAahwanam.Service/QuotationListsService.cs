@@ -27,5 +27,10 @@ namespace MaaAahwanam.Service
         {
             return quotationListsRepository.GetAllQuotations();
         }
+
+        public int UpdateQuote(QuotationsList quotationsList)
+        {
+            return quotationListsRepository.UpdateQuote(quotationsList);
+        }
     }
 }

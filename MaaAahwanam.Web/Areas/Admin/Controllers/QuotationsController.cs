@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Repository;
+using MaaAahwanam.Utility;
+using System.IO;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -13,10 +15,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         ProductInfoService productInfoService = new ProductInfoService();
         QuotationListsService quotationListsService = new QuotationListsService();
         VendorDatesService vendorDatesService = new VendorDatesService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         // GET: Admin/Quotations
         public ActionResult Index()
         {
-            ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.Status == "Active").ToList();
+            ViewBag.quotations = quotationListsService.GetAllQuotations().ToList(); //.Where(m => m.Status == "Active")
             return View();
         }
 
@@ -27,10 +30,11 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult FilteredVendors(string type, string date)
+        public ActionResult FilteredVendors(string type, string date,string id)
         {
             if (type != null && date != null)
             {
+                ViewBag.id = id;
                 var data = vendorDatesService.GetVendorsByService().Where(m => m.ServiceType == type).ToList();
                 ViewBag.display = "1";
                 ViewBag.records = seperatedates(data, date, type);
@@ -81,5 +85,38 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return betweendates;
         }
 
+
+        public JsonResult ParticularQuoteReply(string QuoteID, string id)
+        {
+            DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            var particularquote = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
+            if (particularquote.FirstTime == null && particularquote.FirstTimeQuoteDate == null)
+            {
+                particularquote.FirstTime = id;
+                particularquote.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
+            }
+            //else if (particularquote.FirstTime != null && particularquote.FirstTimeQuoteDate != null && particularquote.SecondTime == null && particularquote.SecondTimeQuoteDate == null)
+            //{
+            //    particularquote.SecondTime = id;
+            //    particularquote.SecondTimeQuoteDate = indianTime.ToString("dd-MM-yyyy");
+            //}
+            //else if (particularquote.FirstTime != null && particularquote.FirstTimeQuoteDate != null && particularquote.SecondTime != null && particularquote.SecondTimeQuoteDate != null && particularquote.ThirdTime == null && particularquote.ThirdTimeQuoteDate == null)
+            //{
+            //    particularquote.ThirdTime = id;
+            //    particularquote.ThirdTimeQuoteDate = indianTime.ToString("dd-MM-yyyy");
+            //}
+
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
+            string readFile = File.OpenText().ReadToEnd();
+            readFile = readFile.Replace("[name]", particularquote.Name);
+            readFile = readFile.Replace("[Email]", particularquote.EmailId);
+            string txtto = particularquote.EmailId;
+            string txtmessage = readFile;
+            string subj = "Response to your Quote #"+particularquote.Id+"";
+            int count = quotationListsService.UpdateQuote(particularquote);
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            return Json("sucess");
+        }
     }
 }

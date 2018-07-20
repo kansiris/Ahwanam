@@ -15,6 +15,7 @@
                     Ahwanam
                 </a>                <ul>
                     <li> <a href="#" onclick="userProfile('userTicketDetails')">Dashboard</a> </li>
+                    <li> <a href="#" onclick="userProfile('Quotations')">Quotations</a> </li>
                     <li> <a href="#" onclick="userProfile('profileDetails')">Profile</a> </li>
                     <li> <a href="#" onclick="userProfile('profileSettings')">Settings</a> </li>
                     <li>
@@ -253,6 +254,98 @@
                             </div>
 
                         </div>
+                        
+                        <div id="Quotations" style="display:none">
+                            <div class="row mx-0">
+                                <h3 class="noteWorthybold">
+                                   All Quotations
+                                    <div class="blackBorder"></div>
+                                </h3>
+                            </div>
+                            <div class="row mx-0 mt-2 tableData">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Quotation ID</th>
+                                            <th>Requested Service</th>
+                                            <th>Requested Occasion Date</th>
+                                            <th>Requirements</th>
+                                            <th>Timeslot</th>
+                                            <th>Response History</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (ViewBag.quotations.Count != 0)
+                                        {
+                                            foreach (var item in ViewBag.quotations)
+                                            {
+                                                <tr>
+                                                    <td>@(++i)</td>
+                                                    <td>@item.Id</td>
+                                                    <td>@item.ServiceType</td>
+                                                    <td>@item.EventStartDate</td>
+                                                    <td>@item.Description</td>
+                                                    <td>@item.TimeSlot</td>
+                                                    <td>
+                                                        @if (item.FirstTimeQuoteDate != null)
+                                                        {
+                                                            <p>Quotation Replied on @item.FirstTimeQuoteDate</p>
+                                                        }
+                                                        @if (item.SecondTimeQuoteDate != null)
+                                                        {
+                                                            <p>Quotation Replied on @item.SecondTimeQuoteDate</p>
+                                                        }
+                                                        @if (item.ThirdTimeQuoteDate != null)
+                                                        {
+                                                            <p>Quotation Replied on @item.ThirdTimeQuoteDate</p>
+                                                        }
+                                                        @if (item.ThirdTimeQuoteDate == null && item.SecondTimeQuoteDate == null && item.FirstTimeQuoteDate == null)
+                                                        {
+                                                            <p>Quote is being prepared. Wait For the Response from Our Support Team</p>
+                                                        }
+                                                    </td>
+                                                    <td>@item.Status</td>
+                                                    <td>
+                                                        <div class="item-price">
+                                                            @*<a onclick="alert1(@item.OrderId)"><i class="fa fa-close"></i></a>&nbsp;&nbsp;<a onclick="alert11(@item.OrderId)"><i class="fa fa-trash" aria-hidden="true"></i></a>*@
+
+                                                            @if (item.FirstTimeQuoteDate != null)
+                                                            {
+                                                                <button type="button" onclick="LoadLists(@item.FirstTime)">View Quote List</button>
+                                                            }
+                                                            @if (item.SecondTimeQuoteDate != null)
+                                                            {
+                                                                <button type="button" onclick="LoadLists(@item.SecondTime)">View Quote List</button>
+                                                            }
+                                                            @if (item.ThirdTimeQuoteDate != null)
+                                                            {
+                                                                <button type="button" onclick="LoadLists(@item.ThirdTime)">View Quote List</button>
+                                                            }
+                                                            @if (item.ThirdTimeQuoteDate == null && item.SecondTimeQuoteDate == null && item.FirstTimeQuoteDate == null)
+                                                            {
+                                                                <button type="button">No Replies yet</button>
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="10">
+                                                    <p>No Current Quotes</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div id="profileDetails">
                             <div class="row mx-0">
                                 <h3 class="noteWorthybold">
@@ -442,6 +535,12 @@
                   });
             }
 
+        </script>
+
+        <script>
+            function LoadLists(val) {
+
+            }
         </script>
 
 
