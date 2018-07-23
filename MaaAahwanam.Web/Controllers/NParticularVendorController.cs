@@ -377,7 +377,7 @@ namespace MaaAahwanam.Web.Controllers
                     CartItem cartItem = new CartItem();
                     cartItem.VendorId = Int32.Parse(id);
                     cartItem.ServiceType = type;
-                    if (type != "Mehendi" || type != "Pandit" || type != "Decorator" || type != "Other")
+                    if (type != "Mehendi" && type != "Pandit" && type != "Decorator" && type != "Other" && type != "Photography")
                         cartItem.TotalPrice = decimal.Parse(total) * decimal.Parse(guest);
                     else
                         cartItem.TotalPrice = decimal.Parse(total);
