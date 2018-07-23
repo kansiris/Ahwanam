@@ -27,5 +27,20 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.QuotationsList.ToList();
         }
+
+        public int UpdateQuote(QuotationsList quotationsList)
+        {
+            var GetMasterRecord = _dbContext.QuotationsList.FirstOrDefault(m => m.Id == quotationsList.Id);
+            GetMasterRecord.FirstTime = quotationsList.FirstTime;
+            GetMasterRecord.FirstTimeQuoteDate = quotationsList.FirstTimeQuoteDate;
+            GetMasterRecord.SecondTime = quotationsList.SecondTime;
+            GetMasterRecord.SecondTimeQuoteDate = quotationsList.SecondTimeQuoteDate;
+            GetMasterRecord.ThirdTime = quotationsList.ThirdTime;
+            GetMasterRecord.ThirdTimeQuoteDate = quotationsList.ThirdTimeQuoteDate;
+            GetMasterRecord.Status = "Quote Replied";
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(quotationsList);
+            int count = _dbContext.SaveChanges();
+            return count;
+        }
     }
 }

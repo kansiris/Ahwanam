@@ -29,5 +29,11 @@ namespace MaaAahwanam.Models
         public string IPaddress { get; set; }
         public string Description { get; set; }
         public string TimeSlot { get; set; }
+        public string FirstTime { get; set; }
+        public string SecondTime { get; set; }
+        public string ThirdTime { get; set; }
+        public string FirstTimeQuoteDate { get; set; }
+        public string SecondTimeQuoteDate { get; set; }
+        public string ThirdTimeQuoteDate { get; set; }
     }
 }
