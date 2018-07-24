@@ -1,4 +1,10 @@
-﻿<link href="~/Assets/jquery.dataTables.css" rel="stylesheet" />
+﻿@*@model MaaAahwanam.Models.QuoteResponse*@
+<link href="~/Assets/jquery.dataTables.css" rel="stylesheet" />
+<style>
+    .instoption {
+        display:none;
+    }
+</style>
 @if (ViewBag.display == "1")
 {
     if (ViewBag.records.Count != 0)
@@ -26,42 +32,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @*@foreach (var item in ViewBag.vendors)
-                                        {
-                                        <tr>
-                                            <td>@(++i)</td>
-                                            <td>@item.BusinessName</td>
-                                            <td>@item.ServiceType</td>
-                                            <td>@item.VenueType</td>
-                                            <td>
-                                                <p>Start Date : @item.StartDate.ToString("dd/MM/yyyy")</p>
-                                                <p>End Date : @item.EndDate.ToString("dd/MM/yyyy")</p>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-primary">Select</button>
-                                            </td>
-                                        </tr>
-                                        }*@
-
                                     @for (int j = 0; j < ViewBag.records.Count; j++)
                                     {
-                                        <tr>
-                                            <td>
-                                                @*<button class="btn btn-primary">Select</button>*@
-                                                <input type="checkbox" class="form-control call-checkbox" value="@ViewBag.records[j][0]#@ViewBag.records[j][1]" />
-                                                @*<div class="checkbox anim-checkbox">
-                                                        <input type="checkbox" id="ch3" class="form-control success">
-                                                        <label for="ch3">Select</label>
-                                                    </div>*@
-                                            </td>
-                                            <td style="display:none">@ViewBag.records[j][0],@ViewBag.records[j][1]</td>
-                                            <td>@ViewBag.records[j][3]</td>
-                                            <td>@ViewBag.records[j][4]</td>
-                                            <td>@ViewBag.records[j][5]</td>
-                                            <td>
-                                                <p> Dates : @ViewBag.records[j][2]</p>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @*<button class="btn btn-primary">Select</button>*@
+                                            <input type="checkbox" class="form-control call-checkbox" value="@ViewBag.records[j][0]#@ViewBag.records[j][1]" onchange="popup('@ViewBag.id','@ViewBag.records[j][3]','@ViewBag.records[j][4]','@ViewBag.records[j][5]','@ViewBag.records[j][0]','@ViewBag.records[j][1]')"/>
+                                            @*<div class="checkbox anim-checkbox">
+                                                    <input type="checkbox" id="ch3" class="form-control success">
+                                                    <label for="ch3">Select</label>
+                                                </div>*@
+                                        </td>
+                                        <td style="display:none">@ViewBag.records[j][0],@ViewBag.records[j][1]</td>
+                                        <td>@ViewBag.records[j][3]</td>
+                                        <td>@ViewBag.records[j][4]</td>
+                                        <td>@ViewBag.records[j][5]</td>
+                                        <td>
+                                            <p> Dates : @ViewBag.records[j][2]</p>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -86,6 +75,99 @@ else if (ViewBag.novendor != null)
 }
 
 
+<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+    <input type="hidden" id="stype" />
+    <input type="hidden" id="substype" />
+    <input type="hidden" id="vid" />
+    <input type="hidden" id="subvid" />
+    <input type="hidden" id="qid" />
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel"><text id="bname"></text> Installments</h4>
+            </div>
+            <div class="modal-body">
+                <select class="form-control" id="addinstallments">
+                    <option>Select Installments</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <br />
+                <div class="row form-group">
+                    <div class="col-lg-6">
+                        <label>Package Amount</label>
+                    </div>
+                    <div class="col-lg-6">
+                        <input class="form-control" type="text" placeholder="Enter Package Amount" id="TotalAmount">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-6">
+                        <label>Token Amount</label>
+                    </div>
+                    <div class="col-lg-6">
+                        <input class="form-control" type="text" placeholder="Enter Token Amoun" id="TokenAmount">
+                    </div>
+                </div>
+                <div class="row form-group instoption" id="1">
+                    <div class="col-lg-4">
+                        <label>First Installment</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="firstamount">
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Days" id="firstdays">
+                    </div>
+                </div>
+                @*<br />*@
+                <div class="row form-group instoption" id="2">
+                    <div class="col-lg-4">
+                        <label>Second Installment</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="secondamount">
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Days" id="seconddays">
+                    </div>
+                </div>
+                @*<br />*@
+                <div class="row form-group instoption" id="3">
+                    <div class="col-lg-4">
+                        <label>Third Installment</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="thirdamount">
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Days" id="thirddays">
+                    </div>
+                </div>
+                @*<br />*@
+                <div class="row form-group instoption" id="4">
+                    <div class="col-lg-4">
+                        <label>Fourth Installment</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="fourthamount">
+                    </div>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" placeholder="Enter Days" id="fourthdays">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SaveDetails()">Save</button>
+                @*<button type="button" class="btn btn-danger">Cancel</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
 <script src="~/Assets/jquery.dataTables.js"></script>
 <script>
@@ -109,7 +191,7 @@ else if (ViewBag.novendor != null)
 
             var QuoteID = '@ViewBag.id';
             var id = ids;
-           
+
             $.ajax({
                 url: '/Admin/Quotations/ParticularQuoteReply',//?QuoteID=' + QuoteID + '&&id=' + ids,
                 dataType: 'json',
@@ -125,3 +207,96 @@ else if (ViewBag.novendor != null)
         });
     });
 </script>
+
+<script>
+    function popup(qid, bname, cat, subcat, id, subid) {
+        $('#stype').val(cat);
+        $('#substype').val(subcat);
+        $('#vid').val(id);
+        $('#subvid').val(subid);
+        $('#bname').empty().text(bname);
+        $('#qid').val(qid);
+        $('#myModal').css('display', 'block');
+    }
+
+    //function close() {
+    //    $('#myModal').css('display', 'none');
+    //}
+
+    $('.close').click(function () {
+        $('#myModal').css('display', 'none');
+        resetAllValues();
+    });
+
+    function resetAllValues() {
+        $('#myModal').find('input:text').val('');
+        $('#myModal').find('input:hidden').val('');
+    }
+
+    function SaveDetails() {
+        var quoteResponse = {
+            QuoteID: $('#qid').val(),
+            ServiceType: $('#stype').val(),
+            SubServiceType: $('#substype').val(),
+            VendorID: $('#vid').val(),
+            VendorSubID: $('#subvid').val(),
+            Installments: $('#addinstallments').val(),
+            FirstInstallment: $('#firstamount').val() + "," + $('#firstdays').val(),
+            SecondInstallment: $('#secondamount').val() + "," + $('#seconddays').val(),
+            ThirdInstallment: $('#thirdamount').val() + "," + $('#thirddays').val(),
+            FourthInstallment: $('#fourthamount').val() + "," + $('#fourthdays').val(),
+            TokenAmount: $('#TokenAmount').val(),
+            TotalAmount: $('#TotalAmount').val()
+        }
+        //alert(quoteResponse.QuoteID);
+        $.ajax({
+            url: '/Admin/Quotations/SaveInstallments',
+            type: 'post',
+            datatype: 'json',
+            data: quoteResponse,
+            success: function (data)
+            {
+                if (data == "Success") {
+                    alert("Installments Added");
+                    $('#myModal').css('display', 'none');
+                    resetAllValues();
+                }
+                else if (data == "Failed") {
+                    alert("Failed to Add Installments!!! Try Again");
+                }
+            },
+            error: function (data) {
+                alert("Something Went Wrong!!! Try Again Later");
+            }
+        });
+    }
+</script>
+
+<script>
+    $(function () {
+        $('#addinstallments').change(function () {
+            $('.instoption').hide();
+            //$('#' + $(this).val()).show();
+            var number = $(this).val();
+            if (number == '1') {
+                $('#1').show();
+            }
+            else if (number == '2') {
+                $('#1').show();
+                $('#2').show();
+            }
+            else if (number == '3') {
+                $('#1').show();
+                $('#2').show();
+                $('#3').show();
+            }
+            else if (number == '4') {
+                $('#1').show();
+                $('#2').show();
+                $('#3').show();
+                $('#4').show();
+            }
+        });
+    });
+</script>
+

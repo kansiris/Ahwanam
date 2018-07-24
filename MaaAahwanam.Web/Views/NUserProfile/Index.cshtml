@@ -273,8 +273,8 @@
                                             <th>Requirements</th>
                                             <th>Timeslot</th>
                                             <th>Response History</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            @*<th>Status</th>*@
+                                            @*<th>Action</th>*@
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -286,50 +286,33 @@
                                                     <td>@(++i)</td>
                                                     <td>@item.Id</td>
                                                     <td>@item.ServiceType</td>
-                                                    <td>@item.EventStartDate</td>
+                                                    <td>@item.EventStartDate.ToString("dd-MMM-yyyy")</td>
                                                     <td>@item.Description</td>
                                                     <td>@item.TimeSlot</td>
                                                     <td>
                                                         @if (item.FirstTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.FirstTimeQuoteDate</p>
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists(@item.FirstTime)">View Quote List</button>
                                                         }
                                                         @if (item.SecondTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.SecondTimeQuoteDate</p>
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists(@item.SecondTime)">View Quote List</button>
                                                         }
                                                         @if (item.ThirdTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.ThirdTimeQuoteDate</p>
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists(@item.ThirdTime)">View Quote List</button>
                                                         }
                                                         @if (item.ThirdTimeQuoteDate == null && item.SecondTimeQuoteDate == null && item.FirstTimeQuoteDate == null)
                                                         {
                                                             <p>Quote is being prepared. Wait For the Response from Our Support Team</p>
+                                                            @*<button type="button" class="btn btn-primary">No Replies yet</button>*@
                                                         }
                                                     </td>
-                                                    <td>@item.Status</td>
-                                                    <td>
-                                                        <div class="item-price">
-                                                            @*<a onclick="alert1(@item.OrderId)"><i class="fa fa-close"></i></a>&nbsp;&nbsp;<a onclick="alert11(@item.OrderId)"><i class="fa fa-trash" aria-hidden="true"></i></a>*@
-
-                                                            @if (item.FirstTimeQuoteDate != null)
-                                                            {
-                                                                <button type="button" onclick="LoadLists(@item.FirstTime)">View Quote List</button>
-                                                            }
-                                                            @if (item.SecondTimeQuoteDate != null)
-                                                            {
-                                                                <button type="button" onclick="LoadLists(@item.SecondTime)">View Quote List</button>
-                                                            }
-                                                            @if (item.ThirdTimeQuoteDate != null)
-                                                            {
-                                                                <button type="button" onclick="LoadLists(@item.ThirdTime)">View Quote List</button>
-                                                            }
-                                                            @if (item.ThirdTimeQuoteDate == null && item.SecondTimeQuoteDate == null && item.FirstTimeQuoteDate == null)
-                                                            {
-                                                                <button type="button">No Replies yet</button>
-                                                            }
-                                                        </div>
-                                                    </td>
+                                                    @*<td>@item.Status</td>*@
+                                                    
                                                 </tr>
 
                                             }
