@@ -117,7 +117,7 @@ else if (ViewBag.novendor != null)
                         <label>First Installment</label>
                     </div>
                     <div class="col-lg-4">
-                        <input class="form-control" type="text" placeholder="Enter Amount or %" id="firstamount">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="firstamount">
                     </div>
                     <div class="col-lg-4">
                         <input class="form-control" type="text" placeholder="Enter Days" id="firstdays">
@@ -129,7 +129,7 @@ else if (ViewBag.novendor != null)
                         <label>Second Installment</label>
                     </div>
                     <div class="col-lg-4">
-                        <input class="form-control" type="text" placeholder="Enter Amount or %" id="secondamount">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="secondamount">
                     </div>
                     <div class="col-lg-4">
                         <input class="form-control" type="text" placeholder="Enter Days" id="seconddays">
@@ -141,7 +141,7 @@ else if (ViewBag.novendor != null)
                         <label>Third Installment</label>
                     </div>
                     <div class="col-lg-4">
-                        <input class="form-control" type="text" placeholder="Enter Amount or %" id="thirdamount">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="thirdamount">
                     </div>
                     <div class="col-lg-4">
                         <input class="form-control" type="text" placeholder="Enter Days" id="thirddays">
@@ -153,7 +153,7 @@ else if (ViewBag.novendor != null)
                         <label>Fourth Installment</label>
                     </div>
                     <div class="col-lg-4">
-                        <input class="form-control" type="text" placeholder="Enter Amount or %" id="fourthamount">
+                        <input class="form-control" type="text" placeholder="Enter Amount" id="fourthamount">
                     </div>
                     <div class="col-lg-4">
                         <input class="form-control" type="text" placeholder="Enter Days" id="fourthdays">
@@ -216,7 +216,7 @@ else if (ViewBag.novendor != null)
         $('#subvid').val(subid);
         $('#bname').empty().text(bname);
         $('#qid').val(qid);
-        $('#myModal').css('display','block');
+        $('#myModal').css('display', 'block');
     }
 
     //function close() {
@@ -233,6 +233,46 @@ else if (ViewBag.novendor != null)
         $('#myModal').find('input:hidden').val('');
     }
 
+    function SaveDetails() {
+        var quoteResponse = {
+            QuoteID: $('#qid').val(),
+            ServiceType: $('#stype').val(),
+            SubServiceType: $('#substype').val(),
+            VendorID: $('#vid').val(),
+            VendorSubID: $('#subvid').val(),
+            Installments: $('#addinstallments').val(),
+            FirstInstallment: $('#firstamount').val() + "," + $('#firstdays').val(),
+            SecondInstallment: $('#secondamount').val() + "," + $('#seconddays').val(),
+            ThirdInstallment: $('#thirdamount').val() + "," + $('#thirddays').val(),
+            FourthInstallment: $('#fourthamount').val() + "," + $('#fourthdays').val(),
+            TokenAmount: $('#TokenAmount').val(),
+            TotalAmount: $('#TotalAmount').val()
+        }
+        //alert(quoteResponse.QuoteID);
+        $.ajax({
+            url: '/Admin/Quotations/SaveInstallments',
+            type: 'post',
+            datatype: 'json',
+            data: quoteResponse,
+            success: function (data)
+            {
+                if (data == "Success") {
+                    alert("Installments Added");
+                    $('#myModal').css('display', 'none');
+                    resetAllValues();
+                }
+                else if (data == "Failed") {
+                    alert("Failed to Add Installments!!! Try Again");
+                }
+            },
+            error: function (data) {
+                alert("Something Went Wrong!!! Try Again Later");
+            }
+        });
+    }
+</script>
+
+<script>
     $(function () {
         $('#addinstallments').change(function () {
             $('.instoption').hide();
@@ -260,32 +300,3 @@ else if (ViewBag.novendor != null)
     });
 </script>
 
-<script>
-    function SaveDetails() {
-        var quoteResponse = {
-            QuoteID: $('#qid').val(),
-            ServiceType: $('#stype').val(),
-            SubServiceType: $('#substype').val(),
-            VendorID: $('#vid').val(),
-            VendorSubID: $('#subvid').val(),
-            Installments: $('#addinstallments').val(),
-            FirstInstallment: $('#firstamount').val() + "," + $('#firstdays').val(),
-            SecondInstallment: $('#secondamount').val() + "," + $('#seconddays').val(),
-            ThirdInstallment: $('#thirdamount').val() + "," + $('#thirddays').val(),
-            FourthInstallment: $('#fourthamount').val() + "," + $('#fourthdays').val(),
-            TokenAmount: $('#TokenAmount').val(),
-            TotalAmount: $('#TotalAmount').val()
-        }
-        //alert(quoteResponse.QuoteID);
-        $.ajax({
-            url: '/Admin/Quotations/SaveInstallments',
-            type: 'post',
-            datatype: 'json',
-            data: quoteResponse,
-            sucess: function (data)
-            {
-                alert("sucess");
-            }
-        });
-    }
-</script>

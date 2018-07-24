@@ -31,7 +31,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult FilteredVendors(string type, string date,string id)
+        public ActionResult FilteredVendors(string type, string date, string id)
         {
             if (type != null && date != null)
             {
@@ -113,7 +113,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             readFile = readFile.Replace("[Email]", particularquote.EmailId);
             string txtto = particularquote.EmailId;
             string txtmessage = readFile;
-            string subj = "Response to your Quote #"+particularquote.Id+"";
+            string subj = "Response to your Quote #" + particularquote.Id + "";
             int count = quotationListsService.UpdateQuote(particularquote);
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
@@ -142,7 +142,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 quoteResponse.FifthInstallment = "0,0";
             }
             int count = quotationListsService.AddInstallments(quoteResponse);
-            return Json(JsonRequestBehavior.AllowGet);
+            if (count > 0)
+                return Json("Success");
+            else
+                return Json("Failed");
         }
     }
 }
