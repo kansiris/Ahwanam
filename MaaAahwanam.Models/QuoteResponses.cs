@@ -23,6 +23,7 @@ namespace MaaAahwanam.Models
         public string FourthInstallment { get; set; }
         public string FifthInstallment { get; set; }
         public decimal TokenAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string Status { get; set; }
     }
