@@ -171,5 +171,14 @@ namespace MaaAahwanam.Web.Controllers
                 return RedirectToAction("Index", "Nhomepage");
             }
         }
+
+        public PartialViewResult VendorsLists(string qid)
+        {
+            if (qid != "")
+            {
+
+            }
+            return PartialView("VendorsLists");
+        }
     }
 }

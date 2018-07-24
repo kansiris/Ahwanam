@@ -12,6 +12,7 @@ namespace MaaAahwanam.Models
         [Key]
         public long ID { get; set; }
         public long QuoteID { get; set; }
+        public string BusinessName { get; set; }
         public string ServiceType { get; set; }
         public string SubServiceType { get; set; }
         public string VendorID { get; set; }

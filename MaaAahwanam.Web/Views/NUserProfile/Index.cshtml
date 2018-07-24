@@ -293,17 +293,17 @@
                                                         @if (item.FirstTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.FirstTimeQuoteDate</p>
-                                                            <button type="button" class="btn btn-success" onclick="LoadLists(@item.FirstTime)">View Quote List</button>
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="LoadLists('@item.FirstTime')">View Quote List</button>  @* data-toggle="modal" data-target="#VendorsList"*@
                                                         }
                                                         @if (item.SecondTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.SecondTimeQuoteDate</p>
-                                                            <button type="button" class="btn btn-success" onclick="LoadLists(@item.SecondTime)">View Quote List</button>
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists('@item.SecondTime')">View Quote List</button>
                                                         }
                                                         @if (item.ThirdTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.ThirdTimeQuoteDate</p>
-                                                            <button type="button" class="btn btn-success" onclick="LoadLists(@item.ThirdTime)">View Quote List</button>
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists('@item.ThirdTime')">View Quote List</button>
                                                         }
                                                         @if (item.ThirdTimeQuoteDate == null && item.SecondTimeQuoteDate == null && item.FirstTimeQuoteDate == null)
                                                         {
@@ -327,6 +327,14 @@
                                         }
                                     </tbody>
                                 </table>
+                                
+                                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    Open modal
+                                </button>*@
+
+                                <!-- The Modal -->
+                                
+
                             </div>
                         </div>
                         <div id="profileDetails">
@@ -381,6 +389,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+             @{Html.RenderAction("VendorsLists", "NUserProfile");}
+
             </div>
         </div>
     </div>
@@ -522,12 +540,11 @@
 
         <script>
             function LoadLists(val) {
-
+                alert(val);
+                //$('#myModal').modal();
             }
         </script>
 
 
     }
-}
-
 }
