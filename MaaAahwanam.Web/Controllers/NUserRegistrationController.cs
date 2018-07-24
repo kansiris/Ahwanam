@@ -156,7 +156,13 @@ namespace MaaAahwanam.Web.Controllers
                             if (userResponse.UserType == "Vendor")
                             {
                                 var vnid = userResponse.UserLoginId;
-                                return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+
+                                string vssid = Convert.ToString(vendorMaster.Id);
+                                encptdecpt encript = new encptdecpt();
+
+                                string encripted = encript.Encrypt(string.Format("Name={0}", vssid));
+
+                                return RedirectToAction("Index", "NVendorDashboard", new { ks = encripted });
                             }
                             else
                                 ViewBag.userid = userResponse.UserLoginId;
