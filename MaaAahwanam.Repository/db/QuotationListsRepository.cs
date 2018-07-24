@@ -42,5 +42,12 @@ namespace MaaAahwanam.Repository.db
             int count = _dbContext.SaveChanges();
             return count;
         }
+
+        public int AddInstallments(QuoteResponse quoteResponse)
+        {
+            _dbContext.QuoteResponse.Add(quoteResponse);
+            _dbContext.SaveChanges();
+            return 1;
+        }
     }
 }

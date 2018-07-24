@@ -7,6 +7,7 @@ using MaaAahwanam.Service;
 using MaaAahwanam.Repository;
 using MaaAahwanam.Utility;
 using System.IO;
+using MaaAahwanam.Models;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -117,6 +118,31 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
             return Json("sucess");
+        }
+
+        public JsonResult SaveInstallments(QuoteResponse quoteResponse)
+        {
+            DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            quoteResponse.UpdatedDate = indianTime;
+            quoteResponse.Status = "Active";
+            if (quoteResponse.SecondInstallment == ",")
+            {
+                quoteResponse.SecondInstallment = "0,0";
+            }
+            if (quoteResponse.ThirdInstallment == ",")
+            {
+                quoteResponse.ThirdInstallment = "0,0";
+            }
+            if (quoteResponse.FourthInstallment == ",")
+            {
+                quoteResponse.FourthInstallment = "0,0";
+            }
+            if (quoteResponse.FifthInstallment == ",")
+            {
+                quoteResponse.FifthInstallment = "0,0";
+            }
+            int count = quotationListsService.AddInstallments(quoteResponse);
+            return Json(JsonRequestBehavior.AllowGet);
         }
     }
 }
