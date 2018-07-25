@@ -69,10 +69,14 @@ namespace MaaAahwanam.Web.Controllers
             string email = vendor.EmailId;
 
             userLoginDetailsService.Updatevendordetailsnew(vendor, email);
-            Int64 id = vendor.Id;
-            //TempData["Active"] = "Profile updated";
+           // Int64 id = vendor.Id;
+                //TempData["Active"] = "Profile updated";
+                string vssid = Convert.ToString(vendor.Id);
+                encptdecpt encript = new encptdecpt();
 
-              return Content("<script language='javascript' type='text/javascript'>alert('Profile updated sucessfully');location.href='" + @Url.Action("Index", "NVendorProfile", new { id = id }) + "'</script>");
+                string encripted = encript.Encrypt(string.Format("Name={0}", vssid));
+
+                return Content("<script language='javascript' type='text/javascript'>alert('Profile updated sucessfully');location.href='" + @Url.Action("Index", "NVendorProfile", new { ks = encripted }) + "'</script>");
 
                 //return RedirectToAction("Index", "NVendorProfile", new { id = id });
             }
