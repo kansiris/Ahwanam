@@ -838,6 +838,10 @@
             else {
                 var evetype1 = $("#eventtype").val();
                 var etype1 = evetype1.split('(')[0];
+               var etype2 = evetype1.split('(')[1]
+               if (etype2 != undefined) {
+                    var etype2 = evetype1.split('(')[1].slice(')', -1);
+                }
                 var type = '@Request.QueryString["type"]';
                 var vid = $('input#vid').val();
                 var id = '@Request.QueryString["id"]';
@@ -850,7 +854,7 @@
                 var totalprice = $('#tp').html();
                 // var did = $("select.pricePerPlate").find("option:selected").val();
                 var deid = $('#did1').val();
-                url1 = '/NViewDeal/addcnow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + deid;
+                url1 = '/NViewDeal/addcnow?type=' + type + '&&etype1=' + etype1 + '&&date=' + date + '&&totalprice=' + totalprice + '&&id=' + id + '&&price=' + price1 + '&&guest=' + nop + '&&timeslot=' + timeslot + '&&vid=' + vid + '&&did=' + deid + '&&etype2=' + etype2;
                 $.ajax({
                     url: url1,
                     success: function (data) {
