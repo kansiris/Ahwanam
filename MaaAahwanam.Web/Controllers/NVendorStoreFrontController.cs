@@ -17,13 +17,11 @@ namespace MaaAahwanam.Web.Controllers
         // GET: NVendorStoreFront
         public ActionResult Index(string ks)
         {
-            try
+            try { 
+            if (TempData["Active"] != "")
             {
-                if (TempData["Active"] != "")
-                {
-                    ViewBag.msg = TempData["Active"];
-                }
-                ViewBag.id = ks;
+                ViewBag.msg = TempData["Active"];
+            }
                 string strReq = "";
                 encptdecpt encript = new encptdecpt();
                 strReq = encript.Decrypt(ks);
@@ -33,18 +31,19 @@ namespace MaaAahwanam.Web.Controllers
                 string id = "";
                 arrIndMsg = arrMsgs[0].Split('='); //Get the id
                 id = arrIndMsg[1].ToString().Trim();
-                ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
-                var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList();
-                var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
-                var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
-                var decorators = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
-                var others = vendorVenueSignUpService.GetVendorOther(long.Parse(id));
-                ViewBag.venues = venues;
-                ViewBag.catering = catering;
-                ViewBag.photography = photography;
-                ViewBag.decorators = decorators;
-                ViewBag.others = others;
-                return View();
+                ViewBag.id = ks;
+            ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
+            var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList();
+            var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
+            var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id));
+            var decorators = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id));
+            var others = vendorVenueSignUpService.GetVendorOther(long.Parse(id));
+            ViewBag.venues = venues;
+            ViewBag.catering = catering;
+            ViewBag.photography = photography;
+            ViewBag.decorators = decorators;
+            ViewBag.others = others;
+            return View();
             }
             catch (Exception ex)
             {

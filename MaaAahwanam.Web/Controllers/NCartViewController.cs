@@ -256,7 +256,171 @@ namespace MaaAahwanam.Web.Controllers
             public string address { get; set; }
             public string order_id { get; set; }
         }
-        public ActionResult booknow(string cartnos, string paymentid,string amountpaid)
+        //public ActionResult booknow(string cartnos, string paymentid,string amountpaid)
+        //{
+        //    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //    {
+        //        var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+        //        if (user.UserType == "User")
+        //        {
+        //            var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+        //            ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+        //            var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+        //            var cartnos1 = cartnos.Split(',');
+
+        //             //Payment Section
+        //                RazorpayClient client = new RazorpayClient("rzp_test_3OHEkrM9aPMz5u", "WUA3WciyAExRDwRwxMIqU5Yb");
+        //                Payment payme1 = client.Payment.Fetch(paymentid);
+
+
+        //                Dictionary<string, object> options = new Dictionary<string, object>();
+        //                options.Add("amount", Convert.ToInt32(amountpaid));
+
+        //                Payment paymentCaptured = payme1.Capture(options);
+        //                Payment payme2 = client.Payment.Fetch(paymentid);
+        //                var ks = JsonConvert.SerializeObject(payme2.Attributes);
+
+        //                payees paymentArray = JsonConvert.DeserializeObject<payees>(ks);
+        //            for (int i = 0; i < cartnos1.Count(); i++)
+        //            {
+        //                string cartno2 = cartnos1[i];
+        //                string totalprice = "";
+        //                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartno2)).FirstOrDefault();
+        //                string type = cartdetails.ServicType;
+        //                string guest = Convert.ToString(cartdetails.Quantity);
+        //                string price = Convert.ToString(cartdetails.Perunitprice);
+        //                string id = Convert.ToString(cartdetails.Id);
+        //                string did = Convert.ToString(cartdetails.DealId);
+        //                string timeslot = cartdetails.attribute;
+        //                string etype1 = cartdetails.EventType;
+        //                string vid = Convert.ToString(cartdetails.subid);
+        //                DateTime date = Convert.ToDateTime(cartdetails.eventstartdate);
+        //                if (type == "Photography" || type == "Decorator" || type == "Other")
+        //                {
+        //                    totalprice = price;
+        //                    guest = "0";
+        //                }
+        //                else
+        //                {
+        //                    totalprice = Convert.ToString(cartdetails.TotalPrice);
+        //                }
+        //                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+        //                int userid = Convert.ToInt32(user.UserId);
+        //                //Saving Record in order Table
+        //                OrderService orderService = new OrderService();
+        //                MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
+        //                order.TotalPrice = Convert.ToDecimal(totalprice);
+        //                order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
+        //                order.UpdatedBy = (Int64)user.UserId;
+        //                order.OrderedBy = (Int64)user.UserId;
+        //                order.UpdatedDate = Convert.ToDateTime(updateddate);
+        //                order.Status = "Pending";
+        //                order = orderService.SaveOrder(order);
+
+
+        //                //Payment Section
+                      
+
+        //                Payment_orderServices payment_orderServices = new Payment_orderServices();
+        //                Payment_Orders payment_Orders = new Payment_Orders();
+
+        //                payment_Orders.cardnumber = paymentArray.card_id;
+        //                payment_Orders.CVV = "razorpay";
+        //                payment_Orders.paidamount = Convert.ToDecimal(Convert.ToDouble(paymentArray.amount)* 0.01);
+        //                payment_Orders.Gateway_ID = paymentArray.id;
+        //                payment_Orders.Paiddate = Convert.ToDateTime(updateddate);
+        //                payment_Orders.OrderID = order.OrderId;
+        //                payment_Orders.Amount = totalprice;
+        //                payment_Orders.Bank = paymentArray.bank;
+        //                payment_Orders.Card_ID = paymentArray.card_id;
+        //                payment_Orders.Currency = paymentArray.currency;
+        //                payment_Orders.Customer_Email = paymentArray.email;
+        //                payment_Orders.Customer_Contact = paymentArray.contact;
+        //                payment_Orders.Error_Code = paymentArray.error_code;
+        //                payment_Orders.Error_Description = paymentArray.error_description;
+        //                payment_Orders.Fee = Convert.ToString(Convert.ToDouble(paymentArray.fee) *0.01);
+        //                payment_Orders.Tax = Convert.ToString(Convert.ToDouble(paymentArray.tax) * 0.01);
+        //                payment_Orders.Payment_Captured = paymentArray.captured;
+        //                payment_Orders.Payment_Status = paymentArray.status;
+        //                payment_Orders.Refunded_Amount = paymentArray.amount_refunded;
+        //                payment_Orders.Refund_Status = paymentArray.refund_status;
+        //                payment_Orders.Wallet = paymentArray.wallet;
+        //                payment_Orders.International = paymentArray.international;
+        //                payment_Orders.Payment_Method = paymentArray.method;
+
+        //                payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
+
+
+        //                //Saving Order Details
+        //                OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
+        //                OrderDetail orderDetail = new OrderDetail();
+        //                orderDetail.OrderId = order.OrderId;
+        //                orderDetail.OrderBy = user.UserId;
+        //                orderDetail.PaymentId = payment_Orders.PaymentID;
+        //                orderDetail.ServiceType = type;
+        //                orderDetail.ServicePrice = decimal.Parse(price);
+        //                orderDetail.attribute = timeslot;
+        //                orderDetail.TotalPrice = decimal.Parse(totalprice);
+        //                orderDetail.PerunitPrice = decimal.Parse(price);
+        //                orderDetail.Quantity = int.Parse(guest);
+        //                orderDetail.OrderId = order.OrderId;
+        //                orderDetail.VendorId = long.Parse(id);
+        //                orderDetail.Status = "Pending";
+        //                orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+        //                orderDetail.UpdatedBy = user.UserId;
+        //                orderDetail.subid = long.Parse(vid);
+        //                orderDetail.BookedDate = date;
+        //                orderDetail.EventType = etype1;
+        //                orderDetail.DealId = long.Parse(did);
+        //                orderDetail.ExtraDate1 = cartdetails.c1date;
+        //                orderDetail.ExtraDate2 = cartdetails.c2date;
+        //                orderDetail.ExtraDate3 = cartdetails.c3date;
+
+        //                orderdetailsServices.SaveOrderDetail(orderDetail);
+
+        //                var userlogdetails = userLoginDetailsService.GetUserId(userid);
+
+        //                string txtto = userlogdetails.UserName;
+        //                var userdetails = userLoginDetailsService.GetUser(userid);
+        //                string name = userdetails.FirstName;
+        //                name = Capitalise(name);
+        //                string OrderId = Convert.ToString(order.OrderId);
+        //                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+        //                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+        //                string readFile = File.OpenText().ReadToEnd();
+        //                readFile = readFile.Replace("[ActivationLink]", url);
+        //                readFile = readFile.Replace("[name]", name);
+        //                readFile = readFile.Replace("[orderid]", OrderId);
+        //                string txtmessage = readFile;//readFile + body;
+        //                string subj = "Thanks for your order";
+        //                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+        //                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+
+        //                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(id));
+
+        //                string txtto1 = vendordetails.EmailId;
+        //                string vname = vendordetails.BusinessName;
+        //                vname = Capitalise(vname);
+
+        //                string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
+        //                FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+        //                string readfile1 = file1.OpenText().ReadToEnd();
+        //                readfile1 = readfile1.Replace("[ActivationLink]", url1);
+        //                readfile1 = readfile1.Replace("[name]", name);
+        //                readfile1 = readfile1.Replace("[vname]", vname);
+        //                readfile1 = readfile1.Replace("[orderid]", OrderId);
+        //                string txtmessage1 = readfile1;
+        //                string subj1 = "order has been placed";
+        //                emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+        //                var message = cartService.Deletecartitem(long.Parse(cartno2));
+        //            }
+        //        }
+        //        return Json("Success", JsonRequestBehavior.AllowGet);
+        //    }
+        //    return Json(JsonRequestBehavior.AllowGet);
+        //}
+
+ public ActionResult booknow(string cartnos, string paymentid,string amountpaid)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -269,18 +433,10 @@ namespace MaaAahwanam.Web.Controllers
                     var cartnos1 = cartnos.Split(',');
 
                      //Payment Section
-                        RazorpayClient client = new RazorpayClient("rzp_test_3OHEkrM9aPMz5u", "WUA3WciyAExRDwRwxMIqU5Yb");
-                        Payment payme1 = client.Payment.Fetch(paymentid);
+                     
+                       
 
-
-                        Dictionary<string, object> options = new Dictionary<string, object>();
-                        options.Add("amount", Convert.ToInt32(amountpaid));
-
-                        Payment paymentCaptured = payme1.Capture(options);
-                        Payment payme2 = client.Payment.Fetch(paymentid);
-                        var ks = JsonConvert.SerializeObject(payme2.Attributes);
-
-                        payees paymentArray = JsonConvert.DeserializeObject<payees>(ks);
+                        
                     for (int i = 0; i < cartnos1.Count(); i++)
                     {
                         string cartno2 = cartnos1[i];
@@ -318,37 +474,7 @@ namespace MaaAahwanam.Web.Controllers
                         order = orderService.SaveOrder(order);
 
 
-                        //Payment Section
-                      
-
-                        Payment_orderServices payment_orderServices = new Payment_orderServices();
-                        Payment_Orders payment_Orders = new Payment_Orders();
-
-                        payment_Orders.cardnumber = paymentArray.card_id;
-                        payment_Orders.CVV = "razorpay";
-                        payment_Orders.paidamount = Convert.ToDecimal(Convert.ToDouble(paymentArray.amount)* 0.01);
-                        payment_Orders.Gateway_ID = paymentArray.id;
-                        payment_Orders.Paiddate = Convert.ToDateTime(updateddate);
-                        payment_Orders.OrderID = order.OrderId;
-                        payment_Orders.Amount = totalprice;
-                        payment_Orders.Bank = paymentArray.bank;
-                        payment_Orders.Card_ID = paymentArray.card_id;
-                        payment_Orders.Currency = paymentArray.currency;
-                        payment_Orders.Customer_Email = paymentArray.email;
-                        payment_Orders.Customer_Contact = paymentArray.contact;
-                        payment_Orders.Error_Code = paymentArray.error_code;
-                        payment_Orders.Error_Description = paymentArray.error_description;
-                        payment_Orders.Fee = Convert.ToString(Convert.ToDouble(paymentArray.fee) *0.01);
-                        payment_Orders.Tax = Convert.ToString(Convert.ToDouble(paymentArray.tax) * 0.01);
-                        payment_Orders.Payment_Captured = paymentArray.captured;
-                        payment_Orders.Payment_Status = paymentArray.status;
-                        payment_Orders.Refunded_Amount = paymentArray.amount_refunded;
-                        payment_Orders.Refund_Status = paymentArray.refund_status;
-                        payment_Orders.Wallet = paymentArray.wallet;
-                        payment_Orders.International = paymentArray.international;
-                        payment_Orders.Payment_Method = paymentArray.method;
-
-                        payment_Orders = payment_orderServices.SavePayment_Orders(payment_Orders);
+                     
 
 
                         //Saving Order Details
@@ -356,7 +482,7 @@ namespace MaaAahwanam.Web.Controllers
                         OrderDetail orderDetail = new OrderDetail();
                         orderDetail.OrderId = order.OrderId;
                         orderDetail.OrderBy = user.UserId;
-                        orderDetail.PaymentId = payment_Orders.PaymentID;
+                        orderDetail.PaymentId = '1';
                         orderDetail.ServiceType = type;
                         orderDetail.ServicePrice = decimal.Parse(price);
                         orderDetail.attribute = timeslot;
@@ -419,7 +545,6 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
-
 
 
         public ActionResult Updatecartitem(long cartId)

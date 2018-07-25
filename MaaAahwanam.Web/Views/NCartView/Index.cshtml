@@ -157,7 +157,7 @@
                 @if (@ViewBag.cartCount != 0)
                 {<div class="row mt-3 d-flex justify-content-center">
                      @*id="rzp-button1"*@
-                            <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow"   disabled>Pay Online and Book Now</button>
+                            <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow"   disabled> Book Now</button>
                         </div>
                 }
                 else
@@ -451,55 +451,52 @@
 
         /*-- Checkbox Fun for Book Now Button --*/
 
-        ///*-- Book Now Button --*/
-        //$(".cartPage .bookNow").click(function () {
-        //    //  alert("Yes");
-        //    var cartnos = '';
-        //    //if ($(".cartselect input[type='checkbox']").is(':checked')) {
+        /*-- Book Now Button --*/
+        $(".cartPage .bookNow").click(function () {
+            //  alert("Yes");
+            var cartnos = '';
+            //if ($(".cartselect input[type='checkbox']").is(':checked')) {
 
-        //    //    var favorite = [];
-        //    //    $.each($("input[name='cardid']:checked"), function () {
-        //    //        favorite.push($(this).val());
-        //    //        cartnos = favorite.join(", ");
-        //    //    })
-        //    //}
+            //    var favorite = [];
+            //    $.each($("input[name='cardid']:checked"), function () {
+            //        favorite.push($(this).val());
+            //        cartnos = favorite.join(", ");
+            //    })
+            //}
 
-        //    var checkBoxVal = [], totalPrice = [];
-        //    $(".cartPage .block").each(function () {
-        //        if (($(this).find("input[type='checkbox']")).is(':checked')) {
-        //            checkBoxVal.push($(this).find("input[type='checkbox']").val());
-        //            //alert(checkBoxVal);
-        //            cartnos = checkBoxVal;
-        //            totalPrice.push($(this).find("p.total span").text());
-        //            alert(totalPrice);
-        //        }
-        //    });
-        // alert(cartnos)
-        //    /*-- Checkbox Fun for Book Now Button --*/
-        //    /*-- payment gateway --*/
-      
+            var checkBoxVal = [], totalPrice = [];
+            $(".cartPage .block").each(function () {
+                if (($(this).find("input[type='checkbox']")).is(':checked')) {
+                    checkBoxVal.push($(this).find("input[type='checkbox']").val());
+                    //alert(checkBoxVal);
+                    cartnos = checkBoxVal;
+                    totalPrice.push($(this).find("p.total span").text());
+                    alert(totalPrice);
+                }
+            });
+         alert(cartnos)
+            /*-- Checkbox Fun for Book Now Button --*/
+          
+         url1 = '/NCartView/booknow?cartnos=' +cartnos;
+            $.ajax({
+                url: url1,
+                success: function (data) {
+                    if (data == "Success") {
+                        //  alert("Sucessfully Added to cart")
+                        alertify.alert("Sucessfully booked");
 
-        ////    /*-- payment gateway --*/
-        //// url1 = '/NCartView/booknow?cartnos=' +cartnos;
-        ////    $.ajax({
-        ////        url: url1,
-        ////        success: function (data) {
-        ////            if (data == "Success") {
-        ////                //  alert("Sucessfully Added to cart")
-        ////                alertify.alert("Sucessfully booked");
+                        if (data != null) {
+                            window.location.reload();
+                        }
+                    }
+                    else if (data == "failed") {
+                        //   alert("login to the cart");
+                        alertify.alertmsg("Login to the cart");
+                    }
+                }
+            });
 
-        ////                if (data != null) {
-        ////                    window.location.reload();
-        ////                }
-        ////            }
-        ////            else if (data == "failed") {
-        ////                //   alert("login to the cart");
-        ////                alertify.alertmsg("Login to the cart");
-        ////            }
-        ////        }
-        ////    });
-
-        ////});
+        });
 
         /*-- Book Now Button --*/
 

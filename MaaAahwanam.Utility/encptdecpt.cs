@@ -24,6 +24,8 @@ namespace MaaAahwanam.Utility
             {
                 key = System.Text.Encoding.UTF8.GetBytes(sEncryptionKey);
                 DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+                stringToDecrypt = stringToDecrypt.Replace(" ", "+");
+
                 inputByteArray = Convert.FromBase64String(stringToDecrypt);
                 MemoryStream ms = new MemoryStream();
                 CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(key, IV), CryptoStreamMode.Write);
