@@ -216,7 +216,9 @@ namespace MaaAahwanam.Web.Controllers
                 cartItem.TotalPrice = decimal.Parse(totalprice);
                 cartItem.Orderedby = user.UserId;
                 cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
-                cartItem.Perunitprice = decimal.Parse(price);
+                    cartItem.Category = "deal";
+
+                    cartItem.Perunitprice = decimal.Parse(price);
                 cartItem.Quantity = Convert.ToInt16(guest);
                 cartItem.subid = Convert.ToInt64(vid);
                 cartItem.attribute = timeslot;

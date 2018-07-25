@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Service;
 using MaaAahwanam.Models;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -17,12 +18,21 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
         // GET: NVendorManageStoreFront
-        public ActionResult Index(string id, string vid, string category, string subcategory)
+        public ActionResult Index(string ks, string vid, string category, string subcategory)
         {
             try
-            { 
-            ViewBag.id = id;
-            ViewBag.vid = vid;
+            {
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
+                ViewBag.id = ks;
+                ViewBag.vid = vid;
             ViewBag.category = category;
             ViewBag.subcategory = subcategory;
             if (vid != null)
@@ -77,10 +87,19 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string command, string serviceselection, string subcategory, string vid)
+        public ActionResult Index(string ks, string command, string serviceselection, string subcategory, string vid)
         {
             try
             {
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
                 string msg = "";
 
                 if (subcategory != "Select Sub-Category")
@@ -95,20 +114,20 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         msg = "Failed To Add Sevice";
 
-                        return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?ks=" + ks + "'</script>");
                     }
 
 
                     else
                         msg = "Failed To Add Sevice";
 
-                    return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "&&vid=" + count + "&&category=" + serviceselection + "&&subcategory=" + subcategory + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?ks=" + ks + "&&vid=" + count + "&&category=" + serviceselection + "&&subcategory=" + subcategory + "'</script>");
 
                 }
             
                 msg = "Failed To Add Sub Sevice";
 
-                return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?id=" + id + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/NVendorManageStoreFront/Index?ks=" + ks + "'</script>");
             
             }
                   
@@ -137,15 +156,25 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult UpdateStoreFront(string command, string category, string subcategory, string id, string vid, Vendormaster vendormaster, VendorVenue vendorVenue)
         {
+
+            string strReq = "";
+            encptdecpt encript = new encptdecpt();
+            strReq = encript.Decrypt(id);
+            //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+            string[] arrMsgs = strReq.Split('&');
+            string[] arrIndMsg;
+            string id1 = "";
+            arrIndMsg = arrMsgs[0].Split('='); //Get the id
+            id1 = arrIndMsg[1].ToString().Trim();
             vendormaster.ServicType = category;
             if (command == "one")
             {
-                vendormaster = vendorMasterService.UpdateVendorStorefront(vendormaster, long.Parse(id)); //updating Vendor Master
+                vendormaster = vendorMasterService.UpdateVendorStorefront(vendormaster, long.Parse(id1)); //updating Vendor Master
                 return Json("Basic Details Updated");
             }
             else if (command == "two")
             {
-                UpdateAmenities(category, subcategory, vendorVenue.Distancefrommainplaceslike, id, vid);
+                UpdateAmenities(category, subcategory, vendorVenue.Distancefrommainplaceslike, id1, vid);
                 return Json("Amenities Updated");
             }
             else if (command == "three")
@@ -153,13 +182,13 @@ namespace MaaAahwanam.Web.Controllers
                 if (category == "Venue")
                 {
                     var venuedata = vendorVenue;
-                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid)); // Retrieving Particular Vendor Record
+                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id1), long.Parse(vid)); // Retrieving Particular Vendor Record
                     vendorVenue.Description = venuedata.Description;
                     vendorVenue.Dimentions = venuedata.Dimentions;
                     vendorVenue.Minimumseatingcapacity = venuedata.Minimumseatingcapacity;
                     vendorVenue.Maximumcapacity = venuedata.Maximumcapacity;
                     vendorVenue.name = venuedata.name;
-                    vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id1), long.Parse(vid));
                     return Json("Hall Details Updated");
                 }
             }
@@ -168,61 +197,61 @@ namespace MaaAahwanam.Web.Controllers
                 var venuedata = vendorVenue;
                 if (category == "Venue")
                 {
-                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid)); // Retrieving Particular Vendor Record
+                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id1), long.Parse(vid)); // Retrieving Particular Vendor Record
                     vendorVenue.Address = venuedata.Address;
                     vendorVenue.City = venuedata.City;
                     vendorVenue.State = venuedata.State;
                     vendorVenue.Landmark = venuedata.Landmark;
                     vendorVenue.ZipCode = venuedata.ZipCode;
                     vendorVenue.GeoLocation = venuedata.GeoLocation;
-                    vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Catering")
                 {
                     VendorCateringService vendorCateringService = new VendorCateringService();
-                    VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(long.Parse(id), long.Parse(vid));
+                    VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(long.Parse(id1), long.Parse(vid));
                     vendorsCatering.Address = vendorVenue.Address;
                     vendorsCatering.City = vendorVenue.City;
                     vendorsCatering.State = vendorVenue.State;
                     vendorsCatering.Landmark = vendorVenue.Landmark;
                     vendorsCatering.ZipCode = vendorVenue.ZipCode;
-                    vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Photography")
                 {
-                    VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
+                    VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id1), long.Parse(vid));
                     vendorsPhotography.Address = vendorVenue.Address;
                     vendorsPhotography.City = vendorVenue.City;
                     vendorsPhotography.State = vendorVenue.State;
                     vendorsPhotography.Landmark = vendorVenue.Landmark;
                     vendorsPhotography.ZipCode = vendorVenue.ZipCode;
-                    vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Decorator")
                 {
-                    VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id), long.Parse(vid));
+                    VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id1), long.Parse(vid));
                     vendorsDecorator.Address = vendorVenue.Address;
                     vendorsDecorator.City = vendorVenue.City;
                     vendorsDecorator.State = vendorVenue.State;
                     vendorsDecorator.Landmark = vendorVenue.Landmark;
                     vendorsDecorator.ZipCode = vendorVenue.ZipCode;
-                    vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Other")
                 {
-                    VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(long.Parse(id), long.Parse(vid));
+                    VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(long.Parse(id1), long.Parse(vid));
                     vendorsOther.Address = vendorVenue.Address;
                     vendorsOther.City = vendorVenue.City;
                     vendorsOther.State = vendorVenue.State;
                     vendorsOther.Landmark = vendorVenue.Landmark;
                     vendorsOther.ZipCode = vendorVenue.ZipCode;
-                    vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 return Json("Address Updated");
             }
             else if (command == "six")
             {
-                vendormaster = vendorMasterService.UpdateVendorStorefront(vendormaster, long.Parse(id)); //updating Vendor Master
+                vendormaster = vendorMasterService.UpdateVendorStorefront(vendormaster, long.Parse(id1)); //updating Vendor Master
                 return Json("Your Address Updated");
             }
             else if (command == "seven")
@@ -230,7 +259,7 @@ namespace MaaAahwanam.Web.Controllers
                 var venuedata = vendorVenue;
                 if (category == "Venue")
                 {
-                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid)); // Retrieving Particular Vendor Record
+                    vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id1), long.Parse(vid)); // Retrieving Particular Vendor Record
                     vendorVenue.ServiceCost = venuedata.ServiceCost;
                     vendorVenue.VegLunchCost = venuedata.VegLunchCost;
                     vendorVenue.NonVegLunchCost = venuedata.NonVegLunchCost;
@@ -238,39 +267,39 @@ namespace MaaAahwanam.Web.Controllers
                     vendorVenue.NonVegDinnerCost = venuedata.NonVegDinnerCost;
                     vendorVenue.MinOrder = venuedata.MinOrder;
                     vendorVenue.MaxOrder = venuedata.MaxOrder;
-                    vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Catering")
                 {
                     VendorCateringService vendorCateringService = new VendorCateringService();
-                    VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(long.Parse(id), long.Parse(vid));
+                    VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(long.Parse(id1), long.Parse(vid));
                     vendorsCatering.Veg = vendorVenue.VegLunchCost;
                     vendorsCatering.NonVeg = vendorVenue.NonVegLunchCost;
                     vendorsCatering.MinOrder = vendorVenue.MinOrder;
                     vendorsCatering.MaxOrder = vendorVenue.MaxOrder;
                     //vendorsCatering.ZipCode = vendorVenue.ZipCode;
-                    vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Photography")
                 {
-                    VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id), long.Parse(vid));
+                    VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(long.Parse(id1), long.Parse(vid));
                     vendorsPhotography.StartingPrice = vendorVenue.ServiceCost;
-                    vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Decorator")
                 {
-                    VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id), long.Parse(vid));
+                    VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(long.Parse(id1), long.Parse(vid));
                     vendorsDecorator.StartingPrice = vendorVenue.ServiceCost;
-                    vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 else if (category == "Other")
                 {
-                    VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(long.Parse(id), long.Parse(vid));
+                    VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(long.Parse(id1), long.Parse(vid));
                     if(vendorVenue.ServiceCost != 0)
                     vendorsOther.ItemCost = vendorVenue.ServiceCost;
                     vendorsOther.MinOrder = vendorVenue.MinOrder;
                     vendorsOther.MaxOrder = vendorVenue.MaxOrder;
-                    vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, long.Parse(id), long.Parse(vid));
+                    vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, long.Parse(id1), long.Parse(vid));
                 }
                 return Json("Price Updated");
             }

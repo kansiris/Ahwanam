@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Service;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -14,14 +15,23 @@ namespace MaaAahwanam.Web.Controllers
         VendorMasterService vendorMasterService = new VendorMasterService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         // GET: NVendorStoreFront
-        public ActionResult Index(string id)
+        public ActionResult Index(string ks)
         {
             try { 
             if (TempData["Active"] != "")
             {
                 ViewBag.msg = TempData["Active"];
             }
-            ViewBag.id = id;
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
+                ViewBag.id = ks;
             ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
             var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList();
             var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList();
