@@ -52,7 +52,12 @@ namespace MaaAahwanam.Web.Controllers
             try { 
             var pkgs = vendorProductsService.getpartpkgs(pid);
             ViewBag.pacakagerecord = pkgs;
-            ViewBag.id = vid;
+
+                string vssid = Convert.ToString(vid);
+                encptdecpt encript = new encptdecpt();
+
+                string encripted = encript.Encrypt(string.Format("Name={0}", vssid));
+                ViewBag.id = encripted;
             return View();
             }
             catch (Exception)
