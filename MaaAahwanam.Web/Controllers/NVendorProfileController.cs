@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -17,23 +18,42 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         // GET: NVendorProfile
-        public ActionResult Index(string id)
+        public ActionResult Index(string ks)
         {
-            try { 
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+
+            try
             {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                ViewBag.id = id;
-                ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
-                var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-                ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
-            }
-            else
-            {
-                return RedirectToAction("Index", "NUserRegistration");
-            }
-            return View();
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+
+                    string strReq = "";
+                    encptdecpt encript = new encptdecpt();
+                    strReq = encript.Decrypt(ks);
+                    //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                    string[] arrMsgs = strReq.Split('&');
+
+
+                    string[] arrIndMsg;
+                    string id = "";
+                    arrIndMsg = arrMsgs[0].Split('='); //Get the Name
+                    id = arrIndMsg[1].ToString().Trim();
+
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+
+                        ViewBag.id = ks;
+                        ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
+                        var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
+                        ViewBag.order = orders.OrderByDescending(m => m.OrderId);
+                        ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
+                    }
+
+                    
+                    else
+                    {
+                        return RedirectToAction("Index", "NUserRegistration");
+                    }
+                    return View();
+                
             }
             catch (Exception)
             {

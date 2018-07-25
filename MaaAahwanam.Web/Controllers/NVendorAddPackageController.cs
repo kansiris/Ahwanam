@@ -1,5 +1,6 @@
 ﻿using MaaAahwanam.Models;
 using MaaAahwanam.Service;
+using MaaAahwanam.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
 
-        public ActionResult Index(string id)
+        public ActionResult Index(string ks)
         {
             try {
 
@@ -25,7 +26,19 @@ namespace MaaAahwanam.Web.Controllers
             {
                 ViewBag.Active = TempData["Active"];
             }
-            var deals = vendorProductsService.getvendorsubid(id);
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+
+
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
+
+                var deals = vendorProductsService.getvendorsubid(id);
             ViewBag.venuerecord = deals;
             ViewBag.vendormasterid = id;
             ViewBag.id = id;
@@ -67,9 +80,13 @@ namespace MaaAahwanam.Web.Controllers
                 package.UpdatedDate = updateddate;
                 package = vendorVenueSignUpService.addpack(package);
                 ViewBag.vendormasterid = id;
-              //  TempData["Active"] = "Package added";
-              //  return RedirectToAction("Index", "NVendorPkgs", new { id = id });
-                return Content("<script language='javascript' type='text/javascript'>alert('Package added successfully');location.href='" + @Url.Action("Index", "NVendorPkgs", new { id = id }) + "'</script>");
+                    //  TempData["Active"] = "Package added";
+                    //  return RedirectToAction("Index", "NVendorPkgs", new { id = id });
+                    string vssid = Convert.ToString(id);
+                    encptdecpt encript = new encptdecpt();
+
+                    string encripted = encript.Encrypt(string.Format("Name={0}", vssid));
+                    return Content("<script language='javascript' type='text/javascript'>alert('Package added successfully');location.href='" + @Url.Action("Index", "NVendorPkgs", new { ks = encripted }) + "'</script>");
             }
             else
             {

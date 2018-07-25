@@ -17,7 +17,7 @@ namespace MaaAahwanam.Web.Controllers
         OrderService orderService = new OrderService();
         Payment_orderServices payment_orderServices = new Payment_orderServices();
         // GET: NVendorOrders
-        public ActionResult Index(string id)
+        public ActionResult Index(string ks)
         {
             try
             {
@@ -25,7 +25,16 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     ViewBag.Active = TempData["Active"];
                 }
-                ViewBag.id = id;
+                ViewBag.id = ks;
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
                 var orders = orderService.userOrderList().Where(m => m.Id == int.Parse(id));
                 ViewBag.order = orders.OrderByDescending(m => m.OrderId);
                 return View();
@@ -36,7 +45,7 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult OrderApproval(string id, string orderid, string command)
+        public ActionResult OrderApproval(string ks, string orderid, string command)
         {
             try
             {
@@ -45,6 +54,15 @@ namespace MaaAahwanam.Web.Controllers
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                     if (user.UserType == "Vendor")
                     {
+                        string strReq = "";
+                        encptdecpt encript = new encptdecpt();
+                        strReq = encript.Decrypt(ks);
+                        //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                        string[] arrMsgs = strReq.Split('&');
+                        string[] arrIndMsg;
+                        string id = "";
+                        arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                        id = arrIndMsg[1].ToString().Trim();
                         //var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                         var orders = orderService.userOrderList().Where(m => m.OrderId == Convert.ToInt64(orderid));
                         Order order = orderService.GetParticularOrder(long.Parse(orderid));
@@ -53,7 +71,7 @@ namespace MaaAahwanam.Web.Controllers
                         if (paymentchecking > 0)
                         {
                             TempData["Active"] = "Cannot Update Partial/Full Payement Orders Status";
-                            return RedirectToAction("Index", "NVendorOrders", new { id = id });
+                            return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
                         }
                         if (command == "Accept")
                         {
@@ -72,13 +90,13 @@ namespace MaaAahwanam.Web.Controllers
                         order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
                         //SendEmail(int.Parse(orders.FirstOrDefault().UserLoginId.ToString()), orderid, id, command, orders.FirstOrDefault().BusinessName);
                         // return RedirectToAction("Index", "NVendorOrders", new { id = id });
-                        return Content("<script language='javascript' type='text/javascript'>alert('Order Cancelled');location.href='" + @Url.Action("Index", "NVendorOrders", new { id = id }) + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('Order Cancelled');location.href='" + @Url.Action("Index", "NVendorOrders", new { ks = ks }) + "'</script>");
 
                     }
                 }
                 //TempData["Active"] = "Please Login";
                 //return RedirectToAction("Index", "NVendorOrders", new { id = id });
-                return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NVendorOrders", new { id = id }) + "'</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NVendorOrders", new { ks = ks }) + "'</script>");
 
             }
             catch (Exception)
