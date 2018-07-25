@@ -27,104 +27,98 @@
 
 
 
-    <div class="row">
-        <div class="col-12 col-sm-8 col-md-8">
-            <div class="totalBlocks">
+            <div class="row">
+                <div class="col-12 col-sm-8 col-md-8">
+                    <div class="totalBlocks">
 
-                @if (ViewBag.cartitems != null)
-                {
-                    foreach (var item in ViewBag.cartitems)
-                    {
-                        <div class="p-3 bgWhite mb-2 block">
-                            <div class="row mx-0">
-                                @if (item.image != null)
-                                {
+                        @if (ViewBag.cartitems != null)
+                        {
+                            foreach (var item in ViewBag.cartitems)
+                            {
+                                <div class="p-3 bgWhite mb-2 block">
+                                    <div class="row mx-0">
+                                        @if (item.image != null)
+                                        {
 
-                                    <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                                    </div>
-
-                                }
-                                else if (item.image == null)
-                                {
-                                    <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
-                                    </div>
-                                }
-
-                                @*<input type="hidden" value="200" id="cartid" />*@
-
-
-                                @*<input type="hidden" id="type" name="type" value="@item.ServicType">*@
-                                <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock pr-0">
-                                    <div class="row titleBlock w-100 float-left mb-2">
-                                        <div class="col-12 col-sm-8 col-md-8 float-left">
-
-                                                <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
+                                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../vendorimages/@item.image');background-repeat: no-repeat;background-size: cover;background-position: center;">
                                             </div>
-                                            <div class="col-12 col-sm-4 col-md-4 float-left pr-0">
-                                                @if(@item.Isdeal == false){
-                                                <span class="flowBlock">Packages </span>
+
+                                        }
+                                        else if (item.image == null)
+                                        {
+                                            <div class="col-12 col-sm-4 col-md-4 pl-sm-0 pl-md-0 d-flex justify-content-center float-left" style="background: url('../noimages.png');background-repeat: no-repeat;background-size: cover;background-position: center;">
+                                            </div>
+                                        }
+
+                                        @*<input type="hidden" value="200" id="cartid" />*@
+
+
+                                        @*<input type="hidden" id="type" name="type" value="@item.ServicType">*@
+                                        <div class="col-12 col-sm-8 col-md-8 float-left detailsBlock pr-0">
+                                            <div class="row titleBlock w-100 float-left mb-2">
+                                                <div class="col-12 col-sm-8 col-md-8 float-left">
+
+                                                    <h4 class="noteWorthybold d-inline">@item.BusinessName</h4>
+                                                </div>
+                                                <div class="col-12 col-sm-4 col-md-4 float-left pr-0">
+                                                    @if (@item.Isdeal == false)
+                                                    {
+                                                        <span class="flowBlock">Packages </span>
+                                                    }
+                                                    else
+                                                    {<span class="flowBlock"> Deals </span>}
+                                                    <label class="mb-0 float-right">
+                                                        <input name="cardid" value="@item.CartId" type="checkbox" checked>
+                                                        <span class="mr-0"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row text-left float-left address w-100 mb-2">
+
+                                                <div class="col-12 col-sm-9 col-md-9 float-left">
+                                                    <p class="float-left">
+                                                        @item.Address
+                                                        @*<br>*@
+                                                        @*@item.Landmark,@item.City <br>*@
+                                                    </p>
+                                                </div>
+                                                <div class="col-12 col-sm-3 col-md-3 float-left pr-0">
+                                                    <p class="float-right total">
+                                                        @*        Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>*@
+                                                        Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <ul class="pl-0 row mx-0 customDates float-left">
+                                                <li>
+                                                <i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')
+                                                <br />Rs
+                                                <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.firsttotalprice)).Replace(".00", "")</span></li>
+                                                @if (@item.c1date != null && @item.c1date != "")
+                                                {
+                                                    <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c1date.Split(',')[1]).Replace(".00", "")</span></li>
+
                                                 }
-                                                else{<span class="flowBlock"> Deals </span>}
-                                                <label class="mb-0 float-right">
-                                                    <input name="cardid" value="@item.CartId" type="checkbox" checked>
-                                                    <span class="mr-0"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row text-left float-left address w-100 mb-2">
+                                                @if (item.c2date != null)
+                                                {
 
-                                            <div class="col-12 col-sm-9 col-md-9 float-left">
-                                                <p class="float-left">
-                                                    @item.Address
-                                                    @*<br>*@
-                                                    @*@item.Landmark,@item.City <br>*@
-                                                </p>
-                                            </div>
-                                            <div class="col-12 col-sm-3 col-md-3 float-left pr-0">
-                                                <p class="float-right total">
-                                                    @*        Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>*@
-                                                    Rs <span name="cartprice" id="cartprice">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "") </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <ul class="pl-0 row mx-0 customDates float-left">
-                                            @if ((@item.ServiceType == "Venue" || @item.ServiceType == "Catering" )&& @item.DealId =='0' )
-                                            {
-                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt64(@item.Perunitprice) * @item.Quantity )).Replace(".00", "")</span></li>
-                                            }
-                                            else if ((@item.ServiceType == "Venue" || @item.ServiceType == "Catering" )&& @item.DealId != '0')
-                                            {
-                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(Convert.ToInt64(@item.Perunitprice))).Replace(".00", "")</span></li>
-                                            }
-                                            else
-                                            {
-                                                <li><i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br />Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.Perunitprice).Replace(".00", "")</span></li>
-                                            }
-                                            @if (@item.c1date != null && @item.c1date != "")
-                                            {
-                                                <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c1date.Split(',')[1]).Replace(".00", "")</span></li>
+                                                    <li><i class="fa fa-times"></i>@item.c2date.Split(',')[0] <br /> Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c2date.Split(',')[1]).Replace(".00", "")</span></li>
+                                                }
+                                                @if (@item.c3date != null)
+                                                {
+                                                    <li><i class="fa fa-times"></i>@item.c3date.Split(',')[0] <br /> Rs <span> @String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c3date.Split(',')[1]).Replace(".00", "")</span></li>
 
-                                            }
-                                            @if (item.c2date != null)
-                                            {
+                                                }
+                                            </ul>
 
-                                                <li><i class="fa fa-times"></i>@item.c2date.Split(',')[0] <br /> Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c2date.Split(',')[1]).Replace(".00", "")</span></li>
-                                            }
-                                            @if (@item.c3date != null)
-                                            {
-                                                <li><i class="fa fa-times"></i>@item.c3date.Split(',')[0] <br /> Rs <span> @String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c3date.Split(',')[1]).Replace(".00", "")</span></li>
-
-                                            }
-                                        </ul>
-                                       
-                                        <div class="dateInput">
-                                            <div class="triangle"></div>
-                                            <i class="fa fa-times"></i>
-                                            <div class="form-group mb-0">
-                                                <input type="text" value="" class="form-control datetimepicker" placeholder="Date Here" />
+                                            <div class="dateInput">
+                                                <div class="triangle"></div>
+                                                <i class="fa fa-times"></i>
+                                                <div class="form-group mb-0">
+                                                    <input type="text" value="" class="form-control datetimepicker" placeholder="Date Here" />
+                                                </div>
+                                                <span class="addSelDates">Add Date</span>
                                             </div>
-                                            <span class="addSelDates">Add Date</span>
-                                        </div>
                                             <div class="row buttons">
                                                 <ul class="pl-0 float-right w-100">
                                                     <li><span class="deleteBlock" onclick="savecartItem(@item.CartId);">Save for Later</span></li>
@@ -138,57 +132,57 @@
 
 
 
-                                    
-                                 
+
+
+
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="cartid" name="cartid" value="@item.CartId">
+
 
                                 </div>
-                                </div>
-                                <input type="hidden" id="cartid" name="cartid" value="@item.CartId">
+                            }
+                        }
+
+                    </div>
 
 
-                            </div>
+
+                    @if (@ViewBag.cartCount != 0)
+                    {<div class="row mt-3 d-flex justify-content-center">
+                @*id="rzp-button1"*@
+                <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow" disabled> Book Now</button>
+            </div>
                     }
-                }
+                    else
+                    {<p>Your Cart is Empty </p>}
 
+
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-4 ">
+                    <div class="px-15">
+                        <div class="row bgWhite mb-3 firstBlock">
+                            @{Html.RenderAction("savedlater", "NCartView"); }
+                        </div>
+                        <div class="row bgWhite mb-3 firstBlock">
+                            @{Html.RenderAction("DealsSection", "NCartView"); }
                         </div>
 
+                    </div>
+                </div>
 
-                  
-                @if (@ViewBag.cartCount != 0)
-                {<div class="row mt-3 d-flex justify-content-center">
-                     @*id="rzp-button1"*@
-                            <button class="themeBgColorPrimary btn btnPrimary text-white border-0 bookNow"   disabled> Book Now</button>
-                        </div>
-                }
-                else
-                {<p>Your Cart is Empty </p>}
-           
-
-        </div>
-    
-    <div class="col-12 col-sm-4 col-md-4 ">
-        <div class="px-15">
-            <div class="row bgWhite mb-3 firstBlock">
-                @{Html.RenderAction("savedlater", "NCartView"); }
             </div>
-            <div class="row bgWhite mb-3 firstBlock">
-                @{Html.RenderAction("DealsSection", "NCartView"); }
-            </div>
-
         </div>
     </div>
-
 </div>
-        </div>
- </div>
-    </div>
 
 
 
 
 
-    @section scripts{
-        <script type="text/javascript">
+@section scripts{
+    <script type="text/javascript">
         //$(document).ready(function () {
         //    $('body').attr("id", "userAuthentication");
         //});
@@ -200,12 +194,12 @@
         });
 
 
-        </script>
+    </script>
 
 
-               
 
-        <script type="text/javascript">
+
+    <script type="text/javascript">
 
         /*--- Date and Time ----*/
         $('.datetimepicker').datetimepicker({
@@ -224,17 +218,17 @@
         var addDates = $(".cartPage .block .detailsBlock .buttons > ul > li > span.addDates"),
   dateInput = $(".cartPage .block .detailsBlock .buttons + .dateInput"),
   closeDateInput = $(".cartPage .block .detailsBlock .dateInput > .triangle + i.fa-times"),
-  removeCustLi = $(".cartPage ul.customDates > li > i"), total,hiddenField = $(".block > input[type='hidden']");
-        $(addDates).click(function(){
-            $(this).parents(".buttons").prev(dateInput).css("display","block");
+  removeCustLi = $(".cartPage ul.customDates > li > i"), total, hiddenField = $(".block > input[type='hidden']");
+        $(addDates).click(function () {
+            $(this).parents(".buttons").prev(dateInput).css("display", "block");
         });
 
-        $(closeDateInput).click(function(){
-            $(this).parents(".dateInput").css("display","none");
+        $(closeDateInput).click(function () {
+            $(this).parents(".dateInput").css("display", "none");
         });
 
-        $(".addSelDates").click(function(){
-            var price1 ='';
+        $(".addSelDates").click(function () {
+            var price1 = '';
             var cartId = $(this).parents(".block").find(hiddenField).val();
             // alert("Hidden Text : " + cartIdl);
             var dateVal = $(this).prev(".form-group").find("input").val();
@@ -252,7 +246,7 @@
             $.get("/NCartView/getprice?cartid=" + cartId, function (data, status) {
 
                 price1 = parseInt(data);
-                priceval.append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ price1 + "</span>" +  "</li>");
+                priceval.append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>" + price1 + "</span>" + "</li>");
                 total += spanTxt;
                 //alert(total);
                 ////totalpr.append(total);
@@ -261,7 +255,7 @@
                 $.ajax({
                     url: '/NCartView/multipledateinsert?cartid=' + cartId + '&&price=' + price1 + '&&date=' + dateVal + '&&total=' + total,
                     type: 'POST',
-                    dataType : 'json',
+                    dataType: 'json',
                     success: function (data) {
                         if (data == "Success") {
                             alertify.alert("Date is added to the cartitem");
@@ -271,16 +265,16 @@
                             alertify.alert("only four dates are allowed");
                             location.href = '/NCartView/Index'
                         }
-                        else  if (data == "date not saved") {
+                        else if (data == "date not saved") {
                             alertify.alert("date not entered");
                             location.href = '/NCartView/Index'
                         }
-                        else  if (data == "Login") {
+                        else if (data == "Login") {
                             alertify.alert("Login expired please login again");
                             location.href = '/NUserRegistration/SignOut'
                         }
 
-                        else{
+                        else {
                             alertify.alert("Date is added to the cartitem");
                             location.href = '/NCartView/Index'
                         }
@@ -301,9 +295,9 @@
 
             /*-- Total Price Increase --*/
             total = price;
-            $(this).parents(".dateInput").prevAll(".customDates").find("li").each(function(){
+            $(this).parents(".dateInput").prevAll(".customDates").find("li").each(function () {
                 var spanTxt = parseInt($(this).find("span").text());
-                total+=spanTxt;
+                total += spanTxt;
                 $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
             });
             /*-- Total Price Increase --*/
@@ -333,12 +327,12 @@
 
         /*-- Checkbox Fun for Book Now Button --*/
 
-        function checkFun(){
-            $(".cartPage .block").each(function(){
-                if(($(this).find("input[type='checkbox']")).is(':checked')){
+        function checkFun() {
+            $(".cartPage .block").each(function () {
+                if (($(this).find("input[type='checkbox']")).is(':checked')) {
                     $(this).parents(".cartPage").find("button.btn").prop('disabled', false);
                     return false;
-                }else{
+                } else {
                     $(this).parents(".cartPage").find("button.btn").prop('disabled', true);
                 }
             });
@@ -357,22 +351,22 @@
             //    $("ul.customDates").append("<li>" + '<i class="fa fa-times"></i>' + dateVal + "<br/>" + "Rs " + "<span>"+ 3500 + "</span>" +  "</li>");
             /*-- Each Block for Vendor title Start --*/
 
-            $(".totalBlocks .block").each(function(){
+            $(".totalBlocks .block").each(function () {
                 var title = $(this).find(".titleBlock").find("h4").text();
                 var titleOrg = $(this).find(".titleBlock").find("h4").text();
                 var threeDots = '...';
-                if(title.length > 15){
+                if (title.length > 15) {
                     title = title.substring(0, 15) + threeDots;
                 }
                 $(this).find(".titleBlock").find("h4").empty().append(title);
 
                 /*-- Hover Function --*/
 
-                $(this).find(".titleBlock").find("h4").hover(function(){
+                $(this).find(".titleBlock").find("h4").hover(function () {
                     var title1 = $(this).text();
-                    if(title1.indexOf('...') > 0){
+                    if (title1.indexOf('...') > 0) {
                         $(this).empty().append(titleOrg);
-                    } else{
+                    } else {
                         $(this).empty().append(title);
                     }
 
@@ -382,13 +376,13 @@
 
         });
 
-        $(document).on('click', '.cartPage ul.customDates > li > i', function(){
+        $(document).on('click', '.cartPage ul.customDates > li > i', function () {
             /*-- Total Price Decrease --*/
-            $(this).each(function(){
+            $(this).each(function () {
                 var thisLiVal = parseInt($(this).parent('li').find("span").text());
                 var spanTxt = parseInt($(this).parents("ul.customDates").prev(".address").find(".total").find("span").text());
-                total=spanTxt - thisLiVal;
-              //  $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
+                total = spanTxt - thisLiVal;
+                //  $(this).parents("ul.customDates").prev(".address").find(".total").find("span").text('').append(total);
             });
 
             /*-- Hidden Field Value --*/
@@ -408,34 +402,34 @@
                    function () {
                        $(this).parent('li').remove();
 
-            $.ajax ({
-                url: '/NCartView/multipledatedelete?cartid=' + cartId + '&&price=' + LiPrice + '&&date=' + LiDate + '&&total=' + total,
-            type: 'POST',
-            dataType : 'json',
-            success: function (data) {
-                if (data == "sSuccess") {
-                    alertify.alert("Date is deleted successfully");
-                   location.href = '/NCartView/Index'
-                }
-                else if (data == "failed") {
-                    alertify.alert("only four dates are allowed");
-                    location.href = '/NCartView/Index'
-                }
-                else {
-                    alertify.alert("Date is deleted successfully");
-                    location.href = '/NCartView/Index'
-                }
-            },
-            error: function (data) {
-                alertify.alert("Error in placing the order.");
-                location.href = '/NCartView/Index'
+                       $.ajax({
+                           url: '/NCartView/multipledatedelete?cartid=' + cartId + '&&price=' + LiPrice + '&&date=' + LiDate + '&&total=' + total,
+                           type: 'POST',
+                           dataType: 'json',
+                           success: function (data) {
+                               if (data == "sSuccess") {
+                                   alertify.alert("Date is deleted successfully");
+                                   location.href = '/NCartView/Index'
+                               }
+                               else if (data == "failed") {
+                                   alertify.alert("only four dates are allowed");
+                                   location.href = '/NCartView/Index'
+                               }
+                               else {
+                                   alertify.alert("Date is deleted successfully");
+                                   location.href = '/NCartView/Index'
+                               }
+                           },
+                           error: function (data) {
+                               alertify.alert("Error in placing the order.");
+                               location.href = '/NCartView/Index'
 
-            }
-        })
+                           }
+                       })
 
                    },
          function () {
-         //    location.href = '/NCartView/Index'
+             //    location.href = '/NCartView/Index'
          });
 
 
@@ -474,10 +468,10 @@
                     alert(totalPrice);
                 }
             });
-         alert(cartnos)
+            alert(cartnos)
             /*-- Checkbox Fun for Book Now Button --*/
-          
-         url1 = '/NCartView/booknow?cartnos=' +cartnos;
+
+            url1 = '/NCartView/booknow?cartnos=' + cartnos;
             $.ajax({
                 url: url1,
                 success: function (data) {
@@ -590,93 +584,93 @@
          function () {
          });
         }
-</script>
+    </script>
 
 
 
 
-<script>
-    /*-- payment gateway 
+    <script>
+        /*-- payment gateway
 
 
 
 
 
- $(".cartPage .bookNow").click(function() {
-     var tot1 = parseInt(0);
-     var cartnos = '';
+     $(".cartPage .bookNow").click(function() {
+         var tot1 = parseInt(0);
+         var cartnos = '';
 
 
-    var checkBoxVal = [], totalPrice = [];
-    $(".cartPage .block").each(function () {
-        if (($(this).find("input[type='checkbox']")).is(':checked')) {
-            checkBoxVal.push($(this).find("input[type='checkbox']").val());
-            //alert(checkBoxVal);
-            cartnos = checkBoxVal;
-            totalPrice.push($(this).find("p.total span").text().split(',').join(''));
-        //    alert(totalPrice);
+        var checkBoxVal = [], totalPrice = [];
+        $(".cartPage .block").each(function () {
+            if (($(this).find("input[type='checkbox']")).is(':checked')) {
+                checkBoxVal.push($(this).find("input[type='checkbox']").val());
+                //alert(checkBoxVal);
+                cartnos = checkBoxVal;
+                totalPrice.push($(this).find("p.total span").text().split(',').join(''));
+            //    alert(totalPrice);
+            }
+        });
+       // alert(cartnos)
+        var i ;
+
+        for (i=0;i<totalPrice.length;i++)
+        {
+            var tot = parseInt(totalPrice[i]);
+            tot1 = tot1 + tot;
+          //  alert(tot1);
+
         }
-    });
-   // alert(cartnos)
-    var i ;
+       // rzp1.open();
+        var tot2 = parseInt(tot1 + '00');
+      //  alert(tot2);
+     //   var rzp1 = new Razorpay(options);
+        var options = {
+            "key": "rzp_test_3OHEkrM9aPMz5u",
+            "amount": tot2, // 2000 paise = INR 20
+            "name": "ahwanam",
+            "description": "ahwanam.com",
+            "image": "/your_logo.png",
+            "handler": function (response) {
+                alert(response.razorpay_payment_id);
+                url1 = '/NCartView/booknow?cartnos=' + cartnos + '&&paymentid=' + response.razorpay_payment_id + '&&amountpaid=' + tot2;
+                         $.ajax({
+                             url: url1,
+                             success: function (data) {
+                                 if (data == "Success") {
+                                     //  alert("Sucessfully Added to cart")
+                                     alertify.alert("Sucessfully booked");
 
-    for (i=0;i<totalPrice.length;i++)
-    {
-        var tot = parseInt(totalPrice[i]);
-        tot1 = tot1 + tot;
-      //  alert(tot1);
-
-    }
-   // rzp1.open();
-    var tot2 = parseInt(tot1 + '00');
-  //  alert(tot2);
- //   var rzp1 = new Razorpay(options);
-    var options = {
-        "key": "rzp_test_3OHEkrM9aPMz5u",
-        "amount": tot2, // 2000 paise = INR 20
-        "name": "ahwanam",
-        "description": "ahwanam.com",
-        "image": "/your_logo.png",
-        "handler": function (response) {
-            alert(response.razorpay_payment_id);
-            url1 = '/NCartView/booknow?cartnos=' + cartnos + '&&paymentid=' + response.razorpay_payment_id + '&&amountpaid=' + tot2;
-                     $.ajax({
-                         url: url1,
-                         success: function (data) {
-                             if (data == "Success") {
-                                 //  alert("Sucessfully Added to cart")
-                                 alertify.alert("Sucessfully booked");
-
-                                 if (data != null) {
-                                     window.location.reload();
+                                     if (data != null) {
+                                         window.location.reload();
+                                     }
+                                 }
+                                 else if (data == "failed") {
+                                     //   alert("login to the cart");
+                                     alertify.alertmsg("Login to the cart");
                                  }
                              }
-                             else if (data == "failed") {
-                                 //   alert("login to the cart");
-                                 alertify.alertmsg("Login to the cart");
-                             }
-                         }
-                     });
+                         });
 
-        },
-        "prefill": {
-            "name": "Harshil Mathur",
-            "email": "harshil@razorpay.com"
-        },
-        "notes": {
-            // "address": "Hello World"
-            "order_id": cartnos
-        },
-        "theme": {
-            "color": "#F37254"
-        }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
+            },
+            "prefill": {
+                "name": "Harshil Mathur",
+                "email": "harshil@razorpay.com"
+            },
+            "notes": {
+                // "address": "Hello World"
+                "order_id": cartnos
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
 
 
- });--*/
-</script>
+     });--*/
+    </script>
 
-    }
+}
 

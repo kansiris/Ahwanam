@@ -157,8 +157,10 @@ namespace MaaAahwanam.Web.Controllers
 
             if (ISdeal == false)
             {
-                var dealid1 = cartdetails.DealId;
-                if (dealid1 == 0)
+                //var dealid1 = cartdetails.DealId;
+                //if (dealid1 == 0)
+                var category = cartdetails.Category;
+                if (category == "" )
                 {
                     // var pricenew = cartdetails.TotalPrice;
                     var servicetype = cartdetails.ServiceType;
@@ -167,29 +169,49 @@ namespace MaaAahwanam.Web.Controllers
                     VendorProductsService vendorProductsService = new VendorProductsService();
                     var vendorcost = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
                     //   int query = vendorMasterService.checkemail(emailid);
-                    //if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
-                    //{ pricenew = Convert.ToString( Convert.ToDecimal(vendorcost) * nofguests);  }
-                    //else
-                    //{
-                    pricenew = vendorcost;
-                    //  }
+                    if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
+                    { pricenew = Convert.ToString(Convert.ToDecimal(vendorcost) * nofguests);
+                    }
+                    else
+                    {
+                        pricenew = vendorcost;
+                    }
 
                 }
-                else
+                else if (category == "Price")
+                {
+                    // var pricenew = cartdetails.TotalPrice;
+                    var servicetype = cartdetails.ServiceType;
+                    var vendorid = cartdetails.Id;
+                    var vendorsubid = cartdetails.subid;
+                    VendorProductsService vendorProductsService = new VendorProductsService();
+                    // var vendorcost = vendorProductsService.Getvendorproducts_Result(servicetype).Where(m => m.id == vendorid && m.subid == vendorsubid.ToString()).FirstOrDefault().cost;
+                     var vendorcost = cartdetails.Perunitprice.ToString();
+
+                    //   int query = vendorMasterService.checkemail(emailid);
+                    if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
+                    { pricenew = Convert.ToString(Convert.ToDecimal(vendorcost) * nofguests); }
+                    else
+                    {
+                        pricenew = vendorcost;
+                    }
+
+                }
+                else if ( category == "Package")
                 {
                     var deal1 = cartdetails.DealId;
 
                     var type = cartdetails.ServiceType;
                     var vendorid = cartdetails.Id;
                     var vendorsubid = cartdetails.subid;
-                    
+
                      var packPrice = vendorProductsService.getvendorpkgs(Convert.ToString(vendorid)).Where(p => p.VendorSubId == (vendorsubid) && p.PackageID == deal1).FirstOrDefault().PackagePrice;
-                   
+                   // var packPrice = cartdetails.Perunitprice;
                     if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
                     { pricenew = Convert.ToString(Convert.ToDecimal(packPrice) * nofguests); }
                     else
                     {
-                        pricenew = packPrice;
+                        pricenew = Convert.ToString(packPrice);
                     }
                 }
             }

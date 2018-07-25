@@ -383,6 +383,8 @@ namespace MaaAahwanam.Web.Controllers
                     //    cartItem.TotalPrice = decimal.Parse(total) * decimal.Parse(guest);
                     //else
                         cartItem.TotalPrice = decimal.Parse(total);
+                    cartItem.firsttotalprice = total;
+
                     cartItem.Orderedby = user.UserId;
                     cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
                     cartItem.Perunitprice = decimal.Parse(price);
