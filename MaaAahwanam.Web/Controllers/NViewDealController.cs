@@ -214,7 +214,8 @@ namespace MaaAahwanam.Web.Controllers
                 cartItem.VendorId = Int32.Parse(id);
                 cartItem.ServiceType = type;
                 cartItem.TotalPrice = decimal.Parse(totalprice);
-                cartItem.Orderedby = user.UserId;
+                    cartItem.firsttotalprice = (totalprice);
+                    cartItem.Orderedby = user.UserId;
                 cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
                     cartItem.Category = "deal";
                     cartItem.SelectedPriceType = etype2;

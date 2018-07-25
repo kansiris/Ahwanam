@@ -41,6 +41,9 @@ namespace MaaAahwanam.Repository
         public decimal DiscountPrice { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<System.DateTime> eventstartdate { get; set; }
+        public string Category { get; set; }
+        public string SelectedPriceType { get; set; }
+        public string firsttotalprice { get; set; }
         public Nullable<System.DateTime> eventenddate { get; set; }
         public Nullable<long> eventid { get; set; }
     }
