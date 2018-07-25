@@ -51,10 +51,20 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult deleteservice(string id, string vid, string type)
+        public ActionResult deleteservice(string ks, string vid, string type)
         {
             try
             {
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
+                ViewBag.id = ks;
                 int count = 0;
                 if (type == "Venue")
                     count = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList().Count;
@@ -75,7 +85,7 @@ namespace MaaAahwanam.Web.Controllers
 
                     //  TempData["Active"] = "Service " + msg + "";
                     // return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                    return Content("<script language='javascript' type='text/javascript'>alert('Service " + msg + "');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Service " + msg + "');location.href='/NVendorStoreFront/Index?ks=" + ks + "'</script>");
                 }
                 else
                 {
@@ -85,14 +95,14 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         //TempData["Active"] = "Service Removed";
                         // return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                        return Content("<script language='javascript' type='text/javascript'>alert('Service Removed');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('Service Removed');location.href='/NVendorStoreFront/Index?ks=" + ks + "'</script>");
 
                     }
                     else
 
                         // TempData["Active"] = "Something Went Wrong!!! Try Again After Some Time";
                         //return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                        return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?id=" + id + "'</script>");
+                        return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?ks=" + ks + "'</script>");
                 }
             }
             catch (Exception)
