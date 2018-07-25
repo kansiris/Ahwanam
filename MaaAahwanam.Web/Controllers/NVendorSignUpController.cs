@@ -106,6 +106,16 @@ namespace MaaAahwanam.Web.Controllers
             return Json("valid", JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult checkBusinessName(string name)
+        {
+            var query = vendorMasterService.GetVendorname().Contains(name);
+            //if (query != 0)
+            //{
+            //    return Json("exists", JsonRequestBehavior.AllowGet);
+            //}
+            return Json("valid", JsonRequestBehavior.AllowGet);
+        }
+
         public int addservice(Vendormaster vendorMaster)
         {
             int count = 0;
