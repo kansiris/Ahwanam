@@ -109,10 +109,10 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult checkBusinessName(string name)
         {
             var query = vendorMasterService.GetVendorname().Contains(name);
-            //if (query != 0)
-            //{
-            //    return Json("exists", JsonRequestBehavior.AllowGet);
-            //}
+            if (query)
+            {
+                return Json("exists", JsonRequestBehavior.AllowGet);
+            }
             return Json("valid", JsonRequestBehavior.AllowGet);
         }
 

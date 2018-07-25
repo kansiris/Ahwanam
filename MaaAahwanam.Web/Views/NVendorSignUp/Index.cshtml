@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="col-12 col-md-8 col-lg-8 offset-md-2 offset-lg-2">
                                             <div class="form-group w-100">
-                                                <input type="text" class="form-control" name="Item2.BusinessName" id="Item2_BusinessName" maxlength="50" placeholder="Business Name" required>
+                                                <input type="text" class="form-control" name="Item2.BusinessName" id="Item2_BusinessName" onchange="checkname()" maxlength="50" placeholder="Business Name" required>
                                             </div>
                                         </div>
                                     </div>
@@ -136,6 +136,17 @@
             var expr = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
             return expr.test(email);
         };
+
+        function checkname() {
+            var name = $('#Item2_BusinessName').val();
+            $.get("/NVendorSignUp/checkBusinessName?name=" + name, function (data) {
+                if (data == "exists") {
+                    alertmsg("Business Name Already Registered");
+                    $("#Item2_BusinessName").val("").focus();
+                }
+            });
+        }
+
         function check() {
             var emailId = $("#Item2_EmailId").val();
             //alert(emailId);
