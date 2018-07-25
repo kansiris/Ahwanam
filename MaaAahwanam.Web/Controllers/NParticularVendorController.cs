@@ -365,7 +365,7 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult AddToCart(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest, string selectedtype,string total)
+        public ActionResult AddToCart(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest, string selectedtype,string total,string SelectedCategory, string SelectedPriceType)
         {
             try
             {
@@ -375,11 +375,13 @@ namespace MaaAahwanam.Web.Controllers
                     List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                     DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                     CartItem cartItem = new CartItem();
+                    cartItem.SelectedPriceType = SelectedPriceType;
+                    cartItem.Category = SelectedCategory;
                     cartItem.VendorId = Int32.Parse(id);
                     cartItem.ServiceType = type;
-                    if (type != "Mehendi" && type != "Pandit" && type != "Decorator" && type != "Other" && type != "Photography")
-                        cartItem.TotalPrice = decimal.Parse(total) * decimal.Parse(guest);
-                    else
+                    //if (type != "Mehendi" && type != "Pandit" && type != "Decorator" && type != "Other" && type != "Photography")
+                    //    cartItem.TotalPrice = decimal.Parse(total) * decimal.Parse(guest);
+                    //else
                         cartItem.TotalPrice = decimal.Parse(total);
                     cartItem.Orderedby = user.UserId;
                     cartItem.UpdatedDate = Convert.ToDateTime(updateddate);

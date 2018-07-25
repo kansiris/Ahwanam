@@ -36,6 +36,7 @@ namespace MaaAahwanam.Models
         public string ExtraDate4 { get; set; }
         public string ExtraDate5 { get; set; }
         public string ExtraDate6 { get; set; }
-        //public DateTime? eventstartdate { get; set; }
+        public string Category { get; set; }
+        public string SelectedPriceType { get; set; }
     }
 }

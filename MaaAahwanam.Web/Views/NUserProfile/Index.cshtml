@@ -254,11 +254,11 @@
                             </div>
 
                         </div>
-                        
+
                         <div id="Quotations" style="display:none">
                             <div class="row mx-0">
                                 <h3 class="noteWorthybold">
-                                   All Quotations
+                                    All Quotations
                                     <div class="blackBorder"></div>
                                 </h3>
                             </div>
@@ -293,17 +293,17 @@
                                                         @if (item.FirstTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.FirstTimeQuoteDate</p>
-                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="LoadLists('@item.FirstTime')">View Quote List</button>  @* data-toggle="modal" data-target="#VendorsList"*@
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="LoadLists('@item.Id')">View Quote List</button>  @* data-toggle="modal" data-target="#VendorsList"*@
                                                         }
                                                         @if (item.SecondTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.SecondTimeQuoteDate</p>
-                                                            <button type="button" class="btn btn-success" onclick="LoadLists('@item.SecondTime')">View Quote List</button>
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists('@item.Id')">View Quote List</button>
                                                         }
                                                         @if (item.ThirdTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.ThirdTimeQuoteDate</p>
-                                                            <button type="button" class="btn btn-success" onclick="LoadLists('@item.ThirdTime')">View Quote List</button>
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists('@item.Id')">View Quote List</button>
                                                         }
                                                         @if (item.ThirdTimeQuoteDate == null && item.SecondTimeQuoteDate == null && item.FirstTimeQuoteDate == null)
                                                         {
@@ -312,7 +312,7 @@
                                                         }
                                                     </td>
                                                     @*<td>@item.Status</td>*@
-                                                    
+
                                                 </tr>
 
                                             }
@@ -327,13 +327,13 @@
                                         }
                                     </tbody>
                                 </table>
-                                
+
                                 @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                    Open modal
-                                </button>*@
+                                        Open modal
+                                    </button>*@
 
                                 <!-- The Modal -->
-                                
+
 
                             </div>
                         </div>
@@ -395,9 +395,9 @@
 
     <div class="modal" id="myModal">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" id="refreshdata">
 
-             @{Html.RenderAction("VendorsLists", "NUserProfile");}
+                @{Html.RenderAction("VendorsLists", "NUserProfile");}
 
             </div>
         </div>
@@ -541,10 +541,12 @@
         <script>
             function LoadLists(val) {
                 alert(val);
+                var url = '/NUserProfile/VendorsLists?qid=' + val;
+                $('#refreshdata').empty().load(url);
                 //$('#myModal').modal();
             }
         </script>
 
 
     }
-}
+                    }

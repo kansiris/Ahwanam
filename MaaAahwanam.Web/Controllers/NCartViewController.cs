@@ -182,7 +182,9 @@ namespace MaaAahwanam.Web.Controllers
                     var type = cartdetails.ServiceType;
                     var vendorid = cartdetails.Id;
                     var vendorsubid = cartdetails.subid;
-                    var packPrice = vendorProductsService.getvendorpkgs(Convert.ToString(vendorid)).Where(p => p.VendorSubId == (vendorsubid) && p.PackageID == deal1).FirstOrDefault().PackagePrice;
+                    
+                     var packPrice = vendorProductsService.getvendorpkgs(Convert.ToString(vendorid)).Where(p => p.VendorSubId == (vendorsubid) && p.PackageID == deal1).FirstOrDefault().PackagePrice;
+                   
                     if (sertype == "Venues" || sertype == "Hotel" || sertype == "Resort" || sertype == "Convention Hall" || sertype == "Venue" || sertype == "Banquet Hall" || sertype == "Function Hall" || sertype == "Venue" || sertype == "Catering")
                     { pricenew = Convert.ToString(Convert.ToDecimal(packPrice) * nofguests); }
                     else

@@ -49,5 +49,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return 1;
         }
+
+        public List<QuoteResponse> GetAllQuoteResponses()
+        {
+            return _dbContext.QuoteResponse.ToList();
+        }
     }
 }

@@ -194,7 +194,7 @@
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">Veg Lunch Cost</p></div>
                                                         <div class="float-right packageCheckbox">
-                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <input type="hidden" id="pkgid" value="@ViewBag.particularVenue.Id" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
@@ -216,7 +216,7 @@
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">Non-Veg Lunch Cost</p></div>
                                                         <div class="float-right packageCheckbox">
-                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <input type="hidden" id="pkgid" value="@ViewBag.particularVenue.Id" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
@@ -238,7 +238,7 @@
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">Veg Dinner Cost</p></div>
                                                         <div class="float-right packageCheckbox">
-                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <input type="hidden" id="pkgid" value="@ViewBag.particularVenue.Id" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
@@ -260,7 +260,7 @@
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">Non - Veg Dinner Cost</p></div>
                                                         <div class="float-right packageCheckbox">
-                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <input type="hidden" id="pkgid" value="@ViewBag.particularVenue.Id" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
@@ -286,7 +286,7 @@
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">Veg Cost</p></div>
                                                         <div class="float-right packageCheckbox">
-                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <input type="hidden" id="pkgid" value="@ViewBag.particularVenue.Id" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
@@ -308,7 +308,7 @@
                                                     <div class="w-100 float-left">
                                                         <div class="float-left"><p class="mb-0 packageName">Non-Veg Cost</p></div>
                                                         <div class="float-right packageCheckbox">
-                                                            @*<input type="hidden" id="pkgid" value="@ViewBag.particularVenue.ID" />*@
+                                                            <input type="hidden" id="pkgid" value="@ViewBag.particularVenue.Id" />
                                                             <label>
                                                                 <input type="checkbox" name="">
                                                                 <p>Select</p>
@@ -697,6 +697,7 @@
                             <input type="hidden" id="vendoravailabledates" value="@ViewBag.vendoravailabledates" />
                             <input type="hidden" id="selectedtype" />
                             <input type="hidden" id="pkgprice" />
+                            <input type="hidden" id="SelectedCategory" />
                             <h3 class="noteWorthybold">
                                 Fill the Details
                                 <div class="blackBorder"></div>
@@ -706,6 +707,7 @@
                             <div class="w-100">
                                 <div class="form-group mb-0">
                                     <input type="text" class="form-control nexaBold" placeholder="Event Type" id="eventtype" name="eventtype">
+                                    <input type="hidden" id="SelectedPriceType" />
                                 </div>
                             </div>
 
@@ -718,7 +720,7 @@
                                         }
                                     </select>
                                 </div>*@
-                            @if (ViewBag.type != "Mehendi" && ViewBag.type != "Mehendi" && ViewBag.type != "Pandit" && ViewBag.type != "Decorator" && ViewBag.type != "Other" && ViewBag.type != "Photography")
+                            @if (ViewBag.type != "Mehendi"  && ViewBag.type != "Pandit" && ViewBag.type != "Decorator" && ViewBag.type != "Other" && ViewBag.type != "Photography" && ViewBag.type != "Function Hall")
                             {
                                 <div class="w-100 mt-3 noOfPeoples" id="people">
                                     <div class="form-group mb-0">
@@ -1008,20 +1010,23 @@
                         var packagename = $(this).parents('div.float-left').find('p.packageName').text();
                         var packageprice = $(this).parents('div.packageCheckbox').next('div.float-right').find('span').html();//pkgid
                         var pkgid = $(this).parents('div.packageCheckbox').find('input').val(); //packageDetails
-                        //alert(pkgid);
+                        alert(pkgid);
                         var selectedpackageprice = parseInt(packageprice);
                         var membercount = parseInt($('#members').val());
                         var calculatedprice = selectedpackageprice * membercount;
                         $('#eventtype').val(packagename);
-                        if ('@ViewBag.type' != "Photography" && '@ViewBag.type' != "Decorator") {
-                            $('#serviceprice').val(calculatedprice);
+                        $('#SelectedPriceType').val(packagename);
+                        if ('@ViewBag.type' != "Photography" && '@ViewBag.type' != "Decorator" && '@ViewBag.type' != "Mehendi"  && '@ViewBag.type' != "Pandit" && '@ViewBag.type' != "Other"  && '@ViewBag.type' != "Function Hall") {
+                            $('#serviceprice').val(selectedpackageprice);
                             $('#selectedprice').html(calculatedprice);
                             $('#pkgprice').val(packageprice);
+                            $('#SelectedCategory').val("Price");
                         }
                         else {
                             $('#serviceprice').val(packageprice);
                             $('#selectedprice').html(packageprice);
                             $('#pkgprice').val(packageprice);
+                            $('#SelectedCategory').val("Package");
                         }
                         $('#selectedtype').val(pkgid);
                     } else {
@@ -1036,6 +1041,7 @@
                         $('#selectedprice').html(@ViewBag.servicetypeprice);
                         $('#selectedtype').val("sprice");
                         $('#pkgprice').val(0);
+                        $('#SelectedCategory').val("ServicePrice");
                     }
                 });
             }
@@ -1169,17 +1175,23 @@
             else {
                 $(".overlay").show();
                 //alert(timeslot);
+
                 var eventtype = $("#eventtype").val();
                 var id = '@Request.QueryString["id"]';
                 var vid = '@Request.QueryString["vid"]';
                 var date = $("#datetimepicker").val();
                 var price = $('#serviceprice').val();//'@ViewBag.servicetypeprice';
                 var nop = $("#members").val();
+                if (nop == undefined) {
+                    nop=1;
+                }
                 var timeslot1 = 'Morning';
                 var totalprice = price * nop;
                 var total = $('#selectedprice').html();
                 var selectedtype = $('#selectedtype').val();
-                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total=' + total;
+                var SelectedPriceType = $('#SelectedPriceType').val();
+                var SelectedCategory = $('#SelectedCategory').val();
+                url1 = '/NParticularVendor/AddToCart?type=' + type + '&&eventtype=' + eventtype + '&&timeslot=' + timeslot + '&&date=' + date + '&&id=' + id + '&&vid=' + vid + '&&price=' + price + '&&guest=' + nop + '&&selectedtype=' + selectedtype + '&&total=' + total + '&&SelectedCategory=' + SelectedCategory + '&&SelectedPriceType=' + SelectedPriceType;
 
                 $.ajax({
                     url: url1,
@@ -1198,6 +1210,11 @@
                             alertmsg("This Service Already Exists in Cart");
                         }
 
+                    },
+                    error:function(data)
+                    {
+                        $(".overlay").hide();
+                        alertmsg("Something Went Wrong!!! Try Again Later");
                     }
                 });
             }
@@ -1221,7 +1238,10 @@
             var pkgprice = $('#pkgprice').val();
             var members = $('#members').val();
             var totalVal = $('.totalVal').text();
-
+            //alert(members);
+            if (members == undefined) {
+                members=1;
+            }
             //alert(pkgprice);
             //alert(members);
             //alert(totalVal);
@@ -1281,28 +1301,29 @@
         });
 
         /*-- Check box Funcationality --*/
+        
+            $(".slotTime input[type='checkbox']").each(function () {
+                $(this).on('change', function () {
+                    //alert($(".noOfPeoples input[type='number']").val());
+                    /*-- Check box Funcationality --*/
+                    if ($(".noOfPeoples input[type='number']").val() != undefined) {
+                        if ($(".noOfPeoples input[type='number']").val().length >= 1) {
+                            $(this).attr("disabled", false);
+                        } else {
+                            alert("Enter No of Guests");
+                            $(this).prop("checked", false);
+                            return false;
+                        }
+                    }
+                    /*-- Check box Funcationality --*/
 
-        $(".slotTime input[type='checkbox']").each(function () {
-            $(this).on('change', function () {
-
-                /*-- Check box Funcationality --*/
-
-                if ($(".noOfPeoples input[type='number']").val().length >= 1) {
-                    $(this).attr("disabled", false);
-                } else {
-                    alert("Enter No of Guests");
-                    $(this).prop("checked", false);
-                    return false;
-                }
-
-                /*-- Check box Funcationality --*/
-
-                if ($(this).is(':checked')) {
-                    checkedBox();
-                } else {
-                    checkedBox();
-                }
+                    if ($(this).is(':checked')) {
+                        checkedBox();
+                    } else {
+                        checkedBox();
+                    }
+                });
             });
-        });
+        
     </script>
 }
