@@ -68,29 +68,33 @@ namespace MaaAahwanam.Web.Controllers
                         Order order = orderService.GetParticularOrder(long.Parse(orderid));
                         OrderDetail orderdetail = new OrderDetail();
                         int paymentchecking = payment_orderServices.GetPaymentOrderService(long.Parse(orderid)).Count();
-                        if (paymentchecking > 0)
-                        {
-                            TempData["Active"] = "Cannot Update Partial/Full Payement Orders Status";
-                            return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
-                        }
+                        //if (paymentchecking > 0)
+                        //{
+                        //    TempData["Active"] = "Cannot Update Partial/Full Payement Orders Status";
+                        //    return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
+                        //}
                         if (command == "Accept")
                         {
                             order.Status = "Active";
                             order.UpdatedBy = long.Parse(id);
                             orderdetail.Status = "Active";
                             orderdetail.UpdatedBy = long.Parse(id);
+                            order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
                             TempData["Active"] = "Order Accepted";
+                            return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
                         }
                         else
                         {
                             order.Status = "Vendor Declined";
                             orderdetail.Status = "Vendor Declined";
-                           // TempData["Active"] = "Order Cancelled";
+                            order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+                            TempData["Active"] = "Order Cancelled";
+                            return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
                         }
-                        order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+                        
                         //SendEmail(int.Parse(orders.FirstOrDefault().UserLoginId.ToString()), orderid, id, command, orders.FirstOrDefault().BusinessName);
                         // return RedirectToAction("Index", "NVendorOrders", new { id = id });
-                        return Content("<script language='javascript' type='text/javascript'>alert('Order Cancelled');location.href='" + @Url.Action("Index", "NVendorOrders", new { ks = ks }) + "'</script>");
+                        //return Content("<script language='javascript' type='text/javascript'>alert('Order Cancelled');location.href='" + @Url.Action("Index", "NVendorOrders", new { ks = ks }) + "'</script>");
 
                     }
                 }
