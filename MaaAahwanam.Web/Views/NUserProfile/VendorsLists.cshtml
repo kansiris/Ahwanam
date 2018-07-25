@@ -1,4 +1,8 @@
 ﻿   <!-- Modal Header -->
+@if (ViewBag.quotes != null)
+{
+
+}
 <div class="modal-header">
     <h4 class="modal-title">Modal Heading</h4>
     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -7,45 +11,47 @@
 <!-- Modal body -->
 <div class="modal-body">
     Modal Body
-    @*<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
         <div class="col-sm-12">
             <table class="table table-hover dataTable table-striped width-full dtr-inline" data-plugin="dataTable" id="DataTables_Table_0" border="1">
                 <thead>
                     <tr>
                         <th style="font-weight:600">S.No</th>
-                        <th style="font-weight:600">Event Type</th>
-                        <th style="font-weight:600">User Name</th>
-                        <th style="font-weight:600">Booked Dates</th>
-                        <th style="font-weight:600">Time Slot</th>
-                        <th style="font-weight:600">Deal</th>
-                        <th style="font-weight:600">Mobile No</th>
+                        <th style="font-weight:600">Service Name</th>
+                        <th style="font-weight:600">Category</th>
+                        <th style="font-weight:600">Sub-Category</th>
+                        <th style="font-weight:600">Installments</th>
+                        <th style="font-weight:600">Package Price</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
+                    
                     @{
                         var i = 0;
-                        foreach (var item in ViewBag.userorderdates)
+                        foreach (var item in ViewBag.quotes)
                         {
                             <tr>
                                 <td>@(++i)</td>
-                                <td>@item[0]</td>
-                                <td>@item[1] @item[2]</td>
-                                <td>@item[3].Replace("00:00:00", "")</td>
-                                <td>@item[4]</td>
+                                <td>@item.BusinessName</td>
+                                <td>@item.ServiceType</td>
+                                <td>@item.SubServiceType</td>
                                 <td>
-                                    @if (item[5] == "False")
-                                    { <p>No</p>}
-                                    else
-                                    { <p>Yes</p>}
+                                    <p>Installments : @item.Installments</p>
+                                    <p>Token Amount : @item.TokenAmount</p>
+                                    <p>First Installment : @item.FirstInstallment</p>
+                                    <p>Second Installment : @item.SecondInstallment</p>
+                                    <p>Third Installment : @item.ThirdInstallment</p>
+                                    <p>Fourth Installment : @item.FourthInstallment</p>
                                 </td>
-                                <td>@item[6]</td>
+                                <td>@item.TotalAmount</td>
                             </tr>
                         }
                     }
                 </tbody>
             </table>
         </div>
-    </div>*@
+    </div>
 </div>
 
 <!-- Modal footer -->

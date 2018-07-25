@@ -37,5 +37,10 @@ namespace MaaAahwanam.Service
         {
             return quotationListsRepository.AddInstallments(quoteResponse);
         }
+
+        public List<QuoteResponse> GetAllQuoteResponses()
+        {
+            return quotationListsRepository.GetAllQuoteResponses();
+        }
     }
 }
