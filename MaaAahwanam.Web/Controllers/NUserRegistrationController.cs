@@ -494,9 +494,14 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
+                string vssid = Convert.ToString(id);
+                encptdecpt encript = new encptdecpt();
+
+                string encripted = encript.Encrypt(string.Format("Name={0}", vssid));
+
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 //return View("AvailableServices", vendorMaster.Id);
-                return RedirectToAction("Index", "NVendorDashboard", new { id = vendorMaster.Id });
+                return RedirectToAction("Index", "NVendorDashboard", new { ks = encripted });
             }
             return RedirectToAction("SignOut", "NUserRegistration");
         }

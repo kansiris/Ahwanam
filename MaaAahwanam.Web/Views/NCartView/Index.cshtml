@@ -19,7 +19,7 @@
                             </h3>
                         </div>
                         <div class="col-12 col-sm-4 col-md-4">
-                            <p class="text-left text-sm-right text-md-right mb-0 grandTotal">Total :Rs <span>@ViewBag.Total</span></p>
+                            <p class="text-left text-sm-right text-md-right mb-0 grandTotal">Total :Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.Total)).Replace(".00", "") </span></p>
                         </div>
                     </div>
                 </div>
@@ -91,9 +91,7 @@
                                             </div>
                                             <ul class="pl-0 row mx-0 customDates float-left">
                                                 <li>
-                                                <i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')
-                                                <br />Rs
-                                                <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.firsttotalprice)).Replace(".00", "")</span></li>
+                                                <i class="fa fa-times"></i>@item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')<br/>Rs<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.firsttotalprice)).Replace(".00", "")</span></li>
                                                 @if (@item.c1date != null && @item.c1date != "")
                                                 {
                                                     <li><i class="fa fa-times"></i>@item.c1date.Split(',')[0] <br /> Rs <span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", @item.c1date.Split(',')[1]).Replace(".00", "")</span></li>
@@ -465,10 +463,10 @@
                     //alert(checkBoxVal);
                     cartnos = checkBoxVal;
                     totalPrice.push($(this).find("p.total span").text());
-                    alert(totalPrice);
+                   // alert(totalPrice);
                 }
             });
-            alert(cartnos)
+           // alert(cartnos)
             /*-- Checkbox Fun for Book Now Button --*/
 
             url1 = '/NCartView/booknow?cartnos=' + cartnos;
@@ -480,7 +478,8 @@
                         alertify.alert("Sucessfully booked");
 
                         if (data != null) {
-                            window.location.reload();
+                            // window.location.reload();
+                            window.location.href = '/NUserProfile/Index';
                         }
                     }
                     else if (data == "failed") {
