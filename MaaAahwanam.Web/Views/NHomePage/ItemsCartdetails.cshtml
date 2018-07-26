@@ -1,4 +1,6 @@
-﻿@if (ViewBag.cartCount != 0)
+﻿@using System.Globalization
+
+@if (ViewBag.cartCount != 0)
 {
     <div class="container-fluid">
         <div class="row">
@@ -27,7 +29,7 @@
                                     <p>@item.BusinessName</p>
                                 </div>
                                 <div class="d-inline-block price">
-                                    <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
+                                    <p>Rs <span class="themeColor">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</span></p>
                                 </div>
                                 <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i></a>
                             </li>
@@ -37,7 +39,7 @@
 
                 <div class="w-100 d-flex justify-content-center">
                     <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2" onclick="location.href='/NCartView/Index'">Checkout</span>
-                    <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@ViewBag.Total</div>
+                    <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.Total)).Replace(".00", "")</div>
                 </div>
             </div>
         </div>

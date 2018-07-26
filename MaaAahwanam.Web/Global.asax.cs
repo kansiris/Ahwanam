@@ -13,6 +13,7 @@ using MaaAahwanam.Web.Custom;
 using System.Security.Principal;
 using System.Web.Helpers;
 using MaaAahwanam.Utility;
+using Microsoft.Owin.Security;
 
 namespace MaaAahwanam.Web
 {
@@ -91,6 +92,9 @@ namespace MaaAahwanam.Web
                 EmailSend.Email_maaaahwanam(email,txt , action);
                 // clear error on server
                 Server.ClearError();
+                //Response.Cookies.Clear();
+
+                //FormsAuthentication.SignOut();
 
                 //  Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
                 // return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");

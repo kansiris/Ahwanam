@@ -3,7 +3,7 @@
     ViewBag.Title = "Orders";
     Layout = "~/Views/SharedWeb/NVendorMasterPage.cshtml";
 }
-
+@using System.Globalization
 <form method="post">
     <div class="page-content container-fluid">
         <div class="row" data-plugin="matchHeight" data-by-row="true">
@@ -64,19 +64,20 @@
                                                     <p>
                                                         EventType : @item.EventType <br />
                                                         TimeSlot : @item.attribute <br />
-                                                        Contact Number : @item.UserPhone
+                                                        Contact Number : @item.UserPhone <br />
+                                                        Booking Date : @item.BookedDate.ToString("dd MMM yyyy")
                                                     </p>
                                                 </td>
                                                 <td>
                                                     <div class="event-date-time">
                                                         <div class="event-dates">
-                                                            @item.OrderDate
+                                                            @item.OrderDate.ToString("dd MMM yyyy")
                                                         </div>
                                                 </td>
                                                 <td>@item.Status</td>
                                                 <td>
                                                     <div class="item-price">
-                                                        <p>Rs.<span id="tprice" class="value">@item.TotalPrice</span></p>
+                                                        <p>Rs.<span id="tprice" class="value">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</span></p>
                                                     </div>
                                                 </td>
                                                 <td>

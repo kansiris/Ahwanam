@@ -2,7 +2,7 @@
     ViewBag.Title = "Packages";
     Layout = "~/Views/SharedWeb/NVendorMasterPage.cshtml";
 }
-
+@using System.Globalization
 
 
 <div class="page-content container-fluid">
@@ -56,9 +56,9 @@
                                                         <td tabindex="0" class="sorting_1">@item.VendorType</td>
                                                         <td>@item.VendorSubType</td>
                                                         <td>@item.PackageName</td>
-                                                        <td>@item.PackagePrice</td>
+                                                        <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PackagePrice)).Replace(".00", "")</td>
                                                         <td>@item.PackageDescription</td>
-                                                        <td>@item.UpdatedDate</td>
+                                                        <td>@item.UpdatedDate.ToString("dd MMM yyyy")</td>
                                     
 
                                                         <td class="actions">

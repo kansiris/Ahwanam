@@ -543,6 +543,7 @@ namespace MaaAahwanam.Web.Controllers
                         string subj = "Thanks for your order";
                         EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                         emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                        emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
 
                         var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(id));
 
