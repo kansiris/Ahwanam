@@ -83,6 +83,9 @@ namespace MaaAahwanam.Web
                     case 500:
                         // server error
                         action = "Error occured in application HttpError500";
+                        //Response.Cookies.Clear();
+
+                        //FormsAuthentication.SignOut();
                         break;
                     default:
                         action = "Error occured in application General";

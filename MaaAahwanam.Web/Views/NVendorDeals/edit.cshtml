@@ -3,6 +3,8 @@
     ViewBag.Title = "update Deal";
     Layout = "~/Views/SharedWeb/NVendorMasterPage.cshtml";
 }
+@using System.Globalization
+
 <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
 
 <div class="page-content container-fluid">
@@ -30,12 +32,12 @@
                                         <div class="form-group col-sm-6">
                                             <label class="control-label" for="inputBasicFirstName">Original Price</label>
 
-                                            <input class="form-control" type="number"  name="OriginalPrice" value="@item.OriginalPrice" placeholder="Original Price"   autocomplete="off" required>
+                                            <input class="form-control" type="number"  name="OriginalPrice" value="@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.OriginalPrice)).Replace(".00", "")" placeholder="Original Price"   autocomplete="off" required>
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label class="control-label" for="inputBasicFirstName">Deal Price</label>
 
-                                            <input class="form-control"  type="number"  name="DealPrice" value="@item.DealPrice" placeholder="Deal Price" autocomplete="off" required>
+                                            <input class="form-control"  type="number"  name="DealPrice" value="@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.DealPrice)).Replace(".00", "")" placeholder="Deal Price" autocomplete="off" required>
                                         </div>
 
                                         <div class="form-group col-sm-6">
@@ -94,7 +96,7 @@
 
                                             @*<input type="date" class="form-control" name="StartDate" placeholder="Start Date"  autocomplete="off">*@
                                             @*<input placeholder="@item.DealStartDate" name="StartDate" class="textbox-n" type="text" onfocus="(this.type='date')" id="date">*@
-                                            <input class="form-control" type="text"  name="StartDate" id="datetimepicker"  value="@item.DealStartDate"  placeholder="StartDate" required/>
+                                            <input class="form-control" type="text"  name="StartDate" id="datetimepicker"  value="@item.DealStartDate.ToString("dd MMM yyyy")"  placeholder="StartDate" required/>
 
                                         </div>
                                         <div class="form-group col-sm-6">
@@ -102,7 +104,7 @@
                                             @*<input placeholder="Date" value="@item.DealEndDate" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" name="EndDate"id="date">*@
 
                                             @*<input type="date" class="form-control" name="EndDate" placeholder="End Date" value="@item.DealEndDate" autocomplete="off">*@
-                                            <input class="form-control" type="text" name="EndDate" id="datetimepicker1"  value="@item.DealEndDate" placeholder="End Date" required/>
+                                            <input class="form-control" type="text" name="EndDate" id="datetimepicker1"  value="@item.DealEndDate.ToString("dd MMM yyyy")" placeholder="End Date" required/>
 
                                             @*<input placeholder="@item.DealEndDate" name="EndDate" class="textbox-n" type="text" id="datetimepicker">*@
 
