@@ -157,7 +157,7 @@ namespace MaaAahwanam.Web.Controllers
                     //ViewBag.vendoravailabledates = String.Join(",", betweendates,orderdates);
                     var vendoravailabledates = String.Join(",", betweendates);
                     if(orderdates != "")
-                    vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates);
+                    vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
                     ViewBag.vendoravailabledates = vendoravailabledates;
                     //var today = DateTime.UtcNow;
                     //var first = new DateTime(today.Year, today.Month, 1);

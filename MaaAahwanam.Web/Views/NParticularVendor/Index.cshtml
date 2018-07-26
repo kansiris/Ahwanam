@@ -890,7 +890,8 @@
             minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
             maxDate: '+1970/03/02',//tomorrow is maximum date calendar
             beforeShowDay: function (date) {
-                var disableddates = $('#vendoravailabledates').val();
+                //var alldates = $('#vendoravailabledates').val();
+                var disableddates =$('#vendoravailabledates').val();
                 if (disableddates != '') {
                     var unavailableDates = '';
                     var final = ''; var dateslist1 = disableddates.split(',');
@@ -917,11 +918,15 @@
                     var dmy = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
                     //alert(unavailableDates);
                     if ($.inArray(dmy, unavailableDates) != -1) {
+                        
                         return [false, "myclass", "Unavailable"];
                     } else {
+                        
                         return [true, ""];
                     }
                 }
+                //var orderdates = alldates.split('order=')[1];
+                
             }
         });
         /*------------ Date and Time --------------*/

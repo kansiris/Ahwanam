@@ -11,6 +11,7 @@ using MaaAahwanam.Utility;
 using System.Text.RegularExpressions;
 using MaaAahwanam.Repository;
 using System.Globalization;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -93,6 +94,8 @@ namespace MaaAahwanam.Web.Controllers
                         orderdetail.Status = "Removed";
                         order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
                         TempData["Active"] = "Order Deleted";
+                        
+
                         return RedirectToAction("Index", "NUserProfile");
                     }
                     TempData["Active"] = "Please Login";
@@ -128,6 +131,7 @@ namespace MaaAahwanam.Web.Controllers
                         orderdetail.Status = "Cancelled";
                         order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
                         TempData["Active"] = "Order Cancelled";
+                        SendEmail((int)user.UserId,orderid,orders.FirstOrDefault().Id.ToString(), "Order Cancelled");
                         return RedirectToAction("Index", "NUserProfile");
                     }
                     TempData["Active"] = "Please Login";
@@ -206,6 +210,53 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.quotes = quotes;
             }
             return PartialView("VendorsLists");
+        }
+
+        public void SendEmail(int userid,string orderid,string vendorid,string msg)
+        {
+            var userlogdetails = userLoginDetailsService.GetUserId(userid);
+            string txtto = userlogdetails.UserName;
+            var userdetails = userLoginDetailsService.GetUser(userid);
+            string name = userdetails.FirstName;
+            name = Capitalise(name);
+            string OrderId = orderid;
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/cancelordeleteorder.html"));
+            string readFile = File.OpenText().ReadToEnd();
+            readFile = readFile.Replace("[ActivationLink]", url);
+            readFile = readFile.Replace("[name]", name);
+            readFile = readFile.Replace("[msg]", "Your Order has been Cancelled");
+            readFile = readFile.Replace("[orderid]", OrderId);
+            string txtmessage = readFile;//readFile + body;
+            string subj = "Order#"+orderid+" Cancelled";
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage, subj);
+
+            var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vendorid));
+
+            string txtto1 = vendordetails.EmailId;
+            string vname = vendordetails.BusinessName;
+            vname = Capitalise(vname);
+
+            string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
+            FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+            string readfile1 = file1.OpenText().ReadToEnd();
+            readfile1 = readfile1.Replace("[ActivationLink]", url1);
+            readfile1 = readfile1.Replace("[name]", name);
+            readfile1 = readfile1.Replace("[vname]", vname);
+            readfile1 = readfile1.Replace("[orderid]", OrderId);
+            readFile = readFile.Replace("[msg]", "Order has been placed by "+name+"");
+            string txtmessage1 = readfile1;
+            string subj1 = "Order#" + orderid + " Cancelled";
+            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage1, subj1);
+        }
+
+        public string Capitalise(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
     }
 }
