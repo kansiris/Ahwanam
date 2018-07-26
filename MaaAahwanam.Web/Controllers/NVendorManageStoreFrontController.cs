@@ -424,10 +424,21 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult UploadImages(HttpPostedFileBase file, string id, string vid, string type)
+        public JsonResult UploadImages(HttpPostedFileBase file, string ks, string vid, string type)
         {
             VendorImage vendorImage = new VendorImage();
             Vendormaster vendorMaster = new Vendormaster();
+            string strReq = "";
+            encptdecpt encript = new encptdecpt();
+            strReq = encript.Decrypt(ks);
+            //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+            string[] arrMsgs = strReq.Split('&');
+            string[] arrIndMsg;
+            string id = "";
+            arrIndMsg = arrMsgs[0].Split('='); //Get the id
+            id = arrIndMsg[1].ToString().Trim();
+            ViewBag.id = ks;
+            ViewBag.vid = vid;
             vendorMaster.Id = long.Parse(id);
             vendorImage.VendorId = long.Parse(vid);
             string fileName = string.Empty;
@@ -498,7 +509,7 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public JsonResult UpdateImageInfo(string id, string vid, string description)
+        public JsonResult UpdateImageInfo(string ks, string vid, string description)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -506,6 +517,16 @@ namespace MaaAahwanam.Web.Controllers
                 string fileName = string.Empty;
                 string imgdesc = description;
                 Vendormaster vendorMaster = new Vendormaster();
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
+                ViewBag.id = ks;
                 vendorMaster.Id = long.Parse(id);
                 vendorImage.VendorId = long.Parse(vid);
                 string status = "";
