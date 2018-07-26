@@ -748,6 +748,8 @@
         <script src="~/newdesign/js/datepicker.js"></script>*@
     <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
     <script type="text/javascript" src="~/newdesign/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -1029,8 +1031,10 @@
             if (servicetype == '') { alertmsg("Select Service Type"); }
             if (servicetype != '') { if (occasiondate == '') { alertmsg("Select Occasion Date"); } }
             //alert("location=" + location + ",servicetype=" + servicetype + ",occasiondate=" + occasiondate + "");
-            var url = '/NQuestionNaire?location=' + location + '&&servicetype=' + servicetype + '&&occasiondate=' + occasiondate;
-            $.cookie("url", url);
+            var currenturl = '/NQuestionNaire?location=' + location + '&&servicetype=' + servicetype + '&&occasiondate=' + occasiondate;
+            //var u = http://localhost:8566/NResults?type=Hotel&&loc=Hyderabad&&date=28/07/2018&&budget=100000&&count=100&&stype=
+            var url = '/NResults?type=' + servicetype + '&&loc=' + location + '&&date=' + occasiondate + '&&budget=100000&&count=100&&stype=';
+            $.cookie("url", currenturl);
             if (servicetype != '' && occasiondate != '') {
                 window.location.href = url;
             }
