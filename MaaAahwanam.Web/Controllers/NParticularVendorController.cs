@@ -129,7 +129,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
                 //var orderdates = orderService.userOrderList().Where(k => k.Id == long.Parse(id) && k.Status == "Active").Select(k => k.OrderDate.Value.ToString("dd-MM-yyyy")).ToList();
 
-                string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type);
+                string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type).Replace('/','-');
 
                 //Blocking Dates
                 //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
