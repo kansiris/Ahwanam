@@ -54,12 +54,13 @@ namespace MaaAahwanam.Repository.db
             var bookeddates = "";
             foreach (var item in orderid)
             {
-                var dates = _dbContext.Order.FirstOrDefault(m => m.OrderId == item && m.OrderDate > first);
+                var dates = _dbContext.OrderDetail.FirstOrDefault(m => m.OrderId == item && m.BookedDate > first);
                 if (dates != null)
-                    bookeddates = bookeddates + "," + dates.OrderDate.Value.ToShortDateString();
+                    bookeddates = bookeddates + "," + dates.BookedDate.Value.ToShortDateString();
                 else
                     bookeddates = "";
             }
+            bookeddates = String.Join(",", bookeddates.Split(',').Distinct());
             return bookeddates;
         }
     }
