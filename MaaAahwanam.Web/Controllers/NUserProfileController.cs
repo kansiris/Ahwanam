@@ -54,7 +54,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m => m.Status == "InActive" || m.Status == "Cancelled").ToList();
                         WhishListService whishListService = new WhishListService();
                         ViewBag.whishlists = whishListService.GetWhishList(user.UserId.ToString());
-                        ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.EmailId == "rameshsai@xsilica.com").ToList();
+                        ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.EmailId == userdata1.UserName).ToList();
                         // OrderByDescending(m => m.OrderId).Take(10);
                         //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
                         //decimal total = cartlist.Sum(s => s.TotalPrice);
