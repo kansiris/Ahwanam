@@ -494,7 +494,9 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
-                string vssid = Convert.ToString(id);
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
+
+                string vssid = Convert.ToString(vendorMaster.Id);
                 encptdecpt encript = new encptdecpt();
 
                 string encripted = encript.Encrypt(string.Format("Name={0}", vssid));
