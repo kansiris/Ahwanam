@@ -240,7 +240,7 @@ namespace MaaAahwanam.Web.Controllers
             vname = Capitalise(vname);
 
             string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
-            FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+            FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vcancelordeleteorder.html"));
             string readfile1 = file1.OpenText().ReadToEnd();
             readfile1 = readfile1.Replace("[ActivationLink]", url1);
             readfile1 = readfile1.Replace("[name]", name);

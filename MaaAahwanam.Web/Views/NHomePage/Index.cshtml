@@ -61,104 +61,104 @@
                 { Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + ""); }
                 if (user.UserType == "User")
                 {
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a href="/Contests" class="nav-link">Contests</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a href="/NLiveDeals" class="nav-link"> Deals <span class="sr-only">(current)</span></a>
-                            </li>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a href="/Contests" class="nav-link">Contests</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="/NLiveDeals" class="nav-link"> Deals <span class="sr-only">(current)</span></a>
+                    </li>
 
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @ViewBag.username
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @ViewBag.username
 
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a href="/NUserProfile/Index" class="dropdown-item">Profile</a>
-                                    <a href="/NUserRegistration/SignOut" class="dropdown-item" id="auth-logoutlink">Sign out</a>
-                                </div>
-                            </li>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a href="/NUserProfile/Index" class="dropdown-item">Profile</a>
+                            <a href="/NUserRegistration/SignOut" class="dropdown-item" id="auth-logoutlink">Sign out</a>
+                        </div>
+                    </li>
 
-                            @*<li class="nav-item">
-                                <a href="#">Hi @ViewBag.username</a></li>
-                                @*<li onclick="window.location.href = "><a class="nav-link text-white">Profile</a></li>
+                    @*<li class="nav-item">
+                        <a href="#">Hi @ViewBag.username</a></li>
+                        @*<li onclick="window.location.href = "><a class="nav-link text-white">Profile</a></li>
 
-                                <li  onclick="location.href='@Url.Action("LogOff", "NUserRegistration")'"><a  class="nav-link text-white">Sign out</a></li>*@
-                            <li class="nav-item">
-                                <a class="nav-link cartToggle" href="#">Cart(@ViewBag.cartCount)</a>
-                            </li>
+                        <li  onclick="location.href='@Url.Action("LogOff", "NUserRegistration")'"><a  class="nav-link text-white">Sign out</a></li>*@
+                    <li class="nav-item">
+                        <a class="nav-link cartToggle" href="#">Cart(@ViewBag.cartCount)</a>
+                    </li>
 
 
-                        </ul>
-                    </div>
+                </ul>
+            </div>
 
                 }
             }
             else
             {
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a href="/Contests" class="nav-link">Contests</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a href="/NLiveDeals/Index" class="nav-link"> Deals <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/NUserRegistration/Index" class="nav-link">Login/Signup</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/NVendorSignUp/Index">Partner Registration</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a href="/Contests" class="nav-link">Contests</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="/NLiveDeals/Index" class="nav-link"> Deals <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/NUserRegistration/Index" class="nav-link">Login/Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/NVendorSignUp/Index">Partner Registration</a>
+                    </li>
+                </ul>
+            </div>
             }
 
         </nav>
     </div>
     @if (ViewBag.cartCount != 0)
     {
-    <div class="container-fluid">
-        <div class="row">
-            <div class="cartBlock p-2">
-                <div class="arrow"></div>
-                <ul class="pl-0">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="cartBlock p-2">
+                    <div class="arrow"></div>
+                    <ul class="pl-0">
 
-                    @foreach (var item in ViewBag.cartitems)
+                        @foreach (var item in ViewBag.cartitems)
                     {
-                        <li>
-                            <div class="d-inline-block image">
-                                @if (item.image != null)
+                    <li>
+                        <div class="d-inline-block image">
+                            @if (item.image != null)
                                 {
-                                    <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
+                                <img width="100" height="100" src="../vendorimages/@item.image" alt="thumb">
 
                                 }
                                 else if (item.image == null)
                                 {
-                                    <img width="100" height="100" src="~/noimages.png" />
+                                <img width="100" height="100" src="~/noimages.png" />
                                 }
-                            </div>
-                            <div class="d-inline-block title">
-                                <p>@item.BusinessName</p>
-                            </div>
-                            <div class="d-inline-block price">
-                                <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
-                            </div>
-                            <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </li>
+                        </div>
+                        <div class="d-inline-block title">
+                            <p>@item.BusinessName</p>
+                        </div>
+                        <div class="d-inline-block price">
+                            <p>Rs <span class="themeColor">@item.TotalPrice</span></p>
+                        </div>
+                        <a href="#" onclick="DeletecartItem(@item.CartId);"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
                     }
 
-                </ul>
-                <div class="w-100 d-flex justify-content-center">
-                    <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2" onclick="location.href='/NCartView/Index'">Checkout</span>
-                    <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@ViewBag.Total</div>
+                    </ul>
+                    <div class="w-100 d-flex justify-content-center">
+                        <span class="themeBgColorPrimary btnSecondary text-white d-inline-block mr-2" onclick="location.href='/NCartView/Index'">Checkout</span>
+                        <div class="themeBgColorSecondary btnSecondary text-white d-inline-block"><span>Rs.</span>@ViewBag.Total</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     }
 
     <div class="container-fluid mainBg">
@@ -205,13 +205,16 @@
                             @*<option value="EventManagement">Event Management</option>*@
                         </select>
                     </div>
-                    @*<div class="row mx-0 mt-3 occasionDate">
-                            <input type="text" class="border-0 ml-auto" placeholder="Occasion Date">
-                        </div>*@
+                    <div class="row mx-0 mt-3 occasionDate">
+                        <div class="datentime w-100">
+                            <input type="number" class="form-control" id="guests" placeholder="Enter Guests Count" onkeyup="this.value = minmax(this.value, 1, 70)">
+                            <i class="fa fa-group" aria-hidden="true"></i>
+                        </div>
+                        </div>
                     <div class="row mx-0 mt-3 occasionDate">
                         <!--<input type="text" class="border-0 ml-auto" placeholder="Occasion Date">-->
                         <div class="datentime w-100">
-                            <input type="text" id="datetimepicker" class="form-control" placeholder="Date Here" />
+                            <input type="text" id="datetimepicker" class="form-control" placeholder="Occasion Date" />
                             <i class="fa fa-calendar" aria-hidden="true"></i>
 
                             @*<div class="input">
@@ -290,7 +293,7 @@
                 <span class="themeBgColorPrimaryPurple align-items-center justify-content-center text-white w-100">Hyderabad</span>
                 <span class="themeBgColorSecondaryYellow d-flex"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
             </div>
-            
+
             <div class="col-12 col-sm-3 col-md-2 categorySearch d-flex mb-2 pr-sm-0 pr-md-0">
                 <span class="themeBgColorPrimaryPurple d-flex align-items-center justify-content-center text-white w-100" id="searchvendortype">Hotel</span>
                 <span class="themeBgColorSecondaryYellow d-flexs"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
@@ -310,7 +313,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 mb-2 pl-4">
-                <input type="text" class="w-100" placeholder="Search Here" id="searchvendors" >
+                <input type="text" class="w-100" placeholder="Search Here" id="searchvendors">
             </div>
         </div>
         <div class="row justify-content-center normalSearchResult" id="sortedvendorlist">
@@ -358,43 +361,43 @@
             </div>
         </div>
         @*<div class="margin-top-50">
-            <div class="row mx-0">
-                <h3 class="noteWorthybold">
-                    Music & Artists (COMING SOON)
-                    <div class="blackBorder"></div>
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a class="item">
-                            <img src="~/newdesign/images/dj.png" alt="DJ" />
-                            <span class="d-block mt-2 themeFontColor">DJ</span>
-                        </a>
-                        <a class="item">
-                            <img src="~/newdesign/images/choreographer-bg.png" alt="Choreographer" />
-                            <span class="d-block mt-2 themeFontColor">Choreographer</span>
-                        </a>
-                        <a class="item">
-                            <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
-                            <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
-                        </a>
-                        <a class="item">
-                            <img src="~/newdesign/images/orchestra-bg.png" alt="orchestra" />
-                            <span class="d-block mt-2 themeFontColor">Orchestra</span>
-                        </a>
-                        <a class="item">
-                            <img src="~/newdesign/images/performing-artists-bg.png" alt="Performing Artist" />
-                            <span class="d-block mt-2 themeFontColor">Performing Artist</span>
-                        </a>
-                        <a class="item">
-                            <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
-                            <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
-                        </a>
+                <div class="row mx-0">
+                    <h3 class="noteWorthybold">
+                        Music & Artists (COMING SOON)
+                        <div class="blackBorder"></div>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="owl-carousel owl-theme mt-3">
+                            <a class="item">
+                                <img src="~/newdesign/images/dj.png" alt="DJ" />
+                                <span class="d-block mt-2 themeFontColor">DJ</span>
+                            </a>
+                            <a class="item">
+                                <img src="~/newdesign/images/choreographer-bg.png" alt="Choreographer" />
+                                <span class="d-block mt-2 themeFontColor">Choreographer</span>
+                            </a>
+                            <a class="item">
+                                <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
+                                <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
+                            </a>
+                            <a class="item">
+                                <img src="~/newdesign/images/orchestra-bg.png" alt="orchestra" />
+                                <span class="d-block mt-2 themeFontColor">Orchestra</span>
+                            </a>
+                            <a class="item">
+                                <img src="~/newdesign/images/performing-artists-bg.png" alt="Performing Artist" />
+                                <span class="d-block mt-2 themeFontColor">Performing Artist</span>
+                            </a>
+                            <a class="item">
+                                <img src="~/newdesign/images/bandanddhol.png" alt="Band and Dhol" />
+                                <span class="d-block mt-2 themeFontColor">Band & Dhol</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
     </div>
     <div class="container-fluid px-0" id="deals">
         <div class="margin-top-50 margin-bottom-50 themeBgColor text-white deals">
@@ -446,14 +449,14 @@
         </div>
     </div>
     @*<div class="container-fluid">
-        <div class="row letsCelebrationBlock margin-top-50">
-            <div class="w-100 text-center">
-                <h2 class="noteWorthybold">Showcase your love by posting most memorable pic with your Dad.</h2>
-                <br />
-                <span onclick='location.href = "/Contests"' class="themeBgColorPrimary btnPrimary text-white">Participate Now</span>
+            <div class="row letsCelebrationBlock margin-top-50">
+                <div class="w-100 text-center">
+                    <h2 class="noteWorthybold">Showcase your love by posting most memorable pic with your Dad.</h2>
+                    <br />
+                    <span onclick='location.href = "/Contests"' class="themeBgColorPrimary btnPrimary text-white">Participate Now</span>
+                </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
     <div class="container">
         <div class="margin-top-50">
@@ -471,9 +474,9 @@
                             <span class="d-block mt-2 themeFontColor">Photography</span>
                         </a>
                         @*<a href="#" class="item">
-                            <img src="~/newdesign/images/makeup-artist-bg.png" alt="Makeup Artist" />
-                            <span class="d-block mt-2 themeFontColor">Makeup Artist</span>
-                        </a>*@
+                                <img src="~/newdesign/images/makeup-artist-bg.png" alt="Makeup Artist" />
+                                <span class="d-block mt-2 themeFontColor">Makeup Artist</span>
+                            </a>*@
                         <a href="/NVendors?servicetype=Mehendi" class="item">
                             <img src="~/newdesign/images/mehendi.jpg" alt="Mehendi Artist" />
                             <span class="d-block mt-2 themeFontColor">Mehendi Artist</span>
@@ -532,39 +535,39 @@
             </div>
         </div>
         @*<div class="margin-top-50">
-            <div class="row mx-0">
-                <h3 class="noteWorthybold">
-                    Other Services (COMING SOON)
-                    <div class="blackBorder"></div>
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <div class="owl-carousel owl-theme mt-3">
-                        <a class="item">
-                            <img src="~/newdesign/images/event-organiser-bg.png" alt="Event Organizer" />
-                            <span class="d-block mt-2 themeFontColor">Event Organizer</span>
-                        </a>
-                        <a class="item">
-                            <img src="http://design.maa-aahwanam.com/newdesign/images/giftstore.jpg" alt="Gift Stores" />
-                            <span class="d-block mt-2 themeFontColor">Gift Stores</span>
-                        </a>
-                        <a class="item">
-                            <img src="~/newdesign/images/bouncer-bg.png" alt="Bouncers" />
-                            <span class="d-block mt-2 themeFontColor">Bouncers</span>
-                        </a>
-                        <a class="item">
-                            <img src="~/newdesign/images/travels-bg.png" alt="Travels" />
-                            <span class="d-block mt-2 themeFontColor">Travels</span>
-                        </a>
-                        <a class="item">
-                            <img src="http://design.maa-aahwanam.com/newdesign/images/otherservices.jpg" alt="Others" />
-                            <span class="d-block mt-2 themeFontColor">Others</span>
-                        </a>
+                <div class="row mx-0">
+                    <h3 class="noteWorthybold">
+                        Other Services (COMING SOON)
+                        <div class="blackBorder"></div>
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="owl-carousel owl-theme mt-3">
+                            <a class="item">
+                                <img src="~/newdesign/images/event-organiser-bg.png" alt="Event Organizer" />
+                                <span class="d-block mt-2 themeFontColor">Event Organizer</span>
+                            </a>
+                            <a class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/giftstore.jpg" alt="Gift Stores" />
+                                <span class="d-block mt-2 themeFontColor">Gift Stores</span>
+                            </a>
+                            <a class="item">
+                                <img src="~/newdesign/images/bouncer-bg.png" alt="Bouncers" />
+                                <span class="d-block mt-2 themeFontColor">Bouncers</span>
+                            </a>
+                            <a class="item">
+                                <img src="~/newdesign/images/travels-bg.png" alt="Travels" />
+                                <span class="d-block mt-2 themeFontColor">Travels</span>
+                            </a>
+                            <a class="item">
+                                <img src="http://design.maa-aahwanam.com/newdesign/images/otherservices.jpg" alt="Others" />
+                                <span class="d-block mt-2 themeFontColor">Others</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
     </div>
 
 
@@ -828,7 +831,15 @@
     </script>
     <!------ Auto Complete ---------->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <script type="text/javascript">
+        function minmax(value, min, max) {
+            if (parseInt(value) <= 1 || isNaN(value))
+                return 1;
+            else if (parseInt(value) > 10000)
+                return 10000;
+            else return value;
+        }
+    </script>
 
     <script type="text/javascript">
         /*--- Date and Time ----*/
@@ -992,7 +1003,7 @@
             catgSearchSpanFirst = $(".categorySearch > span:first-child"),
             catResults = $(".categorySearch .categoryResults")
         $(catgSearch).click(function (e) {
-             e.stopPropagation(); //New Line Added
+            e.stopPropagation(); //New Line Added
             $(catResults).css("display", "block");
         });
         /*-- New Script Added --*/
@@ -1029,13 +1040,15 @@
             var location = $('#tags').val();
             var servicetype = $('#selectedservice').val();
             var occasiondate = $('#datetimepicker').val();
+            var guestscount = $('#guests').val();
             if (location == '') { location = 'Hyderabad'; }
             if (servicetype == '') { alertmsg("Select Service Type"); }
-            if (servicetype != '') { if (occasiondate == '') { alertmsg("Select Occasion Date"); } }
+            if (servicetype != '') { if (guestscount == '' || occasiondate == '') { alertmsg("Enter Guests Count"); } }
+            if (servicetype != '') { if (occasiondate == '' && guestscount != '') { alertmsg("Select Occasion Date"); } }
             //alert("location=" + location + ",servicetype=" + servicetype + ",occasiondate=" + occasiondate + "");
             var currenturl = '/NQuestionNaire?location=' + location + '&&servicetype=' + servicetype + '&&occasiondate=' + occasiondate;
             //var u = http://localhost:8566/NResults?type=Hotel&&loc=Hyderabad&&date=28/07/2018&&budget=100000&&count=100&&stype=
-            var url = '/NResults?type=' + servicetype + '&&loc=' + location + '&&date=' + occasiondate + '&&budget=100000&&count=100&&stype=';
+            var url = '/NResults?type=' + servicetype + '&&loc=' + location + '&&date=' + occasiondate + '&&budget=100000&&count=' + guestscount + '&&stype=';
             $.cookie("url", currenturl);
             if (servicetype != '' && occasiondate != '') {
                 window.location.href = url;
