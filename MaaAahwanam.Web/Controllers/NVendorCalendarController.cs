@@ -15,6 +15,8 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         ProductInfoService productInfoService = new ProductInfoService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
+        VendorProductsService vendorProductsService = new VendorProductsService();
         // GET: NVendorCalendar
         public ActionResult Index(string id, string vid, string type)
         {
@@ -25,6 +27,13 @@ namespace MaaAahwanam.Web.Controllers
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    var vendordetails = vendorMasterService.GetVendorServiceType(user.UserId);
+                    long vendorid = vendordetails.Id;
+                    string vendortype = vendordetails.ServicType;
+                    //var vendordata = new SelectList(availabledatesService.VendorAllServices(vendortype, vendorid), "Id", "Type");
+                    var deals = vendorProductsService.getvendorsubid(id);
+                    //ViewBag.venuerecord = deals;
+                    ViewBag.venuerecord = deals;
                     ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
                     var orderdates = productInfoService.GetCount(long.Parse(id), long.Parse(vid), type);
                     string bookeddates = string.Empty;

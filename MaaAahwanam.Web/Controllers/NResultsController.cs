@@ -135,7 +135,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.results = data;
                 type = (type == "Banquet Hall" || type == "Banquet") ? "Banquets" : type;
                 type = (type == "Function Hall" || type == "FunctionHall" || type == "Function") ? "FunctionHalls" : type;
-                type = (type == "Convetion" || type == "Conventions"  || type == "Convention" || type == "Convention") ? "Conventions" : type;
+                type = (type == "Convetion" || type == "Conventions"  || type == "Convention" || type == "Convention" || type == "Convention Hall") ? "Conventions" : type;
                 ViewBag.type = type;
 
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";

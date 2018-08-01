@@ -82,21 +82,27 @@ function GenerateCalender(events) {
             //    alert("Can't add past dates");
             //}
             //else {
-
-            $('#divEndDate').show();
-            selectedEvent = {
-                eventID: 0,
-                title: '',
-                description: '',
-                start: start,
-                end: end,
-                allDay: false,
-                color: '',
-                type: '',
-                servicetype: ''
-            };
-            openAddEditForm();
-            $('#calendar').fullCalendar('unselect');
+            //alert(check);
+            //var status = $.get('/ManageBooking/CheckAvailability', { id: $('#vendorid').val(), subvid: $('#availableservices').val(), type: "Venue", date: check })
+            //if (status == 'Valid') {
+                $('#divEndDate').show();
+                selectedEvent = {
+                    eventID: 0,
+                    title: '',
+                    description: '',
+                    start: start,
+                    end: end,
+                    allDay: false,
+                    color: '',
+                    type: '',
+                    servicetype: ''
+                };
+                openAddEditForm();
+                $('#calendar').fullCalendar('unselect');
+            //}
+            //else {
+            //    alert("Date Blocked by User");
+            //}
             //}
 
 

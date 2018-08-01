@@ -45,7 +45,7 @@ namespace MaaAahwanam.Web.Controllers
                     type = "Other";
                 //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
                 var data = vendorMasterService.GetVendor(long.Parse(id)); //
-                var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)).Where(a => a.VendorId == long.Parse(vid)).ToList();
+                var allimages = vendorImageService.GetVendorAllImages(long.Parse(id)).ToList();
                 ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
                 ViewBag.allimages = allimages;
                 ViewBag.Productinfo = data;
