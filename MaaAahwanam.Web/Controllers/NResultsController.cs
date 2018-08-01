@@ -119,12 +119,12 @@ namespace MaaAahwanam.Web.Controllers
                 return PartialView();
             }
 
-            if (new string[] { "Hotel", "Resort", "Convetion", "Convention", "BanquetHall", "FunctionHall", "Banquet", "Function", "Banquet Hall", "Function Hall", "ConventionHall", "Convention Hall" }.Contains(type))
+            if (new string[] { "Hotel", "Resort", "Convetion", "Conventions", "Convention", "FunctionHalls", "Banquets", "BanquetHall", "FunctionHall", "Banquet", "Function", "Banquet Hall", "Function Hall", "ConventionHall", "Convention Hall" }.Contains(type))
             {
                 string type1 = type;
-                type1 = (type1 == "Convetion" || type1 == "Convention" || type1 == "ConventionHall") ? "Convention Hall" : type1;
-                type1 = (type1 == "BanquetHall" || type1 == "Banquet") ? "Banquet Hall" : type1;
-                type1 = (type1 == "FunctionHall" || type1 == "Function") ? "Function Hall" : type1;
+                type1 = (type1 == "Convetion" || type1 == "Conventions" || type1 == "Convention" || type1 == "ConventionHall") ? "Convention Hall" : type1;
+                type1 = (type1 == "BanquetHall" || type1 == "Banquets" || type1 == "Banquet") ? "Banquet Hall" : type1;
+                type1 = (type1 == "FunctionHall" || type1 == "FunctionHalls" || type1 == "Function") ? "Function Hall" : type1;
                 var data = vendorProductsService.Getfiltervendors_Result(type1, loc, "0", "0");
                 int recordcount = data.Count();
                 if (data.Count > 0)
@@ -133,9 +133,9 @@ namespace MaaAahwanam.Web.Controllers
                 { data = vendorProductsService.Getfiltervendors_Result(type1, loc, "0", "0").Take(takecount).ToList(); recordcount = data.Count(); }
                 ViewBag.type1 = type1;
                 ViewBag.results = data;
-                type = (type == "Banquet Hall" || type == "Banquet") ? "BanquetHall" : type;
-                type = (type == "Function Hall" || type == "Function") ? "FunctionHall" : type;
-                type = (type == "Convetion" || type == "Convention" || type == "Convention Hall") ? "ConventionHall" : type;
+                type = (type == "Banquet Hall" || type == "Banquet") ? "Banquets" : type;
+                type = (type == "Function Hall" || type == "FunctionHall" || type == "Function") ? "FunctionHalls" : type;
+                type = (type == "Convetion" || type == "Conventions"  || type == "Convention" || type == "Convention") ? "Conventions" : type;
                 ViewBag.type = type;
 
                 ViewBag.count = (recordcount >= takecount) ? "1" : "0";

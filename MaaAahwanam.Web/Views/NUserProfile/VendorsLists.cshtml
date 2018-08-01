@@ -10,54 +10,69 @@
 </div>
 
 <!-- Modal body -->
-<div class="modal-body" style="max-width:650px">
-    
-    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-        <div class="col-sm-12">
-            <table class="table table-hover dataTable table-striped width-full dtr-inline" id="example"  border="1">
-                <thead>
-                    <tr>
-                        <th style="font-weight:600">S.No</th>
-                        <th style="font-weight:600">Service Name</th>
-                        <th style="font-weight:600">Category</th>
-                        <th style="font-weight:600">Sub-Category</th>
-                        <th style="font-weight:600">Installments</th>
-                        <th style="font-weight:600">Package Price</th>
+<div class="modal-body">
 
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (ViewBag.quotes != null)
+    <div class="table-responsive" style="width:auto">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="font-weight:600">S.No</th>
+                    <th style="font-weight:600">Service Name</th>
+                    <th style="font-weight:600">Category</th>
+                    <th style="font-weight:600">Sub-Category</th>
+                    <th style="font-weight:600">Installments</th>
+                    <th style="font-weight:600">Package Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.quotes != null)
+                {
+                    var i = 0;
+                    foreach (var item in ViewBag.quotes)
                     {
-                        var i = 0;
-                        foreach (var item in ViewBag.quotes)
-                        {
-                            <tr>
-                                <td>@(++i)</td>
-                                <td>@item.BusinessName</td>
-                                <td>@item.ServiceType</td>
-                                <td>@item.SubServiceType</td>
-                                <td>
-                                    <p>Installments : @item.Installments</p>
-                                    @*<p>Token Amount : @item.TokenAmount</p>
+                        <tr>
+                            <td>@(++i)</td>
+                            <td>@item.BusinessName</td>
+                            <td>@item.ServiceType</td>
+                            <td>@item.SubServiceType</td>
+                            <td>
+                                <p>Installments : @item.Installments</p>
+                                <p>Token Amount : @item.TokenAmount</p>
+                                @if (@item.Installments == 1)
+                                {
+                                    <p>First Installment : @item.FirstInstallment</p>
+                                }
+                                @if (@item.Installments == 2)
+                                {
+                                    <p>First Installment : @item.FirstInstallment</p>
+                                    <p>Second Installment : @item.SecondInstallment</p>
+                                }
+                                @if (@item.Installments == 3)
+                                {
                                     <p>First Installment : @item.FirstInstallment</p>
                                     <p>Second Installment : @item.SecondInstallment</p>
                                     <p>Third Installment : @item.ThirdInstallment</p>
-                                    <p>Fourth Installment : @item.FourthInstallment</p>*@
-                                </td>
-                                <td>@item.TotalAmount</td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="6">No Quotations Raised Yet!!!</td>
+                                }
+                                @if (@item.Installments == 4)
+                                {
+                                    <p>First Installment : @item.FirstInstallment</p>
+                                    <p>Second Installment : @item.SecondInstallment</p>
+                                    <p>Third Installment : @item.ThirdInstallment</p>
+                                    <p>Fourth Installment : @item.FourthInstallment</p>
+                                }
+                            </td>
+                            <td>@item.TotalAmount</td>
                         </tr>
                     }
-                </tbody>
-            </table>
-        </div>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">No Quotations Raised Yet!!!</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 

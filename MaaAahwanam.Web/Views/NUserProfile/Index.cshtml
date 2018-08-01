@@ -1,6 +1,14 @@
 ﻿@model MaaAahwanam.Models.UserLogin
 @using System.Globalization
 
+<style>
+    .modal-dialog {
+        max-width: 1000px;
+        margin: 1.75rem auto;
+    }
+</style>
+
+
 @{
     ViewBag.Title = ":: Ahwanam ::";
     Layout = "~/Views/SharedWeb/NMasterPage.cshtml";
@@ -130,6 +138,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                           
                             <div class="row mx-0 mt-2 tableData" id="bookingHistory">
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -293,7 +302,7 @@
                                                         @if (item.FirstTimeQuoteDate != null)
                                                         {
                                                             <p>Quotation Replied on @item.FirstTimeQuoteDate</p>
-                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="LoadLists('@item.Id')">View Quote List</button>  @* data-toggle="modal" data-target="#VendorsList"*@
+                                                            <button type="button" class="btn btn-success" onclick="LoadLists('@item.Id')">View Quote List</button>  @* data-toggle="modal" data-target="#VendorsList"*@
                                                         }
                                                         @if (item.SecondTimeQuoteDate != null)
                                                         {
@@ -328,11 +337,59 @@
                                     </tbody>
                                 </table>
 
-                                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                        Open modal
-                                    </button>*@
-
-                                <!-- The Modal -->
+                                <!-- Button trigger modal --> 
+                                
+                                <!-- Modal --> 
+                                @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+                                <div class="modal-dialog" role="document"> 
+                                <div class="modal-content"> 
+                                    <div class="modal-header"> 
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+                                        <span aria-hidden="true">&times;</span> </button> </div> 
+                                    <div class="modal-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Row</th>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>Email</th>
+                                                        <th>Biography</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>John</td>
+                                                        <td>Carter</td>
+                                                        <td>johncarter@mail.com</td>
+                                                        <td>Lorem ipsum dolor sit ametâ€¦</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Peter</td>
+                                                        <td>Parker</td>
+                                                        <td>peterparker@mail.com</td>
+                                                        <td>Vestibulum consectetur scelerisqueâ€¦</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>John</td>
+                                                        <td>Rambo</td>
+                                                        <td>johnrambo@mail.com</td>
+                                                        <td>Integer pulvinar leo id risusâ€¦</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer"> 
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                                    <button type="button" class="btn btn-primary">Save changes</button> 
+                                    </div> 
+                                    </div> 
+                                </div> </div>*@
 
 
                             </div>
@@ -393,6 +450,8 @@
         </div>
     </div>
 
+    
+
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content" id="refreshdata">
@@ -403,7 +462,16 @@
         </div>
     </div>
 
+    
+
+    
+
+
+
+
+
     @section scripts{
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script type="text/javascript">
             //$(document).ready(function () {
             //    $('body').attr("id", "userAuthentication");
@@ -540,13 +608,13 @@
 
         <script>
             function LoadLists(val) {
-                alert(val);
+                //alert(val);
                 var url = '/NUserProfile/VendorsLists?qid=' + val;
                 $('#refreshdata').empty().load(url);
-                //$('#myModal').modal();
+                $('#myModal').modal();
             }
         </script>
 
 
     }
-                    }
+}

@@ -54,7 +54,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m => m.Status == "InActive" || m.Status == "Cancelled").ToList();
                         WhishListService whishListService = new WhishListService();
                         ViewBag.whishlists = whishListService.GetWhishList(user.UserId.ToString());
-                        ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.EmailId == "rameshsai@xsilica.com").ToList();
+                        ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.EmailId == userdata1.UserName).ToList();
                         // OrderByDescending(m => m.OrderId).Take(10);
                         //   List<GetCartItemsnew_Result> cartlist = cartService.CartItemsListnew(int.Parse(user.UserId.ToString()));
                         //decimal total = cartlist.Sum(s => s.TotalPrice);
@@ -231,7 +231,7 @@ namespace MaaAahwanam.Web.Controllers
             string subj = "Order#"+orderid+" Cancelled";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
 
             var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vendorid));
 
@@ -240,16 +240,16 @@ namespace MaaAahwanam.Web.Controllers
             vname = Capitalise(vname);
 
             string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
-            FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+            FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vcancelordeleteorder.html"));
             string readfile1 = file1.OpenText().ReadToEnd();
             readfile1 = readfile1.Replace("[ActivationLink]", url1);
             readfile1 = readfile1.Replace("[name]", name);
             readfile1 = readfile1.Replace("[vname]", vname);
             readfile1 = readfile1.Replace("[orderid]", OrderId);
-            readFile = readFile.Replace("[msg]", "Order has been placed by "+name+"");
+            readFile = readFile.Replace("[msg]", "Order has been Cancelled by "+name+"");
             string txtmessage1 = readfile1;
             string subj1 = "Order#" + orderid + " Cancelled";
-            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage1, subj1);
+            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage1, subj1); //Replace this email with txtto1
         }
 
         public string Capitalise(string str)
