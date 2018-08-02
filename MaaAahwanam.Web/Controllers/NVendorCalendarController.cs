@@ -45,7 +45,7 @@ namespace MaaAahwanam.Web.Controllers
                         if (item.ExtraDate2 != "" && item.ExtraDate2 != null) bookeddates = bookeddates + "," + item.ExtraDate2.ToString();
                         if (item.ExtraDate3 != "" && item.ExtraDate3 != null) bookeddates = bookeddates + "," + item.ExtraDate3.ToString();
                         var getuserdetails = userLoginDetailsService.GetUser(int.Parse(item.OrderBy.ToString()));
-                        userorderdates.Add(new string[] { item.EventType, getuserdetails.FirstName, getuserdetails.LastName, bookeddates, item.attribute, item.Isdeal.ToString(),  getuserdetails.UserPhone });
+                        userorderdates.Add(new string[] { item.EventType, getuserdetails.FirstName, getuserdetails.LastName, bookeddates, item.attribute, item.Isdeal.ToString(), getuserdetails.UserPhone });
                     }
                     ViewBag.userorderdates = userorderdates;
                     return View();
@@ -61,10 +61,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult GetDates(string id, string vid, string type)
         {
-            //var vendorsubcatids = vendorVenueSignUpService.GetVendorVenue(long.Parse(id));
-            //long vendorsubid = (vid == null || vid == "undefined" || vid == "") ? vendorsubcatids.FirstOrDefault().Id : long.Parse(vid); // if vid is null then automatically first Subcategory ID will be considered
             var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
-            //if (orderdates != "") data = data + "," + orderdates.Split(',');
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

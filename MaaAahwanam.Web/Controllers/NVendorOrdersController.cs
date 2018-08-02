@@ -16,6 +16,7 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
         Payment_orderServices payment_orderServices = new Payment_orderServices();
+        VendorDatesService vendorDatesService = new VendorDatesService();
         // GET: NVendorOrders
         public ActionResult Index(string ks)
         {
@@ -73,6 +74,7 @@ namespace MaaAahwanam.Web.Controllers
                         //    TempData["Active"] = "Cannot Update Partial/Full Payement Orders Status";
                         //    return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
                         //}
+                        var particularorder = orderService.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(orderid)); // retrieving order,user details based on order id.
                         if (command == "Accept")
                         {
                             order.Status = "Active";
@@ -80,6 +82,22 @@ namespace MaaAahwanam.Web.Controllers
                             orderdetail.Status = "Active";
                             orderdetail.UpdatedBy = long.Parse(id);
                             order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+                            
+                            //Adding Booked Date to Vendor Calendar
+                            VendorDates vd = new VendorDates();
+                            
+                            //var getuserdetails = userLoginDetailsService.GetUser((int)order.OrderedBy);
+                            vd.Title = "" + particularorder.FirstName + " " + particularorder.LastName + " Order with Order ID : " + orderid + "";
+                            vd.Color = "Green";
+                            vd.Description = "" + particularorder.FirstName + " " + particularorder.LastName + " Order with Order ID : " + orderid + " and Booked Dates are : " + particularorder.BookedDate + "";
+                            vd.VendorId = long.Parse(id);
+                            vd.Vendorsubid = long.Parse(particularorder.vendorsubid.ToString());
+                            vd.Servicetype = particularorder.ServiceType;
+                            vd.StartDate = (DateTime)particularorder.BookedDate;
+                            vd.EndDate = vd.StartDate;
+                            vd.IsFullDay =  "True";
+                            vd.Type = "Appointment";
+                            vd = vendorDatesService.SaveVendorDates(vd);
                             TempData["Active"] = "Order Accepted";
                             return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
                         }
@@ -88,6 +106,7 @@ namespace MaaAahwanam.Web.Controllers
                             order.Status = "Vendor Declined";
                             orderdetail.Status = "Vendor Declined";
                             order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
+
                             TempData["Active"] = "Order Cancelled";
                             return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
                         }
@@ -103,7 +122,7 @@ namespace MaaAahwanam.Web.Controllers
                 return Content("<script language='javascript' type='text/javascript'>alert('Please Login');location.href='" + @Url.Action("Index", "NVendorOrders", new { ks = ks }) + "'</script>");
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return RedirectToAction("Index", "Nhomepage");
             }

@@ -20,6 +20,7 @@ namespace MaaAahwanam.Repository
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long UserLoginId { get; set; }
+        public long vendorsubid { get; set; }
         public string ServiceType { get; set; }
         public Nullable<System.DateTime> BookedDate { get; set; }
         public string EventType { get; set; }

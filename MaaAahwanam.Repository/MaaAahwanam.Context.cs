@@ -636,11 +636,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getservicetype_Result>("getservicetype", ntypeParameter);
         }
     
-        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
-        }
-    
         public virtual ObjectResult<filtervendordates_Result> filtervendordates()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<filtervendordates_Result>("filtervendordates");
@@ -653,6 +648,11 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("VID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCartItems_Result>("GetCartItems", vIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
         }
     }
 }

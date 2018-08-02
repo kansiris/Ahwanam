@@ -49,12 +49,12 @@ namespace MaaAahwanam.Web.Controllers
                 if (item.ExtraDate3 != "" && item.ExtraDate3 != null) bookeddates = bookeddates + "," + item.ExtraDate3.ToString();
                 var getuserdetails = userLoginDetailsService.GetUser(int.Parse(item.OrderBy.ToString()));
                 userorderdates.Add(new string[] { item.EventType, getuserdetails.FirstName, getuserdetails.LastName, bookeddates, item.attribute, item.Isdeal.ToString(), getuserdetails.UserPhone });
+                if (bookeddates.Split(',').Contains(date))
+                    return Json("Date Blocked by " + getuserdetails.FirstName + " " + getuserdetails.LastName + "", JsonRequestBehavior.AllowGet);
             }
             ViewBag.userorderdates = userorderdates;
             //orderdates = "2018-08-01";
-            bool check = true; //userorderdates[3].Contains(date);
-            if (check) return Json("Exists",JsonRequestBehavior.AllowGet);
-            else return Json("Valid", JsonRequestBehavior.AllowGet);
+            return Json("Valid",JsonRequestBehavior.AllowGet);
         }
     }
 }

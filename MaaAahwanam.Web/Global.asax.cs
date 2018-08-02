@@ -72,27 +72,28 @@ namespace MaaAahwanam.Web
             string txt = Convert.ToString(httpException);
             if (httpException != null)
             {
+                string ip = HttpContext.Current.Request.UserHostAddress; //HttpContext.Request.UserHostAddress;
                 string action;
                 string email = "sireesh.k@xsilica.com,maaaahwanamtest@gmail.com,rameshsai@xsilica.com";  //,info @ahwanam.com";
                 switch (httpException.GetHttpCode())
                 {
                     case 404:
                         // page not found
-                        action = " Error occured in application HttpError404";
+                        action = " Error occured in application HttpError404 @IP:" + ip + "";
                         break;
                     case 500:
                         // server error
-                        action = "Error occured in application HttpError500";
+                        action = "Error occured in application HttpError500 @IP:" + ip + "";
                         //Response.Cookies.Clear();
 
                         //FormsAuthentication.SignOut();
                         break;
                     default:
-                        action = "Error occured in application General";
+                        action = "Error occured in application General @IP:" + ip + "";
                         break;
                 }
                 EmailSendingUtility EmailSend = new EmailSendingUtility();
-                EmailSend.Email_maaaahwanam(email,txt , action);
+                EmailSend.Email_maaaahwanam(email, txt, action);
                 // clear error on server
                 Server.ClearError();
                 //Response.Cookies.Clear();

@@ -11,7 +11,7 @@
             $.each(data, function (i, v) {
                 var start1, end1 = null;
                 if (moment(v.EndDate).format("A") == 'AM') {
-                    end1 = moment(v.EndDate)
+                    end1 = moment(v.EndDate);
                 }
                 else {
                     end1 = moment(v.EndDate);
@@ -61,9 +61,9 @@ function GenerateCalender(events) {
                     selectedEvent = data;
                     $('#myModal #eventTitle').text(data.Title);
                     var $description = $('<div/>');
-                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).format("DD/MMM/YYYY hh:mm A")));
+                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).format("DD/MMM/YYYY"))); // hh:mm A
                     if (data.IsFullDay == "False" || data.IsFullDay == null) {
-                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).format("DD/MMM/YYYY hh:mm A")));
+                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).format("DD/MMM/YYYY"))); //hh:mm A
                     }
                     $description.append($('<p/>').html('<b>Description:</b>' + data.Description));
                     $('#myModal #pDetails').empty().html($description);
@@ -76,38 +76,22 @@ function GenerateCalender(events) {
         },
         selectable: true,
         select: function (start, end) {
-            var check = moment(start).format("DD/MMM/YYYY hh:mm A"); //$('#calendar').fullCalendar.formatDate(start, 'yyyy-MM-dd');
-            var today = moment(new Date()).format("DD/MMM/YYYY hh:mm A"); //$('#calendar').fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
-            //if (check < today) {
-            //    alert("Can't add past dates");
-            //}
-            //else {
-            //alert(check);
-            //var status = $.get('/ManageBooking/CheckAvailability', { id: $('#vendorid').val(), subvid: $('#availableservices').val(), type: "Venue", date: check })
-            //if (status == 'Valid') {
-                $('#divEndDate').show();
-                selectedEvent = {
-                    eventID: 0,
-                    title: '',
-                    description: '',
-                    start: start,
-                    end: end,
-                    allDay: false,
-                    color: '',
-                    type: '',
-                    servicetype: ''
-                };
-                openAddEditForm();
-                $('#calendar').fullCalendar('unselect');
-            //}
-            //else {
-            //    alert("Date Blocked by User");
-            //}
-            //}
-
-
-            //alert(moment(start).format('DD/MMM/YYYY HH:mm') + ',' + moment(end).format('DD/MMM/YYYY HH:mm'));
-
+            var check = moment(start).format("DD/MMM/YYYY"); //$('#calendar').fullCalendar.formatDate(start, 'yyyy-MM-dd');  hh:mm A
+            var today = moment(new Date()).format("DD/MMM/YYYY"); //$('#calendar').fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');  hh:mm A
+            $('#divEndDate').show();
+            selectedEvent = {
+                eventID: 0,
+                title: '',
+                description: '',
+                start: start,
+                end: end,
+                allDay: false,
+                color: '',
+                type: '',
+                servicetype: ''
+            };
+            openAddEditForm();
+            $('#calendar').fullCalendar('unselect');
         },
         editable: true,
         eventDrop: function (event) {
@@ -123,7 +107,6 @@ function GenerateCalender(events) {
                 VendorId: $('#vendorid').val(),
                 Servicetype: event.servicetype
             };
-            //alert("Start Date:" + data.StartDate + "End Date:" + event.end.subtract(24, 'hours').format('DD/MMM/YYYY hh:mm A'));
             SaveEvent(data);
         },
         viewRender: function (currentView) {
