@@ -97,6 +97,7 @@ namespace MaaAahwanam.Web.Controllers
                             vd.EndDate = vd.StartDate;
                             vd.IsFullDay =  "True";
                             vd.Type = "Appointment";
+                            vd.OrderID = orderid;
                             vd = vendorDatesService.SaveVendorDates(vd);
                             TempData["Active"] = "Order Accepted";
                             return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
@@ -106,7 +107,8 @@ namespace MaaAahwanam.Web.Controllers
                             order.Status = "Vendor Declined";
                             orderdetail.Status = "Vendor Declined";
                             order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
-
+                            //for removing user booked dates from vendordates table
+                            string status = vendorDatesService.removedatesbyorderid(orderid);
                             TempData["Active"] = "Order Cancelled";
                             return RedirectToAction("Index", "NVendorOrders", new { ks = ks });
                         }

@@ -67,5 +67,20 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.filtervendordates().ToList();
         }
+
+        public string removedatesbyorderid(string id)
+        {
+            try
+            {
+                var list = _dbContext.VendorDates.FirstOrDefault(m => m.OrderID == id);
+                _dbContext.VendorDates.Remove(list);
+                _dbContext.SaveChanges();
+                return "Removed";
+            }
+            catch
+            {
+                return "Failed!!!";
+            }
+        }
     }
 }
