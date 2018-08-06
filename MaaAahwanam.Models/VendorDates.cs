@@ -21,5 +21,6 @@ namespace MaaAahwanam.Models
         public string Color { get; set; }
         public string IsFullDay { get; set; }
         public string Type { get; set; }
+        public string OrderID { get; set; }
     }
 }
