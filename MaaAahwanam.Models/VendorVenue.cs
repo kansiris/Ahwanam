@@ -46,5 +46,47 @@ namespace MaaAahwanam.Models
         //public int tier { get; set; }
         public string Dimentions { get; set; }
         public string Description { get; set; }
+        public string AC { get; set; }
+        public string TV { get; set; }
+        public string ComplimentaryBreakfast { get; set; }
+        public string Geyser { get; set; }
+        public string ParkingFacility { get; set; }
+        public string CardPayment { get; set; }
+        public string LiftorElevator { get; set; }
+        public string BanquetHall { get; set; }
+        public string Laundry { get; set; }
+        public string CCTVCameras { get; set; }
+        public string SwimmingPool { get; set; }
+        public string ConferenceRoom { get; set; }
+        public string Bar { get; set; }
+        public string DiningArea { get; set; }
+        public string PowerBackup { get; set; }
+        public string WheelchairAccessible { get; set; }
+        public string RoomHeater { get; set; }
+        public string InRoomSafe { get; set; }
+        public string MiniFridge { get; set; }
+        public string InhouseRestaurant { get; set; }
+        public string Gym { get; set; }
+        public string HairDryer { get; set; }
+        public string PetFriendly { get; set; }
+        public string HDTV { get; set; }
+        public string Spa { get; set; }
+        public string WellnessCenter { get; set; }
+        public string Electricity { get; set; }
+        public string BathTub { get; set; }
+        public string Kitchen { get; set; }
+        public string Netflix { get; set; }
+        public string Kindle { get; set; }
+        public string CoffeeTeaMaker { get; set; }
+        public string SofaSet { get; set; }
+        public string Jacuzzi { get; set; }
+        public string FullLengthMirrror { get; set; }
+        public string Balcony { get; set; }
+        public string KingBed { get; set; }
+        public string QueenBed { get; set; }
+        public string SingleBed { get; set; }
+        public string Intercom { get; set; }
+        public string SufficientRoomSize { get; set; }
+        public string SufficientWashroom { get; set; }
     }
 }
