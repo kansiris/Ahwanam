@@ -369,9 +369,6 @@
           <FunctionImport Name="SPGETNpkg" ReturnType="Collection(MaaAahwanamModel.SPGETNpkg_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="SPGETpartpkg" ReturnType="Collection(MaaAahwanamModel.SPGETpartpkg_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="SPgetpartdeal" ReturnType="Collection(MaaAahwanamModel.SPgetpartdeal_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -399,7 +396,10 @@
           </FunctionImport>
           <FunctionImport Name="sp_userorddisplay" ReturnType="Collection(MaaAahwanamModel.sp_userorddisplay_Result)" />
           <FunctionImport Name="GetVendors" ReturnType="Collection(MaaAahwanamModel.GetVendors_Result)">
-            <Parameter Name="type" Mode="In" Type="String" />
+          <Parameter Name="type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGETpartpkg" ReturnType="Collection(MaaAahwanamModel.SPGETpartpkg_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -1106,19 +1106,6 @@
           <Property Type="String" Name="Status" Nullable="true" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
         </ComplexType>
-        <ComplexType Name="SPGETpartpkg_Result">
-          <Property Type="Int64" Name="PackageID" Nullable="false" />
-          <Property Type="Int64" Name="VendorId" Nullable="false" />
-          <Property Type="Int64" Name="VendorSubId" Nullable="false" />
-          <Property Type="String" Name="VendorType" Nullable="true" />
-          <Property Type="String" Name="VendorSubType" Nullable="true" />
-          <Property Type="String" Name="Category" Nullable="true" />
-          <Property Type="String" Name="PackageName" Nullable="true" />
-          <Property Type="String" Name="PackagePrice" Nullable="true" />
-          <Property Type="String" Name="PackageDescription" Nullable="true" />
-          <Property Type="String" Name="Status" Nullable="true" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-        </ComplexType>
         <ComplexType Name="SPgetpartdeal_Result">
           <Property Type="Int64" Name="DealID" Nullable="false" />
           <Property Type="Int64" Name="VendorId" Nullable="false" />
@@ -1345,6 +1332,24 @@
           <Property Type="Decimal" Name="cost4" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="logo" Nullable="true" />
           <Property Type="String" Name="image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SPGETpartpkg_Result">
+          <Property Type="Int64" Name="PackageID" Nullable="false" />
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="Int64" Name="VendorSubId" Nullable="false" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
+          <Property Type="String" Name="VendorSubType" Nullable="true" />
+          <Property Type="String" Name="Category" Nullable="true" />
+          <Property Type="String" Name="PackageName" Nullable="true" />
+          <Property Type="String" Name="PackagePrice" Nullable="true" />
+          <Property Type="String" Name="PackageDescription" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MinPrice" Nullable="true" />
+          <Property Type="String" Name="MaxPrice" Nullable="true" />
+          <Property Type="String" Name="MinGuests" Nullable="true" />
+          <Property Type="String" Name="MaxGuests" Nullable="true" />
+          <Property Type="String" Name="images" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2249,23 +2254,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPGETpartpkg" FunctionName="MaaAahwanamModel.Store.SPGETpartpkg">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.SPGETpartpkg_Result">
-                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="VendorSubId" ColumnName="VendorSubId" />
-                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
-                <ScalarProperty Name="VendorSubType" ColumnName="VendorSubType" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
-                <ScalarProperty Name="PackagePrice" ColumnName="PackagePrice" />
-                <ScalarProperty Name="PackageDescription" ColumnName="PackageDescription" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPgetpartdeal" FunctionName="MaaAahwanamModel.Store.SPgetpartdeal">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.SPgetpartdeal_Result">
@@ -2530,6 +2518,28 @@
                 <ScalarProperty Name="cost4" ColumnName="cost4" />
                 <ScalarProperty Name="logo" ColumnName="logo" />
                 <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGETpartpkg" FunctionName="MaaAahwanamModel.Store.SPGETpartpkg">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.SPGETpartpkg_Result">
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorSubId" ColumnName="VendorSubId" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="VendorSubType" ColumnName="VendorSubType" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="PackagePrice" ColumnName="PackagePrice" />
+                <ScalarProperty Name="PackageDescription" ColumnName="PackageDescription" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="MinGuests" ColumnName="MinGuests" />
+                <ScalarProperty Name="MaxGuests" ColumnName="MaxGuests" />
+                <ScalarProperty Name="images" ColumnName="images" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

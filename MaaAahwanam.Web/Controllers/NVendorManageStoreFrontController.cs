@@ -584,6 +584,51 @@ namespace MaaAahwanam.Web.Controllers
                 if (selectedamenitieslist.Contains("Wifi")) vendorVenue.Wifi = "Yes";
                 if (selectedamenitieslist.Contains("Live Cooking Station")) vendorVenue.LiveCookingStation = "Yes";
                 if (selectedamenitieslist.Contains("Decoration Allowed")) vendorVenue.DecorationAllowed = "Yes";
+
+                if (selectedamenitieslist.Contains("Sufficient Washroom")) vendorVenue.SufficientWashroom = "Yes";
+                if (selectedamenitieslist.Contains("Sufficient Room Size")) vendorVenue.SufficientRoomSize = "Yes";
+                if (selectedamenitieslist.Contains("Intercom")) vendorVenue.Intercom = "Yes";
+                if (selectedamenitieslist.Contains("Single Bed")) vendorVenue.SingleBed = "Yes";
+                if (selectedamenitieslist.Contains("Queen Bed")) vendorVenue.QueenBed = "Yes";
+                if (selectedamenitieslist.Contains("King Bed")) vendorVenue.KingBed = "Yes";
+                if (selectedamenitieslist.Contains("Balcony")) vendorVenue.Balcony = "Yes";
+                if (selectedamenitieslist.Contains("Full Length Mirrror")) vendorVenue.FullLengthMirrror = "Yes";
+                if (selectedamenitieslist.Contains("Jacuzzi")) vendorVenue.Jacuzzi = "Yes";
+                if (selectedamenitieslist.Contains("Sofa Set")) vendorVenue.SofaSet = "Yes";
+                if (selectedamenitieslist.Contains("Coffee Tea Maker")) vendorVenue.CoffeeTeaMaker = "Yes";
+                if (selectedamenitieslist.Contains("Kindle")) vendorVenue.Kindle = "Yes";
+                if (selectedamenitieslist.Contains("Netflix")) vendorVenue.Netflix = "Yes";
+                if (selectedamenitieslist.Contains("Kitchen")) vendorVenue.Kitchen = "Yes";
+                if (selectedamenitieslist.Contains("Bath Tub")) vendorVenue.BathTub = "Yes";
+                if (selectedamenitieslist.Contains("Electricity")) vendorVenue.Electricity = "Yes";
+                if (selectedamenitieslist.Contains("Wellness Center")) vendorVenue.WellnessCenter = "Yes";
+                if (selectedamenitieslist.Contains("Spa")) vendorVenue.Spa = "Yes";
+                if (selectedamenitieslist.Contains("HDTV")) vendorVenue.HDTV = "Yes";
+                if (selectedamenitieslist.Contains("Pet Friendly")) vendorVenue.PetFriendly = "Yes";
+                if (selectedamenitieslist.Contains("Gym")) vendorVenue.Gym = "Yes";
+                if (selectedamenitieslist.Contains("In-house Restaurant")) vendorVenue.InhouseRestaurant = "Yes";
+                if (selectedamenitieslist.Contains("Hair Dryer")) vendorVenue.HairDryer= "Yes";
+
+                if (selectedamenitieslist.Contains("Mini Fridge")) vendorVenue.MiniFridge = "Yes";
+                if (selectedamenitieslist.Contains("In Room Safe")) vendorVenue.InRoomSafe = "Yes";
+                if (selectedamenitieslist.Contains("Room Heater")) vendorVenue.RoomHeater = "Yes";
+                if (selectedamenitieslist.Contains("Wheelchair Accessible")) vendorVenue.WheelchairAccessible = "Yes";
+                if (selectedamenitieslist.Contains("Power Backup")) vendorVenue.PowerBackup = "Yes";
+                if (selectedamenitieslist.Contains("Dining Area")) vendorVenue.DiningArea = "Yes";
+                if (selectedamenitieslist.Contains("Bar")) vendorVenue.Bar = "Yes";
+                if (selectedamenitieslist.Contains("Conference Room")) vendorVenue.ConferenceRoom = "Yes";
+                if (selectedamenitieslist.Contains("Swimming Pool")) vendorVenue.SwimmingPool = "Yes";
+                if (selectedamenitieslist.Contains("CCTV Cameras")) vendorVenue.CCTVCameras = "Yes";
+                if (selectedamenitieslist.Contains("Laundry")) vendorVenue.Laundry = "Yes";
+                if (selectedamenitieslist.Contains("Banquet Hall")) vendorVenue.BanquetHall = "Yes";
+                if (selectedamenitieslist.Contains("Lift/Elevator")) vendorVenue.LiftorElevator = "Yes";
+                if (selectedamenitieslist.Contains("Card Payment")) vendorVenue.CardPayment = "Yes";
+                if (selectedamenitieslist.Contains("Parking Facility")) vendorVenue.ParkingFacility = "Yes";
+                if (selectedamenitieslist.Contains("Geyser")) vendorVenue.Geyser = "Yes";
+                if (selectedamenitieslist.Contains("Complimentary Breakfast")) vendorVenue.ComplimentaryBreakfast = "Yes";
+                if (selectedamenitieslist.Contains("TV")) vendorVenue.TV = "Yes";
+                if (selectedamenitieslist.Contains("AC")) vendorVenue.AC = "Yes";
+
                 vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
                 //if (vendorVenue.Id != 0) count = vendorVenue.Id;
             }
@@ -635,6 +680,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (selectedamenitieslist.Contains("Boutonnieres (for groom, fathers, grandfathers, best man, groom’s men)")) vendorsDecorator.Boutonnieres = "Yes";
                 if (selectedamenitieslist.Contains("Decora")) vendorsDecorator.Decora = "Yes";
                 if (selectedamenitieslist.Contains("Just married clings")) vendorsDecorator.Justmarriedclings = "Yes";
+
                 vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, long.Parse(id), long.Parse(vid));
                 //if (vendorsDecorator.Id != 0) count = vendorsDecorator.Id;
             }
