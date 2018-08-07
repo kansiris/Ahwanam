@@ -381,6 +381,21 @@ namespace MaaAahwanam.Web.Controllers
                 var userResponse = venorVenueSignUpService.GetUserdetails(email);
                 var userid = userResponse.UserLoginId;
                 userLoginDetailsService.changepassword(userLogin, (int)userid);
+                txtto = userLogin.UserName;
+                int id = Convert.ToInt32(userResponse.UserLoginId);
+                var userdetails = userLoginDetailsService.GetUser(id);
+                string username = userdetails.FirstName;
+                username = Capitalise(username);
+                string emailid = userLogin.UserName;
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority ;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/change-email.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", username);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Your Password is changed";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 return Json("success");
                 // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
             }
