@@ -246,7 +246,7 @@ namespace MaaAahwanam.Web.Controllers
             readfile1 = readfile1.Replace("[name]", name);
             readfile1 = readfile1.Replace("[vname]", vname);
             readfile1 = readfile1.Replace("[orderid]", OrderId);
-            readFile = readFile.Replace("[msg]", "Order has been Cancelled by "+name+"");
+            //readFile = readFile.Replace("[msg]", "Order has been Cancelled by "+name+"");
             string txtmessage1 = readfile1;
             string subj1 = "Order#" + orderid + " Cancelled";
             emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage1, subj1); //Replace this email with txtto1
