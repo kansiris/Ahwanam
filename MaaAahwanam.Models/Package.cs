@@ -21,5 +21,10 @@ namespace MaaAahwanam.Models
         public string PackageDescription { get; set; }
         public string Status { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public string MinPrice { get; set; }
+        public string MaxPrice { get; set; }
+        public string MinGuests { get; set; }
+        public string MaxGuests { get; set; }
+        public string images { get; set; }
     }
 }
