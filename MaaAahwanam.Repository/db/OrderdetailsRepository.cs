@@ -50,7 +50,7 @@ namespace MaaAahwanam.Repository.db
         {
             var today = DateTime.UtcNow;
             var first = new DateTime(today.Year, today.Month, 1);
-            var orderid = _dbContext.OrderDetail.Where(m => m.VendorId == vid && m.subid == subid && m.ServiceType == servicetype).Select(m=>m.OrderId).ToList();
+            var orderid = _dbContext.OrderDetail.Where(m => m.VendorId == vid && m.subid == subid && m.ServiceType == servicetype && m.Status == "Active").Select(m=>m.OrderId).ToList();
             var bookeddates = "";
             foreach (var item in orderid)
             {

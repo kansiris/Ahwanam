@@ -98,8 +98,8 @@ function GenerateCalender(events) {
             var data = {
                 Id: event.eventID,
                 Title: event.title,
-                StartDate: event.start.format('DD/MMM/YYYY hh:mm A'),
-                EndDate: event.end != null ? event.end.format('DD/MM/YYYY hh:mm A') : event.start.format('DD/MMM/YYYY hh:mm A'),
+                StartDate: event.start.format('DD/MMM/YYYY'),
+                EndDate: event.end != null ? event.end.format('DD/MM/YYYY') : event.start.format('DD/MMM/YYYY'),
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay,
@@ -174,12 +174,12 @@ function openAddEditForm() {
         $('#subject').val(selectedEvent.Title);
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
         if (selectedEvent.eventID != 0) {
-            $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MM/YYYY hh:mm A"));
-            $('#enddate').val(moment(selectedEvent.EndDate).format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).format("DD/MM/YYYY hh:mm A") : '');
+            $('#startdate').val(moment(selectedEvent.StartDate).format("DD/MM/YYYY"));
+            $('#enddate').val(moment(selectedEvent.EndDate).format("DD/MM/YYYY") != null ? moment(selectedEvent.EndDate).format("DD/MM/YYYY") : '');
         }
         else {
-            $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY hh:mm A"));
-            $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") : '');
+            $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY"));
+            $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY") != null ? moment(selectedEvent.end).format("DD/MM/YYYY") : '');
         }
         if (selectedEvent.IsFullDay == "True") {
             $('#divEndDate').hide();
@@ -222,8 +222,8 @@ $('#btnSave').click(function () {
         return;
     }
     else {
-        var startDate = moment($('#startdate').val(), "DD/MM/YYYY hh:mm A").toDate();
-        var endDate = moment($('#enddate').val(), "DD/MM/YYYY hh:mm A").toDate();
+        var startDate = moment($('#startdate').val(), "DD/MM/YYYY").toDate();
+        var endDate = moment($('#enddate').val(), "DD/MM/YYYY").toDate();
         if (startDate > endDate) {
             alert('Invalid end date');
             return;
