@@ -51,7 +51,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public ActionResult addpackage(string id, string type, string packagename, string packageprice, string Packagedec)
+        public ActionResult addpackage(string id, string type, string packagename, string packageprice, string Packagedec, string foodtype, string minGuests,string maxGuests,string MinPrice,string MaxPrice)
         {
             try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -78,7 +78,18 @@ namespace MaaAahwanam.Web.Controllers
                 package.PackageDescription = Packagedec;
                 package.Status = "Active";
                 package.UpdatedDate = updateddate;
-                package = vendorVenueSignUpService.addpack(package);
+                    package.MinPrice = (MinPrice);
+                    package.MaxPrice = MaxPrice;
+                    package.MinGuests = minGuests;
+                    if (type1 == "Venue" || type1 == "Catering")
+                    {
+                        
+                        package.Category = foodtype;
+
+                    }
+
+                    package.MaxGuests = (maxGuests);
+                    package = vendorVenueSignUpService.addpack(package);
                 ViewBag.vendormasterid = id;
                     //  TempData["Active"] = "Package added";
                     //  return RedirectToAction("Index", "NVendorPkgs", new { id = id });
