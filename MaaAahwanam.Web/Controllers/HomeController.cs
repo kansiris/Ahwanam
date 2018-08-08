@@ -16,5 +16,11 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.venues = resultsPageService.GetAllVendors("Venue").Take(3);
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Index(string id)
+        {
+            return RedirectToAction("Index", "results");
+        }
     }
 }
