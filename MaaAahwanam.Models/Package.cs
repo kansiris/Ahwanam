@@ -26,5 +26,13 @@ namespace MaaAahwanam.Models
         public string MinGuests { get; set; }
         public string MaxGuests { get; set; }
         public string images { get; set; }
+        public string price1 { get; set; }
+        public string price2 { get; set; }
+        public string price3 { get; set; }
+        public string price4 { get; set; }
+        public string price5 { get; set; }
+        public string price6 { get; set; }
+        public string price7 { get; set; }
+        public string price8 { get; set; }
     }
 }
