@@ -51,7 +51,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public ActionResult addpackage(string id, string type, string packagename, string packageprice, string Packagedec, string foodtype, string minGuests,string maxGuests,string MinPrice,string MaxPrice)
+        public ActionResult addpackage(string id, string type, string packagename, string packageprice, string Packagedec, string foodtype, string price1, string price2, string price3, string price4, string price5, string price6, string price7, string price8) //string minGuests,string maxGuests,string MinPrice,string MaxPrice)
         {
             try { 
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -78,17 +78,21 @@ namespace MaaAahwanam.Web.Controllers
                 package.PackageDescription = Packagedec;
                 package.Status = "Active";
                 package.UpdatedDate = updateddate;
-                    package.MinPrice = (MinPrice);
-                    package.MaxPrice = MaxPrice;
-                    package.MinGuests = minGuests;
+                    //package.MinPrice = (MinPrice);
+                    //package.MaxPrice = MaxPrice;
+                    //package.MinGuests = minGuests;
+                    //package.MaxGuests = (maxGuests);
+                    package.price1 = price1;
+                    package.price2 = price2;
+                    package.price3 = price3;
+                    package.price4 = price4;
+                    package.price5 = price5;
+                    package.price6 = price6;
+                    package.price7 = price7;
+                    package.price8 = price8;
                     if (type1 == "Venue" || type1 == "Catering")
-                    {
-                        
-                        package.Category = foodtype;
+                    {  package.Category = foodtype;  }
 
-                    }
-
-                    package.MaxGuests = (maxGuests);
                     package = vendorVenueSignUpService.addpack(package);
                 ViewBag.vendormasterid = id;
                     //  TempData["Active"] = "Package added";

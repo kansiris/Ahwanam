@@ -52,15 +52,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetTestimonials_Result>("SP_GetTestimonials");
         }
     
-        public virtual ObjectResult<sp_LeastBidRecord_Result> sp_LeastBidRecord(Nullable<long> requestId)
-        {
-            var requestIdParameter = requestId.HasValue ?
-                new ObjectParameter("RequestId", requestId) :
-                new ObjectParameter("RequestId", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LeastBidRecord_Result>("sp_LeastBidRecord", requestIdParameter);
-        }
-    
         public virtual ObjectResult<SP_vendordatesbooked_Result> SP_vendordatesbooked(Nullable<int> vID)
         {
             var vIDParameter = vID.HasValue ?
@@ -325,15 +316,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorsDatesbooked_Result>("VendorsDatesbooked", idParameter);
         }
     
-        public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
-        {
-            var orderByParameter = orderBy.HasValue ?
-                new ObjectParameter("OrderBy", orderBy) :
-                new ObjectParameter("OrderBy", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
-        }
-    
         public virtual ObjectResult<SP_Amenities_Result> SP_Amenities(Nullable<long> vendorid, string ntype)
         {
             var vendoridParameter = vendorid.HasValue ?
@@ -548,15 +530,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETNDeal_Result>("SPGETNDeal", idParameter);
         }
     
-        public virtual ObjectResult<SPGETNpkg_Result> SPGETNpkg(Nullable<long> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETNpkg_Result>("SPGETNpkg", idParameter);
-        }
-    
         public virtual ObjectResult<SPgetpartdeal_Result> SPgetpartdeal(Nullable<long> id)
         {
             var idParameter = id.HasValue ?
@@ -655,6 +628,15 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendors_Result>("GetVendors", typeParameter);
         }
     
+        public virtual ObjectResult<SPGETNpkg_Result> SPGETNpkg(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETNpkg_Result>("SPGETNpkg", idParameter);
+        }
+    
         public virtual ObjectResult<SPGETpartpkg_Result> SPGETpartpkg(Nullable<long> id)
         {
             var idParameter = id.HasValue ?
@@ -662,6 +644,24 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("Id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETpartpkg_Result>("SPGETpartpkg", idParameter);
+        }
+    
+        public virtual ObjectResult<sp_LeastBidRecord_Result> sp_LeastBidRecord(Nullable<long> requestId)
+        {
+            var requestIdParameter = requestId.HasValue ?
+                new ObjectParameter("RequestId", requestId) :
+                new ObjectParameter("RequestId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_LeastBidRecord_Result>("sp_LeastBidRecord", requestIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_OrderDetails_Result> sp_OrderDetails(Nullable<long> orderBy)
+        {
+            var orderByParameter = orderBy.HasValue ?
+                new ObjectParameter("OrderBy", orderBy) :
+                new ObjectParameter("OrderBy", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
         }
     }
 }
