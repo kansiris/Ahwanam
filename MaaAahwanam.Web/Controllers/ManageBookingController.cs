@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -20,10 +21,14 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 var vendordetails = vendorMasterService.GetVendorServiceType(user.UserId);
                 long vendorid = vendordetails.Id;
-                ViewBag.id = vendorid;
+                encptdecpt encript = new encptdecpt();
+
+                string encripted = encript.Encrypt(string.Format("Name={0}", vendorid));
+                ViewBag.id = encripted;
                 string vendortype = vendordetails.ServicType;
                 var deals = vendorProductsService.getvendorsubid(vendorid.ToString());
                 ViewBag.venuerecord = deals;
