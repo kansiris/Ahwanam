@@ -13,15 +13,16 @@ namespace MaaAahwanam.Web.Controllers
         // GET: results
         public ActionResult Index()
         {
-            //ViewBag.venues = resultsPageService.GetAllVendors("Venue").Take(6).ToList();
+            //ViewBag.venues = resultsPageService.GetAllVendors("Venue");.Take(6).ToList();
             return View();
         }
 
-        public PartialViewResult LoadMore(string count)
+        public PartialViewResult Loadmore(string count)
         {
-            int takecount = (count == "" || count == null) ? 0 : int.Parse(count);
+            int takecount = (count == null) ? 6 : int.Parse(count) +6;
+            ViewBag.count = takecount;
             ViewBag.venues = resultsPageService.GetAllVendors("Venue").Take(takecount).ToList();
-            return PartialView("LoadMore");
+            return PartialView("Loadmore");
         }
     }
 }

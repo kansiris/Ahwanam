@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 string encripted = encript.Encrypt(string.Format("Name={0}", vendorid));
                 ViewBag.id = encripted;
+                ViewBag.vendormasterid = vendorid;
                 string vendortype = vendordetails.ServicType;
                 var deals = vendorProductsService.getvendorsubid(vendorid.ToString());
                 ViewBag.venuerecord = deals;
