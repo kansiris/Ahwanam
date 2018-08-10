@@ -7,6 +7,8 @@ using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.IO;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
@@ -160,5 +162,35 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
 
+        //excel download
+        public ActionResult download(string dropstatus)
+        {
+
+            if (dropstatus != null)
+            {
+                var modelCust1 = vendorSetupService.AllVendorList(dropstatus);
+                var gv = new GridView();
+                gv.DataSource = modelCust1;
+                gv.DataBind();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=ahwanam.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                StringWriter objStringWriter = new StringWriter();
+                HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+
+                gv.RenderControl(objHtmlTextWriter);
+                Response.Output.Write(objStringWriter.ToString());
+                Response.Flush();
+                Response.End();
+                return Content("<script language='javascript' type='text/javascript'>alert('Excel sheet is downloaded');location.href='/Admin/Vendors/AllVendors'</script>");
+            }
+
+
+            return Content("<script> alert('please the vendortype')</script>");
+          
+        }
+      
     }
 }
