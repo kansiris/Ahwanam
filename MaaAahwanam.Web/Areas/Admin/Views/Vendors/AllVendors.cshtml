@@ -55,10 +55,10 @@
 
                     @*<a href="/Admin/Vendors/VendorDetails" class="btn btn-primary btn-xs">Create New Vendor</a>*@
                     <div align="right" class="panel-heading">
-                        <button type="button" data-toggle="tooltip" data-placement="top" title="Export to PDF" class="btn btn-default btn-circle">
+                        @*<button type="button" data-toggle="tooltip" data-placement="top" title="Export to PDF" class="btn btn-default btn-circle">
                             <i class="icon-check"></i>
-                        </button>
-                        <button type="button" data-toggle="tooltip" data-placement="top" title="Export to Exccel" class="btn btn-primary btn-circle">
+                        </button>*@
+                        <button type="button" data-toggle="tooltip" data-placement="top" id="download" value="download" title="Export to Exccel" onclick="ks(this.value)" class="btn btn-primary btn-circle">
                             <i class="icon-list"></i>
                         </button>
                         <button type="button" data-toggle="tooltip" data-placement="top" title="Print" class="btn btn-success btn-circle">
@@ -230,10 +230,38 @@
     <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
    
-    <script>
+    @*<script>
         $(document).ready(function () {
              $('#dataTables-example').dataTable({
                 "order": [[0, "desc"]]
             });
         });
-    </script>
+</script>*@
+<script>
+        function ks(clickedvalue) {
+            var dropstatus = $("#dropstatus").val();
+            if (dropstatus === undefined || dropstatus === '') {
+                alert('Please select vendor type!');
+            }
+                 else {
+                if (clickedvalue == 'download') {
+                    location.href = '/Vendors/download?dropstatus=' + dropstatus;
+                    //$.ajax({
+                    //    type: 'POST',
+                    //    url: '/Vendors/download?dropstatus=' + dropstatus,
+                    //    dataType: 'json',
+                    //    contentType: 'application/json',
+                    //   // success: function (data) {
+                    //   ////     alert(data);
+                    //   //    // var url = '/Vendors/download?dropstatus=' + dropstatus;
+                    //   // },
+                    //   // error: function (data) {
+
+                    //   //     alert("Failed!!!");
+                    //   // }
+                    //});
+
+                }
+            }
+        }
+</script>
