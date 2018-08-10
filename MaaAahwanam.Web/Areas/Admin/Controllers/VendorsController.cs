@@ -184,7 +184,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 Response.Output.Write(objStringWriter.ToString());
                 Response.Flush();
                 Response.End();
-                return Content("<script language='javascript' type='text/javascript'>alert('Excel sheet is downloaded');location.href='/Admin/Vendors/AllVendors'</script>");
+                return Content("<script>alert('Excel sheet is downloaded');location.href='/Admin/Vendors/AllVendors'</script>");
             }
 
 

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
+using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -61,6 +62,16 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult GetDates(string id, string vid, string type)
         {
+            //string strReq = "";
+            //encptdecpt encript = new encptdecpt();
+            //strReq = encript.Decrypt(id);
+            ////Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+            //string[] arrMsgs = strReq.Split('&');
+            //string[] arrIndMsg;
+            ////string id = "";
+            //arrIndMsg = arrMsgs[0].Split('='); //Get the id
+            //id = arrIndMsg[1].ToString().Trim();
+            //ViewBag.id = id;
             var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -75,8 +86,18 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveEvent(VendorDates vendorDates, string vid)
+        public JsonResult SaveEvent(VendorDates vendorDates,string vid)
         {
+            //string strReq = "";
+            //encptdecpt encript = new encptdecpt();
+            //strReq = encript.Decrypt(vendorDates.VendorId.ToString());
+            ////Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+            //string[] arrMsgs = strReq.Split('&');
+            //string[] arrIndMsg;
+            ////string id = "";
+            //arrIndMsg = arrMsgs[0].Split('='); //Get the id
+            //vendorDates.VendorId = long.Parse(arrIndMsg[1].ToString().Trim());
+            //vendorDates.VendorId
             //long vendorsubid = (vid == null || vid=="undefined"||vid=="")? vendorVenueSignUpService.GetVendorVenue(long.Parse(vendorDates.VendorId.ToString())).FirstOrDefault().Id : long.Parse(vid);
             var status = false;
             vendorDates.Vendorsubid = long.Parse(vid);

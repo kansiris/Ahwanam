@@ -47,8 +47,8 @@ display: none;
                                 <div class="form-group col-sm-6">
                                     <label class="control-label" for="inputBasicFirstName">Type</label>
 
-                                    <select class="form-control form-control-lg" id="selectbox2" name="type">
-                                        <option id="price">Type</option>
+                                    <select class="form-control form-control-lg" id="selectbox2" name="type" onchange="options(this)">
+                                        <option disabled selected id="price">Type</option>
                                         @if (ViewBag.venuerecord != null)
                                         {
                                             foreach (var item in ViewBag.venuerecord)
@@ -65,6 +65,7 @@ display: none;
                                     <input type="text" class="form-control" name="PackageName" placeholder="Package Name" autocomplete="off" required>
                                 </div>
 
+
                                 <div class="form-group  col-md-12 " id="food1">
                                     <label class="control-label" for="inputBasicFirstName">Food Type </label>
                                     <div class="row">
@@ -80,7 +81,7 @@ display: none;
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-12">
+                                <div class="form-group col-sm-12" id="priceslist">
                                     <table id="DataTables_Table_0" class="table table-hover dataTable table-striped width-full dtr-inline" role="grid" style="width:100%">
                                         <thead>
                                             <tr role="row">
@@ -174,6 +175,7 @@ display: none;
 <!------ Date Picker ---------->
 @*<script type="text/javascript" src="/newdesign/js/jquery-ui.min.js"></script>*@
 @section scripts{
+@*<script src="~/VendorStyles/global/vendor/jquery/jquery.js"></script>*@
 @if (ViewBag.msg != "" && ViewBag.msg != null)
 {
     <script>
@@ -186,6 +188,24 @@ display: none;
             "paging": false,
             "ordering": false
         });
+        //$('#food1,#priceslist').css('display','none');
+    </script>
+    <script>
+        //$('#selectbox2').change(function () {
+        //    alert("hi");
+        //    var selectedvalue = $(this).val();
+        //    var servicetype = selectedvalue.split(',')[0];
+        //    alert(servicetype);
+        //    if (servicetype == 'Venue' && servicetype == 'Catering') {
+        //        $('#food1', '#priceslist').show();
+        //    }
+        //});
+
+        function options(val) {
+            var selectedvalue = val;
+            var servicetype = selectedvalue.split(',')[0];
+            alert(servicetype);
+        }
     </script>
 }
 }
