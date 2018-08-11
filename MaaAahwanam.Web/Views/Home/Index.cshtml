@@ -42,7 +42,11 @@
     <!-- YOUR CUSTOM CSS -->
     <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-
+    <style>
+        .nice-select,.list {
+        width:370px;
+        }
+    </style>
 </head>
 <body>
     <div id="page">
@@ -76,11 +80,11 @@
                             <li><a href="/results?type=Resort">Resort</a></li>
                             <li><a href="/results?type=Convention Hall">Convention Hall</a></li>
                             <li><a href="/results?type=Function Hall">Function Hall</a></li>
-                            <li><a href="/results?type=Catering">Catering</a></li>
-                            <li><a href="/results?type=Photography">Photography</a></li>
+                            @*<li><a href="/results?type=Catering">Catering</a></li>*@
+                            @*<li><a href="/results?type=Photography">Photography</a></li>
                             <li><a href="/results?type=Decorator">Decorator</a></li>
                             <li><a href="/results?type=Mehendi">Mehendi</a></li>
-                            <li><a href="/results?type=Pandit">Pandits</a></li>
+                            <li><a href="/results?type=Pandit">Pandits</a></li>*@
                         </ul>
                     </li>
 
@@ -118,13 +122,13 @@
 
                                 <div class="col-lg-4">
                                     <select class="form-control" required id="selectevent">
-                                        <option>Select Event</option>
-                                        <option>Wedding</option>
-                                        <option>Party</option>
-                                        <option>Corporate</option>
-                                        <option>Baby Function</option>
-                                        <option>Birthday</option>
-                                        <option>Engagement</option>
+                                        <option value="" disabled selected>Select Event</option>
+                                        <option value="Wedding">Wedding</option>
+                                        <option value="Party">Party</option>
+                                        <option value="Corporate">Corporate</option>
+                                        <option value="Baby Function">Baby Function</option>
+                                        <option value="Birthday">Birthday</option>
+                                        <option value="Engagement">Engagement</option>
                                     </select>
                                     @*<div class="form-group">
                                         <input class="form-control" type="text" placeholder="What Type of Event?" required>
@@ -373,7 +377,7 @@
                 <!-- /wrapper-grid -->
 
                 <p class="text-center">
-                    <a href="#" class="btn_1  add_top_30">
+                    <a href="/results" class="btn_1  add_top_30">
                         Explore More &emsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </p>
@@ -405,47 +409,50 @@
                     <h2>LET'S TALK</h2>
                     <small><p>Get Personalized assistance to help you discover, book sample and supervise your event.</p></small>
                 </div>
-                <div class="row">
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;	<div class="ui equal width form">
-                        <div class="fields">
-                            <div class="eight field">
-                                <label></label>
-                                <input type="text" placeholder="Your name">
-                            </div>
+                <form method="post" action="/Home/SendEmail">
 
-                        </div>
-                        <div class="fields">
-                            <div class="field">
-                                <label></label>
-                                <input type="text" placeholder="Mobile">
-                            </div>
 
-                            <div class="field">
-                                <label></label>
-                                <input type="text" placeholder="City">
-                            </div>
-                        </div>
-                        <div class="fields">
-                            <div class="field">
-                                <label></label>
-                                <input type="text" placeholder="Event Type">
-                            </div>
+                    <div class="row">
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;	<div class="ui equal width form">
+                            <div class="fields">
+                                <div class="eight field">
+                                    <label></label>
+                                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                                </div>
 
-                            <div class="field">
-                                <label></label>
-                                <input type="text" placeholder="Date">
+                            </div>
+                            <div class="fields">
+                                <div class="field">
+                                    <label></label>
+                                    <input type="number" id="number" name="number" min="0" placeholder="Mobile" required>
+                                </div>
+
+                                <div class="field">
+                                    <label></label>
+                                    <input type="text" id="city" name="city" placeholder="City" required>
+                                </div>
+                            </div>
+                            <div class="fields">
+                                <div class="field">
+                                    <label></label>
+                                    <input type="text" id="eventtype" name="eventtype" placeholder="Event Type" required>
+                                </div>
+
+                                <div class="field">
+                                    <label></label>
+                                    <input type="text" id="datepicker2" name="datepicker2" placeholder="Date" required>
+                                </div>
                             </div>
                         </div>
+                        <br>
+
                     </div>
-                    <br>
-
-                </div>
-                <p class="text-center">
-                    <a href="#0" class="btn_1  add_top_30">
-                        Explore More &emsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a><br><br>Whatsapp or Call AutoParty Event Planner at 8587045120<br><br>(OR)<BR><BR>Are you a Vendor?<a href="register.html">REGISTER</a>
-                </p>
-
+                    <p class="text-center">
+                        <button type="submit" value="email" name="command" class="btn_1 add_top_30">Send Details</button>
+                        <a href="/results" class="btn_1  add_top_30">Explore More &emsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        <br><br>Whatsapp or Call Ahwanam.com +91-7702053510 @*8587045120*@<br><br>(OR)<BR><BR>Are you a Vendor?<a href="#">REGISTER</a>
+                    </p>
+                </form>
             </div>
 
         </div>
@@ -470,7 +477,7 @@
     @*<script src="~/newdesign/js/daterangepicker.js"></script>*@
     @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
     <script>
-        $('#datetimepicker1').daterangepicker({
+        $('#datetimepicker1,#datepicker2').daterangepicker({
             singleDatePicker: true,
             locale: {
                 format: 'DD/MM/YYYY'

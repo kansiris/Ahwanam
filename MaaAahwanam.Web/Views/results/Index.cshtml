@@ -4,6 +4,15 @@
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
 }
 
+@*<style>
+        /* Cosmetic only */
+    #easyPaginate {width:300px;}
+    #easyPaginate img {display:block;margin-bottom:10px;}
+    .easyPaginateNav a {padding:5px;}
+    .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
+    </style>*@
+
+
 <main>
 
     <section class="hero_in tours">
@@ -197,31 +206,28 @@
             <!-- /aside -->
             @*@{ Html.RenderAction("Loadmore", "results");}*@
             <div class="col-lg-9">
-                <div class="isotope-wrapper" id="presults">
+                <div class="isotope-wrapper">
                     <div class="row">
-                        <input type="hidden" id="rcount" value="@ViewBag.count" />
-
                         @foreach (var item in ViewBag.venues)
-            {
-                            <div class="col-md-6 isotope-item popular" style="position: absolute; left: 0px; top: 0px;">
+                        {
+                            <div class="col-md-6 isotope-item popular">
                                 <div class="box_grid">
                                     <figure>
 
                                         <a href="#">
-                                            @if (item.logo != null)
-                {
-                                                <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
-                                            }
-                                            else if (item.image != null)
-                                            {
-                                                <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
-                                            }
-                                            <div class="read_more"><span>Read more</span></div>
-                                        </a>
+                                       @if (item.logo != null)
+                                       {
+                                        <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
+                                       }
+                                       else if (item.image != null)
+                                       {
+                                        <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
+                                       }
+                                       else
+                                       {
+                                        <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
+                                       }
+                                        <div class="read_more"><span>Read more</span></div></a>
                                         @*<small>20%CASH BACK</small>*@
                                     </figure>
                                     <div class="wrapper">
@@ -249,10 +255,14 @@
                                     </ul>
                                 </div>
                             </div>
+                        <!-- /box_grid -->
                         }
                     </div>
+                    <!-- /row -->
                 </div>
-                <p class="text-center"><button type="button" id="loadmore" class="btn_1 rounded add_top_30">Load more</button></p>
+                <!-- /isotope-wrapper -->
+
+                <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
             </div>
 
             <!-- /col -->
@@ -266,7 +276,12 @@
 </main>
 
 @section scripts{
-
+    @*<script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+        <script src="~/Scripts/jquery.easyPaginate.js"></script>*@
+    @*<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">*@
     <script>
         $("#loadmore").click(function () {
             var tcount = $('#rcount').val();
@@ -274,10 +289,25 @@
             $('#presults').empty().load(url);
         });
 
-        $("input:checkbox.icheck").click(function () {
-            if ($(this).is(":checked"))
-                alert('you are unchecked ' + $(this).val());
-        });
+
+        // init bootpag
+        //$('#easyPaginate').bootpag({
+        //    total: 10
+        //}).on("page", function(event, /* page number here */ num){
+        //     $("#content").html("Insert content"); // some ajax content loading...
+        //});
+
+
+        //$('#easyPaginate').easyPaginate({
+        //    paginateElement: 'div',
+        //    elementsPerPage: 6
+        //    //effect: 'climb'
+        //});
+
+        //$("input:checkbox.icheck").click(function () {
+        //    if ($(this).is(":checked"))
+        //        alert('you are unchecked ' + $(this).val());
+        //});
 
         //function filtervendors(val) {
         //    alert(val);
