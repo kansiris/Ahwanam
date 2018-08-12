@@ -11,6 +11,12 @@
     .easyPaginateNav a {padding:5px;}
     .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
     </style>*@
+<style>
+    .nice-select, .list {
+        width: 370px;
+    }
+</style>
+
 
 
 <main>
@@ -205,6 +211,7 @@
             </aside>
             <!-- /aside -->
             @*@{ Html.RenderAction("Loadmore", "results");}*@
+            <input type="hidden" id="rcount" value="@ViewBag.count" />
             <div class="col-lg-9">
                 <div class="isotope-wrapper">
                     <div class="row">
@@ -214,7 +221,7 @@
                                 <div class="box_grid">
                                     <figure>
 
-                                        <a href="#">
+                                        <a href="/viewservice">
                                        @if (item.logo != null)
                                        {
                                         <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
@@ -232,7 +239,7 @@
                                     </figure>
                                     <div class="wrapper">
 
-                                        <h3><a href="#">@item.BusinessName</a></h3>
+                                        <h3><a href="/viewservice">@item.BusinessName</a></h3>
                                         <div class="panel panel-default">
                                             <div class="ui segment">
                                                 <p>
@@ -257,12 +264,14 @@
                             </div>
                         <!-- /box_grid -->
                         }
+                        @*<img id="loader" alt="" src="~/CSSWeb/ajax-loader.gif" style="display: none" />*@
                     </div>
-                    <!-- /row -->
-                </div>
+                    <div class="row" id="allrecords"></div>
+                        <!-- /row -->
+                    </div>
                 <!-- /isotope-wrapper -->
 
-                <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+               @* <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>*@
             </div>
 
             <!-- /col -->
@@ -283,12 +292,63 @@
         <script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">*@
     <script>
-        $("#loadmore").click(function () {
-            var tcount = $('#rcount').val();
-            var url = '/results/Loadmore?count=' + tcount;
-            $('#presults').empty().load(url);
-        });
+        //$("#loadmore").click(function () {
+        //    var tcount = $('#rcount').val();
+        //    var url = '/results/Loadmore?count=' + tcount;
+        //    $('#presults').empty().load(url);
+        //});
 
+        var pageIndex = 1;
+        var pageCount;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                //alert("Scroll");
+                GetRecords();
+                //$("#loader").show();
+            }
+        });
+        function GetRecords() {
+            pageIndex++;
+            //if (pageIndex == 2 || pageIndex <= pageCount) {
+                $("#loader").show();
+                $.ajax({
+                    type: "POST",
+                    url: "results/Loadmore?count=" + pageIndex + "&&type=Venue",
+                    data: $('#rcount').val(),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess,
+                    failure: function (response) {
+                        alert("Failed to Load data");
+                    },
+                    error: function (response) {
+                        alert("Something went wrong!!! Try Again after sometime");
+                    }
+                });
+            //}
+        }
+        function OnSuccess(response) {
+           // alert("Data Loaded"); //allrecords
+            $.each(response, function (key, value) {
+                $("#allrecords").append("<div class='col-md-6 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3><a href='/viewservice'>" + value.BusinessName + "</a></h3> <div class='panel panel-default'> <div class='ui segment'> <p> Veg price per plate starts from &emsp;₹ " + value.cost1 + " </p> <p> Non-Veg price per plate starts from &emsp;₹ " + value.cost2 + " </p> </div> </div> </div> <ul> <li><div class='score'><span>BOOK NOW</span></div></li> </ul> </div> </div>");
+            });
+            //var xmlDoc = $.parseXML(response.d);
+            //var xml = $(xmlDoc);
+            //pageCount = parseInt(xml.find("PageCount").eq(0).find("PageCount").text());
+            //var customers = xml.find("Customers");
+            //customers.each(function () {
+            //    var customer = $(this);
+            //    var table = $("#dvCustomers table").eq(0).clone(true);
+            //    $(".name", table).html(customer.find("ContactName").text());
+            //    $(".city", table).html(customer.find("City").text());
+            //    $(".postal", table).html(customer.find("PostalCode").text());
+            //    $(".country", table).html(customer.find("Country").text());
+            //    $(".phone", table).html(customer.find("Phone").text());
+            //    $(".fax", table).html(customer.find("Fax").text());
+            //    $("#dvCustomers").append(table).append("<br />");
+            //});
+            //$("#loader").hide();
+        }
 
         // init bootpag
         //$('#easyPaginate').bootpag({
