@@ -123,8 +123,16 @@ namespace MaaAahwanam.Web.Controllers
             {
 
                 string message = vendorVenueSignUpService.deletedeal(id);
-                    
-                    ViewBag.vendormasterid = id;
+                    string strReq = "";
+                    encptdecpt encript = new encptdecpt();
+                    strReq = encript.Decrypt(ks);
+                    //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                    string[] arrMsgs = strReq.Split('&');
+                    string[] arrIndMsg;
+                    string id1 = "";
+                    arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                    id1 = arrIndMsg[1].ToString().Trim();
+                    ViewBag.vendormasterid = id1;
                 if (message == "success")
                 {
                         return Content("<script> alert('Deal Deleted');location.href='" + @Url.Action("Index", "NVendorDeals", new { ks = ks }) + "'</script>");
