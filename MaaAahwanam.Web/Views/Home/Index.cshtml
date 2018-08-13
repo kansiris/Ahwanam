@@ -47,14 +47,16 @@
         width:370px;
         }
     </style>
+    @using System.Globalization
 </head>
 <body>
     <div id="page">
         <header class="header menu_fixed">
             <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
             <div id="logo">
-                <a href="index-1.html">
-
+                <a href="/home">
+                    <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky">
+                    <img src="~/newdesignstyles/img/logo-sticky.png" width="40" height="36" data-retina="true" alt="" class="logo_normal">
                 </a>
             </div>
             <ul id="top_menu">
@@ -139,13 +141,13 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <input class="form-control" type="number" placeholder="Guests" required>
-                                        <i class="icon_calendar"></i>
+                                        <i class="icon-group"></i>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <input class="form-control" id="datetimepicker1" type="text" name="dates" placeholder="Date?" required>
-                                        @*<i class="icon_calendar"></i>*@
+                                        <i class="icon_calendar"></i>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
@@ -191,7 +193,7 @@
 
 
 
-            <div class="bg_color_1">
+            @*<div class="bg_color_1">
 
                 <div class="container margin_60_35">
                     <center><h3><b>HOW IT WORKS</b></h3></center><br>
@@ -222,13 +224,45 @@
                     <!-- /row -->
                 </div>
                 <!-- /container -->
+            </div>*@
+            <div class="bg_color_2">
+
+                <div class="container margin_60_35">
+                    <center><h3><b>HOW IT WORKS</b></h3></center><br>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/1circle.png">
+                                <h4>Select a package &amp; Shortlist your venues</h4>
+
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/2circle.png">
+                                <h4>Fill your basic details to block venue</h4>
+
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/3circle.png">
+                                <h4>Pay the final amount &amp; start celebrations</h4>
+
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
             </div>
             <!-- /bg_color_1 -->
 
 
             <div class="container-fluid margin_80_0">
                 <div class="main_title_2">
-                    <span><em></em></span>
+                    @*<span><em></em></span>*@
                     <h2><b>BEST DEALS FOR YOU</b></h2>
                     <p>Get Best Deals Now From Our Website, Checkout.</p>
                 </div>
@@ -250,10 +284,10 @@
                             <!-- /box_grid -->
 
                             <div class="col-xl-4 col-lg-6 col-md-6">
-                                <div class="box_grid ">
+                                <div class="box_grid_0">
                                     <figure>
 
-                                        <a href="#"><img src="~/newdesignstyles/images/banquet.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
+                                        <a href="#"><img src="~/newdesignstyles/images/banquet.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
                                         <small>Best Deals From $30 / Plate</small>
                                     </figure>
 
@@ -336,7 +370,7 @@
                             <div class="col-xl-4 col-lg-6 col-md-6">
                                 <div class="box_grid">
                                     <figure>
-                                        <a href="#0" class="wish_bt"></a>
+                                        <a href="#" class="wish_bt"></a>
                                         @if (item.logo != null)
                                         {
                                             <a href="#"><img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
@@ -352,20 +386,15 @@
 
                                     </figure>
                                     <div class="wrapper">
-                                        <h3><a href="#"> @item.BusinessName <a class="ui violet label">@item.subtype</a></a></h3>
+                                        @*<h3><a href="#"> @item.BusinessName <a class="ui violet label">@item.subtype</a></a></h3>*@
+                                        <h3><a href="tour-detail.html">@item.BusinessName&emsp;&emsp;&emsp;&emsp;<a class="ui violet label">@item.subtype</a><SPAN><br><p class="p_0">@item.Landmark,@item.City</p></SPAN></a></h3>
                                         <div class="panel panel-default">
                                             <div class="ui segment">
-                                                <p>
-                                                    Veg price per plate
-                                                    starts from &emsp;&#8377; <strong>@item.cost1</strong>
-                                                </p>
-                                                <p>
-                                                    Non-Veg price per plate
-                                                    starts from &emsp;&#8377; @item.cost2
-                                                </p>
+                                                <p>Veg price per plate <span>&emsp;&emsp;&emsp;&emsp;<strong>&#8377;@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span><br>starts from</p>
+                                                <p>Non-Veg price per plate <span>&emsp;&emsp;&emsp;&emsp;<strong>&#8377;@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span><br>starts from</p>
                                             </div>
                                         </div><br><br>
-                                        <p align="right">VIEW SPACE<i class="fa fa-long-arrow-right"></i> </p>
+                                        @*<p align="right">VIEW SPACE<i class="fa fa-long-arrow-right"></i> </p>*@
                                     </div>
                                 </div>
                             </div>
