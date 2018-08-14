@@ -17,7 +17,7 @@
     }
 </style>
 
-
+@using System.Globalization
 
 <main>
 
@@ -60,13 +60,13 @@
                     <div class="col-lg-2">
                         <div class="form-group">
                             <input class="form-control" type="number" placeholder="Guests" required>
-                            <i class="icon_calendar"></i>
+                            <i class="icon-group"></i>
                         </div>
                     </div>
                     <div class="col-lg-2">
                         <div class="form-group">
                             <input class="form-control" id="datetimepicker1" type="text" name="dates" placeholder="Date?" required>
-                            @*<i class="icon_calendar"></i>*@
+                            <i class="icon_calendar"></i>
                         </div>
                     </div>
                     <div class="col-lg-2">
@@ -215,63 +215,66 @@
             <div class="col-lg-9">
                 <div class="isotope-wrapper">
                     <div class="row">
-                        @foreach (var item in ViewBag.venues)
+                        @if (ViewBag.venues != null)
                         {
-                            <div class="col-md-6 isotope-item popular">
-                                <div class="box_grid">
-                                    <figure>
+                            foreach (var item in ViewBag.venues)
+                            {
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid">
+                                        <figure>
 
-                                        <a href="/viewservice">
-                                       @if (item.logo != null)
-                                       {
-                                        <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
-                                       }
-                                       else if (item.image != null)
-                                       {
-                                        <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
-                                       }
-                                       else
-                                       {
-                                        <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
-                                       }
-                                        <div class="read_more"><span>Read more</span></div></a>
-                                        @*<small>20%CASH BACK</small>*@
-                                    </figure>
-                                    <div class="wrapper">
+                                            <a href="/viewservice">
+                                                @if (item.logo != null)
+                                                {
+                                                    <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
+                                                }
+                                                else if (item.image != null)
+                                                {
+                                                    <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
+                                                }
+                                                <div class="read_more"><span>Read more</span></div>
+                                            </a>
+                                            @*<small>20%CASH BACK</small>*@
+                                        </figure>
+                                        <div class="wrapper">
 
-                                        <h3><a href="/viewservice">@item.BusinessName</a></h3>
-                                        <div class="panel panel-default">
-                                            <div class="ui segment">
-                                                <p>
-                                                    Veg price per plate
-                                                    starts from &emsp;₹ @item.cost1
-                                                </p>
-                                                <p>
-                                                    Non-Veg price per plate
-                                                    starts from &emsp;₹ @item.cost2
-                                                </p>
+                                            <h3><a href="/viewservice">@item.BusinessName</a></h3>
+                                            <div class="panel panel-default">
+                                                <div class="ui segment">
+                                                    <p>
+                                                        Veg price per plate
+                                                        starts from &emsp;₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")
+                                                    </p>
+                                                    <p>
+                                                        Non-Veg price per plate
+                                                        starts from &emsp;₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")
+                                                    </p>
+                                                </div>
+
+
+
                                             </div>
-
-
-
                                         </div>
+                                        <ul>
+                                            @*<li> 3 HALLS + 1 LAWN</li>*@
+                                            <li><div class="score"><span>BOOK NOW</span></div></li>
+                                        </ul>
                                     </div>
-                                    <ul>
-                                        @*<li> 3 HALLS + 1 LAWN</li>*@
-                                        <li><div class="score"><span>BOOK NOW</span></div></li>
-                                    </ul>
                                 </div>
-                            </div>
-                        <!-- /box_grid -->
+                            }
                         }
                         @*<img id="loader" alt="" src="~/CSSWeb/ajax-loader.gif" style="display: none" />*@
-                    </div>
-                    <div class="row" id="allrecords"></div>
-                        <!-- /row -->
-                    </div>
-                <!-- /isotope-wrapper -->
 
-               @* <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>*@
+                    </div>
+
+                    <!-- /row -->
+                </div>
+                <!-- /isotope-wrapper -->
+                @* <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>*@
             </div>
 
             <!-- /col -->
@@ -279,111 +282,43 @@
     </div>
     <!-- /container -->
 
-
-
-
 </main>
 
 @section scripts{
-    @*<script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
-        <script src="~/Scripts/jquery.easyPaginate.js"></script>*@
-    @*<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="//raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">*@
     <script>
-        //$("#loadmore").click(function () {
-        //    var tcount = $('#rcount').val();
-        //    var url = '/results/Loadmore?count=' + tcount;
-        //    $('#presults').empty().load(url);
-        //});
-
         var pageIndex = 1;
         var pageCount;
+        //if (pageIndex == 1)
+        //    GetRecords();
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                //alert("Scroll");
                 GetRecords();
-                //$("#loader").show();
             }
         });
         function GetRecords() {
             pageIndex++;
-            //if (pageIndex == 2 || pageIndex <= pageCount) {
-                $("#loader").show();
-                $.ajax({
-                    type: "POST",
-                    url: "results/Loadmore?count=" + pageIndex + "&&type=Venue",
-                    data: $('#rcount').val(),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: OnSuccess,
-                    failure: function (response) {
-                        alert("Failed to Load data");
-                    },
-                    error: function (response) {
-                        alert("Something went wrong!!! Try Again after sometime");
-                    }
-                });
-            //}
-        }
-        function OnSuccess(response) {
-           // alert("Data Loaded"); //allrecords
-            $.each(response, function (key, value) {
-                $("#allrecords").append("<div class='col-md-6 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3><a href='/viewservice'>" + value.BusinessName + "</a></h3> <div class='panel panel-default'> <div class='ui segment'> <p> Veg price per plate starts from &emsp;₹ " + value.cost1 + " </p> <p> Non-Veg price per plate starts from &emsp;₹ " + value.cost2 + " </p> </div> </div> </div> <ul> <li><div class='score'><span>BOOK NOW</span></div></li> </ul> </div> </div>");
+            $.ajax({
+                type: "POST",
+                url: "results/Loadmore?count=" + pageIndex + "&&type=Venue",
+                data: $('#rcount').val(),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    alert("Failed to Load data");
+                },
+                error: function (response) {
+                    alert("Something went wrong!!! Try Again after sometime");
+                }
             });
-            //var xmlDoc = $.parseXML(response.d);
-            //var xml = $(xmlDoc);
-            //pageCount = parseInt(xml.find("PageCount").eq(0).find("PageCount").text());
-            //var customers = xml.find("Customers");
-            //customers.each(function () {
-            //    var customer = $(this);
-            //    var table = $("#dvCustomers table").eq(0).clone(true);
-            //    $(".name", table).html(customer.find("ContactName").text());
-            //    $(".city", table).html(customer.find("City").text());
-            //    $(".postal", table).html(customer.find("PostalCode").text());
-            //    $(".country", table).html(customer.find("Country").text());
-            //    $(".phone", table).html(customer.find("Phone").text());
-            //    $(".fax", table).html(customer.find("Fax").text());
-            //    $("#dvCustomers").append(table).append("<br />");
-            //});
-            //$("#loader").hide();
         }
-
-        // init bootpag
-        //$('#easyPaginate').bootpag({
-        //    total: 10
-        //}).on("page", function(event, /* page number here */ num){
-        //     $("#content").html("Insert content"); // some ajax content loading...
-        //});
-
-
-        //$('#easyPaginate').easyPaginate({
-        //    paginateElement: 'div',
-        //    elementsPerPage: 6
-        //    //effect: 'climb'
-        //});
-
-        //$("input:checkbox.icheck").click(function () {
-        //    if ($(this).is(":checked"))
-        //        alert('you are unchecked ' + $(this).val());
-        //});
-
-        //function filtervendors(val) {
-        //    alert(val);
-        //    var url = '/results/Loadmore?type=' + val;
-        //    $('#presults').empty().load(url);
-        //}
-
-        //$('.service').click(function () {
-        //    alert("hi");
-        //    var val = $(this).val();
-        //    alert(val);
-        //});
-
-        //$("#allservices input:checkbox").on('change', function () {
-        //    if ($(this).is(':checked'))
-        //        alert('uncheckd ' + $(this).val());
-        //});
+        //#allrecords div:nth-last-child
+        function OnSuccess(response) {
+            alert("data loaded"); 
+            $.each(response, function (key, value) {
+                $("#allrecords .popular:last").append("<div class='col-md-6 isotope-item popular' style='position: absolute; left: 412px; top: 934px;'><div class='box_grid'><figure><a href='/viewservice'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3><a href='/viewservice'>" + value.BusinessName + "</a></h3> <div class='panel panel-default'> <div class='ui segment'> <p> Veg price per plate starts from &emsp;₹ " + value.cost1 + " </p> <p> Non-Veg price per plate starts from &emsp;₹ " + value.cost2 + " </p> </div> </div> </div> <ul> <li><div class='score'><span>BOOK NOW</span></div></li> </ul> </div> </div>");
+                //$("<div class='col-md-6 isotope-item popular' style='position: absolute; left: 412px; top: 934px;'><div class='box_grid'><figure><a href='/viewservice'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3><a href='/viewservice'>" + value.BusinessName + "</a></h3> <div class='panel panel-default'> <div class='ui segment'> <p> Veg price per plate starts from &emsp;₹ " + value.cost1 + " </p> <p> Non-Veg price per plate starts from &emsp;₹ " + value.cost2 + " </p> </div> </div> </div> <ul> <li><div class='score'><span>BOOK NOW</span></div></li> </ul> </div> </div>").insertAfter("#allrecords .popular:last");
+            });
+        }
     </script>
 }

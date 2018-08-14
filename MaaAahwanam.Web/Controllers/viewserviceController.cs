@@ -9,7 +9,7 @@ namespace MaaAahwanam.Web.Controllers
     public class viewserviceController : Controller
     {
         // GET: viewservice
-        public ActionResult Index()
+        public ActionResult Index(string id,string vid)
         {
             return View();
         }
