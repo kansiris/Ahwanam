@@ -1,5 +1,9 @@
 ﻿@using System.Globalization
-<div class="row">
+<div class="row" id="loadresults">
+    @if (ViewBag.venues.Count == 0)
+    {
+        <p>No Records</p>
+    }
     @foreach (var item in ViewBag.venues)
     {
         <div class="col-md-6 isotope-item popular">
@@ -19,27 +23,31 @@
                         {
                             <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
                         }
-                        <div class="read_more"><span>Read more</span></div>
+                        <div class="read_more"></div>  @*<span>Read more</span>*@
                     </a>
                     @*<small>20%CASH BACK</small>*@
                 </figure>
                 <div class="wrapper">
 
                     <h3>
-                        <a href="/viewservice"><strong>@item.BusinessName</strong></a>
-                        <a class="ui violet label">HOTEL</a>
-                        <span><br><p class="p_0">Hyderabad,Telangana</p></span>
+                        <a href="/viewservice">@item.BusinessName </a> @* - @item.subtypename*@
+                        <a class="ui violet label">@item.subtype</a>
+                        <span><br><p class="p_0">@item.Landmark,@item.City</p></span>
                     </h3>
                     <div class="panel panel-default">
                         <div class="ui segment">
-                            <p>
+
+                            <p>Veg price/plate <span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span><br>starts from</p>
+                            <p>Non-Veg price/plate <span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span><br>starts from</p>
+
+                            @*<p>
                                 Veg price per plate
                                 starts from &emsp;₹ <strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong>
                             </p>
                             <p>
                                 Non-Veg price per plate
                                 starts from &emsp;₹ <strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong>
-                            </p>
+                            </p>*@
                         </div>
                     </div>
                 </div>
