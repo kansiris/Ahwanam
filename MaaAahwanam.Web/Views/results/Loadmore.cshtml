@@ -1,58 +1,56 @@
-﻿<div class="col-lg-9" >
-    <div class="isotope-wrapper"id="presults">
-        <div class="row">
-            <input type="hidden" id="rcount" value="@ViewBag.count" />
+﻿@using System.Globalization
+<div class="row">
+    @foreach (var item in ViewBag.venues)
+    {
+        <div class="col-md-6 isotope-item popular">
+            <div class="box_grid">
+                <figure>
 
-            @foreach (var item in ViewBag.venues)
-            {
-                <div class="col-md-6 isotope-item popular" style="position: absolute; left: 0px; top: 0px;">
-                    <div class="box_grid">
-                        <figure>
+                    <a href="/viewservice">
+                        @if (item.logo != null)
+                        {
+                            <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
+                        }
+                        else if (item.image != null)
+                        {
+                            <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
+                        }
+                        else
+                        {
+                            <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
+                        }
+                        <div class="read_more"><span>Read more</span></div>
+                    </a>
+                    @*<small>20%CASH BACK</small>*@
+                </figure>
+                <div class="wrapper">
 
-                            <a href="#">
-                                @if (item.logo != null)
-                {
-                                    <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
-                                }
-                                else if (item.image != null)
-                                {
-                                    <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
-                                }
-                                else
-                                {
-                                    <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
-                                }
-                                <div class="read_more"><span>Read more</span></div>
-                            </a>
-                            @*<small>20%CASH BACK</small>*@
-                        </figure>
-                        <div class="wrapper">
-
-                            <h3><a href="#">@item.BusinessName</a></h3>
-                            <div class="panel panel-default">
-                                <div class="ui segment">
-                                    <p>
-                                        Veg price per plate
-                                        starts from &emsp;₹ @item.cost1
-                                    </p>
-                                    <p>
-                                        Non-Veg price per plate
-                                        starts from &emsp;₹ @item.cost2
-                                    </p>
-                                </div>
-
-
-
-                            </div>
+                    <h3>
+                        <a href="/viewservice"><strong>@item.BusinessName</strong></a>
+                        <a class="ui violet label">HOTEL</a>
+                        <span><br><p class="p_0">Hyderabad,Telangana</p></span>
+                    </h3>
+                    <div class="panel panel-default">
+                        <div class="ui segment">
+                            <p>
+                                Veg price per plate
+                                starts from &emsp;₹ <strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong>
+                            </p>
+                            <p>
+                                Non-Veg price per plate
+                                starts from &emsp;₹ <strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong>
+                            </p>
                         </div>
-                        <ul>
-                            @*<li> 3 HALLS + 1 LAWN</li>*@
-                            <li><div class="score"><span>BOOK NOW</span></div></li>
-                        </ul>
                     </div>
                 </div>
-            }
+                <ul>
+                    @*<li> 3 HALLS + 1 LAWN</li>*@
+                    <li><div class="score"><span>BOOK NOW</span></div></li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <p class="text-center"><button type="button" id="loadmore" class="btn_1 rounded add_top_30">Load more</button></p>
+                        <!-- /box_grid -->
+    }
+    @*<img id="loader" alt="" src="~/CSSWeb/ajax-loader.gif" style="display: none" />*@
 </div>
+<div class="row" id="allrecords"></div>
