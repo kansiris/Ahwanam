@@ -3,7 +3,7 @@
     ViewBag.Title = "::Search Results ::";
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
 }
-
+<link href="~/newdesign/css/alertify.css" rel="stylesheet" />
 @*<style>
         /* Cosmetic only */
     #easyPaginate {width:300px;}
@@ -17,17 +17,17 @@
     }
 </style>
 
-@using System.Globalization
+
 
 <main>
 
-    <section class="hero_in tours">
-        <div class="wrapper">
-            <div class="container">
-                <h1 class="fadeInUp"><span></span>Available Vendors</h1>
+    @*<section class="hero_in tours">
+            <div class="wrapper">
+                <div class="container">
+                    <h1 class="fadeInUp"><span></span>Available Vendors</h1>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>*@
     <!--/hero_in-->
 
     <div class="container margin_60_35">
@@ -50,6 +50,7 @@
                             <option>Baby Function</option>
                             <option>Birthday</option>
                             <option>Engagement</option>
+                            <option>Other</option>
                         </select>
                         @*<div class="form-group">
                                 <input class="form-control" type="text" placeholder="What Type of Event?" required>
@@ -122,7 +123,8 @@
                     <div class="collapse show" id="collapseFilters">
                         <div class="filter_type">
                             <h6>Service Types</h6>
-                            <ul id="allservices">
+                            <p id="selectedservices"></p>
+                            <ul class="allservices">
                                 <li>
                                     <label>
                                         <input type="checkbox" id="service" class="icheck">Hotel @*<small>(945)</small>*@
@@ -210,67 +212,11 @@
                 <!--/filters col-->
             </aside>
             <!-- /aside -->
-            @*@{ Html.RenderAction("Loadmore", "results");}*@
+            
             <input type="hidden" id="rcount" value="@ViewBag.count" />
             <div class="col-lg-9">
-                <div class="isotope-wrapper">
-                    <div class="row">
-                        @if (ViewBag.venues != null)
-                        {
-                            foreach (var item in ViewBag.venues)
-                            {
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid">
-                                        <figure>
-
-                                            <a href="/viewservice">
-                                                @if (item.logo != null)
-                                                {
-                                                    <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
-                                                }
-                                                else if (item.image != null)
-                                                {
-                                                    <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
-                                                }
-                                                else
-                                                {
-                                                    <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
-                                                }
-                                                <div class="read_more"><span>Read more</span></div>
-                                            </a>
-                                            @*<small>20%CASH BACK</small>*@
-                                        </figure>
-                                        <div class="wrapper">
-
-                                            <h3><a href="/viewservice">@item.BusinessName</a></h3>
-                                            <div class="panel panel-default">
-                                                <div class="ui segment">
-                                                    <p>
-                                                        Veg price per plate
-                                                        starts from &emsp;₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")
-                                                    </p>
-                                                    <p>
-                                                        Non-Veg price per plate
-                                                        starts from &emsp;₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")
-                                                    </p>
-                                                </div>
-
-
-
-                                            </div>
-                                        </div>
-                                        <ul>
-                                            @*<li> 3 HALLS + 1 LAWN</li>*@
-                                            <li><div class="score"><span>BOOK NOW</span></div></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        @*<img id="loader" alt="" src="~/CSSWeb/ajax-loader.gif" style="display: none" />*@
-
-                    </div>
-
+                <div class="isotope-wrapper" id="presults">
+                    @{ Html.RenderAction("Loadmore", "results");}
                     <!-- /row -->
                 </div>
                 <!-- /isotope-wrapper -->
@@ -285,11 +231,11 @@
 </main>
 
 @section scripts{
+    <script src="~/newdesign/js/alertify.js"></script>
     <script>
-        var pageIndex = 1;
+        //Lazy Loading.......
+        var pageIndex = 0;
         var pageCount;
-        //if (pageIndex == 1)
-        //    GetRecords();
         $(window).scroll(function () {
             if ($(window).scrollTop() == $(document).height() - $(window).height()) {
                 GetRecords();
@@ -299,7 +245,7 @@
             pageIndex++;
             $.ajax({
                 type: "POST",
-                url: "results/Loadmore?count=" + pageIndex + "&&type=Venue",
+                url: "results/LazyLoad?count=" + pageIndex + "&&type=Venue",
                 data: $('#rcount').val(),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -312,13 +258,35 @@
                 }
             });
         }
-        //#allrecords div:nth-last-child
         function OnSuccess(response) {
-            alert("data loaded"); 
+            alertify.success('New Records Loaded!!! Scroll Down to View');
             $.each(response, function (key, value) {
-                $("#allrecords .popular:last").append("<div class='col-md-6 isotope-item popular' style='position: absolute; left: 412px; top: 934px;'><div class='box_grid'><figure><a href='/viewservice'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3><a href='/viewservice'>" + value.BusinessName + "</a></h3> <div class='panel panel-default'> <div class='ui segment'> <p> Veg price per plate starts from &emsp;₹ " + value.cost1 + " </p> <p> Non-Veg price per plate starts from &emsp;₹ " + value.cost2 + " </p> </div> </div> </div> <ul> <li><div class='score'><span>BOOK NOW</span></div></li> </ul> </div> </div>");
-                //$("<div class='col-md-6 isotope-item popular' style='position: absolute; left: 412px; top: 934px;'><div class='box_grid'><figure><a href='/viewservice'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3><a href='/viewservice'>" + value.BusinessName + "</a></h3> <div class='panel panel-default'> <div class='ui segment'> <p> Veg price per plate starts from &emsp;₹ " + value.cost1 + " </p> <p> Non-Veg price per plate starts from &emsp;₹ " + value.cost2 + " </p> </div> </div> </div> <ul> <li><div class='score'><span>BOOK NOW</span></div></li> </ul> </div> </div>").insertAfter("#allrecords .popular:last");
+                $("#allrecords").append("<div class='col-md-6 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3><a href='/viewservice'>" + value.BusinessName + "</a></h3> <div class='panel panel-default'> <div class='ui segment'> <p> Veg price per plate starts from &emsp;₹ " + value.cost1 + " </p> <p> Non-Veg price per plate starts from &emsp;₹ " + value.cost2 + " </p> </div> </div> </div> <ul> <li><div class='score'><span>BOOK NOW</span></div></li> </ul> </div> </div>");
             });
         }
+    </script>
+
+    <script>
+        // Records Filter
+        //$('ul.allservices > li').on("click", function () {
+        $('.iCheck-helper').click(function () {
+            var value = $(this).parents("label").text().trim();
+            var url = "results/Loadmore?count=1&&type=" + value;
+            $('#presults').empty().load(url);
+            //alert(value);
+            // Working Code
+            //$(" ul.allservices > li").each(function () {
+            //    if ($(this).find("input[type='checkbox']").is(':checked')) {
+            //        var checkText = value;
+            //        $("#selectedservices").append(checkText + ", ");
+            //    }
+            //});
+            // Working Code
+        });
+        //});
+
+
+
+
     </script>
 }

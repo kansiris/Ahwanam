@@ -20,21 +20,26 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-        //public PartialViewResult Loadmore(string count, string type)
-        //{
-        //    type = (type == null) ? "Venue" : type;
-        //    int takecount = (count == "" || count == null) ? 6 : int.Parse(count) + 6;
-        //    ViewBag.count = takecount;
-        //    ViewBag.venues = resultsPageService.GetAllVendors(type).Take(takecount).ToList();
-        //    return PartialView("Loadmore");
-        //}
+        public PartialViewResult Loadmore(string count, string type)
+        {
+            type = (type == null) ? "Venue" : type;
 
-        public JsonResult Loadmore(string count, string type)
+            int takecount = (count == "" || count == null) ? 6 : int.Parse(count) + 6;
+            ViewBag.count = takecount;
+            ViewBag.venues = resultsPageService.GetAllVendors(type).Take(takecount).ToList();
+            return PartialView("Loadmore");
+        }
+
+        public JsonResult LazyLoad(string count, string type)
         {
             type = (type == null) ? "Venue" : type;
             int takecount = (count == "" || count == null) ? 6 : int.Parse(count) * 6;
             ViewBag.count = takecount;
-            List<GetVendors_Result> vendorslist = resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList();
+            List<GetVendors_Result> vendorslist;
+            if (takecount == 6)
+                vendorslist = resultsPageService.GetAllVendors(type).Take(12).ToList();
+            else
+                vendorslist = resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList();
             return Json(vendorslist);
         }
     }
