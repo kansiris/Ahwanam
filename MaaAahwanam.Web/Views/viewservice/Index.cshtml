@@ -5,7 +5,65 @@
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
+<style>
+     
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+     body {
+        font-family: "Lato", sans-serif;
+    }
 
+    .tablink {
+        background-color: #fff;
+        color: #212529;
+        float: left;
+        border: 1px;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 14px;
+        width: 16%;
+    }
+
+        .tablink:hover {
+            background-color: #fff;
+        }
+
+    /* Style the tab content */
+    .tabcontent {
+        color: white;
+        display: none;
+        padding: 50px;
+        text-align: center;
+    }
+
+    #Food Packages {
+        background-color: white;
+    }
+
+    #Hall Details {
+        background-color: white;
+    }
+
+    #Description {
+        background-color: white;
+    }
+
+    #Gallery {
+        background-color: white;
+    }
+
+    #Check Availability {
+        background-color: white;
+    }
+
+    #Policies {
+        background-color: white;
+    }
+</style>
 <main style="transform: none;">
 
 
@@ -18,15 +76,18 @@
                         <div class="uk-position-relative uk-visible-toggle uk-light uk-slideshow" uk-slideshow="min-height: 300; max-height: 600; animation: push">
 
                             <ul class="uk-slideshow-items" style="height: 410px;">
+@foreach (var item in ViewBag.allimages)
+{
                                 <li class="uk-active uk-transition-active" style="transform: translateX(0px); z-index: 0;">
-                                    <img src="images/decorator.jpg" alt="" uk-cover="" class="uk-cover" style="height: 486px; width: 730px;">
+                                    <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height: 486px; width: 730px;" />
+                                  
+                                </li>}
+                                @*<li>
+                                    <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
                                 </li>
                                 <li>
-                                    <img src="images/decorator1.jpg" alt="" uk-cover="" class="uk-cover">
-                                </li>
-                                <li>
-                                    <img src="images/decorator3.jpg" alt="" uk-cover="" class="uk-cover">
-                                </li>
+                                    <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
+                                </li>*@
                             </ul>
 
                             <a class="uk-position-center-left uk-position-small uk-hidden-hover uk-slidenav-previous uk-icon uk-slidenav" href="#" uk-slidenav-previous="" uk-slideshow-item="previous"><svg width="14" height="24" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.4" points="12.775,1 1.225,12 12.775,23 "></polyline></svg></a>
@@ -39,8 +100,8 @@
 
                         <div uk-grid="" class="uk-grid">
 
-                            <p class="uk-first-column"><b>HOTEL RADISSON BLUE</b> <span><br>Hyderabad,Telangana</span></p>
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="images/heart.png">
+                            <p class="uk-first-column"><b>@ViewBag.Productinfo.BusinessName</b> <span><br>@ViewBag.location.City, @ViewBag.location.State</span></p>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://design.maa-aahwanam.com/panagea/images/heart.png">
                         </div>
                         <div uk-grid="" class="uk-grid">
                             <button class="tablink uk-first-column" onclick="openCity('Foodpackage', this, 'white')" id="defaultOpen" style="background-color: white;">Food Package</button>
@@ -102,24 +163,6 @@
 
                             </div>
 
-                            <script>
-function openCity(cityName,elmnt,color) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-    }
-    document.getElementById(cityName).style.display = "block";
-    elmnt.style.backgroundColor = color;
-
-}
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
-                            </script>
 
 
                         </div>
@@ -129,11 +172,7 @@ document.getElementById("defaultOpen").click();
                     <section id="description">
                         <h2>Description</h2>
                         <p>
-                            Luxurious farmhouse ideal to celebrate any kinds of big or small events with kids and adults. Luxurious farmhouse ideal to celebrate
-                            any kinds of big or small events with kids and adults. Luxurious farmhouse ideal to celebrate any kinds of big or small events with kids
-                            and adults. Luxurious farmhouse ideal to celebrate any kinds of big or small events with kids and adults. Luxurious farmhouse ideal to
-                            celebrate any kinds of big or small events with kids and adults. Luxurious farmhouse ideal to celebrate any kinds of big or small events
-                            with kids and adults.
+                            @ViewBag.Productinfo.Description
                         </p>
 
 
@@ -201,11 +240,30 @@ document.getElementById("defaultOpen").click();
                             <!-- /row -->
                         </div>
                         <!-- /rom_type -->
-                        <hr>
-                        <h3>Location</h3>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d121815.04965023292!2d78.3512053170692!3d17.425205468397902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x3bcb972f780bf19f%3A0xc73e20d77b92aeaf!2sxsilica+software+solutions!3m2!1d17.425217699999997!2d78.4212458!5e0!3m2!1sen!2sin!4v1534409755207" width="600" height="1250" frameborder="0" style="border:0" allowfullscreen=""></iframe>
-                        <!-- End Map -->
-                    </section>
+                        
+                        @*<table>
+                            <tr>
+                                <td>From : </td>
+                                <td>
+                                    <asp:DropDownList ID="ddFrom" runat="server"></asp:DropDownList>
+                                </td>
+                                <td>To : </td>
+                                <td>
+                                    <asp:DropDownList ID="ddTo" runat="server"></asp:DropDownList>
+                                </td>
+                                <td>
+                                    <input type="button" value="Get Direction" id="btnGetDirection" />
+                                </td>
+                            </tr>
+                        </table>*@
+                        <br />
+                            <h2>Address</h2>
+                        <p>@ViewBag.Productinfo.Address,@ViewBag.Productinfo.Landmark,@ViewBag.Productinfo.City,@ViewBag.Productinfo.State,@ViewBag.Productinfo.ZipCode
+                        </p>
+                            <div id="map"></div>
+
+                            <!-- End Map -->
+                        </section>
                 </div>
 
                 <!-- /col -->
@@ -213,33 +271,57 @@ document.getElementById("defaultOpen").click();
 
                 <aside class="col-lg-4" id="sidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
 
-
-
-
-
-
-
-
-
-
-
                     <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; top: 0px; left: 879.5px;">
                         <p class="box_text">MAIN AMENTIES</p><div class="box_detail">
 
+@if (Request.QueryString["type"] == "Venues" || Request.QueryString["type"] == "Hotel" || Request.QueryString["type"] == "Resort" || Request.QueryString["type"] == "Convention Hall")
+{
+    if (@ViewBag.particularVenue.CockTails != null && @ViewBag.particularVenue.CockTails == "Yes" && @ViewBag.particularVenue.CockTails != "")
+    {
                             <button class="small ui button_xs">
-                                Small
+                                CockTails
                             </button>
+    }
+    if (@ViewBag.particularVenue.Room != null && @ViewBag.particularVenue.Room == "Yes" && @ViewBag.particularVenue.Room != "")
+    {
                             <button class="small ui button_xs">
-                                Small
+                                Room
                             </button>
+    }
+    if (@ViewBag.particularVenue.DecorationAllowed != null && @ViewBag.particularVenue.DecorationAllowed == "Yes" && @ViewBag.particularVenue.DecorationAllowed != "")
+    {
+
                             <button class="small ui button_xs">
-                                Small
+                               DecorationAllowed
                             </button>
+    }
+    if (@ViewBag.particularVenue.HallType != null && @ViewBag.particularVenue.HallType == "Yes" && @ViewBag.particularVenue.HallType != "")
+    {
+
+        <button class="small ui button_xs">
+            HallType
+        </button>
+    }
+    if (@ViewBag.particularVenue.Wifi != null && @ViewBag.particularVenue.Wifi == "Yes" && @ViewBag.particularVenue.Wifi != "")
+    {
+
+        <button class="small ui button_xs">
+            Wifi
+        </button>
+    }
+    if (@ViewBag.particularVenue.LiveCookingStation != null && @ViewBag.particularVenue.LiveCookingStation == "Yes" && @ViewBag.particularVenue.LiveCookingStation != "")
+    {
+
+        <button class="small ui button_xs">
+            LiveCookingStation
+        </button>
+    }
+}
                         </div><div class="uk-section uk-section-large uk-section-muted">
                             <div class="uk-container">
-                                <img src="images/left.png">
-                                <img src="images/date.png">
-                                <img src="images/right.png">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/left.png">
+    <img src="http://design.maa-aahwanam.com/panagea/images/date.png">
+    <img src="http://design.maa-aahwanam.com/panagea/images/right.png">
                                 <form class="uk-form-stacked">
 
                                     <div class="uk-margin">
@@ -269,8 +351,8 @@ document.getElementById("defaultOpen").click();
 
                                 </form>
 
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="images/icons/arrow1.png"></button>
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="images/icons/cart2.png"></button>
+                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></button>
+                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></button>
 
 
 
@@ -279,9 +361,9 @@ document.getElementById("defaultOpen").click();
 
                         </div><br><div class="uk-section uk-section-large uk-section-muted">
                             <div class="uk-container">
-                                <img src="images/left.png">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/left.png">
 
-                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <img src="images/right.png">
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <img src="http://design.maa-aahwanam.com/panagea/images/right.png">
                                 <form class="uk-form-stacked">
                                     <br>
 
@@ -312,11 +394,8 @@ document.getElementById("defaultOpen").click();
 
                                 </form>
 
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="images/icons/arrow1.png"></button>
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="images/icons/cart2.png"></button>
-
-
-
+                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></button>
+                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></button>
 
                             </div>
 
@@ -336,7 +415,31 @@ document.getElementById("defaultOpen").click();
 
 
 @section scripts{
+<script>
+// Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: @ViewBag.latitude, lng: @ViewBag.longitude};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 4, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap">
+</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
 @*<script src="uikit/dist/js/uikit-icons.min.js"></script>*@
+
+
+
+
+
+
+
+
+
     }
