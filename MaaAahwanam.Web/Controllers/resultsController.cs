@@ -23,7 +23,9 @@ namespace MaaAahwanam.Web.Controllers
         public PartialViewResult Loadmore(string count, string type)
         {
             type = (type == null) ? "Venue" : type;
-
+            type = (type == "Convention") ? "Convention Hall" : type;
+            type = (type == "Banquet") ? "Banquet Hall" : type;
+            type = (type == "Function") ? "Function Hall" : type;
             int takecount = (count == "" || count == null) ? 6 : int.Parse(count) + 6;
             ViewBag.count = takecount;
             ViewBag.venues = resultsPageService.GetAllVendors(type).Take(takecount).ToList();
