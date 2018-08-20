@@ -123,7 +123,7 @@
                     <div class="collapse show" id="collapseFilters">
                         <div class="filter_type">
                             <h6>Service Types</h6>
-                            <p id="selectedservices" style="display:none"></p>
+                            <p id="selectedservices" style="display:none"></p> 
                             <ul class="allservices">
                                 <li>
                                     <label>
@@ -244,7 +244,7 @@
         function GetRecords() {
             pageIndex++;
             var servicetype = 'Venue';
-            var selectedservices = $('#selectedservices').text();
+            var selectedservices = $('#selectedservices').text().slice(0, -1);
             //alert(selectedservices.slice(0, -2));
             //alert(selectedservices.length);
             //if (selectedservices != '') { servicetype = selectedservices.trimEnd(',');}
@@ -279,17 +279,26 @@
         // Records Filter
         $('.iCheck-helper').click(function () {
             var value = $(this).parents("label").text().trim();
-            if ($(this).parents("label").find("input[type='checkbox']").is(':checked')) {
-                var url = "results/Loadmore?count=1&&type=" + value;
-                $('#presults').empty().load(url);
-            }
+
+            //if ($(this).parents("label").find("input[type='checkbox']").is(':checked')) {
+            //    var url = "results/Loadmore?count=1&&type=" + value;
+            //    $('#presults').empty().load(url);
+            //}
+
             // Working Code
+            var count = 0;
             $(" ul.allservices > li").each(function () {
-                if ($(this).find("input[type='checkbox']").is(':checked')) {
-                    var checkText = value;
-                    $("#selectedservices").append(checkText + ", ");
+                if (count == 0) {
+                    if ($(this).find("input[type='checkbox']").is(':checked')) {
+                        var checkText = value;
+                        $("#selectedservices").append(checkText + ",");
+                        count = 1;
+                        var url = "results/Loadmore?count=1&&type=" + $("#selectedservices").text().slice(0, -1);
+                        $('#presults').empty().load(url);
+                    }
                 }
             });
+            
         });
     </script>
 }

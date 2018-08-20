@@ -21,11 +21,11 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Index(string command)
-        {
-            return RedirectToAction("Index", "results");
-        }
+        //[HttpPost]
+        //public ActionResult Index(string command,string loc,string selectevent, string guests,string datetimepicker1)
+        //{
+        //    return RedirectToAction("Index", "results");
+        //}
 
 
 
