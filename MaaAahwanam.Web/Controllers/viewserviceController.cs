@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Service;
+using System.Web.Routing;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
@@ -26,13 +27,25 @@ namespace MaaAahwanam.Web.Controllers
         VendorDatesService vendorDatesService = new VendorDatesService();
         CartService cartService = new CartService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+        ResultsPageService resultsPageService = new ResultsPageService();
+
+         string vid;
         // GET: viewservice
-        public ActionResult Index(string id, string vid)
+        public ActionResult Index(string name, string type)
 
         {
             try
             {
-                ViewBag.count = 2;
+                type = (type == null) ? "Venue" : type;
+                type = (type == "Convention") ? "Convention Hall" : type;
+                type = (type == "Banquet") ? "Banquet Hall" : type;
+                type = (type == "Function") ? "Function Hall" : type;
+               
+             // var ks1 = resultsPageService.GetAllVendors(type).ToList().Where(x=>x.BusinessName == businessname).FirstOrDefault();
+
+                var ks = resultsPageService.GetAllVendors(type).Where(m => m.BusinessName.ToLower().Contains(name.ToLower().TrimEnd())).FirstOrDefault();
+                string id =  ks.Id.ToString();
+                vid = ks.subid.ToString();
 
                 //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
                 var data = vendorMasterService.GetVendor(long.Parse(id)); //
@@ -67,9 +80,6 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.particularDecorator = Decoratorrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
                 ViewBag.particularPhotography = Photographyrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
                 ViewBag.particularOther = Otherrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
-
-
-
 
                 string price = "";
 
@@ -146,12 +156,16 @@ namespace MaaAahwanam.Web.Controllers
                     //else
                     //    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
                 }
+                return View();
 
             }
             catch (Exception)
             {
                 return RedirectToAction("Index", "Nhomepage");
             }
-            return View();
         }
+
+
+
+
     } }
