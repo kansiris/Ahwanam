@@ -23,18 +23,7 @@ namespace MaaAahwanam.Web.Controllers
         public PartialViewResult Loadmore(string count, string type)
         {
             type = (type == null) ? "Venue" : type;
-            var selectedservices = type.Split(',');
-            //List<GetVendors_Result> list = new List<GetVendors_Result>();
-            //int recordcount = 0;
-            //recordcount = 6/selectedservices.Count() ;
-            //for (int i = 0; i < selectedservices.Count(); i++)
-            //{
-            //    selectedservices[i] = (selectedservices[i] == "Convention") ? "Convention Hall" : selectedservices[i];
-            //    selectedservices[i] = (selectedservices[i] == "Banquet") ? "Banquet Hall" : selectedservices[i];
-            //    selectedservices[i] = (selectedservices[i] == "Function") ? "Function Hall" : selectedservices[i];
-            //    var getrecords = resultsPageService.GetAllVendors(selectedservices[i]).Take(recordcount).ToList();
-            //    list.AddRange(getrecords);
-            //}
+            var selectedservices = type.Split(',')
             ViewBag.count = 6;
             ViewBag.venues = vendorlist(6, selectedservices, "first"); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
             return PartialView("Loadmore");
