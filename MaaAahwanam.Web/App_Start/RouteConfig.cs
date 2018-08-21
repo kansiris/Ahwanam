@@ -14,13 +14,13 @@ namespace MaaAahwanam.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
                "viewservice",                                           // Route name
-               "name/{name}/{type}",                            // URL with parameters
-               new { controller = "viewservice", action = "Index" }  // Parameter defaults
+               "name/{name}/{type}",                                   // URL with parameters
+               new { controller = "viewservice", action = "Index" }    // Parameter defaults
            );
             routes.MapRoute(
                "viewservice1",                                           // Route name
-               "name/{name}",                            // URL with parameters
-               new { controller = "viewservice", action = "Index" }  // Parameter defaults
+               "name/{name}",                                         // URL with parameters
+               new { controller = "viewservice", action = "Index" }    // Parameter defaults
            );
             routes.MapRoute(
                 name: "Default",
@@ -28,10 +28,6 @@ namespace MaaAahwanam.Web
                 defaults: new { controller = "NHomePage", action = "Index", id = UrlParameter.Optional },
                  namespaces: new string[] { "MaaAahwanam.Web.Controllers" }
             );
-
-
-           
-
 
         }
     }

@@ -81,9 +81,6 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.particularPhotography = Photographyrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
                 ViewBag.particularOther = Otherrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
 
-
-
-
                 string price = "";
 
                 if (ViewBag.location == null)
@@ -159,12 +156,16 @@ namespace MaaAahwanam.Web.Controllers
                     //else
                     //    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
                 }
+                return View();
 
             }
             catch (Exception)
             {
                 return RedirectToAction("Index", "Nhomepage");
             }
-            return View();
         }
+
+
+
+
     } }
