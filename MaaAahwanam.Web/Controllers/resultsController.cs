@@ -42,7 +42,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult LazyLoad(string count, string type)
         {
-            type = (type == null) ? "Venue" : type;
+            type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');
             int takecount = (count == "" || count == null) ? 6 : int.Parse(count) * 6;
             ViewBag.count = takecount;

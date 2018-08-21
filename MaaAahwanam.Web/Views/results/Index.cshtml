@@ -32,49 +32,45 @@
 
     <div class="container margin_60_35">
         <form method="post">
-            <div class="col-lg-12">
-                <div class="row no-gutters custom-search-input-2 inner">
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Location" value="Hyderabad" required>
-                            <i class="icon_pin_alt"></i>
-                        </div>
-                    </div>
+            <div class="row no-gutters custom-search-input-2">
 
-                    <div class="col-lg-4">
-                        <select class="form-control" required id="selectevent">
-                            <option>Select Event</option>
-                            <option>Wedding</option>
-                            <option>Party</option>
-                            <option>Corporate</option>
-                            <option>Baby Function</option>
-                            <option>Birthday</option>
-                            <option>Engagement</option>
-                            <option>Other</option>
-                        </select>
-                        @*<div class="form-group">
-                                <input class="form-control" type="text" placeholder="What Type of Event?" required>
-
-                                <i class="icon-arrow-down"></i>
-                            </div>*@
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <input class="form-control" type="number" placeholder="Guests" required>
-                            <i class="icon-group"></i>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <input class="form-control" id="datetimepicker1" type="text" name="dates" placeholder="Date?" required>
-                            <i class="icon_calendar"></i>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="submit" class="btn_search" value="Search">
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Location" id="loc" name="loc" value="Hyderabad">
+                        <img src="http://design.maa-aahwanam.com/panagea/images/icons/location.png">
                     </div>
                 </div>
-                <!-- /row -->
+
+                <div class="col-lg-4">
+                    @*<input class="form-control" type="text" placeholder="What type of event" value="" required="" autocomplete="off">*@
+                    <select class="form-control" required id="selectevent" name="selectevent">
+                        <option value="" disabled selected>Select Event</option>
+                        <option value="Wedding">Wedding</option>
+                        <option value="Party">Party</option>
+                        <option value="Corporate">Corporate</option>
+                        <option value="Baby Function">Baby Function</option>
+                        <option value="Birthday">Birthday</option>
+                        <option value="Engagement">Engagement</option>
+                        @*<option value="Other">Other</option>*@
+                    </select>
+                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/checklist.png">
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <input class="form-control" type="number" id="guests" name="guests" placeholder="Guests">
+                        <img src="http://design.maa-aahwanam.com/panagea/images/icons/family.png">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date?" required>
+                        <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <input type="submit" id="btnsearch" class="btn_search" value="Search">
+                </div>
+
             </div>
         </form>
     </div>
@@ -263,7 +259,7 @@
         function OnSuccess(response) {
             alertify.success('New Records Loaded!!! Scroll Down to View');
             $.each(response, function (key, value) {
-                $('#allrecords').append("<div class='col-md-6 isotope-item popular'><div class='box_grid'><figure><a href='#'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h3> <a href='#'>" + value.BusinessName + "</a><a class='ui violet label'>" + value.subtype + "</a> <span><br><p class='p_0'>" + value.Landmark + "," + value.City + "</p></span></h3><div class='panel panel-default'><div class='ui segment'><p>Veg price/plate <span> &emsp;₹ <strong>" + value.cost1 + "</strong></span><br> starts from</p><p> Non-Veg price/plate <span> &emsp;₹ <strong>" + value.cost2 + "</strong></span><br> starts from</p></div></div></div><ul><li><div class='score'><span>BOOK NOW</span></div></li></ul></div></div>")
+                $('#allrecords').append("<div class='col-md-6 isotope-item popular'><div class='box_grid'><figure><a href='#'><img src='/vendorimages/" + value.image + "' class='img-fluid' alt='' width='800' height='533'> </a> </figure> <div class='wrapper'> <h5 class='uk-h5'>"+ value.BusinessName +"&emsp;&emsp;&emsp;&emsp;<a class='ui violet label'>" + value.subtype + "</a><p class='p_0'>" + value.Landmark + "," + value.City + "</p></h5> <div class='panel panel-default'><div class='ui segment'><p>Veg price/plate <span> &emsp;₹ <strong>" + value.cost1 + "</strong></span><br> starts from</p><p> Non-Veg price/plate <span> &emsp;₹ <strong>" + value.cost2 + "</strong></span><br> starts from</p></div></div></div><ul><li><div class='score'><span>BOOK NOW</span></div></li></ul></div></div>")
             });
             $('#loadresults').empty();
         }
