@@ -48,9 +48,9 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.count = takecount;
             List<GetVendors_Result> vendorslist;
             if (takecount == 6)
-                vendorslist = vendorlist(12, selectedservices, "first");//resultsPageService.GetAllVendors(type).Take(12).ToList();
+                vendorslist = resultsPageService.GetAllVendors(type).Take(12).ToList(); //vendorlist(12, selectedservices, "first");
             else
-                vendorslist = vendorlist(6, selectedservices, "next"); //resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList();
+                vendorslist = resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList(); //vendorlist(6, selectedservices, "next");
 
 
             return Json(vendorslist);
