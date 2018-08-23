@@ -23,7 +23,7 @@ namespace MaaAahwanam.Web.Controllers
         public PartialViewResult Loadmore(string count, string type)
         {
             type = (type == null) ? "Venue" : type;
-            var selectedservices = type.Split(',')
+            var selectedservices = type.Split(',');
             ViewBag.count = 6;
             ViewBag.venues = vendorlist(6, selectedservices, "first"); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
             return PartialView("Loadmore");
