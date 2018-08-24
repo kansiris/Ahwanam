@@ -15,17 +15,20 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string type, string loc, string eventtype, string count, string date)
         {
             type = (type == null) ? "Venue" : type;
-            ViewBag.venues = resultsPageService.GetAllVendors(type).Take(6).ToList();
+            var data = resultsPageService.GetAllVendors(type);
+            ViewBag.venues = data.Take(6).ToList();
+            ViewBag.minprice = data.Select(m => m.cost1).Min();
+            ViewBag.maxprice = data.Select(m => m.cost1).Max();
             ViewBag.count = 6;
             return View();
         }
 
         public PartialViewResult Loadmore(string count, string type)
         {
-            type = (type == null) ? "Venue" : type;
-            var selectedservices = type.Split(',')
+            type = (type == null || type == "") ? "Venue" : type;
+            var selectedservices = type.Split(',');
             ViewBag.count = 6;
-            ViewBag.venues = vendorlist(6, selectedservices, "first"); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
+            ViewBag.venues = vendorlist(6, selectedservices, "first", 6); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
             return PartialView("Loadmore");
         }
 
@@ -37,19 +40,18 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.count = takecount;
             List<GetVendors_Result> vendorslist;
             if (takecount == 6)
-                vendorslist = resultsPageService.GetAllVendors(type).Take(12).ToList(); //vendorlist(12, selectedservices, "first");
+                vendorslist = vendorlist(12, selectedservices, "first", takecount);//resultsPageService.GetAllVendors(type).Take(12).ToList(); 
             else
-                vendorslist = resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList(); //vendorlist(6, selectedservices, "next");
-
-
+                vendorslist = vendorlist(6, selectedservices, "next", takecount);//resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList(); 
             return Json(vendorslist);
         }
 
-        public List<GetVendors_Result> vendorlist(int count, string[] selectedservices, string command)
+        public List<GetVendors_Result> vendorlist(int count, string[] selectedservices, string command,int takecount)
         {
             List<GetVendors_Result> list = new List<GetVendors_Result>();
             int recordcount = 0;
             recordcount = count / selectedservices.Count();
+            takecount = takecount / selectedservices.Count();
             for (int i = 0; i < selectedservices.Count(); i++)
             {
                 selectedservices[i] = (selectedservices[i] == "Convention") ? "Convention Hall" : selectedservices[i];
@@ -57,7 +59,7 @@ namespace MaaAahwanam.Web.Controllers
                 selectedservices[i] = (selectedservices[i] == "Function") ? "Function Hall" : selectedservices[i];
                 var getrecords = resultsPageService.GetAllVendors(selectedservices[i]);//.Take(recordcount).ToList();
                 if (command == "next")
-                    getrecords = getrecords.Skip(recordcount).Take(recordcount).ToList();
+                    getrecords = getrecords.Skip(takecount).Take(recordcount).ToList();
                 else if (command == "first")
                     getrecords = getrecords.Take(recordcount).ToList();
                 list.AddRange(getrecords);
