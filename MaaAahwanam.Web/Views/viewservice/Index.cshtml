@@ -6,15 +6,16 @@
 <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
 <style>
-     
-       /* Set the size of the div element that contains the map */
-      #map {
-        height: 400px;  /* The height is 400 pixels */
-        width: 100%;  /* The width is the width of the web page */
-       }
-     body {
+    /* Set the size of the div element that contains the map */
+    #map {
+        height: 400px; /* The height is 400 pixels */
+        width: 100%; /* The width is the width of the web page */
+    }
+
+    body {
         font-family: "Lato", sans-serif;
     }
+
 
     .tablink {
         background-color: #fff;
@@ -24,8 +25,9 @@
         outline: none;
         cursor: pointer;
         padding: 14px 16px;
-        font-size: 14px;
+        font-size: 13px;
         width: 16%;
+        font-family: lato;
     }
 
         .tablink:hover {
@@ -64,30 +66,32 @@
         background-color: white;
     }
 </style>
+
+
 <main style="transform: none;">
 
 
-    <div class="bg_color_1" style="transform: none;">
-        <div class="container margin_60_35" style="transform: none;">
-            <div class="row" style="transform: none;">
+    <div class="bg_color_1">
+        <div class="container margin_60_35">
+            <div class="row">
                 <div class="col-lg-8">
                     <div class="box_cart">
 
                         <div class="uk-position-relative uk-visible-toggle uk-light uk-slideshow" uk-slideshow="min-height: 300; max-height: 600; animation: push">
 
                             <ul class="uk-slideshow-items" style="height: 410px;">
-@foreach (var item in ViewBag.allimages)
-{
-                                <li class="uk-active uk-transition-active" style="transform: translateX(0px); z-index: 0;">
-                                    <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height: 486px; width: 730px;" />
-                                  
-                                </li>}
+                                @foreach (var item in ViewBag.allimages)
+                                {
+                                    <li class="uk-active uk-transition-active" style="transform: translateX(0px); z-index: 0;">
+                                        <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height: 486px; width: 730px;" />
+
+                                    </li>}
                                 @*<li>
-                                    <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
-                                </li>
-                                <li>
-                                    <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
-                                </li>*@
+                    <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
+                </li>
+                <li>
+                    <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
+                </li>*@
                             </ul>
 
                             <a class="uk-position-center-left uk-position-small uk-hidden-hover uk-slidenav-previous uk-icon uk-slidenav" href="#" uk-slidenav-previous="" uk-slideshow-item="previous"><svg width="14" height="24" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.4" points="12.775,1 1.225,12 12.775,23 "></polyline></svg></a>
@@ -98,337 +102,459 @@
 
                         <!--End step -->
 
-                        <div uk-grid="" class="uk-grid">
+                        <div uk-grid>
+                        
+                                <h5 class="uk-h5">@ViewBag.Productinfo.BusinessName <SPAN><br>@ViewBag.location.City,@ViewBag.location.State</SPAN></h5>
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="images/heart.png"></img>
+</div>
+                        <div uk-grid>
+                            <button class="tablink" onclick="openCity('Foodpackage', this, 'white')" id="defaultOpen"><b>KOHINOOR</b></button>
+                            <button class="tablink" onclick="openCity('Hall Dettails', this, 'white')"><b>PEACOCK</b></button>
+                            <button class="tablink" onclick="openCity('Description', this, 'white')"><b>OTHER HALL</b></button>
+                            <button class="tablink" onclick="openCity('gallery', this, 'white')"><b>OTHER ONE</b></button>
 
-                            <p class="uk-first-column"><b>@ViewBag.Productinfo.BusinessName</b> <span><br>@ViewBag.location.City, @ViewBag.location.State</span></p>
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="http://design.maa-aahwanam.com/panagea/images/heart.png">
-                        </div>
-                        <div uk-grid="" class="uk-grid">
-                            <button class="tablink uk-first-column" onclick="openCity('Foodpackage', this, 'white')" id="defaultOpen" style="background-color: white;">Food Package</button>
-                            <button class="tablink" onclick="openCity('Hall Dettails', this, 'white')">Hall Dettails</button>
-                            <button class="tablink" onclick="openCity('Description', this, 'white')">Description</button>
-                            <button class="tablink" onclick="openCity('gallery', this, 'white')">Gallery</button>
-                            <button class="tablink" onclick="openCity('check Availability', this, 'white')">Check Availability</button>
-                            <button class="tablink" onclick="openCity('Policies', this, 'white')">Policies</button>
-                            <div id="London" class="tabcontent" style="display: none;">
-                                <h3></h3>
-                                <p>London is the capital city of England.</p>
-                            </div>
 
-                            <div id="Foodpackage" class="tabcontent uk-grid-margin uk-first-column" style="display: block;">
-                                <h3></h3>
 
-                                <div class="ui card">
+                            <div id="Foodpackage" class="tabcontent">
 
-                                    <a class="image" href="#">
+                                <div class="container">
 
-                                    </a>
-                                    <div class="content">
-                                        <a class="header sticky" href="#"></a>
-                                        <div class="meta">
-                                            <button class="small ui button_xs">
-                                                Small
-                                            </button>
-                                            <button class="small ui button_xs">
-                                                Small
-                                            </button>
-                                            <button class="small ui button_xs">
-                                                Small
-                                            </button>
+                                    <div class="row">
+
+                                        <div class="col-sm">
+                                            <p class="last-child-1">
+                                                Super Veg PackageA<span>
+
+
+                                                    $<b>799</b>/ Person
+                                                </span>
+                                            </p>
                                         </div>
+                                        <div class="col-sm-sm">
+                                            <button type="button" class="btn btn-default btn-round-xs btn-xs">RICE</button>
+                                            <button class="small ui button_xs">soup(2)</button>
+                                            <button class="small ui button_xs">sald(4)</button>
+                                            <button class="small ui button_xs">Mains(9)</button>
+
+                                        </div>
+
+                                    </div><br><br>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <p class="last-child-1">
+                                                Super NonVeg PackageA<span>
+
+
+                                                    $<b>1099</b>/ Person
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-sm">
+
+                                            <button type="button" class="btn btn-default btn-round-xs btn-xs">RICE</button>
+                                            <button class="small ui button_xs">soup(2)</button>
+                                            <button class="small ui button_xs">sald(4)</button>
+                                            <button class="small ui button_xs">Mains(9)</button>
+
+
+
+                                        </div>
+
                                     </div>
+
+
                                 </div>
+
                             </div>
 
-                            <div id="Hall Details" class="tabcontent" style="display: none;">
+                            <div id="Hall Details" class="tabcontent">
                                 <h3></h3>
                                 <p>Tokyo is the capital of Japan.</p>
                             </div>
 
-                            <div id="description" class="tabcontent" style="display: none;">
+                            <div id="description" class="tabcontent">
                                 <h3></h3>
 
                             </div>
-                            <div id="Gallery" class="tabcontent" style="display: none;">
-                                <h3></h3>
-
-                            </div>
-
-                            <div id="Check Availability" class="tabcontent" style="display: none;">
-                                <h3></h3>
-
-                            </div>
-                            <div id="Policies" class="tabcontent" style="display: none;">
+                            <div id="Gallery" class="tabcontent">
                                 <h3></h3>
 
                             </div>
 
+                            <div id="Check Availability" class="tabcontent">
+                                <h3></h3>
+
+                            </div>
+                            <div id="Policies" class="tabcontent">
+                                <h3></h3>
+
+                            </div>
+
+                            <script>
+                                function openCity(cityName, elmnt, color) {
+                                    var i, tabcontent, tablinks;
+                                    tabcontent = document.getElementsByClassName("tabcontent");
+                                    for (i = 0; i < tabcontent.length; i++) {
+                                        tabcontent[i].style.display = "none";
+                                    }
+                                    tablinks = document.getElementsByClassName("tablink");
+                                    for (i = 0; i < tablinks.length; i++) {
+                                        tablinks[i].style.backgroundColor = "";
+                                    }
+                                    document.getElementById(cityName).style.display = "block";
+                                    elmnt.style.backgroundColor = color;
+
+                                }
+                                // Get the element with id="defaultOpen" and click on it
+                                document.getElementById("defaultOpen").click();
+                            </script>
 
 
                         </div>
 
 
                     </div>
-                    <section id="description">
-                        <h2>Description</h2>
-                        <p>
-                            @ViewBag.Productinfo.Description
-                        </p>
+
+                    <h3 class="uk-h3">HALL DETAILS</h3>
+
+                    <div class="<div class="col-lg-5">
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/banquet1.jpg">
 
 
+                                <table style="width:125%">
+
+                                    <tr>
+                                        <th>Area Name</th>
+                                        <th>Kohinoor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>area Type</td>
+                                        <td>Banquet</td>
+                                    </tr>
+                                    <tr>
+                                        <td>area Dimention</td>
+                                        <td>136sft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Max capacity</td>
+                                        <td>900</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Seating Style</td>
+                                        <td>Circular (400), U-Shape (200)</td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                            <div class="col-md-8">
+                                <br><br>
+                                <h4 class="uk-h4">AMENTIES</h4>
+                                <div class="row-4">
+
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>WEDDING</b></img></p>&emsp;&emsp;
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>DECORATOR</b></img></p>&emsp;&emsp;
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>FLORIST</b></img></p>&emsp;&emsp;
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>WEDDING</b></img></p>&emsp;&emsp;
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>DECORATOR</b></img></p>&emsp;&emsp;
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>FLORIST</b></img></p>&emsp;&emsp;
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>DECORATOR</b></img></p>
+                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/icons/wifi.png"><br><br><b>FLORIST</b></img></p>
+
+
+
+                                </div>
+                            </div>
+                        </div>
                         <!-- /row -->
+                    </div>
+                    <!-- /rom_type -->
 
-                        <hr>
-                        <div class="room_type first">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="img\gallery\hotel_list_1.jpeg" class="img-fluid" alt="">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>Single Room</h4>
-                                    <p>Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                                    <ul class="hotel_facilities">
-                                        <li><img src="img\hotel_facilites_icon_2.svg" alt="">Single Bed</li>
-                                        <li><img src="img\hotel_facilites_icon_4.svg" alt="">Free Wifi</li>
-                                        <li><img src="img\hotel_facilites_icon_5.svg" alt="">Shower</li>
-                                        <li><img src="img\hotel_facilites_icon_7.svg" alt="">Air Condition</li>
-                                        <li><img src="img\hotel_facilites_icon_8.svg" alt="">Hairdryer</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- /row -->
-                        </div>
-                        <!-- /rom_type -->
-                        <div class="room_type gray">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="img\gallery\hotel_list_2.jpeg" class="img-fluid" alt="">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>Double Room</h4>
-                                    <p>Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                                    <ul class="hotel_facilities">
-                                        <li><img src="img\hotel_facilites_icon_3.svg" alt="">Double Bed</li>
-                                        <li><img src="img\hotel_facilites_icon_4.svg" alt="">Free Wifi</li>
-                                        <li><img src="img\hotel_facilites_icon_6.svg" alt="">Bathtub</li>
-                                        <li><img src="img\hotel_facilites_icon_7.svg" alt="">Air Condition</li>
-                                        <li><img src="img\hotel_facilites_icon_8.svg" alt="">Hairdryer</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- /row -->
-                        </div>
-                        <!-- /rom_type -->
-                        <div class="room_type last">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="img\gallery\hotel_list_3.jpeg" class="img-fluid" alt="">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>Suite Room</h4>
-                                    <p>Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                                    <ul class="hotel_facilities">
-                                        <li><img src="img\hotel_facilites_icon_3.svg" alt="">King size Bed</li>
-                                        <li><img src="img\hotel_facilites_icon_4.svg" alt="">Free Wifi</li>
-                                        <li><img src="img\hotel_facilites_icon_6.svg" alt="">Bathtub</li>
-                                        <li><img src="img\hotel_facilites_icon_7.svg" alt="">Air Condition</li>
-                                        <li><img src="img\hotel_facilites_icon_9.svg" alt="">Swimming pool</li>
-                                        <li><img src="img\hotel_facilites_icon_3.svg" alt="">Hairdryer</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- /row -->
-                        </div>
-                        <!-- /rom_type -->
-                        
-                        @*<table>
-                            <tr>
-                                <td>From : </td>
-                                <td>
-                                    <asp:DropDownList ID="ddFrom" runat="server"></asp:DropDownList>
-                                </td>
-                                <td>To : </td>
-                                <td>
-                                    <asp:DropDownList ID="ddTo" runat="server"></asp:DropDownList>
-                                </td>
-                                <td>
-                                    <input type="button" value="Get Direction" id="btnGetDirection" />
-                                </td>
-                            </tr>
-                        </table>*@
-                        <br />
-                            <h2>Address</h2>
-                        <p>@ViewBag.Productinfo.Address,@ViewBag.Productinfo.Landmark,@ViewBag.Productinfo.City,@ViewBag.Productinfo.State,@ViewBag.Productinfo.ZipCode
-                        </p>
-                            <div id="map"></div>
 
-                            <!-- End Map -->
-                        </section>
+
+                    <hr><br><br>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <p class="last-child-1">
+                                    Super Veg PackageA<span>
+
+
+                                        $<b>799</b>/ Person
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-sm-sm">
+                                <br>
+                                <div class="row-button">
+                                    <a class="btn pill">curries</a>
+                                    <a class="btn pill">wifi</a>
+                                    <a class="btn pill">rice</a>
+                                </div>
+
+                                <div class="row-button">
+                                    <a class="btn pill">curries</a>
+                                    <a class="btn pill">wifi</a>
+                                    <a class="btn pill">rice</a>
+
+                                </div>
+
+                            </div>
+                            <div class="col-sm-sm">
+                                <br /><br />
+                                &emsp;&emsp;&emsp;<button type="button" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                            </div>
+
+
+                        </div><br><br>
+                        <div class="row">
+                            <div class="col-sm">
+                                <p class="last-child-1">
+                                    Super NonVeg PackageA<span>
+
+
+                                        $<b>1099</b>/ Person
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-sm-sm">
+                                <br>
+                                <div class="row-button">
+                                    <a class="btn pill">curries</a>
+                                    <a class="btn pill">wifi</a>
+                                    <a class="btn pill">rice</a>
+                                </div>
+
+                                <div class="row-button">
+                                    <a class="btn pill">curries</a>
+                                    <a class="btn pill">wifi</a>
+                                    <a class="btn pill">rice</a>
+
+                                </div>
+
+                            </div>
+                            <div class="col-sm-sm">
+                                <br /><br />
+                                &emsp;&emsp;&emsp;<button type="button" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <hr>
+
+                    <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
+                    <img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>
+                    <h3 class="uk-h3">GALLERY/VIDEOS</h3>
+                    <div class="container margin_60_35">
+
+                        <div class="grid">
+                            <ul class="magnific-gallery">
+                                <li>
+                                    <figure>
+                                        <img src="img\gallery\large\pic_1.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="img\gallery\large\pic_1.jpeg" title="Photo title" data-effect="mfp-zoom-in">
+                                                    <i class="pe-7s-albums"></i>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+
+                                <li>
+                                    <figure>
+                                        <img src="img\gallery\large\pic_4.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="https://vimeo.com/45830194" class="video" title="Video Vimeo">
+                                                    <span class="ti-control-play"></span>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                        <img src="img\gallery\large\pic_2.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="img\gallery\large\pic_2.jpeg" title="Photo title" data-effect="mfp-zoom-in">
+                                                    <i class="pe-7s-albums"></i>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                        <img src="img\gallery\large\pic_4.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="https://vimeo.com/45830194" class="video" title="Video Vimeo">
+                                                    <i class="pe-7s-film"></i>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!-- /grid gallery -->
+                    </div>
+                    <!-- /container -->
+                    <h3 class="uk-h3">VENUE POLICY</h3>
+                    <i class="fa fa-beer"></i>
+                    <h4>Need Help? Contact us</h4>
+                    <p>Cum appareat maiestatis interpretaris et, et sit.</p>
+                    </section>
                 </div>
 
                 <!-- /col -->
 
 
-                <aside class="col-lg-4" id="sidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+                <aside class="col-lg-4" id="sidebar">
+                    <p class="box_text">MAIN AMENTIES</p>
 
-                    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; top: 0px; left: 879.5px;">
-                        @if (@ViewBag.particularVenue != null && @ViewBag.particularVenue == "Yes" && @ViewBag.particularVenue != "")
-                        {
-
-                           <p class="box_text">MAIN AMENTIES</p>
-                        <div class="box_detail">
-
-@if (Request.QueryString["type"] == "Venues" || Request.QueryString["type"] == "Hotel" || Request.QueryString["type"] == "Resort" || Request.QueryString["type"] == "Convention Hall")
-{
-    if (@ViewBag.particularVenue.CockTails != null && @ViewBag.particularVenue.CockTails == "Yes" && @ViewBag.particularVenue.CockTails != "")
-    {
-                            <button class="small ui button_xs">
-                                CockTails
-                            </button>
-    }
-    if (@ViewBag.particularVenue.Room != null && @ViewBag.particularVenue.Room == "Yes" && @ViewBag.particularVenue.Room != "")
-    {
-                            <button class="small ui button_xs">
-                                Room
-                            </button>
-    }
-    if (@ViewBag.particularVenue.DecorationAllowed != null && @ViewBag.particularVenue.DecorationAllowed == "Yes" && @ViewBag.particularVenue.DecorationAllowed != "")
-    {
-
-                            <button class="small ui button_xs">
-                               DecorationAllowed
-                            </button>
-    }
-    if (@ViewBag.particularVenue.HallType != null && @ViewBag.particularVenue.HallType == "Yes" && @ViewBag.particularVenue.HallType != "")
-    {
-
-        <button class="small ui button_xs">
-            HallType
-        </button>
-    }
-    if (@ViewBag.particularVenue.Wifi != null && @ViewBag.particularVenue.Wifi == "Yes" && @ViewBag.particularVenue.Wifi != "")
-    {
-
-        <button class="small ui button_xs">
-            Wifi
-        </button>
-    }
-    if (@ViewBag.particularVenue.LiveCookingStation != null && @ViewBag.particularVenue.LiveCookingStation == "Yes" && @ViewBag.particularVenue.LiveCookingStation != "")
-    {
-
-        <button class="small ui button_xs">
-            LiveCookingStation
-        </button>
-    }
-}
-                        </div>
-                        }
-
-                        <div class="uk-section uk-section-large uk-section-muted">
-                            <div class="uk-container">
-                                <img src="http://design.maa-aahwanam.com/panagea/images/left.png">
-    <img src="http://design.maa-aahwanam.com/panagea/images/date.png">
-    <img src="http://design.maa-aahwanam.com/panagea/images/right.png">
-                                <form class="uk-form-stacked">
-
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label" for="form-stacked-text"><b>Guests</b></label>
-                                        <div class="uk-form-controls">
-                                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="300">
-                                        </div>
-
-                                    </div>
-
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label" for="form-stacked-text"><b>Food Packages</b></label>
-                                        <div class="uk-form-controls">
-                                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Super Veg(₹700/per plate)">
-                                        </div><br>
-                                        <h4 align="middle">₹<b>21000</b></h4>
-                                        <div>
-
-
-                                        </div>
-
-
-                                        <div>
-
-                                        </div>
-                                    </div>
-
-                                </form>
-
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></button>
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></button>
-
-
-
-
-                            </div>
-
-                        </div><br><div class="uk-section uk-section-large uk-section-muted">
-                            <div class="uk-container">
-                                <img src="http://design.maa-aahwanam.com/panagea/images/left.png">
-
-                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <img src="http://design.maa-aahwanam.com/panagea/images/right.png">
-                                <form class="uk-form-stacked">
-                                    <br>
-
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label" for="form-stacked-text"><b>Guests</b></label>
-                                        <div class="uk-form-controls">
-                                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="300">
-                                        </div>
-
-                                    </div>
-
-                                    <div class="uk-margin">
-                                        <label class="uk-form-label" for="form-stacked-text"><b>Food Packages</b></label>
-                                        <div class="uk-form-controls">
-                                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Super Veg(₹700/per plate)">
-                                        </div><br>
-                                        <h4 align="middle">₹<b>21000</b></h4>
-                                        <div>
-
-
-                                        </div>
-
-
-                                        <div>
-
-                                        </div>
-                                    </div>
-
-                                </form>
-
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></button>
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></button>
-
-                            </div>
+                    <div class="box_detail">
+                        <div class="row-button">
+                            <a class="btn pill" href="#">rice</a>
+                            <a class="btn pill" href="#">curries</a>
+                            <a class="btn pill" href="#">wifi</a>
+                            <a class="btn pill" href="#">rice</a>
 
                         </div>
-                        <div class="resize-sensor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
-                        <div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
-                            <div style="position: absolute; left: 0px; top: 0px; transition: 0s; width: 390px; height: 2120px;"></div></div>
-                        <div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
-                            <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div>
+                        <div class="row-button">
+                            <a class="btn pill" href="#">rice</a>
+                            <a class="btn pill" href="#">curries</a>
+                            <a class="btn pill" href="#">wifi</a>
+                            <a class="btn pill" href="#">rice</a>
+
+                        </div>
                     </div>
-                </aside>
+
+
+                    <div class="uk-section uk-section-large uk-section-muted">
+                        <div class="uk-container">
+                            <button type="button" class="btn btn-warning btn-circle-1"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMxLjQ5IDMxLjQ5IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMS40OSAzMS40OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cGF0aCBkPSJNMjEuMjA1LDUuMDA3Yy0wLjQyOS0wLjQ0NC0xLjE0My0wLjQ0NC0xLjU4NywwYy0wLjQyOSwwLjQyOS0wLjQyOSwxLjE0MywwLDEuNTcxbDguMDQ3LDguMDQ3SDEuMTExICBDMC40OTIsMTQuNjI2LDAsMTUuMTE4LDAsMTUuNzM3YzAsMC42MTksMC40OTIsMS4xMjcsMS4xMTEsMS4xMjdoMjYuNTU0bC04LjA0Nyw4LjAzMmMtMC40MjksMC40NDQtMC40MjksMS4xNTksMCwxLjU4NyAgYzAuNDQ0LDAuNDQ0LDEuMTU5LDAuNDQ0LDEuNTg3LDBsOS45NTItOS45NTJjMC40NDQtMC40MjksMC40NDQtMS4xNDMsMC0xLjU3MUwyMS4yMDUsNS4wMDd6IiBmaWxsPSIjNjQzNWM5Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                            <button type="button" class="btn btn-warning btn-circle-1"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMxLjQ5IDMxLjQ5IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMS40OSAzMS40OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cGF0aCBkPSJNMjEuMjA1LDUuMDA3Yy0wLjQyOS0wLjQ0NC0xLjE0My0wLjQ0NC0xLjU4NywwYy0wLjQyOSwwLjQyOS0wLjQyOSwxLjE0MywwLDEuNTcxbDguMDQ3LDguMDQ3SDEuMTExICBDMC40OTIsMTQuNjI2LDAsMTUuMTE4LDAsMTUuNzM3YzAsMC42MTksMC40OTIsMS4xMjcsMS4xMTEsMS4xMjdoMjYuNTU0bC04LjA0Nyw4LjAzMmMtMC40MjksMC40NDQtMC40MjksMS4xNTksMCwxLjU4NyAgYzAuNDQ0LDAuNDQ0LDEuMTU5LDAuNDQ0LDEuNTg3LDBsOS45NTItOS45NTJjMC40NDQtMC40MjksMC40NDQtMS4xNDMsMC0xLjU3MUwyMS4yMDUsNS4wMDd6IiBmaWxsPSIjNjQzNWM5Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                            <form class="uk-form-stacked">
+
+                                <div class="uk-margin">
+                                    <br><br>
+                                    <label class="uk-form-label" for="form-stacked-text"><h5 class="uk-h5">Guests</h5></label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="300">
+                                    </div>
+
+                                </div>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text"><h5 class="uk-h5">Food Packages</h5></label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Super Veg(&#8377;700/per plate)">
+                                    </div><br>
+                                    <h4 align="middle">&#8377;<b>21000</b></h4>
+                                    <div>
+
+
+                                    </div>
+
+
+                                    <div>
+
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></img></button>
+                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></img></button>
+
+
+
+
+                        </div>
+
+                    </div><br>
+
+                    <div class="uk-section uk-section-large uk-section-muted-scroll">
+                        <div class="uk-container">
+                            <center>
+                                <img src="images/left.png"></img>
+
+                                <img src="images/right.png"></img>
+                            </center>
+                            <form class="uk-form-stacked">
+                                <br>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text"><h5 class="uk-h5">Guests</h5></label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="300">
+                                    </div>
+
+                                </div>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text"><h5 class="uk-h5">Food Packages</h5></label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Super Veg(&#8377;700/per plate)">
+                                    </div><br>
+                                    <h4 align="middle">&#8377;<b>21000</b></h4>
+                                    <div>
+
+
+                                    </div>
+
+
+                                    <div>
+
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></img></button>
+                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></img></button>
+
+
+
+
+                        </div>
+
+                    </div>
+
+
+
             </div>
-
-
-
+            </aside>
 
         </div>
         <!-- /row -->
     </div>
     <!-- /container -->
+    
+    <!-- /bg_color_1 -->
 </main>
-
-
-@section scripts{
-<script src="~/newdesign/js/alertify.js"></script>
-<script>
+    <!--/main-->
+    <div id="toTop"></div><!-- Back to top button -->
+    <!-- COMMON SCRIPTS -->
+    @section scripts{
+    <script src="~/newdesign/js/alertify.js"></script>
+    <script>
 // Initialize and add the map
 function initMap() {
   // The location of Uluru
@@ -439,10 +565,10 @@ function initMap() {
   // The marker, positioned at Uluru
   var marker = new google.maps.Marker({position: uluru, map: map});
 }
-</script>
-<script async defer   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
 
 
     }
