@@ -40,8 +40,6 @@ namespace MaaAahwanam.Web.Controllers
                 vendorslist = resultsPageService.GetAllVendors(type).Take(12).ToList(); //vendorlist(12, selectedservices, "first");
             else
                 vendorslist = resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList(); //vendorlist(6, selectedservices, "next");
-
-
             return Json(vendorslist);
         }
 

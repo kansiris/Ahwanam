@@ -76,6 +76,9 @@ namespace MaaAahwanam.Web.Controllers
                 var Otherrecords = venorVenueSignUpService.GetVendorOther(long.Parse(id)); //, long.Parse(vid)
 
                 ViewBag.particularVenue = Venuerecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
+                //ViewBag.particularVenue1 = Venuerecords.Where(c => c.Id == long.Parse(vid)).Select.FirstOrDefault();
+
+
                 ViewBag.particularCatering = Cateringrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
                 ViewBag.particularDecorator = Decoratorrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
                 ViewBag.particularPhotography = Photographyrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
