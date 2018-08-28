@@ -109,7 +109,7 @@
                         <div class="uk-grid-sub">
                             @foreach (var item in ViewBag.particularVenue)
                             {
-                                <button class="tablink" onclick="openCity(@item.VenueType, this, 'white')" id="defaultOpen"><b>@item.VenueType</b></button>
+                                <button class="tablink" onclick="openCity(this, 'white')" href="#@item.VenueType"><b>@item.VenueType</b></button>
                             }
                             @*<button class="tablink" onclick="openCity('Hall Dettails', this, 'white')"><b>PEACOCK</b></button>
                                 <button class="tablink" onclick="openCity('Description', this, 'white')"><b>OTHER HALL</b></button>
@@ -120,12 +120,14 @@
                     <br><br>
                     @foreach (var item in ViewBag.particularVenue)
                     {
-                        <div class="container">
+                        <div class="container" id="@item.VenueType" >
                             <h3 class="uk-h3">@item.VenueType</h3>
                             @foreach (var item1 in @ViewBag.availablepackages)
                             {
                                 if (item1.VendorSubId == item.Id)
                                 {
+                                    <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid" >
+                                    <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
 
                                     <div class="row">
                                         <div class="col-sm">
@@ -155,7 +157,7 @@
                                         </div>
                                         <div class="col-sm-sm">
                                             <br /><br />
-                                            &emsp;&emsp;&emsp;<button type="button" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                            &emsp;&emsp;&emsp;<button type="button" onclick="ks()" class ="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
                                         </div>
 
 
@@ -276,49 +278,7 @@
                     </div>
 
 
-                    <div class="uk-section uk-section-large uk-section-muted">
-                        <div class="uk-container">
-                            <button type="button" class="btn btn-warning btn-circle-1"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMxLjQ5IDMxLjQ5IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMS40OSAzMS40OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cGF0aCBkPSJNMjEuMjA1LDUuMDA3Yy0wLjQyOS0wLjQ0NC0xLjE0My0wLjQ0NC0xLjU4NywwYy0wLjQyOSwwLjQyOS0wLjQyOSwxLjE0MywwLDEuNTcxbDguMDQ3LDguMDQ3SDEuMTExICBDMC40OTIsMTQuNjI2LDAsMTUuMTE4LDAsMTUuNzM3YzAsMC42MTksMC40OTIsMS4xMjcsMS4xMTEsMS4xMjdoMjYuNTU0bC04LjA0Nyw4LjAzMmMtMC40MjksMC40NDQtMC40MjksMS4xNTksMCwxLjU4NyAgYzAuNDQ0LDAuNDQ0LDEuMTU5LDAuNDQ0LDEuNTg3LDBsOS45NTItOS45NTJjMC40NDQtMC40MjksMC40NDQtMS4xNDMsMC0xLjU3MUwyMS4yMDUsNS4wMDd6IiBmaWxsPSIjNjQzNWM5Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
-                            <button type="button" class="btn btn-warning btn-circle-1"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMxLjQ5IDMxLjQ5IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMS40OSAzMS40OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cGF0aCBkPSJNMjEuMjA1LDUuMDA3Yy0wLjQyOS0wLjQ0NC0xLjE0My0wLjQ0NC0xLjU4NywwYy0wLjQyOSwwLjQyOS0wLjQyOSwxLjE0MywwLDEuNTcxbDguMDQ3LDguMDQ3SDEuMTExICBDMC40OTIsMTQuNjI2LDAsMTUuMTE4LDAsMTUuNzM3YzAsMC42MTksMC40OTIsMS4xMjcsMS4xMTEsMS4xMjdoMjYuNTU0bC04LjA0Nyw4LjAzMmMtMC40MjksMC40NDQtMC40MjksMS4xNTksMCwxLjU4NyAgYzAuNDQ0LDAuNDQ0LDEuMTU5LDAuNDQ0LDEuNTg3LDBsOS45NTItOS45NTJjMC40NDQtMC40MjksMC40NDQtMS4xNDMsMC0xLjU3MUwyMS4yMDUsNS4wMDd6IiBmaWxsPSIjNjQzNWM5Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
-                            <form class="uk-form-stacked">
-
-                                <div class="uk-margin">
-                                    <br><br>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Guests</h1></label>
-                                    <div class="uk-form-controls">
-                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="300">
-                                    </div>
-
-                                </div>
-
-                                <div class="uk-margin">
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Food Packages</h1></label>
-                                    <div class="uk-form-controls">
-                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Super Veg(&#8377;700/per plate)">
-                                    </div><br>
-                                    <h4 align="middle">&#8377;<b>21000</b></h4>
-                                    <div>
-
-
-                                    </div>
-
-
-                                    <div>
-
-                                    </div>
-                                </div>
-
-                            </form>
-
-                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></img></button>
-                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></img></button>
-
-
-
-
-                        </div>
-
-                    </div><br>
+                    
 
                     <div class="uk-section uk-section-large uk-section-muted">
                         <div class="uk-container">
@@ -341,7 +301,7 @@
                                 <div class="uk-margin">
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Food Packages</h1></label>
                                     <div class="uk-form-controls">
-                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Super Veg(&#8377;700/per plate)">
+                                        <input class="uk-input price" name="price" id="price" type="text" placeholder="Super Veg(&#8377;700/per plate)">
                                     </div><br>
                                     <h4 align="middle">&#8377;<b>21000</b></h4>
                                     <div>
@@ -357,8 +317,8 @@
 
                             </form>
 
-                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></img></button>
-                            <button type="submit" value="email" name="command" class="btn_1 add_top_30">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></img></button>
+                            <button class="btn_1 add_top_30" onclick="location.href = '/cart/index';" >BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></img></button>
+                            <button class="btn_1 add_top_30" onclick="location.href = '/cart/index';">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png"></img></button>
 
 
 
@@ -380,7 +340,6 @@
     </div>
 </main>
 <!--/main-->
-<div id="toTop"></div><!-- Back to top button -->
 <!-- COMMON SCRIPTS -->
 @section scripts{
     <script src="~/newdesign/js/alertify.js"></script>
@@ -400,6 +359,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
     <script>
+        //map script
         function openCity(cityName, elmnt, color) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -417,5 +377,23 @@
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
     </script>
+    <script>
+        function ks() {
+            alert('ks');
+        };
+
+        $(document).ready(function () {        
+        
+            var id =   $('#packageid').val(); 
+            var PackagePrice =  $('#PackagePrice').val();  
+
+            alert(PackagePrice);
+
+            $('.price').val(PackagePrice);
+
+
+        })
+       
+        </script>
 
 }
