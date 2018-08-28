@@ -1,4 +1,4 @@
-﻿
+﻿@using system;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
@@ -119,16 +119,18 @@
 
       <br><br>
                     @foreach (var item in ViewBag.particularVenue)
-      {
+                    {
                     <div class="container">
                         <h3 class="uk-h3">@item.VenueType</h3>
+@foreach (var item1 in ViewBag.availablepackages)
+{
                         <div class="row">
                             <div class="col-sm">
                                 <p class="last-child-1">
-                                    Super Veg PackageA<span>
+                                    @item1.PackageName.where(item.Id==item1.VendorSubId)<span>
 
 
-                                        $<b>799</b>/ Person
+                                        $<b>@item1.PackagePrice.where(item.Id == item1.VendorSubId)</b>/ Person
                                     </span>
                                 </p>
                             </div>
@@ -155,39 +157,7 @@
 
 
                         </div><br><br>
-                        <div class="row">
-                            <div class="col-sm">
-                                <p class="last-child-1">
-                                    Super NonVeg PackageA<span>
-
-
-                                        $<b>1099</b>/ Person
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="col-sm-sm">
-                                <br>
-                                <div class="row-button">
-                                    <a class="btn pill">curries</a>
-                                    <a class="btn pill">wifi</a>
-                                    <a class="btn pill">rice</a>
-                                </div>
-
-                                <div class="row-button">
-                                    <a class="btn pill">curries</a>
-                                    <a class="btn pill">wifi</a>
-                                    <a class="btn pill">rice</a>
-
-                                </div>
-
-                            </div>
-                            <div class="col-sm-sm">
-                                <br /><br />
-                                &emsp;&emsp;&emsp;<button type="button" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
-
-                            </div>
-                        </div>
-
+}
 
                     </div>
 
@@ -259,7 +229,7 @@
                         <!-- /grid gallery -->
                     </div>
                     <!-- /container -->
-                    
+
                     <h3 class="uk-h3">VENUE POLICIES</h3>
                     <P>Read all the terms & conditions of the banquet hall.</P><br><br>
 
@@ -268,6 +238,7 @@
                         <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
                         <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
                     </figure>
+                    }
                     <h3 class="uk-h3">Address</h3>
                         <p>
                             @ViewBag.Productinfo.Address,@ViewBag.Productinfo.Landmark,@ViewBag.Productinfo.City,@ViewBag.Productinfo.State,@ViewBag.Productinfo.ZipCode
