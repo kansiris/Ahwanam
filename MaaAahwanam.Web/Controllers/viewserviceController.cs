@@ -37,7 +37,7 @@ namespace MaaAahwanam.Web.Controllers
             var venues = viewservicesss.GetVendorVenue(long.Parse(id)).ToList();
             if (type == "Venue" || type == "Convention" || type == "Banquet" || type == "Function")
             {
-                var data = viewservicesss.GetVendor(long.Parse(id)); //
+                var data = viewservicesss.GetVendor(long.Parse(id)); 
                 var allimages = viewservicesss.GetVendorAllImages(long.Parse(id)).ToList();
                 ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
                 ViewBag.allimages = allimages;
@@ -52,7 +52,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 foreach (var item in venues)
                 {
-                    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList());
+                    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
                 }
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
