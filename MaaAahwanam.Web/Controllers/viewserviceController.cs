@@ -24,16 +24,20 @@ namespace MaaAahwanam.Web.Controllers
         //CartService cartService = new CartService();
         //private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         ResultsPageService resultsPageService = new ResultsPageService();
-        string vid;
+
+        
         // GET: viewservice
-        public ActionResult Index(string name, string type)
+        public ActionResult Index(string name, string type, string id)
         {
             type = (type == null) ? "Venue" : type;
             type = (type == "Convention") ? "Convention Hall" : type;
             type = (type == "Banquet") ? "Banquet Hall" : type;
             type = (type == "Function") ? "Function Hall" : type;
-            var ks = resultsPageService.GetAllVendors(type).Where(m => m.BusinessName.ToLower().Contains(name.ToLower().TrimEnd())).FirstOrDefault();
-            string id = ks.Id.ToString();
+            if (name != null)
+            {
+                var ks = resultsPageService.GetAllVendors(type).Where(m => m.BusinessName.ToLower().Contains(name.ToLower().TrimEnd())).FirstOrDefault();
+                id = ks.Id.ToString();
+            }
             var venues = viewservicesss.GetVendorVenue(long.Parse(id)).ToList();
             if (type == "Venue" || type == "Convention" || type == "Banquet" || type == "Function")
             {
@@ -42,6 +46,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
                 ViewBag.allimages = allimages;
                 ViewBag.Productinfo = data;
+                ViewBag.location = data.Address;
+                ViewBag.City = data.City;
+                ViewBag.State = data.State;
                 ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[0] : "17.385044";
                 ViewBag.longitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[1] : "78.486671";
 
