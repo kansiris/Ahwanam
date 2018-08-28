@@ -23,6 +23,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendorVenue.Where(p => p.VendorMasterId == id).ToList();
         }
+        public VendorVenue GetVendorVenue(long id, long vid)
+        {
+            return _dbContext.VendorVenue.Where(m => m.VendorMasterId == id && m.Id == vid).FirstOrDefault();
+        }
         public List<VendorsCatering> GetVendorCatering(long id)
         {
             return _dbContext.VendorsCatering.Where(p => p.VendorMasterId == id).ToList();
@@ -76,5 +80,11 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.OrderDetail.Where(m => m.VendorId == vid && m.subid == subid && m.ServiceType == servicetype).ToList();
         }
+        public GetProductsInfo_Result getProductsInfo(int vid, string servicetype, int Subvid)
+        {
+            var a = maaAahwanamEntities.GetProductsInfo(vid, servicetype, Subvid).FirstOrDefault();
+            return a;
+        }
+    
     }
 }

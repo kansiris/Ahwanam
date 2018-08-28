@@ -24,6 +24,10 @@ namespace MaaAahwanam.Service
         {
             return viewservicerepos.GetVendorVenue(id);
         }
+        public VendorVenue GetParticularVendorVenue(long id, long vid)
+        {
+            return viewservicerepos.GetVendorVenue(id, vid);
+        }
         public List<VendorsCatering> GetVendorCatering(long id)
         {
             return viewservicerepos.GetVendorCatering(id);
@@ -60,5 +64,10 @@ namespace MaaAahwanam.Service
         {
             return viewservicerepos.GetCount(vid, subid, servicetype);
         }
+        public GetProductsInfo_Result getProductsInfo_Result(int vid, string servicetype, int Subvid)
+        {
+            return viewservicerepos.getProductsInfo(vid, servicetype, Subvid);
+        }
+     
     }
 }
