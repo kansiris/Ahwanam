@@ -24,7 +24,8 @@ namespace MaaAahwanam.Web.Controllers
         //CartService cartService = new CartService();
         //private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         ResultsPageService resultsPageService = new ResultsPageService();
-        string vid;
+
+        
         // GET: viewservice
         public ActionResult Index(string name, string type)
         {
