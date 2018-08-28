@@ -36,15 +36,15 @@
 
                 <div class="col-lg-2">
                     <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Location" id="loc" name="loc" value="Hyderabad">
+                        <input class="form-control" type="text" placeholder="Location" id="loc" name="loc" value="@Request.QueryString["loc"]">
                         <img src="http://design.maa-aahwanam.com/panagea/images/icons/location.png">
                     </div>
                 </div>
 
                 <div class="col-lg-4">
                     @*<input class="form-control" type="text" placeholder="What type of event" value="" required="" autocomplete="off">*@
-                    <select class="form-control" required id="selectevent" name="selectevent">
-                        <option value="" disabled selected>Select Event</option>
+                    <select  required id="selectevent" name="selectevent">
+                        <option value="" disabled>Select Event</option>
                         <option value="Wedding">Wedding</option>
                         <option value="Party">Party</option>
                         <option value="Corporate">Corporate</option>
@@ -57,13 +57,13 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="form-group">
-                        <input class="form-control" type="number" id="guests" name="guests" placeholder="Guests">
+                        <input class="form-control" type="number" id="guests" name="guests" placeholder="Guests" value="@Request.QueryString["count"]">
                         <img src="http://design.maa-aahwanam.com/panagea/images/icons/family.png">
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="form-group">
-                        <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date?" required>
+                        <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date?" required value="@Request.QueryString["date"]">
                         <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
                     </div>
                 </div>
@@ -229,6 +229,13 @@
 @section scripts{
     <script src="~/newdesign/js/alertify.js"></script>
     <script>
+        if ('@Request.QueryString["eventtype"]' != '') 
+            $("span.current").text('@Request.QueryString["eventtype"]');
+        else 
+            $("span.current").text('Select Event');
+    </script>
+    <script>
+        
         //Lazy Loading.......
         var pageIndex = 0;
         var pageCount;
@@ -243,7 +250,7 @@
             var selectedservices = $('#selectedservices').text();
             $.ajax({
                 type: "POST",
-                url: "results/LazyLoad?count=" + pageIndex + "&&type=" + selectedservices,
+                url: "/results/LazyLoad?count=" + pageIndex + "&&type=" + selectedservices,
                 data: $('#rcount').val(),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -284,7 +291,7 @@
                 }
                 $("#selectedservices").empty().html(servicesarray.join(','));
             }
-            var url = "results/Loadmore?count=1&&type=" + $("#selectedservices").text();
+            var url = "/results/Loadmore?count=1&&type=" + $("#selectedservices").text();
             $('#presults').empty().load(url);
             
         });
