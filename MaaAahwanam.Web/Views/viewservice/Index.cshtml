@@ -317,7 +317,7 @@
                                 <div class="uk-margin">
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Guests</h1></label>
                                     <div class="uk-form-controls">
-                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="300">
+                                        <input class="uk-input guests" name="guests" id="guests" type="text" placeholder="300">
                                     </div>
                                 </div>
                                 <div class="uk-margin">
@@ -332,9 +332,9 @@
                                     </div>
                                 </div>
                             </form>
-                            <button type="submit" class="btn_1 add_top_30" formaction="/cart">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                            <a class="btn_1 add_top_30" href="/cart">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></a>
-                        </div>
+                            <button type="button" class="btn_1 add_top_30" onclick="booknow()">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                            <button type="button" class="btn_1 add_top_30" onclick="cart()">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>
+</div>
                     </div>
                 </aside>
             </div>
@@ -388,14 +388,25 @@
         function ks() {
             alert('ks');
         };
-
+        function booknow() {
+            var pid =   $('#packageid').val();
+            window.localStorage.setItem("cartid",pid)
+            var guests = window.localStorage.getItem("guests");
+            location.href='/cart/Index?pid=' + pid + '&&guest=' + guests;
+            alert(pid);
+        };
+        function cart() {
+            alert('cart');
+        };
         $(document).ready(function () {
-            var id =   $('#packageid').val();
+            var pid =   $('#packageid').val();
             var PackagePrice =  $('#PackagePrice').val();
             var PackageName =  $('#PackageName').val();
             //alert(PackagePrice);
             var SelectedPackage =''+PackageName+'(₹'+PackagePrice+'/per plate)';
+            var guest = window.localStorage.getItem("guests");
             $('.price').val(SelectedPackage);
+            $('.guests').val(guest);
         })
     </script>
 
