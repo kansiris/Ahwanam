@@ -30,7 +30,7 @@ namespace MaaAahwanam.Web.Controllers
 
             if (data != null)
             {
-                return Json("success", JsonRequestBehavior.AllowGet);
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
             return Json("unique", JsonRequestBehavior.AllowGet);
         }

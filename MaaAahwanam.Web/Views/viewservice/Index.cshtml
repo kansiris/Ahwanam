@@ -103,7 +103,7 @@
                         <div class="uk-grid-sub">
                             @foreach (var item in ViewBag.particularVenue)
                             {
-                                <button class="tablink" onclick="openCity(this, 'white')" href="#@item.VenueType"><b>@item.VenueType</b></button>
+                                <button class="tablink" href="#@item.VenueType"><b>@item.VenueType</b></button>
                             }
                             @*<button class="tablink" onclick="openCity('Hall Dettails', this, 'white')"><b>PEACOCK</b></button>
                                 <button class="tablink" onclick="openCity('Description', this, 'white')"><b>OTHER HALL</b></button>
@@ -119,10 +119,12 @@
                             {
                                 if (item1.VendorSubId == item.Id)
                                 {
+
                                     <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid">
                                     <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
                                     <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
-                                    <div class="row">
+                                    <div class="row packss">
+                                        @*<input type="hidden" value="@item1.PackageID,@item1.PackagePrice,@item1.PackageName" name="package" id="package">*@
                                         <div class="col-sm">
                                             <p class="last-child-1">
                                                 @item1.PackageName<span>
@@ -145,7 +147,7 @@
                                         </div>
                                         <div class="col-sm-sm">
                                             <br /><br />
-                                            &emsp;&emsp;&emsp;<button type="button" onclick="ks()" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                            &emsp;&emsp;&emsp;<button value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
                                         </div>
                                     </div><br><br>
                                 }
@@ -320,12 +322,12 @@
                                         <input class="uk-input guests" name="guests" id="guests" type="text" placeholder="300">
                                     </div>
                                 </div>
-                                <div class="uk-margin">
+                                <div class="uk-margin total">
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Food Packages</h1></label>
                                     <div class="uk-form-controls">
                                         <input class="uk-input price" name="price" id="price" type="text" placeholder="Super Veg(&#8377;700/per plate)">
                                     </div><br>
-                                    <h4 align="middle">&#8377;<b>21000</b></h4>
+                                    <h4 align="middle">&#8377;<b id="tp">000</b></h4>
                                     <div>
                                     </div>
                                     <div>
@@ -334,7 +336,7 @@
                             </form>
                             <button type="button" class="btn_1 add_top_30" onclick="booknow()">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
                             <button type="button" class="btn_1 add_top_30" onclick="cart()">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>
-</div>
+                        </div>
                     </div>
                 </aside>
             </div>
@@ -367,6 +369,7 @@
         $(window).load(function(){
             $("#datepicker").daterangepicker().trigger("click");
         });
+        //map
         function openCity(cityName, elmnt, color) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -382,15 +385,53 @@
 
         }
         // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
+        // document.getElementById("defaultOpen").click();
     </script>
     <script>
-        function ks() {
-            alert('ks');
+        function ks(val) {
+            var guest = '';
+            var gu1 = window.localStorage.getItem("guests");
+
+            alert(gu1);
+            if(gu1 == null)
+            {
+                guest =  $('.guests').val();
+            } else { guest = gu1 ;}
+            var s =  val.split(',');
+            var pprice = s[2];
+            var pname = s[1];
+            var pid = s[0];
+            var pid1 =   $('#packageid').val();
+            var expid =   window.localStorage.getItem("cartid");
+            alert('expid'+expid);
+            if (expid != null && expid == pid1)
+            {
+                var newpid = expid + ',' + pid ;
+                window.localStorage.removeItem("cartid")
+
+                window.localStorage.setItem("cartid",newpid)
+                alert('new'+newpid);
+                var cpid =  window.localStorage.getItem("cartid");
+                alert('created'+cpid);
+            } else {
+                window.localStorage.setItem("cartid",pid)
+            }
+            alert(pid + pname + pprice);
+            $('.price').val('');
+            $('.guests').val('');
+            var SelectedPackage =''+pname+'(₹'+pprice+'/per plate)';
+            $('.price').val(SelectedPackage);
+            $('.guests').val(guest);
+
+            var total = guest * pprice;
+            alert(total);
+            $('.tp').val(total);
+            $(".total b").empty().append(total);
+
         };
         function booknow() {
-            var pid =   $('#packageid').val();
-            window.localStorage.setItem("cartid",pid)
+            // var pid =   $('#packageid').val();
+            //window.localStorage.setItem("cartid",pid)
             var guests = window.localStorage.getItem("guests");
             location.href='/cart/Index?pid=' + pid + '&&guest=' + guests;
             alert(pid);
@@ -407,6 +448,10 @@
             var guest = window.localStorage.getItem("guests");
             $('.price').val(SelectedPackage);
             $('.guests').val(guest);
+            var total = guest * PackagePrice;
+            alert(total);
+            $(".total b").empty().append(total);
+
         })
     </script>
 
