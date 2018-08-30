@@ -6,7 +6,7 @@
     }
     @foreach (var item in ViewBag.venues)
     {
-        <div class="col-md-6 isotope-item popular">
+        <div class="col-md-4 isotope-item popular">
             <div class="box_grid">
                 <figure>
                     <a href="/viewservice/index?id=@item.Id">
@@ -24,21 +24,31 @@
                         }
                         <div class="read_more"></div>  @*<span>Read more</span>*@
                     </a>
-                    @*<small>20%CASH BACK</small>*@
-                </figure>
+                    <small5>@item.subtype</small5>
+                </figure>   
                 <div class="wrapper">
 
-                    <h5 class="uk-h5">@item.BusinessName&emsp;&emsp;&emsp;&emsp;<a class="ui violet label">@item.subtype</a><p class="p_0">@item.Landmark,@item.City</p></h5>
+                    <h5 class="uk-h5">@item.BusinessName<p class="p_0">@item.Landmark,@item.City</p></h5> 
                         <div class="panel panel-default">
-                            <div class="ui segment">
-                                <p>Veg price/plate <span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span><br>starts from</p>
-                                <p>Non-Veg price/plate <span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span><br>starts from</p>
-                            </div>
+                            @*<div class="ui segment">*@
+                                <table class="priceslist">
+                                    <tr>
+                                        @*<td style="border:0px;width:170px"> <a class="ui violet label">@item.subtype</a></td>*@
+                                    </tr>
+                                    <tr>
+                                        <td style="border:0px;width:215px"><p>Veg<span style="float:right">&emsp;₹<strong style="font-size:18px">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:0px;width:215px"><p>Non-Veg<span style="float:right">&emsp;₹<strong style="font-size:18px">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span></p></td>
+                                    </tr>
+                                </table>
+                            @*</div>*@
                         </div>
 </div>
                 <ul>
-                    @*<li> 3 HALLS + 1 LAWN</li>*@
-                    <li><div class="score"><span>BOOK NOW</span></div></li>
+                    <li> Capacity : @item.Minimumseatingcapacity - @item.Maximumcapacity</li>
+                    <li> <a href="">Book Now </a></li>
+                    @*<li><div class="score"><span>BOOK NOW</span></div></li>*@
                 </ul>
             </div>
         </div>

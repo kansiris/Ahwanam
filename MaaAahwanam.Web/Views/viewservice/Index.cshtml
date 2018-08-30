@@ -229,8 +229,8 @@
                         </div>
                         <br><br>
                         <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
-                        <img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>
-                        @*<input id="datepicker" class="datepicker" name="datepicker" />*@
+                        @*<img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>*@
+                        <input id="datepicker" class="datepicker" name="datepicker"/>
                         <h3 class="uk-h3">GALLERY/VIDEOS</h3>
                         <div class="container margin_60_35">
                             <div class="grid">
@@ -404,8 +404,7 @@
         function ks(val) {
             var guest = '';
             var gu1 = window.localStorage.getItem("guests");
-
-            alert(gu1);
+            //alert(gu1);
             if(gu1 == null)
             {
                 guest =  $('.guests').val();
@@ -414,22 +413,21 @@
             var pprice = s[2];
             var pname = s[1];
             var pid = s[0];
-            var pid1 =   $('#packageid').val();
+            //var pid1 =   $('#packageid').val();
             var expid =   window.localStorage.getItem("cartid");
-            alert('expid'+expid);
-            if (expid != null && expid == pid1)
+            //alert('expid'+expid);
+            if (expid != null)
             {
                 var newpid = expid + ',' + pid ;
                 window.localStorage.removeItem("cartid")
-
                 window.localStorage.setItem("cartid",newpid)
-                alert('new'+newpid);
+                //alert('new'+newpid);
                 var cpid =  window.localStorage.getItem("cartid");
-                alert('created'+cpid);
+                //alert('created'+cpid);
             } else {
                 window.localStorage.setItem("cartid",pid)
             }
-            alert(pid + pname + pprice);
+            //alert(pid + pname + pprice);
             $('.price').val('');
             $('.guests').val('');
             var SelectedPackage =''+pname+'(₹'+pprice+'/per plate)';
@@ -437,17 +435,19 @@
             $('.guests').val(guest);
 
             var total = guest * pprice;
-            alert(total);
+            //alert(total);
             $('.tp').val(total);
             $(".total b").empty().append(total);
 
         };
         function booknow() {
-            // var pid =   $('#packageid').val();
-            //window.localStorage.setItem("cartid",pid)
-            var guests = window.localStorage.getItem("guests");
+             var pid =   $('#packageid').val();
+             window.localStorage.setItem("cartid",pid)
+             document.cookie="CookieName="+pid+";";
+             var guests = window.localStorage.getItem("guests");
             location.href='/cart/Index?pid=' + pid + '&&guest=' + guests;
             alert(pid);
+            
         };
         function cart() {
             var cartitems = window.localStorage.getItem("cartid");
@@ -469,7 +469,7 @@
             $('.price').val(SelectedPackage);
             $('.guests').val(guest);
             var total = guest * PackagePrice;
-            alert(total);
+            //alert(total);
             $(".total b").empty().append(total);
 
         })

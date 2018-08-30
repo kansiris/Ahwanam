@@ -16,9 +16,6 @@ namespace MaaAahwanam.Web.Controllers
         // GET: cart
         public ActionResult Index()
         {
-            
-              
-            
             return View();
         }
 

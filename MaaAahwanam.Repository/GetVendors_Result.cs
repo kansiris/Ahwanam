@@ -48,5 +48,21 @@ namespace MaaAahwanam.Repository
         public decimal cost4 { get; set; }
         public string logo { get; set; }
         public string image { get; set; }
+        public int Minimumseatingcapacity { get; set; }
+        public int Maximumcapacity { get; set; }
+        public string MinOrder { get; set; }
+        public string MaxOrder { get; set; }
+        public long ServiceCost { get; set; }
+        public Nullable<System.DateTime> lastupdated { get; set; }
+        public string substatus { get; set; }
+        public string discount { get; set; }
+        public string name { get; set; }
+        public string subaddress { get; set; }
+        public string sublandmark { get; set; }
+        public string subcity { get; set; }
+        public string substate { get; set; }
+        public string subzipcode { get; set; }
+        public string Dimentions { get; set; }
+        public string subdescription { get; set; }
     }
 }
