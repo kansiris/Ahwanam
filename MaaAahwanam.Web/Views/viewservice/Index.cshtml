@@ -129,19 +129,32 @@
 
                                     <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid">
                                     <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
+                                    <input type="hidden" value="@item1.price1" name="PackagePrice1" id="PackagePrice1">
                                     <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
                                     <div class="row packss">
                                         @*<input type="hidden" value="@item1.PackageID,@item1.PackagePrice,@item1.PackageName" name="package" id="package">*@
                                         <div class="col-sm">
                                             <p class="last-child-1">
-                                                @item1.PackageName<span>
-                                                    $<b>@item1.PackagePrice</b>/ Person
+                                                <text class="pname">@item1.PackageName</text> <br />
+                                                <span>
+                                                    ₹
+                                                    @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                    { <b>@item1.PackagePrice</b>}
+                                                    else
+                                                    {
+                                                        <b>@item1.price1</b>
+                                                    }
+                                                    / Person
                                                 </span>
+                                                <text class="packageid" style="display:none">@item1.PackageID</text>
                                             </p>
                                         </div>
                                         <div class="col-sm-sm">
                                             <br>
                                             <div class="row-button">
+                                                <a class="btn pill">@item1.PackageDescription</a>
+                                            </div>
+                                            @*<div class="row-button">
                                                 <a class="btn pill">curries</a>
                                                 <a class="btn pill">wifi</a>
                                                 <a class="btn pill">rice</a>
@@ -150,7 +163,7 @@
                                                 <a class="btn pill">curries</a>
                                                 <a class="btn pill">wifi</a>
                                                 <a class="btn pill">rice</a>
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <div class="col-sm-sm">
                                             <br /><br />
@@ -504,9 +517,10 @@
    
         $(document).ready(function () {
             var pid =   $('#packageid').val();
-            var PackagePrice =  $('#PackagePrice').val();
+            var price =  $('#PackagePrice').val();
+            if(price == '') { price =  $('#PackagePrice1').val(); }
+            var PackagePrice =price;
             var PackageName =  $('#PackageName').val();
-            //alert(PackagePrice);
             var SelectedPackage =''+PackageName+'(₹'+PackagePrice+'/per plate)';
             var guest = window.localStorage.getItem("guests");
             $('.price').val(SelectedPackage);
