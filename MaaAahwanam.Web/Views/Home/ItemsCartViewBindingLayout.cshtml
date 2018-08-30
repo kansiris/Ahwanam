@@ -1,0 +1,24 @@
+﻿
+@using MaaAahwanam.Web.Custom
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    var user = (CustomPrincipal)HttpContext.Current.User;
+    if (user.UserType == "Admin")
+    {
+        Response.Redirect("/Admin/Login");
+    }
+    if (user.UserType == "Vendor")
+    {
+        Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
+    }
+    if (user.UserType == "User")
+    { 
+        <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">@ViewBag.username</a></span>
+
+                        
+    }
+}
+else
+{
+        <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Login/Register</a></span>
+}

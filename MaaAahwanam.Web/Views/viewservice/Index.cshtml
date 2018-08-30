@@ -1,8 +1,15 @@
 ﻿@using system;
+@using MaaAahwanam.Web.Custom
+@using System.Globalization
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
     var amenitycount = 0;
+    CustomPrincipal user = null;
+    if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        user = (CustomPrincipal)HttpContext.Current.User;
+    }
 }
 
 @section css{
@@ -330,6 +337,8 @@
                             <form class="uk-form-stacked">
                                 <br>
                                 <div class="uk-margin">
+                                    <input type="hidden" class="Packageselected" value="" name="Packageselected" id="Packageselected">
+
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Guests</h1></label>
                                     <div class="uk-form-controls">
                                         <input class="uk-input guests" name="guests" id="guests" type="text" placeholder="300">
@@ -347,8 +356,17 @@
                                     </div>
                                 </div>
                             </form>
-                            <button type="button" class="btn_1 add_top_30" onclick="booknow()">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                            <button type="button" class="btn_1 add_top_30" onclick="cart()">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>
+                            @if (user != null)
+                            {
+                                <button type="button" class="btn_1 add_top_30" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                <button type="button" class="btn_1 add_top_30" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>                            }
+                            else
+                            {
+                                <a  class="btn_1 add_top_30" id="sign-in" href='#sign-in-dialog'> BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></a>
+                                <a  class="btn_1 add_top_30" href='#sign-in-dialog'> CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></a>
+
+                            }
+                           
                         </div>
                     </div>
                 </aside>
@@ -426,6 +444,7 @@
                 //alert('created'+cpid);
             } else {
                 window.localStorage.setItem("cartid",pid)
+
             }
             //alert(pid + pname + pprice);
             $('.price').val('');
@@ -433,6 +452,7 @@
             var SelectedPackage =''+pname+'(₹'+pprice+'/per plate)';
             $('.price').val(SelectedPackage);
             $('.guests').val(guest);
+            $('.Packageselected').val(s);
 
             var total = guest * pprice;
             //alert(total);
@@ -440,24 +460,58 @@
             $(".total b").empty().append(total);
 
         };
-        function booknow() {
-             var pid =   $('#packageid').val();
-             window.localStorage.setItem("cartid",pid)
-             document.cookie="CookieName="+pid+";";
-             var guests = window.localStorage.getItem("guests");
-            location.href='/cart/Index?pid=' + pid + '&&guest=' + guests;
-            alert(pid);
-            
+        function booknow(val) {
+            var v = val;
+            var cpid =  window.localStorage.getItem("cartid");
+            var pid =   $('#packageid').val();
+            if (cpid== null || cpid == pid)
+            { window.localStorage.setItem("cartid",pid)}
+            var gu1 = window.localStorage.getItem("guests");
+            var guest = '';
+            alert(gu1);
+            if(gu1 == null)
+            {
+                guest =  $('.guests').val();
+            } else { guest = gu1 ;}
+
+            var cart =   $('#Packageselected').val();
+            var carts = cart.split(',');
+            var cpprice = carts[2];
+            var cpname = carts[1];
+            var cpid = carts[0];
+
+            var total = guest * cpprice;
+
+            url1 ='/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total;
+            $.ajax({
+                url: url1,
+                success: function (data) {
+                    if (data == "Success") {
+                        alert('package is add to the cart');
+
+                        //alertify.confirm("Added To Cart",function(){
+                            location.href = '/cart/Index';
+                       
+                    }
+                    else if (data == "failed") {
+                        alert("Failed To add item to the cart");
+                    }
+                    else if (data == "Exists") {
+                        alert("This Service Already Exists in Cart");
+                        location.href = '/cart/Index';
+                    }
+
+                },
+                error:function(data)
+                {
+                    $(".overlay").hide();
+                    alertmsg("Something Went Wrong!!! Try Again Later");
+                }
+            });
+            //location.href='/cart/Index' ; //?pid=' + pid + '&&guest=' + guests;
+            alert(v);
         };
-        function cart() {
-            var cartitems = window.localStorage.getItem("cartid");
-            alert(cartitems);
-            if (cartitems == null) {
-                var pid =   $('#packageid').val();
-                window.localStorage.setItem("cartid",pid);
-                alert("Added To Cart");
-            }
-        };
+   
         $(document).ready(function () {
             var pid =   $('#packageid').val();
             var price =  $('#PackagePrice').val();
@@ -472,7 +526,19 @@
             //alert(total);
             $(".total b").empty().append(total);
 
+            $('.Packageselected').val(pid,PackageName,PackageName);
+
+
+
+
+
         })
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
     </script>
 
 }
