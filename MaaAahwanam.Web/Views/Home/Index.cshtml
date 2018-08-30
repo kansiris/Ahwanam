@@ -2,7 +2,8 @@
         ViewBag.Title = "Index";
         Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
     }*@
-
+@using MaaAahwanam.Web.Models
+@model Tuple<MaaAahwanam.Models.UserLogin, MaaAahwanam.Models.UserDetail>
 <!DOCTYPE html>
 
 <html>
@@ -61,7 +62,7 @@
             </div>
             @*<ul id="top_menu">
                     <li><a href="#" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
-                    <li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>
+                    <li><a href="" id="sign-in" class="login" title="Sign In">Sign In</a></li>
                     <li><a href="#" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
                 </ul>*@
             <!-- /top_menu -->
@@ -75,27 +76,47 @@
             <nav id="menu" class="main-menu">
                 <ul>
                     @*<li>
-                        <span><a href="#0">Services</a></span>
-                        <ul>
-                            <li><a href="/results?type=Banquet Hall">Banquet Hall</a></li>
-                            <li><a href="/results?type=Hotel">Hotel</a></li>
-                            <li><a href="/results?type=Resort">Resort</a></li>
-                            <li><a href="/results?type=Convention Hall">Convention Hall</a></li>
-                            <li><a href="/results?type=Function Hall">Function Hall</a></li>
-                        </ul>
-                    </li>
+                            <span><a href="#0">Services</a></span>
+                            <ul>
+                                <li><a href="/results?type=Banquet Hall">Banquet Hall</a></li>
+                                <li><a href="/results?type=Hotel">Hotel</a></li>
+                                <li><a href="/results?type=Resort">Resort</a></li>
+                                <li><a href="/results?type=Convention Hall">Convention Hall</a></li>
+                                <li><a href="/results?type=Function Hall">Function Hall</a></li>
+                            </ul>
+                        </li>
 
+                        <li>
+                            <span><img src="~/newdesignstyles/images/us.png" /></span>
+                            <ul>
+                                <li><a href="#">INDIA</a></li>
+                                <li><a href="#">US</a></li>
+                            </ul>
+                        </li>*@
                     <li>
-                        <span><img src="~/newdesignstyles/images/us.png" /></span>
-                        <ul>
-                            <li><a href="#">INDIA</a></li>
-                            <li><a href="#">US</a></li>
-                        </ul>
-                    </li>*@
+                        @using MaaAahwanam.Web.Custom
+                        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                            var user = (CustomPrincipal)HttpContext.Current.User;
+                            if (user.UserType == "Admin")
+                            {
+                                Response.Redirect("/Admin/Login");
+                            }
+                            if (user.UserType == "Vendor")
+                            {
+                                Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
+                            }
+                            if (user.UserType == "User")
+                            {
+                                <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">@ViewBag.username</a></span>
 
-                    <li>
-                        <span><a href="#0">Login/Register</a></span>
 
+                            }
+                        }
+                        else
+                        {
+                            <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Login/Register</a></span>
+                        }
                     </li>
                     <li>
                         <a href="#0" class="btn_5 add_top_30">Call: +91 7032199007</a>
@@ -103,7 +124,7 @@
                     </li>
 
                     <li><span><img src="http://design.maa-aahwanam.com/panagea/india.png"></img></span>
-</ul>
+                </ul>
             </nav>
 
         </header>
@@ -115,11 +136,11 @@
 
                         @*<form method="post">*@
 
-                            @*<div align="left">
-                                    <button class="ui violet button"><img class="imgicon" src="~/newdesignstyles/images/venues.png" />Venues</button>
-                                    <button class="ui violet button"><img class="imgicon" src="~/newdesignstyles/images/catering.png" />Catering</button>
-                                </div>*@
-                            
+                        @*<div align="left">
+                                <button class="ui violet button"><img class="imgicon" src="~/newdesignstyles/images/venues.png" />Venues</button>
+                                <button class="ui violet button"><img class="imgicon" src="~/newdesignstyles/images/catering.png" />Catering</button>
+                            </div>*@
+
                         <div class="row no-gutters custom-search-input-2">
 
                             <div class="col-lg-2">
@@ -156,11 +177,11 @@
                                 </div>
                             </div>
                             <div class="col-lg-2">
-                                <input type="submit"id="btnsearch" class="btn_search" value="Search">
+                                <input type="submit" id="btnsearch" class="btn_search" value="Search">
                             </div>
 
                         </div>
-                            <!-- /row -->
+                        <!-- /row -->
                         @*</form>*@
                     </div>
                 </div>
@@ -201,9 +222,6 @@
             </div>
 
             <!-- /container -->
-
-
-
             <!-- /bg_color_2 -->
             <!-- /container -->
             @*<div class="bg_color_1">
@@ -248,34 +266,34 @@
                             <B>HOW IT WORKS</B>
                         </h6><p>Make A Story Of Painless Celebrations</p>
                     </div><br><br><br>
-                            <div class="row">
+                    <div class="row">
 
-                                <div class="col-md-4">
-                                    <a href="#0" class="boxed_list">
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/1circle.png">
-                                        <h4>Select a package &amp; Shortlist your venues</h4>
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/1circle.png">
+                                <h4>Select a package &amp; Shortlist your venues</h4>
 
-                                    </a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="#0" class="boxed_list">
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/2circle.png">
-                                        <h4>Fill your basic details to block venue</h4>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/2circle.png">
+                                <h4>Fill your basic details to block venue</h4>
 
-                                    </a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="#0" class="boxed_list">
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/3circle.png">
-                                        <h4>Pay the final amount &amp; start celebrations</h4>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <img src="http://design.maa-aahwanam.com/panagea/images/3circle.png">
+                                <h4>Pay the final amount &amp; start celebrations</h4>
 
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- /row --><br><br><br>
+                            </a>
+                        </div>
                     </div>
-                    <!-- /container -->
+                    <!-- /row --><br><br><br>
                 </div>
+                <!-- /container -->
+            </div>
             <!-- /bg_color_1 -->
 
 
@@ -283,9 +301,10 @@
                 <div class="main_title_2">
                     @*<span><em></em></span>*@
                     <h6 class="uk-h6">
-                        BEST DEALS FOR YOU</h6>
-                        <p>Get Best Deals Now From Our Website, Checkout.</p>
-</div>
+                        BEST DEALS FOR YOU
+                    </h6>
+                    <p>Get Best Deals Now From Our Website, Checkout.</p>
+                </div>
                 <div class="container margin_60_35">
 
                     <div class="wrapper-grid">
@@ -380,7 +399,7 @@
                 <h6 class="uk-h6">
                     HAND PICKED VENDORS
                 </h6>
-                    <p>Get Best Deals Now From Our Website, Checkout.</p>
+                <p>Get Best Deals Now From Our Website, Checkout.</p>
             </div>
             <div class="container margin_60_35">
 
@@ -390,26 +409,26 @@
                         {
                             <div class="col-xl-4 col-lg-6 col-md-6">
                                 <div class="box_grid">
-                                        @*<a href="#" class="wish_bt"></a>*@
-                                        @if (item.logo != null)
-                                        {
-                                            <a href="#"><img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
-                                        }
-                                        else if (item.image != null)
-                                        {
-                                            <a href="#"><img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
-                                        }
-                                        else
-                                        {
-                                            <a href="#"><img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
-                                        }
+                                    @*<a href="#" class="wish_bt"></a>*@
+                                    @if (item.logo != null)
+                                    {
+                                        <a href="#"><img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
+                                    }
+                                    else if (item.image != null)
+                                    {
+                                        <a href="#"><img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#"><img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
+                                    }
 
                                     <div class="wrapper">
                                         @*<h3><a href="#"> @item.BusinessName <a class="ui violet label">@item.subtype</a></a></h3>*@
                                         @*<h5 class="uk-h5">
                                             <a href="tour-detail.html"><strong>@item.BusinessName</strong> &emsp;&emsp;&emsp;&emsp;<a class="ui violet label">@item.subtype</a><SPAN><br><p class="p_0">@item.Landmark,@item.City</p></SPAN></a></h5>*@
                                         <h5 class="uk-h5">@item.BusinessName&emsp;&emsp;&emsp;<a class="ui violet label">@item.subtype</a><span><br><p class="p_0">@item.Landmark,@item.City</p></span></h5>
-                                            @*<div class="panel panel-default">
+                                        @*<div class="panel panel-default">
                                                 <div class="ui segment">
                                                     <p>Veg price/plate <span>&emsp;&emsp;&emsp;&emsp;&#8377;<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span><br>starts from</p>
                                                     <p>Non-Veg price/plate <span>&emsp;&emsp;&emsp;&#8377;<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span><br>starts from</p>
@@ -423,8 +442,8 @@
                                                 <p>Non-Veg price/plate <span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span><br>starts from</p>
                                             </div>
                                         </div>
-                                            @*<p align="right">VIEW SPACE<i class="fa fa-long-arrow-right"></i> </p>*@
-</div>
+                                        @*<p align="right">VIEW SPACE<i class="fa fa-long-arrow-right"></i> </p>*@
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -463,11 +482,12 @@
 
             <div class="container margin_60_35">
                 <div class="main_title_2">
-                  
+
                     <h6 class="uk-h6">
-                        LET'S TALK</h6>
-                        <p>Get Personalized assistance to help you discover, book sample and supervise your event.</p>
-</div>
+                        LET'S TALK
+                    </h6>
+                    <p>Get Personalized assistance to help you discover, book sample and supervise your event.</p>
+                </div>
                 <form method="post" action="/Home/SendEmail">
 
 
@@ -512,7 +532,7 @@
                             Explore More &emsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </a><br><br>Whatsapp or Call AutoParty Event Planner at 8587045120<br><br>(OR)<br><br>Are you a Vendor?<a href="register.html">REGISTER</a>
                     </p>
-                  
+
                 </form>
             </div>
 
@@ -523,7 +543,94 @@
         <!-- /main -->
     </div>
     <!--/footer-->
+    <!-- Sign In Popup -->
+    <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide ">
+        <div class="small-dialog-header">
+            <h3>Sign In / Register</h3>
+        </div>
+        <form>
+            <div class="sign-in-wrapper">
+                @*<a href="#0" class="social_bt facebook">Login with Facebook</a>
+                    <a href="#0" class="social_bt google">Login with Google</a>
+                    <div class="divider"><span>Or</span></div>*@
+                <div class="authenticationBlocks">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" placeholder="Email ID" name="UserName" id="UserName" required />
 
+                        @*<input type="email" class="form-control" name="email" id="email">*@
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="Password" class="form-control" placeholder="Password" name="Password1" id="Password1" required />
+
+                        @*<input type="password" class="form-control" name="password" id="password" value="">*@
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    @*<div class="clearfix add_bottom_15">
+                           <div class="checkboxes float-left">
+                                <label class="container_check">
+                                    Remember me
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                           <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                        </div>*@
+                    <div class="text-center"><input type="submit" value="login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
+
+                    <div class="text-center">
+                        Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
+                    </div>
+                </div>
+                @*<div class="float-right mt-1 registerBtn"><a id="signup" href="javascript:void(0);">Sign up</a></div>*@
+                <div id="forgot_pw" class="forgotks">
+                    <div class="form-group">
+                        <label>Please confirm login email below</label>
+                        <input type="email" class="form-control" name="email_forgot" id="email_forgot">
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
+                    <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+                    <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
+
+                </div>
+                <div id="signup" class="register">
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="Name" id="txtname" required>
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password" minlength="5" id="Password" required>
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="Email" id="txtemail" required>
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        @*<input type="password" class="form-control" name="password" id="password" value="">*@
+                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" id="txtphone" required>
+                        <i class="icon_lock_alt"></i>
+                    </div>
+
+                    <p>You will receive an email containing a link allowing you to activate</p>
+                    <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
+
+                    <div class="text-center"><input type="submit" value="Register" onclick="savecustomer(this.value)" class="btn_1"></div>
+
+                </div>
+            </div>
+        </form>
+        <!--form -->
+    </div>
+    <!-- /Sign In Popup -->
     <div id="toTop"></div><!-- Back to top button -->
     <!-- COMMON SCRIPTS -->
     @*<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>*@
@@ -548,6 +655,28 @@
     </script>
 
     <script>
+        var regClick = $(".registerBtn"), loginClick = $(".loginBtn"), forgotClick = $(".forgotPasswordBtn"),
+          loginBlock = $(".login"), regBlock = $(".register"), forgotBlock = $(".forgotPassword");
+        $(regClick).click(function () {
+            $(".authenticationBlocks > div").css("display", "none");
+            $(regBlock).css("display", "block");
+        });
+        $(loginClick).click(function () {
+            $(".forgotks").css("display", "none");
+            $(".register").css("display", "none");
+
+            $(".authenticationBlocks > div").css("display", "block");
+
+        });
+
+        $(forgotClick).click(function () {
+            $(".authenticationBlocks > div").css("display", "none");
+            $(forgotBlock).css("display", "block");
+        });
+        $(document).ready(function () {
+            $(regBlock).css("display", "none");
+
+        });
         $('#btnsearch').click(function () {
             var location = $('#loc').val();
             var eventtype = $('#selectevent').val();
@@ -573,6 +702,197 @@
                 window.location.href = '/results/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
             }
         });
+        function savecustomer(clickedvalue) {
+            var CustomerPhoneNumber = $("#txtphone").val();
+            var CustomerName = $("#txtname").val();
+            var Password = $("#Password").val();
+            var Email = $("#txtemail").val();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var phonepattern = /^[0-9]{10}$/;
+            var passwordpattern = /^[a-z0-9]+$/i;
+            var emailaddressVal = $("#txtemail").val();
+            if (CustomerPhoneNumber == '') {
+                alert("Please Enter PhoneNumber");
+                $("#txtphone").focus();
+            }
+            else if (!phonepattern.test(CustomerPhoneNumber)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#txtphone").focus();
+            }
+            else if (CustomerName == '') {
+                alert("Please Enter Name");
+                $("#txtname").focus();
+            }
+            else if (!passwordpattern.test(CustomerName)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#txtphone").focus();
+            }
+            else if (CustomerName.length < 5) {
+                alert("Name must be 5 characters");
+                $("#txtname").focus();
+            }
+            else if (Password == '') {
+                alert("Please Enter Password");
+                $("#txtpassword").focus();
+            }
+            else if (Password.length < 5) {
+                alert("Password length must be 5 characters");
+                $("#txtpassword").focus();
+                $("#txtpassword").alphanum();
+            }
+            else if (!passwordpattern.test(Password)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#txtphone").focus();
+            }
+                //else if (emailaddressVal == '') {
+                //    //alert("Please Enter Email Address");
+
+                //    $("#txtemail").focus();
+                //}
+                //else if (!emailReg.test(emailaddressVal)) {
+                //alert("Please Enter a valid Email Address");
+                //    $("#txtemail").focus();
+                //}
+
+            else {
+                if (clickedvalue == 'Register') {
+                    $.ajax({
+                        url: '/Home/register',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        type: 'POST',
+                        data: JSON.stringify({ CustomerPhoneNumber: CustomerPhoneNumber, CustomerName: CustomerName, Password: Password, Email: Email }),
+                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("Check your email to active your account to login");
+                                //window.location.href = '/NewOrder/orderview'
+                            }
+                            //else {
+                            //    alert("Customer Registered successfully");
+                            //    $("#txtphone").val('');
+                            //    $("#txtname").val('');
+                            //    $("#txtpassword").val('');
+                            //    $("#txtdeladdress").val('');
+                            //    $("#txtemail").val('');
+                            //    window.location.reload();
+                            //}
+                            if (data == "unique") {
+                                alert("E-Mail ID Already Registered!!! Try Logging with your Password");
+
+                            }
+                            else if (data == "unique1") {
+                                alert("Registration fails");
+
+                            }
+                            else if (data == "Failed") {
+
+                                alert("Registration Failed");
+                                window.location.reload();
+                            }
+                            else {
+                                alert("Registration Failed");
+                                // $("#txtphone").val('');
+                                $("#txtname").val('');
+                                $("#txtpassword").val('');
+                                $("#txtdeladdress").val('');
+                                $("#txtemail").val('');
+                                // window.location.reload();
+                                $("#otpopup").css("display", "block");
+                                $("#txtotp").focus();
+                            }
+                        },
+                        error: function (data) {
+                            alert("error");
+                        }
+                    });
+                }
+            }
+        }
+        function login(clickedvalue) {
+            var Password = $("#Password1").val();
+            var Email = $("#UserName").val();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var passwordpattern = /^[a-z0-9]+$/i;
+            var emailaddressVal = $("#UserName").val();
+            //if (!passwordpattern.test(Password)) {
+            //    alert("Please Enter valid 10 digit Phonenumber");
+            //    $("#txtphone").focus();
+            //}
+            //else
+            if (Password == '') {
+                alert("Please Enter Password");
+                $("#txtpassword").focus();
+            }
+                //else if (Password.length < 5) {
+                //    alert("Password length must be 5 characters");
+                //    $("#txtpassword").focus();
+                //    $("#txtpassword").alphanum();
+                //}
+                //else if (!passwordpattern.test(Password)) {
+                //    alert("Please Enter valid 10 digit Phonenumber");
+                //    $("#txtphone").focus();
+                //}
+            else if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+                $("#txtemail").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                alert("Please Enter a valid Email Address");
+                $("#txtemail").focus();
+            }
+
+            else {
+                if (clickedvalue == 'login') {
+                    $.ajax({
+                        url: '/Home/login',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        type: 'POST',
+                        data: JSON.stringify({ Password: Password, Email: Email }),
+                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("Login Sucessfull");
+                                window.location.reload();
+
+                                //window.location.href = '/NewOrder/orderview'
+                            }
+                            //else {
+                            //    alert("Customer Registered successfully");
+                            //    $("#txtphone").val('');
+                            //    $("#txtname").val('');
+                            //    $("#txtpassword").val('');
+                            //    $("#txtdeladdress").val('');
+                            //    $("#txtemail").val('');
+                            //    window.location.reload();
+                            //}
+                            if (data == "unique") {
+                                alert("vendorlogin successfull");
+                                //vendorlogin
+                            }
+                            else if (data == "Failed") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                            //            // $("#txtphone").val('');
+                            //    $("#txtname").val('');
+                            //    $("#txtpassword").val('');
+                            //    $("#txtdeladdress").val('');
+                            //    $("#txtemail").val('');
+                            //    // window.location.reload();
+                            //    $("#otpopup").css("display", "block");
+                            //    $("#txtotp").focus();
+                            //}
+                        },
+                        error: function (data) {
+                            alert("error");
+                        }
+                    });
+                }
+            }
+        }
     </script>
     <!-- INPUT QUANTITY  -->
     @*<script src="~/newdesignstyles/Scripts/input_qty.js"></script>*@
@@ -599,15 +919,15 @@
 
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/5b7e7e93afc2c34e96e7d2fe/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5b7e7e93afc2c34e96e7d2fe/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
     </script>
     <!--End of Tawk.to Script-->
 </body>

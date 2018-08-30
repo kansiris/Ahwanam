@@ -79,32 +79,33 @@
         <div class="container margin_60_35">
             <div class="row">
                 <div class="col-lg-8">
-                    <BR><BR><BR><BR>
-                    <div class="box_cart">
+                    @*<BR><BR><BR><BR>*@
 
-                        <center>
-                            <h2><b>AUTHENTICATE TO PLACE ORDER</b></h2>
-                            <a href="#0" class="btn_1 add_top_30">
-                                Login&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
-                            </a>&emsp;&emsp;
-                            <b>(OR)&emsp;</b>
-                            <a href="#0" class="btn_1 add_top_30">
-                                Register&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
-                            </a>
-                        </center>
-                        <hr>
-                        <!--End step -->
+                  @*  <div class="box_cart">
+
+        <center>
+            <h2><b>AUTHENTICATE TO PLACE ORDER</b></h2>
+            <a href="#0" class="btn_1 add_top_30">
+                Login&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
+            </a>&emsp;&emsp;
+            <b>(OR)&emsp;</b>
+            <a href="#0" class="btn_1 add_top_30">
+                Register&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
+            </a>
+        </center>
+        <hr>
+        <!--End step -->
 
 
 
-                    </div>
+    </div>*@
 
                     <h2>Cart</h2>
-                    @if (ViewBag.cartdata != null)
+                    @if (ViewBag.cartitems != null)
                     {
-                        <p>you got4 items in your bag</p>
+                        <p>you got @ViewBag.cartCount items in your bag</p>
 
-                        foreach (var item in ViewBag.cartdata)
+                        foreach (var item in ViewBag.cartitems)
                         {
                             <div class="room_type first">
 
@@ -113,9 +114,9 @@
                                         <img src="http://design.maa-aahwanam.com/panagea/img/gallery/hotel_list_1.jpeg" class="img-fluid" alt="">
                                     </div>
                                     <div class="col-md-8-1">
-                                        <h2>GREEN PARK&emsp;<a class="ui violet label">HOTEL</a><span><br><p class="p_0"></p></span></h2>
+                                        <h2>@item.BusinessName&emsp;<a class="ui violet label">HOTEL</a><span><br><p class="p_0"></p></span></h2>
                                         <p>
-                                            @item.PackageName 300 guests <br>Date: 12-Oct-2018&emsp;&emsp;&emsp;&emsp; <B>@item.PackagePrice</B>&emsp;&emsp;&emsp;&emsp;&emsp;<a href="#0" class="btn_cart add_top_30">
+                                            @item.SelectedPriceType @item.Quantity guests <br>Date: 12-Oct-2018&emsp;&emsp;&emsp;&emsp; <B>@item.Perunitprice</B>&emsp;&emsp;&emsp;&emsp;&emsp;<a href="#0" class="btn_cart add_top_30">
                                                 Selected&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
                                             </a><br><br><span><a href="#">EDIT</a></span>
 
@@ -199,15 +200,15 @@
                             <div>
                                 <div class="uk-margin">
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">TOTAL AMOUNT</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;$2,39,565</h1></label><br><br>
+                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;$@ViewBag.Total</h1></label><br><br>
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">DISCOUNT</h1></label>
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0</h1></label><br><br>
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">SERVICE CHARGE</h1></label>
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0</h1></label><br><br>
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">GST</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$2039</h1></label><br><br>
+                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$0</h1></label><br><br>
                                     <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">NET AMOUNT</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;$2,39,565</h1></label><br><br>
+                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;$@ViewBag.Total</h1></label><br><br>
 
 
 
