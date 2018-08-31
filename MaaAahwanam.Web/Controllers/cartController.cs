@@ -15,7 +15,6 @@ namespace MaaAahwanam.Web.Controllers
     public class cartController : Controller
     {
         cartservices cartserve = new cartservices();
-        CartService cartService = new CartService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
 
         // GET: cart
@@ -29,12 +28,12 @@ namespace MaaAahwanam.Web.Controllers
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                     if (user.UserType == "Admin")
                     {
-                        ViewBag.cartCount = cartService.CartItemsCount(0);
+                        ViewBag.cartCount = cartserve.CartItemsCount(0);
                         return PartialView("ItemsCartdetails");
                     }
-                    ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
+                    ViewBag.cartCount = cartserve.CartItemsCount((int)user.UserId);
 
-                    List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+                    List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
                     decimal total = cartlist.Where(m => m.Status == "Active").Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist.OrderByDescending(m => m.UpdatedDate).Where(m => m.Status == "Active");
                     ViewBag.Total = total;
@@ -43,7 +42,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
-                ViewBag.cartCount = cartService.CartItemsCount(0);
+                ViewBag.cartCount = cartserve.CartItemsCount(0);
             }
 
 

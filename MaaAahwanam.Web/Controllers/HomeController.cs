@@ -15,12 +15,8 @@ namespace MaaAahwanam.Web.Controllers
     public class HomeController : Controller
     {
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         Vendormaster vendorMaster = new Vendormaster();
-        CartService cartService = new CartService();
-
-        VendorMasterService vendorMasterService = new VendorMasterService();
-
+        cartservices cartserve = new cartservices();
         ResultsPageService resultsPageService = new ResultsPageService();
         // GET: Home
         public ActionResult Index()
@@ -44,15 +40,13 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.username = userdata.AlternativeEmailID;
                     if (user.UserType == "Admin")
                     {
-                        ViewBag.cartCount = cartService.CartItemsCount(0);
+                        ViewBag.cartCount = cartserve.CartItemsCount(0);
                         return PartialView("ItemsCartViewBindingLayout");
                     }
-
-
-                    ViewBag.cartCount = cartService.CartItemsCount1((int)user.UserId);
+                    ViewBag.cartCount = cartserve.CartItemsCount1((int)user.UserId);
                     //   List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    var cartlist = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
-                    var cartlist1 = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
+                    var cartlist = cartserve.CartItemsList1(int.Parse(user.UserId.ToString()));
+                    var cartlist1 = cartserve.CartItemsList1(int.Parse(user.UserId.ToString()));
 
                     //  decimal total = (cartlist1.TotalPrice) .Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist;
@@ -62,7 +56,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
-                ViewBag.cartCount = cartService.CartItemsCount(0);
+                ViewBag.cartCount = cartserve.CartItemsCount(0);
             }
             return View();
         }
@@ -93,7 +87,6 @@ namespace MaaAahwanam.Web.Controllers
             else
             {
                 return Json("unique", JsonRequestBehavior.AllowGet);
-
             }
             if (response == "sucess")
             {
@@ -112,15 +105,11 @@ namespace MaaAahwanam.Web.Controllers
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 return Json("success", JsonRequestBehavior.AllowGet);
-
             }
             else
             {
                 return Json("Failed", JsonRequestBehavior.AllowGet);
-
             }
-
-
         }
         public JsonResult login(string Password, string Email)
         {
@@ -128,50 +117,23 @@ namespace MaaAahwanam.Web.Controllers
             UserDetail userDetail = new UserDetail();
             userLogin.UserName = Email;
             userLogin.Password = Password;
-
-
-            var userResponse = venorVenueSignUpService.GetUserLogin(userLogin);
-            var userResponse1 = venorVenueSignUpService.GetUserLogdetails(userLogin);
-
+            var userResponse = resultsPageService.GetUserLogin(userLogin);
+            var userResponse1 = resultsPageService.GetUserLogdetails(userLogin);
             if (userResponse1 != null)
             {
                 if (userResponse1.Status == "Active")
                 {
-                    vendorMaster = vendorMasterService.GetVendorByEmail(userLogin.UserName);
+                    vendorMaster = resultsPageService.GetVendorByEmail(userLogin.UserName);
                     string userData = JsonConvert.SerializeObject(userResponse1);
                     ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
-                    //if (perfecturl != null && perfecturl != "")
-                    //    return Redirect(perfecturl);
-                    //if (userResponse.UserType == "Vendor" || userResponse == null)
-                    //{
-                    //    var vnid = userResponse.UserLoginId;
-
-                    //    string vssid = Convert.ToString(vendorMaster.Id);
-                    //    encptdecpt encript = new encptdecpt();
-
-                    //    string encripted = encript.Encrypt(string.Format("Name={0}", vssid));
-
-                    //    return Json("unique", JsonRequestBehavior.AllowGet);
-                    //}
-                    //else
                         ViewBag.userid = userResponse1.UserLoginId;
                     return Json("success", JsonRequestBehavior.AllowGet);
-
                 }
                 return Json("Failed", JsonRequestBehavior.AllowGet);
-
-            //    TempData["Active"] = "Please check Your email to verify Email ID";
-            //    return RedirectToAction("Index", "NUserRegistration");
             }
             else
             {
-                    //int query = vendorMasterService.checkemail(userLogin.UserName);
                     int userlogintablecheck = (int)userResponse1.UserLoginId;
-                    //if (userlogintablecheck == 0)
-                    //    TempData["Active"] = "User Record Not Available"; //return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-                    //else
-                    //    TempData["Active"] = "Wrong Credentials,Check Username and password"; //return Content("<script language='javascript' type='text/javascript'>alert('Wrong Credentials,Check Username and password');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-                    //return RedirectToAction("Index", "NUserRegistration");
                     return Json("success1", JsonRequestBehavior.AllowGet);
 
                 }
@@ -203,15 +165,15 @@ namespace MaaAahwanam.Web.Controllers
                             ViewBag.username = userdata.AlternativeEmailID;
                         if (user.UserType == "Admin")
                         {
-                            ViewBag.cartCount = cartService.CartItemsCount(0);
+                            ViewBag.cartCount = cartserve.CartItemsCount(0);
                             return PartialView("ItemsCartViewBindingLayout");
                         }
 
 
-                        ViewBag.cartCount = cartService.CartItemsCount1((int)user.UserId);
+                        ViewBag.cartCount = cartserve.CartItemsCount1((int)user.UserId);
                         //   List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                        var cartlist = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
-                        var cartlist1 = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
+                        var cartlist = cartserve.CartItemsList1(int.Parse(user.UserId.ToString()));
+                        var cartlist1 = cartserve.CartItemsList1(int.Parse(user.UserId.ToString()));
 
                         //  decimal total = (cartlist1.TotalPrice) .Sum(s => s.TotalPrice);
                         ViewBag.cartitems = cartlist;
@@ -221,7 +183,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    ViewBag.cartCount = cartService.CartItemsCount(0);
+                    ViewBag.cartCount = cartserve.CartItemsCount(0);
                 }
                 return PartialView("ItemsCartViewBindingLayout");
             }
@@ -244,11 +206,11 @@ namespace MaaAahwanam.Web.Controllers
                         var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                         if (user.UserType == "Admin")
                         {
-                            ViewBag.cartCount = cartService.CartItemsCount(0);
+                            ViewBag.cartCount = cartserve.CartItemsCount(0);
                             return PartialView("ItemsCartdetails");
                         }
-                        ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
-                        var cartlist1 = cartService.CartItemsList1(int.Parse(user.UserId.ToString()));
+                        ViewBag.cartCount = cartserve.CartItemsCount((int)user.UserId);
+                        var cartlist1 = cartserve.CartItemsList1(int.Parse(user.UserId.ToString()));
 
                         // List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                         decimal total = cartlist1.Select(m => m.TotalPrice).Sum();
@@ -259,7 +221,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    ViewBag.cartCount = cartService.CartItemsCount(0);
+                    ViewBag.cartCount = cartserve.CartItemsCount(0);
                 }
 
 

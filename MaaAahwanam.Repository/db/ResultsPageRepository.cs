@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaaAahwanam.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,20 @@ namespace MaaAahwanam.Repository.db
         public List<GetVendors_Result> GetAllVendors(string type)
         {
             return maaAahwanamEntities.GetVendors(type).ToList();
+        }
+        public Vendormaster GetVendorByEmail(string emailid)
+        {
+            return _dbContext.Vendormaster.Where(m => m.EmailId == emailid).FirstOrDefault();
+        }
+        public UserLogin GetUserLogdetails(UserLogin userLogin)
+        {
+            var data = _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName).FirstOrDefault(); // && p.UserType == userLogin.UserType
+            return data;
+        }
+        public UserLogin GetUserLogin(UserLogin userLogin)
+        {
+            var data = _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault(); // && p.UserType == userLogin.UserType
+            return data;
         }
     }
 }

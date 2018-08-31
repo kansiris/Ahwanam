@@ -16,5 +16,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.SPGETNpkg(Convert.ToInt64(id)).ToList();
         }
+        public List<GetCartItems_Result> CartItemList(int vid)
+        {
+            return maaAahwanamEntities.GetCartItems(vid).ToList();
+        }
+        
     }
 }
