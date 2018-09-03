@@ -139,8 +139,8 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult addcnow(string pid,string guest,string dcval,string total)//(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did, string etype2)
         {
-            try
-            {
+            //try
+            //{
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     //if (type == "Photography" || type == "Decorator" || type == "Other")
@@ -188,11 +188,11 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 return Json(JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
-            {
-                return RedirectToAction("Index", "Nhomepage");
-            }
-        }
+            //catch (Exception)
+            //{
+            //    return RedirectToAction("Index", "Nhomepage");
+            //}
+        //}
 
     }
 }
