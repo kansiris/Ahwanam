@@ -17,12 +17,12 @@
         background-color: white;
     }
 
-    .box_grid .wrapper {
+    /*.box_grid .wrapper {
         padding: 0px;
-    }
+    }*/
 
     .box_grid ul {
-        padding: 0px 0px;
+        padding: 0px 10px;
     }
 
     .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
@@ -39,6 +39,36 @@
         top: 0px;
         padding: 0px 33px 0px;
     }
+
+    .vendorimg {
+        max-width: 100%;
+        height: 177px;
+        overflow: hidden;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+
+    table.priceslist tr td {
+        border: 0px;
+        width: 215px;
+    }
+
+        table.priceslist tr td span {
+            float: right;
+        }
+
+            table.priceslist tr td span strong {
+                font-size: 16px;
+            }
+
+    .margin_60_35 {
+        padding-top: 40px;
+        padding-bottom: 0px;
+    }
+    /*.popular {
+        top:330px;
+    }*/
 </style>
 
 
@@ -235,6 +265,7 @@
 
             <input type="hidden" id="rcount" value="@ViewBag.count" />
             <div class="col-lg-9">
+                
                 <div class="isotope-wrapper" id="presults">
                     @{ Html.RenderAction("Loadmore", "results");}
                     <!-- /row -->
@@ -292,7 +323,7 @@
             var str = '';
             $.each(response, function (key, value) {
                 if (value.logo != null) { str = '/vendorimages/'+value.logo } else if (value.image != null) { str = '/vendorimages/'+value.image } else { str = '/noimages.png' }
-                $('#allrecords').append("<div class='col-md-4 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice/index?id="+value.Id+"'><img src='"+str+"' class='img-fluid' alt='' width='800' height='533'></a><small5>"+value.subtype+"</small5> </figure> <div class='wrapper'> <h5 class='uk-h5'>" + value.BusinessName + "<p class='p_0'>" + value.Landmark + "," + value.City + "</p></h5> <div class='panel panel-default'><table><tr><td style='border:0px;width:215px'><p>Veg <span style='float:right'>&emsp;₹<strong style='font-size:18px'>"+value.cost1+"</strong></span></p></td></tr><tr><td style='border:0px;width:215px'><p>Non-Veg<span style='float:right'>&emsp;₹<strong style='font-size:18px'>"+value.cost2+"</strong></span></p></td></tr></table></div></div><ul><li> Capacity : "+value.Minimumseatingcapacity+" - "+value.Maximumcapacity+"</li><li><a href='#'>Book Now</a></li></ul></div></div>");
+                $('#allrecords').append("<div class='col-md-4 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice/index?id="+value.Id+"'><div class='vendorimg' style='background:url("+str+")'></div></a><small5>"+value.subtype+"</small5> </figure> <div class='wrapper'> <h5 class='uk-h5'>" + value.BusinessName + "<p class='p_0'>" + value.Landmark + "," + value.City + "</p></h5> <div class='panel panel-default'><table><tr><td style='border:0px;width:215px'><p>Veg <span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost1+"</strong></span></p></td></tr><tr><td style='border:0px;width:215px'><p>Non-Veg<span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost2+"</strong></span></p></td></tr></table></div></div><ul><li> Capacity : "+value.Minimumseatingcapacity+" - "+value.Maximumcapacity+"</li><li><a href='/viewservice/index?id="+value.Id+"'>Book Now</a></li></ul></div></div>");
             });
             $('#loadresults').empty();
         }
@@ -334,10 +365,10 @@
             prefix: "Min. ",
             grid: false,
             onFinish: function (data) {
-                alert(data.from +'-'+data.to);
+                //alert(data.from +'-'+data.to);
                 var from = data.from;
                 var to = data.to;
-
+                // code here for filtering records based on budget
             }
         });
     </script>
