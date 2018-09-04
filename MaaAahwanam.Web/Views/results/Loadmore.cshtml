@@ -1,5 +1,13 @@
 ﻿@using System.Globalization
+
 <div class="row" id="loadresults">
+    @*<div class="col-md-12" id="newsletter" style="height:20px">
+        <div class="col-md-6" style="float:left;top:10px;"><strong>50 Records Found</strong></div>
+        <div class="col-md-6" style="float:right;">
+            <input type="email" class="form-control" placeholder="Search By Venue Name" style="background-color:white;">
+            <input type="submit" value="Submit">
+        </div>
+    </div>*@
     @if (ViewBag.venues.Count == 0)
     {
         <p>No Records</p>
@@ -12,15 +20,18 @@
                     <a href="/viewservice/index?id=@item.Id">
                         @if (item.logo != null)
                         {
-                            <img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">
+                            @*<img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">*@
+                            <div class="vendorimg" style="background:url('/vendorimages/@item.logo')"></div>
                         }
                         else if (item.image != null)
                         {
-                            <img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">
+                            @*<img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">*@
+                            <div class="vendorimg" style="background:url('/vendorimages/@item.image')"></div>
                         }
                         else
                         {
-                            <img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">
+                            @*<img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">*@
+                            <div class="vendorimg" style="background:url(/noimages.png)"></div>
                         }
                         <div class="read_more"></div>  @*<span>Read more</span>*@
                     </a>
@@ -36,10 +47,10 @@
                                         @*<td style="border:0px;width:170px"> <a class="ui violet label">@item.subtype</a></td>*@
                                     </tr>
                                     <tr>
-                                        <td style="border:0px;width:215px"><p>Veg<span style="float:right">&emsp;₹<strong style="font-size:18px">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span></p></td>
+                                        <td><p>Veg per plate<span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span></p></td>
                                     </tr>
                                     <tr>
-                                        <td style="border:0px;width:215px"><p>Non-Veg<span style="float:right">&emsp;₹<strong style="font-size:18px">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span></p></td>
+                                        <td><p>Non-Veg per plate<span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span></p></td>
                                     </tr>
                                 </table>
                             @*</div>*@
@@ -47,7 +58,7 @@
 </div>
                 <ul>
                     <li> Capacity : @item.Minimumseatingcapacity - @item.Maximumcapacity</li>
-                    <li> <a href="">Book Now </a></li>
+                    <li> <a href="/viewservice/index?id=@item.Id">Book Now </a></li>
                     @*<li><div class="score"><span>BOOK NOW</span></div></li>*@
                 </ul>
             </div>
@@ -55,4 +66,12 @@
                         <!-- /box_grid -->
     }
 </div>
-<div class="row" id="allrecords"></div>
+<div class="row" id="allrecords">
+    @*<div class="col-md-12" id="newsletter" style="height:20px;">
+        <div class="col-md-6" style="float:left;top:10px;"><strong>50 Records Found</strong></div>
+        <div class="col-md-6" style="float:right;">
+            <input type="email" class="form-control" placeholder="Search By Venue Name" style="background-color:white;">
+            <input type="submit" value="Submit">
+        </div>
+    </div>*@
+</div>

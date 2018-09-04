@@ -88,10 +88,10 @@
                             <ul class="uk-slideshow-items">
                                 @foreach (var item in ViewBag.allimages)
                                 {
-                                    <li class="uk-active uk-transition-active" style="transform: translateX(0px); z-index: 0;">
-                                        <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height: 486px; width: 730px;" />
+                                <li class="uk-active uk-transition-active" style="transform: translateX(0px); z-index: 0;">
+                                    <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height: 486px; width: 730px;" />
 
-                                    </li>}
+                                </li>}
                                 @*<li>
                                         <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
                                     </li>
@@ -110,7 +110,7 @@
                         <div class="uk-grid-sub">
                             @foreach (var item in ViewBag.particularVenue)
                             {
-                                <button class="tablink" href="#@item.VenueType"><b>@item.VenueType</b></button>
+                            <button class="tablink" href="#@item.VenueType"><b>@item.VenueType</b></button>
                             }
                             @*<button class="tablink" onclick="openCity('Hall Dettails', this, 'white')"><b>PEACOCK</b></button>
                                 <button class="tablink" onclick="openCity('Description', this, 'white')"><b>OTHER HALL</b></button>
@@ -149,25 +149,33 @@
                                                 <text class="packageid" style="display:none">@item1.PackageID</text>
                                             </p>
                                         </div>
-                                        <div class="col-sm-sm" overflow="visible">
-                                            <br>
-                                            <div class="row-button">
-                                                <a class="btn pill">@item1.PackageDescription</a>
-                                            </div>
+                                        <div class="col-sm-sm">
+                                            @for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
+                                            {
+                                                <button class="small ui button_xs">@item1.PackageDescription.Split(',')[i]</button>
+                                            }
                                             @*<div class="row-button">
-                                                <a class="btn pill">curries</a>
-                                                <a class="btn pill">wifi</a>
-                                                <a class="btn pill">rice</a>
-                                            </div>
-                                            <div class="row-button">
-                                                <a class="btn pill">curries</a>
-                                                <a class="btn pill">wifi</a>
-                                                <a class="btn pill">rice</a>
-                                            </div>*@
+                                                    <a class="btn pill">curries</a>
+                                                    <a class="btn pill">wifi</a>
+                                                    <a class="btn pill">rice</a>
+                                                </div>
+                                                <div class="row-button">
+                                                    <a class="btn pill">curries</a>
+                                                    <a class="btn pill">wifi</a>
+                                                    <a class="btn pill">rice</a>
+                                                </div>*@
                                         </div>
                                         <div class="col-sm-sm">
-                                            <br /><br />
-                                            &emsp;&emsp;&emsp;<button value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle-2"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                            <br /><br /> &emsp;&emsp; &emsp;
+                                           @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                           {
+                                              <button value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                           }
+                                           else
+                                           {
+                                            <button value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                           }
+                                            
                                         </div>
                                     </div><br><br>
                                 }
@@ -237,7 +245,7 @@
                         <br><br>
                         <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
                         @*<img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>*@
-                        <input id="datepicker" class="datepicker" name="datepicker"/>
+                        <input id="datepicker" class="datepicker" name="datepicker" />
                         <h3 class="uk-h3">GALLERY/VIDEOS</h3>
                         <div class="container margin_60_35">
                             <div class="grid">
@@ -368,7 +376,7 @@
                                 <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"/></button>
                                 <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">CART&nbsp;<img src="images/icons/cart2.png"/></button>
                             }
-                           
+
                         </div>
                     </div>
                 </aside>
@@ -572,8 +580,8 @@
                         alert('package is add to the cart');
 
                         //alertify.confirm("Added To Cart",function(){
-                            location.href = '/cart/Index';
-                       
+                        location.href = '/cart/Index';
+
                     }
                     else if (data == "failed") {
                         alert("Failed To add item to the cart");
@@ -593,7 +601,7 @@
             //location.href='/cart/Index' ; //?pid=' + pid + '&&guest=' + guests;
             alert(v);
         };
-   
+
         $(document).ready(function () {
             var pid =   $('#packageid').val();
             var price =  $('#PackagePrice').val();
@@ -772,5 +780,10 @@
         }
 
     </script>
-
+   @*<script>
+       $('.signin').on('click',function(){
+           //alert("click");
+           $('#sign-in-dialog').attr('class','zoom-anim-dialog');
+       });
+    </script>*@
 }
