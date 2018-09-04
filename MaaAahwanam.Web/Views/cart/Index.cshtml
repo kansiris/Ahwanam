@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
 }
@@ -8,12 +6,10 @@
 @section css{
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
-
     <style>
         body {
             font-family: "Lato", sans-serif;
         }
-
         .tablink {
             background-color: #fff;
             color: #212529;
@@ -25,11 +21,9 @@
             font-size: 14px;
             width: 16%;
         }
-
             .tablink:hover {
                 background-color: #fff;
             }
-
         /* Style the tab content */
         .tabcontent {
             color: white;
@@ -37,71 +31,47 @@
             padding: 50px;
             text-align: center;
         }
-
         #Food Packages {
             background-color: white;
         }
-
         #Hall Details {
             background-color: white;
         }
-
         #Description {
             background-color: white;
         }
-
         #Gallery {
             background-color: white;
         }
-
         #Check Availability {
             background-color: white;
         }
-
         #Policies {
             background-color: white;
         }
     </style>
-
 }
 
-
-
-
-
-
-
-
+@using MaaAahwanam.Web.Custom
 <main>
-
     <hr>
     <div class="bg_color_1">
         <div class="container margin_60_35">
             <div class="row">
                 <div class="col-lg-8">
-                    @*<BR><BR><BR><BR>*@
 
-                  @*  <div class="box_cart">
-
-        <center>
-            <h2><b>AUTHENTICATE TO PLACE ORDER</b></h2>
-            <a href="#0" class="btn_1 add_top_30">
-                Login&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
-            </a>&emsp;&emsp;
-            <b>(OR)&emsp;</b>
-            <a href="#0" class="btn_1 add_top_30">
-                Register&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
-            </a>
-        </center>
-        <hr>
-        <!--End step -->
-
-
-
-    </div>*@
+    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        var user = (CustomPrincipal)HttpContext.Current.User;
+        if (user.UserType == "Vendor")
+        {
+            Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
+        }
+        if (user.UserType == "User")
+        {
 
                     <h2>Cart</h2>
-                    @if (ViewBag.cartitems != null)
+                    if (ViewBag.cartitems != null)
                     {
                         <p>you got @ViewBag.cartCount items in your bag</p>
 
@@ -137,7 +107,35 @@
                     else
                     {
                         <p> No items in cart</p>
-                    }
+            }
+
+        }
+    }
+    else
+    {
+
+
+        <div class="box_cart">
+
+            <center>
+                <h2><b>AUTHENTICATE TO VIEW CART</b></h2>
+                <a  id="sign-in" href='#sign-in-dialog' class="btn_1 add_top_30">
+                    Login&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
+                </a>&emsp;&emsp;
+                @*<b>(OR)&emsp;</b>
+                <a href="#0" class="btn_1 add_top_30">
+                    Register&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
+                </a>*@
+            </center>
+            <hr>
+            <!--End step -->
+
+
+
+        </div>
+
+
+    }
                     <!-- /rom_type -->
                     <img src="http://design.maa-aahwanam.com/panagea/images/photography.png"></img>
 
@@ -249,27 +247,11 @@
                     </div>
 
             </div><br>
-
-
-
         </div>
-
-
-        </aside>
-
     </div>
     <!-- /row -->
-    </div>
-    <!-- /container -->
-    </div>
-    <!-- /bg_color_1 -->
 </main>
 <!--/main-->
-
-
-
-
-
 <div id="toTop"></div><!-- Back to top button -->
 @section scripts{
     <!-- UIkit JS -->
