@@ -13,6 +13,7 @@
 }
 
 @section css{
+<link href="~/Scripts/datedropper.css" rel="stylesheet" />
     <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
@@ -358,11 +359,17 @@
                     </div>
                     <div class="uk-section uk-section-large uk-section-muted">
                         <div class="uk-container">
-                            <center>
-                                <img src="http://design.maa-aahwanam.com/panagea/images/left.png" />
+                            @*<center>
+                            <img src="http://design.maa-aahwanam.com/panagea/images/left.png" />
 
-                                <img src="http://design.maa-aahwanam.com/panagea/images/right.png" />
-                            </center>
+                            <img src="http://design.maa-aahwanam.com/panagea/images/right.png" />
+                            </center>*@
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Guests</h1></label>
+                                <div class="uk-form-controls">
+                                    <input type="text" name="dropdate" id="dropdate" class="form-control" data-large-mode="true" />
+                                </div>
+                            </div>
                             <form class="uk-form-stacked">
                                 <br>
                                 <div class="uk-margin">
@@ -508,6 +515,7 @@
             var marker = new google.maps.Marker({position: uluru, map: map});
         }
     </script>
+<script src="~/Scripts/datedropper.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
@@ -515,6 +523,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script>
         $(window).load(function(){
+            $('#dropdate').dateDropper();
             $("#datepicker").daterangepicker().trigger("click");
         });
         //map
@@ -536,6 +545,8 @@
         // document.getElementById("defaultOpen").click();
     </script>
     <script>
+        //$('#dropdate').change(function()){}
+
         function ks(val) {
             var guest = '';
             var gu1 = window.localStorage.getItem("guests");
