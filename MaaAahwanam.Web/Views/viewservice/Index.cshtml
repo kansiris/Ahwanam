@@ -15,6 +15,8 @@
 @section css{
     <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
     <style>
         /* Set the size of the div element that contains the map */
         #map {
@@ -75,6 +77,33 @@
         #Policies {
             background-color: white;
         }
+        #modal-example .form-group input.form-control {
+        padding-left: 40px;
+        }
+
+        #modal-example .form-group i {
+            font-size: 21px;
+            position: absolute;
+            left: 12px;
+            top: 34px;
+            color: #ccc;
+            width: 25px;
+            height: 25px;
+            display: block;
+            font-weight: 400 !important;
+        }
+        
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 700px;
+    margin: 0 auto;
+  }
     </style>
 }
 
@@ -99,8 +128,8 @@
                                         <img src="/vendorimages/@ViewBag.image" alt="" uk-cover="" class="uk-cover">
                                     </li>*@
                             </ul>
-                            <a  class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                            <a  class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
                         </div>
                         <!--End step -->
                         <div class="uk-grid">
@@ -120,201 +149,202 @@
                     <br><br>
                     @foreach (var item in ViewBag.particularVenue)
                     {
-                        <div class="container" id="@item.VenueType">
-                            <h3 class="uk-h3">@item.VenueType</h3>
-                            @foreach (var item1 in @ViewBag.availablepackages)
+                    <div class="container" id="@item.VenueType">
+                        <h3 class="uk-h3">@item.VenueType</h3>
+                        @foreach (var item1 in @ViewBag.availablepackages)
                             {
                                 if (item1.VendorSubId == item.Id)
                                 {
 
-                                    <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid">
-                                    <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
-                                    <input type="hidden" value="@item1.price1" name="PackagePrice1" id="PackagePrice1">
-                                    <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
-                                    <div class="row packss">
-                                        @*<input type="hidden" value="@item1.PackageID,@item1.PackagePrice,@item1.PackageName" name="package" id="package">*@
-                                        <div class="col-sm">
-                                            <p class="box-text">
-                                                <text class="pname">@item1.PackageName</text> <br />
-                                                <span>
-                                                    ₹
-                                                    @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                        <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid">
+                        <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
+                        <input type="hidden" value="@item1.price1" name="PackagePrice1" id="PackagePrice1">
+                        <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
+                        <div class="row packss">
+                            @*<input type="hidden" value="@item1.PackageID,@item1.PackagePrice,@item1.PackageName" name="package" id="package">*@
+                            <div class="col-sm">
+                                <p class="box-text">
+                                    <text class="pname">@item1.PackageName</text> <br />
+                                    <span>
+                                        ₹
+                                        @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
                                                     { <b>@item1.PackagePrice</b>}
                                                     else
                                                     {
-                                                        <b>@item1.price1</b>
+                                            <b>@item1.price1</b>
                                                     }
-                                                    / Person
-                                                </span>
-                                                <text class="packageid" style="display:none">@item1.PackageID</text>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-sm">
-                                            @for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
+                                        / Person
+                                    </span>
+                                    <text class="packageid" style="display:none">@item1.PackageID</text>
+                                </p>
+                            </div>
+                            <div class="col-sm-sm">
+                                @for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
                                             {
-                                                <button class="small ui button_xs">@item1.PackageDescription.Split(',')[i]</button>
+                                    <button class="small ui button_xs">@item1.PackageDescription.Split(',')[i]</button>
                                             }
-                                            @*<div class="row-button">
-                                                    <a class="btn pill">curries</a>
-                                                    <a class="btn pill">wifi</a>
-                                                    <a class="btn pill">rice</a>
-                                                </div>
-                                                <div class="row-button">
-                                                    <a class="btn pill">curries</a>
-                                                    <a class="btn pill">wifi</a>
-                                                    <a class="btn pill">rice</a>
-                                                </div>*@
-                                        </div>
-                                        <div class="col-sm-sm">
-                                            <br /><br /> &emsp;&emsp; &emsp;
-                                           @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                           {
-                                              <button value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
-                                           }
-                                           else
-                                           {
-                                            <button value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
-                                           }
-                                            
-                                        </div>
-                                    </div><br><br>
+                                @*<div class="row-button">
+                                        <a class="btn pill">curries</a>
+                                        <a class="btn pill">wifi</a>
+                                        <a class="btn pill">rice</a>
+                                    </div>
+                                    <div class="row-button">
+                                        <a class="btn pill">curries</a>
+                                        <a class="btn pill">wifi</a>
+                                        <a class="btn pill">rice</a>
+                                    </div>*@
+                            </div>
+                            <div class="col-sm-sm">
+                                <br /><br /> &emsp;&emsp; &emsp;
+                                @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                            {
+                                    <button value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                            }
+                                            else
+                                            {
+                                    <button value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                            }
+
+                            </div>
+                        </div><br><br>
                                 }
                             }
-                        </div>
-                        <br><br><br><br>
-                        <h3 class="uk-h3">HALL DETAILS</h3>
-                        <div class="row">
-                            <div class="col-md-4-1">
-                                <img src="http://design.maa-aahwanam.com/panagea/images/banquet3.jpg">
-                                <table class="uk-table uk-table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <td>Area Name</td>
-                                            <td>
-                                                @if (item.name != null)
+                    </div>
+                    <br><br><br><br>
+                    <h3 class="uk-h3">HALL DETAILS</h3>
+                    <div class="row">
+                        <div class="col-md-4-1">
+                            <img src="http://design.maa-aahwanam.com/panagea/images/banquet3.jpg">
+                            <table class="uk-table uk-table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Area Name</td>
+                                        <td>
+                                            @if (item.name != null)
                                                 { @item.name }
                                                 else
                                                 { <text>NA</text> }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Area Type</td>
-                                            <td>
-                                                @if (item.VenueType != null)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Area Type</td>
+                                        <td>
+                                            @if (item.VenueType != null)
                                                 { @item.VenueType }
                                                 else
                                                 { <text>NA</text> }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Area Dimentions</td>
-                                            <td>
-                                                @if (item.Dimentions != null)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Area Dimentions</td>
+                                        <td>
+                                            @if (item.Dimentions != null)
                                                 { @item.Dimentions }
                                                 else
                                                 { <text>NA</text> }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Max Capacity</td>
-                                            <td>
-                                                @if (item.Maximumcapacity != null)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Max Capacity</td>
+                                        <td>
+                                            @if (item.Maximumcapacity != null)
                                                 { @item.Maximumcapacity }
                                                 else
                                                 { <text>NA</text> }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Seating Style</td>
-                                            <td>Seating Style</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-8-2">
-                                <h6 class="uk-h6-1">AMENTIES</h6>
-                                <div class="row-2" overflow="visible">
-                                    <br>
-                                    @for (int i = 0; i < ViewBag.amenities[amenitycount].Split(',').Length; i++)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Seating Style</td>
+                                        <td>Seating Style</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-8-2">
+                            <h6 class="uk-h6-1">AMENTIES</h6>
+                            <div class="row-2" overflow="visible">
+                                <br>
+                                @for (int i = 0; i < ViewBag.amenities[amenitycount].Split(',').Length; i++)
                                     {
-                                        <p class="caption"><img src="http://design.maa-aahwanam.com/panagea/images/baloon.png" /><br><br><b>@ViewBag.amenities[amenitycount].Split(',')[i]</b></p>
+                                <p class="caption"><img src="http://design.maa-aahwanam.com/panagea/images/baloon.png" /><br><br><b>@ViewBag.amenities[amenitycount].Split(',')[i]</b></p>
                                     }
-                                </div>
                             </div>
                         </div>
-                        <br><br>
-                        <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
-                        @*<img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>*@
-                        <input id="datepicker" class="datepicker" name="datepicker" />
-                        <h3 class="uk-h3">GALLERY/VIDEOS</h3>
-                        <div class="container margin_60_35">
-                            <div class="grid">
-                                <ul class="magnific-gallery">
-                                    <li>
-                                        <figure>
-                                            <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_1.jpeg" alt="">
-                                            <figcaption>
-                                                <div class="caption-content">
-                                                    <a href="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_1.jpeg" title="Photo title" data-effect="mfp-zoom-in">
-                                                        <i class="pe-7s-albums"></i>
-                                                        <p>Your caption</p>
-                                                    </a>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </li>
-                                    <li>
-                                        <figure>
-                                            <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_4.jpeg" alt="">
-                                            <figcaption>
-                                                <div class="caption-content">
-                                                    <a href="https://vimeo.com/45830194" class="video" title="Video Vimeo">
-                                                        <span class="ti-control-play"></span>
-                                                        <p>Your caption</p>
-                                                    </a>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </li>
-                                    <li>
-                                        <figure>
-                                            <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_2.jpeg" alt="">
-                                            <figcaption>
-                                                <div class="caption-content">
-                                                    <a href="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_2.jpeg" title="Photo title" data-effect="mfp-zoom-in">
-                                                        <i class="pe-7s-albums"></i>
-                                                        <p>Your caption</p>
-                                                    </a>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </li>
-                                    <li>
-                                        <figure>
-                                            <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_4.jpeg" alt="">
-                                            <figcaption>
-                                                <div class="caption-content">
-                                                    <a href="https://vimeo.com/45830194" class="video" title="Video Vimeo">
-                                                        <i class="pe-7s-film"></i>
-                                                        <p>Your caption</p>
-                                                    </a>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /grid gallery -->
+                    </div>
+                    <br><br>
+                    <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
+                    @*<img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>*@
+                    @*<input id="datepicker" class="datepicker" name="datepicker" />*@
+                        <div id='calendar'></div>
+                    <h3 class="uk-h3">GALLERY/VIDEOS</h3>
+                    <div class="container margin_60_35">
+                        <div class="grid">
+                            <ul class="magnific-gallery">
+                                <li>
+                                    <figure>
+                                        <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_1.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_1.jpeg" title="Photo title" data-effect="mfp-zoom-in">
+                                                    <i class="pe-7s-albums"></i>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                        <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_4.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="https://vimeo.com/45830194" class="video" title="Video Vimeo">
+                                                    <span class="ti-control-play"></span>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                        <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_2.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_2.jpeg" title="Photo title" data-effect="mfp-zoom-in">
+                                                    <i class="pe-7s-albums"></i>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                        <img src="http://design.maa-aahwanam.com/panagea/img/gallery/large/pic_4.jpeg" alt="">
+                                        <figcaption>
+                                            <div class="caption-content">
+                                                <a href="https://vimeo.com/45830194" class="video" title="Video Vimeo">
+                                                    <i class="pe-7s-film"></i>
+                                                    <p>Your caption</p>
+                                                </a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </li>
+                            </ul>
                         </div>
+                        <!-- /grid gallery -->
+                    </div>
                     <!-- /container -->
-                        <h3 class="uk-h3">VENUE POLICIES</h3>
-                        <P>Read all the terms & conditions of the banquet hall.</P><br><br>
+                    <h3 class="uk-h3">VENUE POLICIES</h3>
+                    <P>Read all the terms & conditions of the banquet hall.</P><br><br>
 
-                        <figure>
-                            <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
-                            <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
-                            <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
-                        </figure>
+                    <figure>
+                        <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
+                        <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
+                        <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
+                    </figure>
                     }
                     <h3 class="uk-h3">Address</h3>
                     <p>
@@ -325,7 +355,7 @@
                 </div>
                 <!-- /col -->
                 <aside class="col-lg-4" id="sidebar">
-                    <div class="box_detail">
+                    <div class="box_detail" style="display:none">
                         <h6 class="uk-h6-2">AMENTIES</h6>
                         <div class="row-button">
                             <a class="btn-pill">WIFI</a>
@@ -366,15 +396,15 @@
                             </form>
                             @if (user != null)
                             {
-                                <button type="button" class="btn_1 add_top_30" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                                <button type="button" class="btn_1 add_top_30" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>                            }
+                            <button type="button" class="btn_1 add_top_30" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                            <button type="button" class="btn_1 add_top_30" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>                            }
                             else
                             {
-                                @*<a  class="btn_1 add_top_30" id="sign-in" href='#sign-in-dialog'> BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></a>
+                            @*<a  class="btn_1 add_top_30" id="sign-in" href='#sign-in-dialog'> BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></a>
                                 <a  class="btn_1 add_top_30" id="sign-in" href='#sign-in-dialog'> CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></a>*@
 
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"/></button>
-                                <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">CART&nbsp;<img src="images/icons/cart2.png"/></button>
+                            <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                            <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>
                             }
 
                         </div>
@@ -387,87 +417,91 @@
         <!-- /bg_color_1 -->
     </div>
 </main>
+
+
 <!--/main-->
-<!-- This is the modal -->
 <div id="modal-example" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-        <div class="authenticationBlocks">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" placeholder="Email ID" name="UserName1" id="UserName1" required />
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title" style="font-size:22px">Sign In / Register</h3>
+        </div>
+        <div class="uk-modal-body">
+            <div class="authenticationBlocks">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" placeholder="Enter Your Email ID" name="UserName1" id="UserName1" required />
 
-                @*<input type="email" class="form-control" name="email" id="email">*@
-                <i class="icon_mail_alt"></i>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="Password" class="form-control" placeholder="Password" name="Password2" id="Password2" required />
-
-                @*<input type="password" class="form-control" name="password" id="password" value="">*@
-                <i class="icon_lock_alt"></i>
-            </div>
-            @*<div class="clearfix add_bottom_15">
-               <div class="checkboxes float-left">
-                    <label class="container_check">
-                        Remember me
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
+                    @*<input type="email" class="form-control" name="email" id="email">*@
+                    <i class="icon_mail_alt"></i>
                 </div>
-               <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-            </div>*@
-            <div class="text-center"><input type="submit" value="Login" onclick="login1(this.value)" class="btn_1 full-width" name="command"></div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="Password" class="form-control" placeholder="Enter Your Password" name="Password2" id="Password2" required />
 
-            <div class="text-center">
-                Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
-            </div>
-        </div>
-        @*<div class="float-right mt-1 registerBtn"><a id="signup" href="javascript:void(0);">Sign up</a></div>*@
-        <div id="forgot_pw" class="forgotks">
-            <div class="form-group">
-                <label>Please confirm login email below</label>
-                <input type="email" class="form-control" name="email_forgot" id="email_forgot1">
-                <i class="icon_mail_alt"></i>
-            </div>
-            <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-            <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
-            <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
+                    @*<input type="password" class="form-control" name="password" id="password" value="">*@
+                    <i class="icon_lock_alt"></i>
+                </div>
+                @*<div class="clearfix add_bottom_15">
+                       <div class="checkboxes float-left">
+                            <label class="container_check">
+                                Remember me
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                       <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                    </div>*@
+                <div class="text-center"><input type="submit" value="Login" onclick="login1(this.value)" class="btn_1 full-width" name="command"></div>
 
-        </div>
-        <div id="signup" class="register">
-
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" name="Name1" id="txtname1" required>
-                <i class="icon_mail_alt"></i>
+                <div class="text-center">
+                    Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="Password3" minlength="5" id="Password3" required>
-                <i class="icon_lock_alt"></i>
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" name="Email1" id="txtemail1" required>
-                <i class="icon_mail_alt"></i>
-            </div>
-            <div class="form-group">
-                <label>Phone Number</label>
-                @*<input type="password" class="form-control" name="password" id="password" value="">*@
-                <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" id="txtphone1" required>
-                <i class="icon_lock_alt"></i>
-            </div>
+            <div id="forgot_pw" class="forgotks">
+                <div class="form-group">
+                    <label>Please confirm login email below</label>
+                    <input type="email" class="form-control" name="email_forgot" id="email_forgot1">
+                    <i class="icon_mail_alt"></i>
+                </div>
+                <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
+                <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+                <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
-            <p>You will receive an email containing a link allowing you to activate</p>
-            <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
+            </div>
+            <div id="signup" class="register">
 
-            <div class="text-center"><input type="submit" value="Register" onclick="savecustomer1(this.value)" class="btn_1"></div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="Name1" id="txtname1" placeholder="Enter Your Name" required>
+                    <i class="icon_mail_alt"></i>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="Password3" minlength="5" id="Password3" placeholder="Enter Your Desired Password" required>
+                    <i class="icon_lock_alt"></i>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="Email1" id="txtemail1" placeholder="Enter Your Email ID" required>
+                    <i class="icon_mail_alt"></i>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    @*<input type="password" class="form-control" name="password" id="password" value="">*@
+                    <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Enter Your Mobile Number(format: xxxxxxxxxx)" id="txtphone1" required>
+                    <i class="icon_lock_alt"></i>
+                </div>
 
+                <p>You will receive an email containing a link allowing you to activate</p>
+                <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
+
+                <div class="text-center"><input type="submit" value="Register" onclick="savecustomer1(this.value)" class="btn_1"></div>
+
+            </div>
         </div>
     </div>
-   
 </div>
-
 <!-- COMMON SCRIPTS -->
 @section scripts{
     <script src="~/newdesign/js/alertify.js"></script>
@@ -486,6 +520,8 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script>
         $(window).load(function(){
             $("#datepicker").daterangepicker().trigger("click");
@@ -738,7 +774,7 @@
                 alert("Please Enter Password");
                 $("#Password2").focus();
             }
-               
+
             else if (emailaddressVal == '') {
                 alert("Please Enter Email Address");
                 $("#UserName1").focus();
@@ -780,10 +816,29 @@
         }
 
     </script>
-   @*<script>
-       $('.signin').on('click',function(){
-           //alert("click");
-           $('#sign-in-dialog').attr('class','zoom-anim-dialog');
-       });
-    </script>*@
+<script>
+
+    $(document).ready(function() {
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            defaultDate: '2018-03-12',
+            navLinks: true, // can click day/week names to navigate views
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: [
+              {
+                  title: 'All Day Event',
+                  start: '2018-03-01'
+              }
+            ]
+        });
+
+    });
+
+</script>
 }
