@@ -428,11 +428,52 @@
     </script>*@
     
     <script>
+        $(document).ready(function () {
+            var guests = window.localStorage.getItem("guests");
+            var location = window.localStorage.getItem("location");
+            var eventtype = window.localStorage.getItem("eventtype");
+            var date = window.localStorage.getItem("eventdate");
+            if (eventtype != '')
+                $("span.current").text(eventtype);
+            else
+                $("span.current").text('Select Event');
+            $('#loc').val(location);
+            $('#guests').val(guests);
+            $('#datetimepicker1').val(date);
+        });
         $('#datetimepicker1,#datepicker2').daterangepicker({
             singleDatePicker: true,
-            minDate:new Date(),
+            minDate: new Date(),
             locale: {
                 format: 'DD/MM/YYYY'
+            }
+        });
+        $('#btnsearch').click(function () {
+            var location = $('#loc').val();
+            var eventtype = $('.current').text();//$('#selectevent').val();
+            var guests = $('#guests').val();
+            var date = $('#datetimepicker1').val();
+            window.localStorage.setItem("guests", guests);
+            window.localStorage.setItem("location", location);
+            window.localStorage.setItem("eventtype", eventtype);
+            window.localStorage.setItem("eventdate", date);
+            if (location == '') {
+                alert('Enter Location');
+                $('#loc').focus();
+            }
+            else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+                alert('Select Event Type');
+            }
+            else if (guests == '') {
+                alert('Enter Guests');
+                $('#guests').focus();
+            }
+            else if (date == '') {
+                alert('Select date');
+                $('#datetimepicker1').focus();
+            }
+            else {
+                window.location.href = '/results/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
             }
         });
     </script>

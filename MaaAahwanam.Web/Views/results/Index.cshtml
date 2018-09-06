@@ -3,283 +3,202 @@
     ViewBag.Title = "::Search Results ::";
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
 }
-<link href="~/newdesign/css/alertify.css" rel="stylesheet" />
-@*<style>
-        /* Cosmetic only */
-    #easyPaginate {width:300px;}
-    #easyPaginate img {display:block;margin-bottom:10px;}
-    .easyPaginateNav a {padding:5px;}
-    .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
-    </style>*@
-<style>
-    .nice-select, .list {
-        width: 315px;
-        background-color: white;
-    }
-
-    /*.box_grid .wrapper {
-        padding: 0px;
-    }*/
-
-    .box_grid ul {
-        padding: 0px 10px;
-    }
-
-    .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
-        margin: 0 0 0px 0;
-    }
-
-    .th, td {
-        padding: 0px;
-        text-align: left;
-    }
-
-    .box_grid figure small5 {
-        right: -7px;
-        top: 0px;
-        padding: 0px 33px 0px;
-    }
-
-    .vendorimg {
-        max-width: 100%;
-        height: 177px;
-        overflow: hidden;
-        background-repeat: no-repeat !important;
-        background-size: cover !important;
-        background-position: center !important;
-    }
-
-    table.priceslist tr td {
-        border: 0px;
-        width: 215px;
-    }
-
-        table.priceslist tr td span {
-            float: right;
+@section css{
+    <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
+    <style>
+        .nice-select {
+            width: 315px;
         }
 
-            table.priceslist tr td span strong {
-                font-size: 16px;
+            .nice-select .list {
+                height: 250px;
+                width: 315px;
+                overflow: visible;
+                overflow-x: hidden;
+                overflow-y: auto;
             }
 
-    .margin_60_35 {
-        padding-top: 40px;
-        padding-bottom: 0px;
-    }
-    /*.popular {
-        top:330px;
-    }*/
-</style>
+        #other {
+            height: 26px;
+            width: 200px;
+            border: solid 1px black;
+            padding-left: 0px;
+        }
+
+        .box_grid .wrapper {
+            padding: 0px;
+        }
+
+        .box_grid ul {
+            padding: 0px 0px;
+        }
+
+        .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+            margin: 0 0 0px 0;
+        }
+
+        .th, td {
+            padding: 0px;
+            text-align: left;
+        }
+
+        .box_grid figure small5 {
+            right: -7px;
+            top: 0px;
+            padding: 0px 33px 0px;
+        }
+
+        .vendorimg {
+            max-width: 100%;
+            height: 177px;
+            overflow: hidden;
+            background-repeat: no-repeat !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        table.priceslist tr td {
+            border: 0px;
+            width: 215px;
+        }
+
+            table.priceslist tr td span {
+                float: right;
+            }
+
+                table.priceslist tr td span strong {
+                    font-size: 16px;
+                }
+
+        .margin_60_35 {
+            padding-top: 70px;
+            padding-bottom: 0px;
+        }
+        /*.popular {
+            top:330px;
+        }*/
+    </style>
+}
 
 
+<div class="collapse" id="collapseMap">
+    <div id="map" class="map"></div>
+</div>
+<!-- End Map -->
 
-<main>
-
-    @*<section class="hero_in tours">
-            <div class="wrapper">
-                <div class="container">
-                    <h1 class="fadeInUp"><span></span>Available Vendors</h1>
-                </div>
-            </div>
-        </section>*@
-    <!--/hero_in-->
-
-    <div class="container margin_60_35">
-        <form method="post">
-            <div class="row no-gutters custom-search-input-2">
-
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Location" id="loc" name="loc" value="@Request.QueryString["loc"]">
-                        <img src="http://design.maa-aahwanam.com/panagea/images/icons/location.png">
+<div class="container margin_60_35">
+    <div class="row">
+        <aside class="col-lg-3" id="sidebar">
+            <div id="filters_col">
+                <a data-toggle="collapse" href="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
+                <div class="collapse show" id="collapseFilters">
+                    <div class="filter_type">
+                        <h6>Service Types</h6>
+                        <p id="selectedservices" style="display:none"></p>
+                        <ul class="allservices">
+                            <li>
+                                <label>
+                                    <input type="checkbox" id="service" class="icheck service">Hotel @*<small>(945)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Banquet @*<small>(45)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Resort @*<small>(30)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Convention @*<small>(25)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Function @*<small>(56)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    @*<input type="checkbox" class="icheck" disabled>*@ OYO Banquets @*<small>(25)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    @*<input type="checkbox" class="icheck" disabled>*@ Catering @*<small>(56)</small>*@
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="filter_type">
+                        <h6>Budget</h6>
+                        <input type="text" id="range" name="range" value="">
+                    </div>
+                    <div class="filter_type">
+                        <h6>Food Type</h6>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Vegetarian @*<small>(25)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Non-Vegetarian @*<small>(26)</small>*@
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="filter_type">
+                        <h6>Amenities</h6>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">AC @*<small>(25)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Wi-Fi @*<small>(26)</small>*@
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">TV
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" class="icheck">Parking Facility
+                                </label>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
-                <div class="col-lg-4">
-                    @*<input class="form-control" type="text" placeholder="What type of event" value="" required="" autocomplete="off">*@
-                    <select required id="selectevent" name="selectevent">
-                        <option value="" disabled>Select Event</option>
-                        <option value="Wedding">Wedding</option>
-                        <option value="Party">Party</option>
-                        <option value="Corporate">Corporate</option>
-                        <option value="Baby Function">Baby Function</option>
-                        <option value="Birthday">Birthday</option>
-                        <option value="Engagement">Engagement</option>
-                        @*<option value="Other">Other</option>*@
-                    </select>
-                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/checklist.png">
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <input class="form-control" type="number" id="guests" name="guests" placeholder="Guests" value="@Request.QueryString["count"]">
-                        <img src="http://design.maa-aahwanam.com/panagea/images/icons/family.png">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date?" required value="@Request.QueryString["date"]">
-                        <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <input type="submit" id="btnsearch" class="btn_search" value="Search">
-                </div>
-
+                <!--/collapse -->
             </div>
-        </form>
-    </div>
+            <!--/filters col-->
+        </aside>
+        <!-- /aside -->
 
+        <input type="hidden" id="rcount" value="@ViewBag.count" />
+        <div class="col-lg-9">
 
-
-    @*<div class="filters_listing sticky_horizontal">
-            <div class="container">
-                <ul class="clearfix">
-                    <li>
-                    </li>
-                    <li>
-                        <div class="layout_view">
-                            <a href="#0" class="active"><i class="icon-th"></i></a>
-                            <a href="tours-list-sidebar.html"><i class="icon-th-list"></i></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="custom-search-input-2 inner-2">
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="Search By Vendor Name" style="width:300px" /><i class="icon_search" style="background-color: red; width: 36px; color: white;"></i>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+            <div class="isotope-wrapper" id="presults">
+                @{ Html.RenderAction("Loadmore", "results");}
+                <!-- /row -->
             </div>
-
-        </div>*@
-    <!-- /filters -->
-    @*<div class="custom-search-input-2 inner-2" style="width:20%">
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="Terms...">
-                <i class="icon_search"></i>
-            </div>
-        </div>*@
-    <div class="collapse" id="collapseMap">
-        <div id="map" class="map"></div>
-    </div>
-    <!-- End Map -->
-
-    <div class="container margin_60_35">
-        <div class="row">
-            <aside class="col-lg-3" id="sidebar">
-                <div id="filters_col">
-                    <a data-toggle="collapse" href="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
-                    <div class="collapse show" id="collapseFilters">
-                        <div class="filter_type">
-                            <h6>Service Types</h6>
-                            <p id="selectedservices" style="display:none"></p>
-                            <ul class="allservices">
-                                <li>
-                                    <label>
-                                        <input type="checkbox" id="service" class="icheck service">Hotel @*<small>(945)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Banquet @*<small>(45)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Resort @*<small>(30)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Convention @*<small>(25)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Function @*<small>(56)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        @*<input type="checkbox" class="icheck" disabled>*@ OYO Banquets @*<small>(25)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        @*<input type="checkbox" class="icheck" disabled>*@ Catering @*<small>(56)</small>*@
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="filter_type">
-                            <h6>Budget</h6>
-                            <input type="text" id="range" name="range" value="">
-                        </div>
-                        <div class="filter_type">
-                            <h6>Food Type</h6>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Vegetarian @*<small>(25)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Non-Vegetarian @*<small>(26)</small>*@
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="filter_type">
-                            <h6>Amenities</h6>
-                            <ul>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">AC @*<small>(25)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Wi-Fi @*<small>(26)</small>*@
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">TV
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" class="icheck">Parking Facility
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--/collapse -->
-                </div>
-                <!--/filters col-->
-            </aside>
-            <!-- /aside -->
-
-            <input type="hidden" id="rcount" value="@ViewBag.count" />
-            <div class="col-lg-9">
-                
-                <div class="isotope-wrapper" id="presults">
-                    @{ Html.RenderAction("Loadmore", "results");}
-                    <!-- /row -->
-                </div>
-                <!-- /isotope-wrapper -->
-                @* <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>*@
-            </div>
-
-            <!-- /col -->
         </div>
-    </div>
-    <!-- /container -->
 
-</main>
+        <!-- /col -->
+    </div>
+</div>
+<!-- /container -->
+
+
 
 @section scripts{
     <script src="~/newdesign/js/alertify.js"></script>
@@ -305,6 +224,7 @@
         });
         function GetRecords() {
             pageIndex++;
+            //alert(pageIndex);
             var servicetype = 'Venue';
             var selectedservices = $('#selectedservices').text();
             $.ajax({
@@ -325,9 +245,12 @@
         function OnSuccess(response) {
             //alertify.success('New Records Loaded!!! Scroll Down to View');
             var str = '';
+            if (response == '') {
+                alertify.error('No More Records to Display'); //error message
+            }
             $.each(response, function (key, value) {
                 if (value.logo != null) { str = '/vendorimages/'+value.logo } else if (value.image != null) { str = '/vendorimages/'+value.image } else { str = '/noimages.png' }
-                $('#allrecords').append("<div class='col-md-4 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice/index?id="+value.Id+"'><div class='vendorimg' style='background:url("+str+")'></div></a><small5>"+value.subtype+"</small5> </figure> <div class='wrapper'> <h5 class='uk-h5'>" + value.BusinessName + "<p class='p_0'>" + value.Landmark + "," + value.City + "</p></h5> <div class='panel panel-default'><table><tr><td style='border:0px;width:215px'><p>Veg <span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost1+"</strong></span></p></td></tr><tr><td style='border:0px;width:215px'><p>Non-Veg<span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost2+"</strong></span></p></td></tr></table></div></div><ul><li> Capacity : "+value.Minimumseatingcapacity+" - "+value.Maximumcapacity+"</li><li><a href='/viewservice/index?id="+value.Id+"'>Book Now</a></li></ul></div></div>");
+                $('#allrecords').append("<div class='col-md-4 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice/index?id="+value.Id+"'><div class='vendorimg' style='background:url("+str+")'></div></a><small5>"+value.subtype+"</small5> </figure> <div class='wrapper'> <h5 class='uk-h5'>" + value.BusinessName + "<p class='p_0'>" + value.Landmark + ", " + value.City + "</p></h5> <div class='panel panel-default'><table><tr><td style='border:0px;width:215px'><p>Veg <span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost1+"</strong></span></p></td></tr><tr><td style='border:0px;width:215px'><p>Non-Veg<span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost2+"</strong></span></p></td></tr></table></div></div><ul><li> Capacity : "+value.Minimumseatingcapacity+" - "+value.Maximumcapacity+"</li><li><a href='/viewservice/index?id="+value.Id+"'>Book Now</a></li></ul></div></div>");
             });
             $('#loadresults').empty();
         }
@@ -350,6 +273,7 @@
                 }
                 $("#selectedservices").empty().html(servicesarray.join(','));
             }
+            pageIndex = 0;
             var url = "/results/Loadmore?count=1&&type=" + $("#selectedservices").text();
             $('#presults').empty().load(url);
 
@@ -376,5 +300,9 @@
             }
         });
     </script>
-
+    <script type="text/javascript">
+        $('.list input').click(function (e) {
+            e.stopPropagation();
+        })
+    </script>
 }

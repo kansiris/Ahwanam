@@ -44,8 +44,18 @@
     <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
     <style>
-        .nice-select, .list {
+        .nice-select {
             width: 315px;
+        }
+       .nice-select .list {
+           height:250px;
+            width: 315px;
+            overflow:visible;
+            overflow-x:hidden;
+            overflow-y:auto;
+        }
+        #other {
+        height: 26px;width :200px; border :solid 1px black;padding-left:0px
         }
     </style>
     @using System.Globalization
@@ -103,7 +113,7 @@
 
                             <div class="col-lg-4">
                                 @*<input class="form-control" type="text" placeholder="What type of event" value="" required="" autocomplete="off">*@
-                                <select class="form-control" required id="selectevent" name="selectevent">
+                                @*<select class="form-control" required id="selectevent" name="selectevent">
                                     <option value="" disabled selected>Select Event</option>
                                     <option value="Wedding">Wedding</option>
                                     <option value="Party">Party</option>
@@ -111,8 +121,21 @@
                                     <option value="Baby Function">Baby Function</option>
                                     <option value="Birthday">Birthday</option>
                                     <option value="Engagement">Engagement</option>
-                                    @*<option value="Other">Other</option>*@
-                                </select>
+                                    <option value="Other">Other</option>
+                                </select>*@
+                                <div class="nice-select" tabindex="0">
+                                    <span class="current" style="padding-left:20px">Select Event</span>
+                                    <ul class="list">
+                                        <li data-value="" class="option disabled">Select Event</li>
+                                        <li data-value="Wedding" class="option selected">Wedding</li>
+                                        <li data-value="Party" class="option">Party</li>
+                                        <li data-value="Corporate" class="option">Corporate</li>
+                                        <li data-value="Baby Function" class="option">Baby Function</li>
+                                        <li data-value="Birthday" class="option">Birthday</li>
+                                        <li data-value="Engagement" class="option">Engagement</li>
+                                        <li data-value="Other" class="option">Other &emsp;<input type="text" id="other"></li>
+                                    </ul>
+                                </div>
                                 <img src="http://design.maa-aahwanam.com/panagea/images/icons/checklist.png">
                             </div>
                             <div class="col-lg-2">
@@ -630,15 +653,19 @@
         });
         $('#btnsearch').click(function () {
             var location = $('#loc').val();
-            var eventtype = $('#selectevent').val();
+            var eventtype = $('.current').text();//$('#selectevent').val();
             var guests = $('#guests').val();
-            window.localStorage.setItem("guests", guests);
             var date = $('#datetimepicker1').val();
+            window.localStorage.setItem("guests", guests);
+            window.localStorage.setItem("location", location);
+            window.localStorage.setItem("eventtype", eventtype);
+            window.localStorage.setItem("eventdate", date);
+            //alert(eventtype);
             if (location == '') {
                 alert('Enter Location');
                 $('#loc').focus();
             }
-            else if (eventtype == '' || eventtype == null) {
+            else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
                 alert('Select Event Type');
             }
             else if (guests == '') {
