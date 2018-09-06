@@ -9,6 +9,21 @@ using MaaAahwanam.Models;
 using System.IO;
 using Newtonsoft.Json;
 using MaaAahwanam.Web.Custom;
+using Microsoft.AspNet.Identity;
+using System.Configuration;
+using MaaAahwanam.Web.Models;
+using System.Net;
+using System.Web.Script.Serialization;
+using Facebook;
+using System.Web.Security;
+
+using System.Threading.Tasks;
+using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity.Owin;
+using Portal;
+using DotNetOpenAuth.GoogleOAuth2;
+using Microsoft.AspNet.Membership.OpenAuth;
+using System.Collections.Specialized;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -193,7 +208,13 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
+        public ActionResult SignOut()
+        {
+            Response.Cookies.Clear();
 
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "NHomePage");
+        }
         public ActionResult ItemsCartdetails()
         {
             try
