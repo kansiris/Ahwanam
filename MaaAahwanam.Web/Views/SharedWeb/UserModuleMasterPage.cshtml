@@ -33,7 +33,24 @@
     @RenderSection("css", false)
     <!-- YOUR CUSTOM CSS -->
     <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
-   
+   <style>
+            #modal-example .form-group input.form-control {
+            padding-left: 40px;
+        }
+
+        #modal-example .form-group i {
+            font-size: 21px;
+            position: absolute;
+            left: 12px;
+            top: 34px;
+            color: #ccc;
+            width: 25px;
+            height: 25px;
+            display: block;
+            font-weight: 400 !important;
+        }
+
+   </style>
 </head>
 
 <body>
@@ -279,6 +296,92 @@
     </div>
     <!-- /Sign In Popup -->
 
+    <!--modal popup-->
+
+    <div id="modal-example" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" style="font-size:22px">Sign In / Register</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="authenticationBlocks">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" placeholder="Enter Your Email ID" name="UserName1" id="UserName1" required />
+
+                        @*<input type="email" class="form-control" name="email" id="email">*@
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="Password" class="form-control" placeholder="Enter Your Password" name="Password2" id="Password2" required />
+
+                        @*<input type="password" class="form-control" name="password" id="password" value="">*@
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    @*<div class="clearfix add_bottom_15">
+                           <div class="checkboxes float-left">
+                                <label class="container_check">
+                                    Remember me
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                           <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                        </div>*@
+                    <div class="text-center"><input type="submit" value="Login" onclick="login1(this.value)" class="btn_1 full-width" name="command"></div>
+
+                    <div class="text-center">
+                        Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
+                    </div>
+                </div>
+                <div id="forgot_pw" class="forgotks">
+                    <div class="form-group">
+                        <label>Please confirm login email below</label>
+                        <input type="email" class="form-control" name="email_forgot" id="email_forgot1">
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
+                    <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+                    <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
+
+                </div>
+                <div id="signup" class="register">
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="Name1" id="txtname1" placeholder="Enter Your Name" required>
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password3" minlength="5" id="Password3" placeholder="Enter Your Desired Password" required>
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="Email1" id="txtemail1" placeholder="Enter Your Email ID" required>
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        @*<input type="password" class="form-control" name="password" id="password" value="">*@
+                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Enter Your Mobile Number(format: xxxxxxxxxx)" id="txtphone1" required>
+                        <i class="icon_lock_alt"></i>
+                    </div>
+
+                    <p>You will receive an email containing a link allowing you to activate</p>
+                    <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
+
+                    <div class="text-center"><input type="submit" value="Register" onclick="savecustomer1(this.value)" class="btn_1"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal -->
+
     <div id="toTop"></div><!-- Back to top button -->
     <!-- COMMON SCRIPTS -->
     @*<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>*@
@@ -520,6 +623,156 @@
                 }
             }
         }
+
+
+        function savecustomer1(clickedvalue) {
+            var CustomerPhoneNumber = $("#txtphone1").val();
+            var CustomerName = $("#txtname1").val();
+            var Password = $("#Password3").val();
+            var Email = $("#txtemail1").val();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var phonepattern = /^[0-9]{10}$/;
+            var passwordpattern = /^[a-z0-9]+$/i;
+            var emailaddressVal = $("#txtemail1").val();
+            if (CustomerPhoneNumber == '') {
+                alert("Please Enter PhoneNumber");
+                $("#txtphone1").focus();
+            }
+            else if (!phonepattern.test(CustomerPhoneNumber)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#txtphone1").focus();
+            }
+            else if (CustomerName == '') {
+                alert("Please Enter Name");
+                $("#txtname1").focus();
+            }
+            else if (!passwordpattern.test(CustomerName)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#txtphone1").focus();
+            }
+            else if (CustomerName.length < 5) {
+                alert("Name must be 5 characters");
+                $("#txtname1").focus();
+            }
+            else if (Password == '') {
+                alert("Please Enter Password");
+                $("#Password3").focus();
+            }
+            else if (Password.length < 5) {
+                alert("Password length must be 5 characters");
+                $("#Password3").focus();
+                $("#Password3").alphanum();
+            }
+            else if (!passwordpattern.test(Password)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#txtphone1").focus();
+            }
+            else if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+                $("#txtemail1").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                alert("Please Enter a valid Email Address");
+                $("#txtemail1").focus();
+            }
+
+            else {
+                if (clickedvalue == 'Register') {
+                    $.ajax({
+                        url: '/Home/register', type: 'POST',
+                        data: JSON.stringify({ CustomerPhoneNumber: CustomerPhoneNumber, CustomerName: CustomerName, Password: Password, Email: Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("Check your email to active your account to login");
+                                window.location.reload();
+
+                            }
+                            if (data == "unique") {
+                                alert("E-Mail ID Already Registered!!! Try Logging with your Password");
+                                window.location.reload();
+
+                            }
+                            else if (data == "unique1") {
+                                alert("Registration fails");
+
+                            }
+                            else if (data == "Failed") {
+
+                                alert("Registration Failed");
+                                window.location.reload();
+                            }
+                            else {
+                                alert("Registration Failed");
+                                // $("#txtphone").val('');
+                                $("#txtname").val('');
+                                $("#txtpassword").val('');
+                                $("#txtdeladdress").val('');
+                                $("#txtemail").val('');
+                                // window.location.reload();
+                                $("#otpopup").css("display", "block");
+                                $("#txtotp").focus();
+                            }
+                        },
+                        error: function (data) {
+                            alert("error");
+                        }
+                    });
+                }
+            }
+        }
+        function login1(clickedvalue) {
+            var Password = $("#Password2").val();
+            var Email = $("#UserName1").val();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var passwordpattern = /^[a-z0-9]+$/i;
+            var emailaddressVal = $("#UserName1").val();
+            if (Password == '') {
+                alert("Please Enter Password");
+                $("#Password2").focus();
+            }
+
+            else if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+                $("#UserName1").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                alert("Please Enter a valid Email Address");
+                $("#UserName1").focus();
+            }
+
+            else {
+                if (clickedvalue == 'Login') {
+                    $.ajax({
+                        url: '/Home/login',
+                        type: 'POST',
+                        data: JSON.stringify({ Password: Password, Email: Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("Login Sucessfull");
+                                window.location.reload();
+                            }
+                            if (data == "unique") {
+                                alert("vendorlogin successfull");
+                                //vendorlogin
+                            }
+                            else if (data == "Failed") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                        },
+                        error: function (data) {
+                            alert("error");
+                        }
+                    });
+                }
+            }
+        }
+
         </script>
     <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

@@ -49,9 +49,13 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-       
+        public JsonResult DeletecartItem(long cartId)
+        {
+            var message = cartserve.Deletecartitem(cartId);
+            return Json(message);
+        }
 
-      
+
     }
 }
 

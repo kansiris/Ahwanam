@@ -22,6 +22,10 @@ namespace MaaAahwanam.Service
                 l1 = cartres.CartItemList(UserId).Count();
             return l1;
         }
+        public string Deletecartitem(long cartId)
+        {
+            return cartres.DeletecartItem(cartId);
+        }
         public List<GetCartItems_Result> CartItemsList(int vid)
         {
             List<GetCartItems_Result> l1 = cartres.CartItemList(vid);

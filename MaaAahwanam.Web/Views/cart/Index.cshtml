@@ -2,14 +2,17 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
 }
-
+@using System.Globalization
 @section css{
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
+    <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
+
     <style>
         body {
             font-family: "Lato", sans-serif;
         }
+
         .tablink {
             background-color: #fff;
             color: #212529;
@@ -21,6 +24,7 @@
             font-size: 14px;
             width: 16%;
         }
+
             .tablink:hover {
                 background-color: #fff;
             }
@@ -31,24 +35,77 @@
             padding: 50px;
             text-align: center;
         }
+
+
         #Food Packages {
             background-color: white;
         }
+
         #Hall Details {
             background-color: white;
         }
+
         #Description {
             background-color: white;
         }
+
         #Gallery {
             background-color: white;
         }
+
         #Check Availability {
             background-color: white;
         }
+
         #Policies {
             background-color: white;
         }
+
+
+        .zInputWrapper {
+            background-color: #f30712;
+            padding: 1px;
+            margin: 2px;
+            /*border-radius: 12px;*/
+            display: inline-block;
+        }
+
+        .zInput {
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+            background-color: #f30712;
+            margin: 4px;
+            padding: 2px;
+            text-align: center;
+            cursor: default;
+            color: #fff;
+            border: #f30712 1px solid;
+            /*border-radius: 10px;*/
+            font-size: 16px;
+            overflow: hidden;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            /*-khtml-user-select: none;*/
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+
+        .zCheckbox {
+            color: #ffffff;
+            border: #f30712 1px solid;
+        }
+
+        .zSelected {
+            color: #f30712;
+            background-color: #f30712;
+        }
+
+            .zSelected.zCheckbox {
+                background-color: #f30712;
+            }
     </style>
 }
 
@@ -60,87 +117,118 @@
             <div class="row">
                 <div class="col-lg-8">
 
-    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-    {
-        var user = (CustomPrincipal)HttpContext.Current.User;
-        if (user.UserType == "Vendor")
-        {
-            Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
-        }
-        if (user.UserType == "User")
-        {
-
-                    <h2>Cart</h2>
-                    if (ViewBag.cartitems != null)
+                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                     {
-                        <p>you got @ViewBag.cartCount items in your bag</p>
-
-                        foreach (var item in ViewBag.cartitems)
+                        var user = (CustomPrincipal)HttpContext.Current.User;
+                        if (user.UserType == "Vendor")
                         {
-                            <div class="room_type first">
+                            Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
+                        }
+                        if (user.UserType == "User")
+                        {
 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img src="http://design.maa-aahwanam.com/panagea/img/gallery/hotel_list_1.jpeg" class="img-fluid" alt="">
+                            <h2>Cart</h2>
+                            if (ViewBag.cartitems != null)
+                            {
+                                <p>you got @ViewBag.cartCount items in your bag</p>
+
+                                foreach (var item in ViewBag.cartitems)
+                                {
+                                    <div class="room_type first">
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @if (item.image != null)
+                                                {
+                                                    <img src="../vendorimages/@item.image" class="img-fluid" alt="">
+                                                }
+                                                else
+                                                {                                        <img src="../noimages.png" class="img-fluid" alt="">
+                                                }
+                                            </div>
+                                            <div class="col-md-8-1">
+                                                <input type="hidden" id="cartid" name="cartid" value="@item.CartId">
+                                                <h3>@item.BusinessName&emsp;<a class="ui violet label">@item.ServiceType</a><span><br></span></h3>
+                                                <p>
+                                                    @item.SelectedPriceType for  @item.Quantity guests <br>Date: @item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')&emsp;&emsp;&emsp;&emsp; <B>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Perunitprice)).Replace(".00", "")</B>&emsp;&emsp;&emsp;&emsp;&emsp;
+                                                    @*<a href="#0" class="btn_cart add_top_30">
+                                                            Select&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
+                                                        </a>*@
+                                                    @*<button type="submit" name="command" onclick="selectcartItem(@item.CartId)" class="btn_cart add_top_30"> <input type="checkbox" name="">
+                                                        <p>Select</p><img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>*@
+                                                    <div class="zInputWrapper">
+                                                    <div class="zInput zCheckbox"><span style="display:table;width: 100%;height: 100%;"><span style="display: table-cell;vertical-align:middle;"><p>select</p><input type="checkbox" name="selectchart" title="selectcart" value="@item.CartId" style="display: none;"></span></span></div>
+                                                    </div>
+
+                                                    <br><br><span><a href="" onclick="DeletecartItem(@item.CartId)">Delete</a></span>
+
+
+                                                </p>
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <!-- /row -->
                                     </div>
-                                    <div class="col-md-8-1">
-                                        <h2>@item.BusinessName&emsp;<a class="ui violet label">HOTEL</a><span><br><p class="p_0"></p></span></h2>
-                                        <p>
-                                            @item.SelectedPriceType @item.Quantity guests <br>Date: 12-Oct-2018&emsp;&emsp;&emsp;&emsp; <B>@item.Perunitprice</B>&emsp;&emsp;&emsp;&emsp;&emsp;<a href="#0" class="btn_cart add_top_30">
-                                                Selected&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
-                                            </a><br><br><span><a href="#">EDIT</a></span>
-
-
-                                        </p>
-
-
-
-                                    </div>
-
-                                </div>
-                                <!-- /row -->
-                            </div>
                             <!-- /rom_type -->
-                            <hr>
+                                    <hr>
+                                }
+                            }
+                            else
+                            {
+                                <p> No items in cart</p>
+                            }
+
                         }
                     }
                     else
                     {
-                        <p> No items in cart</p>
-            }
-
-        }
-    }
-    else
-    {
 
 
-        <div class="box_cart">
+                        <div class="box_cart">
 
-            <center>
-                <h2><b>AUTHENTICATE TO VIEW CART</b></h2>
-                <a  id="sign-in" href='#sign-in-dialog' class="btn_1 add_top_30">
-                    Login&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
-                </a>&emsp;&emsp;
-                @*<b>(OR)&emsp;</b>
-                <a href="#0" class="btn_1 add_top_30">
-                    Register&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
-                </a>*@
-            </center>
-            <hr>
-            <!--End step -->
+                            <center>
+                                <h2><b>AUTHENTICATE TO VIEW CART</b></h2>
+                                <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">Login&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+
+                                @*<b>(OR)&emsp;</b>
+                                    <a href="#0" class="btn_1 add_top_30">
+                                        Register&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png">
+                                    </a>*@
+                            </center>
+                            <hr>
+                            <!--End step -->
 
 
 
-        </div>
+                        </div>
 
 
-    }
+                    }
                     <!-- /rom_type -->
-                    <img src="http://design.maa-aahwanam.com/panagea/images/photography.png"></img>
+                    <div class="ui people shape">
+                        <div class="sides">
+                            <div class="active side">
+                                <div class="ui card">
+                                    <div class="image">
+                                        <img src="http://design.maa-aahwanam.com/panagea/img/gallery/hotel_list_1.jpeg">
+                                    </div>
+                                    <div class="content">
+                                        <div class="header sticky">photography</div>
 
-                    <img src="http://design.maa-aahwanam.com/panagea/images/florist.png"></img>
-                    <img src="http://design.maa-aahwanam.com/panagea/images/caterer.png"></img>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @*<img src="http://design.maa-aahwanam.com/panagea/images/photography.png"/>
+
+                        <img src="http://design.maa-aahwanam.com/panagea/images/florist.png"/>
+                        <img src="http://design.maa-aahwanam.com/panagea/images/caterer.png"/>*@
                     @*<div class="ui three column grid">
                             <div class="column">
                                 <div class="ui fluid card">
@@ -197,21 +285,21 @@
                             <hr>
                             <div>
                                 <div class="uk-margin">
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">TOTAL AMOUNT</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;$@ViewBag.Total</h1></label><br><br>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">DISCOUNT</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0</h1></label><br><br>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">SERVICE CHARGE</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0</h1></label><br><br>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">GST</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$0</h1></label><br><br>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">NET AMOUNT</h1></label>
-                                    <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">&emsp;&emsp;&emsp;&emsp;&emsp;$@ViewBag.Total</h1></label><br><br>
+                                    <label class="uk-form-label" style="float: left;" for="form-stacked-text"><a class="uk-h1">TOTAL AMOUNT</a></label>
+                                    <label class="uk-form-label" style="float: right;" for="form-stacked-text">₹<a class="uk-h1">000</a></label><br><br>
+                                    <label class="uk-form-label" style="float: left;" for="form-stacked-text"><a class="uk-h1">DISCOUNT</a></label>
+                                    <label class="uk-form-label" style="float: right;" for="form-stacked-text">₹<a class="uk-h1">0</a></label><br><br>
+                                    <label class="uk-form-label" style="float: left;" for="form-stacked-text"><a class="uk-h1">SERVICE CHARGE</a></label>
+                                    <label class="uk-form-label" style="float: right;" for="form-stacked-text">₹<a class="uk-h1">0</a></label><br><br>
+                                    <label class="uk-form-label" style="float: left;" for="form-stacked-text"><a class="uk-h1">GST</a></label>
+                                    <label class="uk-form-label" style="float: right;" for="form-stacked-text">₹<a class="uk-h1">0</a></label><br><br>
+                                    <label class="uk-form-label" style="float: left;" for="form-stacked-text"><a class="uk-h1">NET AMOUNT</a></label>
+                                    <label class="uk-form-label" style="float: right;" for="form-stacked-text">₹<a class="uk-h1">000</a></label><br><br>
 
 
 
                                     <hr>
-                                    <center><button type="submit" value="email" name="command" class="btn_1 add_top_30">Proceed to Payment&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png"></img></button></center><br>
+                                    <center><button type="submit" value="email" name="command" class="btn_1 add_top_30">Proceed to Payment&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button></center><br>
                                     <div class="uk-form-controls">
                                         <center>
                                             <p>
@@ -237,7 +325,6 @@
                             </div>
                         </div>
 
-                        </form>
 
 
 
@@ -245,7 +332,7 @@
 
 
                     </div>
-
+                </aside>
             </div><br>
         </div>
     </div>
@@ -257,30 +344,55 @@
     <!-- UIkit JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
+    <script src="~/newdesign/js/alertify.js"></script>
+
     <!-- COLOR SWITCHER  -->
     <script>
+
+        function DeletecartItem(cartId) {
+            alertify.confirm("Are you sure You want to delete.",
+         function () {
+
+             var obj = {}
+             obj.cartId = cartId;
+             $.ajax({
+                 type: "POST",
+                 url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/cart/DeletecartItem',
+                 data: {},
+                 data: JSON.stringify(obj),
+                 //data: sendInfo,
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (data) {
+                     if (data != null) {
+                         alertify.alert("Item Deleted");
+                         window.location.reload();
+                     }
+                 },
+                 error: function (data) {
+                     //alert('error');
+                     alertify.alertmsg("error");
+                 }
+             });
+
+         }
+        )
+        }
+    </script>
+    <script>
         $(document).ready(function () {
-            var pid = window.localStorage.getItem("cartid");
-            alert(pid);
-            var guests = window.localStorage.getItem("guests");
-            // location.href = '/cart/cookies?pid=' + pid + '&&guest=' + guests;
-
-            //$.ajax({
-            //    url: '/cart/cookies?pid=' + pid + '&&guest=' + guests,
-            //    type: 'POST',
-            //    dataType: 'json',
-            //    contentType: 'application/json',
-            //    success: function (data) {
-
-            //         alert(data);
-
-            //    },
-            //    error: function (data) {
-            //    alert("Error in placing the order.");
-            //}
-            //})
+           
+            $('#checkbox1').change(function () {
+                if (this.checked) {
+                    var returnVal = confirm("Are you sure?");
+                    $(this).prop("checked", returnVal);
+                }
+                $('#textbox1').val(this.checked);
+            });
 
 
+          
         });
+
     </script>
 }

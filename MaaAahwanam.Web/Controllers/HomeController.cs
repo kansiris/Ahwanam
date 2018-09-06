@@ -204,7 +204,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "Nhomepage");
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -213,7 +213,7 @@ namespace MaaAahwanam.Web.Controllers
             Response.Cookies.Clear();
 
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "NHomePage");
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult ItemsCartdetails()
         {
