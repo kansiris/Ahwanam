@@ -35,6 +35,14 @@ namespace MaaAahwanam.Web.Controllers
         // GET: viewservice
         public ActionResult Index(string name, string type, string id)
         {
+            DateTime cdate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            DateTime cdate1 = cdate.AddDays(1);
+            DateTime cdate2 = cdate.AddDays(-1);
+
+            ViewBag.cdate = cdate.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate1 = cdate1.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate2 = cdate2.ToString("dd/MMM/yyyy").Replace('-', '/');
+
             type = (type == null) ? "Venue" : type;
             type = (type == "Convention") ? "Convention Hall" : type;
             type = (type == "Banquet") ? "Banquet Hall" : type;

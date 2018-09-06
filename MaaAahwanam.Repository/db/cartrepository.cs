@@ -20,6 +20,19 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.GetCartItems(vid).ToList();
         }
-        
+        public string DeletecartItem(long cartId)
+        {
+            try
+            {
+                var list = _dbContext.CartItem.FirstOrDefault(m => m.CartId == cartId);
+                _dbContext.CartItem.Remove(list);
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            catch
+            {
+                return "Failed";
+            }
+        }
     }
 }
