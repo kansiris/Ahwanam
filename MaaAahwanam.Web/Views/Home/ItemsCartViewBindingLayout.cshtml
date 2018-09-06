@@ -1,24 +1,57 @@
 ﻿
-@using MaaAahwanam.Web.Custom
-@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-{
-    var user = (CustomPrincipal)HttpContext.Current.User;
-    if (user.UserType == "Admin")
-    {
-        Response.Redirect("/Admin/Login");
-    }
-    if (user.UserType == "Vendor")
-    {
-        Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
-    }
-    if (user.UserType == "User")
-    { 
-        <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">@ViewBag.username</a></span>
+<ul>
+    @*<li>
+            <span><a href="#0">Services</a></span>
+            <ul>
+                <li><a href="/results?type=Banquet Hall">Banquet Hall</a></li>
+                <li><a href="/results?type=Hotel">Hotel</a></li>
+                <li><a href="/results?type=Resort">Resort</a></li>
+                <li><a href="/results?type=Convention Hall">Convention Hall</a></li>
+                <li><a href="/results?type=Function Hall">Function Hall</a></li>
+            </ul>
+        </li>
 
-                        
-    }
-}
-else
-{
-        <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Login/Register</a></span>
-}
+        <li>
+            <span><img src="~/newdesignstyles/images/us.png" /></span>
+            <ul>
+                <li><a href="#">INDIA</a></li>
+                <li><a href="#">US</a></li>
+            </ul>
+        </li>*@
+    <li>
+        @using MaaAahwanam.Web.Custom
+        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            var user = (CustomPrincipal)HttpContext.Current.User;
+            if (user.UserType == "Admin")
+            {
+                Response.Redirect("/Admin/Login");
+            }
+            if (user.UserType == "Vendor")
+            {
+                Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
+            }
+            if (user.UserType == "User")
+            {
+                <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">@ViewBag.username</a></span>
+                <ul>
+                    <li><a href="/Home/SignOut" >logout</a></li>
+                    @*<li><a href="tours-grid-sidebar.html">Tours grid sidebar</a></li>*@
+                    </ul>
+                    }
+                    }
+                    else
+                    {
+                    <span><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Login/Register</a></span>
+                    }
+</li>
+    <li>
+        <a href="/cart/Index" >Cart(@ViewBag.cartCount)</a>
+
+    </li>
+    <li>
+        <a href="#0" class="btn_5 add_top_30">Call: +91 7032199007</a>
+
+    </li>
+    <li><span><img src="http://design.maa-aahwanam.com/panagea/india.png"></img></span>
+</ul>
