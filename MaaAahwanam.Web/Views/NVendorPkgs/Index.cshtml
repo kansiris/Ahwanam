@@ -56,7 +56,11 @@
                                                         <td tabindex="0" class="sorting_1">@item.VendorType</td>
                                                         <td>@item.VendorSubType</td>
                                                         <td>@item.PackageName</td>
-                                                        <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PackagePrice)).Replace(".00", "")</td>
+                                                        @if (item.PackagePrice != null && item.PackagePrice != 0)
+                                                        { <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PackagePrice)).Replace(".00", "")</td> }
+                                                        else
+                                                        {
+                                                        <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.price1)).Replace(".00", "")</td> }
                                                         <td>@item.PackageDescription</td>
                                                         <td>@item.UpdatedDate.ToString("dd MMM yyyy")</td>
                                     
