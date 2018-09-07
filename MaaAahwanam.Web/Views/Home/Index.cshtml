@@ -215,7 +215,7 @@
                                         <option value="Engagement">Engagement</option>
                                         <option value="Other">Other</option>
                                     </select>*@
-                                <div class="nice-select" tabindex="0">
+                                <div class="nice-select" tabindex="0"style="background-color: #fff;" >
                                     <span class="current" style="padding-left:20px;font-weight:700;">Select Event</span>
                                     <ul class="list">
                                         <li data-value="" class="option disabled">Select Event</li>
@@ -238,7 +238,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date?" required>
+                                    <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date" required>
                                     <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
                                 </div>
                             </div>
@@ -680,7 +680,7 @@
 
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="Name" id="txtname" required>
+                        <input type="text" class="form-control" name="txtname" id="txtname" required>
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
@@ -811,6 +811,7 @@
             var phonepattern = /^[0-9]{10}$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#txtemail").val();
+            var url = document.referrer;
             if (CustomerPhoneNumber == '') {
                 alert("Please Enter PhoneNumber");
                 $("#txtphone").focus();
@@ -910,6 +911,8 @@
             }
         }
         function login(clickedvalue) {
+            var url1 = document.referrer;
+            alert(url1);
             var Password = $("#Password1").val();
             var Email = $("#UserName").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
@@ -941,13 +944,12 @@
                 alert("Please Enter a valid Email Address");
                 $("#txtemail").focus();
             }
-
             else {
                 if (clickedvalue == 'login') {
                     $.ajax({
                         url: '/Home/login',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                         type: 'POST',
-                        data: JSON.stringify({ Password: Password, Email: Email }),
+                        data: JSON.stringify({ Password: Password, Email: Email, url1: url1 }),
                         //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
                         contentType: 'application/json',

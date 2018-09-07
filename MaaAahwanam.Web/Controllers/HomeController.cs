@@ -126,22 +126,37 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("Failed", JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult login(string Password, string Email)
+        public JsonResult login(string Password, string Email,string url1)
         {
+            
             UserLogin userLogin = new UserLogin();
             UserDetail userDetail = new UserDetail();
             userLogin.UserName = Email;
             userLogin.Password = Password;
+            string ipaddress = HttpContext.Request.UserHostAddress;
             var userResponse = resultsPageService.GetUserLogin(userLogin);
             var userResponse1 = resultsPageService.GetUserLogdetails(userLogin);
-            if (userResponse1 != null)
+            if (userResponse != null)
             {
-                if (userResponse1.Status == "Active")
+                if (userResponse.Status == "Active")
                 {
                     vendorMaster = resultsPageService.GetVendorByEmail(userLogin.UserName);
-                    string userData = JsonConvert.SerializeObject(userResponse1);
-                    ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
-                        ViewBag.userid = userResponse1.UserLoginId;
+                    string userData = JsonConvert.SerializeObject(userResponse);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
+                        ViewBag.userid = userResponse.UserLoginId;
+
+                    string txtto = "sireesh.k@xsilica.com";//"amit.saxena@ahwanam.com,rameshsai@xsilica.com";
+                    string username = userDetail.FirstName;
+                    username = Capitalise(username);
+                    string emailid = userLogin.UserName;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    readFile = readFile.Replace("[ActivationLink]", url1);
+                    readFile = readFile.Replace("[name]", username);
+                    string txtmessage = readFile;//readFile + body;
+                    string subj = "User login from ahwanam";
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                     return Json("success", JsonRequestBehavior.AllowGet);
                 }
                 return Json("Failed", JsonRequestBehavior.AllowGet);
