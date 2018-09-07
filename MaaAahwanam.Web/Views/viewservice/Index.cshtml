@@ -704,7 +704,7 @@
             { window.localStorage.setItem("cartid",pid)}
             var gu1 = window.localStorage.getItem("guests");
             var guest = '';
-            alert(gu1);
+            //alert(gu1);
             if(gu1 == null)
             {
                 guest =  $('.guests').val();
@@ -717,8 +717,10 @@
             var cpid = carts[0];
 
             var total = guest * cpprice;
+            //alert(total);
 
-            url1 ='/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total;
+            url1 ='/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total + '&&pprice=' + cpprice;
+            //alert(url1);
             $.ajax({
                 url: url1,
                 success: function (data) {
@@ -740,11 +742,11 @@
                 },
                 error:function(data)
                 {
-                    $(".overlay").hide();
-                    alertmsg("Something Went Wrong!!! Try Again Later");
+                   // $(".overlay").hide();
+                    alert("Something Went Wrong!!! Try Again Later");
                 }
             });
-            //location.href='/cart/Index' ; //?pid=' + pid + '&&guest=' + guests;
+            location.href='/cart/Index' ; //?pid=' + pid + '&&guest=' + guests;
             alert(v);
         };
 
@@ -772,9 +774,8 @@
             else{$(".packesss b").empty().append('N/A');}
 
 
-            $('.Packageselected').val(pid,PackageName,PackageName);
-
-
+            $('.Packageselected').val(pid+','+PackageName+','+PackagePrice);
+          
 
 
 

@@ -145,7 +145,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public ActionResult addcnow(string pid,string guest,string dcval,string total)//(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did, string etype2)
+        public ActionResult addcnow(string pid,string guest,string dcval,string total,string pprice)//(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did, string etype2)
         {
             //try
             //{
@@ -171,7 +171,7 @@ namespace MaaAahwanam.Web.Controllers
                     cartItem.Category = "package";
                     cartItem.SelectedPriceType = pkgs.PackageName;
 
-                    cartItem.Perunitprice = decimal.Parse(pkgs.PackagePrice);
+                    cartItem.Perunitprice = decimal.Parse(pprice);
                     cartItem.Quantity = Convert.ToInt16(guest);
                    cartItem.subid = Convert.ToInt64(pkgs.VendorSubId);
                     //cartItem.attribute = timeslot;
