@@ -134,16 +134,16 @@ namespace MaaAahwanam.Web.Controllers
             userLogin.UserName = Email;
             userLogin.Password = Password;
             string ipaddress = HttpContext.Request.UserHostAddress;
-            var userResponse = resultsPageService.GetUserLogin(userLogin);
-            var userResponse1 = resultsPageService.GetUserLogdetails(userLogin);
-            if (userResponse != null)
+            var userResponse1 = resultsPageService.GetUserLogin(userLogin);
+            var userResponse = resultsPageService.GetUserLogdetails(userLogin);
+            if (userResponse1 != null)
             {
-                if (userResponse.Status == "Active")
+                if (userResponse1.Status == "Active")
                 {
                     vendorMaster = resultsPageService.GetVendorByEmail(userLogin.UserName);
-                    string userData = JsonConvert.SerializeObject(userResponse);
-                    ValidUserUtility.SetAuthCookie(userData, userResponse.UserLoginId.ToString());
-                        ViewBag.userid = userResponse.UserLoginId;
+                    string userData = JsonConvert.SerializeObject(userResponse1);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
+                        ViewBag.userid = userResponse1.UserLoginId;
 
                     string txtto = "sireesh.k@xsilica.com";//"amit.saxena@ahwanam.com,rameshsai@xsilica.com";
                     string username = userDetail.FirstName;

@@ -16,7 +16,7 @@ namespace MaaAahwanam.Web.Controllers
     {
         cartservices cartserve = new cartservices();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-
+        decimal totalp, discount,servcharge,gst,nettotal, totalp2;
         // GET: cart
         public ActionResult Index()
         {
@@ -55,6 +55,67 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message);
         }
 
+
+        public ActionResult billing(string cartid)
+        {
+            if (cartid == null)
+            {
+
+                ViewBag.tamount = "000";
+                ViewBag.discount = "0";
+                ViewBag.service = "0";
+                ViewBag.Gst = "0";
+                ViewBag.netamount = "0";
+
+            }
+            else {
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    if (user.UserType == "User")
+                    {
+                        List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
+
+
+                        var cartid1 = cartid.Split(',');
+                        for (int i = 0; i < cartid1.Count(); i++)
+                        {
+                            if (cartid1[i] == "" || cartid1[i] == null)
+                            {
+
+                                totalp = 0;
+                            }
+                            else
+                            {
+                                var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid1[i])).FirstOrDefault();
+                                totalp = cartdetails.TotalPrice;
+                            }
+                            totalp2 = totalp2 + totalp;
+                            discount = 0;
+                            servcharge = 0;
+                            gst = 0 ;
+                            nettotal = nettotal + totalp - Convert.ToDecimal(discount) + Convert.ToDecimal(servcharge) + Convert.ToDecimal(gst);
+                            
+                        }
+                        var totalp1 = totalp2;
+                        var discount1 = "0.00";
+                        var servcharge1 = servcharge;
+                        var gst1 = gst;
+                        var nettotal1 = Convert.ToString(nettotal);
+                        ViewBag.tamount = totalp1;
+                        ViewBag.discount = discount1;
+                        ViewBag.service = servcharge1;
+                        ViewBag.Gst = gst1;
+                        ViewBag.netamount = nettotal1;
+                    }
+                }
+
+            }
+
+
+            return PartialView("billing");
+
+        }
 
     }
 }

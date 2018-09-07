@@ -564,6 +564,7 @@
         function login(clickedvalue) {
             var Password = $("#Password1").val();
             var Email = $("#UserName").val();
+            var url1 = document.referrer;
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#UserName").val();
@@ -586,7 +587,7 @@
                     $.ajax({
                         url: '/Home/login',
                         type: 'POST',
-                        data: JSON.stringify({ Password: Password, Email: Email }),
+                        data: JSON.stringify({ Password: Password, Email: Email,url1:url1 }),
                         dataType: 'json',
                         contentType: 'application/json',
                         success: function (data) {
@@ -603,9 +604,14 @@
                                 alert("Wrong Credentials,Check Username and password");
                                 window.location.reload();
                             }
+                            else if (data == "success1") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
                         },
                         error: function (data) {
-                            alert("error");
+                            alert("Wrong Credentials,Check Username and password");
                         }
                     });
                 }
@@ -716,6 +722,7 @@
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#UserName1").val();
+            var url1 = document.referrer;
             if (Password == '') {
                 alert("Please Enter Password");
                 $("#Password2").focus();
@@ -735,7 +742,7 @@
                     $.ajax({
                         url: '/Home/login',
                         type: 'POST',
-                        data: JSON.stringify({ Password: Password, Email: Email }),
+                        data: JSON.stringify({ Password: Password, Email: Email,url1:url1 }),
                         dataType: 'json',
                         contentType: 'application/json',
                         success: function (data) {
@@ -752,9 +759,14 @@
                                 alert("Wrong Credentials,Check Username and password");
                                 window.location.reload();
                             }
+                            else if (data == "success1") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
                         },
                         error: function (data) {
-                            alert("error");
+                            alert("Wrong Credentials,Check Username and password");
                         }
                     });
                 }
