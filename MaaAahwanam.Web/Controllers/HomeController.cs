@@ -254,10 +254,10 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult SendEmail(string name, string number, string city, string eventtype, string datepicker2)
+        public ActionResult SendEmail(string name, string number, string city, string eventtype, string datepicker2,string Description)
         {
             string ip = HttpContext.Request.UserHostAddress;
-            string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + ",IP:" + ip;
+            string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + "Description:"+Description+",IP:" + ip;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg.Replace(",", "<br/>"), "Mail From Ahwanam");
             emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", msg.Replace(",", "<br/>"), "Mail From Ahwanam");
