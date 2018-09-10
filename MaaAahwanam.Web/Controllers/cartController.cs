@@ -5,7 +5,9 @@ using MaaAahwanam.Utility;
 using MaaAahwanam.Web.Custom;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -117,6 +119,71 @@ namespace MaaAahwanam.Web.Controllers
 
         }
 
+        public JsonResult email( string selcartid)
+        {
+
+            selcartid = selcartid.TrimStart(',');
+
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+
+                if (user.UserType == "User")
+                {
+                    string Email = user.Username;
+                   
+                    string txtto = "sireesh.k@xsilica.com,rameshsai@xsilica.com";
+                    int id = Convert.ToInt32(user.UserId);
+                    var userdetails = userLoginDetailsService.GetUser(id);
+                    string ipaddress = HttpContext.Request.UserHostAddress;
+
+                    string username = userdetails.FirstName;
+                    HomeController home = new HomeController();
+                    username = home.Capitalise(username);
+
+                    List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
+                    var cartid1 = selcartid.Split(',');
+                    //for (int i = 0; i < cartid1.Count(); i++)
+                    //{
+                    //    var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid1[i])).FirstOrDefault();
+                    //    var cartname1 = cartdetails.BusinessName;
+                    //    cartname = cartname1 + ',' + cartname1;
+                    //}
+                    List<GetCartItems_Result> cartdetails = new List<GetCartItems_Result>();
+                    
+                    for (int i = 0; i < cartid1.Count(); i++)
+                    {
+                         cartdetails.AddRange(cartlist.Where(m => m.CartId == Convert.ToInt64(cartid1[i])).ToList());
+                    }
+                    ViewBag.cartdetails = cartdetails;
+                    StringBuilder cds = new StringBuilder();
+                    cds.Append("<table style='border:1px;background: #0000;'><tbody><tb>");
+                    foreach (var item in ViewBag.cartdetails)
+                    {
+                        cds.Append("<table ><tbody><tr><td> name </td><td style = 'width: 75px;'> " + item.BusinessName +"</td></tr><tr><td> guest </td><td style = 'width: 75px;' > " +item.Quantity +" </td></tr><tr><td style = 'width: 50px;'> amount </td><td style = 'width: 75px;'> "+item.TotalPrice + " </td></tr><tr><td style = 'width: 50px;'> date </td><td style = 'width: 50px;'> "+ item.eventstartdate+ "+ </td></tr></table></tbody>");
+                    }
+                    cds.Append("</tb></table></tbody>");
+                    string emailid = user.Username;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                      readFile = readFile.Replace("[carttable]", cds.ToString());
+                    readFile = readFile.Replace("[name]", username);
+                    readFile = readFile.Replace("[Ipaddress]", ipaddress);
+                    readFile = readFile.Replace("[email]", Email);
+
+                    string txtmessage = readFile;//readFile + body;
+                    string subj = " Get Quote For Cart";
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                }
+            }
+
+
+            var message ="success";
+            return Json(message);
+
+
+        }
     }
 }
 
