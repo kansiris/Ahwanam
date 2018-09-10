@@ -374,6 +374,41 @@
 
     <!-- COLOR SWITCHER  -->
     <script>
+        function email() {
+            var selcartid = $('.selectedcart').val();
+            alert(selcartid);
+            $.ajax({
+                url: '/cart/email',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                type: 'POST',
+                data: JSON.stringify({ selcartid: selcartid }),
+                //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data == "success") {
+                        alert('We will contact you soon');
+                        //window.location.href = '/NewOrder/orderview'
+                    }
+                    if (data == "unique") {
+                        alert('We will contact you soon');
+
+                    }
+                    
+                    else if (data == "Failed") {
+
+                        alert('We will contact you soon');
+                    }
+                    else {
+                        //alert('error');
+                        alertify.alertmsg("error");
+
+                    }
+                }
+            })     ;
+
+
+
+        }
 
         function DeletecartItem(cartId) {
             alertify.confirm("Are you sure You want to delete.",
@@ -405,6 +440,9 @@
         )
         }
     </script>
+    <script>
+
+        </script>
     <script>
         $(document).ready(function () {
 
