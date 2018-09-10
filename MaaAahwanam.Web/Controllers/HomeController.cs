@@ -145,7 +145,7 @@ namespace MaaAahwanam.Web.Controllers
                     ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
                         ViewBag.userid = userResponse1.UserLoginId;
 
-                    string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com";//"sireesh.k@xsilica.com";
+                    string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com,sireesh.k@xsilica.com";
                     int id = Convert.ToInt32(userResponse.UserLoginId);
                     var userdetails = userLoginDetailsService.GetUser(id);
                     
