@@ -160,7 +160,7 @@ namespace MaaAahwanam.Web.Controllers
                     cds.Append("<table style='border:1px;background: #0000;'><tbody><tb>");
                     foreach (var item in ViewBag.cartdetails)
                     {
-                        cds.Append("<table ><tbody><tr><td> name </td><td style = 'width: 75px;'> " + item.BusinessName +"</td></tr><tr><td> guest </td><td style = 'width: 75px;' > " +item.Quantity +" </td></tr><tr><td style = 'width: 50px;'> amount </td><td style = 'width: 75px;'> "+item.TotalPrice + " </td></tr><tr><td style = 'width: 50px;'> date </td><td style = 'width: 50px;'> "+ item.eventstartdate+ "+ </td></tr></table></tbody>");
+                        cds.Append("<table ><tbody><tr><td> name </td><td style = 'width: 75px;'> " + item.BusinessName +"</td></tr><tr><td> guest </td><td style = 'width: 75px;' > " +item.Quantity +" </td></tr><tr><td style = 'width: 50px;'> amount </td><td style = 'width: 75px;'> "+item.TotalPrice + " </td></tr><tr><td style = 'width: 50px;'> date </td><td style = 'width: 50px;'> "+ item.eventstartdate+ " </td></tr></table></tbody>");
                     }
                     cds.Append("</tb></table></tbody>");
                     string emailid = user.Username;
