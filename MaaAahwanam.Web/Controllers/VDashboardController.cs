@@ -81,6 +81,7 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult UploadProfilePic(HttpPostedFileBase helpSectionImages, string email)
         {
             string fileName = string.Empty;
+            string filename = string.Empty;
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -89,7 +90,7 @@ namespace MaaAahwanam.Web.Controllers
                 email = userdet.UserName;
 
                 string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
-                var filename = email + path;
+               filename = email + path;
                 fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
                 if (System.IO.File.Exists(fileName) == true)
                     System.IO.File.Delete(fileName);
@@ -97,7 +98,7 @@ namespace MaaAahwanam.Web.Controllers
                 helpSectionImages.SaveAs(fileName);
                 userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
             }
-            return Json(JsonRequestBehavior.AllowGet);
+            return Json(filename, JsonRequestBehavior.AllowGet);
         }
     }
 }
