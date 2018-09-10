@@ -102,10 +102,10 @@
         font-size: 14px;
     }
 
-    #calendar {
+    /*.vendorcalendar {
         max-width: 700px;
         margin-left: 15px;
-    }
+    }*/
 
     .uk-h6-1 {
         font-size: 15px;
@@ -212,8 +212,8 @@
                     </div>
                     <!--End step -->
                     <div class="uk-grid">
-                        <h2 class="uk-h2" style="font-size:18px;text-transform: uppercase;margin: 0px 10px -1px 0px;max-width: 55%;">@ViewBag.Productinfo.BusinessName <span style="font-size:16px;font-weight:400;text-transform: capitalize"><br>@ViewBag.City,@ViewBag.State</span></h2>
-                        <img src="http://design.maa-aahwanam.com/panagea/images/heart.png" style="margin-left:200px;width: 10%;height: 50%;max-width: 50%;"/>
+                        <h2 class="uk-h2" style="font-size:18px;text-transform: uppercase;margin: 0px 10px -1px 0px;max-width: 55%;width:100%">@ViewBag.Productinfo.BusinessName <span style="font-size:16px;font-weight:400;text-transform: capitalize"><br>@ViewBag.City,@ViewBag.State</span></h2>
+                        <img src="http://design.maa-aahwanam.com/panagea/images/heart.png" style="margin-left:200px;width: 10%;height: 50%;max-width: 45%;" />
 
                         <div style="padding-top:10px"><a href="#map">See Address Map</a>&emsp;&emsp; <a href="#">View Description</a></div>
                     </div>
@@ -228,7 +228,7 @@
                 @foreach (var item in ViewBag.particularVenue)
                 {
                     <div class="container" id="@item.VenueType">
-                        <h2 style="font-size:44px;font-weight:700;">@item.VenueType</h2>
+                        <h2 style="font-size:44px;font-weight:700;text-transform: uppercase">@item.VenueType</h2>
                         <h3 class="uk-h3" style="margin-left:4px">AVAILABLE FOOD PACKAGES</h3>
                         @foreach (var item1 in @ViewBag.availablepackages)
                         {
@@ -353,43 +353,47 @@
                     <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
                     @*<img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>*@
                     @*<input id="datepicker" class="datepicker" name="datepicker" />*@
-                    <div class='calendar'></div>
-                    <br />
-                    <br />
-                    <h3 class="uk-h3">GALLERY/VIDEOS</h3>
-                    <div class="container margin_60_35" style="padding-top:30px">
-                        <div class="grid">
-                            <ul class="magnific-gallery">
-                                @foreach (var image in ViewBag.allimages)
-                                {
-                                    <li>
-                                        <figure style="background-color:white">
-                                            <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px;margin-left:10px">
-                                            <figcaption>
-                                                <div class="caption-content">
-                                                    <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
-                                                        <i class="pe-7s-albums"></i>
-                                                        <p>@image.Imagedescription</p>
-                                                    </a>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <!-- /grid gallery -->
-                    </div>
-                    <!-- /container -->
-                    <h3 class="uk-h3">VENUE POLICIES</h3>
-                    <P>Read all the terms & conditions of the banquet hall.</P><br><br>
+                    @*<div class='vendorcalendar'></div>*@
+                    <input type="hidden" class="vendorcalendar"/>
 
-                    <figure>
-                        <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
-                        <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
-                        <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
-                    </figure>
-                    <hr />
+
+
+                    <br />
+                        <br />
+                        <h3 class="uk-h3">GALLERY/VIDEOS</h3>
+                        <div class="container margin_60_35" style="padding-top:30px">
+                            <div class="grid">
+                                <ul class="magnific-gallery">
+                                    @foreach (var image in ViewBag.allimages)
+                                    {
+                                        <li>
+                                            <figure style="background-color:white">
+                                                <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px;margin-left:10px">
+                                                <figcaption>
+                                                    <div class="caption-content">
+                                                        <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
+                                                            <i class="pe-7s-albums"></i>
+                                                            <p>@image.Imagedescription</p>
+                                                        </a>
+                                                    </div>
+                                                </figcaption>
+                                            </figure>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <!-- /grid gallery -->
+                        </div>
+                    <!-- /container -->
+                        <h3 class="uk-h3">VENUE POLICIES</h3>
+                        <P>Read all the terms & conditions of the banquet hall.</P><br><br>
+
+                        <figure>
+                            <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
+                            <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
+                            <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
+                        </figure>
+                        <hr />
                 }
                 <h3 class="uk-h3">Address</h3>
                 <p>
@@ -743,7 +747,7 @@
                 },
                 error:function(data)
                 {
-                   // $(".overlay").hide();
+                    // $(".overlay").hide();
                     alert("Something Went Wrong!!! Try Again Later");
                 }
             });
@@ -776,7 +780,7 @@
 
 
             $('.Packageselected').val(pid+','+PackageName+','+PackagePrice);
-          
+
 
 
 
@@ -788,27 +792,34 @@
             document.cookie = cname + "=" + cvalue + "; " + expires;
         }
 
-
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,basicWeek,basicDay'
-                },
-                defaultDate: '2018-03-12',
-                navLinks: true, // can click day/week names to navigate views
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                events: [
-                  {
-                      title: 'All Day Event',
-                      start: '2018-03-01'
-                  }
-                ]
+        $(function() {
+            $( ".vendorcalendar" ).datepicker({
+                singleDatePicker: true,
+                standalone: true
             });
         });
+
+
+        //$(document).ready(function() {
+        //    $('.vendorcalendar').fullCalendar({
+        //        header: {
+        //            left: 'prev,next today',
+        //            center: 'title',
+        //            right: 'month,basicWeek,basicDay'
+        //        },
+        //        defaultDate: '2018-03-12',
+        //        navLinks: true, // can click day/week names to navigate views
+        //        editable: true,
+        //        eventLimit: true, // allow "more" link when too many events
+        //        events: [
+        //          {
+        //              title: 'All Day Event',
+        //              start: '2018-03-01'
+        //          }
+        //        ]
+        //    });
+        //});
+
     </script>
+
 }
