@@ -126,10 +126,10 @@ namespace MaaAahwanam.Web.Controllers
                     m.Sufficient_Washroom
                     #endregion
                 }).ToList();
-                
+
                 foreach (var item in allamenities)
                 {
-                    string value = string.Join(",",item).Replace("{","").Replace("}","");
+                    string value = string.Join(",", item).Replace("{", "").Replace("}", "");
                     var availableamenities = value.Split(',');
                     value = "";
                     for (int i = 0; i < availableamenities.Length; i++)
@@ -145,61 +145,61 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public ActionResult addcnow(string pid,string guest,string dcval,string total,string pprice)//(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did, string etype2)
+        public ActionResult addcnow(string pid, string guest, string dcval, string total, string pprice)//(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did, string etype2)
         {
             //try
             //{
-                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                //if (type == "Photography" || type == "Decorator" || type == "Other")
+                //{
+                //    totalprice = price;
+                //    guest = "0";
+                //}
+                var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
+
+                var vendor = vendorProductsService.getparticulardeal(Int32.Parse(pid), pkgs.VendorType).FirstOrDefault();
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                CartItem cartItem = new CartItem();
+                cartItem.VendorId = (pkgs.VendorId);
+                cartItem.ServiceType = pkgs.VendorType;
+                cartItem.TotalPrice = decimal.Parse(total);
+                cartItem.Orderedby = user.UserId;
+                cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
+                cartItem.Category = "package";
+                cartItem.SelectedPriceType = pkgs.PackageName;
+
+                cartItem.Perunitprice = decimal.Parse(pprice);
+                cartItem.Quantity = Convert.ToInt16(guest);
+                cartItem.subid = Convert.ToInt64(pkgs.VendorSubId);
+                //cartItem.attribute = timeslot;
+                cartItem.DealId = Convert.ToInt64(pid);
+                cartItem.Isdeal = false;
+                //cartItem.EventType = etype1;
+                //cartItem.EventDate = Convert.ToDateTime(date);
+                long vendorid = Convert.ToInt64(pkgs.VendorId);
+                var cartcount = cartlist.Where(m => m.Id == long.Parse((pkgs.VendorId).ToString()) && m.subid == long.Parse((pkgs.VendorSubId).ToString())).Count();
+                if (cartcount > 0)
+                    return Json("Exists", JsonRequestBehavior.AllowGet);
+                else
                 {
-                    //if (type == "Photography" || type == "Decorator" || type == "Other")
-                    //{
-                    //    totalprice = price;
-                    //    guest = "0";
-                    //}
-                    var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
-                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                    List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-
-                    var vendor = vendorProductsService.getparticulardeal(Int32.Parse(pid), pkgs.VendorType).FirstOrDefault();
-                    DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-                    CartItem cartItem = new CartItem();
-                   cartItem.VendorId = (pkgs.VendorId);
-                    cartItem.ServiceType = pkgs.VendorType;
-                    cartItem.TotalPrice = decimal.Parse(total);
-                    cartItem.Orderedby = user.UserId;
-                    cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
-                    cartItem.Category = "package";
-                    cartItem.SelectedPriceType = pkgs.PackageName;
-
-                    cartItem.Perunitprice = decimal.Parse(pprice);
-                    cartItem.Quantity = Convert.ToInt16(guest);
-                   cartItem.subid = Convert.ToInt64(pkgs.VendorSubId);
-                    //cartItem.attribute = timeslot;
-                    cartItem.DealId = Convert.ToInt64(pid);
-                    cartItem.Isdeal = false;
-                    //cartItem.EventType = etype1;
-                    //cartItem.EventDate = Convert.ToDateTime(date);
-                    long vendorid = Convert.ToInt64(pkgs.VendorId);
-                    var cartcount = cartlist.Where(m => m.Id == long.Parse((pkgs.VendorId).ToString()) && m.subid == long.Parse((pkgs.VendorSubId).ToString())).Count();
-                    if (cartcount > 0)
-                        return Json("Exists", JsonRequestBehavior.AllowGet);
+                    cartItem = cartService.AddCartItem(cartItem);
+                    if (cartItem.CartId != 0)
+                        return Json("Success", JsonRequestBehavior.AllowGet);
                     else
-                    {
-                        cartItem = cartService.AddCartItem(cartItem);
-                        if (cartItem.CartId != 0)
-                            return Json("Success", JsonRequestBehavior.AllowGet);
-                        else
-                            return Json("failed", JsonRequestBehavior.AllowGet);
-                    }
-
-                    //return Json("Success", JsonRequestBehavior.AllowGet);
+                        return Json("failed", JsonRequestBehavior.AllowGet);
                 }
-                return Json(JsonRequestBehavior.AllowGet);
+
+                //return Json("Success", JsonRequestBehavior.AllowGet);
             }
-            //catch (Exception)
-            //{
-            //    return RedirectToAction("Index", "Nhomepage");
-            //}
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+        //catch (Exception)
+        //{
+        //    return RedirectToAction("Index", "Nhomepage");
+        //}
         //}
 
     }

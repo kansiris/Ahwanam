@@ -744,9 +744,7 @@
         $(loginClick).click(function () {
             $(".forgotks").css("display", "none");
             $(".register").css("display", "none");
-
             $(".authenticationBlocks > div").css("display", "block");
-
         });
 
         $(forgotClick).click(function () {
@@ -763,26 +761,28 @@
                 $("span.current").text(eventtype);
             else
                 $("span.current").text('Select Event');
-            $('#loc').val(location);
+            
             if (guests == '') {
                 window.localStorage.setItem("guests", 100);
                 $('#guests').val(100);
             }
-            else {
-                $('#guests').val(guests);
-            }
-            $('#datetimepicker1').val(date);
+            else { $('#guests').val(guests); }
+
+            if (location != '')
+            { $('#loc').val(location); }
+            else
+            { $('#loc').val("Hyderabad"); }
+
+            if (new Date(date) < new Date())
+            { $('#datetimepicker1').val(new Date()); }
+            else
+            { $('#datetimepicker1').val(date); }
         });
         $('#btnsearch').click(function () {
             var location = $('#loc').val();
-            var eventtype = $('.current').text();//$('#selectevent').val();
+            var eventtype = $('.current').text();
             var guests = $('#guests').val();
             var date = $('#datetimepicker1').val();
-            window.localStorage.setItem("guests", guests);
-            window.localStorage.setItem("location", location);
-            window.localStorage.setItem("eventtype", eventtype);
-            window.localStorage.setItem("eventdate", date);
-            //alert(eventtype);
             if (location == '') {
                 alert('Enter Location');
                 $('#loc').focus();
@@ -799,6 +799,10 @@
                 $('#datetimepicker1').focus();
             }
             else {
+                window.localStorage.setItem("guests", guests);
+                window.localStorage.setItem("location", location);
+                window.localStorage.setItem("eventtype", eventtype);
+                window.localStorage.setItem("eventdate", date);
                 window.location.href = '/results/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
             }
         });
