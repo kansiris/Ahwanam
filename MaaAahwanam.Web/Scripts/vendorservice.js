@@ -47,7 +47,7 @@
                 $('#fileUpload').hide();
                 $('#msg').hide();
                 $('.form-control').attr("readonly", "true");
-                itemsdisable();
+                //itemsdisable();
                 $("#dealdisplay").hide();
             }
             if (op == 'add') {
@@ -62,7 +62,7 @@
                 $('#msg').show();
                 $("#btnadd").show();
                 $("#imagesdisplay").hide();
-                $("#dealdisplay").hide(); itemsdisable();
+                $("#dealdisplay").hide(); //itemsdisable();
             }
             //op == url
             if (up == 'vid=' + op || op == url) {
@@ -75,7 +75,7 @@
                 $('.form-control').removeAttr("disabled");
                 $("#dealdisplay").hide();
                 $("#btnadd").hide();
-                itemsdisable();
+                //itemsdisable();
             }
             if (op == 'adddeal' || op == 'adddeal#') {
                 $("#btnadd").show().val("Add Deal").html("Add Deal");
@@ -97,7 +97,7 @@
                 }
                 
                 if (servicetype == 'Venue') {
-                    itemsdisable();
+                    //itemsdisable();
                     var type = $("#Item2_VenueType").val();
                     $("#Item3_VendorCategory").val(type);
                     if (type == 'Banquet Hall') {
@@ -139,7 +139,7 @@
                 $("#dealcheck").prop('checked', true).attr("disabled", "disabled");
                 $("#dealdata").css({ "display": "block" });
                 if (servicetype == 'Venue') {
-                    itemsdisable();
+                    //itemsdisable();
                     var type = $("#Item2_VenueType").val();
                     if (type == 'Banquet Hall') {
                         
@@ -181,7 +181,7 @@
                 $("#dealcheck").prop('checked', true).attr("disabled", "disabled");
                 $("#dealdata").css({ "display": "block" });
                 if (servicetype == 'Venue') {
-                    itemsdisable();
+                    //itemsdisable();
                     var type = $("#Item2_VenueType").val();
                     if (type == 'Banquet Hall') {
                         $("#dealprice").show();

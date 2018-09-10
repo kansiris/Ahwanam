@@ -432,8 +432,17 @@
                 if (thischeckbox.is(':checked')) {
                     thischeckbox.removeAttr('checked');
                     $(this).css('background-color', 'red').text('Select');
-                   
+                    var ids = $(this).prev('input.cartcheckbox').val();
+                    alert(ids);
+                    var selcartid = $('.selectedcart').val();
 
+                    var ids1 = selcartid.replace(ids, "");
+                    $('.selectedcart').val(ids1);
+
+                    alert(ids1);
+                    var url = '/cart/billing?cartid=' + ids1;
+                    $('#sidebar').empty().load(url);
+                    
                 }
                 else {
                     thischeckbox.prop('checked', 'checked');
