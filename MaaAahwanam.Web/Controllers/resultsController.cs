@@ -21,7 +21,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: results
         public ActionResult Index(string type, string loc, string eventtype, string count, string date)
         {
-           // string url =  HttpContext.Current.Request.Url.AbsoluteUri;
+            string url =  Request.Url.AbsoluteUri;
 
             type = (type == null) ? "Venue" : type;
             var data = resultsPageService.GetAllVendors(type);
