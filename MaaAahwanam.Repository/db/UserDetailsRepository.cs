@@ -152,6 +152,8 @@ namespace MaaAahwanam.Repository.db
             return vendor;
         }
 
+
+
         public void UpdateDP(int UserloginsID,string imagename)
         {
             var list = _dbContext.UserDetail.SingleOrDefault(o=>o.UserLoginId==UserloginsID);

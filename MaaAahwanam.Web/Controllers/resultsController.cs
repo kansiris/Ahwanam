@@ -9,6 +9,7 @@ using MaaAahwanam.Web.Custom;
 using System.IO;
 using MaaAahwanam.Utility;
 using MaaAahwanam.Models;
+using System.Text;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -48,13 +49,18 @@ namespace MaaAahwanam.Web.Controllers
                     string emailid = user.Username;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
                     string readFile = File.OpenText().ReadToEnd();
-                  //  readFile = readFile.Replace("[ActivationLink]", url);
+                    StringBuilder cds = new StringBuilder();
+                   
+                    
+                        cds.Append("<table ><tbody><tr><td> type </td><td style = 'width: 75px;'> " + type + "</td></tr><tr><td> guest </td><td style = 'width: 75px;' > " + count + " </td></tr><tr><td style = 'width: 50px;'> loction </td><td style = 'width: 75px;'> " + loc + " </td></tr><tr><td style = 'width: 50px;'> eventtype </td><td style = 'width: 50px;'> " + eventtype + " </td></tr><tr><td style = 'width: 50px;'> date </td><td style = 'width: 50px;'> " + date + " </td></tr></table></tbody>");
+                    readFile = readFile.Replace("[ActivationLink]", url);
                     readFile = readFile.Replace("[name]", username);
                     readFile = readFile.Replace("[Ipaddress]", ipaddress);
                     readFile = readFile.Replace("[email]", Email);
+                    readFile = readFile.Replace("[carttable]", cds.ToString());
 
                     string txtmessage = readFile;//readFile + body;
-                    string subj = "User login from ahwanam";
+                    string subj = "User search from ahwanam";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 }
