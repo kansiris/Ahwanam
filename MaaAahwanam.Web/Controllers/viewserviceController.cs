@@ -140,7 +140,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public ActionResult addcnow(string pid, string guest, string dcval, string total, string pprice)//(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did, string etype2)
+        public ActionResult addcnow(string pid, string guest, string dcval, string total, string pprice,string eventtype)//(string type, string etype1, string date, string totalprice, string id, string price, string guest, string timeslot, string vid, string did, string etype2)
         {
             //try
             //{
@@ -172,7 +172,7 @@ namespace MaaAahwanam.Web.Controllers
                 //cartItem.attribute = timeslot;
                 cartItem.DealId = Convert.ToInt64(pid);
                 cartItem.Isdeal = false;
-                //cartItem.EventType = etype1;
+                cartItem.EventType = eventtype;
                 //cartItem.EventDate = Convert.ToDateTime(date);
                 long vendorid = Convert.ToInt64(pkgs.VendorId);
                 var cartcount = cartlist.Where(m => m.Id == long.Parse((pkgs.VendorId).ToString()) && m.subid == long.Parse((pkgs.VendorSubId).ToString())).Count();

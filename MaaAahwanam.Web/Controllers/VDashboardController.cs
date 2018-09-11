@@ -18,6 +18,8 @@ namespace MaaAahwanam.Web.Controllers
         VendorMasterService vendorMasterService = new VendorMasterService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+        VendorImageService vendorImageService = new VendorImageService();
+        VendorProductsService vendorProductsService = new VendorProductsService();
 
         // GET: VDashboard
         public ActionResult Index()
@@ -34,16 +36,17 @@ namespace MaaAahwanam.Web.Controllers
 
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                string vid = vendorMaster.Id.ToString();
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(vendorMaster.Id));
                 var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id));
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
+                var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
 
-     
-                
-                    
+                ViewBag.venues = venues;
 
-                }
+
+            }
 
                 else
                 {
@@ -122,18 +125,11 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
 
-
-                
-
-
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
                 string id = user.UserId.ToString();
-
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(vendorMaster.Id));
-
                 ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
             }
             else
@@ -144,6 +140,34 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.profilepic = "";
             }
             return PartialView("profilepic");
+        }
+
+        public ActionResult Addservices(string vsid)
+        {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+
+            string uid = user.UserId.ToString();
+         
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+            ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(vid));
+            //var venues = (vendorVenueSignUpService.GetVendorVenue(Convert.ToInt64(vendorMaster.Id))).Where(p => p.Id == Convert.ToInt64(vsid)).ToList();
+            //ViewBag.subvenues = venues;
+            VendorVenueService vendorVenueService = new VendorVenueService();
+            if (vsid == null)
+            {
+                ViewBag.service = ""; ViewBag.images = "";
+            }
+            else
+            {
+                ViewBag.service = vendorVenueService.GetVendorVenue(long.Parse(vid), long.Parse(vsid));
+                ViewBag.categorytype = ViewBag.service.VenueType;
+                ViewBag.images = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
+                var pkgs = vendorProductsService.getvendorpkgs(vid);
+                ViewBag.pacakagerecord = pkgs;
+            }
+            return PartialView("Addservices");
         }
         }
     }
