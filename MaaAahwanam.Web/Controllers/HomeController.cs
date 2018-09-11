@@ -108,6 +108,8 @@ namespace MaaAahwanam.Web.Controllers
               var  activationcode = userLogin.ActivationCode;
                var txtto = userLogin.UserName;
                 string username = userDetail.FirstName;
+                string phoneno = userDetail.UserPhone;
+
                 username = Capitalise(username);
                 string emailid = userLogin.UserName;
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
@@ -115,6 +117,8 @@ namespace MaaAahwanam.Web.Controllers
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", username);
+                readFile = readFile.Replace("[phoneno]", phoneno);
+
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Account Activation";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
@@ -126,14 +130,16 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("Failed", JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult login(string Password, string Email)
+        public JsonResult login(string Password, string Email,string url1)
         {
+            
             UserLogin userLogin = new UserLogin();
             UserDetail userDetail = new UserDetail();
             userLogin.UserName = Email;
             userLogin.Password = Password;
-            var userResponse = resultsPageService.GetUserLogin(userLogin);
-            var userResponse1 = resultsPageService.GetUserLogdetails(userLogin);
+            string ipaddress = HttpContext.Request.UserHostAddress;
+            var userResponse1 = resultsPageService.GetUserLogin(userLogin);
+            var userResponse = resultsPageService.GetUserLogdetails(userLogin);
             if (userResponse1 != null)
             {
                 if (userResponse1.Status == "Active")
@@ -142,6 +148,25 @@ namespace MaaAahwanam.Web.Controllers
                     string userData = JsonConvert.SerializeObject(userResponse1);
                     ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
                         ViewBag.userid = userResponse1.UserLoginId;
+
+                    string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com,sireesh.k@xsilica.com";
+                    int id = Convert.ToInt32(userResponse.UserLoginId);
+                    var userdetails = userLoginDetailsService.GetUser(id);
+                    
+                    string username = userdetails.FirstName;
+                    username = Capitalise(username);
+                    string emailid = userLogin.UserName;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    readFile = readFile.Replace("[ActivationLink]", url1);
+                    readFile = readFile.Replace("[name]", username);
+                    readFile = readFile.Replace("[Ipaddress]", ipaddress);
+                    readFile = readFile.Replace("[email]", Email);
+
+                    string txtmessage = readFile;//readFile + body;
+                    string subj = "User login from ahwanam";
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                     return Json("success", JsonRequestBehavior.AllowGet);
                 }
                 return Json("Failed", JsonRequestBehavior.AllowGet);
@@ -257,7 +282,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult SendEmail(string name, string number, string city, string eventtype, string datepicker2,string Description)
         {
             string ip = HttpContext.Request.UserHostAddress;
-            string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + "Description:"+Description+",IP:" + ip;
+            string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + ",Description:"+Description+",IP:" + ip;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg.Replace(",", "<br/>"), "Mail From Ahwanam");
             emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", msg.Replace(",", "<br/>"), "Mail From Ahwanam");

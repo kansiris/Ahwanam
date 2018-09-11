@@ -102,10 +102,10 @@
         font-size: 14px;
     }
 
-    #calendar {
+    /*.vendorcalendar {
         max-width: 700px;
         margin-left: 15px;
-    }
+    }*/
 
     .uk-h6-1 {
         font-size: 15px;
@@ -212,8 +212,8 @@
                     </div>
                     <!--End step -->
                     <div class="uk-grid">
-                        <h2 class="uk-h2" style="font-size:18px;text-transform: uppercase;">@ViewBag.Productinfo.BusinessName <span style="font-size:16px;font-weight:400;text-transform: capitalize"><br>@ViewBag.City,@ViewBag.State</span></h2>
-                        <img src="http://design.maa-aahwanam.com/panagea/images/heart.png" style="margin-left:200px" />
+                        <h2 class="uk-h2" style="font-size:18px;text-transform: uppercase;margin: 0px 10px -1px 0px;max-width: 55%;width:100%">@ViewBag.Productinfo.BusinessName <span style="font-size:16px;font-weight:400;text-transform: capitalize"><br>@ViewBag.City,@ViewBag.State</span></h2>
+                        <img src="http://design.maa-aahwanam.com/panagea/images/heart.png" style="margin-left:200px;width: 10%;height: 50%;max-width: 45%;" />
 
                         <div style="padding-top:10px"><a href="#map">See Address Map</a>&emsp;&emsp; <a href="#">View Description</a></div>
                     </div>
@@ -228,7 +228,7 @@
                 @foreach (var item in ViewBag.particularVenue)
                 {
                     <div class="container" id="@item.VenueType">
-                        <h2 style="font-size:44px;font-weight:700;">@item.VenueType</h2>
+                        <h2 style="font-size:44px;font-weight:700;text-transform: uppercase">@item.VenueType</h2>
                         <h3 class="uk-h3" style="margin-left:4px">AVAILABLE FOOD PACKAGES</h3>
                         @foreach (var item1 in @ViewBag.availablepackages)
                         {
@@ -271,14 +271,15 @@
                                         }
 
                                     </div>
+                                    @*<img src="~/newdesignstyles/img/plus.png" />*@
                                     <div class="col-sm-sm" style="max-width:15%">
                                         @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
                                         {
-                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="~/newdesignstyles/img/plus.png" /></button>
                                         }
                                         else
                                         {
-                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjNTczNzkxIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /></button>
+                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle"><img src="~/newdesignstyles/img/plus.png" /></button>
                                         }
                                     </div>
                                 </div><br><br>
@@ -342,7 +343,7 @@
                                 @for (int i = 0; i < ViewBag.amenities[amenitycount].Split(',').Length; i++)
                                 {
                                     <p class="caption">
-                                        <img src="https://lh3.googleusercontent.com/-VvI0mbfYyyA/W5EwXj_8E7I/AAAAAAAAASo/dhYsYNlT7CgmgtyZC-eTwVSARICqiA_agCK8BGAs/s24/2018-09-06.png" title="@ViewBag.amenities[amenitycount].Split(',')[i]" />
+                                        <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[amenitycount].Split(',')[i]).png" title="@ViewBag.amenities[amenitycount].Split(',')[i]" />
                                     </p>  @*<br><br><b>@ViewBag.amenities[amenitycount].Split(',')[i]</b>*@
                                 }
                             </div>
@@ -352,43 +353,47 @@
                     <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
                     @*<img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>*@
                     @*<input id="datepicker" class="datepicker" name="datepicker" />*@
-                    <div id='calendar'></div>
-                    <br />
-                    <br />
-                    <h3 class="uk-h3">GALLERY/VIDEOS</h3>
-                    <div class="container margin_60_35" style="padding-top:30px">
-                        <div class="grid">
-                            <ul class="magnific-gallery">
-                                @foreach (var image in ViewBag.allimages)
-                                {
-                                    <li>
-                                        <figure>
-                                            <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px">
-                                            <figcaption>
-                                                <div class="caption-content">
-                                                    <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
-                                                        <i class="pe-7s-albums"></i>
-                                                        <p>@image.Imagedescription</p>
-                                                    </a>
-                                                </div>
-                                            </figcaption>
-                                        </figure>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <!-- /grid gallery -->
-                    </div>
-                    <!-- /container -->
-                    <h3 class="uk-h3">VENUE POLICIES</h3>
-                    <P>Read all the terms & conditions of the banquet hall.</P><br><br>
+                    @*<div class='vendorcalendar'></div>*@
+                    <input type="hidden" class="vendorcalendar"/>
 
-                    <figure>
-                        <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
-                        <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
-                        <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
-                    </figure>
-                    <hr />
+
+
+                    <br />
+                        <br />
+                        <h3 class="uk-h3">GALLERY/VIDEOS</h3>
+                        <div class="container margin_60_35" style="padding-top:30px">
+                            <div class="grid">
+                                <ul class="magnific-gallery">
+                                    @foreach (var image in ViewBag.allimages)
+                                    {
+                                        <li>
+                                            <figure style="background-color:white">
+                                                <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px;margin-left:10px">
+                                                <figcaption>
+                                                    <div class="caption-content">
+                                                        <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
+                                                            <i class="pe-7s-albums"></i>
+                                                            <p>@image.Imagedescription</p>
+                                                        </a>
+                                                    </div>
+                                                </figcaption>
+                                            </figure>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <!-- /grid gallery -->
+                        </div>
+                    <!-- /container -->
+                        <h3 class="uk-h3">VENUE POLICIES</h3>
+                        <P>Read all the terms & conditions of the banquet hall.</P><br><br>
+
+                        <figure>
+                            <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
+                            <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
+                            <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
+                        </figure>
+                        <hr />
                 }
                 <h3 class="uk-h3">Address</h3>
                 <p>
@@ -434,7 +439,7 @@
 
                                         <label class="uk-form-label" for="form-stacked-text"><h1 class="uk-h1">Guests</h1></label>
                                         <div class="uk-form-controls">
-                                            <input class="uk-input guests" name="guests" id="guests" type="text">
+                                            <input class="uk-input guests1" name="guests1" id="guests1" type="text">
                                         </div>
                                     </div>
                                     <div class="uk-margin total">
@@ -657,7 +662,7 @@
             //alert(gu1);
             if(gu1 == null)
             {
-                guest =  $('.guests').val();
+                guest =  $('.guests1').val();
             } else { guest = gu1 ;}
             var s =  val.split(',');
             var pprice = s[2];
@@ -681,13 +686,13 @@
             var SelectedPackage1=''
             //alert(pid + pname + pprice);
             $('.price').val('');
-            $('.guests').val('');
+            $('.guests1').val('');
             if(pname !=''&& pname !='undefined'&& pprice !=''&& pprice !='undefined')
             {SelectedPackage1 =''+pname+'(₹'+pprice+'/per plate)';}
             else{SelectedPackage1 ='N/A'}
             //alert(SelectedPackage1);
             $('.price').val(SelectedPackage1);
-            $('.guests').val(guest);
+            $('.guests1').val(guest);
             $('.Packageselected').val(s);
 
             var total = guest * pprice;
@@ -703,11 +708,13 @@
             if (cpid== null || cpid == pid)
             { window.localStorage.setItem("cartid",pid)}
             var gu1 = window.localStorage.getItem("guests");
+            var eventtype = window.localStorage.getItem("eventtype");
+
             var guest = '';
-            alert(gu1);
+            //alert(gu1);
             if(gu1 == null)
             {
-                guest =  $('.guests').val();
+                guest =  $('.guests1').val();
             } else { guest = gu1 ;}
 
             var cart =   $('#Packageselected').val();
@@ -717,8 +724,10 @@
             var cpid = carts[0];
 
             var total = guest * cpprice;
+            //alert(total);
 
-            url1 ='/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total;
+            url1 ='/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype;
+            //alert(url1);
             $.ajax({
                 url: url1,
                 success: function (data) {
@@ -740,11 +749,11 @@
                 },
                 error:function(data)
                 {
-                    $(".overlay").hide();
-                    alertmsg("Something Went Wrong!!! Try Again Later");
+                    // $(".overlay").hide();
+                    alert("Something Went Wrong!!! Try Again Later");
                 }
             });
-            //location.href='/cart/Index' ; //?pid=' + pid + '&&guest=' + guests;
+            location.href='/cart/Index' ; //?pid=' + pid + '&&guest=' + guests;
             alert(v);
         };
 
@@ -763,7 +772,7 @@
 
             var guest = window.localStorage.getItem("guests");
             $('.price').val(SelectedPackage);
-            $('.guests').val(guest);
+            $('.guests1').val(guest);
             var total = guest * PackagePrice;
             //alert(total);
             $(".total b").empty().append(total);
@@ -772,8 +781,7 @@
             else{$(".packesss b").empty().append('N/A');}
 
 
-            $('.Packageselected').val(pid,PackageName,PackageName);
-
+            $('.Packageselected').val(pid+','+PackageName+','+PackagePrice);
 
 
 
@@ -786,31 +794,34 @@
             document.cookie = cname + "=" + cvalue + "; " + expires;
         }
 
-
-    </script>
-    <script>
-
-        $(document).ready(function() {
-
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,basicWeek,basicDay'
-                },
-                defaultDate: '2018-03-12',
-                navLinks: true, // can click day/week names to navigate views
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                events: [
-                  {
-                      title: 'All Day Event',
-                      start: '2018-03-01'
-                  }
-                ]
+        $(function() {
+            $( ".vendorcalendar" ).datepicker({
+                singleDatePicker: true,
+                standalone: true
             });
-
         });
 
+
+        //$(document).ready(function() {
+        //    $('.vendorcalendar').fullCalendar({
+        //        header: {
+        //            left: 'prev,next today',
+        //            center: 'title',
+        //            right: 'month,basicWeek,basicDay'
+        //        },
+        //        defaultDate: '2018-03-12',
+        //        navLinks: true, // can click day/week names to navigate views
+        //        editable: true,
+        //        eventLimit: true, // allow "more" link when too many events
+        //        events: [
+        //          {
+        //              title: 'All Day Event',
+        //              start: '2018-03-01'
+        //          }
+        //        ]
+        //    });
+        //});
+
     </script>
+
 }

@@ -152,11 +152,12 @@
                             }
                             if (user.UserType == "Vendor")
                             {
-                                Response.Redirect("/NUserRegistration/changeid?id=" + user.UserId + "");
+                                //Response.Redirect("/VDashboard/changeid?id=" + user.UserId + "");
+                                Response.Redirect("/VDashboard/Index");
                             }
                             if (user.UserType == "User")
                             {
-                                <span><a href="#sign-in-dialog" id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
+                                <span><a  id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
                                 <ul>
                                     <li><a href="/Home/SignOut">Log Out</a></li>
                                 </ul>
@@ -215,7 +216,7 @@
                                         <option value="Engagement">Engagement</option>
                                         <option value="Other">Other</option>
                                     </select>*@
-                                <div class="nice-select" tabindex="0">
+                                <div class="nice-select" tabindex="0"style="background-color: #fff;" >
                                     <span class="current" style="padding-left:20px;font-weight:700;">Select Event</span>
                                     <ul class="list">
                                         <li data-value="" class="option disabled">Select Event</li>
@@ -238,7 +239,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date?" required>
+                                    <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date" required>
                                     <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
                                 </div>
                             </div>
@@ -680,7 +681,7 @@
 
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="Name" id="txtname" required>
+                        <input type="text" class="form-control" name="txtname" id="txtname" required>
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
@@ -744,9 +745,7 @@
         $(loginClick).click(function () {
             $(".forgotks").css("display", "none");
             $(".register").css("display", "none");
-
             $(".authenticationBlocks > div").css("display", "block");
-
         });
 
         $(forgotClick).click(function () {
@@ -763,26 +762,28 @@
                 $("span.current").text(eventtype);
             else
                 $("span.current").text('Select Event');
-            $('#loc').val(location);
+            
             if (guests == '') {
                 window.localStorage.setItem("guests", 100);
                 $('#guests').val(100);
             }
-            else {
-                $('#guests').val(guests);
-            }
-            $('#datetimepicker1').val(date);
+            else { $('#guests').val(guests); }
+
+            if (location != '')
+            { $('#loc').val(location); }
+            else
+            { $('#loc').val("Hyderabad"); }
+
+            if (new Date(date) < new Date())
+            { $('#datetimepicker1').val(new Date()); }
+            else
+            { $('#datetimepicker1').val(date); }
         });
         $('#btnsearch').click(function () {
             var location = $('#loc').val();
-            var eventtype = $('.current').text();//$('#selectevent').val();
+            var eventtype = $('.current').text();
             var guests = $('#guests').val();
             var date = $('#datetimepicker1').val();
-            window.localStorage.setItem("guests", guests);
-            window.localStorage.setItem("location", location);
-            window.localStorage.setItem("eventtype", eventtype);
-            window.localStorage.setItem("eventdate", date);
-            //alert(eventtype);
             if (location == '') {
                 alert('Enter Location');
                 $('#loc').focus();
@@ -799,6 +800,10 @@
                 $('#datetimepicker1').focus();
             }
             else {
+                window.localStorage.setItem("guests", guests);
+                window.localStorage.setItem("location", location);
+                window.localStorage.setItem("eventtype", eventtype);
+                window.localStorage.setItem("eventdate", date);
                 window.location.href = '/results/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
             }
         });
@@ -811,6 +816,7 @@
             var phonepattern = /^[0-9]{10}$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#txtemail").val();
+            var url = document.referrer;
             if (CustomerPhoneNumber == '') {
                 alert("Please Enter PhoneNumber");
                 $("#txtphone").focus();
@@ -823,10 +829,10 @@
                 alert("Please Enter Name");
                 $("#txtname").focus();
             }
-            else if (!passwordpattern.test(CustomerName)) {
-                alert("Please Enter valid 10 digit Phonenumber");
-                $("#txtphone").focus();
-            }
+            //else if (!passwordpattern.test(CustomerName)) {
+            //    alert("Please Enter valid 10 digit Phonenumber");
+            //    $("#txtphone").focus();
+            //}
             else if (CustomerName.length < 5) {
                 alert("Name must be 5 characters");
                 $("#txtname").focus();
@@ -910,6 +916,8 @@
             }
         }
         function login(clickedvalue) {
+            var url1 = document.referrer;
+            alert(url1);
             var Password = $("#Password1").val();
             var Email = $("#UserName").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
@@ -941,13 +949,12 @@
                 alert("Please Enter a valid Email Address");
                 $("#txtemail").focus();
             }
-
             else {
                 if (clickedvalue == 'login') {
                     $.ajax({
                         url: '/Home/login',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                         type: 'POST',
-                        data: JSON.stringify({ Password: Password, Email: Email }),
+                        data: JSON.stringify({ Password: Password, Email: Email, url1: url1 }),
                         //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
                         contentType: 'application/json',
@@ -967,7 +974,7 @@
                             //    $("#txtemail").val('');
                             //    window.location.reload();
                             //}
-                            if (data == "unique") {
+                            else if (data == "unique") {
                                 alert("vendorlogin successfull");
                                 //vendorlogin
                             }
@@ -976,18 +983,14 @@
                                 alert("Wrong Credentials,Check Username and password");
                                 window.location.reload();
                             }
-                            //            // $("#txtphone").val('');
-                            //    $("#txtname").val('');
-                            //    $("#txtpassword").val('');
-                            //    $("#txtdeladdress").val('');
-                            //    $("#txtemail").val('');
-                            //    // window.location.reload();
-                            //    $("#otpopup").css("display", "block");
-                            //    $("#txtotp").focus();
-                            //}
+                            else if (data == "success1") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
                         },
                         error: function (data) {
-                            alert("error");
+                            alert("Wrong Credentials,Check Username and password");
                         }
                     });
                 }
