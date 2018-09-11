@@ -108,6 +108,8 @@ namespace MaaAahwanam.Web.Controllers
               var  activationcode = userLogin.ActivationCode;
                var txtto = userLogin.UserName;
                 string username = userDetail.FirstName;
+                string phoneno = userDetail.UserPhone;
+
                 username = Capitalise(username);
                 string emailid = userLogin.UserName;
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
@@ -115,6 +117,8 @@ namespace MaaAahwanam.Web.Controllers
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", username);
+                readFile = readFile.Replace("[phoneno]", phoneno);
+
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Account Activation";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();

@@ -115,12 +115,14 @@ namespace MaaAahwanam.Web.Controllers
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 if (user.UserType == "User")
                 {
-                    string Email = user.Username;
+                    var userlogin = userLoginDetailsService.GetUserId(int.Parse(user.UserId.ToString()));
+                    string Email = userlogin.UserName;
                     string txtto = "sireesh.k@xsilica.com,rameshsai@xsilica.com,seema@xsilica.com,amit.saxena@ahwanam.com";
                     int id = Convert.ToInt32(user.UserId);
                     var userdetails = userLoginDetailsService.GetUser(id);
                     string ipaddress = HttpContext.Request.UserHostAddress;
                     string username = userdetails.FirstName;
+                    string phoneno = userdetails.UserPhone;
                     HomeController home = new HomeController();
                     username = home.Capitalise(username);
                     List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
@@ -141,16 +143,16 @@ namespace MaaAahwanam.Web.Controllers
                     cds.Append("<table style='border:1px;background: #0000;'><tbody><tb>");
                     foreach (var item in ViewBag.cartdetails)
                     {
-                        cds.Append("<table style='border: 2px black solid'><tbody><tr><td> name </td><td> guest </td><td> amount </td><td> date </td></tr><tr><td style = 'width: 75px;border: 2px black solid;'> " + item.BusinessName + "</td><td style = 'width: 75px;border: 2px black solid;' > " + item.Quantity + " </td><td style = 'width: 75px;border: 2px black solid;'> " + item.TotalPrice + " </td><td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + "+ </td></tr></tbody></table>");
+                        cds.Append("<table style='border: 2px black solid'><tbody><tr><td> name </td><td> guest </td><td> amount </td><td> event </td><td> date </td></tr><tr><td style = 'width: 75px;border: 2px black solid;'> " + item.BusinessName + "</td><td style = 'width: 75px;border: 2px black solid;' > " + item.Quantity + " </td><td style = 'width: 75px;border: 2px black solid;'> " + item.TotalPrice + " </td><td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + "+ </td><td style = 'width: 50px;border: 2px black solid;'> " + item.EventType + "+ </td></tr></tbody></table>");
                     }
                     cds.Append("</tb></table></tbody>");
-                    string emailid = user.Username;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
                     string readFile = File.OpenText().ReadToEnd();
                     readFile = readFile.Replace("[carttable]", cds.ToString());
                     readFile = readFile.Replace("[name]", username);
                     readFile = readFile.Replace("[Ipaddress]", ipaddress);
                     readFile = readFile.Replace("[email]", Email);
+                    readFile = readFile.Replace("[phoneno]", phoneno);
                     string txtmessage = readFile;//readFile + body;
                     string subj = "Get Quote From Cart Page";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();

@@ -157,8 +157,8 @@
                                             }
                                         </div>
                                         <div class="col-md-8-1">
-                                            <input type="hidden" id="cartid" name="cartid" value="@item.CartId">
-                                            <h3 style="text-transform:uppercase;font-weight:700">@item.BusinessName&emsp;<a class="ui violet label" style="padding: 2px 7px 2px 7px;font-size: 13px;font-weight: 100;">@item.ServicType</a><span><br></span></h3>
+                                            <input type="hidden" id="cartid" name="cartid[]" value="@item.CartId" />
+                                                                                        <h3 style="text-transform:uppercase;font-weight:700">@item.BusinessName&emsp;<a class="ui violet label" style="padding: 2px 7px 2px 7px;font-size: 13px;font-weight: 100;">@item.ServicType</a><span><br></span></h3>
                                             @*<p>
                                                     @item.SelectedPriceType for  @item.Quantity guests <br>Date: @item.eventstartdate.ToString("dd/MM/yyyy").Replace('-', '/')&emsp;&emsp;&emsp;&emsp; <B>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Perunitprice)).Replace(".00", "")</B>&emsp;&emsp;&emsp;&emsp;&emsp;
                                                     <div class="zInputWrapper">
@@ -173,6 +173,7 @@
                                             <p style="margin-top:-10px">@item.SelectedPriceType for @item.Quantity guests</p>
                                             <text id="itemsselected" style="display:none"></text>
                                             <table style="width:500px;border-collapse: collapse;margin-top:-25px">
+                                               
                                                 <tr>
                                                     <td style="width:30%;border:none">
                                                         <text style="font-size:16px;font-weight:700">
@@ -182,8 +183,8 @@
                                                             { <text> @DateTime.Now.ToString("dd-MMM-yyyy") </text>}
                                                         </text>
                                                     </td>
-                                                    <td style="width:40%;border:none;"><b style="font-weight: 700;font-size: 30px;color: #573791;float:right;">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</b><text style="float:right;font-size: 16px;font-weight: 700;margin-top: 4px;">₹</text></td>
-                                                    <td style="width:30%;border:none"><input type="checkbox" class="cartcheckbox" style="display:none" value="@item.CartId" /><button class="cartselect" style="background-color:red;color:#fff;height:50px;width:100px;float:right">Select <img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button></td>
+                                                    <td style="width:40%;border:none;"><b style="font-size: 14px;color: #573791;float:right;">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</b><text style="float:right;font-size: 14px;">₹</text></td>
+                                                    <td style="width:30%;border:none"><input type="checkbox" class="cartcheckbox" style="display:none" value="@item.CartId" checked/><button class="cartselect" style="background-color:#573791;color:#fff;height:35px;width:100px;float:right">Selected <img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button></td>
                                                 </tr>
                                             </table>
                                             <a href="#" onclick="DeletecartItem(@item.CartId)">Delete</a>
@@ -211,7 +212,7 @@
 
                         <center>
                             <h2><b>AUTHENTICATE TO VIEW CART</b></h2>
-                            <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">Login&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                            <button type="submit" value="email" name="command" class="btn_1 add_top_30" uk-toggle="target: #modal-example">Login<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
 
                             @*<b>(OR)&emsp;</b>
                                 <a href="#0" class="btn_1 add_top_30">
@@ -455,8 +456,15 @@
                
 
             });
+            var cart1 ='';
+            $("input[name='cartid[]']").each(function (i, v) {
+              //  alert(this.value);
+                var cart = this.value;
+                cart1 = cart1 + ',' + cart;
+              //  alert(cart1);
+                $('.selectedcart').val(cart1);
 
-
+            });
 
         });
 
@@ -471,13 +479,13 @@
                     thischeckbox.removeAttr('checked');
                     $(this).css('background-color', 'red').text('Select');
                     var ids = $(this).prev('input.cartcheckbox').val();
-                    alert(ids);
+                   // alert(ids);
                     var selcartid = $('.selectedcart').val();
 
                     var ids1 = selcartid.replace(ids, "");
                     $('.selectedcart').val(ids1);
 
-                    alert(ids1);
+                   // alert(ids1);
                     var url = '/cart/billing?cartid=' + ids1;
                     $('#sidebar').empty().load(url);
                     
@@ -486,14 +494,14 @@
                     thischeckbox.prop('checked', 'checked');
                     $(this).css('background-color', '#573791').text('Selected');
                     var ids = $(this).prev('input.cartcheckbox').val();
-                    alert(ids);
+                  //  alert(ids);
                     var selcartid = $('.selectedcart').val();
 
                     var ids1 = selcartid + ',' + ids;
 
                     $('.selectedcart').val(ids1);
                     
-                    alert(ids1);
+                  //  alert(ids1);
                     var url = '/cart/billing?cartid=' + ids1;
                     $('#sidebar').empty().load(url);
                 }
