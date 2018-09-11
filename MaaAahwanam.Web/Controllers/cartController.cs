@@ -34,20 +34,16 @@ namespace MaaAahwanam.Web.Controllers
                         return PartialView("ItemsCartdetails");
                     }
                     ViewBag.cartCount = cartserve.CartItemsCount((int)user.UserId);
-
                     List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
                     decimal total = cartlist.Where(m => m.Status == "Active").Sum(s => s.TotalPrice);
                     ViewBag.cartitems = cartlist.OrderByDescending(m => m.UpdatedDate).Where(m => m.Status == "Active");
                     ViewBag.Total = total;
-
                 }
             }
             else
             {
                 ViewBag.cartCount = cartserve.CartItemsCount(0);
             }
-
-
             return View();
         }
 
@@ -57,12 +53,10 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message);
         }
 
-
         public ActionResult billing(string cartid)
         {
             if (cartid == null)
             {
-
                 ViewBag.tamount = "000";
                 ViewBag.discount = "0";
                 ViewBag.service = "0";
@@ -77,8 +71,6 @@ namespace MaaAahwanam.Web.Controllers
                     if (user.UserType == "User")
                     {
                         List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
-
-
                         var cartid1 = cartid.Split(',');
                         for (int i = 0; i < cartid1.Count(); i++)
                         {
@@ -111,36 +103,26 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.netamount = nettotal1;
                     }
                 }
-
             }
-
-
             return PartialView("billing");
-
         }
 
         public JsonResult email( string selcartid)
         {
-
             selcartid = selcartid.TrimStart(',');
-
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
                 if (user.UserType == "User")
                 {
                     string Email = user.Username;
-                   
-                    string txtto = "sireesh.k@xsilica.com,rameshsai@xsilica.com";
+                    string txtto = "sireesh.k@xsilica.com,rameshsai@xsilica.com,seema@xsilica.com,amit.saxena@ahwanam.com";
                     int id = Convert.ToInt32(user.UserId);
                     var userdetails = userLoginDetailsService.GetUser(id);
                     string ipaddress = HttpContext.Request.UserHostAddress;
-
                     string username = userdetails.FirstName;
                     HomeController home = new HomeController();
                     username = home.Capitalise(username);
-
                     List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartid1 = selcartid.Split(',');
                     //for (int i = 0; i < cartid1.Count(); i++)
@@ -150,7 +132,6 @@ namespace MaaAahwanam.Web.Controllers
                     //    cartname = cartname1 + ',' + cartname1;
                     //}
                     List<GetCartItems_Result> cartdetails = new List<GetCartItems_Result>();
-                    
                     for (int i = 0; i < cartid1.Count(); i++)
                     {
                          cartdetails.AddRange(cartlist.Where(m => m.CartId == Convert.ToInt64(cartid1[i])).ToList());
@@ -160,29 +141,24 @@ namespace MaaAahwanam.Web.Controllers
                     cds.Append("<table style='border:1px;background: #0000;'><tbody><tb>");
                     foreach (var item in ViewBag.cartdetails)
                     {
-                        cds.Append("<table ><tbody><tr><td> name </td><td style = 'width: 75px;'> " + item.BusinessName +"</td></tr><tr><td> guest </td><td style = 'width: 75px;' > " +item.Quantity +" </td></tr><tr><td style = 'width: 50px;'> amount </td><td style = 'width: 75px;'> "+item.TotalPrice + " </td></tr><tr><td style = 'width: 50px;'> date </td><td style = 'width: 50px;'> "+ item.eventstartdate+ " </td></tr></table></tbody>");
+                        cds.Append("<table style='border: 2px black solid'><tbody><tr><td> name </td><td> guest </td><td> amount </td><td> date </td></tr><tr><td style = 'width: 75px;border: 2px black solid;'> " + item.BusinessName + "</td><td style = 'width: 75px;border: 2px black solid;' > " + item.Quantity + " </td><td style = 'width: 75px;border: 2px black solid;'> " + item.TotalPrice + " </td><td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + "+ </td></tr></tbody></table>");
                     }
                     cds.Append("</tb></table></tbody>");
                     string emailid = user.Username;
                     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
                     string readFile = File.OpenText().ReadToEnd();
-                      readFile = readFile.Replace("[carttable]", cds.ToString());
+                    readFile = readFile.Replace("[carttable]", cds.ToString());
                     readFile = readFile.Replace("[name]", username);
                     readFile = readFile.Replace("[Ipaddress]", ipaddress);
                     readFile = readFile.Replace("[email]", Email);
-
                     string txtmessage = readFile;//readFile + body;
-                    string subj = " Get Quote For Cart";
+                    string subj = "Get Quote From Cart Page";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 }
             }
-
-
             var message ="success";
             return Json(message);
-
-
         }
     }
 }

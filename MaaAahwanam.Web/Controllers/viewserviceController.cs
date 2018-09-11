@@ -20,17 +20,9 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         CartService cartService = new CartService();
-
-
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         viewservicesservice viewservicesss = new viewservicesservice();
-        //ProductInfoService productInfoService = new ProductInfoService();
-        //WhishListService whishListService = new WhishListService();
-        //UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        //OrderService orderService = new OrderService();
-        //private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         ResultsPageService resultsPageService = new ResultsPageService();
-
 
         // GET: viewservice
         public ActionResult Index(string name, string type, string id)
@@ -58,7 +50,7 @@ namespace MaaAahwanam.Web.Controllers
                 var data = viewservicesss.GetVendor(long.Parse(id));
                 var allimages = viewservicesss.GetVendorAllImages(long.Parse(id)).ToList();
                 ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
-                ViewBag.allimages = allimages;
+                //ViewBag.allimages = allimages;
                 ViewBag.Productinfo = data;
                 ViewBag.location = data.Address;
                 ViewBag.City = data.City;
@@ -72,11 +64,14 @@ namespace MaaAahwanam.Web.Controllers
                 List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
                 List<VendorVenue> amenities = new List<VendorVenue>();
                 List<string> famenities = new List<string>();
+                List<VendorImage> vimg = new List<VendorImage>();
                 foreach (var item in venues)
                 {
                     package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
                     amenities.Add(item);
+                    vimg.AddRange(allimages.Where(m => m.VendorId == item.Id));
                 }
+                ViewBag.allimages = vimg;
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
                 var allamenities = amenities.Select(m => new
