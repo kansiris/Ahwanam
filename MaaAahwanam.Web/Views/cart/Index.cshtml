@@ -356,9 +356,6 @@
 
             <aside class="col-lg-4" id="sidebar">
                 @{Html.RenderAction("billing", "cart"); }
-
-
-               
             </aside>
         </div><br>
     </div>
@@ -377,7 +374,6 @@
     <script>
         function email() {
             var selcartid = $('.selectedcart').val();
-            alert(selcartid);
             $.ajax({
                 url: '/cart/email',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                 type: 'POST',
@@ -386,35 +382,22 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function (data) {
-                    if (data == "success") {
-                        alert('We will contact you soon');
-                        //window.location.href = '/NewOrder/orderview'
+                    if (data == "success" || data == "unique") {
+                        alertify.alert("We will contact you soon");
                     }
-                    if (data == "unique") {
-                        alert('We will contact you soon');
-
-                    }
-                    
                     else if (data == "Failed") {
-
-                        alert('We will contact you soon');
+                        alertify.alert("Something Went Wrong!!! Try Again Later");
                     }
                     else {
-                        //alert('error');
                         alertify.alertmsg("error");
-
                     }
                 }
-            })     ;
-
-
-
+            });
         }
 
         function DeletecartItem(cartId) {
             alertify.confirm("Are you sure You want to delete.",
          function () {
-
              var obj = {}
              obj.cartId = cartId;
              $.ajax({
@@ -436,25 +419,18 @@
                      alertify.alertmsg("error");
                  }
              });
-
-         }
-        )
+         })
         }
     </script>
-    <script>
 
-        </script>
     <script>
         $(document).ready(function () {
-
             $('#checkbox1').change(function () {
                 if (this.checked) {
                     var returnVal = confirm("Are you sure?");
                     $(this).prop("checked", returnVal);
                 }
                 $('#textbox1').val(this.checked);
-               
-
             });
             var cart1 ='';
             $("input[name='cartid[]']").each(function (i, v) {
@@ -472,7 +448,6 @@
 
     <script>
         $(document).ready(function () {
-
             $('.cartselect').on('click', function () {
                 var thischeckbox = $(this).prev('input.cartcheckbox');
                 if (thischeckbox.is(':checked')) {
@@ -481,14 +456,12 @@
                     var ids = $(this).prev('input.cartcheckbox').val();
                    // alert(ids);
                     var selcartid = $('.selectedcart').val();
-
                     var ids1 = selcartid.replace(ids, "");
                     $('.selectedcart').val(ids1);
 
                    // alert(ids1);
                     var url = '/cart/billing?cartid=' + ids1;
                     $('#sidebar').empty().load(url);
-                    
                 }
                 else {
                     thischeckbox.prop('checked', 'checked');
@@ -496,19 +469,13 @@
                     var ids = $(this).prev('input.cartcheckbox').val();
                   //  alert(ids);
                     var selcartid = $('.selectedcart').val();
-
                     var ids1 = selcartid + ',' + ids;
-
                     $('.selectedcart').val(ids1);
                     
                   //  alert(ids1);
                     var url = '/cart/billing?cartid=' + ids1;
                     $('#sidebar').empty().load(url);
                 }
-                
-
-
-
             });
         });
     </script>
