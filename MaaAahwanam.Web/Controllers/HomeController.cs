@@ -33,6 +33,8 @@ namespace MaaAahwanam.Web.Controllers
         Vendormaster vendorMaster = new Vendormaster();
         cartservices cartserve = new cartservices();
         ResultsPageService resultsPageService = new ResultsPageService();
+        VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
+
         // GET: Home
         public ActionResult Index()
         {
@@ -178,7 +180,61 @@ namespace MaaAahwanam.Web.Controllers
 
                 }
             }
-        
+
+        public JsonResult forgotpass(string Email)
+        {
+            UserLogin userLogin = new UserLogin();
+            UserDetail userDetail = new UserDetail();
+            userLogin.UserName = Email;
+            var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
+            if (userResponse != null)
+            {
+                string emailid = userLogin.UserName;
+
+                string activationcode = userResponse.ActivationCode;
+                int id = Convert.ToInt32(userResponse.UserLoginId);
+                var userdetails = userLoginDetailsService.GetUser(id);
+                string name = userdetails.FirstName;
+
+                name = Capitalise(name);
+                string txtto = userLogin.UserName;
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Password reset information";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                return Json("success", JsonRequestBehavior.AllowGet);
+
+            }
+            return Json("success1", JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult ActivateEmail(string ActivationCode, string Email)
+        {
+            try
+            {
+                if (ActivationCode == "")
+                { ActivationCode = null; }
+                var userResponse = venorVenueSignUpService.GetUserdetails(Email);
+                if (ActivationCode == userResponse.ActivationCode)
+                {
+                    return RedirectToAction("updatepassword", "Home", new { Email = Email });
+                }
+                //return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                TempData["Active"] = "Email ID not found";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
 
         public string Capitalise(string str)
         {
@@ -277,7 +333,53 @@ namespace MaaAahwanam.Web.Controllers
             {
                 return RedirectToAction("Index", "Nhomepage");
             }
+
         }
+
+        public ActionResult updatepassword(string Email)
+        {
+            try
+            {
+                ViewBag.email = Email;
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Nhomepage");
+            }
+        }
+        public ActionResult changepassword(UserLogin userLogin)
+        {
+            try
+            {
+                string email = userLogin.UserName;
+                var userResponse = venorVenueSignUpService.GetUserdetails(email);
+                var userid = userResponse.UserLoginId;
+                userLoginDetailsService.changepassword(userLogin, (int)userid);
+                string txtto = userLogin.UserName;
+                int id = Convert.ToInt32(userResponse.UserLoginId);
+                var userdetails = userLoginDetailsService.GetUser(id);
+                string username = userdetails.FirstName;
+                username = Capitalise(username);
+                string emailid = userLogin.UserName;
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home";
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/change-email.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", username);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Your Password is changed";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                return Json("success");
+                // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "home");
+            }
+        }
+
 
         public ActionResult SendEmail(string name, string number, string city, string eventtype, string datepicker2,string Description)
         {
