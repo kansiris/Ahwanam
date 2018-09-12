@@ -24,9 +24,9 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VDashboard
         public ActionResult Index()
         {
-            
-                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                {
+
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
 
 
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -48,16 +48,16 @@ namespace MaaAahwanam.Web.Controllers
 
             }
 
-                else
-                {
-                    return RedirectToAction("Index", "NUserRegistration");
-                }
-                return View();
-            
+            else
+            {
+                return RedirectToAction("Index", "NUserRegistration");
+            }
+            return View();
 
-          
+
+
         }
-    
+
         public JsonResult UploadProfilePic(HttpPostedFileBase helpSectionImages, string email)
         {
             string fileName = string.Empty;
@@ -70,7 +70,7 @@ namespace MaaAahwanam.Web.Controllers
                 email = userdet.UserName;
 
                 string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
-               filename = email + path;
+                filename = email + path;
                 fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
                 if (System.IO.File.Exists(fileName) == true)
                     System.IO.File.Delete(fileName);
@@ -86,11 +86,11 @@ namespace MaaAahwanam.Web.Controllers
             {
 
 
-                
+
 
 
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string uid = user.UserId.ToString(); 
+                string uid = user.UserId.ToString();
 
                 string email = userLoginDetailsService.Getusername(long.Parse(uid));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
@@ -119,7 +119,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.profilepic = "";
             }
             return PartialView("sidebar");
-            }
+        }
         public ActionResult profilepic(string ks)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -147,7 +147,7 @@ namespace MaaAahwanam.Web.Controllers
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
 
             string uid = user.UserId.ToString();
-         
+
             string email = userLoginDetailsService.Getusername(long.Parse(uid));
             vendorMaster = vendorMasterService.GetVendorByEmail(email);
             string vid = vendorMaster.Id.ToString();
@@ -157,17 +157,95 @@ namespace MaaAahwanam.Web.Controllers
             VendorVenueService vendorVenueService = new VendorVenueService();
             if (vsid == null)
             {
-                ViewBag.service = ""; ViewBag.images = "";
+                ViewBag.ks = "ks"; ViewBag.service = ""; ViewBag.images = "";
             }
             else
             {
+                ViewBag.ks = "ksc";
                 ViewBag.service = vendorVenueService.GetVendorVenue(long.Parse(vid), long.Parse(vsid));
                 ViewBag.categorytype = ViewBag.service.VenueType;
                 ViewBag.images = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
                 var pkgs = vendorProductsService.getvendorpkgs(vid);
                 ViewBag.pacakagerecord = pkgs;
             }
+           
             return PartialView("Addservices");
         }
+
+        public void UpdateAmenities(string selectedamenities,string vsid )
+        {
+            //long count = 0;
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string id = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(id));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+            Vendormaster vendormaster = new Vendormaster();
+            vendormaster.ServicType = vendorMaster.ServicType;
+            vendormaster.ContactNumber = vendorMaster.ContactNumber;
+            vendormaster.EmailId = vendorMaster.EmailId;
+            vendormaster.LandlineNumber = vendorMaster.LandlineNumber;
+            vendormaster.Description = vendorMaster.Description;
+            vendormaster.Url = vendorMaster.Url;
+            vendormaster.Address = vendorMaster.Address;
+            vendormaster.Landmark = vendorMaster.Landmark;
+            vendormaster.City = vendorMaster.City; vendormaster.State = vendorMaster.State; vendormaster.ZipCode = vendorMaster.ZipCode;
+            string[] selectedamenitieslist = selectedamenities.Split(',');
+            if (vendormaster.ServicType == "Venue")
+            {
+                VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vsid)); // Retrieving Particular Vendor Record
+                if (selectedamenitieslist.Contains("CockTails")) vendorVenue.CockTails = "Yes"; else vendorVenue.CockTails = "No";
+                if (selectedamenitieslist.Contains("Rooms")) vendorVenue.Rooms = "Yes"; else vendorVenue.Rooms = "No";
+                if (selectedamenitieslist.Contains("Wifi")) vendorVenue.Wifi = "Yes"; else vendorVenue.Wifi = "No";
+                if (selectedamenitieslist.Contains("Live Cooking Station")) vendorVenue.LiveCookingStation = "Yes"; else vendorVenue.LiveCookingStation = "No";
+                if (selectedamenitieslist.Contains("Decoration Allowed")) vendorVenue.DecorationAllowed = "Yes"; else vendorVenue.DecorationAllowed = "No";
+                if (selectedamenitieslist.Contains("Sufficient Washroom")) vendorVenue.Sufficient_Washroom = "Yes"; else vendorVenue.Sufficient_Washroom = "No";
+                if (selectedamenitieslist.Contains("Sufficient Room Size")) vendorVenue.Sufficient_Room_Size = "Yes"; else vendorVenue.Sufficient_Room_Size = "No";
+                if (selectedamenitieslist.Contains("Intercom")) vendorVenue.Intercom = "Yes"; else vendorVenue.Intercom = "No";
+                if (selectedamenitieslist.Contains("Single Bed")) vendorVenue.Single_Bed = "Yes"; else vendorVenue.Single_Bed = "No";
+                if (selectedamenitieslist.Contains("Queen Bed")) vendorVenue.Queen_Bed = "Yes"; else vendorVenue.Queen_Bed = "No";
+                if (selectedamenitieslist.Contains("King Bed")) vendorVenue.King_Bed = "Yes"; else vendorVenue.King_Bed = "No";
+                if (selectedamenitieslist.Contains("Balcony")) vendorVenue.Balcony = "Yes"; else vendorVenue.Balcony = "No";
+                if (selectedamenitieslist.Contains("Full Length Mirrror")) vendorVenue.Full_Length_Mirrror = "Yes"; else vendorVenue.Full_Length_Mirrror = "No";
+                if (selectedamenitieslist.Contains("Jacuzzi")) vendorVenue.Jacuzzi = "Yes"; else vendorVenue.Jacuzzi = "No";
+                if (selectedamenitieslist.Contains("Sofa Set")) vendorVenue.Sofa_Set = "Yes"; else vendorVenue.Sofa_Set = "No";
+                if (selectedamenitieslist.Contains("Coffee Tea Maker")) vendorVenue.Coffee_Tea_Maker = "Yes"; else vendorVenue.Coffee_Tea_Maker = "No";
+                if (selectedamenitieslist.Contains("Kindle")) vendorVenue.Kindle = "Yes"; else vendorVenue.Kindle = "No";
+                if (selectedamenitieslist.Contains("Netflix")) vendorVenue.Netflix = "Yes"; else vendorVenue.Netflix = "No";
+                if (selectedamenitieslist.Contains("Kitchen")) vendorVenue.Kitchen = "Yes"; else vendorVenue.Kitchen = "No";
+                if (selectedamenitieslist.Contains("Bath Tub")) vendorVenue.Bath_Tub = "Yes"; else vendorVenue.Bath_Tub = "No";
+                if (selectedamenitieslist.Contains("Electricity")) vendorVenue.Electricity = "Yes"; else vendorVenue.AC = "No";
+                if (selectedamenitieslist.Contains("Wellness Center")) vendorVenue.Wellness_Center = "Yes"; else vendorVenue.Wellness_Center = "No";
+                if (selectedamenitieslist.Contains("Spa")) vendorVenue.Spa = "Yes"; else vendorVenue.Spa = "No";
+                if (selectedamenitieslist.Contains("HDTV")) vendorVenue.HDTV = "Yes"; else vendorVenue.HDTV = "No";
+                if (selectedamenitieslist.Contains("Pet Friendly")) vendorVenue.Pet_Friendly = "Yes"; else vendorVenue.Pet_Friendly = "No";
+                if (selectedamenitieslist.Contains("Gym")) vendorVenue.Gym = "Yes"; else vendorVenue.Gym = "No";
+                if (selectedamenitieslist.Contains("In-house Restaurant")) vendorVenue.In_house_Restaurant = "Yes"; else vendorVenue.In_house_Restaurant = "No";
+                if (selectedamenitieslist.Contains("Hair Dryer")) vendorVenue.Hair_Dryer = "Yes"; else vendorVenue.Hair_Dryer = "No";
+                if (selectedamenitieslist.Contains("Mini Fridge")) vendorVenue.Mini_Fridge = "Yes"; else vendorVenue.Mini_Fridge = "No";
+                if (selectedamenitieslist.Contains("In-Room Safe")) vendorVenue.In_Room_Safe = "Yes"; else vendorVenue.In_Room_Safe = "No";
+                if (selectedamenitieslist.Contains("Room Heater")) vendorVenue.Room_Heater = "Yes"; else vendorVenue.Room_Heater = "No";
+                if (selectedamenitieslist.Contains("Wheelchair Accessible")) vendorVenue.Wheelchair_Accessible = "Yes"; else vendorVenue.Wheelchair_Accessible = "No";
+                if (selectedamenitieslist.Contains("Power Backup")) vendorVenue.Power_Backup = "Yes"; else vendorVenue.Power_Backup = "No";
+                if (selectedamenitieslist.Contains("Dining Area")) vendorVenue.Dining_Area = "Yes"; else vendorVenue.Dining_Area = "No";
+                if (selectedamenitieslist.Contains("Bar")) vendorVenue.Bar = "Yes"; else vendorVenue.Bar = "No";
+                if (selectedamenitieslist.Contains("Conference Room")) vendorVenue.Conference_Room = "Yes"; else vendorVenue.Conference_Room = "No";
+                if (selectedamenitieslist.Contains("Swimming Pool")) vendorVenue.Swimming_Pool = "Yes"; else vendorVenue.AC = "No";
+                if (selectedamenitieslist.Contains("CCTV Cameras")) vendorVenue.CCTV_Cameras = "Yes"; else vendorVenue.CCTV_Cameras = "No";
+                if (selectedamenitieslist.Contains("Laundry")) vendorVenue.Laundry = "Yes"; else vendorVenue.Laundry = "No";
+                if (selectedamenitieslist.Contains("Banquet Hall")) vendorVenue.Banquet_Hall = "Yes"; else vendorVenue.Banquet_Hall = "No";
+                if (selectedamenitieslist.Contains("Lift/Elevator")) vendorVenue.Lift_or_Elevator = "Yes"; else vendorVenue.Lift_or_Elevator = "No";
+                if (selectedamenitieslist.Contains("Card Payment")) vendorVenue.Card_Payment = "Yes"; else vendorVenue.Card_Payment = "No";
+                if (selectedamenitieslist.Contains("Parking Facility")) vendorVenue.Parking_Facility = "Yes"; else vendorVenue.Parking_Facility = "No";
+                if (selectedamenitieslist.Contains("Geyser")) vendorVenue.Geyser = "Yes"; else vendorVenue.AC = "No";
+                if (selectedamenitieslist.Contains("Complimentary Breakfast")) vendorVenue.Complimentary_Breakfast = "Yes"; else vendorVenue.Complimentary_Breakfast = "No";
+                if (selectedamenitieslist.Contains("TV")) vendorVenue.TV = "Yes"; else vendorVenue.TV = "No";
+                if (selectedamenitieslist.Contains("AC")) vendorVenue.AC = "Yes"; else vendorVenue.AC = "No";
+
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(vid), long.Parse(vsid));
+                //if (vendorVenue.Id != 0) count = vendorVenue.Id;
+            }
+
         }
     }
+}
