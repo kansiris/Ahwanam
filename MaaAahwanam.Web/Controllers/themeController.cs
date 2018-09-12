@@ -7,14 +7,13 @@ using MaaAahwanam.Utility;
 
 namespace MaaAahwanam.Web.Controllers
 {
-    public class PartyController : Controller
+    public class themeController : Controller
     {
-        // GET: Party
+        // GET: theme
         public ActionResult Index()
         {
             return View();
         }
-
         public JsonResult SendEmail(string fname, string lname, string emailid, string phoneno, string eventdate)
         {
             string ip = HttpContext.Request.UserHostAddress;
