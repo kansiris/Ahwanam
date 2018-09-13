@@ -39,6 +39,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.venues = venues;
                 Addservices(vsid);
                 ViewBag.enable = c;
+                ViewBag.vsid = vsid;
                 if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
             }
             else
@@ -278,19 +279,8 @@ namespace MaaAahwanam.Web.Controllers
                 m.Sufficient_Washroom
                 #endregion
             }).ToList();
-            // var availableamenities ="";
-            //foreach (var item in allamenities)
-            //{
             string value = string.Join(",", allamenities).Replace("{", "").Replace("}", "");
             var availableamenities = value.Split(',');
-            //value = "";
-            //for (int i = 0; i < availableamenities.Length; i++)
-            //{
-            //    if (availableamenities[i].Split('=')[1].Trim() == "Yes")
-            //        value = value + "," + availableamenities[i].Split('=')[0].Trim();
-            //}
-            //famenities.Add(value.TrimStart(','));
-            //}
             ViewBag.amenities = availableamenities;
         }
     }
