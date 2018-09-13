@@ -22,18 +22,12 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
 
         // GET: VDashboard
-        public ActionResult Index()
+        public ActionResult Index(string c, string vsid)
         {
-
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-
-
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
                 string id = user.UserId.ToString(); ;
-
-
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 string vid = vendorMaster.Id.ToString();
@@ -42,20 +36,16 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
-
                 ViewBag.venues = venues;
-
-
+                Addservices(vsid);
+                ViewBag.enable = c;
+                if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
             }
-
             else
             {
                 return RedirectToAction("Index", "NUserRegistration");
             }
             return View();
-
-
-
         }
 
         public JsonResult UploadProfilePic(HttpPostedFileBase helpSectionImages, string email)
@@ -84,11 +74,6 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-
-
-
-
-
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string uid = user.UserId.ToString();
 
@@ -107,15 +92,11 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.photography = photography;
                 ViewBag.decorators = decorators;
                 ViewBag.others = others;
-
-
-
             }
             else
             {
                 //ViewBag.id = ks;
                 ViewBag.Vendor = "";
-
                 ViewBag.profilepic = "";
             }
             return PartialView("sidebar");
@@ -145,9 +126,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Addservices(string vsid)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
             string uid = user.UserId.ToString();
-
             string email = userLoginDetailsService.Getusername(long.Parse(uid));
             vendorMaster = vendorMasterService.GetVendorByEmail(email);
             string vid = vendorMaster.Id.ToString();
@@ -157,7 +136,7 @@ namespace MaaAahwanam.Web.Controllers
             VendorVenueService vendorVenueService = new VendorVenueService();
             if (vsid == null)
             {
-                ViewBag.ks = "ks"; ViewBag.service = ""; ViewBag.images = "";
+                ViewBag.ks = "ks"; ViewBag.service = new List<VendorVenue>(); ViewBag.images = new List<VendorImage>();
             }
             else
             {
@@ -168,11 +147,11 @@ namespace MaaAahwanam.Web.Controllers
                 var pkgs = vendorProductsService.getvendorpkgs(vid);
                 ViewBag.pacakagerecord = pkgs;
             }
-           
+
             return PartialView("Addservices");
         }
 
-        public void UpdateAmenities(string selectedamenities,string vsid )
+        public JsonResult UpdateAmenities(string selectedamenities, string vsid)
         {
             //long count = 0;
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -245,7 +224,74 @@ namespace MaaAahwanam.Web.Controllers
                 vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(vid), long.Parse(vsid));
                 //if (vendorVenue.Id != 0) count = vendorVenue.Id;
             }
+            return Json("success");
+        }
 
+        public void Amenities(List<VendorVenue> venues)
+        {
+            List<VendorVenue> amenities = venues;
+            List<string> famenities = new List<string>();
+            var allamenities = amenities.Select(m => new
+            {
+                #region Venue amenities
+                m.AC,
+                m.TV,
+                m.Complimentary_Breakfast,
+                m.Geyser,
+                m.Parking_Facility,
+                m.Card_Payment,
+                m.Lift_or_Elevator,
+                m.Banquet_Hall,
+                m.Laundry,
+                m.CCTV_Cameras,
+                m.Swimming_Pool,
+                m.Conference_Room,
+                m.Bar,
+                m.Dining_Area,
+                m.Power_Backup,
+                m.Wheelchair_Accessible,
+                m.Room_Heater,
+                m.In_Room_Safe,
+                m.Mini_Fridge,
+                m.In_house_Restaurant,
+                m.Gym,
+                m.Hair_Dryer,
+                m.Pet_Friendly,
+                m.HDTV,
+                m.Spa,
+                m.Wellness_Center,
+                m.Electricity,
+                m.Bath_Tub,
+                m.Kitchen,
+                m.Netflix,
+                m.Kindle,
+                m.Coffee_Tea_Maker,
+                m.Sofa_Set,
+                m.Jacuzzi,
+                m.Full_Length_Mirrror,
+                m.Balcony,
+                m.King_Bed,
+                m.Queen_Bed,
+                m.Single_Bed,
+                m.Intercom,
+                m.Sufficient_Room_Size,
+                m.Sufficient_Washroom
+                #endregion
+            }).ToList();
+            // var availableamenities ="";
+            //foreach (var item in allamenities)
+            //{
+            string value = string.Join(",", allamenities).Replace("{", "").Replace("}", "");
+            var availableamenities = value.Split(',');
+            //value = "";
+            //for (int i = 0; i < availableamenities.Length; i++)
+            //{
+            //    if (availableamenities[i].Split('=')[1].Trim() == "Yes")
+            //        value = value + "," + availableamenities[i].Split('=')[0].Trim();
+            //}
+            //famenities.Add(value.TrimStart(','));
+            //}
+            ViewBag.amenities = availableamenities;
         }
     }
 }
