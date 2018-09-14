@@ -43,6 +43,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.enable = c;
                 ViewBag.vsid = vsid;
                 if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
+                ViewBag.ksimages = vendorImageService.GetVendorAllImages(long.Parse(id));
             }
             else
             {
@@ -427,7 +428,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult UploadImages(HttpPostedFileBase file, string vsid)
+        public JsonResult UploadImages(HttpPostedFileBase helpSectionImages, string vsid)
         {
             string fileName = string.Empty;
             string filename = string.Empty;
@@ -442,11 +443,20 @@ namespace MaaAahwanam.Web.Controllers
             vendorImage.VendorId = long.Parse(vid);
             VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(vid), long.Parse(vsid)); // Retrieving Particular Vendor Record
             var type = vendorVenue.VenueType;
-            if (file != null)
+
+           //string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+           // filename = email + path;
+            //fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
+            if (System.IO.File.Exists(fileName) == true)
+                System.IO.File.Delete(fileName);
+
+            helpSectionImages.SaveAs(fileName);
+            //userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
+            if (helpSectionImages != null)
             {
-                string path = System.IO.Path.GetExtension(file.FileName);
-                if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
-                    return Json("File");
+                string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+                //if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
+                //    return Json("File");
                 int imageno = 0;
                 int imagecount = 8;
                 var list = vendorImageService.GetImages(long.Parse(vsid), long.Parse(vid));
@@ -479,11 +489,12 @@ namespace MaaAahwanam.Web.Controllers
                             file1.SaveAs(fileName);
                             vendorImage.ImageName = filename;
                             vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                        }
+                    }
+                }
+
             }
-        }
-    }
-}
-            return Json(filename, JsonRequestBehavior.AllowGet);
+                return Json(filename, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateImageInfo(string ks, string vid, string description)
