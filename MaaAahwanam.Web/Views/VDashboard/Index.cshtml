@@ -1237,66 +1237,23 @@
                                         </table>
                                     </div>
                                     <table id="allorders" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
+                                        <tr>
+                                            <th>OrderID</th>
+                                            <th>CustomerDetails</th>
+                                            <th>OrderDate</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        <tr><td>1023</td><td>ramraj</td><td>08/10/2018</td><td>Inactive</td><td><button class="readmore" id="acc1"  onclick="show_hide_row('hidden_row1');">View Details</button> <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Write Message</button></td></tr>
+                                        <tr id="hidden_row1" class="hidden_row">
+                                            <td colspan=4>Event Type: wedding,Time slot: morning,contact number:8889663362</td>
+                                        </tr>
+                                        <tr><td>Aarti</td><td>29</td><td>40000</td><td>Web Designer</td><td><button class="readmore" id="acc1" onclick="show_hide_row('hidden_row2');">View Details</button> <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Write Message</button></td></tr>
+                                        <tr id="hidden_row2" class="hidden_row">
+                                            <td colspan=4>Aarti is 29 years old and she is a web designer he earns 40000 per month</td>
+                                        </tr>
                                     </table>
+
                                 </div>
                             </div>
                         }
@@ -1312,6 +1269,26 @@
         <input type="hidden" id="selectedamenities" />
         <input type="hidden" id="vsid" value="@ViewBag.vsid" />
         <div id="toTop"></div><!-- Back to top button -->
+    </div>
+    <div class="modal fade" id="querymodal" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        @*@using (Html.BeginForm("submitquery", "createvendor", FormMethod.Post))
+            {*@
+        <div class="modal-content">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+            <div class="modal-body">
+                @*<input id="Text1" type="text" name="txtOne"rows="5"  placeholder="Query.....?" style="width:100%;background-color:#eeeeee" />*@
+                <textarea rows="5" name="txtOne" id="txtone" type="text" placeholder="Query.....?" style="width:100%;background-color:#eeeeee"></textarea>
+            </div>
+            <div class="modal-footer" align="center">
+
+                <button type="submit" id="btnSubmitquery" class="btn text-muted text-center btn-success" value="submit">Submit Query</button>
+
+                <button type="button" name="Command" class="btn text-muted text-center btn-danger" id="cancelquery" value="cancel">Cancel</button>
+            </div>
+        </div>
+        @*}*@
+    </div>
     </div>
     <!-- COMMON SCRIPTS -->
     <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
@@ -1642,6 +1619,15 @@
                 });
             }
         });
+    </script>
+    <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+    @*<link rel="stylesheet" type="text/css" href="table_style.css">
+    <script type="text/javascript" src="jquery.js"></script>*@
+    <script type="text/javascript">
+    function show_hide_row(row)
+    {
+      $("#"+row).toggle();
+    }
     </script>
 </body>
 </html>
