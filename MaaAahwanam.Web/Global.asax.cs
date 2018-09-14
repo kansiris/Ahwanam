@@ -102,7 +102,7 @@ namespace MaaAahwanam.Web
 
                 //  Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
                 // return Content("<script language='javascript' type='text/javascript'>alert('User Record Not Available');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-                Response.Write("<script language='javascript'>window.alert('Some thing went wrong please try again after some time click OK to continue!!!');window.location='/nhomepage/index';</script>");
+                Response.Write("<script language='javascript'>window.alert('Some thing went wrong please try again after some time click OK to continue!!!');window.location='/wedding';</script>");
 
 
             }
