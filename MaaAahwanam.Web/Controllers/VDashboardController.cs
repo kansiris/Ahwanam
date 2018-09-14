@@ -7,6 +7,7 @@ using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Utility;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -332,5 +333,27 @@ namespace MaaAahwanam.Web.Controllers
             var availableamenities = value.Split(',');
             ViewBag.amenities = availableamenities;
         }
+      //public JsonResult messagesending(string msg)
+      //  {
+      //      if(System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+      //      {
+      //          var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+      //          string uid = user.UserId.ToString();
+      //          string email = userLoginDetailsService.Getusername(long.Parse(uid));
+      //          vendorMaster = vendorMasterService.GetVendorByEmail(email);
+      //          string vid = vendorMaster.Id.ToString();
+      //          string 
+      //          FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+      //          string readFile = File.OpenText().ReadToEnd();
+                
+                
+      //          string txtmessage = readFile;//readFile + body;
+      //          string subj = "Get Quote From Cart Page";
+      //          EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+      //          emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+
+      //      }
+
+      //  }
     }
 }
