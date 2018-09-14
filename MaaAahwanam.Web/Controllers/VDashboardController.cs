@@ -37,6 +37,7 @@ namespace MaaAahwanam.Web.Controllers
                 var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id));
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
+                ViewBag.order = orders;
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 ViewBag.venues = venues;
                 Addservices(vsid);
@@ -541,6 +542,33 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
+
+      //  }
+      //public ActionResult Sendmsg(string msg)
+      //  {
+      //      if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+      //      {
+
+      //          if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+      //          {
+      //              var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+      //              string uid = user.UserId.ToString();
+      //              string email = userLoginDetailsService.Getusername(long.Parse(uid));
+      //              vendorMaster = vendorMasterService.GetVendorByEmail(email);
+      //              string vid = vendorMaster.Id.ToString();
+
+      //              FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+      //              string readFile = File.OpenText().ReadToEnd();
+
+      //              string txtmessage = readFile;//readFile + body;
+      //              string subj = "Get Quote From Cart Page";
+      //              EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+      //              //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+      //          }
+      //          return View();
+      //      }
+
+       // }
 
     }
 }
