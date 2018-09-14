@@ -7,19 +7,21 @@ using MaaAahwanam.Service;
 using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Utility;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
     public class VDashboardController : Controller
     {
         Vendormaster vendorMaster = new Vendormaster();
-
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         OrderService orderService = new OrderService();
         VendorMasterService vendorMasterService = new VendorMasterService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorImageService vendorImageService = new VendorImageService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        const string imagepath = @"/vendorimages/";
 
         // GET: VDashboard
         public ActionResult Index(string c, string vsid)
@@ -35,12 +37,14 @@ namespace MaaAahwanam.Web.Controllers
                 var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id));
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
+                ViewBag.order = orders;
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 ViewBag.venues = venues;
                 Addservices(vsid);
                 ViewBag.enable = c;
                 ViewBag.vsid = vsid;
                 if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
+                ViewBag.ksimages = vendorImageService.GetVendorAllImages(long.Parse(id));
             }
             else
             {
@@ -135,7 +139,7 @@ namespace MaaAahwanam.Web.Controllers
             //var venues = (vendorVenueSignUpService.GetVendorVenue(Convert.ToInt64(vendorMaster.Id))).Where(p => p.Id == Convert.ToInt64(vsid)).ToList();
             //ViewBag.subvenues = venues;
             VendorVenueService vendorVenueService = new VendorVenueService();
-            if (vsid == null)
+            if (vsid == null || vsid == "undefined")
             {
                 ViewBag.ks = "ks"; ViewBag.service = new List<VendorVenue>(); ViewBag.images = new List<VendorImage>();
             }
@@ -234,9 +238,6 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (command == "three")
             {
-
-               
-              
                 vendorVenue.Dimentions = Dimentions;
                 vendorVenue.Minimumseatingcapacity = Convert.ToInt16(Minimumseatingcapacity);
                 vendorVenue.Maximumcapacity = Convert.ToInt16(Maximumcapacity);
@@ -332,5 +333,242 @@ namespace MaaAahwanam.Web.Controllers
             var availableamenities = value.Split(',');
             ViewBag.amenities = availableamenities;
         }
+        public JsonResult addnewservice(string serviceselection, string subcategory)
+        {
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+            Vendormaster vendormaster = new Vendormaster();
+            var msg = "";
+
+            if (subcategory != "Select Sub-Category")
+            {
+
+                long count = 0;
+                count = addnewservice1(serviceselection, subcategory, long.Parse(vid));
+
+                if (count > 0)
+
+
+                    msg = "Service Added Successfully";
+
+
+
+                else if (serviceselection == "Select Service Type")
+                {
+                    msg = "Failed To Add Sevice";
+
+                }
+
+
+                else
+                    msg = "Failed To Add Sevice";
+            }
+            return Json(msg,JsonRequestBehavior.AllowGet);
+        }
+
+
+        public long addnewservice1(string category, string subcategory, long id)
+        {
+            long count = 0;
+            if (category == "Venue")
+            {
+                VendorVenue vendorVenue = new VendorVenue();
+                vendorVenue.VendorMasterId = id;
+                vendorVenue.VenueType = subcategory;
+                vendorVenue = vendorVenueSignUpService.AddVendorVenue(vendorVenue);
+                if (vendorVenue.Id != 0) count = vendorVenue.Id;
+            }
+            else if (category == "Catering")
+            {
+                VendorsCatering vendorsCatering = new VendorsCatering();
+                vendorsCatering.VendorMasterId = id;
+                vendorsCatering.CuisineType = subcategory;
+                vendorsCatering = vendorVenueSignUpService.AddVendorCatering(vendorsCatering);
+                if (vendorsCatering.Id != 0) count = vendorsCatering.Id;
+            }
+            else if (category == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                vendorsPhotography.VendorMasterId = id;
+                vendorsPhotography.PhotographyType = subcategory;
+                vendorsPhotography = vendorVenueSignUpService.AddVendorPhotography(vendorsPhotography);
+                if (vendorsPhotography.Id != 0) count = vendorsPhotography.Id;
+            }
+            else if (category == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                vendorsDecorator.VendorMasterId = id;
+                vendorsDecorator.DecorationType = subcategory;
+                vendorsDecorator = vendorVenueSignUpService.AddVendorDecorator(vendorsDecorator);
+                if (vendorsDecorator.Id != 0) count = vendorsDecorator.Id;
+            }
+            //if (category == "EventManagement")
+            //{
+            //    VendorsEventOrganiser vendorsEventOrganiser = new VendorsEventOrganiser();
+            //    vendorsEventOrganiser.VendorMasterId = id;
+            //    vendorsEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorsEventOrganiser);
+            //    if (vendorsEventOrganiser.Id != 0) count = vendorsEventOrganiser.Id;
+            //}
+            else if (category == "Other")
+            {
+                VendorsOther vendorsOther = new VendorsOther();
+                vendorsOther.VendorMasterId = id;
+                vendorsOther.MinOrder = "0";
+                vendorsOther.MaxOrder = "0";
+                vendorsOther.Status = "InActive";
+                vendorsOther.UpdatedBy = 2;
+                vendorsOther.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther.type = subcategory;
+                vendorsOther = vendorVenueSignUpService.AddVendorOther(vendorsOther);
+                if (vendorsOther.Id != 0) count = vendorsOther.Id;
+            }
+            return count;
+        }
+
+        [HttpPost]
+        public JsonResult UploadImages(HttpPostedFileBase helpSectionImages, string vsid)
+        {
+            string fileName = string.Empty;
+            string filename = string.Empty;
+            VendorImage vendorImage = new VendorImage();
+            Vendormaster vendorMaster = new Vendormaster();
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+            vendorMaster.Id = long.Parse(vid);
+            vendorImage.VendorId = long.Parse(vid);
+            VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(vid), long.Parse(vsid)); // Retrieving Particular Vendor Record
+            var type = vendorVenue.VenueType;
+
+           //string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+           // filename = email + path;
+            //fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
+            if (System.IO.File.Exists(fileName) == true)
+                System.IO.File.Delete(fileName);
+
+            helpSectionImages.SaveAs(fileName);
+            //userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
+            if (helpSectionImages != null)
+            {
+                string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+                //if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
+                //    return Json("File");
+                int imageno = 0;
+                int imagecount = 8;
+                var list = vendorImageService.GetImages(long.Parse(vsid), long.Parse(vid));
+                if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
+                {
+                    //getting max imageno
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        string x = list[i].ImageName.ToString();
+                        string[] y = x.Split('_', '.');
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
+                    }
+
+                    //Uploading images in db & folder
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        int j = imageno + i + 1;
+                        var file1 = Request.Files[i];
+                        if (file1 != null && file1.ContentLength > 0)
+                        {
+                            filename = type + "_" + vsid + "_" + vid + "_" + j + path;
+                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                            file1.SaveAs(fileName);
+                            vendorImage.ImageName = filename;
+                            vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                        }
+                    }
+                }
+
+            }
+                return Json(filename, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateImageInfo(string ks, string vid, string description)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                VendorImage vendorImage = new VendorImage();
+                string fileName = string.Empty;
+                string imgdesc = description;
+                Vendormaster vendorMaster = new Vendormaster();
+                string strReq = "";
+                encptdecpt encript = new encptdecpt();
+                strReq = encript.Decrypt(ks);
+                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
+                string[] arrMsgs = strReq.Split('&');
+                string[] arrIndMsg;
+                string id = "";
+                arrIndMsg = arrMsgs[0].Split('='); //Get the id
+                id = arrIndMsg[1].ToString().Trim();
+                ViewBag.id = ks;
+                vendorMaster.Id = long.Parse(id);
+                vendorImage.VendorId = long.Parse(vid);
+                string status = "";
+                var images = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
+                if (images.Count != 0)
+                {
+                    //Updating images info
+                    for (int i = 0; i < images.Count; i++)
+                    {
+                        vendorImage.ImageType = images[i].ImageType;
+                        vendorImage.Imagedescription = imgdesc.Split(',')[i];
+                        vendorImage.ImageName = images[i].ImageName;
+                        vendorImage.ImageId = images[i].ImageId;
+                        vendorImage.VendorId = images[i].VendorId;
+                        vendorImage.VendorMasterId = images[i].VendorMasterId;
+                        vendorImage.UpdatedBy = images[i].UpdatedBy;
+                        vendorImage.UpdatedDate = images[i].UpdatedDate;
+                        vendorImage.Status = images[i].Status;
+                        vendorImage.ImageLimit = "6";
+                        status = vendorImageService.UpdateVendorImage(vendorImage, long.Parse(id), long.Parse(vid));
+                    }
+                }
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+
+      //  }
+      //public ActionResult Sendmsg(string msg)
+      //  {
+      //      if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+      //      {
+
+      //          if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+      //          {
+      //              var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+      //              string uid = user.UserId.ToString();
+      //              string email = userLoginDetailsService.Getusername(long.Parse(uid));
+      //              vendorMaster = vendorMasterService.GetVendorByEmail(email);
+      //              string vid = vendorMaster.Id.ToString();
+
+      //              FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+      //              string readFile = File.OpenText().ReadToEnd();
+
+      //              string txtmessage = readFile;//readFile + body;
+      //              string subj = "Get Quote From Cart Page";
+      //              EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+      //              //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+      //          }
+      //          return View();
+      //      }
+
+       // }
+
     }
 }
