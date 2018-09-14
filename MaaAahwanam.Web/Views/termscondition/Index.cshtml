@@ -1,0 +1,196 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
+    <meta name="author" content="Ansonika">
+    <title>:: Ahwanam ::</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
+    @*<img src="~/newdesignstyles/images/favicon.ico" />*@
+    <link rel="apple-touch-icon" type="image/x-icon" href="~/newdesignstyles/images/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="~/newdesignstyles/images/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="~/newdesignstyles/images/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="~/newdesignstyles/images/apple-touch-icon-144x144-precomposed.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- semantic -->
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
+
+    <!-- BASE CSS -->
+    <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/newdesignstyles/css/style.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
+    @*<link href="http://design.maa-aahwanam.com/panagea/css/icon_fonts/css/all_icons.min.css" rel="stylesheet">*@
+
+    <!-- SPECIFIC CSS -->
+    <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+    @*<link href="#" id="colors" rel="stylesheet">*@
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <style>
+        .ks {
+            padding: 97px;
+            padding-top: 144px;
+        }
+    </style>
+    @using System.Globalization
+</head>
+<body>
+    <div id="page">
+        <header class="header menu_fixed">
+            <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+            <div id="logo">
+                <a href="/">
+                    <label style="float:right; font-size:40px;padding-left:16px">AHWANAM</label>  <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky" />
+                    <img src="~/newdesignstyles/img/logo.png" width="70" height="36" data-retina="true" alt="" class="logo_normal" style="width: 60px;" />
+                </a>
+            </div>
+            @*<ul id="top_menu">
+                    <li><a href="#" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
+                    <li><a href="" id="sign-in" class="login" title="Sign In">Sign In</a></li>
+                    <li><a href="#" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
+                </ul>*@
+            <!-- /top_menu -->
+            <a href="#menu" class="btn_mobile">
+                <div class="hamburger hamburger--spin" id="hamburger">
+                    <div class="hamburger-box">
+                        <div class="hamburger-inner"></div>
+                    </div>
+                </div>
+            </a>
+            <nav id="menu" class="main-menu">
+                @*@{Html.RenderAction("ItemsCartViewBindingLayout", "Home");}*@
+
+                <ul>
+                    <li>
+                        @using MaaAahwanam.Web.Custom
+                        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                            var user = (CustomPrincipal)HttpContext.Current.User;
+                            if (user.UserType == "Admin")
+                            {
+                                Response.Redirect("/Admin/Login");
+                            }
+                            if (user.UserType == "Vendor")
+                            {
+                                //Response.Redirect("/VDashboard/changeid?id=" + user.UserId + "");
+                                Response.Redirect("/VDashboard/Index");
+                            }
+                            if (user.UserType == "User")
+                            {
+                                <span><a id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
+                                <ul>
+                                    <li><a href="/Home/SignOut">Log Out</a></li>
+                                </ul>
+                            }
+                        }
+
+                    </li>
+                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <span> <a class="login" style="font-size:16px; font-weight: 700" href="/cart/Index">Cart(@ViewBag.cartCount)</a> </span>
+                        </li>
+                    }
+                    <li>
+                        <a href="#0" class="btn_5 add_top_30" style="font-weight: 700">Call: +91 7032199007</a>
+                    </li>
+                    <li><span><img src="http://design.maa-aahwanam.com/panagea/india.png" /></span>
+                </ul>
+            </nav>
+
+        </header>
+        <!-- /header -->
+        <main style="background:white">
+
+            <div class="ks">
+                <h1>
+                    <b>
+Terms And Conditions                    </b>
+                </h1>
+                
+               <p> These Terms of Use (“Agreement”) sets forth legally binding terms and conditions and the nature of services offered by www.Ahwanam.com . The website is owned and operated by                                     M/S Shree Impex, a propreitorship firm incorporated under the provisions of the Companies Act, 1956 and has its registered office at H.No. 8-2-120/112/B/5&6, 3rd floor, BBR Forum, Road # 2, Banjara Hills (hereinafter referred to as “Company”). The use of this Website (and any other feature, content or application offered from time to time by the Website) is subject at all times to these Terms of Use (and may be modified by us from time to time) and all applicable laws, rules and regulations. We recommend that before accessing and using Ahwanam.Com, you must read and agree to these Terms of Use.</p>
+               
+                <h1>The Website is owned and operated by Ahwanam.com</h1>
+               <p> You acknowledge that the Website serves as a venue for the online distribution and publication of user submitted information between Service Professionals and Service Users, and, by using, visiting, registering for, and/or otherwise participating in this Website, including the Services presented, promoted, and displayed on the Website, and by clicking on "I have read and agree to the terms of use,</p>
+<p>                (1)  you are either a Service Professional or a prospective Service User,</p>
+<p>                (2)  you have the authority to enter into these Terms of Use,</p>
+<p>                (3)  you authorize the transfer of payment for Services requested through the use of the Website.</p>
+<p>                (4) you agree to be bound by all terms and conditions of these Terms of Use and any other documents incorporated by reference herein. If you do not so agree to the foregoing, you should not click to affirm your acceptance thereof, in which case you are prohibited from accessing or using the Website.</p>
+               
+<h1>                MODIFICATIONS TO TERMS</h1>
+             <p>   1. We may modify this Privacy Policy at any time, and we will post any new versions on this page. If we make any material changes in the way we use your personal information, we will notify you by sending an e-mail to the last e-mail address you provided to us and/or by prominently posting notice of the changes on our website.</p>
+ <p>               2. Please note that at all times you are responsible for updating your personal information to provide us with your most current e-mail address. In the event that the last e-mail you have provided us is not valid, or for any reason is not capable of delivering to you the notice described above, our dispatch of the e-mail containing such notice will nonetheless constitute effective notice of the changes described in the notice.</p>
+<p>                3. Your use of the Website following any amendment of the Terms of Use will signify your assent to and acceptance of any revised Terms of Use. If you do not agree to abide by these or any future Terms of Use, please do not use or access the Website</p>
+                <h1>   USE OF THE WEBSITE</h1>
+                <p>
+                1. All registration information submitted by you is truthful and accurate with agree to maintain the accuracy of the information provided by you</p><p>
+                2. The Website facilitates your sharing of personal information with others in order to negotiate, provide, and use the Services.</p><p>
+                3.  If you agree to contract for a service with another Registered User, you may need to reveal your name, email, phone number, or personal address to that individual so that the service may be performed.</p>
+                <p>4. Please note that at all times you are responsible for updating your personal information to provide us.</p>
+<p>                5. you must notify us prior to the effective date of the changes that you wish to deactivate your account with us</p>
+                <p>   6. All of this information may be used for a variety of purposes, including, for example, to gather aggregated demographic or statistical information.</p>
+                <h1>
+                    COLLECTION OF INFORMATION</h1>
+                  <p>  1. To provide our Services to you, including registering you for our Services, verifying your identity and authority to use our Services, and to otherwise enable you to use our Website and our Services.</p>
+<p>                    2. We also collect all your data of the events of your past records todisplay in our website for high end visibility to our customer.</p>
+<p>                    3. To contact you via email, telephone, facsimile or mail, or, where requested, by text message, to deliver certain services or information you have requested.</p>
+                <p>       4. We may use your demographic information (i.e., age, postal code, residential and commercial addresses, and other various data) to more effectively facilitate the promotion of goods and services to appropriate target audiences and for other research and analytical purposes</p>
+                <h1>
+                    TRANSFER OF INFORMATIONS</h1>
+                   <p> 1. We may distribute your submissions to third parties, as permitted pursuant to our Terms of Service</p>
+<p>                    2. We may share your  information with third parties to provide you with services that we offer through     Ahwanam to conduct quality assurance Services.</p>
+<p>                    3.  We maintain a presence on several social networking and blogging platforms, such as Facebook, Instagram, Twitter, Snapchat, WordPress, Pinterest and Google Plus.</p>
+<p>                    4. We may make available mobile applications (or "apps") that you are able to download and use from your mobile device. Depending on the nature and functionality of the app, we may collect Personal Information and non-personally identifiable usage information through the app, including from your contacts, camera, photo gallery and calendar on your mobile device to which you grant us access.</p>
+                <h1>
+                    CHANGE IN POLICIES</h1>
+
+                    <p>1.  Modification of the policies will be changes with the notification date and time</p>
+<p>                    2. we will notify you by sending an e-mail to the last e-mail address you provided to us and/or by prominently posting notice of the changes on our website</p>
+<p>                    3. If you do not wish to permit changes in our use of your personal information, you must notify us prior to the effective date of the changes that you wish to deactivate your account with us .</p>
+                <h1>
+                    INVESTMENT SHARING</h1>
+                <p>
+                    1. Ahwanam will take have the commission of 15% on the total billing of the event given.</p>
+<p>                    2. All payments will be taken by Ahwanam from the clients and would be released on timely basis.</p>
+<p>                    3. Ahwanam will pay 50% before the event and rest will be paid after the event gets over.</p>
+<p>                    4. All transactions will be done by the payment gateway to your given account number.</p>
+
+</div>
+        </main>
+    </div>
+    <footer style="background-color:lightgrey">
+        <div class="fdiv"></div>
+        <div align="center" class="footerdiv">
+            <a href="www.ahwanam.com/privacypolicy">Privacy Policy</a> | <a href="www.ahwanam.com/termscondition">Terms & Conditions</a>
+            <br />
+            <a>Copyright 2018, All rights reserved.</a>
+        </div>
+    </footer>
+    <div id="toTop"></div><!-- Back to top button -->
+    <!-- COMMON SCRIPTS -->
+    @*<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>*@
+    <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
+    <script src="~/newdesignstyles/Scripts/main.js"></script>
+    <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
+
+    <!-- DATEPICKER  -->
+    <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
+    @*<script src="~/newdesign/js/daterangepicker.js"></script>*@
+    @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
+
+</body>
+</html>

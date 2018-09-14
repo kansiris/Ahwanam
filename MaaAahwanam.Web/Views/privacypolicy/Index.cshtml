@@ -1,0 +1,164 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
+    <meta name="author" content="Ansonika">
+    <title>:: Ahwanam ::</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
+    @*<img src="~/newdesignstyles/images/favicon.ico" />*@
+    <link rel="apple-touch-icon" type="image/x-icon" href="~/newdesignstyles/images/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="~/newdesignstyles/images/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="~/newdesignstyles/images/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="~/newdesignstyles/images/apple-touch-icon-144x144-precomposed.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- semantic -->
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
+
+    <!-- BASE CSS -->
+    <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/newdesignstyles/css/style.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
+    @*<link href="http://design.maa-aahwanam.com/panagea/css/icon_fonts/css/all_icons.min.css" rel="stylesheet">*@
+
+    <!-- SPECIFIC CSS -->
+    <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+    @*<link href="#" id="colors" rel="stylesheet">*@
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <style>
+        .ks {
+            padding: 97px;
+            padding-top: 144px;
+        }
+    </style>
+    @using System.Globalization
+</head>
+<body>
+    <div id="page">
+        <header class="header menu_fixed">
+            <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+            <div id="logo">
+                <a href="/">
+                    <label style="float:right; font-size:40px;padding-left:16px">AHWANAM</label>  <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky"/>
+                    <img src="~/newdesignstyles/img/logo.png" width="70" height="36" data-retina="true" alt="" class="logo_normal"style="width: 60px;"/>
+                </a>
+            </div>
+            @*<ul id="top_menu">
+                    <li><a href="#" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
+                    <li><a href="" id="sign-in" class="login" title="Sign In">Sign In</a></li>
+                    <li><a href="#" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
+                </ul>*@
+            <!-- /top_menu -->
+            <a href="#menu" class="btn_mobile">
+                <div class="hamburger hamburger--spin" id="hamburger">
+                    <div class="hamburger-box">
+                        <div class="hamburger-inner"></div>
+                    </div>
+                </div>
+            </a>
+            <nav id="menu" class="main-menu">
+                @*@{Html.RenderAction("ItemsCartViewBindingLayout", "Home");}*@
+
+                <ul>
+                    <li>
+                        @using MaaAahwanam.Web.Custom
+                        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                        {
+                            var user = (CustomPrincipal)HttpContext.Current.User;
+                            if (user.UserType == "Admin")
+                            {
+                                Response.Redirect("/Admin/Login");
+                            }
+                            if (user.UserType == "Vendor")
+                            {
+                                //Response.Redirect("/VDashboard/changeid?id=" + user.UserId + "");
+                                Response.Redirect("/VDashboard/Index");
+                            }
+                            if (user.UserType == "User")
+                            {
+                                <span><a id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
+                                <ul>
+                                    <li><a href="/Home/SignOut">Log Out</a></li>
+                                </ul>
+                            }
+                        }
+                        
+                    </li>
+                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <span> <a class="login" style="font-size:16px; font-weight: 700" href="/cart/Index">Cart(@ViewBag.cartCount)</a> </span>
+                        </li>
+                    }
+                    <li>
+                        <a href="#0" class="btn_5 add_top_30" style="font-weight: 700">Call: +91 7032199007</a>
+                    </li>
+                    <li><span><img src="http://design.maa-aahwanam.com/panagea/india.png" /></span>
+                </ul>
+            </nav>
+
+        </header>
+        <!-- /header -->
+        <main style="background:white">
+
+<div class="ks">            <h1><b>
+    Privacy Policy Ahwanam</b>
+</h1>
+
+               <p> We value the trust you place in us. That's why we insist upon the highest standards for secure transactions and applicant information privacy. Please read the following statement to learn about our information gathering and dissemination practices. Note: Our privacy policy is subject to change at any time without notice. To make sure you are aware of any changes, please review this policy periodically.</p>
+    <p>
+        1. PAYMENT SECURITY Our site has stringent security measures in place to protect the loss, misuse, and alteration of the information under our control. Whenever you change or access your account information, we offer the use of a secure server. Once your information is in our possession we adhere to strict security guidelines, protecting it against unauthorized access. Ahwanam ensures that every transaction that takes between you and our Ahwanam through online is in a safe and secure environment. This can be achieved, as Ahwanam is protected by Secured Socket Layer (SSL) technology.</p>
+    <p>        2. COLLECTION OF PERSONALLY IDENTIFIABLE INFORMATION We collect personally identifiable information (Email Id., Name, Contact number, etc.) from you when you make payment. Anyone can browse some sections of our site without being consumer of the Ahwanam Certain activities (such as applying for the Complaint Status, etc) do require Registration. We do use your contact information to send you information.</p>
+    <p>        3. USE OF DEMOGRAPHIC AND PROFILE DATA We use Personal Information for any payment for smooth conduct of Transaction. And check your payment from time to time. We use your personal information to resolve disputes, troubleshoot problems, help promote a safe service, collect fees owed, detect and protect us against error, fraud and other criminal activity, enforce our terms and conditions, and as otherwise described to you at the time of collection.</p>
+<p>        In our efforts to continually improve our product and service offerings, we collect and analyze demographic and profile data about our users' activity on our app. We identify and use your IP address to help diagnose problems with our server, and to administer our app. Your IP address is also used to help identify you and to gather broad demographic information.</p>
+<p>        4. SHARING OF PERSONAL INFORMATION We may share personal information with other related department entities and affiliates to help detect and prevent identity theft, fraud and other potentially illegal acts, correlate related or multiple accounts to prevent abuse of our services. We may disclose personal information, if required to do so by law or in the good faith belief that such disclosure is reasonably necessary to respond to court orders, or other legal process. We may disclose personal information to law enforcement offices, third party rights owners, or others in the good faith belief that such disclosure is reasonably necessary to enforce our Terms or Privacy Policy, respond to claims that an advertisement, posting or other content violates the rights of a third party or protect the rights, property or personal safety of our users or the general public</p>
+<p>        5. PROHIBITION AGAINST UNLAWFUL USE As a condition for the use of the Ahwanam , the User warrants that they will not use the app for any purpose that is unlawful or illegal under any law for the time being in force within or outside India or prohibited by this Agreement. In addition, the Ahwanam shall not be used in any manner, which could damage, disable, overburden or impair it or interfere with any other party's use of the app. The User shall refrain from obtaining or attempting to obtain any materials or information through any means not intentionally made available or provided for or through the app.</p>
+<p>        6. USE OF COMMUNICATION SERVICES Ahwanam may contain services such as email, News bulletin, information related to Regional or local help centers, and/or other message (hereinafter collectively referred to as "Communication Services"). The User agrees and undertakes to use the Communication Services only to post, send and receive messages and material that are proper and related to the Ahwanam . By way of example, and not as a limitation, the User agrees and undertakes that when using a Communication Service, the User will not:</p>
+<p>        1. Defame, abuse, harass, stalk, threaten or otherwise violate the legal rights of others</p>
+<p>        2. Upload files that contain software or other material protected by intellectual property laws unless the User owns or controls the rights thereto or have received all necessary consents</p>
+<p>        3. Upload or distribute files that contain viruses, corrupted files, or any other similar software or programs that may damage the operation of the Ahwanam or another's computer</p>
+<p>        4. Conduct or forward surveys, contests, pyramid schemes or chain letters;  5. Download any file posted by another user of a Communication Service that the User know, or reasonably should know, cannot be legally distributed in such manner; 6. Falsify or delete any author attributions, legal or other proper notices or proprietary designations or labels of the origin or source of software or other material contained in a file that is uploaded;  7. Violate any code of conduct or other guidelines, which may be applicable for or to any particular Communication Service;  8. Violate any applicable laws or regulations for the time being in force in or outside India; and  9. Violate any of the terms and conditions of this Agreement or any other terms and conditions for the use of the app contained elsewhere herein</p>
+<p>        Ahwanam reserves the right at all times to disclose any information as is necessary to satisfy or comply with any applicable law, regulation, legal process or governmental request, or to edit, refuse to post or to remove any information or materials, in whole or in part, in Ahwanam sole discretion</p>
+<p>        Ahwanam does not control or endorse the content, messages or information found in any communication service and, therefore, Ahwanam specifically disclaims any liability or responsibility whatsoever with regard to the communication services and any actions resulting from the user's participation in any communication service Materials uploaded to a Communication Service may be subject to posted limitations on usage, reproduction and/or dissemination. User is responsible for keeping himself updated of and adhering to such limitations if they download the materials</p>
+<p>        7. TERMINATION/ACCESS RESTRICTION Ahwanam reserves the right, in its sole discretion, to terminate the access to the app and the related services or any portion thereof at any time, without notice.</p>
+
+</div>
+        </main>
+</div>
+    <footer style="background-color:lightgrey">
+        <div class="fdiv"></div>
+        <div align="center" class="footerdiv">
+            <a href="www.ahwanam.com/privacypolicy">Privacy Policy</a> | <a href="www.ahwanam.com/termscondition">Terms & Conditions</a>
+            <br />
+            <a>Copyright 2018, All rights reserved.</a>
+        </div>
+    </footer>
+    <div id="toTop"></div><!-- Back to top button -->
+    <!-- COMMON SCRIPTS -->
+    @*<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>*@
+    <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
+    <script src="~/newdesignstyles/Scripts/main.js"></script>
+    <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
+
+    <!-- DATEPICKER  -->
+    <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
+    @*<script src="~/newdesign/js/daterangepicker.js"></script>*@
+    @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
+
+</body>
+</html>

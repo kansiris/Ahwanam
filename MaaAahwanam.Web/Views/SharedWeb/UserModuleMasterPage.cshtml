@@ -179,16 +179,16 @@
                         @*<input type="password" class="form-control" name="password" id="password" value="">*@
                         <i class="icon_lock_alt"></i>
                     </div>
-                    @*<div class="clearfix add_bottom_15">
-                           <div class="checkboxes float-left">
+                    <div class="clearfix add_bottom_15">
+                           @*<div class="checkboxes float-left">
                                 <label class="container_check">
                                     Remember me
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
-                            </div>
+                            </div>*@
                            <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-                        </div>*@
+                        </div>
                     <div class="text-center"><input type="submit" value="login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
 
                     <div class="text-center">
@@ -196,14 +196,15 @@
                     </div>
                 </div>
                 @*<div class="float-right mt-1 registerBtn"><a id="signup" href="javascript:void(0);">Sign up</a></div>*@
-                <div id="forgot_pw" class="forgotks">
+                <div id="forgot_pw" class="forgotks" style="min-height: 290px;">
                     <div class="form-group">
                         <label>Please confirm login email below</label>
                         <input type="email" class="form-control" name="email_forgot" id="email_forgot">
                         <i class="icon_mail_alt"></i>
                     </div>
                     <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-                    <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+                    <div class="text-center"><div class="text-center"><input type="submit" value="Reset Password" onclick="forgot(this.value)" class="btn_1 full-width" name="command"></div>
+</div>
                     <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
                 </div>
@@ -267,32 +268,40 @@
                         @*<input type="password" class="form-control" name="password" id="password" value="">*@
                         <i class="icon_lock_alt"></i>
                     </div>
-                    @*<div class="clearfix add_bottom_15">
-                           <div class="checkboxes float-left">
+                    <div class="clearfix add_bottom_15">
+                           @*<div class="checkboxes float-left">
                                 <label class="container_check">
                                     Remember me
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
-                            </div>
-                           <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-                        </div>*@
+                            </div>*@
+                           <div class="float-right mt-1"><a class="forgotPasswordBtn" id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                        </div>
                     <div class="text-center"><input type="submit" value="Login" onclick="login1(this.value)" class="btn_1 full-width" name="command"></div>
 
                     <div class="text-center">
                         Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
                     </div>
                 </div>
-                <div id="forgot_pw" class="forgotks">
-                    <div class="form-group">
-                        <label>Please confirm login email below</label>
-                        <input type="email" class="form-control" name="email_forgot" id="email_forgot1">
-                        <i class="icon_mail_alt"></i>
-                    </div>
-                    <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-                    <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
-                    <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
+                <div id="forgot_pw" class="forgotks forgotPassword" style="min-height: 290px;">
+                    <div class="ksc" style="padding: 54px;">
+                        <div class="form-group">
+                            <label>Please confirm login email below</label>
+                            <input type="email" class="form-control" placeholder="Enter Your Password" name="email_forgot1" id="email_forgot1" required />
 
+                            @*<input type="password" class="form-control" name="password" id="password" value="">*@
+                            <i class="icon_mail_alt"></i>
+                        </div>
+                        @*<div class="form-group">
+                <label>Please confirm login email below</label>
+                <input type="email" class="form-control" name="email_forgot1" id="email_forgot1">
+                <i class="icon_mail_alt"></i>
+            </div>*@
+                        <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
+                        <div class="text-center"><input type="submit" value="Reset Password" onclick="forgot1(this.value)" class="btn_1 full-width" name="command"></div>
+                        <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
+                    </div>
                 </div>
                 <div id="signup" class="register">
 
@@ -618,7 +627,147 @@
             }
         }
 
+        function login1(clickedvalue) {
+            var Email = $("#email_forgot").val();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var emailaddressVal = $("#email_forgot").val();
+            if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+                $("#txtemail").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                alert("Please Enter a valid Email Address");
+                $("#txtemail").focus();
+            }
+            else {
+                if (clickedvalue == 'Reset Password') {
+                    $.ajax({
+                        url: '/Home/forgotpass',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        type: 'POST',
+                        data: JSON.stringify({ Email: Email }),
+                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("A mail is sent to your email to change password Please check your email");
+                                window.location.reload();
+                            }
 
+                            else if (data == "Failed") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                            else if (data == "success1") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                        },
+                        error: function (data) {
+                            alert("Wrong Credentials,Check Username and password");
+                        }
+                    });
+                }
+
+
+            }
+        }
+        function forgot(clickedvalue) {
+            var Email = $("#email_forgot").val();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var emailaddressVal = $("#email_forgot").val();
+            if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+                $("#txtemail").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                alert("Please Enter a valid Email Address");
+                $("#txtemail").focus();
+            }
+            else {
+                if (clickedvalue == 'Reset Password') {
+                    $.ajax({
+                        url: '/Home/forgotpass',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        type: 'POST',
+                        data: JSON.stringify({ Email: Email }),
+                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("A mail is sent to your email to change password Please check your email");
+                                window.location.reload();
+                            }
+
+                            else if (data == "Failed") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                            else if (data == "success1") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                        },
+                        error: function (data) {
+                            alert("Wrong Credentials,Check Username and password");
+                        }
+                    });
+                }
+
+
+            }
+        }
+        function forgot1(clickedvalue) {
+            var Email = $("#email_forgot1").val();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var emailaddressVal = $("#email_forgot1").val();
+            if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+                $("#txtemail").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                alert("Please Enter a valid Email Address");
+                $("#txtemail").focus();
+            }
+            else {
+                if (clickedvalue == 'Reset Password') {
+                    $.ajax({
+                        url: '/Home/forgotpass',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        type: 'POST',
+                        data: JSON.stringify({ Email: Email }),
+                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("A mail is sent to your email to change password Please check your email");
+                                window.location.reload();
+                            }
+
+                            else if (data == "Failed") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                            else if (data == "success1") {
+
+                                alert("Wrong Credentials,Check Username and password");
+                                window.location.reload();
+                            }
+                        },
+                        error: function (data) {
+                            alert("Wrong Credentials,Check Username and password");
+                        }
+                    });
+                }
+
+
+            }
+        }
         function savecustomer1(clickedvalue) {
             var CustomerPhoneNumber = $("#txtphone1").val();
             var CustomerName = $("#txtname1").val();
