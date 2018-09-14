@@ -1431,8 +1431,24 @@
 
         function addservice() {
             $('#addservices').css("display", "block");
+            $('#addservicesbutton').css("display", "none");
         }
-        function addservice(Id) {
+        function addservicenow() {
+            var serviceselection = $('#serviceselection1').find(":selected").text();
+            var subcategory = $('#subcategory').find(":selected").text();
+            $.ajax({
+                url: '/VDashboard/addnewservice?serviceselection=' + serviceselection + '&&subcategory=' + subcategory,
+                type: 'post',
+                contentType: 'application-json',
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (er) {
+                    alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
+                }
+            });
+        }
+        function addservice1(Id) {
             //var url = '/VDashboard/Addservices?vsid=' + Id;
             location.href = '/VDashboard/Index?c=first&&vsid=' + Id;
             //$('#addservice').empty().load(url);
@@ -1441,14 +1457,12 @@
         //    if ($(this).text() == selectedcategory) $(this).parent('select').val($(this).val())
         //})
 
-        $('#serviceselection').on('click', function () {
+        $('#serviceselection1').on('change', function () {
             var selectedvalue = $(this).val();
             filterdropdown(selectedvalue);
         });
 
         function filterdropdown(selectedvalue) {
-            var id = '' + selectedvalue + 'Amenities';
-            $('#' + id + '').css('display', 'block');
             var subcat = [];
             $.ajax({
                 url: "/NVendorManageStoreFront/filtercategories?type=" + selectedvalue,
@@ -1571,6 +1585,7 @@
         /*=============== Image upload and Placed =============*/
 
         $("#fileUpload1").change(function () {
+
             var filecount = $(this)[0].files.length;
             if (filecount <= 8) {
                 if (typeof (FileReader) != "undefined") {
