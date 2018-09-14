@@ -1395,14 +1395,43 @@
     <script>
         var image;
         $('.sliderdiv').on('click', function () {
+            var vsid = $('#vsid').val();
             var image = $(this).children('img').attr('href');
             var file = $(this).find('input').attr('id');
+            alert(file);
             image = document.getElementById("" + file + "");
             image.click();
-            image.onchange = function () {
+            //image.onchange = function () {
                 alert(this.value.split("\\")[2]);
-            }
-        });
+                var ext = $('#profileimage').val().split('.').pop().toLowerCase();
+                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                    alert('Invalid File Type');
+                }
+                else {
+                    var data = new FormData();
+                    var files = $("#profileimage").get(0).files;
+                    //alert(files);
+                    if (files.length > 0) {
+                        data.append("helpSectionImages", files[0]);
+                    }
+                    $.ajax({
+                        url: "/VDashboard/UploadImages?vsid=" + vsid,
+                        method: "post",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        success: function (data) {
+                            //Firing event if File Upload is completed!
+                            alert("Upload Completed");
+                            $("#File1").val("");
+                            location.reload();
+                        },
+                        error: function (error) { alert("Try Again After Sometime"); }
+                    })
+                }}
+            );
     </script>
     <script>
         $(function () {
@@ -1481,7 +1510,7 @@
                     alert(data);
                 },
                 error: function (er) {
-                    alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
+                    alert("System Encountered Internal Error!!! Try Again After Some Time");
                 }
             });
         }
@@ -1505,7 +1534,7 @@
                 url: "/NVendorManageStoreFront/filtercategories?type=" + selectedvalue,
                 success: function (result) {
                     if (result == "Fail") {
-                        alertmsg("Failed to Fetch data");
+                        alert("Failed to Fetch data");
                     }
                     else {
                         var selecttag = $('#subcategory').empty();
@@ -1517,7 +1546,7 @@
                     }
                 },
                 error: function (data)
-                { alertmsg("Something Went Wrong Try Again Later"); }
+                { alert("Something Went Wrong Try Again Later"); }
             });
         }
 
@@ -1567,7 +1596,7 @@
                     alert(data);
                 },
                 error: function (er) {
-                    alertmsg("System Encountered Internal Error!!! Try Again After Some Time");
+                    alert("System Encountered Internal Error!!! Try Again After Some Time");
                 }
             });
         }
@@ -1575,122 +1604,8 @@
 
 
     </script>
-    <script>
-
-        /*=============== Image Block remove =============*/
-        $(document).on('click', "p.red", function () {
-            //$("p.red").click(function(){
-            var x = $(this).parents(".blocks").css({ "transform": "translateX(1000px)", "opacity": "0" });
-            setTimeout(function () { x.remove(); }, 200);
-            var imgname = $(this).parents("div.row").parents("div.thumbnail").find("div.thumb-img").children("img").attr('alt');
-            var id = '@ViewBag.id';
-            var vid = '@ViewBag.vid';
-            $.ajax({
-                url: '/NVendorManageStoreFront/Removeimage',//?src=' + imgname.replace('/vendorimages/', '')+'id='+id+'vid='+vid,
-                type: 'POST',
-                data: JSON.stringify({ src: imgname.replace('/vendorimages/', ''), id: id, vid: vid }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == "success") {
-                        alertmsg('Image deleted successfully!');
-                    }
-                    else {
-                        alertmsg('Failed!');
-                    }
-                },
-                error: function (data)
-                { alertmsg("Failed!!!"); }
-            });
-        });
-        /*=============== Image Block remove =============*/
-
-        /*=============== Image upload and Placed =============*/
-
-        $("#fileUpload1").change(function () {
-
-            var filecount = $(this)[0].files.length;
-            if (filecount <= 8) {
-                if (typeof (FileReader) != "undefined") {
-                    var dvPreview = $("#dvPreview");
-                    //dvPreview.html("");
-                    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-                    var params = dvPreview.serializeArray();
-                    //Getting Files Collection
-                    var files = $("#fileUpload1")[0].files;
-
-                    //Declaring new Form Data Instance
-                    var formData = new FormData();
-
-                    //Looping through uploaded files collection in case there is a Multi File Upload. This also works for single i.e simply remove MULTIPLE attribute from file control in HTML.
-                    for (var i = 0; i < files.length; i++) {
-                        formData.append("file", files[i]);
-                    }
-
-                    $.ajax({
-                        url: "/NVendorManageStoreFront/UploadImages?ks=@ViewBag.id&&vid=@ViewBag.vid&&type=@Request.QueryString["category"]",
-                        method: "post",
-                        data: formData,
-                        cache: false,
-                        contentType: false,
-                        enctype: 'multipart/form-data',
-                        processData: false,
-                        success: function (data) {
-                            //Firing event if File Upload is completed!
-                            alertmsg("Upload Completed");
-                            $("#File1").val("");
-                            location.reload();
-                        },
-                        error: function (error) { alertmsg("Try Again After Sometime"); }
-                    })
-                } else {
-                    alertmsg("This browser does not support HTML5 FileReader.");
-                }
-            }
-            else {
-                alertmsg("Max 8 Photos Allowed at a time");
-            }
-        });
-        /*=============== Image upload and Placed =============*/
-        $('#dvPreview .blocks').find('div.radio').change(function () {
-            $("#dvPreview .blocks div.radio:last-of-type input[type='radio']").each(function () {
-                $(this).attr('checked', 'checked');
-            });
-            $(this).next("div.radio").find("input[type='radio']").prop('checked', false);
-        });
-
-        $(".next").click(function (e) {
-            $('.radioName').empty();
-            $('.blockDescrption').empty();
-            e.preventDefault();
-            var arr;
-            var BlockLen = $("#dvPreview .blocks").length;
-            $("#dvPreview .blocks").find('input[type="text"]').each(function () {
-                var v = $.trim($(this).val());
-                if (v != "") {
-                    $(".blockDescrption").append($(this).val() + ',');
-                }
-            });
-            var blockDescrption = $('.blockDescrption').text();
-            $('#Imagedescription').val($('.blockDescrption').text().slice(0, -1));
-
-            $.ajax({
-                url: "/NVendorManageStoreFront/UpdateImageInfo?ks=@ViewBag.id&&vid=@ViewBag.vid&&description=" + $('#Imagedescription').val() + "",
-                method: "post",
-                data: $('#Imagedescription').val(),
-                cache: false,
-                contentType: false,
-                enctype: 'multipart/form-data',
-                processData: false,
-                success: function (data) {
-                    alert("Image Description Updated");
-                },
-                error: function (error) { alertmsg("Try Again After Sometime"); }
-            });
-        });
-
-        /*=============== Blocks Radio name and Descrption save in hidden variable =============*/
-    </script>
+   
+     
     <script>
         $('#profileimage').change(function () {
             var ext = $('#profileimage').val().split('.').pop().toLowerCase();

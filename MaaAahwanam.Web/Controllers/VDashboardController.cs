@@ -21,6 +21,7 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorImageService vendorImageService = new VendorImageService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        const string imagepath = @"/vendorimages/";
 
         // GET: VDashboard
         public ActionResult Index(string c, string vsid)
@@ -426,61 +427,64 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        //public JsonResult UploadImages(HttpPostedFileBase file, string ks,  string type)
-        //{
-        //    VendorImage vendorImage = new VendorImage();
-        //    Vendormaster vendorMaster = new Vendormaster();
-        //    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-        //    string uid = user.UserId.ToString();
-        //    string email = userLoginDetailsService.Getusername(long.Parse(uid));
-        //    vendorMaster = vendorMasterService.GetVendorByEmail(email);
-        //    string vid = vendorMaster.Id.ToString();
-        //    vendorMaster.Id = long.Parse(vid);
-        //    vendorImage.VendorId = long.Parse(vid);
-        //    string fileName = string.Empty;
-        //    if (file != null)
-        //    {
-        //        string path = System.IO.Path.GetExtension(file.FileName);
-        //        //if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
-        //        //    return Json("File");
-        //        int imageno = 0;
-        //        int imagecount = 8;
-        //        //var list = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
-        //        //if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
-        //        //{
-        //        //    //getting max imageno
-        //        //    for (int i = 0; i < list.Count; i++)
-        //        //    {
-        //        //        string x = list[i].ImageName.ToString();
-        //        //        string[] y = x.Split('_', '.');
-        //        //        if (y[3] == "jpg")
-        //        //        {
-        //        //            imageno = int.Parse(y[2]);
-        //        //        }
-        //        //        else
-        //        //        {
-        //        //            imageno = int.Parse(y[3]);
-        //        //        }
-        //        //    }
+        public JsonResult UploadImages(HttpPostedFileBase file, string vsid)
+        {
+            string fileName = string.Empty;
+            string filename = string.Empty;
+            VendorImage vendorImage = new VendorImage();
+            Vendormaster vendorMaster = new Vendormaster();
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+            vendorMaster.Id = long.Parse(vid);
+            vendorImage.VendorId = long.Parse(vid);
+            VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(vid), long.Parse(vsid)); // Retrieving Particular Vendor Record
+            var type = vendorVenue.VenueType;
+            if (file != null)
+            {
+                string path = System.IO.Path.GetExtension(file.FileName);
+                if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
+                    return Json("File");
+                int imageno = 0;
+                int imagecount = 8;
+                var list = vendorImageService.GetImages(long.Parse(vsid), long.Parse(vid));
+                if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
+                {
+                    //getting max imageno
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        string x = list[i].ImageName.ToString();
+                        string[] y = x.Split('_', '.');
+                        if (y[3] == "jpg")
+                        {
+                            imageno = int.Parse(y[2]);
+                        }
+                        else
+                        {
+                            imageno = int.Parse(y[3]);
+                        }
+                    }
 
-        //        //    //Uploading images in db & folder
-        //        //    for (int i = 0; i < Request.Files.Count; i++)
-        //        //    {
-        //        //        int j = imageno + i + 1;
-        //        //        var file1 = Request.Files[i];
-        //        //        if (file1 != null && file1.ContentLength > 0)
-        //        //        {
-        //        //            var filename = type + "_" + id + "_" + vid + "_" + j + path;
-        //        //            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
-        //                    file1.SaveAs(fileName);
-        //                    vendorImage.ImageName = filename;
-        //                    vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return Json("success");
-        //}
+                    //Uploading images in db & folder
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        int j = imageno + i + 1;
+                        var file1 = Request.Files[i];
+                        if (file1 != null && file1.ContentLength > 0)
+                        {
+                            filename = type + "_" + vsid + "_" + vid + "_" + j + path;
+                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                            file1.SaveAs(fileName);
+                            vendorImage.ImageName = filename;
+                            vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+            }
+        }
+    }
+}
+            return Json(filename, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult UpdateImageInfo(string ks, string vid, string description)
         {
