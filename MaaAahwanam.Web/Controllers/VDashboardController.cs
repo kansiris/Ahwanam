@@ -43,10 +43,10 @@ namespace MaaAahwanam.Web.Controllers
                 Addservices(vsid);
                 //if (vsid == null)
                 //{
-                //    if (venues.FirstOrDefault().VenueType != null)
-                //        ViewBag.enable = "second";
-                //    else
-                //        ViewBag.enable = "second";
+                //if (venues.FirstOrDefault().VenueType != null)
+                //    ViewBag.enable = "second";
+                //else
+                //    ViewBag.enable = "first";
                 //}
                 ViewBag.enable = c;
                 ViewBag.vsid = vsid;
