@@ -20,7 +20,7 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-        public JsonResult vendorreg(string vname, string businessname,string mobile,string email)
+        public JsonResult vendorreg(string vname, string businessname,string mobile,string email,string businesstype,string type)
         {
             UserLogin userLogin = new UserLogin();
             UserDetail userDetail = new UserDetail();
@@ -29,6 +29,10 @@ namespace MaaAahwanam.Web.Controllers
             userLogin.Status = "InActive";
             var response = "";
             userLogin.UserType = "Vendor";
+            userDetail.FirstName = businessname;
+            userDetail.UserPhone = mobile;
+            userLogin.Password = "Temp123";
+            userLogin.UserName = email;
             long data = userLoginDetailsService.GetLoginDetailsByEmail(userLogin.UserName);
             if (data == 0)
             { response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); }
