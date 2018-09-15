@@ -1156,16 +1156,17 @@
                                     </form>
                                 </div>
 
-                                <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
-                                    <div>
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td><h4 style="text-transform:uppercase">Upcoming Events</h4></td>
-                                                <td style="float:right"><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <table id="allorders" class="display" style="width:100%">
+                            <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
+                                <div>
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td><h4 style="text-transform:uppercase">Upcoming Events</h4></td>
+                                            <td style="float:right"><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <table id="allorders" class="display" style="width:100%">
+                                    <thead>
                                         <tr>
                                             <th>S.No</th>
                                             <th>Order ID</th>
@@ -1174,6 +1175,8 @@
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
                                         @{
                                             var number = 0;
                                             foreach (var orders in ViewBag.order)
@@ -1186,7 +1189,7 @@
                                                     <td>@orders.BookedDate</td>
                                                     <td>@orders.Status</td>
 
-                                                    <td><button class="btn btn-primary show_hide_row" id="acc1" onclick="show_hide_row('hidden_row')" value="number">View Details</button> <button type="button" class="writemsg button" onclick="orderemail('@orders.username')" value="Query">Write Message</button></td>
+                                                    <td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button" onclick="orderemail('@orders.username')" value="Query">Write Message</button></td>
                                                 </tr>
                                                 <tr id="hidden_row1" class="hidden_row">
                                                     <td colspan=4><ul><li>Event Type:@orders.EventType</li><li>contact number:@orders.UserPhone</li></ul></td>
@@ -1246,7 +1249,7 @@
             <div class="ui negative button" style="height:40px;">
                 CANCEL
             </div>
-            <div class="ui positive button" style="height:40px;" onclick="Sendmsg()">
+            <div class="ui positive button" id="sendmsg" style="height:40px;">
                 SEND
             </div>
         </div>
@@ -1713,6 +1716,41 @@
         $('#pkgsubcat').click(function () {
             alert('First Add Sub Service');
         });
+    </script>
+    <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+    <script type="text/javascript">
+    //function show_hide_row(row)
+    //{
+    // $("."+row).toggle();
+        //}
+        $('.show_hide_row').click(function () {
+            //$('.hidden_row').toggle();
+            //alert($(this).parent('td').html());
+            $(this).parent('td').parent('tr').next('tr#hidden_row1').toggle();
+        });
+        $('#sendmsg').click(function () {
+            var msg = $('#txtmsg').val();
+            var Email = $('#Querymodel .custemail').text(val);
+            $.ajax({
+                url: '/VDashboard/Sendmsg',
+                type: 'POST',
+                data: JSON.stringify({ msg: msg,Email:Email }),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data == "success" || data == "unique") {
+                        alertify.alert("We will contact you soon");
+                    }
+                    else if (data == "Failed") {
+                        alertify.alert("Something Went Wrong!!! Try Again Later");
+                    }
+                    else {
+                        alertify.alertmsg("error");
+                    }
+                }
+            });
+        })
+       
     </script>
 </body>
 </html>

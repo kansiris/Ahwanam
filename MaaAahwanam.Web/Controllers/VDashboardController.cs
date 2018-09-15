@@ -569,32 +569,34 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        //  }
-        //public ActionResult Sendmsg(string msg)
-        //  {
-        //      if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-        //      {
+      
+        public JsonResult Sendmsg(string msg ,string Email)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
 
-        //          if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-        //          {
-        //              var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-        //              string uid = user.UserId.ToString();
-        //              string email = userLoginDetailsService.Getusername(long.Parse(uid));
-        //              vendorMaster = vendorMasterService.GetVendorByEmail(email);
-        //              string vid = vendorMaster.Id.ToString();
-
-        //              FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
-        //              string readFile = File.OpenText().ReadToEnd();
-
-        //              string txtmessage = readFile;//readFile + body;
-        //              string subj = "Get Quote From Cart Page";
-        //              EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-        //              //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-        //          }
-        //          return View();
-        //      }
-
-        // }
-
+                
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    string uid = user.UserId.ToString();
+                    string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
+                    vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
+                    string vid = vendorMaster.Id.ToString();
+                    string fromemail = vemail;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    string txtto = Email;
+                    //string txtmessage = readFile;//readFile + body;
+                    string txtmessage = msg;
+                    string subj = "Get Quote From orders Page";
+                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    emailSendingUtility.Email_maaaahwanam1(txtto, txtmessage, subj, fromemail);
+                
+                
+            }
+            var message = "success";
+            return Json(message);
+        }
     }
-}
+
+ }
+
