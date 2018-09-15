@@ -114,7 +114,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 username = Capitalise(username);
                 string emailid = userLogin.UserName;
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/NUserRegistration/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
@@ -130,6 +130,44 @@ namespace MaaAahwanam.Web.Controllers
             else
             {
                 return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult ActivateEmail1(string ActivationCode, string Email)
+        {
+            try
+            {
+                UserLogin userLogin = new UserLogin();
+                UserDetail userDetails = new UserDetail();
+                if (ActivationCode == "")
+                { ActivationCode = null; }
+                var userResponse = venorVenueSignUpService.GetUserdetails(Email);
+                if (userResponse.Status != "Active")
+                {
+                    if (ActivationCode == userResponse.ActivationCode)
+                    {
+                        userLogin.Status = "Active";
+                        userDetails.Status = "Active";
+                        string email = userLogin.UserName;
+                        var userid = userResponse.UserLoginId;
+                        userLoginDetailsService.changestatus(userLogin, userDetails, (int)userid);
+                        TempData["Active"] = "Thanks for Verifying the Email";
+                        return RedirectToAction("Index", "NUserRegistration");
+                    }
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Your Account is already Verified Please login');location.href='" + @Url.Action("Index", "Home") + "'</script>");
+                    //TempData["Active"] = "Your Account is already Verified Please login";
+                    //return RedirectToAction("Index", "NUserRegistration");
+                }
+                return Content("<script language='javascript' type='text/javascript'>alert('Email not found');location.href='" + @Url.Action("Index", "Home") + "'</script>");
+                //TempData["Active"] = "Email ID not found";
+                //return RedirectToAction("Index", "NUserRegistration");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "home");
             }
         }
         public JsonResult login(string Password, string Email,string url1)
@@ -198,7 +236,7 @@ namespace MaaAahwanam.Web.Controllers
 
                 name = Capitalise(name);
                 string txtto = userLogin.UserName;
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
