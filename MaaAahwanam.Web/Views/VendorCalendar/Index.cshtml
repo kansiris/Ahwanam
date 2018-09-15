@@ -1,6 +1,7 @@
 ﻿@model MaaAahwanam.Models.VendorDates
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>:: Calendar ::</title>
@@ -21,14 +22,32 @@
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
     <body class="dashboard" style="padding-right:0px">
-        @{ Html.RenderAction("ProfileProgressPartial", "SampleStorefront");}
+        <input type="hidden" id="vid" value="@ViewBag.id" />
+        <input type="hidden" id="vsid" value="@ViewBag.vid" />
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 logo">
+                    <a href="/Home"><img src="~/newdesignstyles/img/logo.png" alt="Logo" width="70" height="60"></a>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 top-right-menu">
+                    <ul class="dropdown" style="display:block;top:0;">
+                        <li onclick="window.location.href = '/SampleStorefront/SignOut';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Sign out</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="clearfix margin-top-30"></div>
         <div class="container body-content">
             @*Load Sub Categories*@
             @*<div class="col-xs-12 col-sm-12 col-md-12">
-                <label class="col-xs-12 col-sm-6 col-md-6">Select Sub category</label>
-                @Html.DropDownList("vendorsubcatids", ViewBag.vendorsubcatids as SelectList, "Select Sub category", new { @class = "form-control",@style="width:50%" })
-            </div>*@
+                    <label class="col-xs-12 col-sm-6 col-md-6">Select Sub category</label>
+                    @Html.DropDownList("vendorsubcatids", ViewBag.vendorsubcatids as SelectList, "Select Sub category", new { @class = "form-control",@style="width:50%" })
+                </div>*@
+
+            <div>
+                <div><a href="/VDashboard?c=first&&vsid=@ViewBag.vid" class="btn btn-animate btn-primary" style="margin-bottom:20px">Go Back</a></div>
+                <div><button  style="margin-top: -96px;margin-left: 100px;" id="refresh" class="btn btn-success">Refresh Calendar</button></div>
+            </div>
 
             @*Load Calendar*@
             <div id='calendar'></div>
@@ -73,13 +92,13 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Subject</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="subject" name="title">
+                                            <input type="text" class="form-control" id="subject" name="title" placeholder="Enter Subject">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Start Date</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="startdate" name="title">
+                                            <input type="text" class="form-control" id="startdate" name="title" placeholder="Select Start Date">
                                         </div>
                                     </div>
 
@@ -89,6 +108,7 @@
                                             @*<input type="checkbox" class="form-control">
                                                 <span></span>*@
                                             <select class="form-control" id="chkIsFullDay">
+                                                <option disabled selected value="">Select your choice</option>
                                                 <option>False</option>
                                                 <option>True</option>
                                             </select>
@@ -97,14 +117,14 @@
                                     <div class="form-group" id="divEndDate">
                                         <label class="col-sm-3 control-label">End Date</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="enddate" name="title">
+                                            <input type="text" class="form-control" id="enddate" name="title" placeholder="Select End Date">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" style="height:55px;" id="description" name="descr"></textarea>
+                                            <textarea class="form-control" style="height:55px;" id="description" name="descr" placeholder="Enter Description"></textarea>
                                         </div>
                                     </div>
 
@@ -112,6 +132,7 @@
                                         <label class="col-sm-3 control-label">Color</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="color">
+                                                <option disabled selected value="">Select Color</option>
                                                 <option>Red</option>
                                                 <option>Green</option>
                                                 <option>Blue</option>
@@ -124,8 +145,11 @@
                                         <label class="col-sm-3 control-label">Type</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="type">
-                                                <option>Appointment</option>
-                                                <option>Price</option>
+                                                <option disabled selected value="">Select Type</option>
+                                                <option>Peak Days</option>
+                                                <option>Normal Days</option>
+                                                <option>Holidays</option>
+                                                <option>Choice Days</option>
                                             </select>
                                         </div>
                                     </div>
@@ -179,13 +203,13 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Title</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="title2" name="title2">
+                                            <input type="text" class="form-control" id="title2" name="title2" placeholder="Enter Subject">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
+                                            <textarea class="form-control" style="height:55px;" id="descr2" name="descr" placeholder="Enter Description"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -201,23 +225,11 @@
 
 
         </div>
-        <footer class="container-fluid">
-            <div class="row">© Ahwanam 2017. All right reserved.</div>
-        </footer>
-
-        <!-- /calendar modal -->
-        @*<script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
-            <script type="text/javascript" language="javascript" src="~/Scripts/jquery.min.js"></script>
-            <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>*@
-        @*<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-            <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
-
         <script src="~/newdesign/js/jquery-1.11.3.min.js"></script>
         <script src="~/newdesign/js/jquery-ui-1.12.1.js"></script>
         <script type="text/javascript" language="javascript" src="~/newdesign/js/bootstrap.min.js"></script>
         <script src="~/newdesign/js/moment.min.js"></script>
         <script src="~/newdesign/js/fullcalendar.min.js"></script>
-        @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
         <script src="~/Scripts/calendar.js"></script>
 
@@ -227,15 +239,11 @@
                 var selectedEvent = null;
                 FetchEventAndRenderCalendar(@ViewBag.vid);
             })
-
-            //$('#vendorsubcatids').on('change', function () {
-            //    FetchEventAndRenderCalendar($('#vendorsubcatids').val());
-            //});
         </script>
     </body>
-            }
-            else
-            {
-                Response.Redirect("/Homepage");
-            }
+}
+else
+{
+    Response.Redirect("/Homepage");
+}
 </html>
