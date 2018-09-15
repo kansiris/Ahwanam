@@ -64,5 +64,7 @@ namespace MaaAahwanam.Repository.db
         public DbSet<Contest> Contest { get; set; }
         public DbSet<ContestVote> ContestVote { get; set; }
         public DbSet<QuoteResponse> QuoteResponse { get; set; }
+        public DbSet<ManageUser> ManageUser { get; set; }
+        public DbSet<ManageVendor> ManageVendor { get; set; }
     }
 }

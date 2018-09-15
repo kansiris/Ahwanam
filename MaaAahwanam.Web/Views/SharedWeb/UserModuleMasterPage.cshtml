@@ -389,13 +389,27 @@
             var location = window.localStorage.getItem("location");
             var eventtype = window.localStorage.getItem("eventtype");
             var date = window.localStorage.getItem("eventdate");
-            if (eventtype != '')
+            //alert('Guests:' + guests + ',loc=' + location + ',event=' + eventtype + ',date=' + date);
+            if (eventtype != '' && eventtype != null)
                 $("span.current").text(eventtype);
             else
                 $("span.current").text('Select Event');
-            $('#loc').val(location);
-            $('#guests').val(guests);
-            $('#datetimepicker1').val(date);
+
+            if (guests == '' || guests == null) {
+                window.localStorage.setItem("guests", 100);
+                $('#guests').val(100);
+            }
+            else { $('#guests').val(guests); }
+
+            if (location != '' && location != null)
+            { $('#loc').val(location); }
+            else
+            { $('#loc').val("Hyderabad"); }
+
+            if (new Date(date) < new Date())
+            { $('#datetimepicker1').val(new Date()); }
+            else
+            { $('#datetimepicker1').val(date); }
         });
         $('#datetimepicker1,#datepicker2').daterangepicker({
             singleDatePicker: true,
