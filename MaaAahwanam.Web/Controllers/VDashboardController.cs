@@ -583,8 +583,6 @@ namespace MaaAahwanam.Web.Controllers
                     string subj = "Get Quote From orders Page";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam1(txtto, txtmessage, subj, fromemail);
-                
-                
             }
             var message = "success";
             return Json(message);
