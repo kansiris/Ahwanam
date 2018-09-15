@@ -41,13 +41,14 @@ namespace MaaAahwanam.Web.Controllers
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 ViewBag.venues = venues;
                 Addservices(vsid);
-                if (vsid == null)
-                {
-                    if (venues.FirstOrDefault().VenueType != null)
-                        ViewBag.enable = "second";
-                    else
-                        ViewBag.enable = "second";
-                }
+                //if (vsid == null)
+                //{
+                //if (venues.FirstOrDefault().VenueType != null)
+                //    ViewBag.enable = "second";
+                //else
+                //    ViewBag.enable = "first";
+                //}
+                ViewBag.enable = c;
                 ViewBag.vsid = vsid;
                 ViewBag.vendorid = vid;
                 if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
