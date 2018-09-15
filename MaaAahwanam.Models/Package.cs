@@ -34,5 +34,9 @@ namespace MaaAahwanam.Models
         public string price6 { get; set; }
         public string price7 { get; set; }
         public string price8 { get; set; }
+        public string peakdays { get; set; }
+        public string normaldays { get; set; }
+        public string holidays { get; set; }
+        public string choicedays { get; set; }
     }
 }

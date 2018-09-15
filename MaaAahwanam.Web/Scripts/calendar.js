@@ -6,7 +6,7 @@
         y = date.getFullYear()
     $.ajax({
         type: "GET",
-        url: '/VendorCalendar/GetDates?id=' + $('#vid').val() + '&&vid=' + location.search.split('vid=')[1],
+        url: '/VendorCalendar/GetDates?id=' + $('#vid').val() + '&&vid=' + $('#vsid').val(),
         success: function (data) {
             $.each(data, function (i, v) {
                 var start1, end1 = null;
@@ -61,9 +61,9 @@ function GenerateCalender(events) {
                     selectedEvent = data;
                     $('#myModal #eventTitle').text(data.Title);
                     var $description = $('<div/>');
-                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
+                    $description.append($('<p/>').html('<b>Start:</b>' + moment(data.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY")));
                     if (data.IsFullDay == "False" || data.IsFullDay == null) {
-                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY hh:mm A")));
+                        $description.append($('<p/>').html('<b>End:</b>' + moment(data.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MMM/YYYY")));
                     }
                     $description.append($('<p/>').html('<b>Description:</b>' + data.Description));
                     $('#myModal #pDetails').empty().html($description);
@@ -97,8 +97,8 @@ function GenerateCalender(events) {
             var data = {
                 Id: event.eventID,
                 Title: event.title,
-                StartDate: event.start.format('DD/MMM/YYYY hh:mm A'),
-                EndDate: event.end != null ? event.end.format('DD/MM/YYYY hh:mm A') : null,
+                StartDate: event.start.format('DD/MMM/YYYY'),
+                EndDate: event.end != null ? event.end.format('DD/MM/YYYY') : null,
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay,
@@ -160,12 +160,12 @@ function openAddEditForm() {
         $('#subject').val(selectedEvent.Title);
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
         if (selectedEvent.eventID != 0) {
-            $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A"));
-            $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY hh:mm A") : '');
+            $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY"));
+            $('#enddate').val(moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY") != null ? moment(selectedEvent.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY") : '');
         }
         else {
-            $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY hh:mm A"));
-            $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") != null ? moment(selectedEvent.end).format("DD/MM/YYYY hh:mm A") : '');
+            $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY"));
+            $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY") != null ? moment(selectedEvent.end).format("DD/MM/YYYY") : '');
         }
         if (selectedEvent.IsFullDay == "True") {
             $('#divEndDate').hide();
@@ -208,8 +208,8 @@ $('#btnSave').click(function () {
         return;
     }
     else {
-        var startDate = moment($('#startdate').val(), "DD/MM/YYYY hh:mm A").toDate();
-        var endDate = moment($('#enddate').val(), "DD/MM/YYYY hh:mm A").toDate();
+        var startDate = moment($('#startdate').val(), "DD/MM/YYYY").toDate();
+        var endDate = moment($('#enddate').val(), "DD/MM/YYYY").toDate();
         if (startDate > endDate) {
             alert('Invalid end date');
             return;
@@ -234,7 +234,8 @@ $('#btnSave').click(function () {
 
 
 function SaveEvent(data) {
-    var vid = location.search.split('vid=')[1];
+    var vid = $('#vsid').val();
+    
     $.ajax({
         type: "POST",
         url: "/VendorCalendar/SaveEvent?vid=" + vid.toString() + "",
@@ -242,7 +243,7 @@ function SaveEvent(data) {
         success: function (data) {
             if (data.status) {
                 //Refresh the calender
-                FetchEventAndRenderCalendar($('#vendorsubcatids').val());
+                FetchEventAndRenderCalendar(vid);
                 $('#CalenderModalNew').modal('hide');
                 //location.reload();
             }
@@ -252,3 +253,8 @@ function SaveEvent(data) {
         }
     })
 }
+
+$('#refresh').click(function () {
+    var vid = $('#vsid').val();
+    FetchEventAndRenderCalendar(vid);
+});

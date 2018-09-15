@@ -29,7 +29,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string id = user.UserId.ToString(); ;
+                string id = user.UserId.ToString();
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 string vid = vendorMaster.Id.ToString();
@@ -41,8 +41,15 @@ namespace MaaAahwanam.Web.Controllers
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 ViewBag.venues = venues;
                 Addservices(vsid);
-                ViewBag.enable = c;
+                if (vsid == null)
+                {
+                    if (venues.FirstOrDefault().VenueType != null)
+                        ViewBag.enable = "second";
+                    else
+                        ViewBag.enable = "second";
+                }
                 ViewBag.vsid = vsid;
+                ViewBag.vendorid = vid;
                 if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
                 ViewBag.ksimages = vendorImageService.GetVendorAllImages(long.Parse(id));
             }
@@ -75,6 +82,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(filename, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult sidebar()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -106,6 +114,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             return PartialView("sidebar");
         }
+
         public ActionResult profilepic(string ks)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -156,7 +165,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView("Addservices");
         }
 
-        public JsonResult UpdateAmenities(string selectedamenities, string vsid, string command, string hdname, string Dimentions, string Minimumseatingcapacity, string Maximumcapacity, string Description,  string Address, string Landmark, string City, string ZipCode)
+        public JsonResult UpdateAmenities(string selectedamenities, string vsid, string command, string hdname, string Dimentions, string Minimumseatingcapacity, string Maximumcapacity, string Description, string Address, string Landmark, string City, string ZipCode)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
             string uid = user.UserId.ToString();
@@ -170,7 +179,7 @@ namespace MaaAahwanam.Web.Controllers
             if (command == "two")
             {
                 //long count = 0;
-               
+
                 vendormaster.ServicType = vendorMaster.ServicType;
                 vendormaster.ContactNumber = vendorMaster.ContactNumber;
                 vendormaster.EmailId = vendorMaster.EmailId;
@@ -263,7 +272,6 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        
         public void Amenities(List<VendorVenue> venues)
         {
             List<VendorVenue> amenities = venues;
@@ -333,6 +341,7 @@ namespace MaaAahwanam.Web.Controllers
             var availableamenities = value.Split(',');
             ViewBag.amenities = availableamenities;
         }
+
         public JsonResult addnewservice(string serviceselection, string subcategory)
         {
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -366,9 +375,8 @@ namespace MaaAahwanam.Web.Controllers
                 else
                     msg = "Failed To Add Sevice";
             }
-            return Json(msg,JsonRequestBehavior.AllowGet);
+            return Json(msg, JsonRequestBehavior.AllowGet);
         }
-
 
         public long addnewservice1(string category, string subcategory, long id)
         {
@@ -445,8 +453,8 @@ namespace MaaAahwanam.Web.Controllers
             VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(vid), long.Parse(vsid)); // Retrieving Particular Vendor Record
             var type = vendorVenue.VenueType;
 
-           //string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
-           // filename = email + path;
+            //string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+            // filename = email + path;
             //fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
             if (System.IO.File.Exists(fileName) == true)
                 System.IO.File.Delete(fileName);
@@ -495,7 +503,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
 
             }
-                return Json(filename, JsonRequestBehavior.AllowGet);
+            return Json(filename, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateImageInfo(string ks, string vid, string description)
@@ -543,32 +551,39 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-      //  }
-      //public ActionResult Sendmsg(string msg)
-      //  {
-      //      if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-      //      {
+        public JsonResult AddPackage(Package package)
+        {
+            package.price1 = package.PackagePrice = package.normaldays;
+            //Add Package Code
+            return Json(JsonRequestBehavior.AllowGet);
+        }
 
-      //          if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-      //          {
-      //              var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-      //              string uid = user.UserId.ToString();
-      //              string email = userLoginDetailsService.Getusername(long.Parse(uid));
-      //              vendorMaster = vendorMasterService.GetVendorByEmail(email);
-      //              string vid = vendorMaster.Id.ToString();
+        //  }
+        //public ActionResult Sendmsg(string msg)
+        //  {
+        //      if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //      {
 
-      //              FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
-      //              string readFile = File.OpenText().ReadToEnd();
+        //          if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //          {
+        //              var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+        //              string uid = user.UserId.ToString();
+        //              string email = userLoginDetailsService.Getusername(long.Parse(uid));
+        //              vendorMaster = vendorMasterService.GetVendorByEmail(email);
+        //              string vid = vendorMaster.Id.ToString();
 
-      //              string txtmessage = readFile;//readFile + body;
-      //              string subj = "Get Quote From Cart Page";
-      //              EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-      //              //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-      //          }
-      //          return View();
-      //      }
+        //              FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+        //              string readFile = File.OpenText().ReadToEnd();
 
-       // }
+        //              string txtmessage = readFile;//readFile + body;
+        //              string subj = "Get Quote From Cart Page";
+        //              EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+        //              //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+        //          }
+        //          return View();
+        //      }
+
+        // }
 
     }
 }

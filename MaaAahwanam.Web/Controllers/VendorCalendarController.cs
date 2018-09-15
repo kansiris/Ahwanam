@@ -18,6 +18,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(string id,string vid)
         {
             ViewBag.vid = vid;
+            ViewBag.id = id;
             //ViewBag.vendorsubcatids = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).Select(m => m.Id);
             //ViewBag.vendorsubcatids = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).Select(m => new SelectListItem { Text= m.VenueType ,Value= m.Id.ToString()}).ToList();
             return View();
