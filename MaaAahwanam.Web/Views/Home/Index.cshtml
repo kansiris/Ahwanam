@@ -157,7 +157,7 @@
                             }
                             if (user.UserType == "User")
                             {
-                                <span><a  id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
+                                <span><a id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
                                 <ul>
                                     <li><a href="/Home/SignOut">Log Out</a></li>
                                 </ul>
@@ -216,7 +216,7 @@
                                         <option value="Engagement">Engagement</option>
                                         <option value="Other">Other</option>
                                     </select>*@
-                                <div class="nice-select" tabindex="0"style="background-color: #fff;" >
+                                <div class="nice-select" tabindex="0" style="background-color: #fff;">
                                     <span class="current" style="padding-left:20px;font-weight:700;">Select Event</span>
                                     <ul class="list">
                                         <li data-value="" class="option disabled">Select Event</li>
@@ -650,15 +650,15 @@
                         <i class="icon_lock_alt"></i>
                     </div>
                     <div class="clearfix add_bottom_15">
-                           @*<div class="checkboxes float-left">
+                        @*<div class="checkboxes float-left">
                                 <label class="container_check">
                                     Remember me
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>*@
-                           <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-                        </div>
+                        <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                    </div>
                     <div class="text-center"><input type="submit" value="login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
 
                     <div class="text-center">
@@ -758,24 +758,25 @@
             var location = window.localStorage.getItem("location");
             var eventtype = window.localStorage.getItem("eventtype");
             var date = window.localStorage.getItem("eventdate");
-            if (eventtype != '')
+            //alert('Guests:' + guests + ',loc=' + location + ',event=' + eventtype + ',date=' + date);
+            if (eventtype != '' && eventtype != null)
                 $("span.current").text(eventtype);
             else
                 $("span.current").text('Select Event');
-            
-            if (guests == '') {
+
+            if (guests == '' || guests == null) {
                 window.localStorage.setItem("guests", 100);
                 $('#guests').val(100);
             }
             else { $('#guests').val(guests); }
 
-            if (location != '')
+            if (location != '' && location != null)
             { $('#loc').val(location); }
             else
             { $('#loc').val("Hyderabad"); }
 
             if (new Date(date) < new Date())
-            { $('#datetimepicker1').val(new Date());}
+            { $('#datetimepicker1').val(new Date()); }
             else
             { $('#datetimepicker1').val(date); }
         });
@@ -829,10 +830,10 @@
                 alert("Please Enter Name");
                 $("#txtname").focus();
             }
-            //else if (!passwordpattern.test(CustomerName)) {
-            //    alert("Please Enter valid 10 digit Phonenumber");
-            //    $("#txtphone").focus();
-            //}
+                //else if (!passwordpattern.test(CustomerName)) {
+                //    alert("Please Enter valid 10 digit Phonenumber");
+                //    $("#txtphone").focus();
+                //}
             else if (CustomerName.length < 5) {
                 alert("Name must be 5 characters");
                 $("#txtname").focus();
@@ -965,15 +966,15 @@
 
                                 //window.location.href = '/NewOrder/orderview'
                             }
-                            //else {
-                            //    alert("Customer Registered successfully");
-                            //    $("#txtphone").val('');
-                            //    $("#txtname").val('');
-                            //    $("#txtpassword").val('');
-                            //    $("#txtdeladdress").val('');
-                            //    $("#txtemail").val('');
-                            //    window.location.reload();
-                            //}
+                                //else {
+                                //    alert("Customer Registered successfully");
+                                //    $("#txtphone").val('');
+                                //    $("#txtname").val('');
+                                //    $("#txtpassword").val('');
+                                //    $("#txtdeladdress").val('');
+                                //    $("#txtemail").val('');
+                                //    window.location.reload();
+                                //}
                             else if (data == "unique") {
                                 alert("vendorlogin successfull");
                                 //vendorlogin
@@ -995,11 +996,11 @@
                     });
                 }
 
-                
+
             }
         }
         function forgot(clickedvalue) {
-                      var Email = $("#email_forgot").val();
+            var Email = $("#email_forgot").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var emailaddressVal = $("#email_forgot").val();
             if (emailaddressVal == '') {
@@ -1015,7 +1016,7 @@
                     $.ajax({
                         url: '/Home/forgotpass',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                         type: 'POST',
-                        data: JSON.stringify({ Email: Email}),
+                        data: JSON.stringify({ Email: Email }),
                         //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
                         contentType: 'application/json',
@@ -1023,8 +1024,8 @@
                             if (data == "success") {
                                 alert("A mail is sent to your email to change password Please check your email");
                                 window.location.reload();
- }
-                          
+                            }
+
                             else if (data == "Failed") {
 
                                 alert("Wrong Credentials,Check Username and password");
