@@ -28,6 +28,8 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                DateTime todatedate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                DateTime tommarowdate = todatedate.AddDays(1);
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
@@ -38,6 +40,10 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
                 ViewBag.order = orders;
+                ViewBag.todaysorder = orders.Where(p => p.BookedDate == todatedate);
+                ViewBag.tommaroworder = orders.Where(p => p.BookedDate == tommarowdate);
+                ViewBag.upcominforder = orders.Where(p => p.BookedDate >= tommarowdate);
+
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 ViewBag.venues = venues;
                 Addservices(vsid);
@@ -452,18 +458,19 @@ namespace MaaAahwanam.Web.Controllers
             string email = userLoginDetailsService.Getusername(long.Parse(uid));
             vendorMaster = vendorMasterService.GetVendorByEmail(email);
             string vid = vendorMaster.Id.ToString();
-            vendorMaster.Id = long.Parse(vid);
-            vendorImage.VendorId = long.Parse(vid);
-            VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(vid), long.Parse(vsid)); // Retrieving Particular Vendor Record
-            var type = vendorVenue.VenueType;
+           
+            //vendorMaster.Id = long.Parse(vid);
+            //vendorImage.VendorId = long.Parse(vid);
+            //VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(vid), long.Parse(vsid)); // Retrieving Particular Vendor Record
+            //var type = vendorVenue.VenueType;
 
             //string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
             // filename = email + path;
             //fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
-            if (System.IO.File.Exists(fileName) == true)
-                System.IO.File.Delete(fileName);
+            //if (System.IO.File.Exists(fileName) == true)
+            //    System.IO.File.Delete(fileName);
 
-            helpSectionImages.SaveAs(fileName);
+            //helpSectionImages.SaveAs(fileName);
             //userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
             if (helpSectionImages != null)
             {
@@ -497,7 +504,7 @@ namespace MaaAahwanam.Web.Controllers
                         var file1 = Request.Files[i];
                         if (file1 != null && file1.ContentLength > 0)
                         {
-                            filename = type + "_" + vsid + "_" + vid + "_" + j + path;
+                            filename = vendorMaster.ServicType + "_" + vsid + "_" + vid + "_" + j + path;
                             fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
                             file1.SaveAs(fileName);
                             vendorImage.ImageName = filename;

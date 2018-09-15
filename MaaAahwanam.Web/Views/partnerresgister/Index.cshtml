@@ -134,21 +134,21 @@
                                 <div class="fields">
                                     <div class="eight field">
                                         <label></label>
-                                        <input type="text" placeholder="Your Name">
+                                        <input type="text" id="vname" name="vname" placeholder="Your Name">
                                     </div>
                                 </div>
                                 <div class="eight field">
                                     <label></label>
-                                    <input type="text" placeholder="Business Name">
+                                    <input type="text" id="businessname" name="businessname" placeholder="Business Name">
                                 </div>
                                 <div class="eight field">
                                     <label></label>
-                                    <input type="text" placeholder="Mobile">
+                                    <input type="text" id="mobile" name="mobile" placeholder="Mobile">
                                 </div>
 
                                 <div class="eight field">
                                     <label></label>
-                                    <input type="text" placeholder="Email Address">
+                                    <input type="text" id="email" name="email" placeholder="Email Address">
                                 </div>
 
                                 <a href="#0" class="btn_3 add_top_30" id="btnregister">
@@ -213,9 +213,44 @@
             // attach events to buttons
             $('.second.modal').modal('attach events', '.first.modal .button');
             // show first now
-            $('#btnregister').click(function () { 
-                $('.first.modal').modal('show');
+            $('#btnregister').click(function () {
+                var vname = $('#vname').val;
+                var businessname = $('#businessname').val;
+                var mobile = $('#mobile').val;
+                var email = $('#email').val;
+                $.ajax({
+                    url: '/partnerresgister/vendorreg?vname=' + vname + '&&businessname=' + businessname + '&&mobile=' + mobile + '&&email=' + email,
+                    contentType: false,
+                    method: 'post',
+                    data: formData,
+                    cache: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    success: function (data) {
+                        //Firing event if File Upload is completed!
+                        if (data == 'success') {
+                            //alertmsg("Upload Completed");
+                            $('.first.modal').modal('show');
+                        }
+                        else if (data == 'ks') {
+
+                            alert('E-Mail ID Already Registered!!! Try Logging with your Password');
+                        }
+                        else if ( data == 'success1') {
+                            alert('Registration Failed');
+                        }
+                        },
+           
+                    error: function (data) {
+                        //alert('error');
+                    alertify.alertmsg("error");
+                }
             });
+                
+
+                });
+              
+           
         </script>
 </body>
 </html>
