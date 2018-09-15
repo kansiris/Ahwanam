@@ -20,5 +20,8 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedDate { get; set; }
         public string ActivationCode { get; set; }
         public string IPAddress { get; set; }
+        public string businesstype { get; set; }
+        public string EmailOTP { get; set; }
+        public string MobileOTP { get; set; }
     }
 }

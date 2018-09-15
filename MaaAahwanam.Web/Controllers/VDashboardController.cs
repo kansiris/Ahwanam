@@ -41,18 +41,21 @@ namespace MaaAahwanam.Web.Controllers
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 ViewBag.venues = venues;
                 Addservices(vsid);
-                //if (vsid == null)
-                //{
-                //if (venues.FirstOrDefault().VenueType != null)
-                //    ViewBag.enable = "second";
-                //else
-                //    ViewBag.enable = "first";
-                //}
-                ViewBag.enable = c;
+                if (venues.Count > 0)
+                    ViewBag.enable = "second";
+                else
+                    ViewBag.enable = "first";
+                if (c != null) ViewBag.enable = c;
                 ViewBag.vsid = vsid;
                 ViewBag.vendorid = vid;
                 if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
-                ViewBag.ksimages = vendorImageService.GetVendorAllImages(long.Parse(id));
+                var allimages = vendorImageService.GetVendorAllImages(long.Parse(id));
+                //List<VendorImage> image = new List<VendorImage>();
+                //foreach (var item in allimages)
+                //{
+                //    image.AddRange(allimages.Where(m=>m.VendorId == ));
+                //}
+                ViewBag.ksimages = allimages;
             }
             else
             {
