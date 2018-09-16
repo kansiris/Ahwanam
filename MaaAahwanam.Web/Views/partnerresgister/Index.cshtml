@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
     <style>
         .modal {
-         position: relative;
+            position: relative;
         }
     </style>
 
@@ -150,43 +150,50 @@
                                     <label></label>
                                     <input type="text" id="email" name="email" placeholder="Email Address">
                                 </div>
-
+                                
                                 <a href="#0" class="btn_3 add_top_30" id="btnregister">
                                     Register
-                                  
+
                                 </a>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
-
             </section>
 
         </main>
         <!--/main-->
         <div class="ui first coupled modal">
             <div class="header">
-                Modal #1
-            </div>
+Welcome             </div>
             <div class="image content">
-                <div class="image">
-                    <i class="right arrow icon"></i>
-                </div>
+                
                 <div class="description">
-                    <p>We have more to share with you. Follow us along to modal 2</p>
+                    <p>Go ahead and fill out you business information</p>
+                    <div class="businesstype"> <input type="checkbox" id="business" name="business" value="Individual"/><label>Individual</label><input type="checkbox" id="business" name="business" value="Business"/><label>Business</label> </div>
+                        <label>Category of business</label>
+                        <p><select class="form-control" id="serviceselection1" name="serviceselection1" style="height:40px">
+    <option disabled selected>Select Service Type</option>
+    <option value="Venue">Venue</option>
+    <option value="Catering">Catering</option>
+    <option value="Photography">Photography</option>
+    <option value="Decorator">Decorator</option>
+    <option value="Other">Others</option>
+</select>  </p>
                 </div>
             </div>
             <div class="actions">
-                <div class="ui primary button">Proceed</div>
+                <div class="ui primary button" id="btnregister1">Proceed</div>
             </div>
         </div>
         <div class="ui small second coupled modal">
             <div class="header">
-                Modal #2
+               Almost Done!!!
             </div>
             <div class="content">
                 <div class="description">
-                    <p>That's everything!</p>
+                    <p>Please check you email and click on the activation link to activate and login to your account</p>
                 </div>
             </div>
             <div class="actions">
@@ -196,61 +203,122 @@
                 </div>
             </div>
         </div>
-        </div>
-        <div id="toTop"></div><!-- Back to top button -->
-        <!-- COMMON SCRIPTS -->
-        <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
-        <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
-        <script src="~/newdesignstyles/Scripts/main.js"></script>
-        <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
-        <!-- semantic -->
-        <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
-        <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
-        <script>
-            $('.coupled.modal').modal({
-                allowMultiple: false
-            });
-            // attach events to buttons
-            $('.second.modal').modal('attach events', '.first.modal .button');
-            // show first now
-            $('#btnregister').click(function () {
-                var vname = $('#vname').val;
-                var businessname = $('#businessname').val;
-                var mobile = $('#mobile').val;
-                var email = $('#email').val;
+    </div>
+    <div id="toTop"></div><!-- Back to top button -->
+    <!-- COMMON SCRIPTS -->
+    <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
+    <script src="~/newdesignstyles/Scripts/main.js"></script>
+    <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
+    <!-- semantic -->
+    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
+    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
+    <script>
+        $('.coupled.modal').modal({
+            allowMultiple: false
+
+        });
+        // attach events to buttons
+       // $('.second.modal').modal('attach events', '.first.modal .button');
+        $('#btnregister1').click(function () {
+            $('.first.modal').modal('hide');
+            var businesstype = '';
+            var vname = $('#vname').val();
+            var businessname = $('#businessname').val();
+            var mobile = $('#mobile').val();
+            var email = $('#email').val();
+            var serviceselection = $('#serviceselection1').find(":selected").text();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var phonepattern = /^[0-9]{10}$/;
+            var emailaddressVal = $("#email").val();
+            if ($(".businesstype input[type='checkbox']").is(':checked')) {
+
+                var favorite = [];
+                $.each($("input[name='business']:checked"), function () {
+                    favorite.push($(this).val());
+                    businesstype = favorite.join(", ");
+                })
+            }
+            else {
+                alert("Please select businesstype");
+            }
+           
+            if (serviceselection == 'Select Service Type') {
+                alert('select services');
+            }
+            else if (businesstype == '') {
+                alert('select business type');
+            }
+            else {
                 $.ajax({
-                    url: '/partnerresgister/vendorreg?vname=' + vname + '&&businessname=' + businessname + '&&mobile=' + mobile + '&&email=' + email,
-                    contentType: false,
-                    method: 'post',
-                    data: formData,
-                    cache: false,
-                    enctype: 'multipart/form-data',
-                    processData: false,
+                    url: '/partnerresgister/vendorreg?vname=' + vname + '&&businessname=' + businessname + '&&mobile=' + mobile + '&&email=' + email + '&&businesstype=' + businesstype + '&&serviceselection=' + serviceselection,
+                    type: 'post',
+                    contentType: 'application-json',
                     success: function (data) {
                         //Firing event if File Upload is completed!
                         if (data == 'success') {
                             //alertmsg("Upload Completed");
-                            $('.first.modal').modal('show');
+                            $('.second.modal').modal('show');
                         }
                         else if (data == 'ks') {
 
                             alert('E-Mail ID Already Registered!!! Try Logging with your Password');
                         }
-                        else if ( data == 'success1') {
+                        else if (data == 'success1') {
                             alert('Registration Failed');
                         }
-                        },
-           
-                    error: function (data) {
-                        //alert('error');
-                    alertify.alertmsg("error");
-                }
-            });
-                
+                    },
 
+                    error: function (data) {
+                        alert('error');
+                        //alertify.alertmsg("error");
+                    }
                 });
-              
-           
-        </script>
+
+            }
+        });
+        // show first now
+        $('#btnregister').click(function () {
+
+            var businesstype = '';
+            var vname = $('#vname').val();
+            var businessname = $('#businessname').val();
+            var mobile = $('#mobile').val();
+            var email = $('#email').val();
+           // var serviceselection = $('#serviceselection1').find(":selected").text();
+            var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var phonepattern = /^[0-9]{10}$/;
+            var emailaddressVal = $("#email").val();
+            if (mobile == '') {
+                alert("Please Enter PhoneNumber");
+                $("#txtphone").focus();
+            }
+            else if (!phonepattern.test(mobile)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#mobile").focus();
+            }
+            else if (mobile == '') {
+                alert("Please Enter Name");
+                $("#mobile").focus();
+            }
+            else if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+
+                $("#email").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
+                alert("Please Enter a valid Email Address");
+                $("#email").focus();
+            }
+
+            else {
+                $('.first.modal').modal('show');
+
+            }
+
+        });
+
+
+    </script>
 </body>
 </html>
