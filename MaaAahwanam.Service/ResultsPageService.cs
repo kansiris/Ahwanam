@@ -29,5 +29,15 @@ namespace MaaAahwanam.Service
         {
             return resultsPageRepository.GetUserLogin(userLogin);
         }
+
+        public List<GetPhotographers_Result> GetAllPhotographers()
+        {
+            return resultsPageRepository.GetAllPhotographers();
+        }
+
+        public List<GetDecorators_Result> GetAllDecorators()
+        {
+            return resultsPageRepository.GetAllDecorators();
+        }
     }
 }
