@@ -103,7 +103,7 @@ namespace MaaAahwanam.Web.Controllers
                         nettotal = nettotal + totalp - Convert.ToDecimal(discount) + Convert.ToDecimal(servcharge) + Convert.ToDecimal(gst);
                     }
                     var totalp1 = totalp2;
-                    var discount1 = "0.00";
+                    var discount1 = "0";
                     var servcharge1 = servcharge;
                     var gst1 = gst;
                     var nettotal1 = Convert.ToString(nettotal);

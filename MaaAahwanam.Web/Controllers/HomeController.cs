@@ -34,6 +34,18 @@ namespace MaaAahwanam.Web.Controllers
         cartservices cartserve = new cartservices();
         ResultsPageService resultsPageService = new ResultsPageService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
+        VendorsCatering vendorsCatering = new VendorsCatering();
+        VendorsDecorator vendorsDecorator = new VendorsDecorator();
+        VendorDecoratorService vendorDecoratorService = new VendorDecoratorService();
+        VendorsPhotography vendorsPhotography = new VendorsPhotography();
+        VendorVenue vendorVenue = new VendorVenue();
+        VendorsOther vendorsOther = new VendorsOther();
+        VendorCateringService vendorCateringService = new VendorCateringService();
+        VendorPhotographyService vendorPhotographyService = new VendorPhotographyService();
+        VendorVenueService vendorVenueService = new VendorVenueService();
+        VendorOthersService vendorOthersService = new VendorOthersService();
+        VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
 
         // GET: Home
         public ActionResult Index()
@@ -151,6 +163,50 @@ namespace MaaAahwanam.Web.Controllers
                         string email = userLogin.UserName;
                         var userid = userResponse.UserLoginId;
                         userLoginDetailsService.changestatus(userLogin, userDetails, (int)userid);
+                        if (userResponse.UserType == "Vendor")
+                        {
+                           
+                            
+                            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                            string vid = vendorMaster.Id.ToString();
+                            var vsid = "";
+                            if (vendorMaster.ServicType == "Catering")
+                            {
+                                var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(vid)).FirstOrDefault();
+                                vsid = catering.Id.ToString();
+                                vendorsCatering.Status = vendorMaster.Status = "Active";
+                                vendorsCatering = vendorCateringService.activeCatering(vendorsCatering, vendorMaster, long.Parse(vsid), long.Parse(vid));
+                            }
+                            if (vendorMaster.ServicType == "Decorator")
+                            {
+                                var decorators = vendorVenueSignUpService.GetVendorDecorator(long.Parse(vid)).FirstOrDefault();
+                                vsid = decorators.Id.ToString();
+                                vendorsDecorator.Status = vendorMaster.Status = "Active";
+                                vendorsDecorator = vendorDecoratorService.activeDecorator(vendorsDecorator, vendorMaster, long.Parse(vsid), long.Parse(vid));
+                            }
+                            if (vendorMaster.ServicType == "Photography")
+                            {
+                                var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(vid)).FirstOrDefault();
+                                vsid = photography.Id.ToString();
+                                vendorsPhotography.Status = vendorMaster.Status = "Active";
+                                vendorsPhotography = vendorPhotographyService.ActivePhotography(vendorsPhotography, vendorMaster, long.Parse(vsid), long.Parse(vid));
+                            }
+                            if (vendorMaster.ServicType == "Venue")
+                            {
+                                var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).FirstOrDefault();
+                                vsid = venues.Id.ToString();
+                                vendorVenue.Status = vendorMaster.Status = "Active";
+                                vendorVenue = vendorVenueService.activeVenue(vendorVenue, vendorMaster, long.Parse(vsid), long.Parse(vid));
+                            }
+                            if (vendorMaster.ServicType == "Other")
+                            {
+                                var others = vendorVenueSignUpService.GetVendorOther(long.Parse(vid)).FirstOrDefault();
+                                vsid = others.Id.ToString();
+                                vendorsOther.Status = vendorMaster.Status = "Active";
+                                vendorsOther = vendorOthersService.activationOther(vendorsOther, vendorMaster, long.Parse(vsid), long.Parse(vid));
+                            }
+                        }
+
                         TempData["Active"] = "Thanks for Verifying the Email";
                         return RedirectToAction("Index", "NUserRegistration");
                     }
