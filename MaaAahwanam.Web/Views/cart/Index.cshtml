@@ -373,11 +373,17 @@
     <!-- COLOR SWITCHER  -->
     <script>
         function email() {
+            var guests = window.localStorage.getItem("guests");
+            var location = window.localStorage.getItem("location");
+            var eventtype = window.localStorage.getItem("eventtype");
+            var date = window.localStorage.getItem("eventdate");
+            var searchedcontent = 'Guests:' + guests + ',Location:' + location + ',Event Type:' + eventtype + ',Selected Date:' + date + '';
+            //alert(searchedcontent);
             var selcartid = $('.selectedcart').val();
             $.ajax({
                 url: '/cart/email',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                 type: 'POST',
-                data: JSON.stringify({ selcartid: selcartid }),
+                data: JSON.stringify({ selcartid: selcartid, searchedcontent: searchedcontent }),
                 //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                 dataType: 'json',
                 contentType: 'application/json',
