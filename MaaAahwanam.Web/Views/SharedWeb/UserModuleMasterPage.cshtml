@@ -156,6 +156,12 @@
     <!-- page -->
     <!-- Sign In Popup -->
     <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide ">
+        <div class="overlay" style="display: none;">
+            <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+                <img src="~/CSSWeb/images/Loader.gif" /><br>
+                <p style="color: white; font-style: italic; font-family:serif;" id="loadermsg"></p>
+            </div>
+        </div>
         <div class="small-dialog-header">
             <h3>Sign In / Register</h3>
         </div>
@@ -167,29 +173,29 @@
                 <div class="authenticationBlocks">
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control" placeholder="Email ID" name="UserName" id="UserName" required />
+                        <input type="text" class="form-control" placeholder="Email ID" name="UserName" id="UserName" />
 
                         @*<input type="email" class="form-control" name="email" id="email">*@
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="Password" class="form-control" placeholder="Password" name="Password1" id="Password1" required />
+                        <input type="Password" class="form-control" placeholder="Password" name="Password1" id="Password1" />
 
                         @*<input type="password" class="form-control" name="password" id="password" value="">*@
                         <i class="icon_lock_alt"></i>
                     </div>
                     <div class="clearfix add_bottom_15">
-                           @*<div class="checkboxes float-left">
+                        @*<div class="checkboxes float-left">
                                 <label class="container_check">
                                     Remember me
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>*@
-                           <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-                        </div>
-                    <div class="text-center"><input type="submit" value="login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
+                        <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                    </div>
+                    <div class="text-center"><input type="button" value="Login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
 
                     <div class="text-center">
                         Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
@@ -203,8 +209,7 @@
                         <i class="icon_mail_alt"></i>
                     </div>
                     <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-                    <div class="text-center"><div class="text-center"><input type="submit" value="Reset Password" onclick="forgot(this.value)" class="btn_1 full-width" name="command"></div>
-</div>
+                    <div class="text-center"><input type="button" value="Reset Password" onclick="forgot(this.value)" class="btn_1 full-width" name="command"></div>
                     <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
                 </div>
@@ -212,30 +217,30 @@
 
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="Name" id="txtname" required>
+                        <input type="text" class="form-control" name="txtname" id="txtname">
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="Password" minlength="5" id="Password" required>
+                        <input type="password" class="form-control" name="Password" minlength="5" id="Password">
                         <i class="icon_lock_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="Email" id="txtemail" required>
+                        <input type="email" class="form-control" name="Email" id="txtemail">
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Phone Number</label>
                         @*<input type="password" class="form-control" name="password" id="password" value="">*@
-                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" id="txtphone" required>
+                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" id="txtphone">
                         <i class="icon_lock_alt"></i>
                     </div>
 
                     <p>You will receive an email containing a link allowing you to activate</p>
                     <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
-                    <div class="text-center"><input type="submit" value="Register" onclick="savecustomer(this.value)" class="btn_1"></div>
+                    <div class="text-center"><input type="button" value="Register" onclick="savecustomer(this.value)" class="btn_1"></div>
 
                 </div>
             </div>
@@ -500,6 +505,7 @@
             var phonepattern = /^[0-9]{10}$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#txtemail").val();
+            var url = document.referrer;
             if (CustomerPhoneNumber == '') {
                 alert("Please Enter PhoneNumber");
                 $("#txtphone").focus();
@@ -512,10 +518,10 @@
                 alert("Please Enter Name");
                 $("#txtname").focus();
             }
-            else if (!passwordpattern.test(CustomerName)) {
-                alert("Please Enter valid 10 digit Phonenumber");
-                $("#txtphone").focus();
-            }
+                //else if (!passwordpattern.test(CustomerName)) {
+                //    alert("Please Enter valid 10 digit Phonenumber");
+                //    $("#txtphone").focus();
+                //}
             else if (CustomerName.length < 5) {
                 alert("Name must be 5 characters");
                 $("#txtname").focus();
@@ -533,31 +539,43 @@
                 alert("Please Enter valid 10 digit Phonenumber");
                 $("#txtphone").focus();
             }
-                else if (emailaddressVal == '') {
-                    alert("Please Enter Email Address");
-                    $("#txtemail").focus();
-                }
-                else if (!emailReg.test(emailaddressVal)) {
+            else if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
+
+                $("#txtemail").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
                 alert("Please Enter a valid Email Address");
-                    $("#txtemail").focus();
-                }
+                $("#txtemail").focus();
+            }
 
             else {
                 if (clickedvalue == 'Register') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Registration in process....');
                     $.ajax({
-                        url: '/Home/register', type: 'POST',
+                        url: '/Home/register',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        type: 'POST',
                         data: JSON.stringify({ CustomerPhoneNumber: CustomerPhoneNumber, CustomerName: CustomerName, Password: Password, Email: Email }),
+                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
                         contentType: 'application/json',
                         success: function (data) {
                             if (data == "success") {
                                 alert("Check your email to active your account to login");
-                                window.location.reload();
-
+                                //window.location.href = '/NewOrder/orderview'
                             }
+                            //else {
+                            //    alert("Customer Registered successfully");
+                            //    $("#txtphone").val('');
+                            //    $("#txtname").val('');
+                            //    $("#txtpassword").val('');
+                            //    $("#txtdeladdress").val('');
+                            //    $("#txtemail").val('');
+                            //    window.location.reload();
+                            //}
                             if (data == "unique") {
                                 alert("E-Mail ID Already Registered!!! Try Logging with your Password");
-                                window.location.reload();
 
                             }
                             else if (data == "unique1") {
@@ -582,70 +600,67 @@
                             }
                         },
                         error: function (data) {
-                            alert("error");
+                            alert("Something Went Wrong!!! Try Again Later");
                         }
                     });
                 }
             }
         }
         function login(clickedvalue) {
+            var url1 = document.referrer;
+            //alert(url1);
             var Password = $("#Password1").val();
             var Email = $("#UserName").val();
-            var url1 = document.referrer;
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#UserName").val();
-            if (Password == '') {
-                alert("Please Enter Password");
-                $("#txtpassword").focus();
-            }
-               
-            else if (emailaddressVal == '') {
+            if (emailaddressVal == '') {
                 alert("Please Enter Email Address");
                 $("#txtemail").focus();
             }
+            else if (Password == '') {
+                alert("Please Enter Password");
+                $("#txtpassword").focus();
+            }
             else if (!emailReg.test(emailaddressVal)) {
                 alert("Please Enter a valid Email Address");
-                $("#txtemail").focus();
+                $("#txtpassword").focus();
             }
-
             else {
-                if (clickedvalue == 'login') {
+                if (clickedvalue == 'Login') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Signing you in....');
                     $.ajax({
                         url: '/Home/login',
                         type: 'POST',
-                        data: JSON.stringify({ Password: Password, Email: Email,url1:url1 }),
+                        data: JSON.stringify({ Password: Password, Email: Email, url1: url1 }),
                         dataType: 'json',
                         contentType: 'application/json',
                         success: function (data) {
                             if (data == "success") {
-                                alert("Login Sucessfull");
                                 window.location.reload();
-}
-                            if (data == "unique") {
+                            }
+                            else if (data == "unique") {
                                 alert("vendorlogin successfull");
                                 //vendorlogin
                             }
                             else if (data == "Failed") {
-
                                 alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
+                                //window.location.reload();
                             }
                             else if (data == "success1") {
-
                                 alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
+                                //window.location.reload();
                             }
                         },
                         error: function (data) {
-                            alert("Wrong Credentials,Check Username and password");
+                            alert("Something Went Wrong!!! Try Again Later");
                         }
                     });
                 }
             }
         }
-
-        function login1(clickedvalue) {
+        function forgot(clickedvalue) {
             var Email = $("#email_forgot").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var emailaddressVal = $("#email_forgot").val();
@@ -659,9 +674,11 @@
             }
             else {
                 if (clickedvalue == 'Reset Password') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Locating your Email Address in database....');
                     $.ajax({
                         url: '/Home/forgotpass',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
-                        type: 'POST',
+                        type: 'post',
                         data: JSON.stringify({ Email: Email }),
                         //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
@@ -671,20 +688,13 @@
                                 alert("A mail is sent to your email to change password Please check your email");
                                 window.location.reload();
                             }
-
-                            else if (data == "Failed") {
-
-                                alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
-                            }
                             else if (data == "success1") {
-
-                                alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
+                                alert("Email ID Not Found.please enter registered Email ID");
+                                $("#email_forgot").focus();
                             }
                         },
                         error: function (data) {
-                            alert("Wrong Credentials,Check Username and password");
+                            alert("Something Went Wrong!!! Try Again Later");
                         }
                     });
                 }
@@ -692,7 +702,8 @@
 
             }
         }
-        function forgot(clickedvalue) {
+
+        function login1(clickedvalue) {
             var Email = $("#email_forgot").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var emailaddressVal = $("#email_forgot").val();

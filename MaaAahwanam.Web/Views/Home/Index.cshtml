@@ -28,7 +28,7 @@
 
     <!-- SPECIFIC CSS -->
     <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
-
+    <link href="~/newdesign/css/css" rel="stylesheet" />
     <!-- YOUR CUSTOM CSS -->
     <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
@@ -101,9 +101,23 @@
             text-align: left;
         }
     </style>
+    <style>
+        .overlay {
+            background: no-repeat scroll center center #FFF;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999999;
+            background-color: rgba(0,0,0,0.8);
+            /* END EXTERNAL S */
+        }
+    </style>
     @using System.Globalization
 </head>
 <body>
+
     <div id="page">
         <header class="header menu_fixed">
             <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
@@ -131,7 +145,7 @@
                 @using MaaAahwanam.Web.Custom
                 <ul>
                     <li>
-                        
+
                         @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                         {
                             var user = (CustomPrincipal)HttpContext.Current.User;
@@ -146,7 +160,7 @@
                             }
                             if (user.UserType == "User")
                             {
-                                <span><a id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
+                                <span><a id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@user.FirstName</a></span>
                                 <ul>
                                     <li><a href="/Home/SignOut">Log Out</a></li>
                                 </ul>
@@ -234,7 +248,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date" required>
+                                    <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date">
                                     <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
                                 </div>
                             </div>
@@ -621,6 +635,12 @@
     <!--/footer-->
     <!-- Sign In Popup -->
     <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide ">
+        <div class="overlay" style="display: none;">
+            <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+                <img src="~/CSSWeb/images/Loader.gif" /><br>
+                <p style="color: white; font-style: italic; font-family:serif;" id="loadermsg"></p>
+            </div>
+        </div>
         <div class="small-dialog-header">
             <h3>Sign In / Register</h3>
         </div>
@@ -632,14 +652,14 @@
                 <div class="authenticationBlocks">
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control" placeholder="Email ID" name="UserName" id="UserName" required />
+                        <input type="text" class="form-control" placeholder="Email ID" name="UserName" id="UserName" />
 
                         @*<input type="email" class="form-control" name="email" id="email">*@
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="Password" class="form-control" placeholder="Password" name="Password1" id="Password1" required />
+                        <input type="Password" class="form-control" placeholder="Password" name="Password1" id="Password1" />
 
                         @*<input type="password" class="form-control" name="password" id="password" value="">*@
                         <i class="icon_lock_alt"></i>
@@ -654,7 +674,7 @@
                             </div>*@
                         <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
                     </div>
-                    <div class="text-center"><input type="submit" value="Login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
+                    <div class="text-center"><input type="button" value="Login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
 
                     <div class="text-center">
                         Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
@@ -668,7 +688,7 @@
                         <i class="icon_mail_alt"></i>
                     </div>
                     <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-                    <div class="text-center"><input type="submit" value="Reset Password" onclick="forgot(this.value)" class="btn_1 full-width" name="command"></div>
+                    <div class="text-center"><input type="button" value="Reset Password" onclick="forgot(this.value)" class="btn_1 full-width" name="command"></div>
                     <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
                 </div>
@@ -676,30 +696,30 @@
 
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="txtname" id="txtname" required>
+                        <input type="text" class="form-control" name="txtname" id="txtname">
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="Password" minlength="5" id="Password" required>
+                        <input type="password" class="form-control" name="Password" minlength="5" id="Password">
                         <i class="icon_lock_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="Email" id="txtemail" required>
+                        <input type="email" class="form-control" name="Email" id="txtemail">
                         <i class="icon_mail_alt"></i>
                     </div>
                     <div class="form-group">
                         <label>Phone Number</label>
                         @*<input type="password" class="form-control" name="password" id="password" value="">*@
-                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" id="txtphone" required>
+                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" id="txtphone">
                         <i class="icon_lock_alt"></i>
                     </div>
 
                     <p>You will receive an email containing a link allowing you to activate</p>
                     <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
-                    <div class="text-center"><input type="submit" value="Register" onclick="savecustomer(this.value)" class="btn_1"></div>
+                    <div class="text-center"><input type="button" value="Register" onclick="savecustomer(this.value)" class="btn_1"></div>
 
                 </div>
             </div>
@@ -718,6 +738,7 @@
     <!-- DATEPICKER  -->
     <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
     <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
+
     @*<script src="~/newdesign/js/daterangepicker.js"></script>*@
     @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
     <script>
@@ -770,14 +791,12 @@
             else
             { $('#loc').val("Hyderabad"); }
 
-            if (new Date(date) < new Date())
-            {
+            if (new Date(date) < new Date()) {
                 var today = new Date();
                 var formatdate = '' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '';
                 $('#datetimepicker1').val(formatdate);
             }
-            else
-            { $('#datetimepicker1').val(date); }
+            else { $('#datetimepicker1').val(date); }
         });
         $('#btnsearch').click(function () {
             var location = $('#loc').val();
@@ -850,18 +869,20 @@
                 alert("Please Enter valid 10 digit Phonenumber");
                 $("#txtphone").focus();
             }
-                else if (emailaddressVal == '') {
-                    alert("Please Enter Email Address");
+            else if (emailaddressVal == '') {
+                alert("Please Enter Email Address");
 
-                    $("#txtemail").focus();
-                }
-                else if (!emailReg.test(emailaddressVal)) {
+                $("#txtemail").focus();
+            }
+            else if (!emailReg.test(emailaddressVal)) {
                 alert("Please Enter a valid Email Address");
                 $("#txtemail").focus();
-                }
+            }
 
             else {
                 if (clickedvalue == 'Register') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Registration in process....');
                     $.ajax({
                         url: '/Home/register',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                         type: 'POST',
@@ -909,7 +930,7 @@
                             }
                         },
                         error: function (data) {
-                            alert("error");
+                            alert("Something Went Wrong!!! Try Again Later");
                         }
                     });
                 }
@@ -936,7 +957,9 @@
                 $("#txtpassword").focus();
             }
             else {
-                //if (clickedvalue == 'login') {
+                if (clickedvalue == 'Login') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Signing you in....');
                     $.ajax({
                         url: '/Home/login',
                         type: 'POST',
@@ -953,18 +976,18 @@
                             }
                             else if (data == "Failed") {
                                 alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
+                                //window.location.reload();
                             }
                             else if (data == "success1") {
                                 alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
+                                //window.location.reload();
                             }
                         },
                         error: function (data) {
-                            alert("Wrong Credentials,Check Username and password");
+                            alert("Something Went Wrong!!! Try Again Later");
                         }
                     });
-                //}
+                }
             }
         }
         function forgot(clickedvalue) {
@@ -981,9 +1004,11 @@
             }
             else {
                 if (clickedvalue == 'Reset Password') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Locating your Email Address in database....');
                     $.ajax({
                         url: '/Home/forgotpass',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
-                        type: 'POST',
+                        type: 'post',
                         data: JSON.stringify({ Email: Email }),
                         //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
@@ -993,20 +1018,13 @@
                                 alert("A mail is sent to your email to change password Please check your email");
                                 window.location.reload();
                             }
-
-                            else if (data == "Failed") {
-
-                                alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
-                            }
                             else if (data == "success1") {
-
-                                alert("Wrong Credentials,Check Username and password");
-                                window.location.reload();
+                                alert("Email ID Not Found.please enter registered Email ID");
+                                $("#email_forgot").focus();
                             }
                         },
                         error: function (data) {
-                            alert("Wrong Credentials,Check Username and password");
+                            alert("Something Went Wrong!!! Try Again Later");
                         }
                     });
                 }
