@@ -30,5 +30,15 @@ namespace MaaAahwanam.Repository.db
             var data = _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault(); // && p.UserType == userLogin.UserType
             return data;
         }
+
+        public List<GetPhotographers_Result> GetAllPhotographers()
+        {
+            return maaAahwanamEntities.GetPhotographers().ToList();
+        }
+
+        public List<GetDecorators_Result> GetAllDecorators()
+        {
+            return maaAahwanamEntities.GetDecorators().ToList();
+        }
     }
 }

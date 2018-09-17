@@ -25,9 +25,11 @@ namespace MaaAahwanam.Web.Controllers
 
         // GET: VDashboard
         public ActionResult Index(string c, string vsid)
+
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                List<VendorImage> allimages = new List<VendorImage>();
                 DateTime todatedate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
                 DateTime tommarowdate = todatedate.AddDays(1);
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -43,7 +45,6 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.todaysorder = orders.Where(p => p.BookedDate == todatedate);
                 ViewBag.tommaroworder = orders.Where(p => p.BookedDate == tommarowdate);
                 ViewBag.upcominforder = orders.Where(p => p.BookedDate >= tommarowdate);
-
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 ViewBag.venues = venues;
                 Addservices(vsid);
@@ -54,14 +55,11 @@ namespace MaaAahwanam.Web.Controllers
                 if (c != null) ViewBag.enable = c;
                 ViewBag.vsid = vsid;
                 ViewBag.vendorid = vid;
-                if (vsid != null) Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
-                var allimages = vendorImageService.GetVendorAllImages(long.Parse(id));
-                //List<VendorImage> image = new List<VendorImage>();
-                //foreach (var item in allimages)
-                //{
-                //    image.AddRange(allimages.Where(m=>m.VendorId == ));
-                //}
+                if (vsid != null && vsid != "") { Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList()); allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid)); }
                 ViewBag.ksimages = allimages;
+                ViewBag.images = allimages;
+                ViewBag.sliderimages = allimages.Where(m => m.ImageType == "Slider").ToList();
+                ViewBag.slidercount = 4 - ViewBag.sliderimages.Count;
             }
             else
             {
@@ -158,16 +156,16 @@ namespace MaaAahwanam.Web.Controllers
             //var venues = (vendorVenueSignUpService.GetVendorVenue(Convert.ToInt64(vendorMaster.Id))).Where(p => p.Id == Convert.ToInt64(vsid)).ToList();
             //ViewBag.subvenues = venues;
             VendorVenueService vendorVenueService = new VendorVenueService();
-            if (vsid == null || vsid == "undefined")
+            if (vsid == null || vsid == "" || vsid == "undefined")
             {
-                ViewBag.ks = "ks"; ViewBag.service = new List<VendorVenue>(); ViewBag.images = new List<VendorImage>();
+                ViewBag.ks = "ks"; ViewBag.service = new List<VendorVenue>(); 
             }
             else
             {
                 ViewBag.ks = "ksc";
                 ViewBag.service = vendorVenueService.GetVendorVenue(long.Parse(vid), long.Parse(vsid));
                 ViewBag.categorytype = ViewBag.service.VenueType;
-                ViewBag.images = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
+                //ViewBag.images = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
                 var pkgs = vendorProductsService.getvendorpkgs(vid);
                 ViewBag.pacakagerecord = pkgs;
             }
@@ -458,44 +456,18 @@ namespace MaaAahwanam.Web.Controllers
             string email = userLoginDetailsService.Getusername(long.Parse(uid));
             vendorMaster = vendorMasterService.GetVendorByEmail(email);
             string vid = vendorMaster.Id.ToString();
-           
-            //vendorMaster.Id = long.Parse(vid);
-            //vendorImage.VendorId = long.Parse(vid);
-            //VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(vid), long.Parse(vsid)); // Retrieving Particular Vendor Record
-            //var type = vendorVenue.VenueType;
-
-            //string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
-            // filename = email + path;
-            //fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
-            //if (System.IO.File.Exists(fileName) == true)
-            //    System.IO.File.Delete(fileName);
-
-            //helpSectionImages.SaveAs(fileName);
-            //userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
             if (helpSectionImages != null)
             {
                 string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
-                //if (path.ToLower() != ".jpg" && path.ToLower() != ".jpeg" && path.ToLower() != ".png")
-                //    return Json("File");
                 int imageno = 0;
                 int imagecount = 8;
-                var list = vendorImageService.GetImages(long.Parse(vsid), long.Parse(vid));
+                var list = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
+                string lastimage = list.OrderByDescending(m => m.ImageId).FirstOrDefault().ImageName;
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     //getting max imageno
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        string x = list[i].ImageName.ToString();
-                        string[] y = x.Split('_', '.');
-                        if (y[3] == "jpg")
-                        {
-                            imageno = int.Parse(y[2]);
-                        }
-                        else
-                        {
-                            imageno = int.Parse(y[3]);
-                        }
-                    }
+                    var splitimage = lastimage.Split('_', '.');
+                    imageno = int.Parse(splitimage[3]);
 
                     //Uploading images in db & folder
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -508,11 +480,12 @@ namespace MaaAahwanam.Web.Controllers
                             fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
                             file1.SaveAs(fileName);
                             vendorImage.ImageName = filename;
+                            vendorImage.ImageType = "Slider";
+                            vendorImage.VendorId = long.Parse(vsid);
                             vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
                         }
                     }
                 }
-
             }
             return Json(filename, JsonRequestBehavior.AllowGet);
         }

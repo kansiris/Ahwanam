@@ -11,17 +11,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
-    <meta name="author" content="Ansonika">
     <title>:: Ahwanam ::</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
-    @*<img src="~/newdesignstyles/images/favicon.ico" />*@
-    <link rel="apple-touch-icon" type="image/x-icon" href="~/newdesignstyles/images/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="~/newdesignstyles/images/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="~/newdesignstyles/images/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="~/newdesignstyles/images/apple-touch-icon-144x144-precomposed.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- semantic -->
     <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
@@ -32,13 +25,9 @@
     <link href="~/newdesignstyles/css/style.css" rel="stylesheet">
     <link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
     <link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
-    @*<link href="http://design.maa-aahwanam.com/panagea/css/icon_fonts/css/all_icons.min.css" rel="stylesheet">*@
 
     <!-- SPECIFIC CSS -->
     <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
-
-    <!-- ALTERNATIVE COLORS CSS -->
-    @*<link href="#" id="colors" rel="stylesheet">*@
 
     <!-- YOUR CUSTOM CSS -->
     <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
@@ -139,10 +128,10 @@
             </a>
             <nav id="menu" class="main-menu">
                 @*@{Html.RenderAction("ItemsCartViewBindingLayout", "Home");}*@
-
+                @using MaaAahwanam.Web.Custom
                 <ul>
                     <li>
-                        @using MaaAahwanam.Web.Custom
+                        
                         @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                         {
                             var user = (CustomPrincipal)HttpContext.Current.User;
@@ -172,6 +161,12 @@
                     {
                         <li>
                             <span> <a class="login" style="font-size:16px; font-weight: 700" href="/cart/Index">Cart(@ViewBag.cartCount)</a> </span>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <span><a href="/partnerresgister" style="font-size:16px" title="Partner Registration">Partner Registration</a></span>
                         </li>
                     }
                     <li>
@@ -659,7 +654,7 @@
                             </div>*@
                         <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
                     </div>
-                    <div class="text-center"><input type="submit" value="login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
+                    <div class="text-center"><input type="submit" value="Login" onclick="login(this.value)" class="btn_1 full-width" name="command"></div>
 
                     <div class="text-center">
                         Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
@@ -776,7 +771,11 @@
             { $('#loc').val("Hyderabad"); }
 
             if (new Date(date) < new Date())
-            { $('#datetimepicker1').val(new Date()); }
+            {
+                var today = new Date();
+                var formatdate = '' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '';
+                $('#datetimepicker1').val(formatdate);
+            }
             else
             { $('#datetimepicker1').val(date); }
         });
@@ -918,74 +917,45 @@
         }
         function login(clickedvalue) {
             var url1 = document.referrer;
-            alert(url1);
+            //alert(url1);
             var Password = $("#Password1").val();
             var Email = $("#UserName").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#UserName").val();
-            //if (!passwordpattern.test(Password)) {
-            //    alert("Please Enter valid 10 digit Phonenumber");
-            //    $("#txtphone").focus();
-            //}
-            //else
-            if (Password == '') {
-                alert("Please Enter Password");
-                $("#txtpassword").focus();
-            }
-                //else if (Password.length < 5) {
-                //    alert("Password length must be 5 characters");
-                //    $("#txtpassword").focus();
-                //    $("#txtpassword").alphanum();
-                //}
-                //else if (!passwordpattern.test(Password)) {
-                //    alert("Please Enter valid 10 digit Phonenumber");
-                //    $("#txtphone").focus();
-                //}
-            else if (emailaddressVal == '') {
+            if (emailaddressVal == '') {
                 alert("Please Enter Email Address");
                 $("#txtemail").focus();
             }
+            else if (Password == '') {
+                alert("Please Enter Password");
+                $("#txtpassword").focus();
+            }
             else if (!emailReg.test(emailaddressVal)) {
                 alert("Please Enter a valid Email Address");
-                $("#txtemail").focus();
+                $("#txtpassword").focus();
             }
             else {
-                if (clickedvalue == 'login') {
+                //if (clickedvalue == 'login') {
                     $.ajax({
-                        url: '/Home/login',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        url: '/Home/login',
                         type: 'POST',
                         data: JSON.stringify({ Password: Password, Email: Email, url1: url1 }),
-                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
                         contentType: 'application/json',
                         success: function (data) {
                             if (data == "success") {
-                                alert("Login Sucessfull");
                                 window.location.reload();
-
-                                //window.location.href = '/NewOrder/orderview'
                             }
-                                //else {
-                                //    alert("Customer Registered successfully");
-                                //    $("#txtphone").val('');
-                                //    $("#txtname").val('');
-                                //    $("#txtpassword").val('');
-                                //    $("#txtdeladdress").val('');
-                                //    $("#txtemail").val('');
-                                //    window.location.reload();
-                                //}
                             else if (data == "unique") {
                                 alert("vendorlogin successfull");
                                 //vendorlogin
                             }
                             else if (data == "Failed") {
-
                                 alert("Wrong Credentials,Check Username and password");
                                 window.location.reload();
                             }
                             else if (data == "success1") {
-
                                 alert("Wrong Credentials,Check Username and password");
                                 window.location.reload();
                             }
@@ -994,9 +964,7 @@
                             alert("Wrong Credentials,Check Username and password");
                         }
                     });
-                }
-
-
+                //}
             }
         }
         function forgot(clickedvalue) {

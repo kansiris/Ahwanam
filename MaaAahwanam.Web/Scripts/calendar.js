@@ -9,19 +9,19 @@
         url: '/VendorCalendar/GetDates?id=' + $('#vid').val() + '&&vid=' + $('#vsid').val(),
         success: function (data) {
             $.each(data, function (i, v) {
-                var start1, end1 = null;
-                if (moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("A") == 'AM') {
-                    end1 = moment(v.EndDate).add(12, 'hours').add(30, 'minutes')
-                }
-                else {
-                    end1 = moment(v.EndDate);
-                }
+                //var start1, end1 = null;
+                //if (moment(v.EndDate).subtract(12, 'hours').subtract(30, 'minutes').format("A") == 'AM') {
+                //    end1 = moment(v.EndDate).add(12, 'hours').add(30, 'minutes')
+                //}
+                //else {
+                //    end1 = moment(v.EndDate);
+                //}
                 events.push({
                     eventID: v.Id,
                     title: v.Title,
                     description: v.Description,
                     start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes'),
-                    end: end1,//moment(v.EndDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
+                    end: moment(v.EndDate),//.subtract(12, 'hours').subtract(30, 'minutes'),
                     color: v.Color,
                     allDay: v.IsFullDay,
                     type: v.Type,
@@ -139,7 +139,7 @@ $('#btnDelete').click(function () {
 })
 
 $('#startdate,#enddate').datetimepicker({
-    format: 'DD/MM/YYYY hh:mm A'
+    format: 'DD/MM/YYYY'
     //step: 15
 });
 
@@ -157,7 +157,7 @@ $('#chkIsFullDay').change(function () {
 function openAddEditForm() {
     if (selectedEvent != null) {
         $('#hdEventID').val(selectedEvent.Id);
-        $('#subject').val(selectedEvent.Title);
+        //$('#subject').val(selectedEvent.Title);
         $('#chkIsFullDay').val(selectedEvent.IsFullDay);
         if (selectedEvent.eventID != 0) {
             $('#startdate').val(moment(selectedEvent.StartDate).subtract(12, 'hours').subtract(30, 'minutes').format("DD/MM/YYYY"));
@@ -183,24 +183,24 @@ function openAddEditForm() {
 }
 $('#btnSave').click(function () {
     //Validation/
-    if ($('#subject').val().trim() == "") {
-        alert('Subject required');
-        return;
-    }
+    //if ($('#subject').val().trim() == "") {
+    //    alert('Subject required');
+    //    return;
+    //}
     if ($('#startdate').val().trim() == "") {
         alert('Start date required');
         return;
     }
     
-    if ($('#chkIsFullDay').val() == "" || $('#chkIsFullDay').val() == null) {
-        alert('Is Full Day event required');
-        return;
-    }
-    else {
-        if ($('#chkIsFullDay').val() == "True") {
-            $('#enddate').val($('#startdate').val());
-        }
-    }
+    //if ($('#chkIsFullDay').val() == "" || $('#chkIsFullDay').val() == null) {
+    //    alert('Is Full Day event required');
+    //    return;
+    //}
+    //else {
+    //    if ($('#chkIsFullDay').val() == "True") {
+    //        $('#enddate').val($('#startdate').val());
+    //    }
+    //}
 
    
     if ($('#enddate').val().trim() == "") {
@@ -218,12 +218,12 @@ $('#btnSave').click(function () {
 
     var data = {
         Id: $('#hdEventID').val(),
-        Title: $('#subject').val().trim(),
+        Title: $('#type').val(),//$('#subject').val().trim(),
         StartDate: $('#startdate').val().trim(),
         EndDate: $('#enddate').val().trim(),
         Description: $('#description').val(),
         Color: $('#color').val(),
-        IsFullDay: $('#chkIsFullDay').val(),
+        IsFullDay: true,//$('#chkIsFullDay').val(),
         Type: $('#type').val(),
         VendorId: $('#vid').val(),
         Servicetype: 'Venue',

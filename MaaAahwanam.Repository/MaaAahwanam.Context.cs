@@ -663,5 +663,15 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendors_Result>("GetVendors", typeParameter);
         }
+    
+        public virtual ObjectResult<GetDecorators_Result> GetDecorators()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDecorators_Result>("GetDecorators");
+        }
+    
+        public virtual ObjectResult<GetPhotographers_Result> GetPhotographers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotographers_Result>("GetPhotographers");
+        }
     }
 }

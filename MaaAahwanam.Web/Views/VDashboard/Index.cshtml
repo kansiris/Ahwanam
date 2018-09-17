@@ -96,7 +96,7 @@
         .grid-item {
             background-color: white;
             border: 1px solid rgba(0, 0, 0, 0.8);
-            padding: 20px;
+            padding: 15px 20px 15px 20px;
             font-size: 30px;
             text-align: center;
             border-radius: 30px;
@@ -256,12 +256,10 @@
                                 @{Html.RenderAction("sidebar", "VDashboard");  }
                                 @if (ViewBag.enable == "first")
                                 {
-
-
                                     <style>
                                         table, th, td {
                                             border: 0px;
-                                            padding-left: 61px;
+                                            padding-left: 35px;
                                             padding-top: 12px;
                                             margin-top: -16px;
                                             font-size: 16px;
@@ -275,10 +273,10 @@
                                             </h6>
                                             @if (ViewBag.images.Count != 0)
                                             {
-                                                foreach (var item in ViewBag.images)
-                                                {
-                                                    <img style="width: 645px;" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" />
-                                                }
+                                                //foreach (var item in ViewBag.images)
+                                                //{
+                                                <img style="width: 645px;height:248px;" src="~/vendorimages/@ViewBag.images[0].ImageName" alt="@ViewBag.images[0].ImageName" />
+                                                //}
                                             }
                                             else
                                             {
@@ -288,7 +286,7 @@
                                             @if (ViewBag.ks == "ksc")
                                             {
                                                 <div align="center">
-                                                    <div style="float:left"><input type="text" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="width:100%" placeholder="YOUR HALL NAME" /></div>
+                                                    <div style="float:left"><input type="text" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" /></div>
                                                     <div style="float:right;margin-top:17px"><input type="checkbox" class="icheck" /><span style="color:black">InActive</span></div> @*@ViewBag.service.Status*@
                                                 </div>
                                                 <input type="hidden" id="vsid" value="@ViewBag.service.Id" />
@@ -305,36 +303,41 @@
                                             <form>
                                                 <table class="tsliders">
                                                     <tr>
-                                                        <td>
-                                                            <div class="sliderdiv">
-                                                                <img src="~/newdesignstyles/img/plus.png" href="s1" />
-                                                                <input type="file" name="image" id="s1">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="sliderdiv">
-                                                                <img src="~/newdesignstyles/img/plus.png" href="s2" />
-                                                                <input type="file" name="image" id="s2">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="sliderdiv">
-                                                                <img src="~/newdesignstyles/img/plus.png" href="s3" />
-                                                                <input type="file" name="image" id="s3">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="sliderdiv">
-                                                                <img src="~/newdesignstyles/img/plus.png" href="s4" />
-                                                                <input type="file" name="image" id="s4">
-                                                            </div>
-                                                        </td>
+                                                        @{
+                                                            if (ViewBag.sliderimages.Count > 0)
+                                                            {
+                                                                int no = 0;
+                                                                foreach (var item in ViewBag.sliderimages)
+                                                                {
+                                                                    <td>
+                                                                        <div class="sliderdiv" style="border:none" align="center">
+                                                                            <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
+                                                                            <text style="color:black">Slider @(++no)</text>
+                                                                        </div>
+                                                                    </td>
+                                                                }
+
+                                                            }
+                                                            if (ViewBag.slidercount > 0)
+                                                            {
+                                                                for (int i = 1; i < ViewBag.slidercount + 1; i++)
+                                                                {
+                                                                    <td>
+                                                                        <div class="sliderdiv">
+                                                                            <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
+                                                                            <input type="file" name="image" id="s@(i)">
+                                                                        </div>
+                                                                    </td>
+                                                                }
+                                                            }
+
+                                                        }
                                                     </tr>
                                                 </table>
                                             </form>
                                         </div>
                                         <h5 class="h5-1-1">
-                                            Packages
+                                            PACKAGES
                                             @if (ViewBag.vsid != null)
                                             {
                                                 <button type="button" class="btn" style="margin-top: -47px;margin-left: 402px;" data-toggle="modal" onclick="window.location.href='/VendorCalendar/Index?id=@ViewBag.vendorid&&vid=@ViewBag.vsid'" data-target="#exampleModal">Plan Calendar</button>
@@ -354,7 +357,7 @@
                                                             <input type="text" id="fname" name="fname" placeholder="Package Name" style="width:100%">
                                                         </td>
                                                         <td style="width:50%;padding-left:70px">
-                                                            <input type="radio" name="checkradio" id="Veg" value="Veg" /><label for="Veg">Veg</label>
+                                                            <input type="radio" name="checkradio" id="Veg" value="Veg" checked /><label for="Veg">Veg</label>
                                                             <input type="radio" name="checkradio" id="NonVeg" value="NonVeg" style="margin-left:20px" /><label for="NonVeg">Non-Veg</label>
                                                         </td>
                                                     </tr>
@@ -362,10 +365,10 @@
                                             </form>
                                             <table>
                                                 <tr>
-                                                    <th>Peak days</th>
-                                                    <th>Normal Days</th>
-                                                    <th>Holidays</th>
-                                                    <th>Choice days</th>
+                                                    <th>Peak days ₹</th>
+                                                    <th>Normal Days ₹</th>
+                                                    <th>Holidays ₹</th>
+                                                    <th>Choice days ₹</th>
                                                 </tr>
                                                 <tr class="pricestr">
                                                     <td><input type="number" id="pdays" name="pdays" placeholder="₹100" /> </td>
@@ -385,7 +388,7 @@
                                             <button class="button pkgitem">Fry/Dry(0)</button>
                                             <button class="button pkgitem">Salads(0)</button>
                                             <button class="button pkgitem">Soups(0)</button>
-                                            <button class="button pkgitem">Tandoori/Kababs(0)</button>
+                                            @*<button class="button pkgitem">Tandoori/Kababs(0)</button>*@
                                             <button class="button pkgitem">Deserts(0)</button>
                                             <button class="button pkgitem">Beverages(0)</button>
                                             <button class="button pkgitem">Fruits(0)</button>
@@ -397,11 +400,38 @@
                                             </div>
                                             <br><br>
                                             <div class="row-gallery" style="padding-top: 13px;">
+                                                <strong style="color:black">GALLERY/VIDEOS</strong>
                                                 <table class="tsliders">
                                                     <tr>
-                                                        <td>
+                                                        @{
+                                                            if (ViewBag.images.Count > 0)
+                                                            {
+                                                                foreach (var item in ViewBag.images)
+                                                                {
+                                                                    <td>
+                                                                        <div class="sliderdiv" style="border:none" align="center">
+                                                                            <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
+                                                                        </div>
+                                                                    </td>
+                                                                }
+
+                                                            }
+                                                            if (ViewBag.images.Count > 0)
+                                                            {
+                                                                for (int i = 1; i < ViewBag.images.Count + 1; i++)
+                                                                {
+                                                                    <td>
+                                                                        <div class="sliderdiv">
+                                                                            <img src="~/newdesignstyles/img/plus.png" href="g@(i)" />
+                                                                            <input type="file" name="image" id="g@(i)">
+                                                                        </div>
+                                                                    </td>
+                                                                }
+                                                            }
+
+                                                        }
+                                                        @*<td>
                                                             <div class="sliderdiv" style="background-image:url(http://design.maa-aahwanam.com/panagea/images/caterer.png);">
-                                                                @*<img src="http://design.maa-aahwanam.com/panagea/images/caterer.png" href="s1" style="width: 130px;height: 130px;margin: -6px 0px 0px -6px;" />*@
                                                                 <input type="file" name="image" id="s5">
                                                             </div>
                                                         </td>
@@ -422,7 +452,7 @@
                                                                 <img src="~/newdesignstyles/img/plus.png" href="s8" />
                                                                 <input type="file" name="image" id="s8">
                                                             </div>
-                                                        </td>
+                                                        </td>*@
                                                     </tr>
                                                 </table>
                                             </div>
@@ -433,319 +463,319 @@
                                         </div>
                                         <div class="col-md-2-4 row" style="overflow-y: auto;padding:20px">
                                             <div>
-                                                <h6 class="h4-11">AMENTIES </h6><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('two')">SAVE</button>
-                                                <div class="box-row" style="padding-top:20px;">
-                                                    <div class="grid-container">
-                                                        @if (ViewBag.vsid != "" && ViewBag.vsid != null)
-                                                        {
-                                                            foreach (var item in ViewBag.amenities)
+                                                <h6 class="h4-11" style="font-weight:700">AMENTIES </h6><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('two')">SAVE</button>
+                                                    <div class="box-row" style="padding-top:20px;">
+                                                        <div class="grid-container">
+                                                            @if (ViewBag.vsid != "" && ViewBag.vsid != null)
                                                             {
-                                                                var amenity = item.Split('=')[0].Trim();
-                                                                var value = item.Split('=')[1].Trim();
-                                                                if (value == "Yes")
+                                                                foreach (var item in ViewBag.amenities)
                                                                 {
-                                                                    <div class="grid-item" style="background-color:yellow">
-                                                                        <p class="caption">
-                                                                            <img src="/newdesignstyles/VenueIcons/@(amenity).png" title="AC">
-                                                                            <input type="checkbox" id="@amenity" style="display:none" value="@amenity" checked />
-                                                                        </p>
-                                                                    </div>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <div class="grid-item" style="background-color:white">
-                                                                        <p class="caption">
-                                                                            <img src="/newdesignstyles/VenueIcons/@(amenity).png" title="AC">
-                                                                            <input type="checkbox" id="@amenity" style="display:none" value="@amenity" />
-                                                                        </p>
-                                                                    </div>
+                                                                    var amenity = item.Split('=')[0].Trim();
+                                                                    var value = item.Split('=')[1].Trim();
+                                                                    if (value == "Yes")
+                                                                    {
+                                                                        <div class="grid-item" style="background-color:yellow">
+                                                                            <p class="caption">
+                                                                                <img src="/newdesignstyles/VenueIcons/@(amenity).png" title="AC">
+                                                                                <input type="checkbox" id="@amenity" style="display:none" value="@amenity" checked />
+                                                                            </p>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="grid-item" style="background-color:white">
+                                                                            <p class="caption">
+                                                                                <img src="/newdesignstyles/VenueIcons/@(amenity).png" title="AC">
+                                                                                <input type="checkbox" id="@amenity" style="display:none" value="@amenity" />
+                                                                            </p>
+                                                                        </div>
+                                                                    }
                                                                 }
                                                             }
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="grid-container">
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="/newdesignstyles/VenueIcons/AC.png" title="AC">
-                                                                        <input type="checkbox" id="AC" style="display:none" value="AC" />
-                                                                    </p>
+                                                            else
+                                                            {
+                                                                <div class="grid-container">
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="/newdesignstyles/VenueIcons/AC.png" title="AC">
+                                                                            <input type="checkbox" id="AC" style="display:none" value="AC" />
+                                                                        </p>
 
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Balcony.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Balcony" style="display:none" value="Balcony" />
-                                                                    </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Balcony.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Balcony" style="display:none" value="Balcony" />
+                                                                        </p>
 
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Banquet_Hall.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Banquet Hall" style="display:none" value="Banquet_Hall" />
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Banquet_Hall.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Banquet Hall" style="display:none" value="Banquet_Hall" />
 
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Bar.png" />
-
-
-                                                                        <input type="checkbox" id="Bar" class="cartcheckbox" style="display:none" value="Bar" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Bath_Tub.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" style="display:none" id="Bath Tub" value="Bath Tub" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Card_Payment.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" style="display:none" id="Card Payment" value="Card Payment" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/CCTV_Cameras.png" />
-
-                                                                        <input type="checkbox" class="cartcheckbox" style="display:none" id="CCTV Cameras" value="CCTV Cameras" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Coffee_Tea_Maker.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" style="display:none" id="Coffee Tea Maker" value="Coffee_Tea_Maker" />
-
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Complimentary_Breakfast.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" style="display:none" id="Complimentary Breakfast" value="Complimentary Breakfast" />
-                                                                    </p>
-                                                                </div>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Bar.png" />
 
 
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Conference_Room.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" style="display:none" id="Conference Room" value="Conference Room" />
+                                                                            <input type="checkbox" id="Bar" class="cartcheckbox" style="display:none" value="Bar" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Bath_Tub.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" style="display:none" id="Bath Tub" value="Bath Tub" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Card_Payment.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" style="display:none" id="Card Payment" value="Card Payment" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/CCTV_Cameras.png" />
 
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Dining_Area.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Dining Area" style="display:none" value="Dining Area" />
+                                                                            <input type="checkbox" class="cartcheckbox" style="display:none" id="CCTV Cameras" value="CCTV Cameras" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Coffee_Tea_Maker.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" style="display:none" id="Coffee Tea Maker" value="Coffee_Tea_Maker" />
 
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Electricity.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" style="display:none" id="Electricity" value="Electricity" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Complimentary_Breakfast.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" style="display:none" id="Complimentary Breakfast" value="Complimentary Breakfast" />
+                                                                        </p>
+                                                                    </div>
 
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Full_Length_Mirrror.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Full Length Mirrror" style="display:none" value="Full Length Mirrror" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Geyser.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Geyser" style="display:none" value="Geyser" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Gym.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Gym" style="display:none" value="Gym" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Hair_Dryer.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Hair Dryer" style="display:none" value="Hair Dryer" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/HDTV.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="HDTV" style="display:none" value="HDTV" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/In_house_Restaurant.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="In-house Restaurant" style="display:none" value="In-house Restaurant" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/In_Room_Safe.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="In-Room Safe" style="display:none" value="In-Room Safe" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Intercom.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Intercom" style="display:none" value="Intercom" />
 
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Jacuzzi.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Jacuzzi" style="display:none" value="Jacuzzi" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Kindle.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Kindle" style="display:none" value="Kindle" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/King_Bed.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="King Bed" style="display:none" value="King Bed" />
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Conference_Room.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" style="display:none" id="Conference Room" value="Conference Room" />
 
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Kitchen.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Kitchen" style="display:none" value="Kitchen" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Laundry.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Laundry" style="display:none" value="Laundry" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Lift_or_Elevator.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Lift/Elevator" style="display:none" value="Lift/Elevator" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Mini_Fridge.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Mini Fridge" style="display:none" value="Mini Fridge" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Netflix.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Netflix" style="display:none" value="Netflix" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Parking_Facility.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Pet Friendly" style="display:none" value="Pet Friendly" />
-                                                                    </p>
-                                                                </div>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Dining_Area.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Dining Area" style="display:none" value="Dining Area" />
 
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Pet_Friendly.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="ParkingFacility" style="display:none" value="ParkingFacility" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Power_Backup.png" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Electricity.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" style="display:none" id="Electricity" value="Electricity" />
 
-                                                                        <input type="checkbox" class="cartcheckbox" id="Power Backup" style="display:none" value="Power Backup" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Queen_Bed.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Queen Bed" style="display:none" value="Queen Bed" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Room_Heater.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Room Heater" style="display:none" value="Room Heater" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Single_Bed.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Single Bed" style="display:none" value="Single Bed" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Sofa_Set.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Sofa Set" style="display:none" value="Sofa Set" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Spa.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Spa" style="display:none" value="Spa" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Sufficient_Room_Size.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Sufficient Room Size" style="display:none" value="Sufficient Room Size" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Sufficient_Washroom.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Sufficient Washroom" style="display:none" value="Sufficient Washroom" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Swimming_Pool.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Swimming Pool" style="display:none" value="Swimming Pool" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/TV.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="TV" style="display:none" value="TV" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Full_Length_Mirrror.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Full Length Mirrror" style="display:none" value="Full Length Mirrror" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Geyser.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Geyser" style="display:none" value="Geyser" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Gym.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Gym" style="display:none" value="Gym" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Hair_Dryer.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Hair Dryer" style="display:none" value="Hair Dryer" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/HDTV.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="HDTV" style="display:none" value="HDTV" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/In_house_Restaurant.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="In-house Restaurant" style="display:none" value="In-house Restaurant" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/In_Room_Safe.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="In-Room Safe" style="display:none" value="In-Room Safe" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Intercom.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Intercom" style="display:none" value="Intercom" />
 
-                                                                        <img src="~/newdesignstyles/VenueIcons/Wellness_Center.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Wheelchair Accessible" style="display:none" value="Wheelchair Accessible" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/Wheelchair_Accessible.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Wellness Center" style="display:none" value="Wellness Center" />
-                                                                    </p>
-                                                                </div>
-                                                                <div class="grid-item">
-                                                                    <p class="caption">
-                                                                        <img src="~/newdesignstyles/VenueIcons/wifi.png" />
-                                                                        <input type="checkbox" class="cartcheckbox" id="Wifi" style="display:none" value="Wifi" />
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        }
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Jacuzzi.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Jacuzzi" style="display:none" value="Jacuzzi" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Kindle.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Kindle" style="display:none" value="Kindle" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/King_Bed.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="King Bed" style="display:none" value="King Bed" />
 
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Kitchen.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Kitchen" style="display:none" value="Kitchen" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Laundry.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Laundry" style="display:none" value="Laundry" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Lift_or_Elevator.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Lift/Elevator" style="display:none" value="Lift/Elevator" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Mini_Fridge.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Mini Fridge" style="display:none" value="Mini Fridge" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Netflix.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Netflix" style="display:none" value="Netflix" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Parking_Facility.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Pet Friendly" style="display:none" value="Pet Friendly" />
+                                                                        </p>
+                                                                    </div>
+
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Pet_Friendly.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="ParkingFacility" style="display:none" value="ParkingFacility" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Power_Backup.png" />
+
+                                                                            <input type="checkbox" class="cartcheckbox" id="Power Backup" style="display:none" value="Power Backup" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Queen_Bed.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Queen Bed" style="display:none" value="Queen Bed" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Room_Heater.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Room Heater" style="display:none" value="Room Heater" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Single_Bed.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Single Bed" style="display:none" value="Single Bed" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Sofa_Set.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Sofa Set" style="display:none" value="Sofa Set" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Spa.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Spa" style="display:none" value="Spa" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Sufficient_Room_Size.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Sufficient Room Size" style="display:none" value="Sufficient Room Size" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Sufficient_Washroom.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Sufficient Washroom" style="display:none" value="Sufficient Washroom" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Swimming_Pool.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Swimming Pool" style="display:none" value="Swimming Pool" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/TV.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="TV" style="display:none" value="TV" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+
+                                                                            <img src="~/newdesignstyles/VenueIcons/Wellness_Center.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Wheelchair Accessible" style="display:none" value="Wheelchair Accessible" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/Wheelchair_Accessible.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Wellness Center" style="display:none" value="Wellness Center" />
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="grid-item">
+                                                                        <p class="caption">
+                                                                            <img src="~/newdesignstyles/VenueIcons/wifi.png" />
+                                                                            <input type="checkbox" class="cartcheckbox" id="Wifi" style="display:none" value="Wifi" />
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
+</div>
                                         </div>
                                         <div class="col-md-2-5">
                                             <h5 class="h5-1">HALL DETAILS</h5><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('three')">SAVE</button>
@@ -806,41 +836,76 @@
                                             <br>
                                         </div>
                                         <div class="col-md-2-11">
-                                            <h5 class="h5-1">Add Description</h5><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('four')">SAVE</button>
+                                            <h5 class="h5-1">DESCRIBE YOUR SERVICE</h5><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('four')">SAVE</button>
                                             @if (@ViewBag.ks == "ksc")
                                             {
                                                 <div class="ui equal width form">
                                                     <div class="fields">
                                                         <div class="four-field">
                                                             <label></label>
-                                                            <input type="text" id="mainDescription" name="mainDescription" placeholder="Description" style="height: 109px;" value="@ViewBag.service.Description">
+                                                            <input type="text" id="mainDescription" name="mainDescription" placeholder="Start typing your service info..." style="height: 109px;" value="@ViewBag.service.Description">
                                                         </div>
                                                     </div>
 
-                                                    <h5 class="h5-1">Address</h5><br>
+                                                    <h5 class="h5-1">ADDRESS</h5><br>
                                                     <div class="ui equal width form">
                                                         <div class="fields">
                                                             <label></label>
-                                                            <input id="Address" name="Address" type="text" placeholder="Address" value="@ViewBag.service.Address">
+                                                            <input id="Address" name="Address" type="text" placeholder="Give your Address" value="@ViewBag.service.Address">
                                                         </div>
 
-                                                        <div class="fields" style="width:250px">
+                                                        <div class="fields">
                                                             <div class="field">
                                                                 <label></label>
-                                                                <input type="text" id="Landmark" name="Landmark" placeholder="Landmark" value="@ViewBag.service.Landmark" style="width:120px">
+                                                                <input type="text" id="Landmark" name="Landmark" placeholder="What's the Landmark'" value="@ViewBag.service.Landmark" style="width:100%">
                                                             </div>
 
                                                             <div class="field">
                                                                 <label></label>
-                                                                <input type="text" id="City" name="City" placeholder="City" value="@ViewBag.service.City" style="width:120px">
+                                                                <input type="text" id="City" name="City" placeholder="What's your City" value="@ViewBag.service.City" style="width:100%">
                                                             </div>
                                                         </div>
                                                         <div class="eight field">
                                                             <label></label>
-                                                            <input type="text" id="ZipCode" name="ZipCode" placeholder="ZipCode" value="@ViewBag.service.ZipCode">
+                                                            <input type="text" id="ZipCode" name="ZipCode" placeholder="Type ZipCode" value="@ViewBag.service.ZipCode">
                                                         </div>
 
                                                     </div>
+                                                    @*<form>
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="text-line" placeholder="First Name*" id="fname" name="fname" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="text-line" placeholder="Last Name*" id="lname" name="lname" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /row -->
+                                                        <div class="row">
+                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="text-line" placeholder="Email Address*" id="emailid" name="emailid" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="text-line" placeholder="Phone Number*" id="phoneno" name="phoneno" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /row -->
+                                                        <div class="form-group">
+                                                            <input class="text-line" id="datetimepicker" type="text" name="datetimepicker" placeholder="Event Date*">
+                                                            
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button type="button" style="margin-left:0;position:relative;width:50%;margin-top:50px" class="btn btn-dark-green" id="btnsubmit">SUBMIT</button>
+                                                        </div>
+                                                    </form>*@
                                                 </div>
 
                                             }
@@ -884,7 +949,7 @@
                                             }
                                         </div>
                                     </div>
-                                }
+                                                            }
 
                             </div>
                         </div>
@@ -1156,53 +1221,53 @@
                                     </form>
                                 </div>
 
-                            <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
-                                <div>
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td><h4 style="text-transform:uppercase">Upcoming Events</h4></td>
-                                            <td style="float:right"><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <table id="allorders" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>S.No</th>
-                                            <th>Order ID</th>
-                                            <th>Event Type</th>
-                                            <th>Event Date</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            var number = 0;
-                                            foreach (var orders in ViewBag.order)
-                                            {
+                                <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
+                                    <div>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><h4 style="text-transform:uppercase">Upcoming Events</h4></td>
+                                                <td style="float:right"><button type="button" class="btn btn-primary">New Order</button><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <table id="allorders" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Order ID</th>
+                                                <th>Event Type</th>
+                                                <th>Event Date</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                var number = 0;
+                                                foreach (var orders in ViewBag.order)
+                                                {
 
-                                                <tr>
-                                                    <td>@(++number)</td>
-                                                    <td>@orders.OrderId</td>
-                                                    <td>@orders.EventType</td>
-                                                    <td>@orders.BookedDate</td>
-                                                    <td>@orders.Status</td>
+                                                    <tr>
+                                                        <td>@(++number)</td>
+                                                        <td>@orders.OrderId</td>
+                                                        <td>@orders.EventType</td>
+                                                        <td>@orders.BookedDate</td>
+                                                        <td>@orders.Status</td>
 
-                                                    <td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button" onclick="orderemail('@orders.username')"  value="Query">Send Message</button></td>
-                                                </tr>
-                                                <tr id="hidden_row1" class="hidden_row">
-                                                    <td colspan=4><ul><li>Event Type:@orders.EventType</li><li>contact number:@orders.UserPhone</li></ul></td>
-                                                </tr>
+                                                        <td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>
+                                                    </tr>
+                                                    <tr id="hidden_row1" class="hidden_row">
+                                                        <td colspan=4><ul><li>Event Type:@orders.EventType</li><li>contact number:@orders.UserPhone</li></ul></td>
+                                                    </tr>
 
 
+                                                }
                                             }
-                                        }
                                     </table>
 
                                 </div>
                             </div>
-                                            }
+                                                }
                         <!-- /container -->
                     </div>
                 </div>
@@ -1397,23 +1462,23 @@
                     commondiv = welcome_drinks;
                 }
                 if (selpkg == 'starters') {
-                    starters = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    starters = "Gold Coin,Alu 65,Gobi 65,Babycorn 65,Veg. Manchurian,Paneer Manchurian,Gobi Manchurian,Pepper Gobi,Corn Kernel,Boiled Corn,Babycorn Pakoda,Babycorn Manchurian,Capsicum Rings,Onion Rings,Cheese Ball,Boiled Pally,Masala Pally,Chana Roast,Mirchi Bajji,Cut Mirchi,Moongdal Pakoda,Alu Bonda,Minapa Garelu,Paneer Tikka,Paneer Stick,Veg. Stick,Harabara Tikka,Masala Tikka,Dragon Roll,Paneer Roll,Cheese Roll,Veg. Bullet,Alu Samosa,Irani Samosa,Veg. Spring Roll,Cocktail Samosa,Moongdal Pakoda,Corn Pakoda,Finger Paneer,Crispy Babycorn,Crispy Veg.,Smilies,French Fries,Babycorn Golden Fry,Veg. Seekh Kabab,Palak Makkai Kabab";
                     commondiv = starters;
                 }
                 if (selpkg == 'rice') {
-                    rice = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    rice = "Veg Fried Rice,Mongolian Rice,Shezwan Rice,Singapore Noodles,Hot Garlic Sauce,American Chopsuey,Veg Dumpling,Veg Chow Chow,Veg Manchurian (Wt),Thai Veg (Wet.),Chilli Veg (Wet),Chilli Paneer,Chilli Baby corn,Gobi Manchurian,Veg Biryani,Tomato Rice,emon Rice,White Rice,Bagara Rice,Curd Rice,Veg Biryani,eg Pulav,Peas Pulav,Malai Koftha,Diwani Handi,Mushroom Kaju,unakkaya Kaju,Mirch Ka Saalan,Bagara Baingan,Capsicum Masala,Tomato Masala,Mirchi Tomato Masala,Dondakaya Masala,Sorakaya Masala,Beerakaya Masala,Mealmaker Masala,Rajma Masala,Chole Masala,hendi Masala,Palak Koftha Curry,kaddu Koftha Curry,Chama Gadda Pulusu,Gumadikaya Pulusu,Bendakaya Pulusu,Kakarkaya Pulusu,Beerakaya Alsandalu,eera Kaya Methi,beera kaya Boondi,Alu Palak,Capsicum Tomata Masala,na Palak,Chikkudukaya Alu,Vankaya Alu,Vankaya Alu Tomato,Dosakaya Tomato,lu Gobi Kurma,Alu Mutter,Mixed Veg Kurma,Gangavali Tomato";
                     commondiv = rice;
                 }
                 if (selpkg == 'bread') {
-                    bread = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Muli Paratha,Makki ki roti,Kulcha";
                     commondiv = bread;
                 }
                 if (selpkg == 'curries') {
-                    curries = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    curries = "Paneer Butter Masala,Paneer Tikka Masala,Paneer Babycorn Masala,Paneer Capsicum,Paneer Chatpata,Paneer Do Pyasa,Bhendi Do Pyasa,Hariyali Paneer,Khaju Paneer,Methi Chaman,Achari Veg.,Palak Paneer,Kadai Paneer,Navratan Kurma,Paneer Shahi Kurma,Veg Chatpata,Veg Kolhapur,Corn Palak,Chum Alu,Tawa Vegetable,Babycorn Do Pyaza,Koftha Palak,Veg. Jaipuri";
                     commondiv = curries;
                 }
                 if (selpkg == 'fry_dry') {
-                    fry_dry = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    fry_dry = "Alu Methi Fry,Alu Gobi Fry,Alu Capsicum Fry,Chikkudukaya Alu Fry,Jeera Aloo Fry,Bendi Pakoda Fry,Bendi Kaju Fry,Jaipur Bendi,Chat Pat bendi,Kanda kaju Fry,Donda kaju Fry,Aratikaya Fry,Chamagadda Fry,Beans Coconut Fry,Kakarakaya Fry,Chikkudukaya Fry,Cabbage Coconut Fry,Nutrilla Kaju Fry,Guthivankaya Fry,Mixed Vegetable Fry,Vankaya Pakoda,Dondakaya Pakoda,Veg. Dalcha,Munakkaya Charu,Tomato Charu,Ulawa Charu,Bendakaya Charu,omato Rasam,Miryala Rasam,Pachi Pulusu,Majjiga Pulusu,Kadi Pakoda,Dosa Avakaya,Gobi Avakaya,onda Avakaya,Mango Avakaya,Lime Pickle,Mixed Veg.Pickle,Gongoora Pickle,ongoora Chutney,Tomata Chutney,Cabbage Chutney,Carrot Chutney,Beerakaya Chutney,Kandi Podi,coconut Chutney,Nallakaram Podi,Putnaala Podi,Kariyepak Podi,Nuvvula Karram,Ellipaya Kaaram,Allam Chutney,Pudina Chutney,Chukka Kura Chutney,Kothimeera Chuyney,Kobbari Kaaram Podi,Pudina Coconut Chutney,Mango Coconut Chutney,Vankaya Dosakaya Chutney";
                     commondiv = fry_dry;
                 }
                 if (selpkg == 'salads') {
@@ -1421,41 +1486,96 @@
                     commondiv = salads;
                 }
                 if (selpkg == 'soups') {
-                    soups = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    soups = "Tomato Soup,Tomato Shorba,Veg. Corn Soup,Coriander Soup,Hot & Sour Soup,Sweetcorn Soup";
                     commondiv = soups;
                 }
-                if (selpkg == 'tandoori_kababs') {
-                    tandoori_kababs = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
-                    commondiv = tandoori_kababs;
-                }
+                //if (selpkg == 'tandoori_kababs') {
+                //    tandoori_kababs = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                //    commondiv = tandoori_kababs;
+                //}
                 if (selpkg == 'deserts') {
-                    deserts = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    deserts = "Vanilla,Strawberry,Chocolate,Mango,Butter Scotch,Seethapal,Choco chips,Pista,Cassata,Kulfi Sticks,Cake Ice Cream,Trifle Pudding,Asmar Cream,Zouceshani,cold Stone,chocobar Stick,King Cone Chocolate,King Cone Butter Scotch,Matka Kulfi,Roller Ice Cream,Jhangri,Khova Burf,Malai Roll,Green Guava,Sweet Tamarind,Black Grapes,Australian Grapes";
                     commondiv = deserts;
                 }
                 if (selpkg == 'beverages') {
-                    beverages = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    beverages = "Mini Orange,Rambutan,Dragon Fruit,Mango Steam,Cherry,Water bottle,Choclate coffee,Coffee,Tea,Soft drinks,Cuppuccino,Lata";
                     commondiv = beverages;
                 }
                 if (selpkg == 'fruits') {
-                    fruits = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Pears,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
                     commondiv = fruits;
                 }
-                tabletr.empty();
-                var getlist = window.localStorage.getItem(selectedpkg.toLowerCase());
-                alert(getlist);
-                for (var i = 0; i < commondiv.split(',').length; i++) {
-                    var row = $("<tr/>");
+            }
+            else if (type == 'NonVeg') {
+                if (selpkg == 'welcome_drinks') {
+                    welcome_drinks = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                    commondiv = welcome_drinks;
+                }
+                if (selpkg == 'starters') {
+                    starters = "Chicken 65,Spicy Wings,Chicken Manchurian,Chicken Lollypop,Chicken Tikka,Chicken Satay,Murg Malai Kabab,Chicken Garlic Kabab,Chicken Pahadi Kabab,Chicken Reshmi Kabab,Chicken Hariyali Kabab,Chicken Majestic,Chicken Nuggets,Shezwan Chicken,Chicken Pakoda,Pepper Chicken,Popcorn Chicken,Chilli Chicken,Loose Chilli Prawns,Golden Fried Prawns,Pepper Prawns,Chilli Prawns,Prawn Pakoda,Royyala Vepudu,Garlic Prawns,Prawns Iguru,Finger Fish,Apollo Fish,Fried Fish,Chilly Fish,Fish Tikka,Fish Fry (Murrel With Bone),Fish Amrithsari,Tawa Fish Bone (Murrel),Tawa Fish Boneless (Murrel),Crab Wray Bheemavaram,Crab lguru";
+                    commondiv = starters;
+                }
+                if (selpkg == 'rice') {
+                    rice = "Hyderabad Mutton Biryani,Mutton Sofiyani Biryani,Hyderabad Chicken Biryani,Chicken Sofiyani Biryani,Chicken Pulav,Prawns Pulav,Egg Biryani,Mixed Fried Rice,Egg Fried Rice,Egg Fried Rice,Chicken Fried Rice,Mixed Fried Rice,American Chopsoy (Non-Veg),Chilly Chicken Wet,Chicken Manchurian Wet,Shezwan Chicken Wet,Gralic Chicken (Dry & Wet)";
+                    commondiv = rice;
+                }
+                if (selpkg == 'bread') {
+                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Kheema Naan,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Muli Paratha,Makki ki roti,Kulcha";
+                    commondiv = bread;
+                }
+                if (selpkg == 'curries') {
+                    curries = "Dhumka Chicken,Methi Chicken,Chilli Chicken,Ginger Chicken,Gongoora Chicken,Moghalai Chicken,ariyali Chicken,Ankapur Country Chicken,utter Chicken,Chicken Masala,Chilly Chicken Wet(Chinese),Chicken Manchurian Wet,hicken Diwani Handi,Mutton Curry,Moghalai Mutton,utton Pasinda,Mutton Kali Mirchi,Mutton Roganjosh,Dhum-ka- Bakra,utton Raan,ongoora Maamsam,Chukkakura Maamsam,Palak Mutton,iver Fry,Kidney Fry,okkala Charu,Mutton Dalcha,Boti Dhalcha,Thalakaya Kura,Keema Methi,Keema Palak,Keema Batana,eema Koftha Curry,Paya,Haleem,Butter Chicken,Anda Bhurji,Sarson KA Saag,Makki Ki Roti,Amritsari Kulcha,Punjabi Chole,Dal Makhni,akoda Khadi,Dal Fry,Labadar Paneer,Dal Tadka";
+                    commondiv = curries;
+                }
+                if (selpkg == 'fry_dry') {
+                    fry_dry = "Boti Fry,Kidney Fry,Keema Shikhampuri,Mutton Boti Kabab,Mutton Seekh Kabab,Mutton Shami Kabab,Mutton Chops,Kheema Lukmi,Keema Balls,Liver Fry,Pathar ka Ghosh,Liver Kidney Fry,Mutton Fry (Telangana Style)";
+                    commondiv = fry_dry;
+                }
+                if (selpkg == 'salads') {
+                    salads = "Carrot Salad,Green Salad,Ceaser Salad,Barley Salad,Sprouts Salad,Onion Salad,Green Bean Salad,Leafy Salad with nuts,Lintel Salad";
+                    commondiv = salads;
+                }
+                if (selpkg == 'soups') {
+                    soups = "Chicken Hot & Sour Soup,Paya Shorba,Badami Murg Shorba,Morag Soup,Wanton soup,Chicken clear soup,Canton soup,Chicken noodle soup,Chicken cream soup,Egg drop soup";
+                    commondiv = soups;
+                }
+                //if (selpkg == 'tandoori_kababs') {
+                //    tandoori_kababs = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                //    commondiv = tandoori_kababs;
+                //}
+                if (selpkg == 'deserts') {
+                    deserts = "Vanilla,Strawberry,Chocolate,Mango,Butter Scotch,Seethapal,Choco chips,Pista,Cassata,Kulfi Sticks,Cake Ice Cream,Trifle Pudding,Asmar Cream,Zouceshani,cold Stone,chocobar Stick,King Cone Chocolate,King Cone Butter Scotch,Matka Kulfi,Roller Ice Cream,Jhangri,Khova Burf,Malai Roll,Kaddu Ka Kheer,Kaddu Ka Halwa,Carrot Halwa,Chocolate Burf,Appricot Trifle,hawa Mitai,Gulab Jamoon,Kala Jamoon,Baadhusha,Mothichur Laddu,Boondi Laddu,Rawa Laddu,Besan Laddu,Mysore Pak,Madatha Kaaja,Chandra Kala,Double Ka Meeta,Rice Phirni,Bakshalu,Poornam Boorelu,Gaajar Ka Halwa,Paneer Jilebi,kesari Jilebi,Ras MalaI,Badam Kun,Jilebi With Rabdi,Mango Rabdi,Rasgulla,Fruit Salad Custard,Khubhani Ka Meeta,Angoori Ras Malai,Baasundi,Sabid Khubhani Ka Meeta,Lichi Gulla,Maal Puva,Mithai Mela,Pan Peta";
+                    commondiv = deserts;
+                }
+                if (selpkg == 'beverages') {
+                    beverages = "Mini Orange,Rambutan,Dragon Fruit,Mango Steam,Cherry,Water bottle,Choclate coffee,Coffee,Tea,Soft drinks,Cuppuccino,Lata";
+                    commondiv = beverages;
+                }
+                if (selpkg == 'fruits') {
+                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Pears,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
+                    commondiv = fruits;
+                }
+            }
+            tabletr.empty();
+            var getlist = window.localStorage.getItem(selectedpkg.toLowerCase());
+            for (var i = 0; i < commondiv.split(',').length; i++) {
+                var row = $("<tr/>");
+                if (getlist != null) {
+
                     if (getlist.includes(commondiv.split(',')[i])) {
                         row.append('<td class="menuitems"><input type="checkbox" class="icheck" checked/><label>' + commondiv.split(',')[i] + '</label></td>');
                     }
                     else {
                         row.append('<td class="menuitems"><input type="checkbox" class="icheck" /><label>' + commondiv.split(',')[i] + '</label></td>');
                     }
-                    tabletr.append(row);
                 }
-                $('#pkgmodal .selectedpkg').text(selectedpkg);
-                $('#pkgmodal').modal('show');
+                else {
+                    row.append('<td class="menuitems"><input type="checkbox" class="icheck" /><label>' + commondiv.split(',')[i] + '</label></td>');
+                }
+                tabletr.append(row);
             }
+            $('#pkgmodal .selectedpkg').text(selectedpkg);
+            $('#pkgmodal').modal('show');
         }
     </script>
 
@@ -1526,19 +1646,17 @@
         var image;
         $('.sliderdiv').on('click', function () {
             var vsid = $('#vsid').val();
+            var thisimage = $(this);
             var image = $(this).children('img').attr('href');
             var file1 = $(this).find('input').attr('id');
-            alert(file1);
             image = document.getElementById("" + file1 + "");
             image.click();
             image.onchange = function () {
-                // alert(this.value.split("\\")[2]);
                 var file = $('#' + file1 + '').get(0).files;
                 var data = new FormData;
                 if (file.length > 0) {
                     data.append("helpSectionImages", file[0]);
                 }
-
                 $.ajax({
                     url: '/VDashboard/UploadImages?vsid=' + vsid,
                     type: "POST",
@@ -1546,13 +1664,14 @@
                     processData: false, // Not to process data
                     data: data,
                     success: function (result) {
-                        alert(result);
+                        thisimage.children('img').remove();
+                        thisimage.append('<img src="/vendorimages/' + result + '" href="s2" style="width:100px;height:100px;padding:0px">')
+                        //thisimage.attr('border', 'none');
                     },
                     error: function (err) {
                         alert(err.statusText);
                     }
                 });
-
             }
         });
 
@@ -1574,6 +1693,10 @@
             $('#today,#tomorrow,#upcoming,#allorders').DataTable();
         });
 
+        $('#spc').on('click', function () {
+            $('#profileimage').click();
+        });
+
         $('#profileimage').change(function () {
             var ext = $('#profileimage').val().split('.').pop().toLowerCase();
             if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
@@ -1586,7 +1709,6 @@
                 if (files.length > 0) {
                     data.append("helpSectionImages", files[0]);
                 }
-                alert($('#Item1_EmailId').val());
                 $.ajax({
                     url: '/VDashboard/UploadProfilePic?email=' + $('#Item1_EmailId').val(),
                     type: "POST",
@@ -1594,10 +1716,8 @@
                     contentType: false,
                     data: data,
                     success: function (response) {
-                        //alert(response);
-                        $('#profilepic1').removeAttr('src').attr('src', '~/ProfilePictures/' + response);
-                        // window.location.reload();
-                        //  $("#profilepic").load();
+                        var url = '/vdashboard/profilepic';
+                        $('#profilepipccontent').empty().load(url);
                     }
                 });
             }
@@ -1719,9 +1839,9 @@
     </script>
     <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
     <script type="text/javascript">
-    //function show_hide_row(row)
-    //{
-    // $("."+row).toggle();
+        //function show_hide_row(row)
+        //{
+        // $("."+row).toggle();
         //}
         $('.show_hide_row').click(function () {
             //$('.hidden_row').toggle();
@@ -1734,7 +1854,7 @@
             $.ajax({
                 url: '/VDashboard/Sendmsg',
                 type: 'POST',
-                data: JSON.stringify({ msg: msg,Email:Email }),
+                data: JSON.stringify({ msg: msg, Email: Email }),
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function (data) {
@@ -1750,7 +1870,7 @@
                 }
             });
         })
-       
+
     </script>
 </body>
 </html>

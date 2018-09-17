@@ -545,12 +545,12 @@
                                 </form>
                                 @if (user != null)
                                 {
-                                    <button type="button" class="btn_1" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                    <button type="button" class="btn_1" style="width:85%" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
                                     @*<button type="button" class="btn_1" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
                                 }
                                 else
                                 {
-                                   <button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                   <button type="submit" value="email" style="width:85%" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
                                    @*<button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
                                 }
 
@@ -790,6 +790,7 @@
         };
         function booknow(val) {
             var v = val;
+            //alert(v);
             var cpid =  window.localStorage.getItem("cartid");
             var pid =   $('#packageid').val();
             if (cpid== null || cpid == pid)
@@ -819,29 +820,21 @@
                 url: url1,
                 success: function (data) {
                     if (data == "Success") {
-                        alert('package is add to the cart');
-
-                        //alertify.confirm("Added To Cart",function(){
+                        alertify.alert('Moved To Cart');
                         location.href = '/cart/Index';
-
                     }
                     else if (data == "failed") {
-                        alert("Failed To add item to the cart");
+                        alertify.alert("Failed To add item to the cart");
                     }
                     else if (data == "Exists") {
-                        alert("This Service Already Exists in Cart");
-                        location.href = '/cart/Index';
+                       alertify.alert("This Service Already Exists in Cart");
                     }
-
                 },
                 error:function(data)
                 {
-                    // $(".overlay").hide();
-                    alert("Something Went Wrong!!! Try Again Later");
+                    alertify.alert("Something Went Wrong!!! Try Again Later");
                 }
             });
-            location.href='/cart/Index' ; //?pid=' + pid + '&&guest=' + guests;
-            //alert(v);
         };
 
         $(document).ready(function () {
