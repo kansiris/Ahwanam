@@ -25,7 +25,6 @@ namespace MaaAahwanam.Web.Controllers
 
         // GET: VDashboard
         public ActionResult Index(string c, string vsid)
-
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -127,7 +126,6 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
