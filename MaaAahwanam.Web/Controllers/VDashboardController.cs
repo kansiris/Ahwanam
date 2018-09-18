@@ -57,6 +57,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (vsid != null && vsid != "") { Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList()); allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid)); }
                 ViewBag.ksimages = allimages;
                 ViewBag.images = allimages;
+                ViewBag.imagescount = 4 - allimages.Count;
                 ViewBag.sliderimages = allimages.Where(m => m.ImageType == "Slider").ToList();
                 ViewBag.slidercount = 4 - ViewBag.sliderimages.Count;
             }

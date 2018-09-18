@@ -66,7 +66,7 @@ namespace MaaAahwanam.Web.Controllers
                     else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
                         ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
                     else
-                        ViewBag.username = userdata.AlternativeEmailID;
+                        ViewBag.username = userLoginDetailsService.GetUserId((int)user.UserId).UserName; //userdata.AlternativeEmailID;
                     if (user.UserType == "Admin")
                     {
                         ViewBag.cartCount = cartserve.CartItemsCount(0);
