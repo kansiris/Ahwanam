@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+    
     <style type="text/css">
         .button {
             background-color: #fff;
@@ -101,7 +102,9 @@
             width: 60px;
         }
 
-
+        /*.dt-checkboxes {
+float :left;
+}*/
 
         .sliderdiv {
             border: 4px grey solid;
@@ -192,10 +195,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td colspan="6"> No Records</td>
-                                        </tr>
-                                    </tbody>
+                                        @{
+                                            var number = 0;
+                                            foreach(var vendors in ViewBag.vendorlist)
+                                            {
+                                                <tr>
+                                                    <td><input type="checkbox" class="chcktbl" /></td>
+                                                    <td>no records</td>
+                                                </tr>
+
+                                            }
+
+                                        }
+                                        
+                                    
                                 </table>
                                 <div id="saverecord" style="display:none;margin-top:50px">
                                     <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
@@ -276,6 +289,7 @@
     <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    
     <script>
         $(document).ready(function () {
             $('#allorders').DataTable();

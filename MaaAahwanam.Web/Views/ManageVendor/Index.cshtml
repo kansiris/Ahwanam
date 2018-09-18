@@ -185,18 +185,34 @@
                                 <table id="allorders" class="display" style="width:100%;padding-bottom:50px">
                                     <thead>
                                         <tr>
+                                            <th>Select</th>
                                             <th>S.No</th>
                                             <th>Vendor ID</th>
-                                            <th>Event Type</th>
-                                            <th>Event Date</th>
-                                            <th>Status</th>
+                                            <th>Business Name</th>
+                                            <th>First Name </th>
+                                            <th>Email</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td colspan="6"> No Records</td>
-                                        </tr>
+                                            @{
+                                                var number = 0;
+                                                foreach (var vendors in ViewBag.vendorlist)
+                                                {
+                                                <tr>
+                                                    <td><input type="checkbox" class="chcktbl" /></td>
+                                                    <td>@(++number)</td>
+                                                    <td>@vendors.vendorId </td>
+                                                    <td>@vendors.Businessname</td>
+                                                    <td>@vendors.firstname </td>
+                                                    <td>@vendors.email</td>
+                                                    <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-primary" disabled>Book Know</button></td>
+                                                </tr>
+
+                                                }
+
+                                            }
+                                      
                                     </tbody>
                                 </table>
                                 <div id="saverecord" style="display:none;margin-top:50px">
@@ -279,28 +295,27 @@
         });
         $('#CancelVendor').click(function () {
             $('#saverecord').css('display', 'none');
-        })
-        //$('#SaveVendor').click(function () {
-        //    alert('hi');
-        //    var buisnessname = $('#Businessname').val();
-        //    var services = $('#Services').val();
-        //    var Firstname = $('#firstname').val();
-        //    var Middlename = $('#middlename').val();
-        //    var Lastname = $('#lastname').val();
-        //    var Email = $('#email').val();
-        //    var PhoneNumber = $('#phoneno').val();
-        //    var Address1 = $('#adress1').val();
-        //    var Address2 = $('#adress2').val();
-        //    var city = $('#City').val();
-        //    var state = $("#State").val();
-        //    var country = $('#Country').val();
-
-        //    $.ajax({
-        //        url: '/ManageVendor/AddVendorDetails',
-        //        type: 'POST',
-        //    })
-
-        //});
+        });
+        $(function () {
+            $('.chcktbl').click(function () {
+                $('#btnBook').prop('disabled', !$('.chcktbl:checked').length);
+            });
+        });
+        $(function () {
+            $('.chcktbl').click(function () {
+                if ($(this).is(':checked')) {
+                    //$(this).parent('td').parent('tr').next('tr#btnBook').removeAttr('disabled')
+                    //$('#btnBook').removeAttr('disabled');
+                    $(this).parent('td').children('td').last('td.tdbtn#btnBook').removeAttr('disabled');
+                   // $(this).parent('td').children('td#btnBook').removeAttr('disabled');
+                } //else {
+                //    //$(this).parent('td').parent('tr').next('tr#btnBook').attr('disabled', 'disabled');
+                //    //$(this).parent('td').children('td#btnBook').attr('disabled', 'disabled');
+                //    $('#btnBook').attr('disabled', 'disabled');
+                //}
+            });
+        });
     </script>
+   
 </body>
 </html>

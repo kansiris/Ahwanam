@@ -28,10 +28,10 @@ namespace MaaAahwanam.Web.Controllers
                 string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
                 vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
                 VendorId = vendorMaster.Id.ToString();
-               
+                ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
 
             }
-            ViewBag.vendorlist= mngvendorservice.getvendor(VendorId);
+            
             return View();
         }
 
