@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model MaaAahwanam.Models.ManageUser
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -32,6 +33,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+    
     <style type="text/css">
         .button {
             background-color: #fff;
@@ -100,7 +102,9 @@
             width: 60px;
         }
 
-
+        /*.dt-checkboxes {
+float :left;
+}*/
 
         .sliderdiv {
             border: 4px grey solid;
@@ -174,8 +178,8 @@
                                 <div>
                                     <table style="width:100%">
                                         <tr>
-                                            <td><h4 style="text-transform:uppercase">Manage Users</h4></td>
-                                            <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New User</button></td>
+                                            <td><h4 style="text-transform:uppercase">Customers</h4></td>
+                                            <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Customer</button></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -183,7 +187,7 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
-                                            <th>User ID</th>
+                                            <th>Vendor ID</th>
                                             <th>Event Type</th>
                                             <th>Event Date</th>
                                             <th>Status</th>
@@ -191,52 +195,64 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td colspan="6"> No Records</td>
-                                        </tr>
-                                    </tbody>
+                                         <tr>
+                                            <td>No records</td>
+                                         </tr>
+
                                 </table>
                                 <div id="saverecord" style="display:none;margin-top:50px">
-                                    <h4 style="text-transform:uppercase">Add/Edit User</h4>
+                                    <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
                                     <table id="mngvendor" class="allvendors" style="width:100%;padding-bottom:50px">
                                         <tbody>
                                             <tr>
+                                                <td>Customer Type</td>
+                                                <td>
+                                                    <label for="CtypeIndividual">
+                                                        <input type="radio" id="CtypeIndividual" name="type" />
+                                                        Individual
+                                                    </label>
+                                                    <label for="CtypeCorporate">
+                                                        <input type="radio" id="CtypeCorporate" name="type" />
+                                                       Corporate
+                                                    </label>
+                                                </td>
+                                                <td>Company Name</td>
+                                                <td><input type="text" id="cmpname" /></td>
                                                 <td>First Name</td>
                                                 <td><input type="text" /></td>
+                                                
+                                            </tr>
+                                            <tr>
                                                 <td>Last Name</td>
                                                 <td><input type="text" /></td>
-                                                <td>Middle Name</td>
-                                                <td><input type="text" /></td>
-                                            </tr>
-                                            <tr>
+                                                @*<td>Middle Name</td>
+                                                <td><input type="text" /></td>*@
                                                 <td>Email</td>
                                                 <td><input type="text" /></td>
-                                                <td>Phone Number</td>
-                                                <td><input type="text" /></td>
-                                                <td>Event Type</td>
-                                                <td><input type="text" /></td>
+                                              
                                             </tr>
                                             <tr>
+                                                <td>Phone Number</td>
+                                                <td><input type="text" /></td>
                                                 <td>Address1</td>
                                                 <td><input type="text" /></td>
                                                 <td>Address2</td>
                                                 <td><input type="text" /></td>
-                                                <td>City</td>
-                                                <td><input type="text" /></td>
+                                               
                                             </tr>
                                             <tr>
+                                                <td>City</td>
+                                                <td><input type="text" /></td>
                                                 <td>State</td>
                                                 <td><input type="text" /></td>
                                                 <td>Country</td>
-                                                <td><input type="text" /></td>
-                                                <td>Services</td>
                                                 <td><input type="text" /></td>
                                                 
                                             </tr>
                                         </tbody>
                                     </table>
 
-                                    <button id="CancelVendor" class="btn btn-success">Save</button>
+                                    <button id="SaveCustomer" type="submit" class="btn btn-success">Save</button>
                                     <button id="CancelVendor" class="btn btn-danger">Cancel</button>
                                 </div>
                             </div>
@@ -263,6 +279,7 @@
     <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    
     <script>
         $(document).ready(function () {
             $('#allorders').DataTable();
@@ -275,7 +292,11 @@
         $('#btnadd').click(function () {
             $('#saverecord').css('display', 'block');
         });
+        $('#CancelVendor').click(function () {
+            $('#saverecord').css('display', 'none');
+        });
     </script>
+   
 </body>
 </html>
 
