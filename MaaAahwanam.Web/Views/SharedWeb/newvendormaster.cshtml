@@ -1,0 +1,360 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    @using system;
+    @using System.Linq;
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
+
+    <!-- BASE CSS -->
+    <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/newdesignstyles/css/style.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
+
+    <!-- SPECIFIC CSS -->
+    <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+    <link href="#" id="colors" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="http://design.maa-aahwanam.com/panagea/css/custom1.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
+    <!-- semantic -->
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+    @RenderSection("css", false)
+    <style type="text/css">
+        .ui-datepicker-inline {
+            width: 100%;
+        }
+
+        .button {
+            background-color: #fff;
+            border: none;
+            color: black;
+            padding: 6px 3px 15px 2px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 8px 0px 3px 6px;
+            cursor: pointer;
+            border-radius: 16px;
+        }
+
+        .button {
+            height: 27px;
+            width: 112px;
+        }
+
+        /*table, th, td {
+            border: 0px;
+            padding-left: 61px;
+            padding-top: 24px;
+            margin-top: -16px;
+            font-size: 16px;
+        }*/
+
+        input[type=text] {
+            width: 39%;
+            padding: 12px 26px;
+            margin: 5px 15px;
+            box-sizing: border-box;
+            border: none;
+            background-color: #fff;
+            /*color: white;*/
+        }
+
+        p.caption {
+            margin: 0 30px 0px 0;
+            background-color: yellow;
+        }
+
+        .caption {
+            font-size: 10px;
+            font-family: lato;
+            color: #000;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            border-radius: 30px;
+            height: 60px;
+            width: 60px;
+            grid-gap: 30px 30px;
+        }
+
+        .grid-item {
+            background-color: white;
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 15px 20px 15px 20px;
+            font-size: 30px;
+            text-align: center;
+            border-radius: 30px;
+            height: 60px;
+            width: 60px;
+        }
+
+        .saveamenities {
+            margin-left: 300px;
+            margin-top: -33px;
+            width: 75px;
+            background-color: #5829bb;
+            color: white;
+        }
+
+        .sliderdiv {
+            border: 4px grey solid;
+            border-style: dashed;
+            height: 100px;
+            width: 100px;
+            margin-top: 25px;
+        }
+
+            .sliderdiv img {
+                padding: 35px;
+            }
+
+        .sliderdiv1 {
+            border: 4px grey solid;
+            border-style: dashed;
+            height: 100px;
+            width: 100px;
+            margin-top: 25px;
+        }
+
+            .sliderdiv1 img {
+                padding: 35px;
+            }
+
+        table.tsliders, th, td {
+            padding-left: 50px;
+        }
+
+        .sliderdiv input[type=file] {
+            display: none;
+        }
+
+        tr.pricestr td input {
+            margin: 0px;
+            width: 100%;
+            padding: 4px 2px;
+        }
+
+        table.priceslist, th.priceslist, td.priceslist {
+            border: 0px;
+            padding-left: 0;
+            padding-top: 0;
+            margin-top: 0;
+            font-size: 16px;
+            color: black;
+            text-align: center;
+        }
+
+        .box_grid ul li {
+            margin-right: 0;
+            color: black;
+            float: none;
+            align-content: center;
+        }
+
+        .vendorimg {
+            max-width: 100%;
+            height: 140px;
+            overflow: hidden;
+            background-repeat: no-repeat !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .nice-select {
+            width: 315px;
+        }
+
+            .nice-select .list {
+                height: 250px;
+                width: 315px;
+                overflow: visible;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+        .card-body {
+            color: black;
+        }
+
+        #pkgmodal, #Querymodel, #viewmenuitems {
+            position: relative;
+        }
+
+        .col-md-2-10 {
+            padding-left: 10px;
+        }
+
+            .col-md-2-10 > .pkgitem {
+                padding: 0px;
+                min-height: 2rem;
+                min-width: fit-content;
+                background-color: white;
+                border-radius: 16px;
+            }
+
+        table.menuitems, th.menuitems, td.menuitems {
+            padding-left: 0;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="page">
+        <header class="header menu_fixed">
+            <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+            @*<div id="logo">
+                    <a href="/home">
+                        <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky">
+                        <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_normal">
+                    </a>
+                </div>*@
+
+            <ul id="top_menu"></ul>
+            <!-- /top_menu -->
+            <a href="#menu" class="btn_mobile">
+                <div class="hamburger hamburger--spin" id="hamburger">
+                    <div class="hamburger-box">
+                        <div class="hamburger-inner"></div>
+                    </div>
+                </div>
+            </a>
+            <nav id="menu" class="main-menu">
+                <ul>
+                    <li><span><a href="#0">Add Manager</a></span>
+                    <li><span><a href="#0">Add service</a></span>
+                    <li>
+                        <span><a href="#0">Settings</a></span>
+                    </li>
+                </ul>
+            </nav>
+
+        </header>
+        @*@model MaaAahwanam.Models.Package*@
+        <!-- /header -->
+        <main>
+            <div id="error_page">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="ui-cards">
+                                @{Html.RenderAction("profilepic", "VDashboard");}
+                                @{Html.RenderAction("sidebar", "VDashboard");  }
+                                @RenderBody();
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>   <!-- /error_page -->
+        </main>
+        </div>
+        <div id="pkgmodal" class="ui mini test modal" style="max-width:300px;width:100%">
+            <i class="close icon"></i>
+            <div class="header">
+                <text class="selectedpkg"></text> Items
+            </div>
+            <div class="scrolling content pkgitemsection">
+                <table class="menuitems"></table>
+            </div>
+            <div class="actions">
+                <div class="ui negative button" style="height:40px;">
+                    CANCEL
+                </div>
+                <div class="ui positive button" style="height:40px;" onclick="Addpkgitems()">
+                    ADD
+                </div>
+            </div>
+        </div>
+        <div id="Querymodel" class="ui standard writemsg modal" style="max-width:500px;width:100%">
+            <div class="header">
+                Write Message To: <text class="custemail"></text>
+            </div>
+            <div class="scrolling content">
+                <textarea placeholder="Start typing your message here....." class="form-control" id="txtmsg" rows="5"></textarea>
+            </div>
+            <div class="actions">
+                <div class="ui negative button" style="height:40px;">
+                    CANCEL
+                </div>
+                <div class="ui positive button" id="sendmsg" style="height:40px;">
+                    SEND
+                </div>
+            </div>
+        </div>
+
+        <div id="viewmenuitems" class="ui long writemsg modal">
+            <div class="header" style="background-color:#573791;color:white">
+                <text class="pkgname"></text> - <text class="pkgtype"></text>
+                <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewmenuitems').modal('hide')">Close</button>
+                <br />
+                <table style="width:100%">
+                    <tr>
+                        <td>Normal Days</td>
+                        <td>Peak Days</td>
+                        <td>HoliDays</td>
+                        <td>Choice Days</td>
+                    </tr>
+                    <tr>
+                        <td>₹<label id="normaldays"></label></td>
+                        <td>₹<label id="peakdays"></label></td>
+                        <td>₹<label id="holidays"></label></td>
+                        <td>₹<label id="choicedays"></label></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="scrolling content">
+                <textarea placeholder="Selected Menu items" class="form-control" id="pkgitems" rows="5"></textarea>
+            </div>
+            <div class="actions">
+                <div class="ui negative button" style="height:40px;">
+                    CANCEL
+                </div>
+                <div class="ui positive button" id="sendmsg" style="height:40px;">
+                    SEND
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMON SCRIPTS -->
+        <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+        <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
+        <script src="~/newdesignstyles/Scripts/main.js"></script>
+        <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
+        <!-- DATEPICKER  -->
+        <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
+        <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
+        <!-- semantic -->
+        <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
+        <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    @RenderSection("scripts", false)
+
+       
+</body>
+</html>

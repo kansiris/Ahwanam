@@ -8,6 +8,7 @@ using MaaAahwanam.Models;
 using MaaAahwanam.Web.Custom;
 using MaaAahwanam.Utility;
 using System.IO;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -21,6 +22,8 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorImageService vendorImageService = new VendorImageService();
         VendorProductsService vendorProductsService = new VendorProductsService();
+        viewservicesservice viewservicesss = new viewservicesservice();
+
         const string imagepath = @"/vendorimages/";
 
         // GET: VDashboard
@@ -45,6 +48,20 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.tommaroworder = orders.Where(p => p.BookedDate == tommarowdate);
                 ViewBag.upcominforder = orders.Where(p => p.BookedDate >= tommarowdate);
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
+                List<VendorVenue> vendor = venues;
+                List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
+                List<VendorImage> vimg = new List<VendorImage>();
+
+                foreach (var item in venues)
+                {
+                    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
+                    //amenities.Add(item);
+                    vimg.AddRange(allimages.Where(m => m.VendorId == item.Id));
+                }
+              //  ViewBag.allimages = vimg.FirstOrDefault();
+
+                ViewBag.particularVenue = vendor;
+                ViewBag.availablepackages = package;
                 ViewBag.venues = venues;
                 Addservices(vsid);
                 if (venues.Count > 0)
