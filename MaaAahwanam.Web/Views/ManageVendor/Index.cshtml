@@ -177,7 +177,7 @@
                                 <div>
                                     <table style="width:100%">
                                         <tr>
-                                            <td><h4 style="text-transform:uppercase">Manage Vendors</h4></td>
+                                            <td><h4 style="text-transform:uppercase">Vendors</h4></td>
                                             <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Vendor</button></td>
                                         </tr>
                                     </table>
@@ -206,7 +206,7 @@
                                                     <td>@vendors.Businessname</td>
                                                     <td>@vendors.firstname </td>
                                                     <td>@vendors.email</td>
-                                                    <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-primary" disabled>Book Know</button></td>
+                                                    <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-primary" disabled>Book Now</button></td>
                                                 </tr>
 
                                                 }
@@ -228,8 +228,8 @@
                                                 <td><input type="text" id="firstname" name="firstname"/></td>
                                             </tr>
                                             <tr>
-                                                <td>Middle Name</td>
-                                                <td><input type="text" id="middlename" name="middlename"/></td>
+                                                @*<td>Middle Name</td>
+                                                <td><input type="text" id="middlename" name="middlename"/></td>*@
                                                 <td>Last Name</td>
                                                 <td><input type="text" id="lastname" name="lastname"/></td>
                                                 <td>Email</td>
@@ -296,25 +296,18 @@
         $('#CancelVendor').click(function () {
             $('#saverecord').css('display', 'none');
         });
+       
         $(function () {
-            $('.chcktbl').click(function () {
-                $('#btnBook').prop('disabled', !$('.chcktbl:checked').length);
+                $('.chcktbl').click(function () {
+                    if ($(this).is(':checked')) {
+                        $(this).closest('tr').find('#btnBook').removeAttr('disabled');
+                    }
+                    else {
+                        $(this).closest('tr').find('#btnBook').attr('disabled', 'disabled');
+                    }
+                });
             });
-        });
-        $(function () {
-            $('.chcktbl').click(function () {
-                if ($(this).is(':checked')) {
-                    //$(this).parent('td').parent('tr').next('tr#btnBook').removeAttr('disabled')
-                    //$('#btnBook').removeAttr('disabled');
-                    $(this).parent('td').children('td').last('td.tdbtn#btnBook').removeAttr('disabled');
-                   // $(this).parent('td').children('td#btnBook').removeAttr('disabled');
-                } //else {
-                //    //$(this).parent('td').parent('tr').next('tr#btnBook').attr('disabled', 'disabled');
-                //    //$(this).parent('td').children('td#btnBook').attr('disabled', 'disabled');
-                //    $('#btnBook').attr('disabled', 'disabled');
-                //}
-            });
-        });
+
     </script>
    
 </body>
