@@ -71,7 +71,8 @@ namespace MaaAahwanam.Web.Controllers
                 if (c != null) ViewBag.enable = c;
                 ViewBag.vsid = vsid;
                 ViewBag.vendorid = vid;
-                if (vsid != null && vsid != "") { Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList()); allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid)); }
+                if (vsid != null && vsid != "") { Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
+                    allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid)); }
                 ViewBag.ksimages = allimages;
                 ViewBag.images = allimages;
                 ViewBag.imagescount = 4 - allimages.Count;
