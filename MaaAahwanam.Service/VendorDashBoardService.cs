@@ -22,5 +22,16 @@ namespace MaaAahwanam.Service
             mngvendorlist = mngvendorrepository.GetVendorList(Vid);
             return mngvendorlist;
         }
+        public ManageUser AddUser(ManageUser mnguser)
+        {
+            mnguser = mngvendorrepository.AddUser(mnguser);
+            return mnguser;
+        }
+        public List<ManageUser> getuser(string Vid)
+        {
+            List<ManageUser> mnguserlist = new List<ManageUser>();
+            mnguserlist = mngvendorrepository.GetUserList(Vid);
+            return mnguserlist;
+        }
     }
 }
