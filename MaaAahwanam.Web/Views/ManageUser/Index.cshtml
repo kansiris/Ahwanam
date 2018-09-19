@@ -178,7 +178,7 @@ float :left;
                                 <div>
                                     <table style="width:100%">
                                         <tr>
-                                            <td><h4 style="text-transform:uppercase">Customers</h4></td>
+                                            <td><h4 style="text-transform:uppercase">Customers/Clients</h4></td>
                                             <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Customer</button></td>
                                         </tr>
                                     </table>
@@ -186,19 +186,34 @@ float :left;
                                 <table id="allorders" class="display" style="width:100%;padding-bottom:50px">
                                     <thead>
                                         <tr>
+                                            <th>Select</th>
                                             <th>S.No</th>
                                             <th>Vendor ID</th>
-                                            <th>Event Type</th>
-                                            <th>Event Date</th>
-                                            <th>Status</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         <tr>
-                                            <td>No records</td>
-                                         </tr>
+                                        @{
+                                            var number = 0;
+                                            foreach (var users in ViewBag.Userlist)
+                                            {
+                                                <tr>
+                                                    <td><input type="checkbox" class="chcktbl" /></td>
+                                                    <td>@(++number)</td>
+                                                    <td>@users.vendorId </td>
+                                                    <td>@users.firstname</td>
+                                                    <td>@users.lastname </td>
+                                                    <td>@users.email</td>
+                                                    <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
+                                                </tr>
 
+                                            }
+
+                                        }
+                                   </tbody>
                                 </table>
                                 <div id="saverecord" style="display:none;margin-top:50px">
                                     <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
@@ -294,6 +309,16 @@ float :left;
         });
         $('#CancelVendor').click(function () {
             $('#saverecord').css('display', 'none');
+        });
+        $(function () {
+            $('.chcktbl').click(function () {
+                if ($(this).is(':checked')) {
+                    $(this).closest('tr').find('#btnBook').removeAttr('disabled');
+                }
+                else {
+                    $(this).closest('tr').find('#btnBook').attr('disabled', 'disabled');
+                }
+            });
         });
     </script>
    

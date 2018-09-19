@@ -21,5 +21,16 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ManageVendor.Where(v => v.vendorId == Vid).ToList();
         }
+        public ManageUser AddUser(ManageUser mnguser)
+        {
+            _dbContext.ManageUser.Add(mnguser);
+            _dbContext.SaveChanges();
+            return mnguser;
+
+        }
+        public List<ManageUser> GetUserList(string Vid)
+        {
+            return _dbContext.ManageUser.Where(v => v.vendorId == Vid).ToList();
+        }
     }
 }
