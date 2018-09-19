@@ -37,6 +37,10 @@
     <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
 
     <style type="text/css">
+        .ui-datepicker-inline {
+            width: 100%;
+        }
+
         .button {
             background-color: #fff;
             border: none;
@@ -192,7 +196,7 @@
             color: black;
         }
 
-        #pkgmodal, #Querymodel {
+        #pkgmodal, #Querymodel, #viewmenuitems {
             position: relative;
         }
 
@@ -218,12 +222,12 @@
     <div id="page">
         <header class="header menu_fixed">
             <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
-            <div id="logo">
-                <a href="/home">
-                    <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky">
-                    <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_normal">
-                </a>
-            </div>
+            @*<div id="logo">
+                    <a href="/home">
+                        <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky">
+                        <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_normal">
+                    </a>
+                </div>*@
 
             <ul id="top_menu"></ul>
             <!-- /top_menu -->
@@ -365,14 +369,14 @@
                                             </form>
                                             <table>
                                                 <tr>
-                                                    <th>Peak days ₹</th>
                                                     <th>Normal Days ₹</th>
+                                                    <th>Peak days ₹</th>
                                                     <th>Holidays ₹</th>
                                                     <th>Choice days ₹</th>
                                                 </tr>
                                                 <tr class="pricestr">
-                                                    <td><input type="number" id="pdays" name="pdays" placeholder="₹100" /> </td>
                                                     <td><input type="number" id="ndays" name="ndays" placeholder="₹100" /> </td>
+                                                    <td><input type="number" id="pdays" name="pdays" placeholder="₹100" /> </td>
                                                     <td><input type="number" id="holidays" name="holidays" placeholder="₹100" /> </td>
                                                     <td><input type="number" id="cdays" name="cdays" placeholder="₹100" /> </td>
                                                 </tr>
@@ -392,8 +396,9 @@
                                             <button class="button pkgitem">Deserts(0)</button>
                                             <button class="button pkgitem">Beverages(0)</button>
                                             <button class="button pkgitem">Fruits(0)</button>
-                                            <br><br>
+                                            @*<br><br>*@
                                             <div align="right">
+                                                <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;">View Menu</a>
                                                 <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;">Duplicate</a>
                                                 <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545;">Publish</a>
                                                 <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;">Remove</a>
@@ -416,9 +421,9 @@
                                                                 }
 
                                                             }
-                                                            if (ViewBag.images.Count > 0)
+                                                            if (ViewBag.imagescount > 0)
                                                             {
-                                                                for (int i = 1; i < ViewBag.images.Count + 1; i++)
+                                                                for (int i = 1; i < ViewBag.imagescount + 1; i++)
                                                                 {
                                                                     <td>
                                                                         <div class="sliderdiv">
@@ -782,55 +787,55 @@
                                             <div class="ui equal width form" style="margin-left: 49px;">
                                                 @if (ViewBag.ks == "ks")
                                                 {
-                                                <div class="fields">
-                                                    <div class="four-field">
-                                                        <label></label>
-                                                        <input type="text" id="hdname" name="hdname" placeholder="Area Type" autocomplete="off">
+                                                    <div class="fields">
+                                                        <div class="four-field">
+                                                            <label></label>
+                                                            <input type="text" id="hdname" name="hdname" placeholder="Enter Hall Name" autocomplete="off">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="fields">
-                                                    <div class="four-field">
-                                                        <label></label>
-                                                        <input type="text" id="Dimentions" name="Dimentions" placeholder="Area Dimensions(in sft)">
+                                                    <div class="fields">
+                                                        <div class="four-field">
+                                                            <label></label>
+                                                            <input type="text" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="fields">
-                                                    <div class="field-1">
-                                                        <label></label>
-                                                        <input type="text" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Min Capacity">
-                                                    </div>
+                                                    <div class="fields">
+                                                        <div class="field-1">
+                                                            <label></label>
+                                                            <input type="text" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Min Capacity">
+                                                        </div>
 
-                                                    <div class="field-1">
-                                                        <label></label>
-                                                        <input type="text" id="Maximumcapacity" name="Maximumcapacity" placeholder="Max Capacity">
+                                                        <div class="field-1">
+                                                            <label></label>
+                                                            <input type="text" id="Maximumcapacity" name="Maximumcapacity" placeholder="Max Capacity">
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 }
                                                 else if (ViewBag.ks == "ksc")
                                                 {
-                                                <div class="fields">
-                                                    <div class="four-field">
-                                                        <label></label>
-                                                        <input type="text" id="hdname" name="hdname" placeholder="Area Type" autocomplete="off" value="@ViewBag.service.name">
+                                                    <div class="fields">
+                                                        <div class="four-field">
+                                                            <label></label>
+                                                            <input type="text" id="hdname" name="hdname" placeholder="Enter Hall Name" autocomplete="off" value="@ViewBag.service.name">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="fields">
-                                                    <div class="four-field">
-                                                        <label></label>
-                                                        <input type="text" id="Dimentions" name="Dimentions" placeholder="Area Dimensions(in sft)" value="@ViewBag.service.Dimentions">
+                                                    <div class="fields">
+                                                        <div class="four-field">
+                                                            <label></label>
+                                                            <input type="text" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)" value="@ViewBag.service.Dimentions">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="fields">
-                                                    <div class="field-1">
-                                                        <label></label>
-                                                        <input type="text" placeholder="Min Capacity" id="Minimumseatingcapacity" name="Minimumseatingcapacity" value="@ViewBag.service.Minimumseatingcapacity">
-                                                    </div>
+                                                    <div class="fields">
+                                                        <div class="field-1">
+                                                            <label></label>
+                                                            <input type="text" placeholder="Min Capacity" id="Minimumseatingcapacity" name="Minimumseatingcapacity" value="@ViewBag.service.Minimumseatingcapacity">
+                                                        </div>
 
-                                                    <div class="field-1">
-                                                        <label></label>
-                                                        <input type="text" placeholder="Max Capacity" id="Maximumcapacity" name="Maximumcapacity" value="@ViewBag.service.Maximumcapacity">
+                                                        <div class="field-1">
+                                                            <label></label>
+                                                            <input type="text" placeholder="Max Capacity" id="Maximumcapacity" name="Maximumcapacity" value="@ViewBag.service.Maximumcapacity">
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 }
                                             </div>
                                             <br>
@@ -839,113 +844,113 @@
                                             <h5 class="h5-1">DESCRIBE YOUR SERVICE</h5><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('four')">SAVE</button>
                                             @if (@ViewBag.ks == "ksc")
                                             {
-                                            <div class="ui equal width form">
-                                                <div class="fields">
-                                                    <div class="four-field">
-                                                        <label></label>
-                                                        <input type="text" id="mainDescription" name="mainDescription" placeholder="Start typing your service info..." style="height: 109px;" value="@ViewBag.service.Description">
-                                                    </div>
-                                                </div>
-
-                                                <h5 class="h5-1">ADDRESS</h5><br>
                                                 <div class="ui equal width form">
                                                     <div class="fields">
-                                                        <label></label>
-                                                        <input id="Address" name="Address" type="text" placeholder="Give your Address" value="@ViewBag.service.Address">
-                                                    </div>
-
-                                                    <div class="fields">
-                                                        <div class="field">
+                                                        <div class="four-field">
                                                             <label></label>
-                                                            <input type="text" id="Landmark" name="Landmark" placeholder="What's the Landmark'" value="@ViewBag.service.Landmark" style="width:100%">
-                                                        </div>
-
-                                                        <div class="field">
-                                                            <label></label>
-                                                            <input type="text" id="City" name="City" placeholder="What's your City" value="@ViewBag.service.City" style="width:100%">
+                                                            <input type="text" id="mainDescription" name="mainDescription" placeholder="Start typing your service info..." style="height: 109px;" value="@ViewBag.service.Description">
                                                         </div>
                                                     </div>
-                                                    <div class="eight field">
-                                                        <label></label>
-                                                        <input type="text" id="ZipCode" name="ZipCode" placeholder="Type ZipCode" value="@ViewBag.service.ZipCode">
-                                                    </div>
 
+                                                    <h5 class="h5-1">ADDRESS</h5><br>
+                                                    <div class="ui equal width form">
+                                                        <div class="fields">
+                                                            <label></label>
+                                                            <input id="Address" name="Address" type="text" placeholder="Give your Address" value="@ViewBag.service.Address">
+                                                        </div>
+
+                                                        <div class="fields">
+                                                            <div class="field">
+                                                                <label></label>
+                                                                <input type="text" id="Landmark" name="Landmark" placeholder="What's the Landmark" value="@ViewBag.service.Landmark" style="width:100%">
+                                                            </div>
+
+                                                            <div class="field">
+                                                                <label></label>
+                                                                <input type="text" id="City" name="City" placeholder="What's your City" value="@ViewBag.service.City" style="width:100%">
+                                                            </div>
+                                                        </div>
+                                                        <div class="eight field">
+                                                            <label></label>
+                                                            <input type="text" id="ZipCode" name="ZipCode" placeholder="Type ZipCode" value="@ViewBag.service.ZipCode">
+                                                        </div>
+
+                                                    </div>
+                                                    @*<form>
+                                                            <div class="row col-md-12">
+                                                                <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="text-line" placeholder="First Name*" id="fname" name="fname" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="text-line" placeholder="Last Name*" id="lname" name="lname" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /row -->
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="text-line" placeholder="Email Address*" id="emailid" name="emailid" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="text-line" placeholder="Phone Number*" id="phoneno" name="phoneno" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /row -->
+                                                            <div class="form-group">
+                                                                <input class="text-line" id="datetimepicker" type="text" name="datetimepicker" placeholder="Event Date*">
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="button" style="margin-left:0;position:relative;width:50%;margin-top:50px" class="btn btn-dark-green" id="btnsubmit">SUBMIT</button>
+                                                            </div>
+                                                        </form>*@
                                                 </div>
-                                                @*<form>
-                                                        <div class="row col-md-12">
-                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="text-line" placeholder="First Name*" id="fname" name="fname" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="text-line" placeholder="Last Name*" id="lname" name="lname" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /row -->
-                                                        <div class="row">
-                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="text-line" placeholder="Email Address*" id="emailid" name="emailid" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6" style="padding: 0px 20px 0px 10px;">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="text-line" placeholder="Phone Number*" id="phoneno" name="phoneno" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /row -->
-                                                        <div class="form-group">
-                                                            <input class="text-line" id="datetimepicker" type="text" name="datetimepicker" placeholder="Event Date*">
-
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button type="button" style="margin-left:0;position:relative;width:50%;margin-top:50px" class="btn btn-dark-green" id="btnsubmit">SUBMIT</button>
-                                                        </div>
-                                                    </form>*@
-                                            </div>
 
                                             }
                                             else if (@ViewBag.ks == "ks")
                                             {
-                                            <div class="ui equal width form">
-                                                <div class="fields">
-                                                    <div class="four-field">
-                                                        <label></label>
-                                                        <input type="text" id="mainDescription" name="mainDescription" placeholder="Description" style="height: 109px;">
-                                                    </div>
-                                                </div>
-
-                                                <h5 class="h5-1">Address</h5><br>
                                                 <div class="ui equal width form">
                                                     <div class="fields">
+                                                        <div class="four-field">
+                                                            <label></label>
+                                                            <input type="text" id="mainDescription" name="mainDescription" placeholder="Description" style="height: 109px;">
+                                                        </div>
+                                                    </div>
+
+                                                    <h5 class="h5-1">Address</h5><br>
+                                                    <div class="ui equal width form">
+                                                        <div class="fields">
+                                                            <div class="eight field">
+                                                                <label></label>
+                                                                <input id="Address" name="Address" type="text" placeholder="Address">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="fields" style="width:250px">
+                                                            <div class="field">
+                                                                <label></label>
+                                                                <input type="text" id="Landmark" name="Landmark" placeholder="Landmark" style="width:120px">
+                                                            </div>
+
+                                                            <div class="field">
+                                                                <label></label>
+                                                                <input type="text" id="City" name="City" placeholder="City" style="width:120px">
+                                                            </div>
+                                                        </div>
                                                         <div class="eight field">
                                                             <label></label>
-                                                            <input id="Address" name="Address" type="text" placeholder="Address">
+                                                            <input type="text" id="ZipCode" name="ZipCode" placeholder="ZipCode">
                                                         </div>
 
                                                     </div>
-                                                    <div class="fields" style="width:250px">
-                                                        <div class="field">
-                                                            <label></label>
-                                                            <input type="text" id="Landmark" name="Landmark" placeholder="Landmark" style="width:120px">
-                                                        </div>
-
-                                                        <div class="field">
-                                                            <label></label>
-                                                            <input type="text" id="City" name="City" placeholder="City" style="width:120px">
-                                                        </div>
-                                                    </div>
-                                                    <div class="eight field">
-                                                        <label></label>
-                                                        <input type="text" id="ZipCode" name="ZipCode" placeholder="ZipCode">
-                                                    </div>
-
                                                 </div>
-                                            </div>
                                             }
                                         </div>
                                     </div>
@@ -1002,7 +1007,7 @@
                                     <div class="row">
                                         @foreach (var item in ViewBag.venues)
                                         {
-                                            <div class="col-xl-3.5 isotope-item popular">
+                                            <div class="col-xl-4 isotope-item popular">
                                                 <div class="box_grid">
                                                     <figure style="margin:0;height:140px">
                                                         @*@foreach (var item1 in ViewBag.ksimages)
@@ -1260,9 +1265,9 @@
                                                         <td colspan=4><ul><li>Event Type:@orders.EventType</li><li>contact number:@orders.UserPhone</li></ul></td>
                                                     </tr>
 
-
                                                 }
                                             }
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -1302,13 +1307,44 @@
         </div>
     </div>
     <div id="Querymodel" class="ui standard writemsg modal" style="max-width:500px;width:100%">
-
         <div class="header">
             Write Message To: <text class="custemail"></text>
         </div>
         <div class="scrolling content">
             <textarea placeholder="Start typing your message here....." class="form-control" id="txtmsg" rows="5"></textarea>
+        </div>
+        <div class="actions">
+            <div class="ui negative button" style="height:40px;">
+                CANCEL
+            </div>
+            <div class="ui positive button" id="sendmsg" style="height:40px;">
+                SEND
+            </div>
+        </div>
+    </div>
 
+    <div id="viewmenuitems" class="ui long writemsg modal">
+        <div class="header" style="background-color:#573791;color:white">
+            <text class="pkgname"></text> - <text class="pkgtype"></text>
+            <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewmenuitems').modal('hide')">Close</button>
+            <br />
+            <table style="width:100%">
+                <tr>
+                    <td>Normal Days</td>
+                    <td>Peak Days</td>
+                    <td>HoliDays</td>
+                    <td>Choice Days</td>
+                </tr>
+                <tr>
+                    <td>₹<label id="normaldays"></label></td>
+                    <td>₹<label id="peakdays"></label></td>
+                    <td>₹<label id="holidays"></label></td>
+                    <td>₹<label id="choicedays"></label></td>
+                </tr>
+            </table>
+        </div>
+        <div class="scrolling content">
+            <textarea placeholder="Selected Menu items" class="form-control" id="pkgitems" rows="5"></textarea>
         </div>
         <div class="actions">
             <div class="ui negative button" style="height:40px;">
@@ -1353,6 +1389,31 @@
                     }
                 }
             }
+        });
+
+        $('.viewmenu').click(function () {
+            var packagename = $(this).parent('div').parent('.col-md-2-10').prev('.col-md-2-9').children('form').children('table').find('tr').find('td:first').find('input').val();
+            var pkgcategory = $("input[name='checkradio']:checked").val();
+            var dayssection = $(this).parent('div').parent('.col-md-2-10').prev('.col-md-2-9').find('table').find('tr.pricestr');
+            var peakdays = dayssection.find('td').find('input#pdays').val();
+            var normaldays = dayssection.find('td').find('input#ndays').val();
+            var holidays = dayssection.find('td').find('input#holidays').val();
+            var choicedays = dayssection.find('td').find('input#cdays').val();
+            var selectedpkgitems = '';
+            for (var i = 0; i < pkgheadings.split(',').length; i++) {
+                var selecteditems = window.localStorage.getItem(pkgheadings.toLowerCase());
+                if (selecteditems != null)
+                    selectedpkgitems = selectedpkgitems + ',' + (pkgheadings.split(',')[i] + ':' + selecteditems);
+            }
+            //alert(selectedpkgitems);
+            $('#viewmenuitems .pkgname').text(packagename);
+            $('#viewmenuitems .pkgtype').text(pkgcategory);
+            $('#viewmenuitems #peakdays').text(peakdays);
+            $('#viewmenuitems #normaldays').text(normaldays);
+            $('#viewmenuitems #holidays').text(holidays);
+            $('#viewmenuitems #choicedays').text(choicedays);
+            $('#viewmenuitems #pkgitems').text(selectedpkgitems.split(':'));
+            $('#viewmenuitems').modal('show');
         });
         $('.addpkg').click(function () {
             var packagename = $(this).parent('div').parent('.col-md-2-10').prev('.col-md-2-9').children('form').children('table').find('tr').find('td:first').find('input');
@@ -1801,7 +1862,7 @@
                     arr1 = arr + arr1 + ',' + checkbox.attr('id');
                 else
                     arr1 = arr1 + ',' + checkbox.attr('id');
-                alert(checkbox.attr('id'));
+                //alert(checkbox.attr('id'));
                 $(this).css('background-color', 'yellow');
             }
             $('#amenities1').val(arr1.substr(1));

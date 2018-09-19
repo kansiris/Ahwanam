@@ -118,7 +118,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView("billing");
         }
 
-        public JsonResult email(string selcartid)
+        public JsonResult email(string selcartid,string searchedcontent)
         {
             selcartid = selcartid.Trim(',');
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -135,7 +135,7 @@ namespace MaaAahwanam.Web.Controllers
                     string username = userdetails.FirstName;
                     string phoneno = userdetails.UserPhone;
                     HomeController home = new HomeController();
-                    username = home.Capitalise(username);
+                    username = home.Capitalise(username) + " "+ home.Capitalise(userdetails.LastName);
                     List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartid1 = selcartid.Split(',');
                     //for (int i = 0; i < cartid1.Count(); i++)
@@ -151,21 +151,23 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     ViewBag.cartdetails = cartdetails;
                     StringBuilder cds = new StringBuilder();
-                    cds.Append("<table style='border:1px;background: #0000;'><tbody><tb>");
+                    cds.Append("<table style='border:1px black solid;'><tbody>");
+                    cds.Append("<tr><td> Selected Business </td><td> Guests Count </td><td> Amount </td><td> Selected Event </td></tr>");
                     foreach (var item in ViewBag.cartdetails)
                     {
-                        cds.Append("<table style='border: 2px black solid'><tbody><tr><td> name </td><td> guest </td><td> amount </td><td> event </td><td> date </td></tr><tr><td style = 'width: 75px;border: 2px black solid;'> " + item.BusinessName + "</td><td style = 'width: 75px;border: 2px black solid;' > " + item.Quantity + " </td><td style = 'width: 75px;border: 2px black solid;'> " + item.TotalPrice + " </td><td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td style = 'width: 50px;border: 2px black solid;'> " + item.EventType + " </td></tr></tbody></table>");
+                        cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.BusinessName + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Quantity + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.TotalPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.EventType + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                     }
-                    cds.Append("</tb></table></tbody>");
-                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+                    cds.Append("</tbody></table>");
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/getassistance.html"));
                     string readFile = File.OpenText().ReadToEnd();
                     readFile = readFile.Replace("[carttable]", cds.ToString());
                     readFile = readFile.Replace("[name]", username);
                     readFile = readFile.Replace("[Ipaddress]", ipaddress);
                     readFile = readFile.Replace("[email]", Email);
                     readFile = readFile.Replace("[phoneno]", phoneno);
+                    readFile = readFile.Replace("[usersearch]", searchedcontent.Replace(",","<br/>"));
                     string txtmessage = readFile;//readFile + body;
-                    string subj = "Get Quote From Cart Page";
+                    string subj = "Get Assistance/Quote From Cart Page";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                     emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 }

@@ -39,6 +39,25 @@
         .modal {
             position: relative;
         }
+        .kcheckbox {
+            height: 25px;
+    width: 25px;
+    background-color: #eee;
+        }
+        .kcheckboxname {
+            padding-left: 5px;
+    padding-right: 40px;
+    font-size: 33px;
+    font-weight: 300;
+        }
+        .businesstype input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+        .kscatego {
+                padding-top: 20px;
+    font-size: 15px;
+    padding-bottom: 10px;
+        }
     </style>
 
 </head>
@@ -172,9 +191,9 @@ Welcome             </div>
                 
                 <div class="description">
                     <p>Go ahead and fill out you business information</p>
-                    <div class="businesstype"> <input type="checkbox" id="business" name="business" value="Individual"/><label>Individual</label><input type="checkbox" id="business" name="business" value="Business"/><label>Business</label> </div>
-                        <label>Category of business</label>
-                        <p><select class="form-control" id="serviceselection1" name="serviceselection1" style="height:40px">
+                    <div class="businesstype"> <input class="kcheckbox" type="checkbox" id="business" name="business" value="Individual"/><label class="kcheckboxname">Individual</label><input class="kcheckbox" type="checkbox" id="business" name="business" value="Business"/><label class="kcheckboxname">Business</label> </div>
+                        <label class="kscatego">Category of business</label>
+                        <p><select class="form-control" id="serviceselection1" name="serviceselection1" style="height:40px;font-size:15px">
     <option disabled selected>Select Service Type</option>
     <option value="Venue">Venue</option>
     <option value="Catering">Catering</option>
@@ -243,7 +262,7 @@ Welcome             </div>
                         
                     </div>
                     @*<div class="float-right mt-1 registerBtn"><a id="signup" href="javascript:void(0);">Sign up</a></div>*@
-                    <div id="forgot_pw" class="forgotks" style="min-height: 287px;">
+                    <div id="forgot_pw" class="forgotks" style="min-height: 270px;">
                         <div class="form-group">
                             <label>Please confirm login email below</label>
                             <input type="email" class="form-control" name="email_forgot" id="email_forgot">
@@ -354,7 +373,16 @@ Welcome             </div>
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var phonepattern = /^[0-9]{10}$/;
             var emailaddressVal = $("#email").val();
-            if (mobile == '') {
+            if (vname == '') {
+                alert("Please Enter Your Name");
+                $("#vname").focus();
+            }
+            else if (businessname == '') {
+                alert("Please Enter Your business Name");
+                $("#businessname").focus();
+            
+            }
+           else if (mobile == '') {
                 alert("Please Enter PhoneNumber");
                 $("#txtphone").focus();
             }

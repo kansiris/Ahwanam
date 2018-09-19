@@ -66,5 +66,6 @@ namespace MaaAahwanam.Repository.db
         public DbSet<QuoteResponse> QuoteResponse { get; set; }
         public DbSet<ManageUser> ManageUser { get; set; }
         public DbSet<ManageVendor> ManageVendor { get; set; }
+       
     }
 }

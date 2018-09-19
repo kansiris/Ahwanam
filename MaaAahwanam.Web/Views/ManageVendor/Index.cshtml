@@ -1,12 +1,11 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Managa Vendor</title>
+    <title>Vendor</title>
     <!-- Favicons-->
     <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
 
@@ -101,7 +100,7 @@
             width: 60px;
         }
 
-        
+
 
         .sliderdiv {
             border: 4px grey solid;
@@ -126,8 +125,6 @@
             .sliderdiv1 img {
                 padding: 35px;
             }
-
-        
     </style>
 </head>
 <body>
@@ -177,7 +174,7 @@
                                 <div>
                                     <table style="width:100%">
                                         <tr>
-                                            <td><h4 style="text-transform:uppercase">Manage Vendors</h4></td>
+                                            <td><h4 style="text-transform:uppercase">Vendors</h4></td>
                                             <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Vendor</button></td>
                                         </tr>
                                     </table>
@@ -185,18 +182,34 @@
                                 <table id="allorders" class="display" style="width:100%;padding-bottom:50px">
                                     <thead>
                                         <tr>
+                                            <th>Select</th>
                                             <th>S.No</th>
-                                            <th>Order ID</th>
-                                            <th>Event Type</th>
-                                            <th>Event Date</th>
-                                            <th>Status</th>
+                                            <th>Vendor ID</th>
+                                            <th>Business Name</th>
+                                            <th>First Name </th>
+                                            <th>Email</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td colspan="6"> No Records</td>
-                                        </tr>
+                                        @{
+                                            var number = 0;
+                                            foreach (var vendors in ViewBag.vendorlist)
+                                            {
+                                                <tr>
+                                                    <td><input type="checkbox" class="chcktbl" /></td>
+                                                    <td>@(++number)</td>
+                                                    <td>@vendors.vendorId </td>
+                                                    <td>@vendors.Businessname</td>
+                                                    <td>@vendors.firstname </td>
+                                                    <td>@vendors.email</td>
+                                                    <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-primary" disabled>Book Now</button></td>
+                                                </tr>
+
+                                            }
+
+                                        }
+
                                     </tbody>
                                 </table>
                                 <div id="saverecord" style="display:none;margin-top:50px">
@@ -205,40 +218,40 @@
                                         <tbody>
                                             <tr>
                                                 <td>Business Name</td>
-                                                <td><input type="text" /></td>
+                                                <td><input type="text" id="Businessname" name="Businessname" /></td>
+                                                <td>Services</td>
+                                                <td><input type="text" id="Services" name="Services" /></td>
                                                 <td>First Name</td>
-                                                <td><input type="text" /></td>
+                                                <td><input type="text" id="firstname" name="firstname" /></td>
+                                            </tr>
+                                            <tr>
+                                                @*<td>Middle Name</td>
+                                                    <td><input type="text" id="middlename" name="middlename"/></td>*@
                                                 <td>Last Name</td>
-                                                <td><input type="text" /></td>
+                                                <td><input type="text" id="lastname" name="lastname" /></td>
+                                                <td>Email</td>
+                                                <td><input type="text" id="email" name="email" /></td>
                                             </tr>
                                             <tr>
-                                                <td>Middle Name</td>
-                                                <td><input type="text" /></td>
-                                                <td>Event Type</td>
-                                                <td><input type="text" /></td>
                                                 <td>Phone Number</td>
-                                                <td><input type="text" /></td>
-                                            </tr>
-                                            <tr>
+                                                <td><input type="text" id="phoneno" name="phoneno" /></td>
                                                 <td>Address1</td>
-                                                <td><input type="text" /></td>
+                                                <td><input type="text" id="adress1" name="adress1" /></td>
                                                 <td>Address2</td>
-                                                <td><input type="text" /></td>
-                                                <td>City</td>
-                                                <td><input type="text" /></td>
+                                                <td><input type="text" id="adress2" name="adress2" /></td>
                                             </tr>
                                             <tr>
+                                                <td>City</td>
+                                                <td><input type="text" id="city" name="city" /></td>
                                                 <td>State</td>
-                                                <td><input type="text" /></td>
+                                                <td><input type="text" id="state" name="state" /></td>
                                                 <td>Country</td>
-                                                <td><input type="text" /></td>
-                                                <td>services</td>
-                                                <td><input type="text" /></td>
+                                                <td><input type="text" id="country" name="country" /></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    
-                                    <button id="CancelVendor" class="btn btn-success">Save</button>
+
+                                    <button id="SaveVendor" type="submit" class="btn btn-success">Save</button>
                                     <button id="CancelVendor" class="btn btn-danger">Cancel</button>
                                 </div>
                             </div>
@@ -277,6 +290,22 @@
         $('#btnadd').click(function () {
             $('#saverecord').css('display', 'block');
         });
+        $('#CancelVendor').click(function () {
+            $('#saverecord').css('display', 'none');
+        });
+
+        $(function () {
+                $('.chcktbl').click(function () {
+                    if ($(this).is(':checked')) {
+                        $(this).closest('tr').find('#btnBook').removeAttr('disabled');
+                    }
+                    else {
+                        $(this).closest('tr').find('#btnBook').attr('disabled', 'disabled');
+                    }
+                });
+            });
+
     </script>
+
 </body>
 </html>
