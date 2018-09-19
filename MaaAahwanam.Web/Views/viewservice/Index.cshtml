@@ -549,9 +549,9 @@
                                 <form class="uk-form-stacked" style="margin-top:-10px">
                                     <br>
                                     <div class="uk-margin">
-                                        <div class="uk-form-controls" align="center">
-                                            <input type="checkbox" class="icheck" style="float:left">Morning
-                                            <input type="checkbox" class="icheck" style="float:right">Evening
+                                        <div class="uk-form-controls " align="center">
+                                            <input type="checkbox" class="icheck" id="ch1" value="Morning" name="timeslot" style="float:left">Morning
+                                            <input type="checkbox" class="icheck" id="ch2" value="Evening" name="timeslot" style="float:right">Evening
                                         </div>
                                     </div>
                                     <div class="uk-margin">
@@ -773,7 +773,42 @@
 
 
     <script>
+        $('allservices').find('.iCheck-helper').click(function () {
+            var value = $(this).parents("label").text().trim();
+            if ($(this).parents("label").find("input[type='checkbox']").is(':checked')) {
+                alert ('ks');
+            }
 
+        });
+        function checkedBox() {
+            var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
+           total = checkLen * totalVal;
+            $(".totalAmount span").empty().append(total);
+        }
+
+
+        $(".slotTime input[type='checkbox']").each(function () {
+            $(this).on('change', function () {
+
+                /*-- Check box Funcationality --*/
+
+                if ($(".noOfPeoples input[type='number']").val().length >= 1) {
+                    $(this).attr("disabled", false);
+                } else {
+                    alert("Enter No of Guests");
+                    $(this).prop("checked", false);
+                    return false;
+                }
+
+                /*-- Check box Funcationality --*/
+
+                if ($(this).is(':checked')) {
+                    checkedBox();
+                } else {
+                    checkedBox();
+                }
+            });
+        });
         function ks(val) {
             var guest = '';
             var gu1 = window.localStorage.getItem("guests");
@@ -820,6 +855,18 @@
 
         };
         function booknow(val) {
+            var timeslot = '';
+            if ($(".slotTime input[type='checkbox']").is(':checked')) {
+
+                var favorite = [];
+                $.each($("input[name='timeslot']:checked"), function () {
+                    favorite.push($(this).val());
+                    timeslot = favorite.join(", ");
+                })
+            }
+            else {
+                alertmsg("Please select time slot");
+            }
             var v = val;
             //alert(v);
             var cpid =  window.localStorage.getItem("cartid");
