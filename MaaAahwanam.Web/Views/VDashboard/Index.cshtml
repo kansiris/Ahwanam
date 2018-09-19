@@ -257,7 +257,7 @@
                         <div class="col-md-2">
                             <div class="ui-cards">
                                 @{Html.RenderAction("profilepic", "VDashboard");}
-                                @{Html.RenderAction("sidebar", "VDashboard");  }
+                                @{Html.RenderAction("sidebar", "VDashboard"); }
                                 @if (ViewBag.enable == "first")
                                 {
                                     <style>
@@ -954,7 +954,7 @@
                                             }
                                         </div>
                                     </div>
-                                                            }
+                                }
 
                             </div>
                         </div>
@@ -1042,6 +1042,46 @@
                                                     </div>
                                                     <div style="border:1px black solid">
                                                         <div class='vendorcalendar'></div>
+                                                    </div>
+                                                    <hr style="margin:0;border: 1px lightgray solid;" />
+                                                    <div>
+                                                        <div style="color:black;font-weight:700" align="center">Packages</div>
+                                                    </div>
+                                                    <div>
+                                                        @foreach (var item1 in ViewBag.particularVenue)
+                                                        {
+                                                            foreach (var item2 in @ViewBag.availablepackages)
+                                                            {
+                                                                if (item2.VendorSubId == item1.Id)
+                                                                {
+                                                                    <table class="priceslist">
+                                                                        <tr class="priceslist">
+                                                                            <td align="center">@item2.PackageName</td>
+                                                                        </tr>
+                                                                        <tr class="priceslist">
+                                                                            <td align="center">
+                                                                                <span>
+                                                                                    ₹
+                                                                                    @if (@item2.PackagePrice != "" && @item2.PackagePrice != null)
+                                                                                    {<b style="font-size:30px">@item2.PackagePrice</b>}
+                                                                                else
+                                                                                {
+                                                                                    <b style="font-size:30px">@item2.price1</b>
+                                                                                }
+                                                                                    / Person
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="priceslist">
+                                                                            <td align="center"><input type="button" onclick="booknow(@item1.PackageID)" value="book now" /></td>
+                                                                        </tr>
+                                                                        <tr class="priceslist">
+                                                                            <td align="center">Seating Arrangement</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                }
+                                                            }
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -1180,7 +1220,7 @@
                                 </div>
                                 <!-- /accordion payment -->
                             </div>
-                                                            }
+                        }
                         @if (ViewBag.enable == "orders")
                         {
 
@@ -1272,7 +1312,7 @@
 
                                 </div>
                             </div>
-                                                }
+                        }
                         <!-- /container -->
                     </div>
                 </div>
@@ -1839,8 +1879,7 @@
                         $('#subcategory').css('display', 'block');
                     }
                 },
-                error: function (data)
-                { alert("Something Went Wrong Try Again Later"); }
+                error: function (data) { alert("Something Went Wrong Try Again Later"); }
             });
         }
 
