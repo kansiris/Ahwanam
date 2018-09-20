@@ -22,7 +22,7 @@ namespace MaaAahwanam.Service
             mngvendorlist = mngvendorrepository.GetVendorList(Vid);
             return mngvendorlist;
         }
-        public int checkvendoremail(string email,int id)
+        public int checkvendoremail(string email, string id)
         {
             return mngvendorrepository.checkvendoremail(email, id);
         }

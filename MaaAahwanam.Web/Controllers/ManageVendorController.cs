@@ -21,44 +21,23 @@ namespace MaaAahwanam.Web.Controllers
         [HttpGet]
         public ActionResult Index(string VendorId)
         {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string uid = user.UserId.ToString();
-                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
-                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
-                VendorId = vendorMaster.Id.ToString();
-                ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
-
-            }
-            
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
+            VendorId = vendorMaster.Id.ToString();
+            ViewBag.masterid = VendorId;
+            ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(ManageVendor mngvendor)
         {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string uid = user.UserId.ToString();
-                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
-                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
-                mngvendor.vendorId = vendorMaster.Id.ToString();
-                int query = mngvendorservice.checkvendoremail(mngvendor.email, int.Parse(mngvendor.id.ToString()));
-                if (query == 0)
-                    Console.Write("valid email");
-
-                else
-
-                    Console.Write("already email is added");
-
-                mngvendor.registereddate = DateTime.Now;
-                mngvendor.updateddate = DateTime.Now;
-                mngvendor = mngvendorservice.SaveVendor(mngvendor);
-
-            }
-            return RedirectToAction("Index", "ManageVendor");
+            mngvendor.registereddate = DateTime.Now;
+            mngvendor.updateddate = DateTime.Now;
+            mngvendor = mngvendorservice.SaveVendor(mngvendor);
+            return Content("<script language='javascript' type='text/javascript'>alert('Added New Vendor');location.href='/ManageVendor'</script>");
         }
         [HttpPost]
         public JsonResult GetVendorDetails(string id)
@@ -67,20 +46,19 @@ namespace MaaAahwanam.Web.Controllers
             return Json(data);
         }
         [HttpPost]
-        public ActionResult Index(ManageVendor mngvendor, string id)
+        public JsonResult UpdateVendorDetails(ManageVendor mngvendor, string id)
         {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string uid = user.UserId.ToString();
-                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
-                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
-                mngvendor.vendorId = vendorMaster.Id.ToString();
-                mngvendor.updateddate = DateTime.Now;
-                mngvendor = mngvendorservice.UpdateVendor(mngvendor,int.Parse(id));
-
-            }
-            return RedirectToAction("Index", "ManageVendor");
+            mngvendor.updateddate = DateTime.Now;
+            mngvendor = mngvendorservice.UpdateVendor(mngvendor, int.Parse(id));
+            return Json("Success",JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult checkemail(string email, string id)
+        {
+            int query = mngvendorservice.checkvendoremail(email, id);
+            if (query == 0)
+                return Json("valid email");
+            else
+                return Json("already email is added");
         }
     }
 }
