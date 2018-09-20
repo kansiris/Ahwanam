@@ -15,7 +15,10 @@ namespace MaaAahwanam.Service
         {
             return vendormasterRepository.GetVendor(id);
         }
-
+        public Policy Getpolicy(string vid,string vsid)
+        {
+            return vendormasterRepository.Getpolicy(vid,vsid);
+        }
         public int checkemail(string emailid)
         {
             return vendormasterRepository.checkemail(emailid);

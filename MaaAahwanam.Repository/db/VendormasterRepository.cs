@@ -26,7 +26,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Vendormaster.Where(m => m.Id == id).FirstOrDefault();
         }
-
+        public Policy Getpolicy(string vid,string vsid)
+        {
+            return _dbContext.Policy.Where(m => m.VendorId == vid && m.VendorSubId == vsid).FirstOrDefault();
+        }
         public Vendormaster UpdateVendorMaster(Vendormaster vendorMaster, long id)
         {
             var GetMasterRecord = _dbContext.Vendormaster.SingleOrDefault(m => m.Id == id);
