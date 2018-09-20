@@ -21,6 +21,11 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ManageVendor.Where(v => v.vendorId == Vid).ToList();
         }
+        //public int GetSubVendorId(string Vid)
+        //{
+        //    var query = from Vendorsubid in _dbContext.ManageVendor where ManageVendor.vendorId == Vid select ManageVendor.id;
+            
+        //}
         public ManageUser AddUser(ManageUser mnguser)
         {
             _dbContext.ManageUser.Add(mnguser);
@@ -32,5 +37,6 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ManageUser.Where(v => v.vendorId == Vid).ToList();
         }
+
     }
 }
