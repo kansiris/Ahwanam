@@ -20,8 +20,8 @@ namespace MaaAahwanam.Web.Controllers
             string msg = "First Name: " + fname + ", Last Name : " + lname + ",Email ID : " + emailid + ",Phone Number:" + phoneno + ",Event date:" + eventdate + ",IP:" + ip;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             string subject = "Ahwanam Party Landing Page";
-            emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", msg.Replace(",", "<br/>"), subject);
-            emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", msg.Replace(",", "<br/>"), subject);
+            string txtto = "seema@xsilica.com,amit.saxena@ahwanam.com,dedeepya@gmail.com"; // Mention Target Email ID's here
+            emailSendingUtility.Email_maaaahwanam(txtto, msg.Replace(",", "<br/>"), subject);
             return Json("success", JsonRequestBehavior.AllowGet);
         }
     }
