@@ -36,7 +36,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddVendorDetails(ManageVendor mngvendor)
+        public ActionResult Index(ManageVendor mngvendor)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -45,9 +45,39 @@ namespace MaaAahwanam.Web.Controllers
                 string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
                 vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
                 mngvendor.vendorId = vendorMaster.Id.ToString();
+                int query = mngvendorservice.checkvendoremail(mngvendor.email, int.Parse(mngvendor.id.ToString()));
+                if (query == 0)
+                    Console.Write("valid email");
+
+                else
+
+                    Console.Write("already email is added");
+
                 mngvendor.registereddate = DateTime.Now;
                 mngvendor.updateddate = DateTime.Now;
                 mngvendor = mngvendorservice.SaveVendor(mngvendor);
+
+            }
+            return RedirectToAction("Index", "ManageVendor");
+        }
+        [HttpPost]
+        public JsonResult GetVendorDetails(string id)
+        {
+            var data = mngvendorservice.getvendorbyid(int.Parse(id));
+            return Json(data);
+        }
+        [HttpPost]
+        public ActionResult Index(ManageVendor mngvendor, string id)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string uid = user.UserId.ToString();
+                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
+                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
+                mngvendor.vendorId = vendorMaster.Id.ToString();
+                mngvendor.updateddate = DateTime.Now;
+                mngvendor = mngvendorservice.UpdateVendor(mngvendor,int.Parse(id));
 
             }
             return RedirectToAction("Index", "ManageVendor");

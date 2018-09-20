@@ -22,6 +22,19 @@ namespace MaaAahwanam.Service
             mngvendorlist = mngvendorrepository.GetVendorList(Vid);
             return mngvendorlist;
         }
+        public int checkvendoremail(string email,int id)
+        {
+            return mngvendorrepository.checkvendoremail(email, id);
+        }
+        public ManageVendor getvendorbyid(int id)
+        {
+            return mngvendorrepository.GetVendordetails(id);
+        }
+
+        public ManageVendor UpdateVendor(ManageVendor mngvendor, int id)
+        {
+            return mngvendorrepository.UpdateVendor(mngvendor,id);
+        }
         public ManageUser AddUser(ManageUser mnguser)
         {
             mnguser = mngvendorrepository.AddUser(mnguser);
