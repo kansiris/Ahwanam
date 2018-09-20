@@ -103,9 +103,9 @@
     }
 
     /*.vendorcalendar {
-          max-width: 700px;
-          margin-left: 15px;
-      }*/
+              max-width: 700px;
+              margin-left: 15px;
+          }*/
 
     .uk-h6-1 {
         font-size: 15px;
@@ -145,9 +145,9 @@
         }
 
     /*a.btn-pill {
-          display: flex;
-    justify-content: space-between;
-      }*/
+              display: flex;
+        justify-content: space-between;
+          }*/
 
     .col-sm, .col-sm-sm {
         height: 140px;
@@ -223,28 +223,65 @@
 
 
     /*.multi-item-carousel{
-  .carousel-inner{
-    > .item{
-      transition: 500ms ease-in-out left;
-    }
-    .active{
-      &.left{
-        left:-33%;
-      }
-      &.right{
-        left:33%;
-      }
-    }
-    .next{
-      left: 33%;
-    }
-    .prev{
-      left: -33%;
-    }
-   
-  }
-}*/
+      .carousel-inner{
+        > .item{
+          transition: 500ms ease-in-out left;
+        }
+        .active{
+          &.left{
+            left:-33%;
+          }
+          &.right{
+            left:33%;
+          }
+        }
+        .next{
+          left: 33%;
+        }
+        .prev{
+          left: -33%;
+        }
 
+      }
+    }*/
+
+    /* Put your css in here */
+
+    .left {
+        float: left;
+        width: 10%;
+        height: 100px;
+        /*border: 1px solid black;*/
+    }
+
+    .internal {
+        width: 31.75%;
+        height: 100%;
+        border: 1px solid black;
+        display: inline-block;
+    }
+
+    .center {
+        float: left;
+        width: 78%;
+        height: 100px;
+        border: 1px solid black;
+        margin: 1px;
+        overflow: hidden;
+        /*will change this to hidden later to deny scolling to user*/
+        white-space: nowrap;
+    }
+
+    .right {
+        float: right;
+        width: 5%;
+        height: 100px;
+        /* border: 1px solid black;*/
+    }
+
+    .kscalender {
+        background-color: white;
+    }
 </style>
 
 
@@ -308,10 +345,10 @@
                                                 <span>
                                                     ₹
                                                     @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                    { <b style="font-size:30px">@item1.PackagePrice</b>}
+                                                    {<b style="font-size:30px">@item1.PackagePrice</b>}
                                                     else
                                                     {
-                                                        <b style="font-size:30px">@item1.price1</b>
+                                                    <b style="font-size:30px">@item1.price1</b>
                                                     }
                                                     / Person
                                                 </span>
@@ -356,36 +393,36 @@
                                         <td class="tdwidhth"><h1 class="uk-h1">Area Name</h1></td>
                                         <td>
                                             @if (item.name != null)
-                                            { @item.name }
+                                            {@item.name }
                                             else
-                                            { <text>NA</text> }
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="tdwidhth"><h1 class="uk-h1">Area Type</h1></td>
                                         <td>
                                             @if (item.VenueType != null)
-                                            { @item.VenueType }
+                                            {@item.VenueType }
                                             else
-                                            { <text>NA</text> }
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="tdwidhth"><h1 class="uk-h1">Area Dimensions</h1></td>
                                         <td>
                                             @if (item.Dimentions != null)
-                                            { @item.Dimentions }
+                                            {@item.Dimentions }
                                             else
-                                            { <text>NA</text> }
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="tdwidhth"><h1 class="uk-h1">Max Capacity</h1></td>
                                         <td>
                                             @if (item.Maximumcapacity != null)
-                                            { @item.Maximumcapacity }
+                                            {@item.Maximumcapacity }
                                             else
-                                            { <text>NA</text> }
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
@@ -415,8 +452,8 @@
                                                 <td>@(ViewBag.amenities[amenitycount].Split(',')[first].Replace('_', ' '))</td>
                                                 @if (next < count)
                                                 {
-                                                <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[amenitycount].Split(',')[next]).png" /></td>
-                                                <td>@(ViewBag.amenities[amenitycount].Split(',')[next].Replace('_', ' '))</td>
+                                                    <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[amenitycount].Split(',')[next]).png" /></td>
+                                                    <td>@(ViewBag.amenities[amenitycount].Split(',')[next].Replace('_', ' '))</td>
                                                 }
                                             </tr>
                                             first = next;
@@ -444,11 +481,9 @@
                         </div>
                     </div>
                     <br><br>
-                    <h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
-                    @*<img src="http://design.maa-aahwanam.com/panagea/images/calendar.jpg"></img>*@
-                    @*<input id="datepicker" class="datepicker" name="datepicker" />*@
-                    <div class='vendorcalendar'></div>
-                    <input type="hidden" class="vendorcalendardates" value="" />
+                    @*<h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
+                        <div class='vendorcalendar'></div>
+                         <input type="hidden" class="vendorcalendardates" value="" />*@
 
 
 
@@ -532,20 +567,34 @@
                                 <img src="http://design.maa-aahwanam.com/panagea/images/right.png" />
                             </center>*@
                         <div>
-                            <div class="row packesss" id="allrecords" style="margin-left:35px">
+                            @*<div class="row packesss" id="allrecords" style="margin-left:35px;overflow-x: auto;">
 
-                          <div style="width: 30em;overflow-x: auto;	white-space: nowrap;">
 
-                                @*<img src="http://design.maa-aahwanam.com/panagea/images/left.png" />*@
+                                @*<img src="http://design.maa-aahwanam.com/panagea/images/left.png" />
                                 <div class="col-md-2 isotope-item popular" id="example2"><label style="padding-left: 17px;padding-right:10px;font-size: 17px;font-weight: 700;color: #06c147;">@ViewBag.cdate2.Split('/')[0]</label><label>@ViewBag.cdate2.Split('/')[1],@ViewBag.cdate2.Split('/')[2]</label>₹<b id="pprice">00</b></div>
                                 <div class="col-md-2 isotope-item popular" id="example1" style="margin-top: -5px;"><label style="padding-left: 17px;padding-right:10px;font-size: 17px;font-weight: 700;color: white;">@ViewBag.cdate.Split('/')[0]</label><label>@ViewBag.cdate.Split('/')[1],@ViewBag.cdate.Split('/')[2]</label>₹<b id="pprice">00</b></div>
                                 <div class="col-md-2 isotope-item popular" id="example2"><label style="padding-left: 17px;padding-right:10px;font-size: 17px;font-weight: 700;color: red;">@ViewBag.cdate1.Split('/')[0]</label><label>@ViewBag.cdate1.Split('/')[1],@ViewBag.cdate1.Split('/')[2]</label>₹<b id="pprice">00</b></div>
                                 @*<img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:85px;margin-left:10px" />*@
-                                @*<input type='button' value="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker1" style="height:17px ;width:20px;margin-top:85px;margin-left:10px" />*@
-                                @*<img src="http://design.maa-aahwanam.com/panagea/images/right.png" />*@
-                              </div>
-                            </div>
+                            @*<input type='button' value="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker1" style="height:17px ;width:20px;margin-top:85px;margin-left:10px" />*@
+                            @*<img src="http://design.maa-aahwanam.com/panagea/images/right.png" />
 
+                                </div>*@
+                            <div class="row packesss" id="allrecords" style="margin-left:35px;">
+                                <div class="left">
+                                    <button id="left-button">
+                                        <<
+                                    </button>
+                                </div>
+                                <div class="center" id="content">
+                                  @{Html.RenderAction("calender", "viewservice"); }
+                                </div>
+                                <div class="right">
+                                    <button id="right-button">
+                                        >>
+                                    </button>
+                                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:85px;margin-left:10px">
+                                </div>
+                            </div>
                             <div>
                                 <form class="uk-form-stacked" style="margin-top:-10px">
                                     <br>
@@ -582,8 +631,8 @@
                                 }
                                 else
                                 {
-                                   <button type="submit" value="email" style="width:85%" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                                   @*<button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
+                                    <button type="submit" value="email" style="width:85%" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                    @*<button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
                                 }
 
                             </div>
@@ -734,7 +783,7 @@
         }
         </script>*@
     <script>
-        $(window).load(function(){
+        $(window).load(function () {
 
             //$("#datepicker").daterangepicker().trigger("click");
             $('#datepicker').datetimepicker({
@@ -746,13 +795,41 @@
                 maxDate: '+1970/03/02'//tomorrow is maximum date calendar
 
             });
-            $("#datepicker").on("change",function(){
+            $("#datepicker").on("change", function () {
                 var selected = $(this).val();
-                $('#example1').html(selected);
+                var datesdiv = $('#content');
+                var data = "";
+                var package = $('#Packageselected').val();
+               // alert(package);
+                $.ajax({
+                    url: '/viewservice/calender?calender=' + selected + '&&packageid=' + package,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                       // alert(result);
+                       // datesdiv.clear();
+                        // datesdiv.remove();
+                        //datesdiv.replaceWith(result);
+
+                        $('.center').html(result);
+                        //$('#content').load(result);
+                        //$('.center').append(result);
+                    }
+                });
             });
-
-
         });
+
+
+        function formatDate(date) {
+
+            var dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
+            // 01, 02, 03, ... 10, 11, 12
+            var MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1);
+            //return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + strTime;
+            return dd + "/" + MM + "/" + date.getFullYear();
+        }
         //map
         function openCity(cityName, elmnt, color) {
             var i, tabcontent, tablinks;
@@ -774,76 +851,61 @@
 
 
     <script>
-        $('allservices').find('.iCheck-helper').click(function () {
-            var value = $(this).parents("label").text().trim();
-            if ($(this).parents("label").find("input[type='checkbox']").is(':checked')) {
-                alert ('ks');
-            }
 
+
+        // Add your javascript here
+
+        $('#right-button').click(function () {
+            event.preventDefault();
+            $('#content').animate({
+                scrollLeft: "+=300px"
+            }, "slow");
         });
-        function checkedBox() {
-            var checkLen = $(".slotTime input[type='checkbox']:checked").length, totalVal = parseInt($(".totalVal").text()),
-           total = checkLen * totalVal;
-            $(".totalAmount span").empty().append(total);
-        }
 
-
-        $(".slotTime input[type='checkbox']").each(function () {
-            $(this).on('change', function () {
-
-                /*-- Check box Funcationality --*/
-
-                if ($(".noOfPeoples input[type='number']").val().length >= 1) {
-                    $(this).attr("disabled", false);
-                } else {
-                    alert("Enter No of Guests");
-                    $(this).prop("checked", false);
-                    return false;
-                }
-
-                /*-- Check box Funcationality --*/
-
-                if ($(this).is(':checked')) {
-                    checkedBox();
-                } else {
-                    checkedBox();
-                }
-            });
+        $('#left-button').click(function () {
+            event.preventDefault();
+            $('#content').animate({
+                scrollLeft: "-=300px"
+            }, "slow");
         });
+    </script>
+
+
+
+
+
+    <script>
         function ks(val) {
             var guest = '';
             var gu1 = window.localStorage.getItem("guests");
             //alert(gu1);
-            if(gu1 == null)
-            {
-                guest =  $('.guests1').val();
-            } else { guest = gu1 ;}
-            var s =  val.split(',');
+            if (gu1 == null) {
+                guest = $('.guests1').val();
+            } else { guest = gu1; }
+            var s = val.split(',');
             var pprice = s[2];
             var pname = s[1];
             var pid = s[0];
             //var pid1 =   $('#packageid').val();
-            var expid =   window.localStorage.getItem("cartid");
+            var expid = window.localStorage.getItem("cartid");
             //alert('expid'+expid);
-            if (expid != null)
-            {
-                var newpid = expid + ',' + pid ;
+            if (expid != null) {
+                var newpid = expid + ',' + pid;
                 window.localStorage.removeItem("cartid")
-                window.localStorage.setItem("cartid",newpid)
+                window.localStorage.setItem("cartid", newpid)
                 //alert('new'+newpid);
-                var cpid =  window.localStorage.getItem("cartid");
+                var cpid = window.localStorage.getItem("cartid");
                 //alert('created'+cpid);
             } else {
-                window.localStorage.setItem("cartid",pid)
+                window.localStorage.setItem("cartid", pid)
 
             }
-            var SelectedPackage1=''
+            var SelectedPackage1 = ''
             //alert(pid + pname + pprice);
             $('.price').val('');
             $('.guests1').val('');
-            if(pname !=''&& pname !='undefined'&& pprice !=''&& pprice !='undefined')
-            {SelectedPackage1 =''+pname+'(₹'+pprice+'/per plate)';}
-            else{SelectedPackage1 ='N/A'}
+            if (pname != '' && pname != 'undefined' && pprice != '' && pprice != 'undefined') { SelectedPackage1 = '' + pname + '(₹' + pprice + '/per plate)'; }
+            else { SelectedPackage1 = 'N/A' }
             //alert(SelectedPackage1);
             $('.price').val(SelectedPackage1);
             $('.guests1').val(guest);
@@ -857,24 +919,22 @@
         };
         function booknow(val) {
             var timeslot = '';
-            
+
             var v = val;
             //alert(v);
-            var cpid =  window.localStorage.getItem("cartid");
-            var pid =   $('#packageid').val();
-            if (cpid== null || cpid == pid)
-            { window.localStorage.setItem("cartid",pid)}
+            var cpid = window.localStorage.getItem("cartid");
+            var pid = $('#packageid').val();
+            if (cpid == null || cpid == pid) { window.localStorage.setItem("cartid", pid) }
             var gu1 = window.localStorage.getItem("guests");
             var eventtype = window.localStorage.getItem("eventtype");
 
             var guest = '';
             //alert(gu1);
-            if(gu1 == null)
-            {
-                guest =  $('.guests1').val();
-            } else { guest = gu1 ;}
+            if (gu1 == null) {
+                guest = $('.guests1').val();
+            } else { guest = gu1; }
 
-            var cart =   $('#Packageselected').val();
+            var cart = $('#Packageselected').val();
             var carts = cart.split(',');
             var cpprice = carts[2];
             var cpname = carts[1];
@@ -883,7 +943,7 @@
             var total = guest * cpprice;
             //alert(total);
 
-            url1 ='/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype;
+            url1 = '/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype;
             //alert(url1);
             $.ajax({
                 url: url1,
@@ -896,27 +956,25 @@
                         alertify.alert("Failed To add item to the cart");
                     }
                     else if (data == "Exists") {
-                       alertify.alert("This Service Already Exists in Cart");
+                        alertify.alert("This Service Already Exists in Cart");
                     }
                 },
-                error:function(data)
-                {
+                error: function (data) {
                     alertify.alert("Something Went Wrong!!! Try Again Later");
                 }
             });
         };
 
         $(document).ready(function () {
-            var pid =   $('#packageid').val();
-            var price =  $('#PackagePrice').val();
-            if(price == '') { price =  $('#PackagePrice1').val(); }
-            var PackagePrice =price;
+            var pid = $('#packageid').val();
+            var price = $('#PackagePrice').val();
+            if (price == '') { price = $('#PackagePrice1').val(); }
+            var PackagePrice = price;
             // alert(typeof(price));
-            var PackageName =  $('#PackageName').val();
-            var SelectedPackage ='';
-            if(PackageName !=''&& price  !=''&& PackageName !=undefined&& price  !=undefined)
-            {SelectedPackage =''+PackageName+'(₹'+PackagePrice+'/per plate)';}
-            else{ SelectedPackage ='N/A';}
+            var PackageName = $('#PackageName').val();
+            var SelectedPackage = '';
+            if (PackageName != '' && price != '' && PackageName != undefined && price != undefined) { SelectedPackage = '' + PackageName + '(₹' + PackagePrice + '/per plate)'; }
+            else { SelectedPackage = 'N/A'; }
             // alert(SelectedPackage);
             var guest = window.localStorage.getItem("guests");
             $('.price').val(SelectedPackage);
@@ -924,10 +982,14 @@
             var total = guest * PackagePrice;
             //alert(total);
             $(".total b").empty().append(total);
-            if(PackagePrice != '' && PackagePrice != undefined)
-            {$(".packesss b").empty().append(PackagePrice);}
-            else{$(".packesss b").empty().append('N/A');}
-            $('.Packageselected').val(pid+','+PackageName+','+PackagePrice);
+            if (PackagePrice != '' && PackagePrice != undefined) { $(".packesss b").empty().append(PackagePrice); }
+            else { $(".packesss b").empty().append('N/A'); }
+            $('.Packageselected').val(pid + ',' + PackageName + ',' + PackagePrice);
+
+
+
+
+
         })
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
@@ -943,18 +1005,18 @@
         //    });
         //});
 
-        $('.btnpkg').on('click',function(){
+        $('.btnpkg').on('click', function () {
             var check = $(this).prev('input.btnpkgcheck');
             var img = $(this).children('img');
             //alert(check.is(':checked'));
             if (check.is(':checked')) {
                 //alert("");
                 check.removeAttr('checked');
-                img.removeAttr('src').attr('src','/newdesignstyles/img/plus.png');
+                img.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
             }
             else {
                 check.prop('checked', 'checked');
-                img.removeAttr('src').attr('src','/newdesignstyles/img/tick.png');
+                img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
             }
         });
 
@@ -996,7 +1058,7 @@
         }
 
 
-        $(function() {
+        $(function () {
             $(".vendorcalendar").datepicker({
                 //dateFormat: 'dd/mm/yy',
                 //inline: true,
@@ -1004,10 +1066,11 @@
             });
         });
 
-        $("button").click(function() {
+        $("button").click(function () {
             var btnvalue = $(this).attr('src');
             $('html,body').animate({
-                scrollTop: $(""+btnvalue+"").offset().top},
+                scrollTop: $("" + btnvalue + "").offset().top
+            },
                 'slow');
         });
     </script>
