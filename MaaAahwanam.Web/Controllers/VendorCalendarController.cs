@@ -44,6 +44,8 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public JsonResult SaveEvent(VendorDates vendorDates,string vid)
         {
+            if (vendorDates.Type == "Availability") { vendorDates.Description = "Not Availbale on this date"; vendorDates.Title = "Not Available on this day/days"; }
+            else if (vendorDates.Type == "Packages") { vendorDates.Title = vendorDates.Description; }
             //long vendorsubid = (vid == null || vid=="undefined"||vid=="")? vendorVenueSignUpService.GetVendorVenue(long.Parse(vendorDates.VendorId.ToString())).FirstOrDefault().Id : long.Parse(vid);
             var status = false;
             vendorDates.Vendorsubid = long.Parse(vid);

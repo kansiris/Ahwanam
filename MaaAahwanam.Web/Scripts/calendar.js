@@ -177,6 +177,13 @@ function openAddEditForm() {
         $('#description').val(selectedEvent.Description);
         $('#color').val(selectedEvent.Color);
         $('#type').val(selectedEvent.Type);
+        if (selectedEvent.Type == 'Packages') {
+            $('#pkgdays').css('display', 'block');
+            $('#title').val(selectedEvent.Title);
+        }
+        else {
+            $('#pkgdays').css('display', 'none');
+        }
     }
     $('#myModal').modal('hide');
     $('#CalenderModalNew').modal();
@@ -221,9 +228,9 @@ $('#btnSave').click(function () {
         Title: $('#type').val(),//$('#subject').val().trim(),
         StartDate: $('#startdate').val().trim(),
         EndDate: $('#enddate').val().trim(),
-        Description: $('#description').val(),
+        Description: $('#title').val(),
         Color: $('#color').val(),
-        IsFullDay: true,//$('#chkIsFullDay').val(),
+        IsFullDay: false,//$('#chkIsFullDay').val(),
         Type: $('#type').val(),
         VendorId: $('#vid').val(),
         Servicetype: 'Venue',
@@ -245,6 +252,7 @@ function SaveEvent(data) {
                 //Refresh the calender
                 FetchEventAndRenderCalendar(vid);
                 $('#CalenderModalNew').modal('hide');
+                $('#btnSave').attr("disabled", "disabled");
                 //location.reload();
             }
         },
