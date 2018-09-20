@@ -282,6 +282,9 @@
     .kscalender {
         background-color: white;
     }
+        .kscalender .selected {
+            border-color: grey;
+        }
 </style>
 
 
@@ -586,7 +589,9 @@
                                     </button>
                                 </div>
                                 <div class="center" id="content">
-                                  @{Html.RenderAction("calender", "viewservice"); }
+                                    <input type="hidden" class="calenderselected" value="" name="calenderselected" id="calenderselected">
+
+                                    @{Html.RenderAction("calender", "viewservice"); }
                                 </div>
                                 <div class="right">
                                     <button id="right-button">
@@ -799,8 +804,8 @@
                 var selected = $(this).val();
                 var datesdiv = $('#content');
                 var data = "";
-                var package = $('#Packageselected').val();
-               // alert(package);
+                var package = $('#Packageselected').val().split(',')[0];
+                alert(package);
                 $.ajax({
                     url: '/viewservice/calender?calender=' + selected + '&&packageid=' + package,
                     type: 'POST',
@@ -822,14 +827,6 @@
         });
 
 
-        function formatDate(date) {
-
-            var dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
-            // 01, 02, 03, ... 10, 11, 12
-            var MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1);
-            //return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + strTime;
-            return dd + "/" + MM + "/" + date.getFullYear();
-        }
         //map
         function openCity(cityName, elmnt, color) {
             var i, tabcontent, tablinks;
@@ -858,16 +855,31 @@
         $('#right-button').click(function () {
             event.preventDefault();
             $('#content').animate({
-                scrollLeft: "+=300px"
+                scrollLeft: "+=105px"
             }, "slow");
         });
 
         $('#left-button').click(function () {
             event.preventDefault();
             $('#content').animate({
-                scrollLeft: "-=300px"
+                scrollLeft: "-=105px"
             }, "slow");
         });
+
+        $('.center .kscalender').click(function () {
+            $(this).parent().find('.kscalender').removeClass('selected');
+            $(this).addClass('selected');
+            var idValue = $(this).attr('data-title');
+            alert(idValue);
+            $(this).css("background-color", "yellowgreen");
+            var calselected = $('.calenderselected').val();
+            //if (calselected == null) {
+            //    $('.calenderselected').val(idValue);
+            //}
+            //else { }
+        });
+
+
     </script>
 
 

@@ -213,7 +213,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public PartialViewResult calender(string calender,string packageid)
         {
-            DateTime cdate;
+            DateTime cdate; string packprice;
             if (calender == null)
             {
                 cdate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
@@ -221,6 +221,20 @@ namespace MaaAahwanam.Web.Controllers
             else {
                 cdate = Convert.ToDateTime(calender);
             }
+            if (packageid == null)
+            {
+                 packprice = "N/A";
+            }
+            else
+            {
+                var pkgs = vendorProductsService.getpartpkgs(packageid).FirstOrDefault();
+                if (pkgs.PackagePrice != null) //|| pkgs.PackagePrice != "")
+                {
+                    packprice = pkgs.PackagePrice;
+                }
+                else { packprice = pkgs.price1; }
+            }
+            ViewBag.ppakprice = packprice;
             DateTime cdate1 = cdate.AddDays(-1);
             DateTime cdate2 = cdate;
             DateTime cdate3 = cdate.AddDays(1);
