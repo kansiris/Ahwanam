@@ -27,13 +27,7 @@ namespace MaaAahwanam.Web.Controllers
         // GET: viewservice
         public ActionResult Index(string name, string type, string id)
         {
-            DateTime cdate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            DateTime cdate1 = cdate.AddDays(1);
-            DateTime cdate2 = cdate.AddDays(-1);
-
-            ViewBag.cdate = cdate.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate1 = cdate1.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate2 = cdate2.ToString("dd/MMM/yyyy").Replace('-', '/');
+            
 
             type = (type == null) ? "Venue" : type;
             type = (type == "Convention") ? "Convention Hall" : type;
@@ -196,6 +190,54 @@ namespace MaaAahwanam.Web.Controllers
         //    return RedirectToAction("Index", "Nhomepage");
         //}
         //}
+        //public JsonResult calender(string calender)
+        //{
+        //    //DateTime cdate = Convert.ToDateTime(calender);
+        //    //int pdays = 3; var previousdays = ""; var nextdays = ""; ;
+        //    //for (int i = 1; i < pdays; i++)
+        //    //{
+        //    //    int previous = pdays - i;
+        //    //    previousdays = previousdays + "," + cdate.AddDays(-previous).ToString("dd/MMM/yyyy");
+        //    //    nextdays = nextdays + "," + cdate.AddDays(i).ToString("dd/MMM/yyyy");
+        //    //}
+        //    //var data = previousdays.Trim(',') + "," + cdate.ToString("dd/MMM/yyyy") + "," + nextdays.Trim(',');
+        //    //StringBuilder divs = new StringBuilder();
+        //    //for (int i = 0; i < data.Split(',').Length; i++)
+        //    //{
+        //    //    //divs.Append("<div class='internal'><div class='kscalender'><p style='padding-left: 17px;padding-right:10px;font-size: 17px;font-weight: 700;color: #06c147;'>" + data.Split(',')[i].Split('-')[0] + "</p><p style='padding-left:10px'>" + data.Split(',')[i].Split('-')[1]+ "," +data.Split(',')[i].Split('-')[2] + "</p><label style='padding-left:10px'>₹<b id='pprice'>00</b></label></div></div>");
+        //    //    divs.Append("<p>gfffdsgf</p>");
 
+        //    //}
+        //    return Json(divs);
+        //}
+
+        public PartialViewResult calender(string calender,string packageid)
+        {
+            DateTime cdate;
+            if (calender == null)
+            {
+                cdate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            }
+            else {
+                cdate = Convert.ToDateTime(calender);
+            }
+            DateTime cdate1 = cdate.AddDays(-1);
+            DateTime cdate2 = cdate;
+            DateTime cdate3 = cdate.AddDays(1);
+            DateTime cdate4 = cdate.AddDays(2);
+            DateTime cdate5 = cdate.AddDays(3);
+            DateTime cdate6 = cdate.AddDays(4);
+            DateTime cdate7 = cdate.AddDays(5);
+            DateTime cdate8 = cdate.AddDays(6);
+            ViewBag.cdate1 = cdate1.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate2 = cdate2.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate3 = cdate3.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate4 = cdate4.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate5 = cdate5.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate6 = cdate6.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate7 = cdate7.ToString("dd/MMM/yyyy").Replace('-', '/');
+            ViewBag.cdate8 = cdate8.ToString("dd/MMM/yyyy").Replace('-', '/');
+            return PartialView("calender");
+        }
     }
 }
