@@ -26,6 +26,37 @@ namespace MaaAahwanam.Repository.db
         //    var query = from Vendorsubid in _dbContext.ManageVendor where ManageVendor.vendorId == Vid select ManageVendor.id;
             
         //}
+        public ManageVendor UpdateVendor(ManageVendor vendor,int id)
+        {
+            ManageVendor mngvendor = _dbContext.ManageVendor.Where(v => v.id == id).SingleOrDefault();
+            mngvendor.firstname = vendor.firstname;
+            mngvendor.lastname = vendor.lastname;
+            mngvendor.phoneno = vendor.phoneno;
+            mngvendor.services = vendor.services;
+            mngvendor.state = vendor.state;
+            mngvendor.Status = vendor.Status;
+            mngvendor.city = vendor.city;
+            mngvendor.country = vendor.country;
+            mngvendor.Businessname = vendor.Businessname;
+            mngvendor.adress1 = vendor.adress1;
+            mngvendor.adress2 = vendor.adress2;
+            mngvendor.email = vendor.email;
+            mngvendor.registereddate = vendor.registereddate;
+            mngvendor.updatedby = vendor.vendorId;
+            _dbContext.SaveChanges();
+            return mngvendor;
+        }
+        public ManageVendor GetVendordetails(int id)
+        {
+            //var query = from vendor in _dbContext.ManageVendor where vendor.id == id select vendor;
+            return _dbContext.ManageVendor.Where(v => v.id == id).FirstOrDefault();
+
+        }
+        public int checkvendoremail(string email,int id)
+        {
+            int c = _dbContext.ManageVendor.Where(e => e.email == email && e.id == id).Count();
+            return c;
+        }
         public ManageUser AddUser(ManageUser mnguser)
         {
             _dbContext.ManageUser.Add(mnguser);
