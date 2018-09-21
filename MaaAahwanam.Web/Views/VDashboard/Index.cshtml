@@ -776,6 +776,8 @@
                                                         <div style="color:black;font-weight:700" align="center">Availability Calendar</div>
                                                     </div>
                                                     <div style="border:1px black solid">
+                                                        <input type="hidden" value="@item.Id" id="venusid" name="venusid" />
+                                                        <input type="hidden" value="@item.VendorMasterId" id="venusmasterid" name="venusmasterid" />
                                                         <div class='vendorcalendar'></div>
                                                     </div>
                                                     <hr style="margin:0;border: 1px lightgray solid;" />
@@ -1581,7 +1583,23 @@
 
         $(function () {
             $(".vendorcalendar").datepicker({
+                dayOfWeekStart: 1,
+                lang: 'en',
+                timepicker: false,
+                format: 'd/m/Y',
+                minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+                maxDate: '+1970/03/02'//tomorrow is maximum date calendar
             });
+        });
+
+        $(".vendorcalendar").on("change", function () {
+            var selected = $(this).val();
+         //   var venusid = $('#venusid').val(); var venusmasterid = $('#venusmasterid').val();
+            var venusid = $(this).parent().find('input#venusid').val(); var venusmasterid = $(this).parent().find('input#venusmasterid').val();
+
+            alert(selected); alert(venusid); alert(venusmasterid); alert(venusid);
+
+
         });
         $('#datetimepicker1,datetimepicker2').daterangepicker({
             //singleDatePicker: true,

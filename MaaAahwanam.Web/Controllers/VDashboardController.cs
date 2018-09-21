@@ -80,7 +80,11 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.slidercount = (ViewBag.sliderimages.Count < 4) ? 4 - ViewBag.sliderimages.Count : 0;
                 ViewBag.subtype = venues.FirstOrDefault().VenueType;
                 if (vsid != null && vsid != "")
-                    ViewBag.package = vendorVenueSignUpService.Getpackages((long.Parse(vid)),long.Parse(vsid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
+                {
+                    var pkgsks = vendorVenueSignUpService.Getpackages((long.Parse(vid)), long.Parse(vsid)).FirstOrDefault();
+                    if (pkgsks != null) ViewBag.package = pkgsks;
+                    else ViewBag.package = new Package();
+                } //Remove FirstOrDefault() after finalising packages design
                 else
                     ViewBag.package = new Package();
             }
