@@ -938,7 +938,8 @@
         }
         function login(clickedvalue) {
             var url1 = document.referrer;
-            //alert(url1);
+            if (url1 == '' || url1 == undefined) { url1 = location.href; }
+           // alert(url1);
             var Password = $("#Password1").val();
             var Email = $("#UserName").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
@@ -959,7 +960,7 @@
             else {
                 if (clickedvalue == 'Login') {
                     $('.overlay').show();
-                    $('#loadermsg').text('Signing you in....');
+                    $('#loadermsg').text('Authenticating....');
                     $.ajax({
                         url: '/Home/login',
                         type: 'POST',
@@ -977,10 +978,12 @@
                             else if (data == "Failed") {
                                 alert("Wrong Credentials,Check Username and password");
                                 //window.location.reload();
+                                $('.overlay').hide();
                             }
                             else if (data == "success1") {
                                 alert("Wrong Credentials,Check Username and password");
                                 //window.location.reload();
+                                $('.overlay').hide();
                             }
                         },
                         error: function (data) {
