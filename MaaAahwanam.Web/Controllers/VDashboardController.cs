@@ -74,10 +74,15 @@ namespace MaaAahwanam.Web.Controllers
                 if (vsid != null && vsid != "") { Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
                     allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid)); }
                 ViewBag.ksimages = allimages;
-                ViewBag.images = allimages;
-                ViewBag.imagescount = 4 - allimages.Count;
-                ViewBag.sliderimages = allimages.Where(m => m.ImageType == "Slider").ToList();
-                ViewBag.slidercount = 4 - ViewBag.sliderimages.Count;
+                ViewBag.images = allimages.Take(4).ToList();
+                ViewBag.imagescount = (allimages.Count < 4) ? 4 - allimages.Count : 0;
+                ViewBag.sliderimages = allimages.Where(m => m.ImageType == "Slider").Take(4).ToList();
+                ViewBag.slidercount = (ViewBag.sliderimages.Count < 4) ? 4 - ViewBag.sliderimages.Count : 0;
+                ViewBag.subtype = venues.FirstOrDefault().VenueType;
+                if (vsid != null && vsid != "")
+                    ViewBag.package = vendorVenueSignUpService.Getpackages((long.Parse(vid)),long.Parse(vsid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
+                else
+                    ViewBag.package = new Package();
             }
             else
             {
@@ -554,12 +559,18 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult AddPackage(Package package)
         {
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.price1 = package.PackagePrice = package.normaldays;
             //Add Package Code
-            return Json(JsonRequestBehavior.AllowGet);
+            package.Status = "Active";
+            package.UpdatedDate = updateddate;
+            package = vendorVenueSignUpService.addpack(package);
+            string msg=string.Empty;
+            if (package.PackageID > 0) msg = "Package Added SuccessFully!!!";
+            else msg = "Failed TO Add Package";
+            return Json(msg,JsonRequestBehavior.AllowGet);
         }
 
-      
         public JsonResult Sendmsg(string msg ,string Email)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

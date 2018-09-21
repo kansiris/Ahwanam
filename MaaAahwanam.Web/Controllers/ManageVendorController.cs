@@ -45,6 +45,8 @@ namespace MaaAahwanam.Web.Controllers
                 string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
                 vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
                 mngvendor.vendorId = vendorMaster.Id.ToString();
+                mngvendor.registereddate = DateTime.Now;
+                mngvendor.updateddate = DateTime.Now;
                 mngvendor = mngvendorservice.SaveVendor(mngvendor);
 
             }
