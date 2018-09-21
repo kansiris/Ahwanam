@@ -33,5 +33,6 @@ namespace MaaAahwanam.Models
         public DateTime updateddate { get; set; }
         public string Status { get; set; }
         public string updatedby { get; set; }
+        //public string pincode { get; set; }
     }
 }

@@ -94,6 +94,17 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="type">
                                                 <option disabled selected value="">Select Type</option>
+                                                <option value="Availability">Availability</option>
+                                                <option value="Packages">Packages</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="pkgdays" style="display:none">
+                                        <label class="col-sm-3 control-label">Days Selection</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="title">
+                                                <option disabled selected value="">Select Days</option>
                                                 <option>Peak Days</option>
                                                 <option>Normal Days</option>
                                                 <option>Holidays</option>
@@ -101,12 +112,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    @*<div class="form-group">
-                                        <label class="col-sm-3 control-label">Subject</label>
-                                         <div class="col-sm-9">
-                                             <input type="text" class="form-control" id="subject" name="title" placeholder="Enter Subject">
-                                         </div>
-                                                                        </div>*@
+
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Start Date</label>
                                         <div class="col-sm-9">
@@ -114,75 +120,18 @@
                                         </div>
                                     </div>
 
-                                    @*<div class="form-group">
-                                            <label class="col-sm-3 control-label">Is Full Day event</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" id="chkIsFullDay">
-                                                    <option disabled selected value="">Select your choice</option>
-                                                    <option>False</option>
-                                                    <option>True</option>
-                                                </select>
-                                            </div>
-                                        </div>*@
                                     <div class="form-group" id="divEndDate">
                                         <label class="col-sm-3 control-label">End Date</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" id="enddate" name="title" placeholder="Select End Date">
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Description</label>
-                                        <div class="col-sm-9">
-                                            <textarea class="form-control" style="height:55px;" id="description" name="descr" placeholder="Enter Description"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Color</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" id="color">
-                                                <option disabled selected value="">Select Color</option>
-                                                <option>Red</option>
-                                                <option>Green</option>
-                                                <option>Blue</option>
-                                                <option>Black</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-
-                                    @*<div class="row">
-                                            <div class="col-md-5 col-md-offset-1">
-                                                <div class="form-group">
-                                                    <label class="inline-control-label">
-                                                        Appointment
-                                                        <input type="radio" class="form-control" name="selectBlock" id="appointment">
-                                                        <span></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <div class="form-group margin-bottom-0">
-                                                    <label class="inline-control-label">
-                                                        Price
-                                                        <input type="radio" class="form-control" name="selectBlock" id="prices">
-                                                        <span></span>
-                                                    </label>
-                                                </div>
-                                                <div class="prices">
-                                                    <p class="margin-bottom-0">Regular Price : Rs <b>1000</b></p>
-                                                    <p>Deal Price : Rs <input type="text" class="form-control" placeholder="Enter Deal Price" /></p>
-                                                </div>
-                                            </div>
-                                        </div>*@
                                 </form>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary antosubmit" id="btnSave">Save changes</button>
+                            <button type="button" class="btn btn-primary antosubmit" id="btnSave" disabled>Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -238,11 +187,17 @@
                 var selectedEvent = null;
                 FetchEventAndRenderCalendar(@ViewBag.vid);
             })
+
+            $('#type').on('change', function () {
+                var selected = $(this).val();
+                $('#btnSave').removeAttr("disabled");
+                if (selected == 'Packages') $('#pkgdays').css('display', 'block'); else $('#pkgdays').css('display', 'none');
+            });
         </script>
     </body>
 }
 else
 {
-    Response.Redirect("/Homepage");
+    Response.Redirect("/Home");
 }
 </html>

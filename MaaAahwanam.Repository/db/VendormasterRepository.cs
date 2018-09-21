@@ -40,7 +40,7 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorMaster;
         }
-
+         
         public int checkemail(string emailid)
         {
             int i = _dbContext.Vendormaster.Where(m => m.EmailId == emailid).Count();
