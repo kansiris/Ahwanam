@@ -61,7 +61,7 @@
             font-size: 16px;
         }*/
 
-        input[type=text] {
+        input[type=text], input[type="email"], input[type="tel"] {
             width: 101%;
             padding: 12px 26px 0px 10px;
             margin: 15px 5px 15px 0px;
@@ -247,53 +247,53 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    
-                                    <table id="allorders" class="display" style="width:100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>Select</th>
-                                                <th>S.No</th>
-                                                <th>Vendor ID</th>
-                                                <th>Business Name</th>
-                                                <th>Services</th>
-                                                <th>First Name </th>
-                                                <th>Last Name</th>
-                                                <th>Email</th>
-                                                <th>Phone Number</th>
-                                                <th>Flat No/Street</th>
-                                                <th>Locality</th>
-                                                <th>PinCode</th>
-                                                <th>City</th>
-                                                <th>State</th>
-                                                <th>Country</th>
-                                                @*<th>Status</th>*@
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{
-                                                var number = 0;
-                                                foreach (var vendors in ViewBag.vendorlist)
-                                                {
-                                                    <tr>
-                                                        <td><input type="checkbox" class="chcktbl" value="@vendors.id" /></td>
-                                                        <td>@(++number)</td>
-                                                        <td>@vendors.id </td>
-                                                        <td>@vendors.Businessname</td>
-                                                        <td>@vendors.services</td>
-                                                        <td>@vendors.firstname </td>
-                                                        <td>@vendors.lastname</td>
-                                                        <td>@vendors.email</td>
-                                                        <td>@vendors.phoneno</td>
-                                                        <td>@vendors.adress1</td>
-                                                        <td>@vendors.adress2</td>
-                                                        <td>@vendors.pin_code</td>
-                                                        <td>@vendors.city</td>
-                                                        <td>@vendors.state</td>
-                                                        <td>@vendors.country</td>
-                                                        <td>@vendors.Status</td>
-                                                        <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
-                                                    </tr>
+                                    <div style="overflow:scroll">
+                                        <table id="allorders" class="display" style="width:100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>S.No</th>
+                                                    <th>Vendor ID</th>
+                                                    <th>Business Name</th>
+                                                    <th>Services</th>
+                                                    <th>First Name </th>
+                                                    <th>Last Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Flat No/Street</th>
+                                                    <th>Locality</th>
+                                                    <th>PinCode</th>
+                                                    <th>City</th>
+                                                    <th>State</th>
+                                                    <th>Country</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    var number = 0;
+                                                    foreach (var vendors in ViewBag.vendorlist)
+                                                    {
+                                                        <tr>
+                                                            <td><input type="checkbox" class="chcktbl" value="@vendors.id" /></td>
+                                                            <td>@(++number)</td>
+                                                            <td>@vendors.id </td>
+                                                            <td>@vendors.Businessname</td>
+                                                            <td>@vendors.services</td>
+                                                            <td>@vendors.firstname </td>
+                                                            <td>@vendors.lastname</td>
+                                                            <td>@vendors.email</td>
+                                                            <td>@vendors.phoneno</td>
+                                                            <td>@vendors.adress1</td>
+                                                            <td>@vendors.adress2</td>
+                                                            <td>@vendors.pin_code</td>
+                                                            <td>@vendors.city</td>
+                                                            <td>@vendors.state</td>
+                                                            <td>@vendors.country</td>
+                                                            <td>@vendors.Status</td>
+                                                            <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
+                                                        </tr>
 
                                                     }
 
@@ -301,8 +301,8 @@
 
                                             </tbody>
                                         </table>
-                                   
 
+                                    </div>
                                     <div class="row" id="saverecord" style="display:none;margin-top:50px">
                                         <div align="center"><h3 style="text-transform:uppercase">Add/Edit Vendor</h3></div>
                                         <form method="POST">
@@ -346,7 +346,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="email" name="email" value="" onchange="checkEmail(this.value)" required />
+                                                            <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
                                                                 <span class="input__label-content input__label-content--hoshi">Email</span>
                                                             </label>
@@ -354,7 +354,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" value="" min="10" required />
+                                                            <input class="input__field input__field--hoshi" type="tel" id="phoneno" name="phoneno" value="" min="10" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
                                                                 <span class="input__label-content input__label-content--hoshi">Phone Number</span>
                                                             </label>
@@ -381,7 +381,7 @@
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text" id="pin_code" min="6" name="pin_code" value="" required/>
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pin_code">
                                                                 <span class="input__label-content input__label-content--hoshi">PinCode</span>
                                                             </label>
                                                         </span>
@@ -412,9 +412,13 @@
                                                             </label>
                                                         </span>
                                                     </div>
-                                                    @*<div class="col-12 col-sm-3 col-md-3">
-                                                     <h5>Status</h5><input type="checkbox" class="chckstatus1" id="Status" name="Status" value="Active" /> <input type="checkbox" class="chckstatus2" id="Status" name="Status" value="InActive" />
-                                                    </div>*@
+                                                    <div>
+                                                        <span class="Cstatus">Status</span>
+                                                        <label>Active</label>
+                                                        <input type="checkbox" class="chckactive" id="Status1" name="Status" value="Active" />
+                                                        <label>InActive</label>
+                                                        <input type="checkbox" class="chckinactive" id="Status2" name="Status" value="InActive" />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div align="center">
@@ -474,7 +478,6 @@
         <script>
             $(document).ready(function () {
                 $('#allorders').DataTable();
-
                 $('#addservices').css("display", "none");
             });
             function addservice() {
@@ -483,11 +486,14 @@
             }
             $('#btnadd').click(function () {
                 $('#saverecord').css('display', 'block');
+                $('#Businessname').val(''),
+
             });
             $('#CancelVendor').click(function () {
                 $('#saverecord').css('display', 'none');
             });
-
+             
+          
 
                 $(document).on('click', '.chcktbl', function () {
                     if ($(this).is(':checked')) {
@@ -516,7 +522,8 @@
                                 $("#state").val(result.state);
                                 $("#country").val(result.country);
                                 $("#services").val(result.services);
-                                $('#pincode').val(result.pincode);
+                                $("#pin_code").val(result.pin_code);
+                                $("#Status").val(result.Status);
                             },
                             error: function (result) {
                                 alert("failed");
@@ -528,8 +535,10 @@
                         $('#saverecord').css('display', 'none');
                     }
                 });
+   
 
-            $('#EditVendor').click(function () {
+                $('#EditVendor').click(function () {
+                    var status="null"
                 var Id = $('#id').val();
                 var managevendor = {
                     Businessname: $('#Businessname').val(),
@@ -543,9 +552,12 @@
                     state: $('#state').val(),
                     country: $('#country').val(),
                     phoneno: $('#phoneno').val(),
-                    pincode: $('#pincode').val(),
+                    pin_code: $('#pin_code').val(),
+                    Status: $("input[name='Status']:checked").val()            
+                    
 
                 }
+                
                 $.ajax({
                     url: '/ManageVendor/UpdateVendorDetails?id=' + Id,
                     type: 'POST',

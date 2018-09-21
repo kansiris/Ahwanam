@@ -61,20 +61,24 @@
                     font-size: 16px;
                 }*/
 
-           input[type=text] {
-           width: 101%;
+          input[type=text], input[type="email"], input[type="tel"] {
+            width: 101%;
             padding: 12px 26px 0px 10px;
             margin: 15px 5px 15px 0px;
             box-sizing: border-box;
-            /*border: 1px black solid;*/
             background-color: #fff;
-            /*color: white;*/
-            /*line-height: 40px;*/
+            color: black;
         }
                 p.caption {
                     margin: 0 30px 0px 0;
                     background-color: yellow;
                 }
+               table.dataTable thead th, table.dataTable tfoot th {
+            white-space: nowrap;
+        }
+        table.dataTable, table.dataTable th, table.dataTable td {
+            white-space: nowrap;
+        }
 
                 .caption {
                     font-size: 10px;
@@ -220,9 +224,20 @@
                                                 <th>Select</th>
                                                 <th>S.No</th>
                                                 <th>Vendor ID</th>
-                                                <th>First Name</th>
+                                                <th>Business Name</th>
+                                                <th>Customer Type</th>
+                                                <th>Company Name</th>
+                                                <th>First Name </th>
                                                 <th>Last Name</th>
                                                 <th>Email</th>
+                                                <th>Phone Number</th>
+                                                <th>Flat No/Street</th>
+                                                <th>Locality</th>
+                                                <th>PinCode</th>
+                                                <th>City</th>
+                                                <th>State</th>
+                                                <th>Country</th>
+                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -249,13 +264,15 @@
 
 
                                     <div class="row" id="saverecord" style="display:none;margin-top:50px">
-                                        <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
-                                        <form class="NewUser">
+                                        <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
+                                        <form method="POST">
+                                            <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
                                             <div class="col-12 col-sm-12 col-md-12">
                                                 <div class="row">
+                                                    <input type="hidden" id="id" name="id" value="" />
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" name="Businessname" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
                                                                 <span class="input__label-content input__label-content--hoshi">Business Name</span>
                                                             </label>
@@ -263,17 +280,17 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                                <span class="input__label-content input__label-content--hoshi">City</span>
+                                                            <input class="input__field input__field--hoshi" type="text" id="services" name="services" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="services">
+                                                                <span class="input__label-content input__label-content--hoshi">Services</span>
                                                             </label>
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                                <span class="input__label-content input__label-content--hoshi">Name</span>
+                                                            <input class="input__field input__field--hoshi" type="text" id="firstname" name="firstname" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstname">
+                                                                <span class="input__label-content input__label-content--hoshi">First Name</span>
                                                             </label>
                                                         </span>
                                                     </div>
@@ -281,25 +298,25 @@
                                                 <div class="row">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
-                                                                <span class="input__label-content input__label-content--hoshi">Business Name</span>
+                                                            <input class="input__field input__field--hoshi" type="text" id="lastname" name="lastname" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="lastname">
+                                                                <span class="input__label-content input__label-content--hoshi">Last Name</span>
                                                             </label>
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                                <span class="input__label-content input__label-content--hoshi">City</span>
+                                                            <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
+                                                                <span class="input__label-content input__label-content--hoshi">Email</span>
                                                             </label>
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                                <span class="input__label-content input__label-content--hoshi">Name</span>
+                                                            <input class="input__field input__field--hoshi" type="tel" id="phoneno" name="phoneno" value="" min="10" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
+                                                                <span class="input__label-content input__label-content--hoshi">Phone Number</span>
                                                             </label>
                                                         </span>
                                                     </div>
@@ -307,89 +324,73 @@
                                                 <div class="row">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
-                                                                <span class="input__label-content input__label-content--hoshi">Business Name</span>
+                                                            <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress1">
+                                                                <span class="input__label-content input__label-content--hoshi"> Flat No/Street</span>
                                                             </label>
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                                            <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress2">
+                                                                <span class="input__label-content input__label-content--hoshi">Locality</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="pin_code" min="6" name="pin_code" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pin_code">
+                                                                <span class="input__label-content input__label-content--hoshi">PinCode</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="city" name="city" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="city">
                                                                 <span class="input__label-content input__label-content--hoshi">City</span>
                                                             </label>
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                                <span class="input__label-content input__label-content--hoshi">Name</span>
+                                                            <input class="input__field input__field--hoshi" type="text" id="state" name="state" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="state">
+                                                                <span class="input__label-content input__label-content--hoshi">State</span>
                                                             </label>
                                                         </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="country" name="country" value="" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="country">
+                                                                <span class="input__label-content input__label-content--hoshi">Country</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="Cstatus">Status</span>
+                                                        <label>Active</label>
+                                                        <input type="checkbox" class="chckactive" id="Status1" name="Status" value="Active" />
+                                                        <label>InActive</label>
+                                                        <input type="checkbox" class="chckinactive" id="Status2" name="Status" value="InActive" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button id="SaveVendor" type="submit" class="btn btn-success">Save</button>
-                                            <button id="CancelVendor" class="btn btn-danger">Cancel</button>
+                                            <div align="center">
+                                                <div style="position: absolute; left: 485px;">
+                                                    <button id="SaveVendor" type="submit" class="btn btn-success" style="display:block">Save</button>
+                                                    <button id="EditVendor" type="button" class="btn btn-success" style="display:none">Update</button>
+                                                </div>
+                                                <div style="position:absolute; display: inline;">
+                                                    <button id="CancelVendor" type="button" class="btn btn-danger">Cancel</button>
+                                                </div>
+                                            </div>
                                         </form>
-
-
-                                        @*<div id="saverecord" style="display:none;margin-top:50px">
-                                            <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
-                                            <table id="mngvendor" class="allvendors" style="width:100%;padding-bottom:50px">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Customer Type</td>
-                                                        <td>
-                                                            <label for="CtypeIndividual">
-                                                                <input type="radio" id="CtypeIndividual" name="type" />
-                                                                Individual
-                                                            </label>
-                                                            <label for="CtypeCorporate">
-                                                                <input type="radio" id="CtypeCorporate" name="type" />
-                                                                Corporate
-                                                            </label>
-                                                        </td>
-                                                        <td>Company Name</td>
-                                                        <td><input type="text" id="cmpname" /></td>
-                                                        <td>First Name</td>
-                                                        <td><input type="text" /></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Last Name</td>
-                                                        <td><input type="text" /></td>
-                                                        @*<td>Middle Name</td>
-                                                            <td><input type="text" /></td>*@
-                                        @*<td>Email</td>
-                                                        <td><input type="text" /></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Phone Number</td>
-                                                        <td><input type="text" /></td>
-                                                        <td>Address1</td>
-                                                        <td><input type="text" /></td>
-                                                        <td>Address2</td>
-                                                        <td><input type="text" /></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>City</td>
-                                                        <td><input type="text" /></td>
-                                                        <td>State</td>
-                                                        <td><input type="text" /></td>
-                                                        <td>Country</td>
-                                                        <td><input type="text" /></td>
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-                                            <button id="SaveCustomer" type="submit" class="btn btn-success">Save</button>
-                                            <button id="CancelVendor" class="btn btn-danger">Cancel</button>*@
                                     </div>
                                 </div>
                             </div>
@@ -427,6 +428,7 @@
         }
         $('#btnadd').click(function () {
             $('#saverecord').css('display', 'block');
+
         });
         $('#CancelVendor').click(function () {
             $('#saverecord').css('display', 'none');
