@@ -53,14 +53,14 @@ namespace MaaAahwanam.Web.Controllers
                 List<VendorImage> vimg = new List<VendorImage>();
                 var policy = vendorMasterService.Getpolicy(vid, vsid);
                 ViewBag.policy = policy;
-                foreach (var item in venues)
-                {
-                    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
-                    //amenities.Add(item);
-                    vimg.AddRange(allimages.Where(m => m.VendorId == item.Id));
-                }
+                //foreach (var item in venues)
+                //{
+                //    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorId == long.Parse(item.Id.ToString())).ToList());
+                //    //amenities.Add(item);
+                //    vimg.AddRange(allimages.Where(m => m.VendorId == item.Id));
+                //}
               //  ViewBag.allimages = vimg.FirstOrDefault();
-
+               package = viewservicesss.getvendorpkgs(vid).ToList();
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
                 ViewBag.venues = venues;
@@ -600,42 +600,43 @@ namespace MaaAahwanam.Web.Controllers
             var message = "success";
             return Json(message);
         }
-        //public JsonResult updatepolicy()
-        //{
-        //    Policy policy = new Policy();
-        //    policy.ServiceType = ServiceType;
-        //    policy.VendorId = VendorId;
-        //    policy.VendorSubId { get; set; }
-        // policy.Outside_decorators_allowed { get; set; }
-        // policy.Decor_provided { get; set; }
-        // policy.Decorators_allowed_with_royalty { get; set; }
-        // policy.Decoration_starting_costs { get; set; }
-        // policy.Food_provided { get; set; }
-        // policy.Outside_food_or_caterer_allowed { get; set; }
-        // policy.NonVeg_allowed { get; set; }
-        // policy.Alcohol_allowed { get; set; }
-        // policy.Outside_Alcohol_allowed { get; set; }
-        // policy.Tax { get; set; }
-        // policy.Valet_Parking { get; set; }
-        // policy.Parking_Space { get; set; }
-        // policy.Cancellation { get; set; }
-        // policy.Advance_Amount { get; set; }
-        // policy.Available_Rooms { get; set; }
-        // policy.Rooms_Count { get; set; }
-        // policy.Room_Average_Price { get; set; }
-        // policy.Changing_Rooms_AC { get; set; }
-        // policy.Complimentary_Changing_Room { get; set; }
-        // policy.Music_Allowed_Late { get; set; }
-        // policy.Halls_AC { get; set; }
-        // policy.Ample_Parking { get; set; }
-        // policy.Baarat_Allowed { get; set; }
-        // policy.Fire_Crackers_Allowed { get; set; }
-        // policy.Hawan_Allowed { get; set; }
-        // policy.Overnight_wedding_Allowed { get; set; }
 
-        //    return Json("policies Updated");
+        public JsonResult updatepolicy()
+        {
+            //Policy policy = new Policy();
+            //policy.ServiceType = ServiceType;
+            //policy.VendorId = VendorId;
+            //policy.VendorSubId { get; set; }
+            //policy.Outside_decorators_allowed { get; set; }
+            //policy.Decor_provided { get; set; }
+            //policy.Decorators_allowed_with_royalty { get; set; }
+            //policy.Decoration_starting_costs { get; set; }
+            //policy.Food_provided { get; set; }
+            //policy.Outside_food_or_caterer_allowed { get; set; }
+            //policy.NonVeg_allowed { get; set; }
+            //policy.Alcohol_allowed { get; set; }
+            //policy.Outside_Alcohol_allowed { get; set; }
+            //policy.Tax { get; set; }
+            //policy.Valet_Parking { get; set; }
+            //policy.Parking_Space { get; set; }
+            //policy.Cancellation { get; set; }
+            //policy.Advance_Amount { get; set; }
+            //policy.Available_Rooms { get; set; }
+            //policy.Rooms_Count { get; set; }
+            //policy.Room_Average_Price { get; set; }
+            //policy.Changing_Rooms_AC { get; set; }
+            //policy.Complimentary_Changing_Room { get; set; }
+            //policy.Music_Allowed_Late { get; set; }
+            //policy.Halls_AC { get; set; }
+            //policy.Ample_Parking { get; set; }
+            //policy.Baarat_Allowed { get; set; }
+            //policy.Fire_Crackers_Allowed { get; set; }
+            //policy.Hawan_Allowed { get; set; }
+            //policy.Overnight_wedding_Allowed { get; set; }
 
-        //}
+            return Json("policies Updated");
+
+        }
     }
 
 }
