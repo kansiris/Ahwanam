@@ -269,7 +269,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
-                    int userlogintablecheck = (int)userResponse1.UserLoginId;
+                    //int userlogintablecheck = (int)userResponse1.UserLoginId;
                     return Json("success1", JsonRequestBehavior.AllowGet);
 
                 }
