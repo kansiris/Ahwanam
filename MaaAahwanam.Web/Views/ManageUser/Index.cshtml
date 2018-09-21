@@ -159,261 +159,264 @@
         }
     </style>
 </head>
-<body>
-    <div id="page">
-        <header class="header menu_fixed">
-            <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
-            <div id="logo">
-                <a href="/home">
-                    <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky">
-                    <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_normal">
-                </a>
-            </div>
-
-            <ul id="top_menu"></ul>
-            <!-- /top_menu -->
-            <a href="#menu" class="btn_mobile">
-                <div class="hamburger hamburger--spin" id="hamburger">
-                    <div class="hamburger-box">
-                        <div class="hamburger-inner"></div>
-                    </div>
+@using MaaAahwanam.Web.Custom
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    <body>
+        <div id="page">
+            <header class="header menu_fixed">
+                <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+                <div id="logo">
+                    <a href="/home">
+                        <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky">
+                        <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_normal">
+                    </a>
                 </div>
-            </a>
-            <nav id="menu" class="main-menu">
-                <ul>
-                    <li><span><a href="#0">Add Manager</a></span>
-                    <li><span><a href="#0">Add service</a></span>
-                    <li>
-                        <span><a href="#0">Settings</a></span>
-                    </li>
-                </ul>
-            </nav>
 
-        </header>
-        <!-- /header -->
-        <main>
-            <div id="error_page">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="ui-cards">
-                                @{Html.RenderAction("profilepic", "VDashboard");}
-                                @{Html.RenderAction("sidebar", "VDashboard");  }
-                            </div>
+                <ul id="top_menu"></ul>
+                <!-- /top_menu -->
+                <a href="#menu" class="btn_mobile">
+                    <div class="hamburger hamburger--spin" id="hamburger">
+                        <div class="hamburger-box">
+                            <div class="hamburger-inner"></div>
                         </div>
-                        <div class="col-md-10" style="color:black">
-                            <div class="isotope-wrapper" style="padding: 30px;margin-top: 70px;">
-                                <div>
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td><h4 style="text-transform:uppercase">Customers/Clients</h4></td>
-                                            <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Customer</button></td>
-                                        </tr>
-                                    </table>
+                    </div>
+                </a>
+                <nav id="menu" class="main-menu">
+                    <ul>
+                        <li><span><a href="#0">Add Manager</a></span>
+                        <li><span><a href="#0">Add service</a></span>
+                        <li>
+                            <span><a href="#0">Settings</a></span>
+                        </li>
+                    </ul>
+                </nav>
+
+            </header>
+            <!-- /header -->
+            <main>
+                <div id="error_page">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="ui-cards">
+                                    @{Html.RenderAction("profilepic", "VDashboard");}
+                                    @{Html.RenderAction("sidebar", "VDashboard");  }
                                 </div>
-                                <table id="allorders" class="display" style="width:100%;padding-bottom:50px">
-                                    <thead>
-                                        <tr>
-                                            <th>Select</th>
-                                            <th>S.No</th>
-                                            <th>Vendor ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Email</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            var number = 0;
-                                            foreach (var users in ViewBag.Userlist)
-                                            {
-                                                <tr>
-                                                    <td><input type="checkbox" class="chcktbl" /></td>
-                                                    <td>@(++number)</td>
-                                                    <td>@users.vendorId </td>
-                                                    <td>@users.firstname</td>
-                                                    <td>@users.lastname </td>
-                                                    <td>@users.email</td>
-                                                    <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
-                                                </tr>
+                            </div>
+                            <div class="col-md-10" style="color:black">
+                                <div class="isotope-wrapper" style="padding: 30px;margin-top: 70px;">
+                                    <div>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><h4 style="text-transform:uppercase">Customers/Clients</h4></td>
+                                                <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Customer</button></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <table id="allorders" class="display" style="width:100%;padding-bottom:50px">
+                                        <thead>
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>S.No</th>
+                                                <th>Vendor ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Email</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                var number = 0;
+                                                foreach (var users in ViewBag.Userlist)
+                                                {
+                                                    <tr>
+                                                        <td><input type="checkbox" class="chcktbl" /></td>
+                                                        <td>@(++number)</td>
+                                                        <td>@users.vendorId </td>
+                                                        <td>@users.firstname</td>
+                                                        <td>@users.lastname </td>
+                                                        <td>@users.email</td>
+                                                        <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
+                                                    </tr>
+
+                                                }
 
                                             }
-
-                                        }
-                                   </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
 
 
-                                <div class="row" id="saverecord" style="display:none;margin-top:50px">
-                                    <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
-                                    <form class="NewUser">
-                                        <div class="col-12 col-sm-12 col-md-12">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
-                                                            <span class="input__label-content input__label-content--hoshi">Business Name</span>
-                                                        </label>
-                                                    </span>
+                                    <div class="row" id="saverecord" style="display:none;margin-top:50px">
+                                        <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
+                                        <form class="NewUser">
+                                            <div class="col-12 col-sm-12 col-md-12">
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
+                                                                <span class="input__label-content input__label-content--hoshi">Business Name</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                                                <span class="input__label-content input__label-content--hoshi">City</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                                                <span class="input__label-content input__label-content--hoshi">Name</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                            <span class="input__label-content input__label-content--hoshi">City</span>
-                                                        </label>
-                                                    </span>
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
+                                                                <span class="input__label-content input__label-content--hoshi">Business Name</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                                                <span class="input__label-content input__label-content--hoshi">City</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                                                <span class="input__label-content input__label-content--hoshi">Name</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                            <span class="input__label-content input__label-content--hoshi">Name</span>
-                                                        </label>
-                                                    </span>
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
+                                                                <span class="input__label-content input__label-content--hoshi">Business Name</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                                                <span class="input__label-content input__label-content--hoshi">City</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        <span class="input input--hoshi">
+                                                            <input class="input__field input__field--hoshi" type="text" id="input-4" />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                                                <span class="input__label-content input__label-content--hoshi">Name</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
-                                                            <span class="input__label-content input__label-content--hoshi">Business Name</span>
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                            <span class="input__label-content input__label-content--hoshi">City</span>
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                            <span class="input__label-content input__label-content--hoshi">Name</span>
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="Businessname" value="Taj" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
-                                                            <span class="input__label-content input__label-content--hoshi">Business Name</span>
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                            <span class="input__label-content input__label-content--hoshi">City</span>
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                                <div class="col-12 col-sm-4 col-md-4">
-                                                    <span class="input input--hoshi">
-                                                        <input class="input__field input__field--hoshi" type="text" id="input-4" />
-                                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-                                                            <span class="input__label-content input__label-content--hoshi">Name</span>
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button id="SaveVendor" type="submit" class="btn btn-success">Save</button>
-                                        <button id="CancelVendor" class="btn btn-danger">Cancel</button>
-                                    </form>
+                                            <button id="SaveVendor" type="submit" class="btn btn-success">Save</button>
+                                            <button id="CancelVendor" class="btn btn-danger">Cancel</button>
+                                        </form>
 
 
-                                    @*<div id="saverecord" style="display:none;margin-top:50px">
-            <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
-            <table id="mngvendor" class="allvendors" style="width:100%;padding-bottom:50px">
-                <tbody>
-                    <tr>
-                        <td>Customer Type</td>
-                        <td>
-                            <label for="CtypeIndividual">
-                                <input type="radio" id="CtypeIndividual" name="type" />
-                                Individual
-                            </label>
-                            <label for="CtypeCorporate">
-                                <input type="radio" id="CtypeCorporate" name="type" />
-                                Corporate
-                            </label>
-                        </td>
-                        <td>Company Name</td>
-                        <td><input type="text" id="cmpname" /></td>
-                        <td>First Name</td>
-                        <td><input type="text" /></td>
+                                        @*<div id="saverecord" style="display:none;margin-top:50px">
+                                            <h4 style="text-transform:uppercase">Add/Edit Customer</h4>
+                                            <table id="mngvendor" class="allvendors" style="width:100%;padding-bottom:50px">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Customer Type</td>
+                                                        <td>
+                                                            <label for="CtypeIndividual">
+                                                                <input type="radio" id="CtypeIndividual" name="type" />
+                                                                Individual
+                                                            </label>
+                                                            <label for="CtypeCorporate">
+                                                                <input type="radio" id="CtypeCorporate" name="type" />
+                                                                Corporate
+                                                            </label>
+                                                        </td>
+                                                        <td>Company Name</td>
+                                                        <td><input type="text" id="cmpname" /></td>
+                                                        <td>First Name</td>
+                                                        <td><input type="text" /></td>
 
-                    </tr>
-                    <tr>
-                        <td>Last Name</td>
-                        <td><input type="text" /></td>
-                        @*<td>Middle Name</td>
-                            <td><input type="text" /></td>*@
-                                    @*<td>Email</td>
-                        <td><input type="text" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Last Name</td>
+                                                        <td><input type="text" /></td>
+                                                        @*<td>Middle Name</td>
+                                                            <td><input type="text" /></td>*@
+                                        @*<td>Email</td>
+                                                        <td><input type="text" /></td>
 
-                    </tr>
-                    <tr>
-                        <td>Phone Number</td>
-                        <td><input type="text" /></td>
-                        <td>Address1</td>
-                        <td><input type="text" /></td>
-                        <td>Address2</td>
-                        <td><input type="text" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Phone Number</td>
+                                                        <td><input type="text" /></td>
+                                                        <td>Address1</td>
+                                                        <td><input type="text" /></td>
+                                                        <td>Address2</td>
+                                                        <td><input type="text" /></td>
 
-                    </tr>
-                    <tr>
-                        <td>City</td>
-                        <td><input type="text" /></td>
-                        <td>State</td>
-                        <td><input type="text" /></td>
-                        <td>Country</td>
-                        <td><input type="text" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>City</td>
+                                                        <td><input type="text" /></td>
+                                                        <td>State</td>
+                                                        <td><input type="text" /></td>
+                                                        <td>Country</td>
+                                                        <td><input type="text" /></td>
 
-                    </tr>
-                </tbody>
-            </table>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-            <button id="SaveCustomer" type="submit" class="btn btn-success">Save</button>
-            <button id="CancelVendor" class="btn btn-danger">Cancel</button>*@
+                                            <button id="SaveCustomer" type="submit" class="btn btn-success">Save</button>
+                                            <button id="CancelVendor" class="btn btn-danger">Cancel</button>*@
+                                    </div>
                                 </div>
                             </div>
+                            <!-- /container -->
                         </div>
-                        <!-- /container -->
                     </div>
                 </div>
-            </div>
-            <!-- /error_page -->
-        </main>
-        <!--/main-->
-        <div id="toTop"></div><!-- Back to top button -->
-    </div>
-    <!-- COMMON SCRIPTS -->
-    <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
-    <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
-    <script src="~/newdesignstyles/Scripts/main.js"></script>
-    <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
-    <!-- DATEPICKER  -->
-    <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
-    <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
-    <!-- semantic -->
-    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
-    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+                <!-- /error_page -->
+            </main>
+            <!--/main-->
+            <div id="toTop"></div><!-- Back to top button -->
+        </div>
+        <!-- COMMON SCRIPTS -->
+        <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+        <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
+        <script src="~/newdesignstyles/Scripts/main.js"></script>
+        <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
+        <!-- DATEPICKER  -->
+        <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
+        <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
+        <!-- semantic -->
+        <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
+        <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-    <script>
+        <script>
         $(document).ready(function () {
             $('#allorders').DataTable();
             $('#addservices').css("display", "none");
@@ -438,7 +441,13 @@
                 }
             });
         });
-    </script>
+        </script>
 
-</body>
+    </body>
+   }
+   else
+   {
+      Response.Redirect("/Home");
+   }
+
 </html>
