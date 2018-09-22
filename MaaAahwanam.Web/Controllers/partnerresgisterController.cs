@@ -76,7 +76,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             return count;
         }
-        public JsonResult vendorreg(string vname, string businessname,string mobile,string email,string businesstype,string serviceselection)
+        public JsonResult vendorreg(string vname, string businessname,string mobile,string email,string businesstype,string serviceselection, string Password)
         {
             UserLogin userLogin1 = new UserLogin();
             UserDetail userDetail = new UserDetail();
@@ -91,7 +91,7 @@ namespace MaaAahwanam.Web.Controllers
             userLogin1.UserType = "Vendor";
             userDetail.FirstName = vname;
             userDetail.UserPhone = mobile;
-            userLogin1.Password = "Temp123";
+            userLogin1.Password = Password;
             userLogin1.UserName = email;
             vendorMaster.BusinessName = businessname;
             vendorMaster.ContactPerson = vname;

@@ -170,7 +170,10 @@
                                     <label></label>
                                     <input type="text" id="email" name="email" placeholder="Email Address">
                                 </div>
-                                
+                                <div class="eight field">
+                                    <label></label>
+                                    <input type="Password" id="Password" name="Password" placeholder="Password">
+                                </div>
                                 <a style="cursor:pointer;color:white" class="btn_3" id="btnregister">
                                     Register
 
@@ -315,6 +318,7 @@ Welcome             </div>
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var phonepattern = /^[0-9]{10}$/;
             var emailaddressVal = $("#email").val();
+            var Password = $("#Password").val();
             if ($(".businesstype input[type='checkbox']").is(':checked')) {
 
                 var favorite = [];
@@ -335,7 +339,7 @@ Welcome             </div>
             }
             else {
                 $.ajax({
-                    url: '/partnerresgister/vendorreg?vname=' + vname + '&&businessname=' + businessname + '&&mobile=' + mobile + '&&email=' + email + '&&businesstype=' + businesstype + '&&serviceselection=' + serviceselection,
+                    url: '/partnerresgister/vendorreg?vname=' + vname + '&&businessname=' + businessname + '&&mobile=' + mobile + '&&email=' + email + '&&businesstype=' + businesstype + '&&serviceselection=' + serviceselection + '&&Password=' + Password,
                     type: 'post',
                     contentType: 'application-json',
                     success: function (data) {
@@ -373,6 +377,8 @@ Welcome             </div>
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var phonepattern = /^[0-9]{10}$/;
             var emailaddressVal = $("#email").val();
+            var Password = $("#Password").val();
+            var passwordpattern = /^[a-z0-9]+$/i;
             if (vname == '') {
                 alert("Please Enter Your Name");
                 $("#vname").focus();
@@ -402,6 +408,19 @@ Welcome             </div>
             else if (!emailReg.test(emailaddressVal)) {
                 alert("Please Enter a valid Email Address");
                 $("#email").focus();
+                }
+             else if (Password == '') {
+                alert("Please Enter Password");
+                $("#txtpassword").focus();
+            }
+            else if (Password.length < 5) {
+                alert("Password length must be 5 characters");
+                $("#txtpassword").focus();
+                $("#txtpassword").alphanum();
+            }
+            else if (!passwordpattern.test(Password)) {
+                alert("Please Enter valid 10 digit Phonenumber");
+                $("#txtphone").focus();
             }
 
             else {
@@ -418,6 +437,7 @@ Welcome             </div>
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
             var passwordpattern = /^[a-z0-9]+$/i;
             var emailaddressVal = $("#UserName").val();
+           
             if (Password == '') {
                 alert("Please Enter Password");
                 $("#txtpassword").focus();

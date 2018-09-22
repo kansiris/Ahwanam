@@ -165,8 +165,6 @@ namespace MaaAahwanam.Web.Controllers
                         userLoginDetailsService.changestatus(userLogin, userDetails, (int)userid);
                         if (userResponse.UserType == "Vendor")
                         {
-                           
-                            
                             vendorMaster = vendorMasterService.GetVendorByEmail(email);
                             string vid = vendorMaster.Id.ToString();
                             var vsid = "";
@@ -243,7 +241,7 @@ namespace MaaAahwanam.Web.Controllers
                     vendorMaster = resultsPageService.GetVendorByEmail(userLogin.UserName);
                     string userData = JsonConvert.SerializeObject(userResponse1);
                     ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
-                        ViewBag.userid = userResponse1.UserLoginId;
+                    ViewBag.userid = userResponse1.UserLoginId;
 
                     string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com,sireesh.k@xsilica.com";
                     int id = Convert.ToInt32(userResponse.UserLoginId);
