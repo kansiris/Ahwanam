@@ -25,6 +25,7 @@ namespace MaaAahwanam.Web.Controllers
                 string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
                 vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
                 VendorId = vendorMaster.Id.ToString();
+                ViewBag.masterid = VendorId;
                 ViewBag.Userlist = mnguserservice.getuser(VendorId);
                 return View();
         }
@@ -44,6 +45,18 @@ namespace MaaAahwanam.Web.Controllers
             else
                 return Json("already email is added");
         }
-     
+        [HttpPost]
+        public JsonResult GetUserDetails(string id)
+        {
+            var data = mnguserservice.getuserbyid(int.Parse(id));
+            return Json(data);
+        }
+        [HttpPost]
+        public JsonResult UpdateUserDetails(ManageUser mnguser, string id)
+        {
+            mnguser.updateddate = DateTime.Now;
+            mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
+            return Json("Sucess", JsonRequestBehavior.AllowGet);
+        }
     }
 }
