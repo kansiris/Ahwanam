@@ -58,6 +58,11 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ManageUser.Where(v => v.vendorId == Vid).ToList();
         }
-
+         public int checkuseremail(string email,string id)
+        {
+            int UseremailCount = _dbContext.ManageUser.Where(e => e.email == email && e.vendorId == id).Count();
+            return UseremailCount;
+        }
+      
     }
 }
