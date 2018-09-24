@@ -106,6 +106,26 @@
               max-width: 700px;
               margin-left: 15px;
           }*/
+    .buttonks {
+        border-radius: 50%;
+    }
+    /*.buttonks1 {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+    }*/
+    .buttonks1 {
+        background-color: yellow;
+        border: none;
+        color: black;
+        padding: 11px;
+    }
 
     .uk-h6-1 {
         font-size: 15px;
@@ -579,9 +599,10 @@
                             @*<img src="http://design.maa-aahwanam.com/panagea/images/right.png" />
 
                                 </div>*@
-                            <div class="row packesss" id="allrecords" style="margin-left:35px;">
+                            <div class="row packesss" id="allrecords" >
+                                
                                 <div class="left">
-                                    <button id="left-button">
+                                    <button class="buttonks buttonks1" id="left-button">
                                         <<
                                     </button>
                                 </div>
@@ -591,11 +612,12 @@
                                     @{Html.RenderAction("calender", "viewservice"); }
                                 </div>
                                 <div class="right">
-                                    <button id="right-button">
+                                    <button class="buttonks buttonks1" id="right-button">
                                         >>
                                     </button>
-                                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:85px;margin-left:10px">
+                                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:44px;margin-left:10px">
                                 </div>
+                                   
                             </div>
                             <div>
                                 <form class="uk-form-stacked" style="margin-top:-10px">
@@ -863,20 +885,22 @@
             }, "slow");
         });
 
-        $('.center .kscalender').click(function () {
-            $(this).parent().find('.kscalender').removeClass('selected');
-            $(this).addClass('selected');
-            var idValue = $(this).attr('data-title');
-            //alert(idValue);
-            $(this).css("background-color", "yellowgreen");
-            var calselected = $('.calenderselected').val();
-            //if (calselected == null) {
-            //    $('.calenderselected').val(idValue);
-            //}
-            //else { }
+        var timeslot = '';
+        $('.iCheck-helper').click(function () {
+            //if ($(this).is(':checked')) {
+            //    var ks = $(this).find('input[name=timeslot]').val();
+            //    alert(ks);
+            if ($('.iCheck').is(":checked")) {
+                var favorite = [];
+                $.each($("input[name='timeslot']:checked"), function () {
+                    favorite.push($(this).val());
+                    timeslot = favorite.join(", ");
+                })
+            }
+            else {
+                alert("Please select time slot");
+            }
         });
-
-
     </script>
 
 
@@ -936,7 +960,8 @@
             if (cpid == null || cpid == pid) { window.localStorage.setItem("cartid", pid) }
             var gu1 = window.localStorage.getItem("guests");
             var eventtype = window.localStorage.getItem("eventtype");
-
+            var seldate = $('input[name=radioname]:checked').val();
+           
             var guest = '';
             //alert(gu1);
             if (gu1 == null) {
@@ -952,7 +977,7 @@
             var total = guest * cpprice;
             //alert(total);
 
-            url1 = '/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype;
+            url1 = '/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype + '&&bookdate=' + seldate;
             //alert(url1);
             $.ajax({
                 url: url1,
@@ -1075,12 +1100,12 @@
             });
         });
 
-        $("button").click(function () {
-            var btnvalue = $(this).attr('src');
-            $('html,body').animate({
-                scrollTop: $("" + btnvalue + "").offset().top
-            },
-                'slow');
-        });
+        //$("button").click(function () {
+        //    var btnvalue = $(this).attr('src');
+        //    $('html,body').animate({
+        //        scrollTop: $("" + btnvalue + "").offset().top
+        //    },
+        //        'slow');
+        //});
     </script>
 }
