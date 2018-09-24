@@ -598,7 +598,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             Response.Cookies.Clear();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "NHomePage");
+            return RedirectToAction("Index", "home");
         }
 
 
@@ -607,7 +607,7 @@ namespace MaaAahwanam.Web.Controllers
             Response.Cookies.Clear();
 
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "NHomePage");
+            return RedirectToAction("Index", "home");
         }
 
         //

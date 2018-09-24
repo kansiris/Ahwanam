@@ -679,6 +679,12 @@
                     <div class="text-center">
                         Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
                     </div>
+                    <p style="margin-left: 72px;">
+                    <button class="btn btn-primary text-white text-center" onclick="fbLogin()"><i class="fa fa-facebook mr-2" aria-hidden="true"></i> Login with Facebook</button>
+                    @*<span class="gmailBg btnSecondary text-white ml-3 fontSize-18" id="login-button"><i class="fa fa-google mr-2" aria-hidden="true"></i> Gmail</span>*@
+                        </p><p style="margin-left: 82px;">
+                    <button class="btn btn-primary text-white text-center" id="GoogleLogin" onclick="glogin()"><i class="fa fa-google mr-2" aria-hidden="true"></i> Login with Gmail</button>
+                    </p>
                 </div>
                 @*<div class="float-right mt-1 registerBtn"><a id="signup" href="javascript:void(0);">Sign up</a></div>*@
                 <div id="forgot_pw" class="forgotks" style="min-height: 290px;">
@@ -738,7 +744,14 @@
     <!-- DATEPICKER  -->
     <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
     <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
+    <script src="~/Scripts/fauth.js"></script>
 
+
+    @*gmail login*@
+
+
+
+    <script src="~/Scripts/gauth.js"></script>
     @*<script src="~/newdesign/js/daterangepicker.js"></script>*@
     @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
     <script>
@@ -753,7 +766,7 @@
 
     <script>
         var regClick = $(".registerBtn"), loginClick = $(".loginBtn"), forgotClick = $(".forgotPasswordBtn"),
-          loginBlock = $(".login"), regBlock = $(".register"), forgotBlock = $(".forgotPassword");
+            loginBlock = $(".login"), regBlock = $(".register"), forgotBlock = $(".forgotPassword");
         $(regClick).click(function () {
             $(".authenticationBlocks > div").css("display", "none");
             $(regBlock).css("display", "block");
@@ -786,10 +799,8 @@
             }
             else { $('#guests').val(guests); }
 
-            if (location != '' && location != null)
-            { $('#loc').val(location); }
-            else
-            { $('#loc').val("Hyderabad"); }
+            if (location != '' && location != null) { $('#loc').val(location); }
+            else { $('#loc').val("Hyderabad"); }
 
             if (new Date(date) < new Date()) {
                 var today = new Date();
@@ -848,10 +859,10 @@
                 alert("Please Enter Name");
                 $("#txtname").focus();
             }
-                //else if (!passwordpattern.test(CustomerName)) {
-                //    alert("Please Enter valid 10 digit Phonenumber");
-                //    $("#txtphone").focus();
-                //}
+            //else if (!passwordpattern.test(CustomerName)) {
+            //    alert("Please Enter valid 10 digit Phonenumber");
+            //    $("#txtphone").focus();
+            //}
             else if (CustomerName.length < 5) {
                 alert("Name must be 5 characters");
                 $("#txtname").focus();
@@ -939,7 +950,7 @@
         function login(clickedvalue) {
             var url1 = document.referrer;
             if (url1 == '' || url1 == undefined) { url1 = location.href; }
-           // alert(url1);
+            // alert(url1);
             var Password = $("#Password1").val();
             var Email = $("#UserName").val();
             var emailReg = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
