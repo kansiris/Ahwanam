@@ -45,6 +45,7 @@ namespace MaaAahwanam.Repository.db
         public int checkvendoremail(string email,string id)
         {
             int c = _dbContext.ManageVendor.Where(e => e.email == email && e.vendorId == id).Count();
+            //int count = _dbContext.ManageVendor.Where(e => e.email == email && e.id == int.Parse(id)).Count();
             return c;
         }
         public ManageUser AddUser(ManageUser mnguser)
@@ -61,8 +62,24 @@ namespace MaaAahwanam.Repository.db
          public int checkuseremail(string email,string id)
         {
             int UseremailCount = _dbContext.ManageUser.Where(e => e.email == email && e.vendorId == id).Count();
+            //int count = _dbContext.ManageUser.Where(e => e.email == email && e.id == int.Parse(id)).Count();
             return UseremailCount;
         }
-      
+        public ManageUser UpdateUser(ManageUser User, int id)
+        {
+            var GetUser = _dbContext.ManageUser.SingleOrDefault(v => v.id == id);
+            User.id = GetUser.id;
+            User.vendorId = GetUser.vendorId;
+            User.registereddate = GetUser.registereddate;
+            _dbContext.Entry(GetUser).CurrentValues.SetValues(User);
+            _dbContext.SaveChanges();
+            return GetUser;
+        }
+        public ManageUser GetUserdetails(int id)
+        {
+            //var query = from vendor in _dbContext.ManageVendor where vendor.id == id select vendor;
+            return _dbContext.ManageUser.Where(v => v.id == id).FirstOrDefault();
+
+        }
     }
 }

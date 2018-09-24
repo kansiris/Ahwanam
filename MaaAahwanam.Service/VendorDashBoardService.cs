@@ -53,5 +53,14 @@ namespace MaaAahwanam.Service
            
             return mngvendorrepository.checkuseremail(email, id);
         }
+        public ManageUser getuserbyid(int id)
+        {
+            return mngvendorrepository.GetUserdetails(id);
+        }
+
+        public ManageUser UpdateUser(ManageUser mnguser, int id)
+        {
+            return mngvendorrepository.UpdateUser(mnguser, id);
+        }
     }
 }
