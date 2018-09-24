@@ -256,7 +256,9 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="ui-cards">
-                                @{Html.RenderAction("profilepic", "VDashboard");}
+                                <div class="card" id="profilepipccontent">
+                                    @{Html.RenderAction("profilepic", "VDashboard");}
+                                </div>
                                 @{Html.RenderAction("sidebar", "VDashboard"); }
                                 @if (ViewBag.enable == "first")
                                 {
@@ -289,52 +291,80 @@
 
                                             @if (ViewBag.ks == "ksc")
                                             {
-                                            @*<div align="center">
-                                                @if (ViewBag.service.name != null && ViewBag.service.name != "")
-                                                { <div style="float:left"><input type="text" value="@ViewBag.service.name" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" /></div>}
-                                                else
-                                                {<div style="float:left"><input type="text" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" /></div> }
-                                                
-                                                <div style="float:right;margin-top:17px">
-                                                     @if (ViewBag.vsid != null)
-                                                    {
-                                                        <button type="button" class="btn" style="margin-top: -47px;margin-left: 402px;" data-toggle="modal" onclick="window.location.href='/VendorCalendar/Index?id=@ViewBag.vendorid&&vid=@ViewBag.vsid'" data-target="#exampleModal">Plan Calendar</button>
-                                                    }
-                                                    else
-                                                    {
-                                                        <button type="button" class="btn" style="margin-top: -47px;margin-left: 402px;" id="pkgsubcat">Plan Calendar</button>
-                                                    }
-                                                <input type="checkbox" class="icheck" /><span style="color:black">InActive</span>
-                                                   
-                                                </div> 
-                                            </div>*@
-                                            <div class="row" style="padding-left:15px;height:30%;width:102%">
-                                                <div class="col-md-6" style="max-width:50%;padding-left:10%;padding-top:10px">
-                                                    @if (ViewBag.service.name != null && ViewBag.service.name != "")
-                                                    { <input type="text" value="@ViewBag.service.name" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" />}
-                                                    else
-                                                    {<input type="text" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" /> }
+                                                @*<div align="center">
+                                                        @if (ViewBag.service.name != null && ViewBag.service.name != "")
+                                                        { <div style="float:left"><input type="text" value="@ViewBag.service.name" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" /></div>}
+                                                        else
+                                                        {<div style="float:left"><input type="text" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" /></div> }
+
+                                                        <div style="float:right;margin-top:17px">
+                                                             @if (ViewBag.vsid != null)
+                                                            {
+                                                                <button type="button" class="btn" style="margin-top: -47px;margin-left: 402px;" data-toggle="modal" onclick="window.location.href='/VendorCalendar/Index?id=@ViewBag.vendorid&&vid=@ViewBag.vsid'" data-target="#exampleModal">Plan Calendar</button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button type="button" class="btn" style="margin-top: -47px;margin-left: 402px;" id="pkgsubcat">Plan Calendar</button>
+                                                            }
+                                                        <input type="checkbox" class="icheck" /><span style="color:black">InActive</span>
+
+                                                        </div>
+                                                    </div>*@
+                                                <div class="row" style="padding-left:15px;height:30%;width:102%">
+                                                    <div class="col-md-6" style="max-width:50%;padding-left:10%;padding-top:10px">
+                                                        @if (ViewBag.service.name != null && ViewBag.service.name != "")
+                                                        {
+                                                            <input type="hidden" value="@ViewBag.service.name" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" />
+                                                            <h2 id="venuetype1" style="color:black;width: 50%;font-size: 30px;border: none;margin: 0px;">@ViewBag.service.name</h2>
+                                                            <label style="color:black;float:left;margin-left:-45px;margin-top:5px">Change Service Type?</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="hidden" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" />
+                                                            <h2 id="venuetype1" style="color:black;width: 50%;font-size: 30px;border: none;margin: 0px;">@ViewBag.service.VenueType</h2>
+                                                            <label style="color:black;float:left;margin-left:-45px;margin-top:5px">Select Service Type</label>
+                                                        }
+                                                        <select id="selectedservice" style="color:black;padding:0;width:auto;margin-left:100px" class="form-control">
+                                                            <option disabled selected>Select Category</option>
+                                                            <option value="Convention Hall">Convention Hall</option>
+                                                            <option value="Function Hall">Function Hall</option>
+                                                            <option value="Banquet Hall">Banquet Hall</option>
+                                                            <option value="Meeting Room">Meeting Room</option>
+                                                            <option value="Open Lawn">Open Lawn</option>
+                                                            <option value="Hotel">Hotel</option>
+                                                            <option value="Resort">Resort</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6" style="max-width:50%;padding-left:40px;">
+                                                        @if (ViewBag.vsid != null)
+                                                        {
+                                                            <button type="button" class="btn" data-toggle="modal" onclick="window.location.href='/VendorCalendar/Index?id=@ViewBag.vendorid&&vid=@ViewBag.vsid'" data-target="#exampleModal">Plan Calendar</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn" id="pkgsubcat">Plan Calendar</button>
+                                                        }
+                                                        <input type="checkbox" class="icheck" /><span style="color:black;">InActive</span>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6" style="max-width:50%;padding-left:40px;">
-                                                    @if (ViewBag.vsid != null)
-                                                    {
-                                                        <button type="button" class="btn" data-toggle="modal" onclick="window.location.href='/VendorCalendar/Index?id=@ViewBag.vendorid&&vid=@ViewBag.vsid'" data-target="#exampleModal">Plan Calendar</button>
-                                                    }
-                                                    else
-                                                    {
-                                                        <button type="button" class="btn"  id="pkgsubcat">Plan Calendar</button>
-                                                    }
-                                                    <input type="checkbox" class="icheck"/><span style="color:black;">InActive</span>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" id="vsid" value="@ViewBag.service.Id" />
+                                                <input type="hidden" id="vsid" value="@ViewBag.service.Id" />
                                             }
                                             else if (ViewBag.ks == "ks")
                                             {
-                                                <div align="center">
-                                                    <div style="float:left"><input type="text" style="width:100%" placeholder="YOUR HALL NAME" /></div>
-                                                    <div style="float:right;margin-top:17px"><input type="checkbox" class="icheck" /><span style="color:black">InActive</span></div>
+                                                <div class="row" style="padding-left:15px;height:30%;width:102%">
+                                                    <div class="col-md-6" style="max-width:50%;padding-left:10%;padding-top:10px">
+                                                        <h2 id="venuetype1">Select Category</h2>
+
+                                                    </div>
+                                                    <div class="col-md-6" style="max-width:50%;padding-left:10%;padding-top:10px">
+                                                        <button type="button" class="btn" id="pkgsubcat">Plan Calendar</button>
+                                                        <input type="checkbox" class="icheck" /><span style="color:black;">InActive</span>
+                                                    </div>
                                                 </div>
+                                                @*<div align="center">
+                                                        <div style="float:left"><input type="text" style="width:100%" placeholder="YOUR HALL NAME" /></div>
+                                                        <div style="float:right;margin-top:17px"><input type="checkbox" class="icheck" /><span style="color:black">InActive</span></div>
+                                                    </div>*@
                                             }
                                         </div>
                                         <div class="col-md-2-8">
@@ -376,7 +406,7 @@
                                         </div>
                                         <h5 class="h5-1-1" style="padding-top:0px">
                                             PACKAGES
-                                            
+
                                             <button type="button" class="btn btn-danger" style="margin-top: -40px;margin-left: 520px;">Add Package</button>
                                         </h5>
                                         <div class="col-md-2-9">
@@ -386,21 +416,70 @@
                                                 </div>
                                                 <div class="col-md-6" style="background-color:#543791;padding-left:20px;padding-top: 5px;max-width: 50%;">
                                                     <div class="row">
+                                                        <input type="hidden" id="pkgslots" value="@ViewBag.package.timeslot" />
                                                         <div class="col-md-4" style="padding:0px">
                                                             <input type="radio" name="checkradio" id="Veg" value="Veg" checked /><label for="Veg">Veg</label>
                                                             <br />
                                                             <input type="radio" name="checkradio" id="NonVeg" value="NonVeg" style="margin-left:0px" /><label for="NonVeg">Non-Veg</label>
                                                         </div>
-                                                        <div class="col-md-4" style="padding:0px">
-                                                            <input type="checkbox" name="slot" id="breakfast" value="Break Fast" checked /><label for="breakfast">Break Fast</label>
-                                                            <br />
-                                                            <input type="checkbox" name="slot" id="lunch" value="Lunch" style="margin-left:0px" /><label for="lunch">Lunch</label>
-                                                        </div>
-                                                        <div class="col-md-4" style="padding:0px">
-                                                            <input type="checkbox" name="slot" id="dinner" value="Dinner" checked /><label for="dinner">Dinner</label>
-                                                            <br />
-                                                            <input type="checkbox" name="slot" id="hightea" value="hightea" style="margin-left:0px" /><label for="hightea">High Tea</label>
-                                                        </div>
+                                                        @{
+                                                            if (ViewBag.package.timeslot != "" && ViewBag.package.timeslot != null)
+                                                            {
+                                                                <div class="col-md-4" style="padding:0px">
+                                                                    @if (ViewBag.package.timeslot.Contains("Break Fast"))
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="breakfast" value="Break Fast" checked /><label for="breakfast">Break Fast</label>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="breakfast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                                                    }
+                                                                    <br />
+                                                                    @if (ViewBag.package.timeslot.Contains("Lunch"))
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="lunch" value="Lunch" checked style="margin-left:0px" /><label for="lunch">Lunch</label>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="lunch" value="Lunch" style="margin-left:0px" /><label for="lunch">Lunch</label>
+                                                                    }
+                                                                </div>
+
+                                                                <div class="col-md-4" style="padding:0px">
+                                                                    @if (ViewBag.package.timeslot.Contains("Dinner"))
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" checked /><label for="dinner">Dinner</label>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" /><label for="dinner">Dinner</label>
+                                                                    }
+                                                                    <br />
+                                                                    @if (ViewBag.package.timeslot.Contains("High Tea"))
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" checked style="margin-left:0px" /><label for="hightea">High Tea</label>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" style="margin-left:0px" /><label for="hightea">High Tea</label>
+                                                                    }
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="col-md-4" style="padding:0px">
+                                                                    <input type="checkbox" class="slotcheck" name="slot" id="breakfast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                                                    <br />
+                                                                    <input type="checkbox" class="slotcheck" name="slot" id="lunch" value="Lunch" style="margin-left:0px" /><label for="lunch">Lunch</label>
+                                                                </div>
+
+                                                                <div class="col-md-4" style="padding:0px">
+                                                                    <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" /><label for="dinner">Dinner</label>
+                                                                    <br />
+                                                                    <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" style="margin-left:0px" /><label for="hightea">High Tea</label>
+                                                                </div>
+                                                            }
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -736,7 +815,7 @@
                                             }
                                         </div>
                                     </div>
-                                }
+                                                            }
 
                             </div>
                         </div>
@@ -832,39 +911,39 @@
                                                         <div style="color:black;font-weight:700" align="center">Available Packages</div>
                                                     </div>
                                                     <div>
-                                                       
-                                                            @foreach (var item1 in @ViewBag.availablepackages)
+
+                                                        @foreach (var item1 in @ViewBag.availablepackages)
+                                                        {
+                                                            if (item1.VendorSubId == item.Id)
                                                             {
-                                                                if (item1.VendorSubId == item.Id)
-                                                                {
-                                                                    <table class="priceslist">
-                                                                        <tr class="priceslist">
-                                                                            <td align="center">@item1.PackageName</td>
-                                                                        </tr>
-                                                                        <tr class="priceslist">
-                                                                            <td align="center">
-                                                                                <span>
-                                                                                    ₹
-                                                                                    @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                                                    {<b style="font-size:30px">@item1.PackagePrice</b>}
+                                                                <table class="priceslist">
+                                                                    <tr class="priceslist">
+                                                                        <td align="center">@item1.PackageName</td>
+                                                                    </tr>
+                                                                    <tr class="priceslist">
+                                                                        <td align="center">
+                                                                            <span>
+                                                                                ₹
+                                                                                @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                                                {<b style="font-size:30px">@item1.PackagePrice</b>}
                                                                                 else
                                                                                 {
                                                                                     <b style="font-size:30px">@item1.price1</b>
                                                                                 }
-                                                                                    / Person
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr class="priceslist">
-                                                                            <td align="center"><input type="button" onclick="booknow(@item1.PackageID)" value="book now" /></td>
-                                                                        </tr>
-                                                                        <tr class="priceslist">
-                                                                            <td align="center">Seating Arrangement</td>
-                                                                        </tr>
-                                                                    </table>
-                                                                }
+                                                                                / Person
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="priceslist">
+                                                                        <td align="center"><input type="button" onclick="booknow(@item1.PackageID)" value="book now" /></td>
+                                                                    </tr>
+                                                                    <tr class="priceslist">
+                                                                        <td align="center">Seating Arrangement</td>
+                                                                    </tr>
+                                                                </table>
                                                             }
-                                                       
+                                                        }
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -907,16 +986,16 @@
                                                             foreach (var orders in ViewBag.todaysorder)
                                                             {
 
-                                                        <tr>
-                                                            <td>@(++number1)</td>
-                                                            <td>@orders.OrderId</td>
-                                                            <td>@orders.EventType</td>
-                                                            <td>@orders.BookedDate</td>
-                                                            <td>Package Name</td>
-                                                            <td>Pax Count</td>
-                                                            <td>Balance Due</td>
-                                                            <td>@orders.Status</td>
-                                                        </tr>
+                                                                <tr>
+                                                                    <td>@(++number1)</td>
+                                                                    <td>@orders.OrderId</td>
+                                                                    <td>@orders.EventType</td>
+                                                                    <td>@orders.BookedDate</td>
+                                                                    <td>Package Name</td>
+                                                                    <td>Pax Count</td>
+                                                                    <td>Balance Due</td>
+                                                                    <td>@orders.Status</td>
+                                                                </tr>
 
                                                             } }
                                                     </tbody>
@@ -954,15 +1033,15 @@
                                                             foreach (var orders in ViewBag.tommaroworder)
                                                             {
 
-                                                        <tr>
-                                                            <td>@(++number2)</td>
-                                                            <td>@orders.OrderId</td>
-                                                            <td>@orders.EventType</td>
-                                                            <td>@orders.BookedDate</td>
-                                                            <td>Package Name</td>
-                                                            <td>Pax Count</td>
-                                                            <td>Balance Due</td>
-                                                            <td>@orders.Status</td>
+                                                                <tr>
+                                                                    <td>@(++number2)</td>
+                                                                    <td>@orders.OrderId</td>
+                                                                    <td>@orders.EventType</td>
+                                                                    <td>@orders.BookedDate</td>
+                                                                    <td>Package Name</td>
+                                                                    <td>Pax Count</td>
+                                                                    <td>Balance Due</td>
+                                                                    <td>@orders.Status</td>
 
                                                                 </tr>
                                                             } }
@@ -1000,16 +1079,16 @@
                                                             var number3 = 0;
                                                             foreach (var orders in ViewBag.tommaroworder)
                                                             {
-                                                        <tr>
-                                                            <td>@(++number3)</td>
-                                                            <td>@orders.OrderId</td>
-                                                            <td>@orders.EventType</td>
-                                                            <td>@orders.BookedDate</td>
-                                                            <td>Package Name</td>
-                                                            <td>Pax Count</td>
-                                                            <td>Balance Due</td>
-                                                            <td>@orders.Status</td>
-                                                        </tr>
+                                                                <tr>
+                                                                    <td>@(++number3)</td>
+                                                                    <td>@orders.OrderId</td>
+                                                                    <td>@orders.EventType</td>
+                                                                    <td>@orders.BookedDate</td>
+                                                                    <td>Package Name</td>
+                                                                    <td>Pax Count</td>
+                                                                    <td>Balance Due</td>
+                                                                    <td>@orders.Status</td>
+                                                                </tr>
                                                             }
                                                         }
                                                     </tbody>
@@ -1136,7 +1215,7 @@
 
                                 </div>
                             </div>
-                        }
+                                                }
                         <!-- /container -->
                     </div>
                 </div>
@@ -1338,7 +1417,8 @@
             var normaldays = $('#ndays').val();
             var holidays = $('#holidays').val();
             var choicedays = $('#cdays').val();
-            //var pkgdesc = $('#pkgdesc').val();
+            var timeslot = $('#pkgslots').val();
+            var pkgdesc = $('#pkgdesc').val();
             //alert(pkgdesc);
             if (packagename == '') {
                 $(packagename).focus();
@@ -1364,6 +1444,7 @@
                 alert("Enter Choice Days Price");
             }
             else {
+                debugger;
                 var package = {
                     PackageName: packagename,
                     Category: pkgcategory,
@@ -1376,6 +1457,7 @@
                     VendorSubId: '@ViewBag.vsid',
                     VendorType: '@ViewBag.Vendor.ServicType',
                     VendorSubType: '@ViewBag.subtype',
+                    timeslot:timeslot
                 }
                 $.ajax({
                     url: '/VDashboard/AddPackage',
@@ -1384,10 +1466,14 @@
                     data: package,
                     success: function (data) {
                         alert(data);
+                        for (var i = 0; i < pkgheadings.split(',').length; i++) {
+                            var selecteditems = pkgheadings.split(',')[i].toLowerCase();
+                            if (selecteditems != null)
+                                window.localStorage.removeItem(selecteditems);
+                        }
                     }
                 });
             }
-
         });
 
         function Addpkgitems() {
@@ -1670,7 +1756,7 @@
 
         $(".vendorcalendar").on("change", function () {
             var selected = $(this).val();
-         //   var venusid = $('#venusid').val(); var venusmasterid = $('#venusmasterid').val();
+            //   var venusid = $('#venusid').val(); var venusmasterid = $('#venusmasterid').val();
             var venusid = $(this).parent().find('input#venusid').val(); var venusmasterid = $(this).parent().find('input#venusmasterid').val();
 
             alert(selected); alert(venusid); alert(venusmasterid); alert(venusid);
@@ -1747,8 +1833,10 @@
                     contentType: false,
                     data: data,
                     success: function (response) {
-                        var url = '/vdashboard/profilepic';
-                        $('#profilepipccontent').empty().load(url);
+                        $('#profilepic1').removeAttr('src');
+                        $('#profilepic1').attr('src', '/ProfilePictures/' + response + '');
+                        //var url = '/vdashboard/profilepic';
+                        //$('#profilepipccontent').empty().load(url);
                     }
                 });
             }
@@ -1757,12 +1845,37 @@
     <script>
         $(document).ready(function () {
             $('#addservices').css("display", "none");
+            if ('@ViewBag.service.VenueType' != null && '@ViewBag.service.VenueType' != "") {
+                $('#selectedservice').val('@ViewBag.service.VenueType'); //Assign value to service dropdown here
+            }
         });
 
         function addservice() {
             $('#addservices').css("display", "block");
             $('#addservicesbutton').css("display", "none");
         }
+
+        $('#selectedservice').on('change', function () {
+            //function addsubcategory(val) {
+            var subid = '@Request.QueryString["vsid"]';
+            var subcategory1 = $(this).val();
+            var category = '@ViewBag.Vendor.ServicType';
+            //alert(subcategory1);
+            //alert(subid);
+            $.ajax({
+                url: '/VDashboard/AddSubService?type=' + category + '&&subcategory=' + subcategory1 + '&&subid=' + subid,
+                type: 'post',
+                contentType: 'application-json',
+                success: function (data) {
+                    alert(data);
+                    window.location.reload();
+                },
+                error: function (er) {
+                    alert("System Encountered Internal Error!!! Try Again After Some Time");
+                }
+            });
+            //}
+        });
         function addservicenow() {
             var serviceselection = $('#serviceselection1').find(":selected").text();
             var subcategory = $('#subcategory').find(":selected").text();
