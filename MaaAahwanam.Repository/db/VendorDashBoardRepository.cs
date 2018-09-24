@@ -75,6 +75,7 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return GetUser;
         }
+       
         public ManageUser GetUserdetails(int id)
         {
             //var query = from vendor in _dbContext.ManageVendor where vendor.id == id select vendor;
