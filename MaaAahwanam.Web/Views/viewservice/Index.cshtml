@@ -10,6 +10,7 @@
     {
         user = (CustomPrincipal)HttpContext.Current.User;
     }
+    var servicescount = 0;
 }
 
 @section css{
@@ -363,9 +364,16 @@
                                         <span>What You Get</span>
                                         <br />
 
-                                        @for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
+                                        @if (item1.PackageDescription != null && item1.PackageDescription != "")
+                                        {
+                                        for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
                                         {
                                             <a class="btn-pill">@item1.PackageDescription.Split(',')[i]</a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a class="btn-pill">No Packages Available</a>
                                         }
 
                                     </div>
@@ -439,27 +447,35 @@
                             <h6>AMENITIES</h6>
                             <div class="row-2" overflow="visible">
                                 <table>
-                                    @if (ViewBag.amenities[amenitycount].Split(',').Length != 0)
+                                    
+                                    @if (ViewBag.amenities[servicescount].Split(',').Length != 0)
                                     {
+                                        var rcount = ViewBag.amenities.Count;
+                                        
+                                        
                                         var first = 0; var next = 0;
-                                        for (int i = 0; i < ViewBag.amenities[amenitycount].Split(',').Length; i++)
+                                        for (int i = 0; i < ViewBag.amenities[servicescount].Split(',').Length; i++)
                                         {
-                                            var count = ViewBag.amenities[amenitycount].Split(',').Length;
+                                            var count = ViewBag.amenities[servicescount].Split(',').Length;
                                             first = i;
                                             if (next < count)
                                             {
                                                 next = ++i;
                                             }
                                             <tr>
-                                                <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[amenitycount].Split(',')[first]).png" /></td>
-                                                <td>@(ViewBag.amenities[amenitycount].Split(',')[first].Replace('_', ' '))</td>
+                                                <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[servicescount].Split(',')[first]).png" /></td>
+                                                <td>@(ViewBag.amenities[servicescount].Split(',')[first].Replace('_', ' '))</td>
                                                 @if (next < count)
                                                 {
-                                                    <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[amenitycount].Split(',')[next]).png" /></td>
-                                                    <td>@(ViewBag.amenities[amenitycount].Split(',')[next].Replace('_', ' '))</td>
+                                                    <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[servicescount].Split(',')[next]).png" /></td>
+                                                    <td>@(ViewBag.amenities[servicescount].Split(',')[next].Replace('_', ' '))</td>
                                                 }
                                             </tr>
                                             first = next;
+                                        }
+                                        if (servicescount <= rcount)
+                                        {
+                                            servicescount = (++servicescount);
                                         }
                                     }
                                 </table>

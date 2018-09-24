@@ -10,7 +10,7 @@
     <h6 class="h6-in" onclick="location.href = '/ManageUser'">Customers/clients</h6>
     <h6 class="h6-in" onclick="location.href = '/ManageVendor'">Vendors</h6>
     <h6 class="h6-in">Resellers/partners</h6>
-    <h6 class="h6-in">Add Availability</h6>
+    @*<h6 class="h6-in">Add Availability</h6>*@
     <div role="tablist" class="add_bottom_45 accordion_2" id="allservices">
         <div class="card">
             <div class="card-header" role="tab">
@@ -25,7 +25,33 @@
                 <div class="card-body">
                     @foreach (var item in ViewBag.venues)
                     {
+                        @*if (item.VenueType == null || item.VenueType == "")
+                            {
+                                <select class="form-control" id="subcat" name="subcat" style="height:40px">
+                                    <option disabled selected>Select Sub-Category</option>
+                                    <option value="Convention Hall">Convention Hall</option>
+                                    <option value="Function Hall">Function Hall</option>
+                                    <option value="Banquet Hal">Banquet Hall</option>
+                                    <option value="Meeting Room">Meeting Room</option>
+                                    <option value="Open Lawn">Open Lawn</option>
+                                    <option value="Hotel">Hotel</option>
+                                    <option value="Resort">Resort</option>
+                                </select>
+
+                                <div>
+                                    <button type="button" onclick="addsubcategory('Venue')" class="btn btn-1 addbutton" style="padding-top:10px;border-radius:1px;width:150px;color:#fff;background-color:red; font-size:14px;">
+                                        Save Sub Category
+                                    </button>
+                                </div>
+                            }*@
+                    if (item.VenueType == "" || item.VenueType == null)
+                    {
+                        <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">Venue</h6>
+                    }
+                    else
+                    {
                         <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.name - @item.VenueType</h6>
+                        }
                     }
                     @foreach (var item in ViewBag.catering)
                     {

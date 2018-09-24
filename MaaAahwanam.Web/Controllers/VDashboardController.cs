@@ -51,8 +51,7 @@ namespace MaaAahwanam.Web.Controllers
                 List<VendorVenue> vendor = venues;
                 List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
                 List<VendorImage> vimg = new List<VendorImage>();
-                var policy = vendorMasterService.Getpolicy(vid, vsid);
-                ViewBag.policy = policy;
+                
                 //foreach (var item in venues)
                 //{
                 //    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorId == long.Parse(item.Id.ToString())).ToList());
@@ -72,22 +71,24 @@ namespace MaaAahwanam.Web.Controllers
                 if (c != null) ViewBag.enable = c;
                 ViewBag.vsid = vsid;
                 ViewBag.vendorid = vid;
-                if (vsid != null && vsid != "") { Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
-                    allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid)); }
+                if (vsid != null && vsid != "")
+                {
+                    Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
+                    allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
+                    var pkgsks = vendorVenueSignUpService.Getpackages((long.Parse(vid)), long.Parse(vsid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
+                    if (pkgsks != null) ViewBag.package = pkgsks;
+                    else ViewBag.package = new Package();
+                    var policy = vendorMasterService.Getpolicy(vid, vsid);
+                    ViewBag.policy = policy;
+                }
+                else
+                    ViewBag.package = new Package();
                 ViewBag.ksimages = allimages;
                 ViewBag.images = allimages.Take(4).ToList();
                 ViewBag.imagescount = (allimages.Count < 4) ? 4 - allimages.Count : 0;
                 ViewBag.sliderimages = allimages.Where(m => m.ImageType == "Slider").Take(4).ToList();
                 ViewBag.slidercount = (ViewBag.sliderimages.Count < 4) ? 4 - ViewBag.sliderimages.Count : 0;
                 ViewBag.subtype = venues.FirstOrDefault().VenueType;
-                if (vsid != null && vsid != "")
-                {
-                    var pkgsks = vendorVenueSignUpService.Getpackages((long.Parse(vid)), long.Parse(vsid)).FirstOrDefault();
-                    if (pkgsks != null) ViewBag.package = pkgsks;
-                    else ViewBag.package = new Package();
-                } //Remove FirstOrDefault() after finalising packages design
-                else
-                    ViewBag.package = new Package();
             }
             else
             {
@@ -185,7 +186,7 @@ namespace MaaAahwanam.Web.Controllers
             VendorVenueService vendorVenueService = new VendorVenueService();
             if (vsid == null || vsid == "" || vsid == "undefined")
             {
-                ViewBag.ks = "ks"; ViewBag.service = new List<VendorVenue>(); 
+                ViewBag.ks = "ks"; ViewBag.service = new VendorVenue(); 
             }
             else
             {
@@ -413,6 +414,20 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult AddSubService(string type, string subcategory,string subid)
+        {
+            var msg = "";
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+            long count = updateservice(type, subcategory, long.Parse(vid), long.Parse(subid));//addnewservice1(type, subcategory, long.Parse(vid));
+            if (count > 0)
+                msg = "Service Updated Successfully";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
         public long addnewservice1(string category, string subcategory, long id)
         {
             long count = 0;
@@ -471,6 +486,65 @@ namespace MaaAahwanam.Web.Controllers
             return count;
         }
 
+        public long updateservice(string category, string subcategory, long id, long vid)
+        {
+            Vendormaster vendormaster = new Vendormaster();
+            long count = 0;
+            if (category == "Venue")
+            {
+                VendorVenue vendorVenue = new VendorVenue();
+                vendorVenue.VendorMasterId = id;
+                vendorVenue.VenueType = subcategory;
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, id, vid);
+                if (vendorVenue.Id != 0) count = vendorVenue.Id;
+            }
+            else if (category == "Catering")
+            {
+                VendorsCatering vendorsCatering = new VendorsCatering();
+                vendorsCatering.VendorMasterId = id;
+                vendorsCatering.CuisineType = subcategory;
+                vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, id, vid);
+                if (vendorsCatering.Id != 0) count = vendorsCatering.Id;
+            }
+            else if (category == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                vendorsPhotography.VendorMasterId = id;
+                vendorsPhotography.PhotographyType = subcategory;
+                vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, id, vid);
+                if (vendorsPhotography.Id != 0) count = vendorsPhotography.Id;
+            }
+            else if (category == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                vendorsDecorator.VendorMasterId = id;
+                vendorsDecorator.DecorationType = subcategory;
+                vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, id, vid);
+                if (vendorsDecorator.Id != 0) count = vendorsDecorator.Id;
+            }
+            //if (category == "EventManagement")
+            //{
+            //    VendorsEventOrganiser vendorsEventOrganiser = new VendorsEventOrganiser();
+            //    vendorsEventOrganiser.VendorMasterId = id;
+            //    vendorsEventOrganiser = vendorVenueSignUpService.AddVendorEventOrganiser(vendorsEventOrganiser);
+            //    if (vendorsEventOrganiser.Id != 0) count = vendorsEventOrganiser.Id;
+            //}
+            else if (category == "Other")
+            {
+                VendorsOther vendorsOther = new VendorsOther();
+                vendorsOther.VendorMasterId = id;
+                vendorsOther.MinOrder = "0";
+                vendorsOther.MaxOrder = "0";
+                vendorsOther.Status = "InActive";
+                vendorsOther.UpdatedBy = 2;
+                vendorsOther.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther.type = subcategory;
+                vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, id, vid);
+                if (vendorsOther.Id != 0) count = vendorsOther.Id;
+            }
+            return count;
+        }
+
         [HttpPost]
         public JsonResult UploadImages(HttpPostedFileBase helpSectionImages, string vsid)
         {
@@ -489,13 +563,16 @@ namespace MaaAahwanam.Web.Controllers
                 int imageno = 0;
                 int imagecount = 8;
                 var list = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
-                string lastimage = list.OrderByDescending(m => m.ImageId).FirstOrDefault().ImageName;
+                
                 if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
                 {
                     //getting max imageno
-                    var splitimage = lastimage.Split('_', '.');
-                    imageno = int.Parse(splitimage[3]);
-
+                    if (list.Count != 0)
+                    {
+                        string lastimage = list.OrderByDescending(m => m.ImageId).FirstOrDefault().ImageName;
+                        var splitimage = lastimage.Split('_', '.');
+                        imageno = int.Parse(splitimage[3]);
+                    }
                     //Uploading images in db & folder
                     for (int i = 0; i < Request.Files.Count; i++)
                     {
@@ -569,6 +646,7 @@ namespace MaaAahwanam.Web.Controllers
             //Add Package Code
             package.Status = "Active";
             package.UpdatedDate = updateddate;
+            package.timeslot = package.timeslot.Trim(',');
             package = vendorVenueSignUpService.addpack(package);
             string msg=string.Empty;
             if (package.PackageID > 0) msg = "Package Added SuccessFully!!!";
