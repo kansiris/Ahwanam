@@ -20,7 +20,6 @@ namespace MaaAahwanam.Web.Controllers
         // GET: ManageUser
         public ActionResult Index(string VendorId)
         {
-           
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string uid = user.UserId.ToString();
                 string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
@@ -32,13 +31,19 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(ManageUser mnguser)
         {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string uid = user.UserId.ToString();
-                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
-                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
-                mnguser.vendorId = vendorMaster.Id.ToString();
-                mnguser = mnguserservice.AddUser(mnguser);
-            return RedirectToAction("Index", "ManageUser");
+            mnguser.registereddate = DateTime.Now;
+            mnguser.updateddate = DateTime.Now;
+            mnguser = mnguserservice.AddUser(mnguser);
+            return Content("<script language='javascript' type='text/javascript'>alert('Added New User');location.href='/ManageUser'</script>");
         }
+        public JsonResult checkemail(string email, string id)
+        {
+            int query = mnguserservice.checkuseremail(email, id);
+            if (query == 0)
+                return Json("valid email");
+            else
+                return Json("already email is added");
+        }
+     
     }
 }
