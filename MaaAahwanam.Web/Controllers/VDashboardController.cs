@@ -24,6 +24,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         viewservicesservice viewservicesss = new viewservicesservice();
         ProductInfoService productInfoService = new ProductInfoService();
+        VendorDatesService vendorDatesService = new VendorDatesService();
 
 
         const string imagepath = @"/vendorimages/";
@@ -58,10 +59,11 @@ namespace MaaAahwanam.Web.Controllers
                 if (date != null)
                 {
 
-                    //ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => (m.VendorMasterId == long.Parse(vid) && m.VendorMasterId == long.Parse(vid))).FirstOrDefault();
+                   var  data = vendorDatesService.GetVendorsByService().Where(m => m.ServiceType == "Venue").ToList();
+                   var package1 = seperatedates(data, date, "Venue");
 
-                     }
-               package = viewservicesss.getvendorpkgs(vid).ToList();
+                }
+                package = viewservicesss.getvendorpkgs(vid).ToList();
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
                 ViewBag.venues = venues;
