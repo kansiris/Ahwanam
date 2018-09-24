@@ -23,11 +23,13 @@ namespace MaaAahwanam.Web.Controllers
         VendorImageService vendorImageService = new VendorImageService();
         VendorProductsService vendorProductsService = new VendorProductsService();
         viewservicesservice viewservicesss = new viewservicesservice();
+        ProductInfoService productInfoService = new ProductInfoService();
+
 
         const string imagepath = @"/vendorimages/";
 
         // GET: VDashboard
-        public ActionResult Index(string c, string vsid)
+        public ActionResult Index(string c, string vsid,string loc,string eventtype,string count,string date)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -92,9 +94,49 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "NUserRegistration");
+                return RedirectToAction("Index", "home");
             }
             return View();
+        }
+
+
+        public List<string[]> seperatedates(List<filtervendordates_Result> data, string date, string type)
+        {
+            List<string[]> betweendates = new List<string[]>();
+            string dates = "";
+            //var Gettotaldates = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
+            int recordcount = data.Count();
+            foreach (var item in data)
+            {
+                var startdate = Convert.ToDateTime(item.StartDate);
+                var enddate = Convert.ToDateTime(item.EndDate);
+                if (startdate != enddate)
+                {
+                    string orderdates = productInfoService.disabledate(item.masterid, item.subid, type);
+                    for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
+                    {
+                        dates = (dates != "") ? dates + "," + dt.ToString("dd-MM-yyyy") : dt.ToString("dd-MM-yyyy");
+                    }
+                    if (dates.Split(',').Contains(date))
+                    {
+                        if (orderdates != "")
+                            dates = String.Join(",", dates.Split(',').Where(i => !orderdates.Split(',').Any(e => i.Contains(e))));
+                        string[] da = { item.masterid.ToString(), item.subid.ToString(), dates, item.BusinessName, item.ServiceType, item.VenueType, item.Type };
+                        betweendates.Add(da);
+                    }
+                    dates = "";
+                }
+                else
+                {
+                    if (dates.Contains(date))
+                    {
+                        string[] da = { item.masterid.ToString(), item.subid.ToString(), startdate.ToString("dd-MM-yyyy"), item.BusinessName, item.ServiceType, item.VenueType, item.Type };
+                        betweendates.Add(da);
+                    }
+                    dates = "";
+                }
+            }
+            return betweendates;
         }
 
         public JsonResult UploadProfilePic(HttpPostedFileBase helpSectionImages, string email)
@@ -226,8 +268,8 @@ namespace MaaAahwanam.Web.Controllers
                 vendormaster.Landmark = vendorMaster.Landmark;
                 vendormaster.City = vendorMaster.City; vendormaster.State = vendorMaster.State; vendormaster.ZipCode = vendorMaster.ZipCode;
                 string[] selectedamenitieslist = selectedamenities.Split(',');
-                if (vendormaster.ServicType == "Venue")
-                {
+                //if (vendormaster.ServicType == "Venue")
+                //{
                     if (selectedamenitieslist.Contains("CockTails")) vendorVenue.CockTails = "Yes"; else vendorVenue.CockTails = "No";
                     if (selectedamenitieslist.Contains("Rooms")) vendorVenue.Rooms = "Yes"; else vendorVenue.Rooms = "No";
                     if (selectedamenitieslist.Contains("Wifi")) vendorVenue.Wifi = "Yes"; else vendorVenue.Wifi = "No";
@@ -278,7 +320,7 @@ namespace MaaAahwanam.Web.Controllers
 
                     vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(vid), long.Parse(vsid));
                     //if (vendorVenue.Id != 0) count = vendorVenue.Id;
-                }
+                //}
                 return Json("Amenities Updated");
             }
             else if (command == "three")

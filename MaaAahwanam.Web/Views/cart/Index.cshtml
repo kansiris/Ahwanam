@@ -393,25 +393,28 @@
             var searchedcontent = 'Guests:' + guests + ',Location:' + location + ',Event Type:' + eventtype + ',Selected Date:' + date + '';
             //alert(searchedcontent);
             var selcartid = $('.selectedcart').val();
-            $.ajax({
-                url: '/cart/email',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
-                type: 'POST',
-                data: JSON.stringify({ selcartid: selcartid, searchedcontent: searchedcontent }),
-                //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == "success" || data == "unique") {
-                        alertify.alert("We will contact you soon");
+            if (selcartid == undefined) { alert('select the cart item') } else {
+                $.ajax({
+                    url: '/cart/email',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                    type: 'POST',
+                    data: JSON.stringify({ selcartid: selcartid, searchedcontent: searchedcontent }),
+                    //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data == "success" || data == "unique") {
+                            alertify.alert("We will contact you soon");
+                            window.location = "/home/index";
+                        }
+                        else if (data == "Failed") {
+                            alertify.alert("Something Went Wrong!!! Try Again Later");
+                        }
+                        else {
+                            alertify.alertmsg("error");
+                        }
                     }
-                    else if (data == "Failed") {
-                        alertify.alert("Something Went Wrong!!! Try Again Later");
-                    }
-                    else {
-                        alertify.alertmsg("error");
-                    }
-                }
-            });
+                });
+            }
         }
 
         function DeletecartItem(cartId) {

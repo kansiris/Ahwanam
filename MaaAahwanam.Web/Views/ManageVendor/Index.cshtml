@@ -61,7 +61,7 @@
             font-size: 16px;
         }*/
 
-        input[type=text] {
+        input[type=text], input[type="email"], input[type="tel"] {
             width: 101%;
             padding: 12px 26px 0px 10px;
             margin: 15px 5px 15px 0px;
@@ -73,6 +73,12 @@
         p.caption {
             margin: 0 30px 0px 0;
             background-color: yellow;
+        }
+        table.dataTable thead th, table.dataTable tfoot th {
+            white-space: nowrap;
+        }
+        table.dataTable, table.dataTable th, table.dataTable td {
+            white-space: nowrap;
         }
 
         .caption {
@@ -100,7 +106,6 @@
             height: 60px;
             width: 60px;
         }
-
 
 
         .sliderdiv {
@@ -188,6 +193,7 @@
 @using MaaAahwanam.Web.Custom
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
+    
     <body>
         <div id="page">
             <header class="header menu_fixed">
@@ -240,41 +246,62 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    
-                                    <table id="allorders" class="display" style="width:100%;padding-bottom:50px">
-                                        <thead>
-                                            <tr>
-                                                <th>Select</th>
-                                                <th>S.No</th>
-                                                <th>Vendor ID</th>
-                                                <th>Business Name</th>
-                                                <th>First Name </th>
-                                                <th>Email</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{
-                                                var number = 0;
-                                                foreach (var vendors in ViewBag.vendorlist)
-                                                {
-                                                    <tr>
-                                                        <td><input type="checkbox" class="chcktbl" value="@vendors.id" /></td>
-                                                        <td>@(++number)</td>
-                                                        <td>@vendors.id </td>
-                                                        <td>@vendors.Businessname</td>
-                                                        <td>@vendors.firstname </td>
-                                                        <td>@vendors.email</td>
-                                                        <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
-                                                    </tr>
+                                    <div style="overflow-x: auto;">
+                                        <table id="allorders" class="display" style="width:100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>S.No</th>
+                                                    <th>Vendor ID</th>
+                                                    <th>Business Name</th>
+                                                    <th>Services</th>
+                                                    <th>First Name </th>
+                                                    <th>Last Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Flat No/Street</th>
+                                                    <th>Locality</th>
+                                                    <th>PinCode</th>
+                                                    <th>City</th>
+                                                    <th>State</th>
+                                                    <th>Country</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    var number = 0;
+                                                    foreach (var vendors in ViewBag.vendorlist)
+                                                    {
+                                                        <tr>
+                                                            <td><input type="checkbox" class="chcktbl" value="@vendors.id" /></td>
+                                                            <td>@(++number)</td>
+                                                            <td>@vendors.id </td>
+                                                            <td>@vendors.Businessname</td>
+                                                            <td>@vendors.services</td>
+                                                            <td>@vendors.firstname </td>
+                                                            <td>@vendors.lastname</td>
+                                                            <td>@vendors.email</td>
+                                                            <td>@vendors.phoneno</td>
+                                                            <td>@vendors.adress1</td>
+                                                            <td>@vendors.adress2</td>
+                                                            <td>@vendors.pin_code</td>
+                                                            <td>@vendors.city</td>
+                                                            <td>@vendors.state</td>
+                                                            <td>@vendors.country</td>
+                                                            <td>@vendors.Status</td>
+                                                            <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
+                                                        </tr>
+
+                                                    }
 
                                                 }
 
-                                            }
+                                            </tbody>
+                                        </table>
 
-                                        </tbody>
-                                    </table>
-
+                                    </div>
                                     <div class="row" id="saverecord" style="display:none;margin-top:50px">
                                         <div align="center"><h3 style="text-transform:uppercase">Add/Edit Vendor</h3></div>
                                         <form method="POST">
@@ -284,7 +311,7 @@
                                                     <input type="hidden" id="id" name="id" value="" />
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" name="Businessname" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="Businessname" name="Businessname" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
                                                                 <span class="input__label-content input__label-content--hoshi">Business Name</span>
                                                             </label>
@@ -292,7 +319,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="services" name="services" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="services" name="services" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="services">
                                                                 <span class="input__label-content input__label-content--hoshi">Services</span>
                                                             </label>
@@ -300,7 +327,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="firstname" name="firstname" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="firstname" name="firstname"  value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstname">
                                                                 <span class="input__label-content input__label-content--hoshi">First Name</span>
                                                             </label>
@@ -310,7 +337,7 @@
                                                 <div class="row">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="lastname" name="lastname" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="lastname" name="lastname" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="lastname">
                                                                 <span class="input__label-content input__label-content--hoshi">Last Name</span>
                                                             </label>
@@ -318,7 +345,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="email" name="email" value="" onchange="checkEmail(this.value)" />
+                                                            <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
                                                                 <span class="input__label-content input__label-content--hoshi">Email</span>
                                                             </label>
@@ -326,7 +353,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+" title="Enter Numbers and 10 digits only" value="" maxlength="10" pattern="[0-9]{10}" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
                                                                 <span class="input__label-content input__label-content--hoshi">Phone Number</span>
                                                             </label>
@@ -336,24 +363,24 @@
                                                 <div class="row">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress1">
-                                                                <span class="input__label-content input__label-content--hoshi">Permanent Address</span>
+                                                                <span class="input__label-content input__label-content--hoshi"> Flat No/Street</span>
                                                             </label>
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress2">
-                                                                <span class="input__label-content input__label-content--hoshi">Present Address</span>
+                                                                <span class="input__label-content input__label-content--hoshi">Locality</span>
                                                             </label>
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="pincode" name="pincode" value="" />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
+                                                            <input class="input__field input__field--hoshi" type="text" id="pin_code"  minlength="6+" title="Enter Numbers and 6 digits only" maxlength="6" name="pin_code" value=""  pattern="[0-9]+" Title="Enter number only and enter 6 digits only" required />
+                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pin_code">
                                                                 <span class="input__label-content input__label-content--hoshi">PinCode</span>
                                                             </label>
                                                         </span>
@@ -362,7 +389,7 @@
                                                 <div class="row">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="city" name="city" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="city" name="city"  value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="city">
                                                                 <span class="input__label-content input__label-content--hoshi">City</span>
                                                             </label>
@@ -370,7 +397,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="state" name="state" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="state" name="state"  value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="state">
                                                                 <span class="input__label-content input__label-content--hoshi">State</span>
                                                             </label>
@@ -378,20 +405,34 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="country" name="country" value="" />
+                                                            <input class="input__field input__field--hoshi" type="text" id="country" name="country" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="country">
                                                                 <span class="input__label-content input__label-content--hoshi">Country</span>
                                                             </label>
                                                         </span>
                                                     </div>
+                                                    <div>
+                                                        <label class="d-block mb-0" style="font-weight:bold">Status</label>
+                                                        <fieldset class="form-check" style="display:inline">
+                                                            <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" checked="checked" required/>
+                                                            <label class="form-check-label" for="Status1">Active</label>
+                                                        </fieldset>
+                                                        <fieldset class="form-check" style="display:inline">
+                                                            <input type="radio" class="chckinactive" id="Status2" name="Status" value="InActive" required/>
+                                                            <label class="form-check-label" for="Status2">InActive</label>
+                                                        </fieldset>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div align="center">
-                                                <button id="SaveVendor" type="submit" class="btn btn-success" style="display:block">Save</button>
-                                                <button id="EditVendor" type="button" class="btn btn-success" style="display:none">Update</button>
-                                                <button id="CancelVendor" type="button" class="btn btn-danger">Cancel</button>
+                                                <div style="position: absolute; left: 485px;">
+                                                    <button id="SaveVendor" type="submit" class="btn btn-success" style="display:block">Save</button>
+                                                    <button id="EditVendor" type="button" class="btn btn-success" style="display:none">Update</button>
+                                                </div>
+                                                <div style="position:absolute; display: inline;">
+                                                    <button id="CancelVendor" type="button" class="btn btn-danger">Cancel</button>
+                                                </div>
                                             </div>
-                                            @*<button id="CancelVendor" class="btn btn-danger">Cancel</button>*@
                                         </form>
                                     </div>
                                 </div>
@@ -448,13 +489,30 @@
             }
             $('#btnadd').click(function () {
                 $('#saverecord').css('display', 'block');
+                $('#Businessname').val('');
+                $('#firstname').val('');
+                $('#lastname').val('');
+                $('#email').val('');
+                $('#phoneno').val('');
+                $('#adress1').val('');
+                $('#adress2').val('');
+                $('#city').val('');
+                $('#state').val('');
+                $('#country').val('');
+                $('#services').val('');
+                $('#pin_code').val('');
+                $('#Status').val('');
+                $('#SaveVendor').css('display', 'block');
+                $('#EditVendor').css('display', 'none');
+
             });
             $('#CancelVendor').click(function () {
                 $('#saverecord').css('display', 'none');
             });
+             
+          
 
-            
-                $(document).on('click', '.chcktbl', function () { 
+                $(document).on('click', '.chcktbl', function () {
                     if ($(this).is(':checked')) {
                         $(this).closest('tr').find('#btnBook').removeAttr('disabled');
                         $('#saverecord').css('display', 'block');
@@ -467,6 +525,7 @@
                             url: '/ManageVendor/GetVendorDetails?id=' + radataid,
                             type: 'POST',
                             contentType: 'application/json',
+
                             success: function (result) {
                                 //debugger;
                                 //alert('success');
@@ -481,7 +540,8 @@
                                 $("#state").val(result.state);
                                 $("#country").val(result.country);
                                 $("#services").val(result.services);
-                                $('#pincode').val(result.pincode);
+                                $("#pin_code").val(result.pin_code);
+                                $("#Status").val(result.Status);
                             },
                             error: function (result) {
                                 alert("failed");
@@ -493,8 +553,10 @@
                         $('#saverecord').css('display', 'none');
                     }
                 });
-       
-            $('#EditVendor').click(function () {
+   
+
+                $('#EditVendor').click(function () {
+                    var status="null"
                 var Id = $('#id').val();
                 var managevendor = {
                     Businessname: $('#Businessname').val(),
@@ -508,9 +570,11 @@
                     state: $('#state').val(),
                     country: $('#country').val(),
                     phoneno: $('#phoneno').val(),
-                    pincode: $('#pincode').val(),
+                    pin_code: $('#pin_code').val(),
+                    Status: $("input[name='Status']:checked").val()            
 
                 }
+                
                 $.ajax({
                     url: '/ManageVendor/UpdateVendorDetails?id=' + Id,
                     type: 'POST',
@@ -518,6 +582,7 @@
                     contentType: 'application/json',
                     success: function (data) {
                         alert(data);
+                        window.location.href = "@Url.Action("Index", "ManageVendor")";
                     }
                 });
             });
@@ -525,7 +590,7 @@
                 alert(val);
             }
         </script>
-    </body>
+  </body>
  }
   else
       {

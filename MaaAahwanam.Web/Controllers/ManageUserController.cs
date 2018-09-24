@@ -20,34 +20,43 @@ namespace MaaAahwanam.Web.Controllers
         // GET: ManageUser
         public ActionResult Index(string VendorId)
         {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string uid = user.UserId.ToString();
                 string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
                 vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
                 VendorId = vendorMaster.Id.ToString();
+                ViewBag.masterid = VendorId;
                 ViewBag.Userlist = mnguserservice.getuser(VendorId);
-
-            }
-            return View();
+                return View();
         }
         [HttpPost]
-        public ActionResult AddCustomerDetails(ManageUser mnguser)
+        public ActionResult Index(ManageUser mnguser)
         {
-
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string uid = user.UserId.ToString();
-                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
-                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
-                mnguser.vendorId = vendorMaster.Id.ToString();
-                mnguser = mnguserservice.AddUser(mnguser);
-                
-
-            }
-            return RedirectToAction("Index", "ManageUser");
+            mnguser.registereddate = DateTime.Now;
+            mnguser.updateddate = DateTime.Now;
+            mnguser = mnguserservice.AddUser(mnguser);
+            return Content("<script language='javascript' type='text/javascript'>alert('Added New User');location.href='/ManageUser'</script>");
+        }
+        public JsonResult checkemail(string email, string id)
+        {
+            int query = mnguserservice.checkuseremail(email, id);
+            if (query == 0)
+                return Json("valid email");
+            else
+                return Json("already email is added");
+        }
+        [HttpPost]
+        public JsonResult GetUserDetails(string id)
+        {
+            var data = mnguserservice.getuserbyid(int.Parse(id));
+            return Json(data);
+        }
+        [HttpPost]
+        public JsonResult UpdateUserDetails(ManageUser mnguser, string id)
+        {
+            mnguser.updateddate = DateTime.Now;
+            mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
+            return Json("Sucess", JsonRequestBehavior.AllowGet);
         }
     }
 }

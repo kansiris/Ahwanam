@@ -24,6 +24,8 @@ namespace MaaAahwanam.Service
         }
         public int checkvendoremail(string email, string id)
         {
+            //int vendorsubid = int.Parse(id);
+           // return mngvendorrepository.checkvendoremail(email,id);
             return mngvendorrepository.checkvendoremail(email, id);
         }
         public ManageVendor getvendorbyid(int id)
@@ -45,6 +47,20 @@ namespace MaaAahwanam.Service
             List<ManageUser> mnguserlist = new List<ManageUser>();
             mnguserlist = mngvendorrepository.GetUserList(Vid);
             return mnguserlist;
+        }
+        public int checkuseremail(string email, string id)
+        {
+           
+            return mngvendorrepository.checkuseremail(email, id);
+        }
+        public ManageUser getuserbyid(int id)
+        {
+            return mngvendorrepository.GetUserdetails(id);
+        }
+
+        public ManageUser UpdateUser(ManageUser mnguser, int id)
+        {
+            return mngvendorrepository.UpdateUser(mnguser, id);
         }
     }
 }

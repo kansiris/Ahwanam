@@ -50,7 +50,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             mngvendor.updateddate = DateTime.Now;
             mngvendor = mngvendorservice.UpdateVendor(mngvendor, int.Parse(id));
-            return Json("Success",JsonRequestBehavior.AllowGet);
+            return Json("Sucess", JsonRequestBehavior.AllowGet);
         }
         public JsonResult checkemail(string email, string id)
         {

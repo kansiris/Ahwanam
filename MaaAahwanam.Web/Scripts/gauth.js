@@ -12,7 +12,7 @@ var expiresIn;
 var user;
 var loggedIn = false;
 
-function login() {
+function glogin() {
 
     var win = window.open(_url, "windowname1", 'width=800, height=600');
     var pollTimer = window.setInterval(function () {

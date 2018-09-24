@@ -562,77 +562,86 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="col-md-2-4 row" style="overflow-y: auto;padding:20px;margin-top:-878px;">
-                                            <div>
-                                                <h6 class="h4-11" style="font-weight:700">AMENITIES </h6><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('two')">SAVE</button>
-                                                <div class="box-row" style="padding-top:20px;">
-                                                    <table>
-                                                        @if (ViewBag.vsid != "" && ViewBag.vsid != null)
-                                                        {
-                                                            var first = 0; var next = 0;
-                                                            for (int i = 0; i < ViewBag.amenities.Length; i++)
-                                                            {
-                                                                var count = ViewBag.amenities.Length;
-                                                                first = i;
-                                                                if (next < count)
-                                                                {
-                                                                    next = ++i;
-                                                                }
-                                                                <tr>
-                                                                    <td style="padding-left:0px">
-                                                                        @if (ViewBag.amenities[first].Split('=')[1].Trim() == "Yes")
-                                                                        { <input type="checkbox" checked />}
-                                                                        else
-                                                                        { <input type="checkbox" />}
-                                                                    </td>
-                                                                    <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
-                                                                    <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
-                                                                    @if (next < count)
-                                                                    {
-                                                                        <td style="padding-left:0px">
-                                                                            @if (ViewBag.amenities[next].Split('=')[1].Trim() == "Yes")
-                                                                            { <input type="checkbox" checked />}
-                                                                            else
-                                                                            { <input type="checkbox" />}
-                                                                        </td>
-                                                                        <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
-                                                                        <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            var first = 0; var next = 0;
-                                                            for (int i = 0; i < ViewBag.amenities.Length; i++)
-                                                            {
-                                                                var count = ViewBag.amenities.Length;
-                                                                first = i;
-                                                                if (next < count)
-                                                                {
-                                                                    next = ++i;
-                                                                }
-                                                                <tr>
-                                                                    <td style="padding-left:0px">
-                                                                        <input type="checkbox" />
-                                                                    </td>
-                                                                    <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
-                                                                    <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
-                                                                    @if (next < count)
-                                                                    {
-                                                                        <td style="padding-left:0px">
-                                                                            <input type="checkbox" />
-                                                                        </td>
-                                                                        <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
-                                                                        <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        }
-                                                    </table>
+                                        <div class="col-md-2-4 row" id="exampleTabsLeftTwo" style="overflow-y: auto;padding:20px;margin-top:-878px;">
+                                            <form name="TestForm" action="Video1.php" method="post" onsubmit="return validateForm()">
 
+                                                <input type="hidden" id="selectedamenities" />
+
+                                                <div>
+                                                    <h6 class="h4-11" style="font-weight:700">AMENITIES </h6>
+                                                    <button type="submit" class="btn btn-block saveamenities">SAVE</button>
+
+                                                    @*<button type="button" class="btn btn-block saveamenities" onclick="updatedetails('two')">SAVE</button>*@
+                                                    <div class="box-row" style="padding-top:20px;">
+                                                        <table>
+                                                            @if (ViewBag.vsid != "" && ViewBag.vsid != null)
+                                                            {
+                                                                var first = 0; var next = 0;
+                                                                for (int i = 0; i < ViewBag.amenities.Length; i++)
+                                                                {
+                                                                    var count = ViewBag.amenities.Length;
+                                                                    first = i;
+                                                                    if (next < count)
+                                                                    {
+                                                                        next = ++i;
+                                                                    }
+                                                                    <tr>
+                                                                        <td style="padding-left:0px">
+
+                                                                            @if (ViewBag.amenities[first].Split('=')[1].Trim() == "Yes")
+                                                                            {<input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))" checked />}
+                                                                            else
+                                                                            { <input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))" />}
+                                                                        </td>
+                                                                        <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
+                                                                        <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                                                        @if (next < count)
+                                                                        {
+                                                                            <td style="padding-left:0px">
+                                                                                @if (ViewBag.amenities[next].Split('=')[1].Trim() == "Yes")
+                                                                                {<input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))" checked />}
+                                                                                else
+                                                                                { <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))" />}
+                                                                            </td>
+                                                                            <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
+                                                                            <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                var first = 0; var next = 0;
+                                                                for (int i = 0; i < ViewBag.amenities.Length; i++)
+                                                                {
+                                                                    var count = ViewBag.amenities.Length;
+                                                                    first = i;
+                                                                    if (next < count)
+                                                                    {
+                                                                        next = ++i;
+                                                                    }
+                                                                    <tr>
+                                                                        <td style="padding-left:0px">
+                                                                            <input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))" />
+                                                                        </td>
+                                                                        <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
+                                                                        <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                                                        @if (next < count)
+                                                                        {
+                                                                            <td style="padding-left:0px">
+                                                                                <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))" />
+                                                                            </td>
+                                                                            <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
+                                                                            <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        </table>
+
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                         <div class="col-md-2-5">
                                             <h5 class="h5-1">HALL DETAILS</h5><button type="button" class="btn btn-block saveamenities" onclick="updatedetails('three')">SAVE</button>
@@ -648,18 +657,18 @@
                                                     <div class="fields">
                                                         <div class="four-field">
                                                             <label></label>
-                                                            <input type="text" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)">
+                                                            <input type="number" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)">
                                                         </div>
                                                     </div>
                                                     <div class="fields">
                                                         <div class="field-1">
                                                             <label></label>
-                                                            <input type="text" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Min Capacity">
+                                                            <input type="number" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Min Capacity">
                                                         </div>
 
                                                         <div class="field-1">
                                                             <label></label>
-                                                            <input type="text" id="Maximumcapacity" name="Maximumcapacity" placeholder="Max Capacity">
+                                                            <input type="number" id="Maximumcapacity" name="Maximumcapacity" placeholder="Max Capacity">
                                                         </div>
                                                     </div>
                                                 }
@@ -674,18 +683,18 @@
                                                     <div class="fields">
                                                         <div class="four-field">
                                                             <label></label>
-                                                            <input type="text" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)" value="@ViewBag.service.Dimentions">
+                                                            <input type="number" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)" value="@ViewBag.service.Dimentions">
                                                         </div>
                                                     </div>
                                                     <div class="fields">
                                                         <div class="field-1">
                                                             <label></label>
-                                                            <input type="text" placeholder="Min Capacity" id="Minimumseatingcapacity" name="Minimumseatingcapacity" value="@ViewBag.service.Minimumseatingcapacity">
+                                                            <input type="number" placeholder="Min Capacity" id="Minimumseatingcapacity" name="Minimumseatingcapacity" value="@ViewBag.service.Minimumseatingcapacity">
                                                         </div>
 
                                                         <div class="field-1">
                                                             <label></label>
-                                                            <input type="text" placeholder="Max Capacity" id="Maximumcapacity" name="Maximumcapacity" value="@ViewBag.service.Maximumcapacity">
+                                                            <input type="number" placeholder="Max Capacity" id="Maximumcapacity" name="Maximumcapacity" value="@ViewBag.service.Maximumcapacity">
                                                         </div>
                                                     </div>
                                                 }
@@ -1166,38 +1175,38 @@
                                                 foreach (var orders in ViewBag.order)
                                                 {
 
-                                                    <tr>
-                                                        <td>@(++number)</td>
-                                                        <td>@orders.OrderId</td>
-                                                        <td>@orders.EventType</td>
-                                                        <td>@orders.BookedDate</td>
-                                                        <td>Package Name</td>
-                                                        <td>Pax Count</td>
-                                                        <td>Balance Due</td>
-                                                        <td>@orders.Status</td>
-                                                        <td>
-                                                            <div class="menu">
-                                                                <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                                <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                                    <div class="four column relaxed divided grid">
-                                                                        <div class="column">
-                                                                            <div class="link list">
-                                                                                @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
-                                                                                    <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
-                                                                                <a class="show_hide_row item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                                <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                            </div>
-                                                                        </div>
+                                            <tr class="show_hide_row">
+                                                <td>@(++number)</td>
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>Package Name</td>
+                                                <td>Pax Count</td>
+                                                <td>Balance Due</td>
+                                                <td>@orders.Status</td>
+                                                <td>
+                                                    <div class="menu">
+                                                        <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                        <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                            <div class="four column relaxed divided grid">
+                                                                <div class="column">
+                                                                    <div class="link list">
+                                                                        @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
+                                                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
+                                                                        <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                        <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </td>
-                                                        @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
-                                                    </tr>
-                                                    <tr id="hidden_row1" class="hidden_row">
-                                                        <td colspan=4><ul><li>Event Type:@orders.EventType</li><li>contact number:@orders.UserPhone</li></ul></td>
-                                                    </tr>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
+                                            </tr>
+                                            <tr id="hidden_row1" class="hidden_row">
+                                                <td colspan=4><ul><li>Event Type:@orders.EventType</li><li>contact number:@orders.UserPhone</li></ul></td>
+                                            </tr>
 
                                                 }
                                             }
@@ -1325,21 +1334,36 @@
         ;
     </script>
     <script>
-
-        $('.slotcheck').on('change', function () {
-            debugger;
-            var checked = $(this).val();
-            var selpkgslots = $('#pkgslots').val();
-            if ($(this).is(':checked')) {
-                    selpkgslots = selpkgslots + ',' + checked;
-                    $('#pkgslots').val(selpkgslots);
-            }
-            else {
-                    selpkgslots = selpkgslots.replace(','+checked, '');
-                    $('#pkgslots').val(selpkgslots);
-            }
-        });
-
+        var validateForm = function () {
+            var checks = $('input[type="checkbox"]:checked').map(function () {
+                return $(this).val();
+            }).get()
+           // alert(checks);
+            var vsid = $('#vsid').val();
+            var hdname = $('#hdname').val();
+            var Dimentions = $('#Dimentions').val();
+            var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
+            var Maximumcapacity = $('#Maximumcapacity').val();
+            var selectedamenuities = checks;
+            var vsid = $('#vsid').val();
+            var Address = $('#Address').val();
+            var Landmark = $('#Landmark').val();
+            var City = $('#City').val();
+            var ZipCode = $('#ZipCode').val();
+            var Description = $('#mainDescription').val();
+            $.ajax({
+                url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&vsid=' + vsid + '&&hdname=' + hdname + '&&vsid=' + vsid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&vsid=' + vsid + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + 'two',
+                type: 'post',
+                contentType: 'application-json',
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (er) {
+                    alert("System Encountered Internal Error!!! Try Again After Some Time");
+                }
+            });
+            return false;
+        }
         var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Tandoori/Kababs,Deserts,Beverages,Fruits';
         var pkgdesc = '';
         $(function () {
@@ -1746,6 +1770,7 @@
                 format: 'DD/MM/YYYY'
             }
         });
+
     </script>
     <script>
         $(document).ready(function () {
@@ -1755,6 +1780,39 @@
         $('#spc').on('click', function () {
             $('#profileimage').click();
         });
+
+
+
+        $('#btnsearch').click(function () {
+            var location = $('#loc').val();
+            var eventtype = $('.current').text();
+            var guests = $('#guests').val();
+            var date = $('#datetimepicker1').val();
+            if (location == '') {
+                alert('Enter Location');
+                $('#loc').focus();
+            }
+            else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+                alert('Select Event Type');
+            }
+            else if (guests == '') {
+                alert('Enter Guests');
+                $('#guests').focus();
+            }
+            else if (date == '') {
+                alert('Select date');
+                $('#datetimepicker1').focus();
+            }
+            else {
+                window.localStorage.setItem("guests", guests1);
+                window.localStorage.setItem("location", location1);
+                window.localStorage.setItem("eventtype", eventtype1);
+                window.localStorage.setItem("eventdate", date1);
+                window.location.href = '/VDashboard/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
+            }
+        });
+
+
 
         $('#profileimage').change(function () {
             var ext = $('#profileimage').val().split('.').pop().toLowerCase();
@@ -1928,12 +1986,13 @@
     <script type="text/javascript">
         //function show_hide_row(row)
         //{
-        // $("."+row).toggle();
+        // $("#"+row).toggle();
         //}
         $('.show_hide_row').click(function () {
             //$('.hidden_row').toggle();
             //alert($(this).parent('td').html());
-            $(this).parents('td').parent('tr').next('tr#hidden_row1').toggle();
+            // $(this).parents('td').parent('tr').next('tr#hidden_row1').toggle();
+            $(this).next('tr#hidden_row1').toggle();
         });
         $('#sendmsg').click(function () {
             var msg = $('#txtmsg').val();
