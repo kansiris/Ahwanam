@@ -30,12 +30,22 @@ namespace MaaAahwanam.Web.Controllers
                 return View();
         }
         [HttpPost]
-        public ActionResult Index(ManageUser mnguser)
+        public ActionResult Index(ManageUser mnguser, string id, string command)
         {
+            string msg = string.Empty;
             mnguser.registereddate = DateTime.Now;
             mnguser.updateddate = DateTime.Now;
-            mnguser = mnguserservice.AddUser(mnguser);
-            return Content("<script language='javascript' type='text/javascript'>alert('Added New User');location.href='/ManageUser'</script>");
+            if (command == "Save")
+            {
+                mnguser = mnguserservice.AddUser(mnguser);
+                msg = "Added New User";
+            }
+            else if (command == "Update")
+            {
+                mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
+                msg = "Updated User";
+            }
+            return Content("<script language='javascript' type='text/javascript'>alert('"+msg+"');location.href='/ManageUser'</script>");
         }
         public JsonResult checkemail(string email, string id)
         {
@@ -51,12 +61,12 @@ namespace MaaAahwanam.Web.Controllers
             var data = mnguserservice.getuserbyid(int.Parse(id));
             return Json(data);
         }
-        [HttpPost]
-        public JsonResult UpdateUserDetails(ManageUser mnguser, string id)
-        {
-            mnguser.updateddate = DateTime.Now;
-            mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
-            return Json("Sucess", JsonRequestBehavior.AllowGet);
-        }
+        //[HttpPost]
+        //public JsonResult UpdateUserDetails(ManageUser mnguser, string id)
+        //{
+        //    mnguser.updateddate = DateTime.Now;
+        //    mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
+        //    return Json("Sucess", JsonRequestBehavior.AllowGet);
+        //}
     }
 }

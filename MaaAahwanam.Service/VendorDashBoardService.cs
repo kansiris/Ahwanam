@@ -62,5 +62,6 @@ namespace MaaAahwanam.Service
         {
             return mngvendorrepository.UpdateUser(mnguser, id);
         }
+
     }
 }

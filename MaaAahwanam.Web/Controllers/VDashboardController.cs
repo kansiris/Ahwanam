@@ -14,6 +14,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class VDashboardController : Controller
     {
+        
         Vendormaster vendorMaster = new Vendormaster();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         OrderService orderService = new OrderService();
@@ -24,13 +25,15 @@ namespace MaaAahwanam.Web.Controllers
         VendorProductsService vendorProductsService = new VendorProductsService();
         viewservicesservice viewservicesss = new viewservicesservice();
         ProductInfoService productInfoService = new ProductInfoService();
+        VendorDatesService vendorDatesService = new VendorDatesService();
 
-
+      
         const string imagepath = @"/vendorimages/";
-
+        
         // GET: VDashboard
         public ActionResult Index(string c, string vsid, string loc, string eventtype, string count, string date)
         {
+            
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 List<VendorImage> allimages = new List<VendorImage>();
@@ -53,14 +56,15 @@ namespace MaaAahwanam.Web.Controllers
                 List<VendorVenue> vendor = venues;
                 List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
                 List<VendorImage> vimg = new List<VendorImage>();
+              var    policy = vendorMasterService.Getpolicy(vid, vsid);
+                ViewBag.policy = policy;
+                if (date != null)
+                {
 
-                //foreach (var item in venues)
-                //{
-                //    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorId == long.Parse(item.Id.ToString())).ToList());
-                //    //amenities.Add(item);
-                //    vimg.AddRange(allimages.Where(m => m.VendorId == item.Id));
-                //}
-                //  ViewBag.allimages = vimg.FirstOrDefault();
+                   var  data = vendorDatesService.GetVendorsByService().Where(m => m.ServiceType == "Venue").ToList();
+                   var package1 = seperatedates(data, date, "Venue");
+
+                }
                 package = viewservicesss.getvendorpkgs(vid).ToList();
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
@@ -80,8 +84,8 @@ namespace MaaAahwanam.Web.Controllers
                     var pkgsks = vendorVenueSignUpService.Getpackages((long.Parse(vid)), long.Parse(vsid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
                     if (pkgsks != null) ViewBag.package = pkgsks;
                     else ViewBag.package = new Package();
-                    var policy = vendorMasterService.Getpolicy(vid, vsid);
-                    ViewBag.policy = policy;
+                    var policy1 = vendorMasterService.Getpolicy(vid, vsid);
+                    ViewBag.policy = policy1;
                 }
                 else
                     ViewBag.package = new Package();
