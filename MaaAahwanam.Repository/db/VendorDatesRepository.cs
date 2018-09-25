@@ -67,6 +67,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.filtervendordates().ToList();
         }
+        public List<packagevendordates_Result> GetVendorsByServicepack()
+        {
+            return maaAahwanamEntities.packagevendordates().ToList();
+        }
 
         public string removedatesbyorderid(string id)
         {

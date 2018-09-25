@@ -243,9 +243,9 @@
                                             </thead>
                                             <tbody>
                                                 @{
-                                                var number = 0;
-                                                foreach (var users in ViewBag.Userlist)
-                                                {
+                                                    var number = 0;
+                                                    foreach (var users in ViewBag.Userlist)
+                                                    {
                                             <tr>
                                                 <td><input type="checkbox" class="chcktbl" value="@users.id" /></td>
                                                 <td>@(++number)</td>
@@ -266,7 +266,7 @@
                                                 <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
                                             </tr>
 
-                                                }
+                                                    }
 
                                                 }
                                             </tbody>
@@ -276,6 +276,8 @@
                                         <div class="row" id="saverecord" style="display:none;margin-top:50px">
                                             <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
                                             <form method="POST">
+                                                <input type="hidden" id="userid" name="usedid" value="" />
+
                                                 <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
                                                 <div class="col-12 col-sm-12 col-md-12">
                                                     <div class="row">
@@ -293,7 +295,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only"  id="Businessname" name="Businessname" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
                                                                     <span class="input__label-content input__label-content--hoshi">Company Name</span>
                                                                 </label>
@@ -406,6 +408,8 @@
                                                         <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
                                                     </div>
                                                     <div style="position:absolute; display: inline;">
+                                                        <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
+
                                                         <button id="CancelUser" type="button" class="btn btn-danger">Cancel</button>
                                                     </div>
                                                 </div>
@@ -467,6 +471,24 @@
             $('#saverecord').css('display', 'none');
         });
 
+
+            $('#booknow').click(function () {
+                var vid = $("#vendorId").val();
+                var userid = $("#usedid").val();
+                var packid = '@Request.QueryString["pid"]';
+                var loc = '@Request.QueryString["loc"]';
+            var eventtype = '@Request.QueryString["eventtype"]';
+            var guests = '@Request.QueryString["guests"]';
+            var date = '@Request.QueryString["date"]';
+                $.ajax({
+                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid ,
+                    type: 'POST',
+                    contentType: 'application/json',
+
+                    success: function (result) { alert(result); }
+            });
+
+
         $(document).on('click', '.chcktbl', function () {
             if ($(this).is(':checked')) {
                 $(this).closest('tr').find('#btnBook').removeAttr('disabled');
@@ -497,6 +519,7 @@
                         $("#country").val(result.country);
                         $("#pincode").val(result.pincode);
                         $("#Status").val(result.Status);
+                        $("#usedid").val(result.id)
                     },
                     error: function (result) {
                         alert("failed");
@@ -540,7 +563,9 @@
         });*@
         function checkEmail(val) {
             alert(val);
-        }
+            }
+
+       
         </script>
 
     </body>
