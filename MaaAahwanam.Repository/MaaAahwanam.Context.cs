@@ -673,6 +673,10 @@ namespace MaaAahwanam.Repository
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotographers_Result>("GetPhotographers");
         }
-      
+    
+        public virtual ObjectResult<packagevendordates_Result> packagevendordates()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<packagevendordates_Result>("packagevendordates");
+        }
     }
 }

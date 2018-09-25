@@ -1,8 +1,11 @@
 ﻿using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 using MaaAahwanam.Service;
+using MaaAahwanam.Utility;
 using MaaAahwanam.Web.Custom;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,8 +20,13 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
+        viewservicesservice viewservicesss = new viewservicesservice();
+        VendorProductsService vendorProductsService = new VendorProductsService();
+
+
+
         // GET: ManageUser
-        public ActionResult Index(string VendorId)
+        public ActionResult Index(string VendorId,string loc,string eventtype,string count,string date,string pid)
         {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string uid = user.UserId.ToString();
@@ -68,5 +76,111 @@ namespace MaaAahwanam.Web.Controllers
         //    mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
         //    return Json("Sucess", JsonRequestBehavior.AllowGet);
         //}
+
+        [HttpPost]
+        public JsonResult booknow(string uid, string loc,string eventtype,string count,string date,string pid,string vid)
+        {
+            int userid = Convert.ToInt32(uid);
+
+            HomeController home = new HomeController();
+            var userdata = userLoginDetailsService.GetUser(userid);
+            //Payment Section
+            var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+            string totalprice = "";
+                string type = pkgs.VendorType;
+                string guest = count;
+                string price = Convert.ToString(pkgs.PackagePrice);
+            string totalprice1 = (Convert.ToInt32(price) * Convert.ToInt32(count)).ToString();
+                string id = Convert.ToString(pid);
+                //string did = Convert.ToString(cartdetails.DealId);
+               // string timeslot = cartdetails.attribute;
+                string etype1 = eventtype;
+                DateTime date1 = Convert.ToDateTime(date);
+                if (type == "Photography" || type == "Decorator" || type == "Other")
+                {
+                    totalprice = price;
+                    guest = "0";
+                }
+                else
+                {
+                    totalprice = totalprice1;
+                }
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                //Saving Record in order Table
+                OrderService orderService = new OrderService();
+                MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
+                order.TotalPrice = Convert.ToDecimal(totalprice);
+                order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
+                order.UpdatedBy = userid;
+                order.OrderedBy = userid;
+                order.UpdatedDate = Convert.ToDateTime(updateddate);
+                order.Status = "Pending";
+                order = orderService.SaveOrder(order);
+ 
+            //Saving Order Details
+                OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.OrderId = order.OrderId;
+                orderDetail.OrderBy = userid;
+                orderDetail.PaymentId = '1';
+               // orderDetail.ServiceType = type;
+                orderDetail.ServicePrice = decimal.Parse(pkgs.PackagePrice);
+              //  orderDetail.attribute = timeslot;
+                orderDetail.TotalPrice = decimal.Parse(totalprice);
+                orderDetail.PerunitPrice = decimal.Parse(pkgs.PackagePrice);
+                orderDetail.Quantity = int.Parse(count);
+                orderDetail.OrderId = order.OrderId;
+                orderDetail.VendorId = long.Parse(id);
+                orderDetail.Status = "Pending";
+                orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+                orderDetail.UpdatedBy = userid;
+                orderDetail.subid = pkgs.VendorSubId;
+                orderDetail.BookedDate = Convert.ToDateTime(date);
+                orderDetail.EventType = etype1;
+//                orderDetail.DealId = long.Parse(did);
+              
+
+                orderdetailsServices.SaveOrderDetail(orderDetail);
+
+                var userlogdetails = userLoginDetailsService.GetUserId(userid);
+
+                string txtto = userlogdetails.UserName;
+                var userdetails = userLoginDetailsService.GetUser(userid);
+                string name = userdetails.FirstName;
+                name = home.Capitalise(name);
+                string OrderId = Convert.ToString(order.OrderId);
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                readFile = readFile.Replace("[orderid]", OrderId);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Thanks for your order";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+
+                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(id));
+
+                string txtto1 = vendordetails.EmailId;
+                string vname = vendordetails.BusinessName;
+                vname = home.Capitalise(vname);
+
+                string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
+                FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+                string readfile1 = file1.OpenText().ReadToEnd();
+                readfile1 = readfile1.Replace("[ActivationLink]", url1);
+                readfile1 = readfile1.Replace("[name]", name);
+                readfile1 = readfile1.Replace("[vname]", vname);
+                readfile1 = readfile1.Replace("[orderid]", OrderId);
+                string txtmessage1 = readfile1;
+                string subj1 = "order has been placed";
+                emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+            
+        
+                return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
