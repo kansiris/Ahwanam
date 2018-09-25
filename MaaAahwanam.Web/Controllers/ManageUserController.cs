@@ -60,7 +60,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             var data = mnguserservice.getuserbyid(int.Parse(id));
             return Json(data);
-        }
+         }
         //[HttpPost]
         //public JsonResult UpdateUserDetails(ManageUser mnguser, string id)
         //{
