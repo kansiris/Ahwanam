@@ -27,8 +27,6 @@ namespace MaaAahwanam.Web.Controllers
         // GET: viewservice
         public ActionResult Index(string name, string type, string id)
         {
-            
-
             type = (type == null) ? "Venue" : type;
             type = (type == "Convention") ? "Convention Hall" : type;
             type = (type == "Banquet") ? "Banquet Hall" : type;
