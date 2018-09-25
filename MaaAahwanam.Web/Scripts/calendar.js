@@ -139,7 +139,8 @@ $('#btnDelete').click(function () {
 })
 
 $('#startdate,#enddate').datetimepicker({
-    format: 'DD/MM/YYYY'
+    format: 'DD/MM/YYYY',
+    minDate:new Date()
     //step: 15
 });
 

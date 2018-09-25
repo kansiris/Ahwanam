@@ -33,7 +33,6 @@ namespace MaaAahwanam.Web.Controllers
         // GET: VDashboard
         public ActionResult Index(string c, string vsid, string loc, string eventtype, string count, string date)
         {
-            
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 List<VendorImage> allimages = new List<VendorImage>();

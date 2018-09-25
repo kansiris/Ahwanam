@@ -1,11 +1,13 @@
 ﻿<style>
     .h6-in {
         cursor: pointer;
+        margin:0 0 5px 20px;
     }
 </style>
 <div class="col-md-2-2" id="menusidebar">
     <br />
     <h6 class="h6-in" onclick="location.href = '/VDashboard'">Dashboard	</h6>
+    <h6 class="h6-in">Quotes</h6>
     <h6 class="h6-in" onclick="location.href = '/VDashboard?c=orders'">Orders</h6>
     <h6 class="h6-in" onclick="location.href = '/ManageUser'">Customers/clients</h6>
     <h6 class="h6-in" onclick="location.href = '/ManageVendor'">Vendors</h6>
@@ -13,37 +15,18 @@
     @*<h6 class="h6-in">Add Availability</h6>*@
     <div role="tablist" class="add_bottom_45 accordion_2" id="allservices">
         <div class="card">
-            <div class="card-header" role="tab">
+            <div class="card-header" role="tab" style="padding: 3px 0px 0px 20px;">
                 <h5 class="mb-0">
-                    <a data-toggle="collapse" href="#collapseOne_allservices" aria-expanded="false" style="text-transform:uppercase">
+                    <a data-toggle="collapse" href="#collapseOne_allservices" aria-expanded="false" style="text-transform:uppercase;color:black">
                         <i class="indicator ti-minus"></i>Services
                     </a>
                 </h5>
             </div>
 
             <div id="collapseOne_allservices" class="collapse show" role="tabpanel" data-parent="#allservices">
-                <div class="card-body">
+                <div class="card-body" style="padding: 5px 0px 0px 10px;">
                     @foreach (var item in ViewBag.venues)
                     {
-                        @*if (item.VenueType == null || item.VenueType == "")
-                            {
-                                <select class="form-control" id="subcat" name="subcat" style="height:40px">
-                                    <option disabled selected>Select Sub-Category</option>
-                                    <option value="Convention Hall">Convention Hall</option>
-                                    <option value="Function Hall">Function Hall</option>
-                                    <option value="Banquet Hal">Banquet Hall</option>
-                                    <option value="Meeting Room">Meeting Room</option>
-                                    <option value="Open Lawn">Open Lawn</option>
-                                    <option value="Hotel">Hotel</option>
-                                    <option value="Resort">Resort</option>
-                                </select>
-
-                                <div>
-                                    <button type="button" onclick="addsubcategory('Venue')" class="btn btn-1 addbutton" style="padding-top:10px;border-radius:1px;width:150px;color:#fff;background-color:red; font-size:14px;">
-                                        Save Sub Category
-                                    </button>
-                                </div>
-                            }*@
                     if (item.VenueType == "" || item.VenueType == null)
                     {
                         <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">Venue</h6>
@@ -106,9 +89,9 @@
             </select>
         </div>
         @*<input type="hidden" id="serviceselection" name="serviceselection" value="@ViewBag.category" />*@
-        <div class="addsubcategory">
+        @*<div class="addsubcategory">
             <select class="form-control" id="subcategory" name="subcategory" style="display:none ;height:40px"></select>
-        </div>
+        </div>*@
         <div>
             <button type="button" onclick="addservicenow()" class="btn btn-1 addbutton" style="border-radius:1px;width:230px;color:#fff;background-color:red; font-size:14px;">
                 submit
