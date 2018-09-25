@@ -970,7 +970,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-2">
-                                                <input type="submit" id="btnsearch" class="btn_search" value="Search">
+                                                <input type="button" id="btnsearch" class="btn btn-danger btn_search" style="width:100%" value="Search">
                                             </div>
 
                                         </div>
@@ -1039,10 +1039,10 @@
                                                                             <span>
                                                                                 ₹
                                                                                 @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                                                {<b style="font-size:30px">@item1.PackagePrice</b>}
+                                                                                {<b style="font-size:17px">@item1.PackagePrice</b>}
                                                                                 else
                                                                                 {
-                                                                                    <b style="font-size:30px">@item1.price1</b>
+                                                                                    <b style="font-size:17px">@item1.price1</b>
                                                                                 }
                                                                                 / Person
                                                                             </span>
@@ -1253,7 +1253,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-2">
-                                                <input type="submit" id="btnsearch" class="btn_search" value="Search">
+                                                <input type="button" id="btnsearch" class="btn btn-danger btn_search" style="width:100%" value="Search">
                                             </div>
 
                                         </div>
@@ -1898,7 +1898,8 @@
 
 
         $('#btnsearch').click(function () {
-            var location = $('#loc').val();
+            debugger;
+            var location = 'Hyderabad';//$('#loc').val();
             var eventtype = $('.current').text();
             var guests = $('#guests').val();
             var date = $('#datetimepicker1').val();
@@ -1918,10 +1919,10 @@
                 $('#datetimepicker1').focus();
             }
             else {
-                window.localStorage.setItem("guests", guests1);
-                window.localStorage.setItem("location", location1);
-                window.localStorage.setItem("eventtype", eventtype1);
-                window.localStorage.setItem("eventdate", date1);
+                window.localStorage.setItem("guests1", guests);
+                window.localStorage.setItem("location1", location);
+                window.localStorage.setItem("eventtype1", eventtype);
+                window.localStorage.setItem("eventdate1", date);
                 window.location.href = '/VDashboard/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
             }
         });
@@ -2068,6 +2069,17 @@
             $('#amenities1').val(arr1.substr(1));
             $('#selectedamenities').val(arr.substr(1));
         });
+
+        function booknow(val) {
+            var packageid = val;
+            var loc = '@Request.QueryString["loc"]';
+            var eventtype = '@Request.QueryString["eventtype"]';
+            var guests = '@Request.QueryString["guests"]';
+            var date = '@Request.QueryString["date"]';
+            window.location.href = '/ManageUser/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packageid;
+
+        }
+
         function updatedetails(val) {
             var hdname = $('#hdname').val();
             var Dimentions = $('#Dimentions').val();

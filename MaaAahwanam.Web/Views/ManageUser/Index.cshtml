@@ -146,7 +146,7 @@
             border-radius: 0;
             background: #f0f0f0;
             color: #aaa;
-            font-weight: bold;
+            font-weight: normal;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             -webkit-appearance: none;
         }
@@ -243,9 +243,9 @@
                                             </thead>
                                             <tbody>
                                                 @{
-                                                var number = 0;
-                                                foreach (var users in ViewBag.Userlist)
-                                                {
+                                                    var number = 0;
+                                                    foreach (var users in ViewBag.Userlist)
+                                                    {
                                             <tr>
                                                 <td><input type="checkbox" class="chcktbl" value="@users.id" /></td>
                                                 <td>@(++number)</td>
@@ -266,7 +266,7 @@
                                                 <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
                                             </tr>
 
-                                                }
+                                                    }
 
                                                 }
                                             </tbody>
@@ -276,6 +276,8 @@
                                         <div class="row" id="saverecord" style="display:none;margin-top:50px">
                                             <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
                                             <form method="POST">
+                                                <input type="hidden" id="userid" name="usedid" value="" />
+
                                                 <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
                                                 <div class="col-12 col-sm-12 col-md-12">
                                                     <div class="row">
@@ -283,17 +285,17 @@
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <label class="input input--hoshi" style="font-weight:bold">Customer Type</label>
                                                             <span class="form-check" style="display:inline">
-                                                                <input class="form-check-input" name="type" type="radio" id="radio1" value="Individual" checked="checked" required>
+                                                                <input class="form-check-input" name="type" type="radio" id="radio1" value="Individual" required>
                                                                 <label class="form-check-label" for="radio1">Individual</label>
                                                             </span>
                                                             <span class="form-check" style="display:inline">
-                                                                <input class="form-check-input" name="type" type="radio" id="radio2" value="Corporate" required>
+                                                                <input class="form-check-input" name="type" type="radio" id="radio2" value="Corporate" checked required>
                                                                 <label class="form-check-label" for="radio2">Corporate</label>
                                                             </span>
                                                         </div>
-                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                        <div class="col-12 col-sm-4 col-md-4" style="display:block;">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only"  id="Businessname" name="Businessname" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only"  id="Businessname" name="Businessname" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
                                                                     <span class="input__label-content input__label-content--hoshi">Company Name</span>
                                                                 </label>
@@ -337,7 +339,7 @@
                                                     <div class="row">
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" pattern="[a-zA-Z0-9\s]+" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress1">
                                                                     <span class="input__label-content input__label-content--hoshi"> Flat No/Street</span>
                                                                 </label>
@@ -345,7 +347,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" pattern="[a-zA-Z0-9\s]+" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress2">
                                                                     <span class="input__label-content input__label-content--hoshi">Locality</span>
                                                                 </label>
@@ -353,7 +355,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+" title="Enter number only and enter 6 digits only" required />
+                                                                <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+(!000000)+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+" title="Enter number only and enter 6 digits only" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
                                                                     <span class="input__label-content input__label-content--hoshi">PinCode</span>
                                                                 </label>
@@ -363,7 +365,7 @@
                                                     <div class="row">
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" id="city" name="city" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" id="city" name="city" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="city">
                                                                     <span class="input__label-content input__label-content--hoshi">City</span>
                                                                 </label>
@@ -371,7 +373,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" id="state" name="state" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" id="state" name="state" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="state">
                                                                     <span class="input__label-content input__label-content--hoshi">State</span>
                                                                 </label>
@@ -379,7 +381,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" id="country" name="country" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" id="country" name="country" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="country">
                                                                     <span class="input__label-content input__label-content--hoshi">Country</span>
                                                                 </label>
@@ -390,11 +392,11 @@
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <label class="d-block mb-0" style="font-weight:bold">Status</label>
                                                             <fieldset class="form-check" style="display:inline">
-                                                                <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" checked required />
+                                                                <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" required />
                                                                 <label class="form-check-label" for="Status1">Active</label>
                                                             </fieldset>
                                                             <fieldset class="form-check" style="display:inline">
-                                                                <input type="radio" class="chckinactive" id="Status2" name="Status" value="InActive" required />
+                                                                <input type="radio" class="chckinactive" id="Status2" name="Status" value="InActive" checked required />
                                                                 <label class="form-check-label" for="Status2">InActive</label>
                                                             </fieldset>
                                                         </div>
@@ -406,6 +408,8 @@
                                                         <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
                                                     </div>
                                                     <div style="position:absolute; display: inline;">
+                                                        <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
+
                                                         <button id="CancelUser" type="button" class="btn btn-danger">Cancel</button>
                                                     </div>
                                                 </div>
@@ -463,9 +467,28 @@
             $('#EditUser').css('display', 'none');
 
         });
+      
         $('#CancelUser').click(function () {
             $('#saverecord').css('display', 'none');
         });
+
+
+            $('#booknow').click(function () {
+                var vid = $("#vendorId").val();
+                var userid = $("#usedid").val();
+                var packid = '@Request.QueryString["pid"]';
+                var loc = '@Request.QueryString["loc"]';
+            var eventtype = '@Request.QueryString["eventtype"]';
+            var guests = '@Request.QueryString["guests"]';
+            var date = '@Request.QueryString["date"]';
+                $.ajax({
+                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid ,
+                    type: 'POST',
+                    contentType: 'application/json',
+
+                    success: function (result) { alert(result); }
+            });
+
 
         $(document).on('click', '.chcktbl', function () {
             if ($(this).is(':checked')) {
@@ -482,9 +505,14 @@
                     contentType: 'application/json',
 
                     success: function (result) {
-                        //debugger;
-                        //alert('success');
-                        $("#type").val(result.type);
+                        if (result.type == "Corporate")
+                        {
+                          
+                            $("input[name=type][value='Corporate']").prop('checked', true);
+                        }
+                        else {
+                            $("input[name=type][value='Individual']").prop('checked', true);
+                        }
                         $("#Businessname").val(result.Businessname);
                         $("#firstname").val(result.firstname);
                         $("#lastname").val(result.lastname);
@@ -496,7 +524,14 @@
                         $("#state").val(result.state);
                         $("#country").val(result.country);
                         $("#pincode").val(result.pincode);
-                        $("#Status").val(result.Status);
+                        //$("#Status").val(result.Status);
+                        if (result.Status == "Active") {
+
+                            $("input[name=Status][value='Active']").prop('checked', true);
+                        }
+                        else {
+                            $("input[name=Status][value='InActive']").prop('checked', true);
+                        }
                     },
                     error: function (result) {
                         alert("failed");
@@ -508,11 +543,13 @@
                 $('#saverecord').css('display', 'none');
             }
         });
+
         @*$('#EditUser').click(function () {
             var status="null"
             var Id = $('#id').val();
             var manageuser = {
-                type:$("input[name='type']:checked").val(),
+                type:
+            ,
                 Businessname: $('#Businessname').val(),
                 firstname: $('#firstname').val(),
                 lastname: $('#lastname').val(),
@@ -539,8 +576,24 @@
             });
         });*@
         function checkEmail(val) {
-            alert(val);
-        }
+            //alert(val);
+            vendorId = $('#vendorId').val();
+            $.ajax({
+                url: '/ManageUser/checkemail?email=' +val+ "&&id=" +vendorId,
+                type: 'Post',
+                contentType: 'application/json',
+                success: function (result) {
+                    alert(result);
+                },
+                error: function (result) {
+                    alert("failed");
+                }
+
+            });
+
+         }
+            
+    
         </script>
 
     </body>

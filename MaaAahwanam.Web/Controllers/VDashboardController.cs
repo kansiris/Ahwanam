@@ -60,13 +60,14 @@ namespace MaaAahwanam.Web.Controllers
                 if (date != null)
                 {
 
-                   var  data = vendorDatesService.GetVendorsByService().Where(m => m.ServiceType == "Venue").ToList();
+                   var  data = vendorDatesService.GetVendorsByServicepack().Where(m => m.masterid == long.Parse(vid)).ToList();
                    var package1 = seperatedates(data, date, "Venue");
-
+                    ViewBag.availablepackages = package1;
                 }
-                package = viewservicesss.getvendorpkgs(vid).ToList();
+                else { package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package; }
+                
                 ViewBag.particularVenue = vendor;
-                ViewBag.availablepackages = package;
+                
                 ViewBag.venues = venues;
                 Addservices(vsid);
                 if (venues.Count > 0)
@@ -103,16 +104,18 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public List<string[]> seperatedates(List<filtervendordates_Result> data, string date, string type)
+        public List<string[]> seperatedates(List<packagevendordates_Result> data, string date, string type)
         {
             List<string[]> betweendates = new List<string[]>();
             string dates = "";
+          var  dates1 = date.Split('-');
+            
             //var Gettotaldates = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
             int recordcount = data.Count();
             foreach (var item in data)
             {
-                var startdate = Convert.ToDateTime(item.StartDate);
-                var enddate = Convert.ToDateTime(item.EndDate);
+                var startdate = Convert.ToDateTime(dates1[0]);
+                var enddate = Convert.ToDateTime(dates1[1]);
                 if (startdate != enddate)
                 {
                     string orderdates = productInfoService.disabledate(item.masterid, item.subid, type);

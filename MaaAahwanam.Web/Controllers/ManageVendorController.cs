@@ -32,12 +32,22 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(ManageVendor mngvendor)
+        public ActionResult Index(ManageVendor mngvendor, string id, string command)
         {
+            string msg = string.Empty;
             mngvendor.registereddate = DateTime.Now;
             mngvendor.updateddate = DateTime.Now;
-            mngvendor = mngvendorservice.SaveVendor(mngvendor);
-            return Content("<script language='javascript' type='text/javascript'>alert('Added New Vendor');location.href='/ManageVendor'</script>");
+            if (command == "Save")
+            {
+                mngvendor = mngvendorservice.SaveVendor(mngvendor);
+                msg = "Added New vendor";
+            }
+            else if (command == "Update")
+            {
+                mngvendor = mngvendorservice.UpdateVendor(mngvendor, int.Parse(id));
+                msg = "Updated vendor";
+            }
+            return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>");
         }
         [HttpPost]
         public JsonResult GetVendorDetails(string id)
@@ -45,14 +55,14 @@ namespace MaaAahwanam.Web.Controllers
             var data = mngvendorservice.getvendorbyid(int.Parse(id));
             return Json(data);
         }
-        [HttpPost]
-        public JsonResult UpdateVendorDetails(ManageVendor mngvendor, string id)
-        {
-            mngvendor.updateddate = DateTime.Now;
-            mngvendor = mngvendorservice.UpdateVendor(mngvendor, int.Parse(id));
-            return Json("Sucess", JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult checkemail(string email, string id)
+        //[HttpPost]
+        //public JsonResult UpdateVendorDetails(ManageVendor mngvendor, string id)
+        //{
+        //    mngvendor.updateddate = DateTime.Now;
+        //    mngvendor = mngvendorservice.UpdateVendor(mngvendor, int.Parse(id));
+        //    return Json("Sucess", JsonRequestBehavior.AllowGet);
+        //}
+        public JsonResult checkVendoremail(string email, string id)
         {
             int query = mngvendorservice.checkvendoremail(email, id);
             if (query == 0)

@@ -81,6 +81,7 @@
         <Function Name="orderconfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OID" Type="int" Mode="In" />
         </Function>
+        <Function Name="packagevendordates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ProductsDisplay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
           <Parameter Name="VID" Type="int" Mode="In" />
@@ -405,6 +406,7 @@
           </FunctionImport>
           <FunctionImport Name="GetDecorators" ReturnType="Collection(MaaAahwanamModel.GetDecorators_Result)" />
           <FunctionImport Name="GetPhotographers" ReturnType="Collection(MaaAahwanamModel.GetPhotographers_Result)" />
+          <FunctionImport Name="packagevendordates" ReturnType="Collection(MaaAahwanamModel.packagevendordates_Result)" />
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -1477,6 +1479,20 @@
           <Property Type="String" Name="subcity" Nullable="true" />
           <Property Type="String" Name="substate" Nullable="true" />
           <Property Type="String" Name="subzipcode" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="packagevendordates_Result">
+          <Property Type="Int64" Name="masterid" Nullable="false" />
+          <Property Type="Int64" Name="subid" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="String" Name="VenueType" Nullable="true" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Type" Nullable="true" />
+          <Property Type="Int64" Name="PackageID" Nullable="false" />
+          <Property Type="String" Name="PackageName" Nullable="true" />
+          <Property Type="String" Name="PackagePrice" Nullable="true" />
+          <Property Type="String" Name="price1" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2798,6 +2814,24 @@
                 <ScalarProperty Name="subcity" ColumnName="subcity" />
                 <ScalarProperty Name="substate" ColumnName="substate" />
                 <ScalarProperty Name="subzipcode" ColumnName="subzipcode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="packagevendordates" FunctionName="MaaAahwanamModel.Store.packagevendordates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.packagevendordates_Result">
+                <ScalarProperty Name="masterid" ColumnName="masterid" />
+                <ScalarProperty Name="subid" ColumnName="subid" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="VenueType" ColumnName="VenueType" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="PackagePrice" ColumnName="PackagePrice" />
+                <ScalarProperty Name="price1" ColumnName="price1" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

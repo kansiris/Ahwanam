@@ -47,6 +47,10 @@ namespace MaaAahwanam.Service
         {
             return vendorDatesRepository.GetVendorsByService();
         }
+        public List<packagevendordates_Result> GetVendorsByServicepack()
+        {
+            return vendorDatesRepository.GetVendorsByServicepack();
+        }
 
         public string removedatesbyorderid(string id)
         {
