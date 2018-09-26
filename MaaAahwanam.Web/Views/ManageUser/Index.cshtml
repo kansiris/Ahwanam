@@ -161,6 +161,10 @@
             text-align: left;
             pointer-events: none;
         }
+        .kscfont {
+            font-size: 15px;
+            font-weight: 900;
+        }
     </style>
 </head>
 @using MaaAahwanam.Web.Custom
@@ -275,8 +279,31 @@
 
                                         <div class="row" id="saverecord" style="display:none;margin-top:50px">
                                             <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
+
+@if (Request.QueryString["select"] != null)
+{
+                                            <div>
+                                                <div>
+                                                    <label> location :</label>
+                                                    <label class="kscfont">@ViewBag.loc ,</label>
+                                              
+                                                    <label>eventdate : </label>
+                                                    <label class="kscfont">@ViewBag.date ,</label>
+                                              
+                                                    <label>eventtype : </label><label class="kscfont">@ViewBag.eventtype ,</label>
+                                                
+                                                    <label> price : </label><label class="kscfont">@ViewBag.price ,</label>
+                                              
+                                                    <label> guest :</label><label class="kscfont">@ViewBag.guest ,</label>
+                                                
+                                                    <label> total :</label><label class="kscfont">@ViewBag.total .</label>
+                                                </div>
+                                            </div>
+}
+
+
                                             <form method="POST">
-                                                <input type="hidden" id="userid" name="usedid" value="" />
+                                                <input type="hidden" id="usedid" name="usedid" value="" />
 
                                                 <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
                                                 <div class="col-12 col-sm-12 col-md-12">
@@ -444,6 +471,8 @@
         $(document).ready(function () {
             $('#allorders').DataTable();
             $('#addservices').css("display", "none");
+            var vpbook = window.localStorage.getItem("vpbook");
+            $('#vpbookdetails').val(vpbook)
         });
         function addservice() {
             $('#addservices').css("display", "block");
@@ -465,9 +494,11 @@
             $('#Status').val('');
             $('#SaveUser').css('display', 'block');
             $('#EditUser').css('display', 'none');
+            $('#booknow').css('display', 'none');
+
 
         });
-      
+
         $('#CancelUser').click(function () {
             $('#saverecord').css('display', 'none');
         });
@@ -475,20 +506,24 @@
 
             $('#booknow').click(function () {
                 var vid = $("#vendorId").val();
-                var userid = $("#usedid").val();
-                var packid = '@Request.QueryString["pid"]';
-                var loc = '@Request.QueryString["loc"]';
-            var eventtype = '@Request.QueryString["eventtype"]';
-            var guests = '@Request.QueryString["guests"]';
-            var date = '@Request.QueryString["date"]';
+                var usedid = $("#usedid").val();
+               var packid = '@ViewBag.pid';
+                 var loc = '@ViewBag.loc';
+                var eventtype = '@ViewBag.eventtype';
+                var guests = '@ViewBag.guest';
+                var date = '@ViewBag.date';
+                //var loc = window.localStorage.getItem("location1");
+                //var eventtype = window.localStorage.getItem("eventtype1");
+                //var guests = window.localStorage.getItem("guests1");
+                //var date = window.localStorage.getItem("eventdate1");
                 $.ajax({
-                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid ,
+                    url: '/ManageUser/booknow?uid=' + usedid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid,
                     type: 'POST',
                     contentType: 'application/json',
 
                     success: function (result) { alert(result); }
+                });
             });
-
 
         $(document).on('click', '.chcktbl', function () {
             if ($(this).is(':checked')) {
@@ -496,6 +531,8 @@
                 $('#saverecord').css('display', 'block');
                 $('#SaveUser').css('display', 'none');
                 $('#EditUser').css('display', 'block');
+                $('#booknow').css('display', 'block');
+
                 var radataid = $(this).val();
                 $('#id').val(radataid);
                 //alert(radataid);
@@ -507,12 +544,13 @@
                     success: function (result) {
                         if (result.type == "Corporate")
                         {
-                          
+
                             $("input[name=type][value='Corporate']").prop('checked', true);
                         }
                         else {
                             $("input[name=type][value='Individual']").prop('checked', true);
                         }
+                        $("#usedid").val(result.id);
                         $("#Businessname").val(result.Businessname);
                         $("#firstname").val(result.firstname);
                         $("#lastname").val(result.lastname);
@@ -561,9 +599,9 @@
                 country: $('#country').val(),
                 phoneno: $('#phoneno').val(),
                 pincode: $('#pincode').val(),
-                Status: $("input[name='Status']:checked").val()            
+                Status: $("input[name='Status']:checked").val()
             }
-                
+
             $.ajax({
                 url: '/ManageUser/UpdateUserDetails?id=' + Id,
                 type: 'POST',
@@ -592,8 +630,8 @@
             });
 
          }
-            
-    
+
+
         </script>
 
     </body>
