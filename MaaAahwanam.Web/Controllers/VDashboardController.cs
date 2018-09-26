@@ -57,15 +57,15 @@ namespace MaaAahwanam.Web.Controllers
                 List<VendorImage> vimg = new List<VendorImage>();
               var    policy = vendorMasterService.Getpolicy(vid, vsid);
                 ViewBag.policy = policy;
-                if (date != null)
-                {
+                //if (date != null)
+                //{
 
-                   var  data = vendorDatesService.GetVendorsByServicepack().Where(m => m.masterid == long.Parse(vid)).ToList();
-                   var package1 = seperatedates(data, date, "Venue");
-                    ViewBag.availablepackages = package1;
-                }
-                else { package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package; }
-                
+                //   var  data = vendorDatesService.GetVendorsByServicepack().Where(m => m.masterid == long.Parse(vid)).ToList();
+                //   var package1 = seperatedates(data, date, "Venue");
+                //    ViewBag.availablepackages = package1;
+                //}
+                //else { package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package; }
+                package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package;
                 ViewBag.particularVenue = vendor;
                 
                 ViewBag.venues = venues;
@@ -108,14 +108,14 @@ namespace MaaAahwanam.Web.Controllers
         {
             List<string[]> betweendates = new List<string[]>();
             string dates = "";
-          var  dates1 = date.Split('-');
+         // var  dates1 = date.Split('-');
             
             //var Gettotaldates = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
             int recordcount = data.Count();
             foreach (var item in data)
             {
-                var startdate = Convert.ToDateTime(dates1[0]);
-                var enddate = Convert.ToDateTime(dates1[1]);
+                var startdate = Convert.ToDateTime(date);
+                var enddate = Convert.ToDateTime(date);
                 if (startdate != enddate)
                 {
                     string orderdates = productInfoService.disabledate(item.masterid, item.subid, type);
