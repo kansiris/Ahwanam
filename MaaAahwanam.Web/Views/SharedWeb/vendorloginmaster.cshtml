@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
+
+    <!-- BASE CSS -->
+    <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/newdesignstyles/css/style.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
+
+    <!-- SPECIFIC CSS -->
+    <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+    <link href="#" id="colors" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="http://design.maa-aahwanam.com/panagea/css/custom1.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
+    <!-- semantic -->
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+    @RenderSection("css", false);
+</head>
+<body>
+    <div id="page">
+        <header class="header menu_fixed">
+            <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+            <ul id="top_menu"></ul>
+            <!-- /top_menu -->
+            <a href="#menu" class="btn_mobile">
+                <div class="hamburger hamburger--spin" id="hamburger">
+                    <div class="hamburger-box">
+                        <div class="hamburger-inner"></div>
+                    </div>
+                </div>
+            </a>
+            <nav id="menu" class="main-menu">
+                <ul>
+                    <li><span><a href="#0" style="color:black">Add User</a></span>
+                    <li><span><a href="#0" style="color:black">Add service</a></span>
+                    <li>
+                        <span><a href="#0" style="color:black">Settings</a></span>
+                    </li>
+                </ul>
+            </nav>
+
+        </header>
+        @RenderBody()
+        <div id="toTop"></div><!-- Back to top button -->
+   
+    </div>
+    <!-- COMMON SCRIPTS -->
+    <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
+    <script src="~/newdesignstyles/Scripts/main.js"></script>
+    <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
+    <!-- DATEPICKER  -->
+    <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
+    <!-- semantic -->
+    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
+    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addservices').css("display", "none");
+            
+        });
+
+        function addservice() {
+            $('#addservices').css("display", "block");
+            $('#addservicesbutton').css("display", "none");
+        }
+
+        
+        function addservicenow() {
+            var serviceselection = $('#serviceselection1').find(":selected").text();
+            var subcategory = '';
+            $.ajax({
+                url: '/VDashboard/addnewservice?serviceselection=' + serviceselection + '&&subcategory=' + subcategory,
+                type: 'post',
+                contentType: 'application-json',
+                success: function (data) {
+                    alert(data);
+                    //var url = '/VDashboard/sidebar';
+                    //$('#menusidebar').empty().load(url);
+                    //$('#addservices').css('display', 'none');
+                    location.reload();
+                },
+                error: function (er) {
+                    alert("System Encountered Internal Error!!! Try Again After Some Time");
+                }
+            });
+        }
+        function addservice1(Id) {
+            //var url = '/VDashboard/Addservices?vsid=' + Id;
+            location.href = '/VDashboard/Index?c=first&&vsid=' + Id;
+            //$('#addservice').empty().load(url);
+        }
+        //$('#serviceselection1 > option').each(function () {
+        //    if ($(this).text() == selectedcategory) $(this).parent('select').val($(this).val())
+        //})
+
+        $('#serviceselection1').on('change', function () {
+            var selectedvalue = $(this).val();
+            filterdropdown(selectedvalue);
+        });
+
+        function filterdropdown(selectedvalue) {
+            var subcat = [];
+            $.ajax({
+                url: "/NVendorManageStoreFront/filtercategories?type=" + selectedvalue,
+                success: function (result) {
+                    if (result == "Fail") {
+                        alert("Failed to Fetch data");
+                    }
+                    else {
+                        var selecttag = $('#subcategory').empty();
+                        $.each(result.split(','), function (i, option) {
+                            subcat[i] = "<option value='" + result.split(',')[i] + "'>" + result.split(',')[i] + "</option>";
+                        });
+                        $('#subcategory').empty().append(subcat);
+                        $('#subcategory').css('display', 'block');
+                    }
+                },
+                error: function (data) { alert("Something Went Wrong Try Again Later"); }
+            });
+        }
+    </script>
+    @RenderSection("scripts", false);
+</body>
+</html>
