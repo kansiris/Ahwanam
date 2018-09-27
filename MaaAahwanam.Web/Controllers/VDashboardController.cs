@@ -44,19 +44,23 @@ namespace MaaAahwanam.Web.Controllers
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 string vid = vendorMaster.Id.ToString();
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(vendorMaster.Id));
-                var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id));
+                var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id)).ToList();
+                var orders1 = orderService.userOrderList1().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
+
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
                 ViewBag.order = orders;
-                ViewBag.todaysorder = orders.Where(p => p.BookedDate == todatedate);
-                ViewBag.tommaroworder = orders.Where(p => p.BookedDate == tommarowdate);
-                ViewBag.upcominforder = orders.Where(p => p.BookedDate >= tommarowdate);
+                ViewBag.todaysorder = orders.Where(p => p.BookedDate == todatedate).ToList();
+                ViewBag.todaysorder1 = orders1.Where(p => p.BookedDate == todatedate).ToList();
+                ViewBag.tommaroworder1 = orders1.Where(p => p.BookedDate == tommarowdate).ToList();
+                ViewBag.upcominforder1 = orders1.Where(p => p.BookedDate >= tommarowdate).ToList();
+                ViewBag.tommaroworder = orders.Where(p => p.BookedDate == tommarowdate).ToList();
+                ViewBag.upcominforder = orders.Where(p => p.BookedDate >= tommarowdate).ToList();
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
                 List<VendorVenue> vendor = venues;
                 List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
                 List<VendorImage> vimg = new List<VendorImage>();
-              var    policy = vendorMasterService.Getpolicy(vid, vsid);
-                ViewBag.policy = policy;
+                ViewBag.policy = vendorMasterService.Getpolicy(vid, vsid);
                 //if (date != null)
                 //{
 
@@ -767,7 +771,7 @@ namespace MaaAahwanam.Web.Controllers
             if (selectedamenitieslist.Contains("Hawan_Allowed")) policy.Hawan_Allowed = "Yes"; else policy.Hawan_Allowed = "No";
             if (selectedamenitieslist.Contains("Overnight_wedding_Allowed")) policy.Overnight_wedding_Allowed = "Yes"; else policy.Overnight_wedding_Allowed = "No";
 
-
+            string msg;
 
            policy.Decoration_starting_costs = Decoration_starting_costs;
            policy.Tax = Tax;
@@ -776,12 +780,15 @@ namespace MaaAahwanam.Web.Controllers
            policy.Rooms_Count = Rooms_Count ;
             var policy1 = vendorMasterService.Getpolicy(vid, vsid);
             if (policy1 == null) {
-            //    var data = VendorDashBoardService.UpdateVenue(policy, long.Parse(vid), long.Parse(vsid));
-            //}
-            //else {
-            //    var data = vendorVenueSignUpService.UpdateVenue(policy, long.Parse(vid), long.Parse(vsid));
+                var data = vendorMasterService.insertpolicy(policy, vid, vsid);
+                msg = "policies inserted";
             }
-            return Json("policies Updated");
+            else
+            {
+                var data = vendorMasterService.updatepolicy(policy, vid, vsid);
+                msg = "policies Updated";
+            }
+            return Json(msg);
 
         }
     }

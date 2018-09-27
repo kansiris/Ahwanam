@@ -50,6 +50,8 @@ namespace MaaAahwanam.Web.Controllers
                 string price = "";
                 if (pkgs.PackagePrice == null)
                 { price = Convert.ToString(pkgs.price1); }
+                else { price = Convert.ToString(pkgs.PackagePrice); }
+
                 var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
                 ViewBag.guest = guests;
                 ViewBag.total = total;
@@ -134,8 +136,8 @@ namespace MaaAahwanam.Web.Controllers
                 MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
                 order.TotalPrice = Convert.ToDecimal(totalprice);
                 order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
-                order.UpdatedBy = userid;
-                order.OrderedBy = userid;
+                order.UpdatedBy = long.Parse(vid);
+                order.OrderedBy = long.Parse(vid);
                 order.UpdatedDate = Convert.ToDateTime(updateddate);
                 order.Status = "Pending";
                 order = orderService.SaveOrder(order);
@@ -202,7 +204,7 @@ namespace MaaAahwanam.Web.Controllers
                 emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
             
         
-                return Json("Order placed Successfully", JsonRequestBehavior.AllowGet);
+                return Json("success", JsonRequestBehavior.AllowGet);
         }
 
     }
