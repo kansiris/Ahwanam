@@ -507,22 +507,7 @@
 
         });
 
-        $('#booknow').click(function () {
-            var vid = $("#vendorId").val();
-            var userid = $("#usedid").val();
-            var packid = '@Request.QueryString["pid"]';
-            var loc = '@Request.QueryString["loc"]';
-            var eventtype = '@Request.QueryString["eventtype"]';
-            var guests = '@Request.QueryString["guests"]';
-            var date = '@Request.QueryString["date"]';
-            $.ajax({
-                url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid,
-                type: 'POST',
-                contentType: 'application/json',
-
-                success: function (result) { alert(result); }
-            });
-        });
+  
 
 
         $(document).on('click', '.chcktbl', function () {
@@ -630,7 +615,34 @@
                 });
 
             }
-           
+            $('#booknow').click(function () {
+                var vid = $("#vendorId").val();
+                var userid = $("#usedid").val();
+                var packid = '@ViewBag.pid';
+                var loc = '@ViewBag.loc';
+                var eventtype = '@ViewBag.eventtype';
+                var guests = '@ViewBag.guest';
+                var date = '@ViewBag.date';
+
+                $.ajax({
+                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid,
+                    type: 'POST',
+                    contentType: 'application/json',
+
+                    success: function (result) {
+                        if (result == "success") {
+                            alert("Order placed Successfully");
+                            window.location.href = "/VDashboard/Index";
+                        } else {
+                            alert("Error Occurred in placing order");
+}
+
+
+
+                    }
+                });
+            });
+
         </script>
         
     </body>

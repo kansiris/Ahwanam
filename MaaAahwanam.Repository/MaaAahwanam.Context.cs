@@ -678,5 +678,10 @@ namespace MaaAahwanam.Repository
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<packagevendordates_Result>("packagevendordates");
         }
+    
+        public virtual ObjectResult<sp_vendoruserorddisplay_Result> sp_vendoruserorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vendoruserorddisplay_Result>("sp_vendoruserorddisplay");
+        }
     }
 }

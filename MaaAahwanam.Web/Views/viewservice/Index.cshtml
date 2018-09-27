@@ -300,6 +300,7 @@
     .kscalender {
         background-color: white;
     }
+
         .kscalender.selected {
             border-color: grey;
         }
@@ -336,7 +337,14 @@
                     <div class="uk-grid-sub">
                         @foreach (var item in ViewBag.particularVenue)
                         {
-                            <button style="text-transform: uppercase;font-size:16px" class="tablink" href="#@(++services)"><b>@item.VenueType</b></button>
+                            if (item.name != null && item.name != "")
+                            {
+                                <a style="text-transform: uppercase;font-size:16px" class="tablink" href="#@(++services)"><b>@item.name</b></a>
+                            }
+                            else
+                            {
+                                <a style="text-transform: uppercase;font-size:16px" class="tablink" href="#@(++services)"><b>@item.VenueType</b></a>
+                            }
                         }
                     </div>
                 </div>
@@ -344,12 +352,22 @@
                 @foreach (var item in ViewBag.particularVenue)
                 {
                     <div class="container" id="@(++servicesdiv)">
-                        <h2 style="font-size:44px;font-weight:700;text-transform: uppercase">@item.VenueType</h2>
-                        <h3 class="uk-h3" style="margin-left:4px">AVAILABLE FOOD PACKAGES</h3>
-                        @foreach (var item1 in @ViewBag.availablepackages)
+                        @if (item.name != null && item.name != "")
                         {
-                            if (item1.VendorSubId == item.Id)
-                            {
+                            <h2 style="font-size:30px;font-weight:700;text-transform: uppercase">@item.name - @item.VenueType</h2>
+                        }
+                        else
+                        {
+                            <h2 style="font-size:30px;font-weight:700;text-transform: uppercase">@item.VenueType</h2>
+                        }
+
+                        <h3 class="uk-h3" style="margin-left:4px">AVAILABLE FOOD PACKAGES</h3>
+                        @if (ViewBag.availablepackages.Count != 0)
+                        {
+                           foreach (var item1 in @ViewBag.availablepackages)
+                           {
+                               if (item1.VendorSubId == item.Id)
+                               {
 
                                 <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid">
                                 <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
@@ -369,7 +387,7 @@
                                                     {<b style="font-size:30px">@item1.PackagePrice</b>}
                                                     else
                                                     {
-                                                    <b style="font-size:30px">@item1.price1</b>
+                                                        <b style="font-size:30px">@item1.price1</b>
                                                     }
                                                     / Person
                                                 </span>
@@ -383,9 +401,9 @@
 
                                         @if (item1.PackageDescription != null && item1.PackageDescription != "")
                                         {
-                                        for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
-                                        {
-                                            <a class="btn-pill">@item1.PackageDescription.Split(',')[i]</a>
+                                            for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
+                                            {
+                                                <a class="btn-pill">@item1.PackageDescription.Split(',')[i]</a>
                                             }
                                         }
                                         else
@@ -407,8 +425,14 @@
                                         }
                                     </div>
                                 </div><br><br>
+                                }
                             }
                         }
+                        else
+                        {
+                            <span>No Packages Available</span>
+                        }
+
                     </div>
 
                     <h3 class="uk-h3">HALL DETAILS</h3>
@@ -464,12 +488,12 @@
                             <h6>AMENITIES</h6>
                             <div class="row-2" overflow="visible">
                                 <table>
-                                    
+
                                     @if (ViewBag.amenities[servicescount].Split(',').Length != 0)
                                     {
                                         var rcount = ViewBag.amenities.Count;
-                                        
-                                        
+
+
                                         var first = 0; var next = 0;
                                         for (int i = 0; i < ViewBag.amenities[servicescount].Split(',').Length; i++)
                                         {
@@ -520,8 +544,166 @@
                     @*<h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
                         <div class='vendorcalendar'></div>
                          <input type="hidden" class="vendorcalendardates" value="" />*@
+                    <div class="white-wrapper">
+                        <h2 class="heading"><b>Policies</b></h2>
+                        <div class="policies">
+                            <!-- <div class="col-sm-6"> -->
+                            <!-- Decorators -->
 
+                            <div class="policies-col">
+                                <div class="decorators">
+                                    <h4 class="sub-title"><b>Decor</b></h4>
+                                    <ul class="tab-data highlights" style="padding-left: 0px;">
+                                        <li>
+                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            Outside decorators allowed
+                                        </li>
+                                        <li>
+                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            Decor provided by the venue
+                                        </li>
+                                        <li>
+                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            Decorators allowed with royalty
 
+                                        </li>
+                                        <li>
+                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            Decoration starting costs Rs 6,000
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Panel Decorators -->
+                                <!-- </div> -->
+                            </div>
+
+                            <div class="policies-col">
+                                <!-- Caterers -->
+                                <div class="caterers">
+                                    <h4 class="sub-title"><b>Food</b></h4>
+                                    <ul class="tab-data highlights" style="padding-left: 0px;">
+                                        <li>
+                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                            Food provided by the venue
+                                        </li>
+                                        <li><img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> Outside food/caterer allowed at the venue</li>
+                                        <li>
+                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png"> Non-Veg allowed at the venue
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Panel caterers -->
+                                <!-- </div> -->
+                            </div>
+                            <!-- Alcohol -->
+                            <!-- <div class="col-sm-6"> -->
+                            <div class="policies-col alcohol">
+                                <h4 class="sub-title"><b>Alcohol</b></h4>
+                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                    <li>
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">Alcohol allowed at the venue
+                                    </li>
+                                    <li>
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/error1.png"> Outside alcohol allowed at the venue
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <!-- Taxes -->
+                            <!-- <div class="col-sm-6"> -->
+                            <div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
+                                <h4 class="sub-title"><b>Taxes</b></h4>
+                                <ul class="tab-data" style="padding-left: 0px;">
+                                    <li> Taxes F&amp;B : <b>18.00%</b></li>
+                                </ul>
+                            </div>
+                            <!-- </div> -->
+                            <!-- Parking -->
+                            <!-- <div class="col-sm-6">-->
+
+                            <div class="policies-col parking" style="margin-top:41px;">
+                                <h4 class="sub-title"><b>Parking</b></h4>
+                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                    <li><img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> Valet provided by venue</li>
+                                    <li> Parking space available for 150 vehicles</li>
+                                </ul>
+                            </div>
+
+                            <!-- </div>-->
+                            <!-- Cancellation -->
+                            <!-- Rental -->
+                            <!-- <div class="col-sm-6"> -->
+                            <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
+                                <h4 class="sub-title"><b>Cancellation</b></h4>
+                                <ul class="tab-data" style="padding-left: 0px;">
+
+                                    <li> Non cancellable</li>
+
+                                </ul>
+                            </div>
+                            <!-- </div> -->
+                            <!-- </div> -->
+                            <!-- <div class="col-sm-6">	 -->
+                            <!-- <div class="col-sm-6"> -->
+                            <!-- </div> -->
+                            <!-- Advance -->
+                            <!-- <div class="col-sm-6"> -->
+                            <div class="policies-col advance" style="margin-top:37px;">
+                                <h4 class="sub-title"><b>Advance</b></h4>
+                                <ul class="tab-data" style="padding-left: 0px;">
+                                    <li> <b>50%</b> at the time of booking</li>
+                                </ul>
+                            </div>
+                            <!-- </div> -->
+
+                            <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
+                                <h4 class="sub-title"><b>Changing Room</b></h4>
+                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                    <li><img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">Changing Room A/C</li>
+                                    <li>
+                                        No. of complimentary changing rooms: <strong>2</strong>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="policies-col highlights high-light">
+                                <h4 class="sub-title"><b>Other Policies</b></h4>
+                                <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
+                                    <li>
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                        Music allowed late
+                                    </li>
+                                    <li>
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                        Halls are air conditioned
+                                    </li>
+                                    <li>
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                        Ample parking
+                                    </li>
+                                    <li>
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                        Baarat allowed
+                                    </li>
+                                    <li style="margin-left: 193px;margin-top: -89px;">
+
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                        Fire crackers allowed
+                                    </li>
+                                    <li style="margin-left: 193px;margin-top: 4px;">
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                        Hawan allowed
+                                    </li>
+                                    <li style="margin-left: 193px;margin-top: 6px;">
+                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                        Overnight wedding allowed
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
 
                     <br />
                     <br />
@@ -554,14 +736,14 @@
                         <!-- /grid gallery -->
                     </div>
                     <!-- /container -->
-                    <h3 class="uk-h3">VENUE POLICIES</h3>
-                    <P>Read all the terms & conditions of the banquet hall.</P><br><br>
+                    @*<h3 class="uk-h3">VENUE POLICIES</h3>
+                        <P>Read all the terms & conditions of the banquet hall.</P><br><br>
 
-                    <figure>
-                        <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
-                        <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
-                        <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
-                    </figure>
+                        <figure>
+                            <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
+                            <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
+                            <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
+                        </figure>*@
                     <hr />
                 }
                 <h3 class="uk-h3">DESCRIPTION</h3>
@@ -576,6 +758,7 @@
                     }
 
                 </p>
+                <hr />
                 <h3 class="uk-h3">ADDRESS</h3>
                 <p>
                     @ViewBag.Productinfo.Address,@ViewBag.Productinfo.Landmark,@ViewBag.Productinfo.City,@ViewBag.Productinfo.State,@ViewBag.Productinfo.ZipCode
@@ -615,8 +798,8 @@
                             @*<img src="http://design.maa-aahwanam.com/panagea/images/right.png" />
 
                                 </div>*@
-                            <div class="row packesss" id="allrecords" >
-                                
+                            <div class="row packesss" id="allrecords">
+
                                 <div class="left">
                                     <button class="buttonks buttonks1" id="left-button">
                                         <<
@@ -633,7 +816,7 @@
                                     </button>
                                     <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:44px;margin-left:10px">
                                 </div>
-                                   
+
                             </div>
                             <div>
                                 <form class="uk-form-stacked" style="margin-top:-10px">
@@ -848,8 +1031,8 @@
                     processData: false,
                     data: data,
                     success: function (result) {
-                       // alert(result);
-                       // datesdiv.clear();
+                        // alert(result);
+                        // datesdiv.clear();
                         // datesdiv.remove();
                         //datesdiv.replaceWith(result);
 
@@ -901,22 +1084,22 @@
             }, "slow");
         });
 
-        var timeslot = '';
-        $('.iCheck-helper').click(function () {
-            //if ($(this).is(':checked')) {
-            //    var ks = $(this).find('input[name=timeslot]').val();
-            //    alert(ks);
-            if ($('.iCheck').is(":checked")) {
-                var favorite = [];
-                $.each($("input[name='timeslot']:checked"), function () {
-                    favorite.push($(this).val());
-                    timeslot = favorite.join(", ");
-                })
-            }
-            else {
-                alert("Please select time slot");
-            }
-        });
+        //var timeslot = '';
+        //$('.iCheck-helper').click(function () {
+        //    //if ($(this).is(':checked')) {
+        //    //    var ks = $(this).find('input[name=timeslot]').val();
+        //    //    alert(ks);
+        //    if ($('.iCheck').is(":checked")) {
+        //        var favorite = [];
+        //        $.each($("input[name='timeslot']:checked"), function () {
+        //            favorite.push($(this).val());
+        //            timeslot = favorite.join(", ");
+        //        })
+        //    }
+        //    else {
+        //        alert("Please select time slot");
+        //    }
+        //});
     </script>
 
 
@@ -977,7 +1160,7 @@
             var gu1 = window.localStorage.getItem("guests");
             var eventtype = window.localStorage.getItem("eventtype");
             var seldate = $('input[name=radioname]:checked').val();
-           
+
             var guest = '';
             //alert(gu1);
             if (gu1 == null) {
@@ -1058,14 +1241,22 @@
         $('.btnpkg').on('click', function () {
             var check = $(this).prev('input.btnpkgcheck');
             var img = $(this).children('img');
-            //alert(check.is(':checked'));
-            if (check.is(':checked')) {
-                //alert("");
-                check.removeAttr('checked');
+            check.change();
+        });
+
+        $('.btnpkgcheck').on('change',function(){
+            var img = $(this).next('button.btnpkg').find('img');
+            //alert('radio changes');
+            img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
+
+            if ($(this).is(':checked')) {
+                //alert("unchecked");
+                $(this).removeAttr('checked');
                 img.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
             }
             else {
-                check.prop('checked', 'checked');
+                //alert("checked");
+                $(this).prop('checked', 'checked');
                 img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
             }
         });
