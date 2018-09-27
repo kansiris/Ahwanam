@@ -33,7 +33,8 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.vendorname = orderdetails.FirstOrDefault().BusinessName;
                     ViewBag.vendoraddress = orderdetails.FirstOrDefault().Address +","+ orderdetails.FirstOrDefault().Landmark +","+orderdetails.FirstOrDefault().City;
                     ViewBag.vendorcontact = orderdetails.FirstOrDefault().ContactNumber;
-                    ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
+                    ViewBag.bookeddate = Convert.ToDateTime(orderdetails.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
+                    ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                     ViewBag.orderdetails = orderdetails;
                     ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
                 }
