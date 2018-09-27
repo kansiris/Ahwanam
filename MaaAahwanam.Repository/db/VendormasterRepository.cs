@@ -43,7 +43,24 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return vendorMaster;
         }
-         
+
+        public Policy insertpolicy(Policy policy, long vid,long vsid)
+        {
+            _dbContext.Policy.Add(policy);
+            _dbContext.SaveChanges();
+            return policy;
+        }
+
+        public Policy updatepolicy(Policy policy, long vid, long vsid)
+        {
+            var GetVendor = _dbContext.Policy.SingleOrDefault(m => m.VendorId == Convert.ToString(vid) && m.VendorSubId == Convert.ToString(vsid));
+            policy.Id = GetVendor.Id;
+            policy.VendorId = GetVendor.VendorId;
+            _dbContext.Entry(GetVendor).CurrentValues.SetValues(policy);
+            _dbContext.SaveChanges();
+            return policy;
+        }
+
         public int checkemail(string emailid)
         {
             int i = _dbContext.Vendormaster.Where(m => m.EmailId == emailid).Count();

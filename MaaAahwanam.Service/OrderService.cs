@@ -21,6 +21,10 @@ namespace MaaAahwanam.Service
         {
             return orderRepository.userOrderList();
         }
+        public List<sp_vendoruserorddisplay_Result> userOrderList1()
+        {
+            return orderRepository.userOrderList1();
+        }
         public List<MaaAahwanam_Orders_OrderDetails_Result> OrderDetailServivce(long id)
         {
             return orderRepository.GetOrderDetailsList(id);

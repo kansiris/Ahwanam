@@ -34,6 +34,14 @@ namespace MaaAahwanam.Service
             return vendormasterRepository.UpdateVendorMaster(vendorMaster, id);
         }
 
+        public Policy insertpolicy(Policy policy, long vid,long vsid)
+        {
+            return vendormasterRepository.insertpolicy(policy, vid,vsid);
+        }
+        public Policy updatepolicy(Policy policy, long vid, long vsid)
+        {
+            return vendormasterRepository.updatepolicy(policy, vid, vsid);
+        }
         public Vendormaster GetVendorByEmail(string emailid)
         {
             return vendormasterRepository.GetVendorByEmail(emailid);
