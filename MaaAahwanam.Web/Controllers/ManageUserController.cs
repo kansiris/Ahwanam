@@ -26,7 +26,7 @@ namespace MaaAahwanam.Web.Controllers
 
 
         // GET: ManageUser
-        public ActionResult Index(string VendorId,string loc,string eventtype,string count,string date,string pid)
+        public ActionResult Index(string VendorId,string select)
         {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string uid = user.UserId.ToString();
@@ -35,6 +35,27 @@ namespace MaaAahwanam.Web.Controllers
                 VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 ViewBag.Userlist = mnguserservice.getuser(VendorId);
+            if (select != null)
+            {
+                var select1 = select.Split(',');
+
+                ViewBag.loc = select1[0];
+                var guests = select1[1];
+                DateTime date = Convert.ToDateTime(select1[2]);
+                string date1 = date.ToString("dd-MM-yyyy");
+                ViewBag.date = date1;
+                ViewBag.eventtype = select1[3];
+                var pid = select1[4];
+                var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                string price = "";
+                if (pkgs.PackagePrice == null)
+                { price = Convert.ToString(pkgs.price1); }
+                var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
+                ViewBag.guest = guests;
+                ViewBag.total = total;
+                ViewBag.price = price;
+                ViewBag.pid = pid;
+            }
                 return View();
         }
         [HttpPost]
@@ -89,13 +110,15 @@ namespace MaaAahwanam.Web.Controllers
             string totalprice = "";
                 string type = pkgs.VendorType;
                 string guest = count;
-                string price = Convert.ToString(pkgs.PackagePrice);
+            string price = "";
+            if (pkgs.PackagePrice == null)
+            { price = Convert.ToString(pkgs.price1); }
+            else { price = Convert.ToString(pkgs.PackagePrice); }
             string totalprice1 = (Convert.ToInt32(price) * Convert.ToInt32(count)).ToString();
-                string id = Convert.ToString(pid);
+               // string id = Convert.ToString(pid);
                 //string did = Convert.ToString(cartdetails.DealId);
                // string timeslot = cartdetails.attribute;
                 string etype1 = eventtype;
-                DateTime date1 = Convert.ToDateTime(date);
                 if (type == "Photography" || type == "Decorator" || type == "Other")
                 {
                     totalprice = price;
@@ -124,13 +147,13 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.OrderBy = userid;
                 orderDetail.PaymentId = '1';
                // orderDetail.ServiceType = type;
-                orderDetail.ServicePrice = decimal.Parse(pkgs.PackagePrice);
+                orderDetail.ServicePrice = decimal.Parse(price);
               //  orderDetail.attribute = timeslot;
                 orderDetail.TotalPrice = decimal.Parse(totalprice);
-                orderDetail.PerunitPrice = decimal.Parse(pkgs.PackagePrice);
+                orderDetail.PerunitPrice = decimal.Parse(price);
                 orderDetail.Quantity = int.Parse(count);
                 orderDetail.OrderId = order.OrderId;
-                orderDetail.VendorId = long.Parse(id);
+                orderDetail.VendorId = long.Parse(vid);
                 orderDetail.Status = "Pending";
                 orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                 orderDetail.UpdatedBy = userid;
@@ -141,12 +164,12 @@ namespace MaaAahwanam.Web.Controllers
               
 
                 orderdetailsServices.SaveOrderDetail(orderDetail);
+            var userlogdetails = mnguserservice.getuserbyid(userid);
 
-                var userlogdetails = userLoginDetailsService.GetUserId(userid);
 
-                string txtto = userlogdetails.UserName;
-                var userdetails = userLoginDetailsService.GetUser(userid);
-                string name = userdetails.FirstName;
+                string txtto = userlogdetails.email;
+              
+                string name = userlogdetails.firstname;
                 name = home.Capitalise(name);
                 string OrderId = Convert.ToString(order.OrderId);
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority;
@@ -161,7 +184,7 @@ namespace MaaAahwanam.Web.Controllers
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
 
-                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(id));
+                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vid));
 
                 string txtto1 = vendordetails.EmailId;
                 string vname = vendordetails.BusinessName;
@@ -179,7 +202,7 @@ namespace MaaAahwanam.Web.Controllers
                 emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
             
         
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                return Json("Order placed Successfully", JsonRequestBehavior.AllowGet);
         }
 
     }

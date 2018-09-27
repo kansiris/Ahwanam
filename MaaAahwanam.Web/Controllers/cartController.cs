@@ -382,19 +382,19 @@ namespace MaaAahwanam.Web.Controllers
         //    return Json(JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult booknow(string cartnos, string paymentid, string amountpaid)
+        public ActionResult booknow(string selcartid, string searchedcontent)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 if (user.UserType == "User")
                 {
-
+                    selcartid = selcartid.Trim(',');
                     HomeController home = new HomeController();
                     var userdata = userLoginDetailsService.GetUser((int)user.UserId);
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                     var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    var cartnos1 = cartnos.Split(',');
+                    var cartnos1 = selcartid.Split(',');
 
                     //Payment Section
 
@@ -430,7 +430,7 @@ namespace MaaAahwanam.Web.Controllers
                         OrderService orderService = new OrderService();
                         MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
                         order.TotalPrice = Convert.ToDecimal(totalprice);
-                        order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
+                        order.OrderDate = date;
                         order.UpdatedBy = (Int64)user.UserId;
                         order.OrderedBy = (Int64)user.UserId;
                         order.UpdatedDate = Convert.ToDateTime(updateddate);
@@ -511,11 +511,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult booknow(string selcartid, string searchedcontent)
-        {
-            var message = "success";
-            return Json(message);
-        }
+      
     }
 }
 
