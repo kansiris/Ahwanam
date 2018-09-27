@@ -378,7 +378,7 @@
                                     <div class="col-sm">
                                         <div align="center">
                                             <p class="box-text">
-                                                <text class="pname">@item1.PackageName</text>
+                                                <text class="pname">@item1.PackageName.Replace("_"," ")</text>
                                                 <br />
                                                 <br />
                                                 <span>
@@ -414,14 +414,14 @@
                                     </div>
                                     @*<img src="~/newdesignstyles/img/plus.png" />*@
                                     <div class="col-sm-sm" style="max-width:15%">
-                                        <input type="radio" name="btnradio" class="btnpkgcheck" style="display:block" />
+                                        <input type="radio" name="btnradio" class="btnpkgcheck" style="display:none" />
                                         @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
                                         {
-                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img src="~/newdesignstyles/img/plus.png" /></button>
+                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
                                         }
                                         else
                                         {
-                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img src="~/newdesignstyles/img/plus.png" /></button>
+                                            <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
                                         }
                                     </div>
                                 </div><br><br>
@@ -489,7 +489,7 @@
                             <div class="row-2" overflow="visible">
                                 <table>
 
-                                    @if (ViewBag.amenities[servicescount].Split(',').Length != 0)
+                                    @if (ViewBag.amenities[servicescount].Split(',').Length != 0 && ViewBag.amenities[servicescount] != "")
                                     {
                                         var rcount = ViewBag.amenities.Count;
 
@@ -518,6 +518,14 @@
                                         {
                                             servicescount = (++servicescount);
                                         }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4">
+                                                No Amenities
+                                            </td>
+                                        </tr>
                                     }
                                 </table>
                             </div>
@@ -1335,23 +1343,19 @@
             var check = $(this).prev('input.btnpkgcheck');
             var img = $(this).children('img');
             check.change();
-        });
-
-        $('.btnpkgcheck').on('change',function(){
-            var img = $(this).next('button.btnpkg').find('img');
-            alert('radio changes');
-            img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
-
-            if ($(this).is(':checked')) {
-                alert("unchecked");
-                $(this).removeAttr('checked');
+            if (check.is(':checked')) {
+                check.removeAttr('checked');
                 img.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
             }
             else {
-                alert("checked");
-                $(this).prop('checked', 'checked');
+                check.prop('checked', 'checked');
                 img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
             }
+        });
+
+        $('.btnpkgcheck').on('change',function(){
+            var allimages = $('img.pkgimg');
+            allimages.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
         });
 
         //$(document).ready(function() {

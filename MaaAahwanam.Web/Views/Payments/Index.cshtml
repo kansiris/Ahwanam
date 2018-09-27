@@ -1,12 +1,11 @@
-﻿
-@{
-    ViewBag.Title = ":: Invoice ::";
+﻿@{
+    ViewBag.Title = ":: RecivedPayments::";
     Layout = "~/Views/SharedWeb/vendorloginmaster.cshtml";
 }
 
 @section css{
     <style>
-        .invoice-title h2, .invoice-title h3 {
+        .Payments-title h2, .invoice-title h3 {
             display: inline-block;
         }
 
@@ -34,21 +33,22 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-2">
-                    
-                        <div class="card" id="profilepipccontent">
-                            @{Html.RenderAction("profilepic", "VDashboard");}
-                        </div>
-                        @{Html.RenderAction("sidebar", "VDashboard"); }
-                    
+
+                    <div class="card" id="profilepipccontent">
+                        @{Html.RenderAction("profilepic", "VDashboard");}
+                    </div>
+                    @{Html.RenderAction("sidebar", "VDashboard"); }
+
                 </div>
 
                 <div class="col-md-10">
                     <div class="row">
                         <div class="col-12" style="padding-left:30px">
-                            <div class="invoice-title add_top_30">
-                                <h3 style="color:black">Invoice</h3><h3 class="float-right">Order # @ViewBag.orderid</h3>
+                            <div class="Payments-title add_top_30">
+                                <h3 style="color:black;display:inline">Received Payments</h3>
+                                <h3 class="float-right" style="display:inline">Order # @ViewBag.orderid</h3>
                             </div>
-                            <hr>
+                             <hr />
                             <div class="row">
                                 <div class="col-6">
                                     <address>
@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="col-6 text-right">
                                     <address>
-                                        <strong>Shipped To:</strong><br>
+                                        <strong>Customer Name:</strong><br>
                                         @ViewBag.username<br>
                                     </address>
                                 </div>
@@ -67,24 +67,17 @@
                             <div class="row">
                                 <div class="col-6">
                                     <address>
-                                        <strong>Booked Date:</strong><br>
-                                        @ViewBag.bookeddate<br><br>
+                                        <strong>Order Date:</strong><br>
+                                        @ViewBag.orderdate<br><br>
                                     </address>
-                                    <address>
-                                        <strong>Payment Method:</strong><br>
-                                        Visa ending **** 4242<br>
-                                        @*jsmith@email.com*@
-                                    </address>
-                                    
                                 </div>
                                 <div class="col-6 text-right">
                                     <address>
-                                        <strong>Order Date:</strong><br>
-                                       @ViewBag.orderdate<br><br>
+                                        <strong>Total Price:</strong><br />
+                                        ₹ 0<br /><br />
                                     </address>
-
-                                    
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -97,23 +90,25 @@
                                     <table class="table table-condensed" style="width:100%;max-width:100%">
                                         <thead>
                                             <tr>
-                                                <td><strong>Package Name</strong></td>
+                                                <td><strong>Select</strong></td>
+                                                <td><strong>Event Type</strong></td>
                                                 <td class="text-center"><strong>Price</strong></td>
                                                 <td class="text-center"><strong>Quantity</strong></td>
-                                                <td class="text-right"><strong>Total</strong></td>
+                                                <td class="text-right"><strong>Total Amount</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in ViewBag.orderdetails)
                                             {
                                                 <tr>
+                                                    <td><input type="checkbox" class="chcktbl" value="" /></td>
                                                     <td>@item.EventType</td>
                                                     <td class="text-center">₹ @item.PerunitPrice</td>
                                                     <td class="text-center">@item.Quantity</td>
                                                     <td class="text-right">₹ @item.TotalPrice</td>
                                                 </tr>
                                             }
-                                            <tr>
+                                            @*<tr>
                                                 <td class="thick-line"></td>
                                                 <td class="thick-line"></td>
                                                 <td class="thick-line text-center"><strong>Subtotal</strong></td>
@@ -122,7 +117,7 @@
                                             <tr>
                                                 <td class="no-line"></td>
                                                 <td class="no-line"></td>
-                                                <td class="no-line text-center"><strong>GST</strong></td>
+                                                <td class="no-line text-center"><strong>Shipping</strong></td>
                                                 <td class="no-line text-right">₹ 0</td>
                                             </tr>
                                             <tr>
@@ -130,10 +125,12 @@
                                                 <td class="no-line"></td>
                                                 <td class="no-line text-center"><strong>Total</strong></td>
                                                 <td class="no-line text-right">₹ @ViewBag.totalprice</td>
-                                            </tr>
+                                            </tr>*@
                                         </tbody>
                                     </table>
                                 </div>
+                                <hr />
+
                                 <a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>
                             </div>
                         </div>
@@ -146,4 +143,3 @@
     </div>
     <!-- /error_page -->
 </main>
-
