@@ -421,14 +421,15 @@
             var location = window.localStorage.getItem("location");
             var eventtype = window.localStorage.getItem("eventtype");
             var date = window.localStorage.getItem("eventdate");
-            var searchedcontent = 'Guests:' + guests + ',Location:' + location + ',Event Type:' + eventtype + ',Selected Date:' + date + '';
+            var searchedcontent = 'Guests:' + guests + ',Location:' + location + ',EventType:' + eventtype + ',SelectedDate:' + date + '';
+            var total = $(this).parents(".netamount").text();
             //alert(searchedcontent);
             var selcartid = $('.selectedcart').val();
             if (selcartid == undefined) { alert('select the cart item') } else {
                 $.ajax({
                     url: '/cart/booknow',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                     type: 'POST',
-                    data: JSON.stringify({ selcartid: selcartid, searchedcontent: searchedcontent }),
+                    data: JSON.stringify({ selcartid: selcartid, searchedcontent: searchedcontent, total: total }),
                     //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                     dataType: 'json',
                     contentType: 'application/json',

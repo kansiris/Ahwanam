@@ -302,21 +302,21 @@ namespace MaaAahwanam.Web.Controllers
                 if (selectedamenitieslist.Contains("HDTV")) vendorVenue.HDTV = "Yes"; else vendorVenue.HDTV = "No";
                 if (selectedamenitieslist.Contains("Pet Friendly")) vendorVenue.Pet_Friendly = "Yes"; else vendorVenue.Pet_Friendly = "No";
                 if (selectedamenitieslist.Contains("Gym")) vendorVenue.Gym = "Yes"; else vendorVenue.Gym = "No";
-                if (selectedamenitieslist.Contains("In-house Restaurant")) vendorVenue.In_house_Restaurant = "Yes"; else vendorVenue.In_house_Restaurant = "No";
+                if (selectedamenitieslist.Contains("In_house_Restaurant")) vendorVenue.In_house_Restaurant = "Yes"; else vendorVenue.In_house_Restaurant = "No";
                 if (selectedamenitieslist.Contains("Hair Dryer")) vendorVenue.Hair_Dryer = "Yes"; else vendorVenue.Hair_Dryer = "No";
                 if (selectedamenitieslist.Contains("Mini Fridge")) vendorVenue.Mini_Fridge = "Yes"; else vendorVenue.Mini_Fridge = "No";
-                if (selectedamenitieslist.Contains("In-Room Safe")) vendorVenue.In_Room_Safe = "Yes"; else vendorVenue.In_Room_Safe = "No";
-                if (selectedamenitieslist.Contains("Room Heater")) vendorVenue.Room_Heater = "Yes"; else vendorVenue.Room_Heater = "No";
+                if (selectedamenitieslist.Contains("In_Room_Safe")) vendorVenue.In_Room_Safe = "Yes"; else vendorVenue.In_Room_Safe = "No";
+                if (selectedamenitieslist.Contains("Room_Heater")) vendorVenue.Room_Heater = "Yes"; else vendorVenue.Room_Heater = "No";
                 if (selectedamenitieslist.Contains("Wheelchair Accessible")) vendorVenue.Wheelchair_Accessible = "Yes"; else vendorVenue.Wheelchair_Accessible = "No";
                 if (selectedamenitieslist.Contains("Power Backup")) vendorVenue.Power_Backup = "Yes"; else vendorVenue.Power_Backup = "No";
                 if (selectedamenitieslist.Contains("Dining Area")) vendorVenue.Dining_Area = "Yes"; else vendorVenue.Dining_Area = "No";
                 if (selectedamenitieslist.Contains("Bar")) vendorVenue.Bar = "Yes"; else vendorVenue.Bar = "No";
                 if (selectedamenitieslist.Contains("Conference Room")) vendorVenue.Conference_Room = "Yes"; else vendorVenue.Conference_Room = "No";
-                if (selectedamenitieslist.Contains("Swimming Pool")) vendorVenue.Swimming_Pool = "Yes"; else vendorVenue.AC = "No";
+                if (selectedamenitieslist.Contains("Swimming_Pool")) vendorVenue.Swimming_Pool = "Yes"; else vendorVenue.AC = "No";
                 if (selectedamenitieslist.Contains("CCTV Cameras")) vendorVenue.CCTV_Cameras = "Yes"; else vendorVenue.CCTV_Cameras = "No";
                 if (selectedamenitieslist.Contains("Laundry")) vendorVenue.Laundry = "Yes"; else vendorVenue.Laundry = "No";
                 if (selectedamenitieslist.Contains("Banquet Hall")) vendorVenue.Banquet_Hall = "Yes"; else vendorVenue.Banquet_Hall = "No";
-                if (selectedamenitieslist.Contains("Lift/Elevator")) vendorVenue.Lift_or_Elevator = "Yes"; else vendorVenue.Lift_or_Elevator = "No";
+                if (selectedamenitieslist.Contains("Lift_or_Elevator")) vendorVenue.Lift_or_Elevator = "Yes"; else vendorVenue.Lift_or_Elevator = "No";
                 if (selectedamenitieslist.Contains("Card Payment")) vendorVenue.Card_Payment = "Yes"; else vendorVenue.Card_Payment = "No";
                 if (selectedamenitieslist.Contains("Parking Facility")) vendorVenue.Parking_Facility = "Yes"; else vendorVenue.Parking_Facility = "No";
                 if (selectedamenitieslist.Contains("Geyser")) vendorVenue.Geyser = "Yes"; else vendorVenue.AC = "No";
@@ -727,39 +727,60 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message);
         }
 
-        public JsonResult updatepolicy()
+        public JsonResult updatepolicy( string policycheck,string vsid, string Tax,string Decoration_starting_costs,string Rooms_Count,string Advance_Amount,string Room_Average_Price)
         {
-            //Policy policy = new Policy();
-            //policy.ServiceType = ServiceType;
-            //policy.VendorId = VendorId;
-            //policy.VendorSubId { get; set; }
-            //policy.Outside_decorators_allowed { get; set; }
-            //policy.Decor_provided { get; set; }
-            //policy.Decorators_allowed_with_royalty { get; set; }
-            //policy.Decoration_starting_costs { get; set; }
-            //policy.Food_provided { get; set; }
-            //policy.Outside_food_or_caterer_allowed { get; set; }
-            //policy.NonVeg_allowed { get; set; }
-            //policy.Alcohol_allowed { get; set; }
-            //policy.Outside_Alcohol_allowed { get; set; }
-            //policy.Tax { get; set; }
-            //policy.Valet_Parking { get; set; }
-            //policy.Parking_Space { get; set; }
-            //policy.Cancellation { get; set; }
-            //policy.Advance_Amount { get; set; }
-            //policy.Available_Rooms { get; set; }
-            //policy.Rooms_Count { get; set; }
-            //policy.Room_Average_Price { get; set; }
-            //policy.Changing_Rooms_AC { get; set; }
-            //policy.Complimentary_Changing_Room { get; set; }
-            //policy.Music_Allowed_Late { get; set; }
-            //policy.Halls_AC { get; set; }
-            //policy.Ample_Parking { get; set; }
-            //policy.Baarat_Allowed { get; set; }
-            //policy.Fire_Crackers_Allowed { get; set; }
-            //policy.Hawan_Allowed { get; set; }
-            //policy.Overnight_wedding_Allowed { get; set; }
 
+            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+
+            Policy policy = new Policy();
+            policy.ServiceType = vendorMaster.ServicType;
+            policy.VendorId = vid;
+            policy.VendorSubId = vsid;
+
+
+            string[] selectedamenitieslist = policycheck.Split(',');
+            //if (vendormaster.ServicType == "Venue")
+            //{
+            if (selectedamenitieslist.Contains("Outside_decorators_allowed")) policy.Outside_decorators_allowed = "Yes"; else policy.Outside_decorators_allowed = "No";
+            if (selectedamenitieslist.Contains("Decor_provided")) policy.Decor_provided = "Yes"; else policy.Decor_provided = "No";
+            if (selectedamenitieslist.Contains("Decorators_allowed_with_royalty")) policy.Decorators_allowed_with_royalty = "Yes"; else policy.Decorators_allowed_with_royalty = "No";
+            if (selectedamenitieslist.Contains("Food_provided")) policy.Food_provided = "Yes"; else policy.Food_provided = "No";
+            if (selectedamenitieslist.Contains("Outside_food_or_caterer_allowed")) policy.Outside_food_or_caterer_allowed = "Yes"; else policy.Outside_food_or_caterer_allowed = "No";
+            if (selectedamenitieslist.Contains("NonVeg_allowed")) policy.NonVeg_allowed = "Yes"; else policy.NonVeg_allowed = "No";
+            if (selectedamenitieslist.Contains("Alcohol_allowed")) policy.Alcohol_allowed = "Yes"; else policy.Alcohol_allowed = "No";
+            if (selectedamenitieslist.Contains("Outside_Alcohol_allowed")) policy.Outside_Alcohol_allowed = "Yes"; else policy.Outside_Alcohol_allowed = "No";
+            if (selectedamenitieslist.Contains("Valet_Parking")) policy.Valet_Parking = "Yes"; else policy.Valet_Parking = "No";
+            if (selectedamenitieslist.Contains("Parking_Space")) policy.Parking_Space = "Yes"; else policy.Parking_Space = "No";
+            if (selectedamenitieslist.Contains("Cancellation")) policy.Cancellation = "Yes"; else policy.Cancellation = "No";
+            if (selectedamenitieslist.Contains("Available_Rooms")) policy.Available_Rooms = "Yes"; else policy.Available_Rooms = "No";
+            if (selectedamenitieslist.Contains("Changing_Rooms_AC")) policy.Changing_Rooms_AC = "Yes"; else policy.Changing_Rooms_AC = "No";
+            if (selectedamenitieslist.Contains("Complimentary_Changing_Room")) policy.Complimentary_Changing_Room = "Yes"; else policy.Complimentary_Changing_Room = "No";
+            if (selectedamenitieslist.Contains("Music_Allowed_Late")) policy.Music_Allowed_Late = "Yes"; else policy.Music_Allowed_Late = "No";
+            if (selectedamenitieslist.Contains("Halls_AC")) policy.Halls_AC = "Yes"; else policy.Halls_AC = "No";
+            if (selectedamenitieslist.Contains("Ample_Parking")) policy.Ample_Parking = "Yes"; else policy.Ample_Parking = "No";
+            if (selectedamenitieslist.Contains("Baarat_Allowed")) policy.Baarat_Allowed = "Yes"; else policy.Baarat_Allowed = "No";
+            if (selectedamenitieslist.Contains("Fire_Crackers_Allowed")) policy.Fire_Crackers_Allowed = "Yes"; else policy.Fire_Crackers_Allowed = "No";
+            if (selectedamenitieslist.Contains("Hawan_Allowed")) policy.Hawan_Allowed = "Yes"; else policy.Hawan_Allowed = "No";
+            if (selectedamenitieslist.Contains("Overnight_wedding_Allowed")) policy.Overnight_wedding_Allowed = "Yes"; else policy.Overnight_wedding_Allowed = "No";
+
+
+
+           policy.Decoration_starting_costs = Decoration_starting_costs;
+           policy.Tax = Tax;
+           policy.Advance_Amount = Advance_Amount;
+           policy.Room_Average_Price = Room_Average_Price;
+           policy.Rooms_Count = Rooms_Count ;
+            var policy1 = vendorMasterService.Getpolicy(vid, vsid);
+            if (policy1 == null) {
+            //    var data = VendorDashBoardService.UpdateVenue(policy, long.Parse(vid), long.Parse(vsid));
+            //}
+            //else {
+            //    var data = vendorVenueSignUpService.UpdateVenue(policy, long.Parse(vid), long.Parse(vsid));
+            }
             return Json("policies Updated");
 
         }
