@@ -49,8 +49,8 @@ namespace MaaAahwanam.Web.Controllers
 
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
-                ViewBag.order = orders;
-                ViewBag.order1 = orders1;
+                ViewBag.order = orders.OrderByDescending(m => m.OrderId);
+                ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
                 ViewBag.todaysorder = orders.Where(p => p.BookedDate == todatedate).ToList();
                 ViewBag.todaysorder1 = orders1.Where(p => p.BookedDate == todatedate).ToList();
                 ViewBag.tommaroworder1 = orders1.Where(p => p.BookedDate == tommarowdate).ToList();
