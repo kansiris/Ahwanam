@@ -541,169 +541,262 @@
                         </div>
                     </div>
                     <br><br>
-                    @*<h3 class="uk-h3">AVAILABILITY CALENDAR</h3>
-                        <div class='vendorcalendar'></div>
-                         <input type="hidden" class="vendorcalendardates" value="" />*@
-                    <div class="white-wrapper">
-                        <h2 class="heading"><b>Policies</b></h2>
-                        <div class="policies">
-                            <!-- <div class="col-sm-6"> -->
-                            <!-- Decorators -->
+                        <div class="white-wrapper">
+                            <h2 class="heading"><b>Policies</b></h2>
+                            @if (ViewBag.policy.Count != 0)
+                            {
+                                foreach (var iks in ViewBag.policy)
+                                {
+                                    if (long.Parse(iks.VendorSubId) == item.Id)
+                                    {
+                                        <div class="policies">
 
-                            <div class="policies-col">
-                                <div class="decorators">
-                                    <h4 class="sub-title"><b>Decor</b></h4>
-                                    <ul class="tab-data highlights" style="padding-left: 0px;">
-                                        <li>
-                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                            Outside decorators allowed
-                                        </li>
-                                        <li>
-                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                            Decor provided by the venue
-                                        </li>
-                                        <li>
-                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                            Decorators allowed with royalty
+                                            <div class="policies-col">
+                                                <div class="decorators">
+                                                    <h4 class="sub-title"><b>Decor</b></h4>
+                                                    <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                        <li>
+                                                            @if (iks.Outside_decorators_allowed == "Yes")
+                                                            {
+                                                                <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                            else
+                                                            { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            }
+                                                            Outside decorators allowed
+                                                        </li>
+    
+                                                        <li>
 
-                                        </li>
-                                        <li>
-                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                            Decoration starting costs Rs 6,000
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Panel Decorators -->
-                                <!-- </div> -->
-                            </div>
+                                                            @if (iks.Decor_provided == "Yes")
+                                                            {
+                                                                <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                            else
+                                                            { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            }
+                                                            Decor provided by the venue
+                                                        </li>
+    
+                                                        <li>
 
-                            <div class="policies-col">
-                                <!-- Caterers -->
-                                <div class="caterers">
-                                    <h4 class="sub-title"><b>Food</b></h4>
-                                    <ul class="tab-data highlights" style="padding-left: 0px;">
-                                        <li>
-                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                            Food provided by the venue
-                                        </li>
-                                        <li><img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> Outside food/caterer allowed at the venue</li>
-                                        <li>
-                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png"> Non-Veg allowed at the venue
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Panel caterers -->
-                                <!-- </div> -->
-                            </div>
-                            <!-- Alcohol -->
-                            <!-- <div class="col-sm-6"> -->
-                            <div class="policies-col alcohol">
-                                <h4 class="sub-title"><b>Alcohol</b></h4>
-                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                    <li>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">Alcohol allowed at the venue
-                                    </li>
-                                    <li>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/error1.png"> Outside alcohol allowed at the venue
-                                    </li>
+                                                            @if (iks.Decorators_allowed_with_royalty == "Yes")
+                                                            {
+                                                                <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                            else
+                                                            { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            }
+                                                            Decorators allowed with royalty
 
-                                </ul>
-                            </div>
+                                                        </li>
+    
+                                                        <li>
+ <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            Decoration starting costs Rs @iks.Decoration_starting_costs
+                                                        </li>
+    
+                                                        </ul>
+    
+                                                    </div>
+    
+                                                </div>
+    
 
-                            <!-- Taxes -->
-                            <!-- <div class="col-sm-6"> -->
-                            <div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
-                                <h4 class="sub-title"><b>Taxes</b></h4>
-                                <ul class="tab-data" style="padding-left: 0px;">
-                                    <li> Taxes F&amp;B : <b>18.00%</b></li>
-                                </ul>
-                            </div>
-                            <!-- </div> -->
-                            <!-- Parking -->
-                            <!-- <div class="col-sm-6">-->
+                                                <div class="policies-col">
+                                                <!-- Caterers -->
+                                                <div class="caterers">
+                                                    <h4 class="sub-title"><b>Food</b></h4>
+                                                    <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                        <li>
+                                                            @if (iks.Food_provided == "Yes")
+                                                            {
+                                                                <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                            else
+                                                            { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            }
+                                                            Food provided by the venue
+                                                        </li>
+                                                        <li>
+                                                            @if (iks.Outside_food_or_caterer_allowed == "Yes")
+                                                            {
+                                                                <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                            else
+                                                            { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            } Outside food/caterer allowed at the venue
+                                                        </li>
+                                                        <li>
+                                                            @if (iks.NonVeg_allowed == "Yes")
+                                                            {
+                                                                <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                            else
+                                                            { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            } Non-Veg allowed at the venue
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="policies-col alcohol">
+                                                <h4 class="sub-title"><b>Alcohol</b></h4>
+                                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                    <li>
+                                                        @if (iks.Alcohol_allowed == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }Alcohol allowed at the venue
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.Outside_Alcohol_allowed == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        } Outside alcohol allowed at the venue
+                                                    </li>
 
-                            <div class="policies-col parking" style="margin-top:41px;">
-                                <h4 class="sub-title"><b>Parking</b></h4>
-                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                    <li><img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> Valet provided by venue</li>
-                                    <li> Parking space available for 150 vehicles</li>
-                                </ul>
-                            </div>
+                                                </ul>
+                                            </div>
 
-                            <!-- </div>-->
-                            <!-- Cancellation -->
-                            <!-- Rental -->
-                            <!-- <div class="col-sm-6"> -->
-                            <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
-                                <h4 class="sub-title"><b>Cancellation</b></h4>
-                                <ul class="tab-data" style="padding-left: 0px;">
 
-                                    <li> Non cancellable</li>
+                                            <div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
+                                                <h4 class="sub-title"><b>Taxes</b></h4>
+                                                <ul class="tab-data" style="padding-left: 0px;">
+                                                    <li> Taxes F&amp;B : <b>@iks.Tax%</b></li>
+                                                </ul>
+                                            </div>
 
-                                </ul>
-                            </div>
-                            <!-- </div> -->
-                            <!-- </div> -->
-                            <!-- <div class="col-sm-6">	 -->
-                            <!-- <div class="col-sm-6"> -->
-                            <!-- </div> -->
-                            <!-- Advance -->
-                            <!-- <div class="col-sm-6"> -->
-                            <div class="policies-col advance" style="margin-top:37px;">
-                                <h4 class="sub-title"><b>Advance</b></h4>
-                                <ul class="tab-data" style="padding-left: 0px;">
-                                    <li> <b>50%</b> at the time of booking</li>
-                                </ul>
-                            </div>
-                            <!-- </div> -->
 
-                            <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
-                                <h4 class="sub-title"><b>Changing Room</b></h4>
-                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                    <li><img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">Changing Room A/C</li>
-                                    <li>
-                                        No. of complimentary changing rooms: <strong>2</strong>
-                                    </li>
-                                </ul>
-                            </div>
+                                            <div class="policies-col parking" style="margin-top:41px;">
+                                                <h4 class="sub-title"><b>Parking</b></h4>
+                                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                    <li>
+                                                        @if (iks.Valet_Parking == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        } Valet provided by venue
+                                                    </li>
+                                                    <li> Parking space available for @iks.Parking_Space vehicles</li>
+                                                </ul>
+                                            </div>
 
-                            <div class="policies-col highlights high-light">
-                                <h4 class="sub-title"><b>Other Policies</b></h4>
-                                <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
-                                    <li>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                        Music allowed late
-                                    </li>
-                                    <li>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                        Halls are air conditioned
-                                    </li>
-                                    <li>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                        Ample parking
-                                    </li>
-                                    <li>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                        Baarat allowed
-                                    </li>
-                                    <li style="margin-left: 193px;margin-top: -89px;">
 
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                        Fire crackers allowed
-                                    </li>
-                                    <li style="margin-left: 193px;margin-top: 4px;">
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                        Hawan allowed
-                                    </li>
-                                    <li style="margin-left: 193px;margin-top: 6px;">
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                        Overnight wedding allowed
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
+                                            <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
+                                                <h4 class="sub-title"><b>Cancellation</b></h4>
+                                                <ul class="tab-data" style="padding-left: 0px;">
+
+                                                    <li>
+                                                        @if (iks.Cancellation == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        } Non cancellable
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                            <div class="policies-col advance" style="margin-top:37px;">
+                                                <h4 class="sub-title"><b>Advance</b></h4>
+                                                <ul class="tab-data" style="padding-left: 0px;">
+                                                    <li> <b>@iks.Advance_Amount %</b> at the time of booking</li>
+                                                </ul>
+                                            </div>
+                                            <!-- </div> -->
+
+                                            <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
+                                                <h4 class="sub-title"><b>Changing Room</b></h4>
+                                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                    <li>
+                                                         @if (iks.Available_Rooms == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }Changing Room A/C
+                                                    </li>
+                                                    <li>
+                                                        No. of complimentary changing rooms: <strong>@iks.Rooms_Count</strong>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="policies-col highlights high-light">
+                                                <h4 class="sub-title"><b>Other Policies</b></h4>
+                                                <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
+                                                    <li>
+                                                         @if (iks.Music_Allowed_Late == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }
+                                                        Music allowed late
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.Halls_AC == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }
+                                                        Halls are air conditioned
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.Ample_Parking == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }
+                                                        Ample parking
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.Baarat_Allowed == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }
+                                                        Baarat allowed
+                                                    </li>
+                                                    <li style="margin-left: 193px;margin-top: -89px;">
+
+                                                        @if (iks.Fire_Crackers_Allowed == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }
+                                                        Fire crackers allowed
+                                                    </li>
+                                                    <li style="margin-left: 193px;margin-top: 4px;">
+                                                        @if (iks.Hawan_Allowed == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }
+                                                        Hawan allowed
+                                                    </li>
+                                                    <li style="margin-left: 193px;margin-top: 6px;">
+                                                        @if (iks.Overnight_wedding_Allowed == "Yes")
+                                                        {
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">}
+                                                        else
+                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        }
+                                                        Overnight wedding allowed
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                                    </div>
+                            
 
                     <br />
                     <br />
