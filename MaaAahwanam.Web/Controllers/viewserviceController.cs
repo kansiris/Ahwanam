@@ -23,6 +23,7 @@ namespace MaaAahwanam.Web.Controllers
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         viewservicesservice viewservicesss = new viewservicesservice();
         ResultsPageService resultsPageService = new ResultsPageService();
+        VendorMasterService vendorMasterService = new VendorMasterService();
 
         // GET: viewservice
         public ActionResult Index(string name, string type, string id)
@@ -47,8 +48,17 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.location = data.Address;
                 ViewBag.City = data.City;
                 ViewBag.State = data.State;
-                ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[0] : "17.385044";
-                ViewBag.longitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[1] : "78.486671";
+                if (data.GeoLocation.Split(',').Count() > 1)
+                {
+                    ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[0] : "17.385044";
+                    ViewBag.longitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[1] : "78.486671";
+                }
+                else
+                {
+                    ViewBag.latitude = "17.385044";
+                    ViewBag.longitude = "78.486671";
+                }
+                
 
                 //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
                 ViewBag.data = data;
@@ -57,12 +67,17 @@ namespace MaaAahwanam.Web.Controllers
                 List<VendorVenue> amenities = new List<VendorVenue>();
                 List<string> famenities = new List<string>();
                 List<VendorImage> vimg = new List<VendorImage>();
+                List<Policy> policy = new List<Policy>();
+
                 foreach (var item in venues)
                 {
                     package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
                     amenities.Add(item);
                     vimg.AddRange(allimages.Where(m => m.VendorId == item.Id));
-                }
+                  var p1=  vendorMasterService.Getpolicy(id, item.Id.ToString());
+                    if(p1 != null)
+                    policy.Add(p1);
+                  }
                 ViewBag.allimages = vimg;
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
@@ -113,7 +128,7 @@ namespace MaaAahwanam.Web.Controllers
                     m.Sufficient_Washroom
                     #endregion
                 }).ToList();
-
+                ViewBag.policy = policy;
                 foreach (var item in allamenities)
                 {
                     string value = string.Join(",", item).Replace("{", "").Replace("}", "");
