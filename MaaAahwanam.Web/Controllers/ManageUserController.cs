@@ -204,7 +204,7 @@ namespace MaaAahwanam.Web.Controllers
                 emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
             
         
-                return Json("Order placed Successfully", JsonRequestBehavior.AllowGet);
+                return Json("success", JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -44,16 +44,16 @@ namespace MaaAahwanam.Repository.db
             return vendorMaster;
         }
 
-        public Policy insertpolicy(Policy policy, long vid,long vsid)
+        public Policy insertpolicy(Policy policy, string vid, string vsid)
         {
             _dbContext.Policy.Add(policy);
             _dbContext.SaveChanges();
             return policy;
         }
 
-        public Policy updatepolicy(Policy policy, long vid, long vsid)
+        public Policy updatepolicy(Policy policy, string vid, string vsid)
         {
-            var GetVendor = _dbContext.Policy.SingleOrDefault(m => m.VendorId == Convert.ToString(vid) && m.VendorSubId == Convert.ToString(vsid));
+            var GetVendor = _dbContext.Policy.SingleOrDefault(m => m.VendorId == vid && m.VendorSubId == vsid);
             policy.Id = GetVendor.Id;
             policy.VendorId = GetVendor.VendorId;
             _dbContext.Entry(GetVendor).CurrentValues.SetValues(policy);

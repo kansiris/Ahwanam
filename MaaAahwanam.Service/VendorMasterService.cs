@@ -34,11 +34,11 @@ namespace MaaAahwanam.Service
             return vendormasterRepository.UpdateVendorMaster(vendorMaster, id);
         }
 
-        public Policy insertpolicy(Policy policy, long vid,long vsid)
+        public Policy insertpolicy(Policy policy, string vid,string vsid)
         {
             return vendormasterRepository.insertpolicy(policy, vid,vsid);
         }
-        public Policy updatepolicy(Policy policy, long vid, long vsid)
+        public Policy updatepolicy(Policy policy, string vid, string vsid)
         {
             return vendormasterRepository.updatepolicy(policy, vid, vsid);
         }
