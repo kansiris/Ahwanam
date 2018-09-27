@@ -304,7 +304,7 @@
 
                                             <form method="POST">
                                                 <input type="hidden" id="usedid" name="usedid" value="" />
-
+                                                <input type="hidden" id="vpbookdetails" name="vpbookdetails" value="" />
                                                 <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
                                                 <div class="col-12 col-sm-12 col-md-12">
                                                     <div class="row">
@@ -322,7 +322,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-4 col-md-4" style="display:block;">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only"  id="Businessname" name="Businessname" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
                                                                     <span class="input__label-content input__label-content--hoshi">Company Name</span>
                                                                 </label>
@@ -502,10 +502,7 @@
         $('#CancelUser').click(function () {
             $('#saverecord').css('display', 'none');
         });
-        //$("#radio1
-        //    ").click(function () {
-
-        //});
+       
 
   
 
@@ -623,9 +620,11 @@
                 var eventtype = '@ViewBag.eventtype';
                 var guests = '@ViewBag.guest';
                 var date = '@ViewBag.date';
-
+                if (packid == '') {
+                    var selectedp = window.localStorage.getItem("vpbook");
+                }
                 $.ajax({
-                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid,
+                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp,
                     type: 'POST',
                     contentType: 'application/json',
 
@@ -633,6 +632,7 @@
                         if (result == "success") {
                             alert("Order placed Successfully");
                             window.location.href = "/VDashboard/Index";
+                            window.localStorage.removeItem("vpbook");
                         } else {
                             alert("Error Occurred in placing order");
 }
