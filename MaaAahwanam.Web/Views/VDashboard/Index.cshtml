@@ -1720,74 +1720,77 @@
                             </form>
                         </div>
 
-                        <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
-                            <div>
-                                <table style="width:100%">
-                                    <tr>
-                                        <td><h4 style="text-transform:uppercase">Orders</h4></td>
-                                        <td style="float:right"><button type="button" class="btn btn-primary">New Order</button><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <table id="allorders" class="display" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Order ID</th>
-                                        <th>Event Type</th>
-                                        <th>Event Date</th>
-                                        <th>Package Name</th>
-                                        <th>Pax Count</th>
-                                        <th>Balance Due</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        var number = 0;
-                                        foreach (var orders in ViewBag.order)
-                                        {
+                                <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
+                                    <div>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><h4 style="text-transform:uppercase">Orders</h4></td>
+                                                <td style="float:right"><button type="button" class="btn btn-primary">New Order</button><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                  
+                                        <table id="allorders" class="display" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Order ID</th>
+                                                    <th>Event Type</th>
+                                                    <th>Event Date</th>
+                                                    <th>Package Name</th>
+                                                    <th>Pax Count</th>
+                                                    <th>Balance Due</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                var number = 0;
+                                                foreach (var orders in ViewBag.order)
+                                                {
 
-                                            <tr class="show_hide_row">
-                                                <td>@(++number)</td>
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>Package Name</td>
-                                                <td>Pax Count</td>
-                                                <td>Balance Due</td>
-                                                <td>@orders.Status</td>
-                                                <td>
-                                                    <div class="menu">
-                                                        <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                        <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                            <div class="four column relaxed divided grid">
-                                                                <div class="column">
-                                                                    <div class="link list">
-                                                                        @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
-                                                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
-                                                                        <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                        <tr class="show_hide_row">
+                                                            <td>@(++number)</td>
+                                                            <td>@orders.OrderId</td>
+                                                            <td>@orders.EventType</td>
+                                                            <td>@orders.BookedDate</td>
+                                                            <td>Package Name</td>
+                                                            <td>Pax Count</td>
+                                                            <td>Balance Due</td>
+                                                            <td>@orders.Status</td>
+                                                            <td>
+                                                                <div class="menu">
+                                                                    <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                                    <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                                        <div class="four column relaxed divided grid">
+                                                                            <div class="column">
+                                                                                <div class="link list">
+                                                                                    @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
+                                                        <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
+                                                                                    <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                                    <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                                    <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                                    <a class="payments" href="/Payments?Oid=@orders.OrderId" style="cursor:pointer;">Receive Payment</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
-                                            </tr>
-                                                    <tr id="hidden_row1" class="hidden_row">
-                                                        <td colspan=4>
-                                                            <ul>
-                                                                <li>Event Type:@orders.EventType</li>
-                                                                <li>contact number:@orders.UserPhone</li>
-                                                            </ul>
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                            @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
+                                                        </tr>
+                                                        <tr id="hidden_row1" class="hidden_row">
+                                                            <td colspan=4>
+                                                                <ul>
+                                                                    <li>Event Type:@orders.EventType</li>
+                                                                    <li>contact number:@orders.UserPhone</li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
 
                                         }
                                     }
