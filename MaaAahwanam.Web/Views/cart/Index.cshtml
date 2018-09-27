@@ -124,11 +124,30 @@
             width: 300px;
         }
     </style>
+<style>
+    .overlay {
+        background: no-repeat scroll center center #FFF;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999999;
+        background-color: rgba(0,0,0,0.8);
+        /* END EXTERNAL S */
+    }
+</style>
 }
 
 @using MaaAahwanam.Web.Custom
 @*<main>*@
 
+<div class="overlay" style="display: none;">
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+        <img src="~/CSSWeb/images/Loader.gif" /><br>
+        <p style="color: white; font-style: italic; font-family:serif;" id="loadermsg"></p>
+    </div>
+</div>
 <div class="bg_color_1">
     <div class="container margin_60_35" style="max-width:1300px;margin-left:40px">
         <div class="row">
@@ -424,6 +443,8 @@
             var selcartid = $('.selectedcart').val();
             if (selcartid == undefined) { alert('select the cart item'); }
             else {
+                $('.overlay').show();
+                $('#loadermsg').text('Booking in process....');
                 $.ajax({
                     url: '/cart/booknow',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                     type: 'POST',
@@ -433,7 +454,9 @@
                     contentType: 'application/json',
                     success: function (data) {
                         if (data == "success" || data == "unique" || data == "Success") {
-                            alertify.alert("Order is sucessfully placed");
+                            //alertify.alert("Order is sucessfully placed");
+                            alert("Order Placed");
+                            //alertify.confirm('Order Placed', 'Order is sucessfully placed', function () { window.location = "/home/index"; });
                             window.location = "/home/index";
                         }
                         else if (data == "Failed") {
