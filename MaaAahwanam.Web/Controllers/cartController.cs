@@ -382,7 +382,7 @@ namespace MaaAahwanam.Web.Controllers
         //    return Json(JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult booknow(string selcartid, string searchedcontent)
+        public ActionResult booknow(string selcartid, string searchedcontent,string total)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -395,12 +395,21 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.cartCount = cartService.CartItemsCount((int)user.UserId);
                     var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartnos1 = selcartid.Split(',');
+                    DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+
+
+                    //Saving Record in order Table
+                    OrderService orderService = new OrderService();
+                    MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
+                    order.TotalPrice = Convert.ToDecimal(total);
+                    order.OrderDate = Convert.ToDateTime(updateddate);
+                    order.UpdatedBy = (Int64)user.UserId;
+                    order.OrderedBy = (Int64)user.UserId;
+                    order.UpdatedDate = Convert.ToDateTime(updateddate);
+                    order.Status = "Pending";
+                    order = orderService.SaveOrder(order);
 
                     //Payment Section
-
-
-
-
                     for (int i = 0; i < cartnos1.Count(); i++)
                     {
                         string cartno2 = cartnos1[i];
@@ -424,19 +433,8 @@ namespace MaaAahwanam.Web.Controllers
                         {
                             totalprice = Convert.ToString(cartdetails.TotalPrice);
                         }
-                        DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                         int userid = Convert.ToInt32(user.UserId);
-                        //Saving Record in order Table
-                        OrderService orderService = new OrderService();
-                        MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
-                        order.TotalPrice = Convert.ToDecimal(totalprice);
-                        order.OrderDate = date;
-                        order.UpdatedBy = (Int64)user.UserId;
-                        order.OrderedBy = (Int64)user.UserId;
-                        order.UpdatedDate = Convert.ToDateTime(updateddate);
-                        order.Status = "Pending";
-                        order = orderService.SaveOrder(order);
-
+                 
 
 
 
