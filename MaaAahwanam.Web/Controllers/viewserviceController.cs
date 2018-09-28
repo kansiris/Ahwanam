@@ -24,6 +24,10 @@ namespace MaaAahwanam.Web.Controllers
         viewservicesservice viewservicesss = new viewservicesservice();
         ResultsPageService resultsPageService = new ResultsPageService();
         VendorMasterService vendorMasterService = new VendorMasterService();
+        VendorDatesService vendorDatesService = new VendorDatesService();
+        ProductInfoService productInfoService = new ProductInfoService();
+
+
 
         // GET: viewservice
         public ActionResult Index(string name, string type, string id)
@@ -32,6 +36,7 @@ namespace MaaAahwanam.Web.Controllers
             type = (type == "Convention") ? "Convention Hall" : type;
             type = (type == "Banquet") ? "Banquet Hall" : type;
             type = (type == "Function") ? "Function Hall" : type;
+
             if (name != null)
             {
                 var ks = resultsPageService.GetAllVendors(type).Where(m => m.BusinessName.ToLower().Contains(name.ToLower().TrimEnd())).FirstOrDefault();
@@ -68,16 +73,16 @@ namespace MaaAahwanam.Web.Controllers
                 List<string> famenities = new List<string>();
                 List<VendorImage> vimg = new List<VendorImage>();
                 List<Policy> policy = new List<Policy>();
-
-                foreach (var item in venues)
+                    foreach (var item in venues)
                 {
                     package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
                     amenities.Add(item);
-                    vimg.AddRange(allimages.Where(m => m.VendorId == item.Id));
+                    vimg.AddRange(allimages.Where(m => m.VendorId == long.Parse(id)));
                   var p1=  vendorMasterService.Getpolicy(id, item.Id.ToString());
                     if(p1 != null)
                     policy.Add(p1);
-                  }
+                   
+                }
                 ViewBag.allimages = vimg;
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
@@ -147,7 +152,56 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public ActionResult addcnow(string pid, string guest, string dcval, string total, string pprice,string eventtype ,string bookdate)//(string totalprice, string id, string price,  string timeslot, )
+        public JsonResult Availabledates( string pid,string type)
+        {
+            var msg = "";
+            if (pid != "undefined")
+            {
+                type = (type == null) ? "Venue" : type;
+                type = (type == "Convention") ? "Convention Hall" : type;
+                type = (type == "Banquet") ? "Banquet Hall" : type;
+                type = (type == "Function") ? "Function Hall" : type;
+                var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault(); ;
+                Int64 vid, vsid;
+                vid = pkgs.VendorId;
+                vsid = pkgs.VendorSubId;
+
+                string orderdates = productInfoService.disabledate(vid, vsid, type).Replace('/', '-');
+
+                if (vid != 0)
+                {
+                    var betweendates = new List<string>();
+                    var Gettotaldates = vendorDatesService.GetDates(vid, vsid);
+                    int recordcount = Gettotaldates.Count();
+                    foreach (var item1 in Gettotaldates)
+                    {
+                        var startdate = Convert.ToDateTime(item1.StartDate);
+                        var enddate = Convert.ToDateTime(item1.EndDate);
+                        if (startdate != enddate)
+                        {
+                            for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
+                            {
+                                betweendates.Add(dt.ToString("yyyy-MM-dd"));
+                            }
+                        }
+                        else
+                        {
+                            betweendates.Add(startdate.ToString("yyyy-MM-dd"));
+                        }
+                    }
+                    //ViewBag.vendoravailabledates = String.Join(",", betweendates,orderdates);
+                    var vendoravailabledates = String.Join(",", betweendates);
+                    if (orderdates != "")
+                        vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
+                    string availdate = vendoravailabledates;
+                    msg = availdate;
+                }
+
+            }
+            return Json(msg);
+    }
+
+    public ActionResult addcnow(string pid, string guest, string dcval, string total, string pprice,string eventtype ,string bookdate)//(string totalprice, string id, string price,  string timeslot, )
         {
             //try
             //{
