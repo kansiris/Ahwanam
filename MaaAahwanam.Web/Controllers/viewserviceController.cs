@@ -48,16 +48,16 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.location = data.Address;
                 ViewBag.City = data.City;
                 ViewBag.State = data.State;
-                if (data.GeoLocation.Split(',').Count() > 1)
-                {
-                    ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[0] : "17.385044";
-                    ViewBag.longitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[1] : "78.486671";
-                }
-                else
-                {
+                //if (data.GeoLocation.Split(',').Count() > 1)
+                //{
+                //    ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[0] : "17.385044";
+                //    ViewBag.longitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[1] : "78.486671";
+                //}
+                //else
+                //{
                     ViewBag.latitude = "17.385044";
                     ViewBag.longitude = "78.486671";
-                }
+                //}
                 
 
                 //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
