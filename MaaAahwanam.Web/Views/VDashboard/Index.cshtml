@@ -1,12 +1,11 @@
 ﻿@{
     ViewBag.Title = ":: Dashboard ::";
     Layout = "~/Views/SharedWeb/vendorloginmaster.cshtml";
+    var vcalcount = 0;
 }
 @section css{
     <style type="text/css">
-        .ui-datepicker-inline {
-            width: 100%;
-        }
+        
 
         .button {
             background-color: #fff;
@@ -221,6 +220,27 @@
             box-shadow: none;
         }
     </style>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <style>
+        /*.ui-state-default, .ui-widget-content .ui-state-default {
+        border: 1px solid red;background: white;font-weight: 700;color: red;
+        }*/
+        /*.ui-datepicker-unselectable .ui-state-disabled .undefined {
+        background:red;
+        }*/
+        .ui-datepicker-inline {
+            width: 100%;
+        }
+        /*.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+        }*/
+        /*.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+        background:red;
+        }*/
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+        background:white;
+        }
+    </style>
+
 }
 
 <!-- /header -->
@@ -291,14 +311,14 @@
                                                     @if (ViewBag.service.name != null && ViewBag.service.name != "")
                                                     {
                                                         <input type="hidden" value="@ViewBag.service.name" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" />
-                                                                    <h2 id="venuetype1">@ViewBag.service.name</h2>
-                                                                    @*<label id="typemsg">Change Service Type?</label>*@
+                                                        <h2 id="venuetype1">@ViewBag.service.name</h2>
+                                                        @*<label id="typemsg">Change Service Type?</label>*@
                                                     }
                                                     else
                                                     {
                                                         <input type="hidden" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" />
-                                                                    <h2 id="venuetype1">@ViewBag.service.VenueType</h2>
-                                                                    @*<label id="typemsg">Select Service Type</label>*@
+                                                        <h2 id="venuetype1">@ViewBag.service.VenueType</h2>
+                                                        @*<label id="typemsg">Select Service Type</label>*@
                                                     }
                                                 </div>
                                                 <div class="col-md-6" style="padding: 2% 0% 0% 10%;">
@@ -315,28 +335,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            @*@if (ViewBag.service.name != null && ViewBag.service.name != "")
-                                                {
-                                                    <input type="hidden" value="@ViewBag.service.name" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" />
-                                                    <h2 id="venuetype1">@ViewBag.service.name</h2>
-                                                    <label id="typemsg">Change Service Type?</label>
-                                                }
-                                                else
-                                                {
-                                                    <input type="hidden" value="@ViewBag.service.VenueType" id="venuetype1" name="venuetype1" style="height: 70px;width: 100%;font-size: 30px;border: none;margin: 0;" placeholder="YOUR HALL NAME" />
-                                                    <h2 id="venuetype1">@ViewBag.service.VenueType</h2>
-                                                    <label id="typemsg">Select Service Type</label>
-                                                }
-                                                <select id="selectedservice" style="color:black;padding:0;width:auto;margin-left:100px" class="form-control">
-                                                    <option disabled selected>Select Category</option>
-                                                    <option value="Convention Hall">Convention Hall</option>
-                                                    <option value="Function Hall">Function Hall</option>
-                                                    <option value="Banquet Hall">Banquet Hall</option>
-                                                    <option value="Meeting Room">Meeting Room</option>
-                                                    <option value="Open Lawn">Open Lawn</option>
-                                                    <option value="Hotel">Hotel</option>
-                                                    <option value="Resort">Resort</option>
-                                                </select>*@
                                         </div>
                                         <div class="col-md-6" style="max-width:20%;padding-left:25px;padding-top:15px">
                                             <div class="row">
@@ -356,7 +354,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                                <input type="hidden" id="vsid" value="@ViewBag.service.Id" />
+                                    <input type="hidden" id="vsid" value="@ViewBag.service.Id" />
                                 }
                                 else if (ViewBag.ks == "ks")
                                 {
@@ -372,10 +370,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                                @*<div align="center">
-                                                        <div style="float:left"><input type="text" style="width:100%" placeholder="YOUR HALL NAME" /></div>
-                                                        <div style="float:right;margin-top:17px"><input type="checkbox" class="icheck" /><span style="color:black">InActive</span></div>
-                                                    </div>*@
+                                    @*<div align="center">
+                                            <div style="float:left"><input type="text" style="width:100%" placeholder="YOUR HALL NAME" /></div>
+                                            <div style="float:right;margin-top:17px"><input type="checkbox" class="icheck" /><span style="color:black">InActive</span></div>
+                                        </div>*@
                                 }
                             </div>
                             <div class="col-md-2-8">
@@ -456,25 +454,25 @@
                                                         }
                                                     </div>
 
-                                                                <div class="col-md-4" style="padding:0px">
-                                                                    @if (ViewBag.package.timeslot.Contains("Dinner"))
-                                                                    {
-                                                                        <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" checked /><label for="dinner">Dinner</label>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" /><label for="dinner">Dinner</label>
-                                                                    }
-                                                                    <br />
-                                                                    @if (ViewBag.package.timeslot.Contains("High Tea"))
-                                                                    {
-                                                                        <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" checked style="margin-left:0px" /><label for="hightea">High Tea</label>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" style="margin-left:0px" /><label for="hightea">High Tea</label>
-                                                                    }
-                                                                </div>
+                                                    <div class="col-md-4" style="padding:0px">
+                                                        @if (ViewBag.package.timeslot.Contains("Dinner"))
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" checked /><label for="dinner">Dinner</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" /><label for="dinner">Dinner</label>
+                                                        }
+                                                        <br />
+                                                        @if (ViewBag.package.timeslot.Contains("High Tea"))
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" checked style="margin-left:0px" /><label for="hightea">High Tea</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" style="margin-left:0px" /><label for="hightea">High Tea</label>
+                                                        }
+                                                    </div>
                                                 }
                                                 else
                                                 {
@@ -484,11 +482,11 @@
                                                         <input type="checkbox" class="slotcheck" name="slot" id="lunch" value="Lunch" style="margin-left:0px" /><label for="lunch">Lunch</label>
                                                     </div>
 
-                                                                <div class="col-md-4" style="padding:0px">
-                                                                    <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" /><label for="dinner">Dinner</label>
-                                                                    <br />
-                                                                    <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" style="margin-left:0px" /><label for="hightea">High Tea</label>
-                                                                </div>
+                                                    <div class="col-md-4" style="padding:0px">
+                                                        <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Dinner" /><label for="dinner">Dinner</label>
+                                                        <br />
+                                                        <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" style="margin-left:0px" /><label for="hightea">High Tea</label>
+                                                    </div>
                                                 }
                                             }
                                         </div>
@@ -534,13 +532,13 @@
                                 <div align="right">
                                     <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
                                     <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
-                                    @if (ViewBag.package != null)
+                                    @if (ViewBag.package.PackageID != 0)
                                     {
                                         <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Update</a>
                                     }
                                     else
                                     {
-                                        <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Save</a>
+                                        <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Publish</a>
                                     }
                                     <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
                                 </div>
@@ -589,300 +587,300 @@
                                 @*<div style="overflow:scroll;overflow-x:visible">*@
                                 @if (ViewBag.policy != null)
                                 {
-                                    
-                                        <div>
-                                            <table style="color:#222;">
+
+                                    <div>
+                                        <table style="color:#222;">
 
 
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
 
 
-                                                            @if (ViewBag.policy.Outside_decorators_allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy">
-                                                            }
+                                                        @if (ViewBag.policy.Outside_decorators_allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy">
+                                                        }
 
-                                                        </td>
-                                                        <td>Outside Decorators Allowed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Decor_provided == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Decor_provided" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Decor_provided" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Decorations provided</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Decorators_allowed_with_royalty == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Decorators allowed with royalty</td>
-                                                    </tr>
+                                                    </td>
+                                                    <td>Outside Decorators Allowed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Decor_provided == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Decor_provided" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Decor_provided" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Decorations provided</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Decorators_allowed_with_royalty == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Decorators allowed with royalty</td>
+                                                </tr>
 
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Food_provided == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Food_provided" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Food_provided" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Food provided</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Outside_food_or_caterer_allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Outside  food or caterer allowed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.NonVeg_allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="NonVeg_allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="NonVeg_allowed" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>NonVeg allowed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Alcohol_allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Alcohol_allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Alcohol_allowed" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Alcohol allowed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Food_provided == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Food_provided" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Food_provided" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Food provided</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Outside_food_or_caterer_allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Outside  food or caterer allowed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.NonVeg_allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="NonVeg_allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="NonVeg_allowed" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>NonVeg allowed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Alcohol_allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Alcohol_allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Alcohol_allowed" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Alcohol allowed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
 
-                                                            @if (ViewBag.policy.Outside_Alcohol_allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Outside Alcohol allowed</td>
-                                                    </tr>
+                                                        @if (ViewBag.policy.Outside_Alcohol_allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Outside Alcohol allowed</td>
+                                                </tr>
 
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Valet_Parking == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Valet_Parking" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Valet_Parking" class="kscpolicy">
-                                                            }
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Valet_Parking == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Valet_Parking" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Valet_Parking" class="kscpolicy">
+                                                        }
 
-                                                        </td>
-                                                        <td>Valet Parking</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Valet_Parking == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Parking_Space" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Parking_Space" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Parking Space</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Cancellation == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Cancellation" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Cancellation" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Booking Cancellation  accepted</td>
-                                                    </tr>
+                                                    </td>
+                                                    <td>Valet Parking</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Valet_Parking == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Parking_Space" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Parking_Space" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Parking Space</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Cancellation == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Cancellation" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Cancellation" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Booking Cancellation  accepted</td>
+                                                </tr>
 
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Available_Rooms == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Available_Rooms" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Available_Rooms" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Available Rooms</td>
-                                                    </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Available_Rooms == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Available_Rooms" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Available_Rooms" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Available Rooms</td>
+                                                </tr>
 
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Changing_Rooms_AC == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Changing Rooms with AC</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Complimentary_Changing_Room == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Complimentary Changing Room</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Music_Allowed_Late == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Music Allowed Late</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Halls_AC == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Halls_AC" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Halls_AC" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Halls AC</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Ample_Parking == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Ample_Parking" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Ample_Parking" class="kscpolicy">
-                                                            }
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Changing_Rooms_AC == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Changing Rooms with AC</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Complimentary_Changing_Room == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Complimentary Changing Room</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Music_Allowed_Late == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Music Allowed Late</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Halls_AC == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Halls_AC" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Halls_AC" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Halls AC</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Ample_Parking == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Ample_Parking" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Ample_Parking" class="kscpolicy">
+                                                        }
 
-                                                        </td>
-                                                        <td>Ample_Parking</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Baarat_Allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Baarat_Allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Baarat_Allowed" class="kscpolicy">
-                                                            }
+                                                    </td>
+                                                    <td>Ample_Parking</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Baarat_Allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Baarat_Allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Baarat_Allowed" class="kscpolicy">
+                                                        }
 
-                                                        </td>
-                                                        <td>Baarat Allowed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Fire Crackers Allowed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Hawan_Allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Hawan_Allowed" class="kscpolicy">
-                                                            }
+                                                    </td>
+                                                    <td>Baarat Allowed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Fire Crackers Allowed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Hawan_Allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Hawan_Allowed" class="kscpolicy">
+                                                        }
 
-                                                        </td>
-                                                        <td>Hawan Allowed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            @if (ViewBag.policy.Overnight_wedding_Allowed == "Yes")
-                                                            {
-                                                                <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy" checked />
-                                                            }
-                                                            else
-                                                            { <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy">
-                                                            }
-                                                        </td>
-                                                        <td>Overnight wedding Allowed</td>
-                                                    </tr>
-                                                </tbody>
+                                                    </td>
+                                                    <td>Hawan Allowed</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (ViewBag.policy.Overnight_wedding_Allowed == "Yes")
+                                                        {
+                                                            <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy" checked />
+                                                        }
+                                                        else
+                                                        { <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy">
+                                                        }
+                                                    </td>
+                                                    <td>Overnight wedding Allowed</td>
+                                                </tr>
+                                            </tbody>
 
-                                            </table>
+                                        </table>
+                                    </div>
+
+                                    @* <div style="padding-left: 27px; padding-bottom: 20px;">
+                                            <label>Tax Percentage</label>
+                                            <input type="text" id="Tax" class="form-control kscpolicy" placeholder="Enter Tax %">
+
+                                            <label>Decoration starting costs</label>
+                                            <input type="text" id="Decoration_starting_costs" class="form-control kscpolicy" placeholder="Enter Starting ₹">
+                                            <label>Complimentary Rooms</label>
+
+                                            <input type="text" id="Rooms_Count" class="form-control kscpolicy" placeholder="Enter Complimentary Rooms" />
+                                            <label>Advance Amount</label>
+
+                                            <input type="text" id="Advance_Amount" class="form-control kscpolicy" placeholder="Enter Advance ₹">
+                                            <label>Room Average Price</label>
+
+                                            <input type="text" id="Room_Average_Price" class="form-control kscpolicy" placeholder="Enter Room Average ₹">
+
                                         </div>
+                                        </div>*@
 
-                                        @* <div style="padding-left: 27px; padding-bottom: 20px;">
-                    <label>Tax Percentage</label>
-                    <input type="text" id="Tax" class="form-control kscpolicy" placeholder="Enter Tax %">
-
-                    <label>Decoration starting costs</label>
-                    <input type="text" id="Decoration_starting_costs" class="form-control kscpolicy" placeholder="Enter Starting ₹">
-                    <label>Complimentary Rooms</label>
-
-                    <input type="text" id="Rooms_Count" class="form-control kscpolicy" placeholder="Enter Complimentary Rooms" />
-                    <label>Advance Amount</label>
-
-                    <input type="text" id="Advance_Amount" class="form-control kscpolicy" placeholder="Enter Advance ₹">
-                    <label>Room Average Price</label>
-
-                    <input type="text" id="Room_Average_Price" class="form-control kscpolicy" placeholder="Enter Room Average ₹">
-
-                </div>
-                </div>*@
-                                   
 
                                 }
                                 else
@@ -895,153 +893,153 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
- <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy">
-                                                                                                           </td>
+                                                        <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy">
+                                                    </td>
                                                     <td>Outside Decorators Allowed</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Decor_provided" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Decor_provided" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Decorations provided</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                         <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Decorators allowed with royalty</td>
                                                 </tr>
 
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Food_provided" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Food_provided" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Food provided</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy"/>
-                                                                                            </td>
+                                                        <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy" />
+                                                    </td>
                                                     <td>Outside  food or caterer allowed</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="NonVeg_allowed" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="NonVeg_allowed" class="kscpolicy" />
+
                                                     </td>
                                                     <td>NonVeg allowed</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Alcohol_allowed" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Alcohol_allowed" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Alcohol allowed</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
- <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy"/>
-                                                       
+                                                        <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Outside Alcohol allowed</td>
                                                 </tr>
 
                                                 <tr>
                                                     <td>
-                                                      <input type="checkbox" value="Valet_Parking" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Valet_Parking" class="kscpolicy" />
+
 
                                                     </td>
                                                     <td>Valet Parking</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                         <input type="checkbox" value="Parking_Space" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Parking_Space" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Parking Space</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                       <input type="checkbox" value="Cancellation" class="kscpolicy"/>
-                                                       
+                                                        <input type="checkbox" value="Cancellation" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Booking Cancellation  accepted</td>
                                                 </tr>
 
                                                 <tr>
                                                     <td>
-                                                       <input type="checkbox" value="Available_Rooms" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Available_Rooms" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Available Rooms</td>
                                                 </tr>
 
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Changing Rooms with AC</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy"/>
-                                                       
+                                                        <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Complimentary Changing Room</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                      <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Music Allowed Late</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Halls_AC" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Halls_AC" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Halls AC</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                      <input type="checkbox" value="Ample_Parking" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Ample_Parking" class="kscpolicy" />
+
 
                                                     </td>
                                                     <td>Ample_Parking</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Baarat_Allowed" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Baarat_Allowed" class="kscpolicy" />
+
 
                                                     </td>
                                                     <td>Baarat Allowed</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                     <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Fire Crackers Allowed</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" value="Hawan_Allowed" class="kscpolicy"/>
-                                                      
+                                                        <input type="checkbox" value="Hawan_Allowed" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Hawan Allowed</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                      <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy"/>
-                                                        
+                                                        <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy" />
+
                                                     </td>
                                                     <td>Overnight wedding Allowed</td>
                                                 </tr>
@@ -1051,23 +1049,23 @@
                                     </div>
 
                                     @* <div style="padding-left: 27px; padding-bottom: 20px;">
-                <label>Tax Percentage</label>
-                <input type="text" id="Tax" class="form-control kscpolicy" placeholder="Enter Tax %">
+                                            <label>Tax Percentage</label>
+                                            <input type="text" id="Tax" class="form-control kscpolicy" placeholder="Enter Tax %">
 
-                <label>Decoration starting costs</label>
-                <input type="text" id="Decoration_starting_costs" class="form-control kscpolicy" placeholder="Enter Starting ₹">
-                <label>Complimentary Rooms</label>
+                                            <label>Decoration starting costs</label>
+                                            <input type="text" id="Decoration_starting_costs" class="form-control kscpolicy" placeholder="Enter Starting ₹">
+                                            <label>Complimentary Rooms</label>
 
-                <input type="text" id="Rooms_Count" class="form-control kscpolicy" placeholder="Enter Complimentary Rooms" />
-                <label>Advance Amount</label>
+                                            <input type="text" id="Rooms_Count" class="form-control kscpolicy" placeholder="Enter Complimentary Rooms" />
+                                            <label>Advance Amount</label>
 
-                <input type="text" id="Advance_Amount" class="form-control kscpolicy" placeholder="Enter Advance ₹">
-                <label>Room Average Price</label>
+                                            <input type="text" id="Advance_Amount" class="form-control kscpolicy" placeholder="Enter Advance ₹">
+                                            <label>Room Average Price</label>
 
-                <input type="text" id="Room_Average_Price" class="form-control kscpolicy" placeholder="Enter Room Average ₹">
+                                            <input type="text" id="Room_Average_Price" class="form-control kscpolicy" placeholder="Enter Room Average ₹">
 
-            </div>
-            </div>*@
+                                        </div>
+                                        </div>*@
 
 
 
@@ -1114,8 +1112,8 @@
                                                                     else
                                                                     { <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))" />}
                                                                 </td>
-                                                                            <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
-                                                                            <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                                                <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
+                                                                <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
                                                             }
                                                         </tr>
                                                     }
@@ -1142,8 +1140,8 @@
                                                                 <td style="padding-left:0px">
                                                                     <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))" />
                                                                 </td>
-                                                                            <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
-                                                                            <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                                                <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
+                                                                <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
                                                             }
                                                         </tr>
                                                     }
@@ -1165,23 +1163,23 @@
                                                 <input type="text" id="hdname" name="hdname" placeholder="Enter Hall Name" autocomplete="off">
                                             </div>
                                         </div>
-                                                    <div class="fields">
-                                                        <div class="four-field">
-                                                            <label></label>
-                                                            <input type="number" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="fields">
-                                                        <div class="field-1">
-                                                            <label></label>
-                                                            <input type="number" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Min Capacity">
-                                                        </div>
+                                        <div class="fields">
+                                            <div class="four-field">
+                                                <label></label>
+                                                <input type="number" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)">
+                                            </div>
+                                        </div>
+                                        <div class="fields">
+                                            <div class="field-1">
+                                                <label></label>
+                                                <input type="number" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Min Capacity">
+                                            </div>
 
-                                                        <div class="field-1">
-                                                            <label></label>
-                                                            <input type="number" id="Maximumcapacity" name="Maximumcapacity" placeholder="Max Capacity">
-                                                        </div>
-                                                    </div>
+                                            <div class="field-1">
+                                                <label></label>
+                                                <input type="number" id="Maximumcapacity" name="Maximumcapacity" placeholder="Max Capacity">
+                                            </div>
+                                        </div>
                                     }
                                     else if (ViewBag.ks == "ksc")
                                     {
@@ -1191,23 +1189,23 @@
                                                 <input type="text" id="hdname" name="hdname" placeholder="Enter Hall Name" autocomplete="off" value="@ViewBag.service.name">
                                             </div>
                                         </div>
-                                                    <div class="fields">
-                                                        <div class="four-field">
-                                                            <label></label>
-                                                            <input type="number" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)" value="@ViewBag.service.Dimentions">
-                                                        </div>
-                                                    </div>
-                                                    <div class="fields">
-                                                        <div class="field-1">
-                                                            <label></label>
-                                                            <input type="number" placeholder="Min Capacity" id="Minimumseatingcapacity" name="Minimumseatingcapacity" value="@ViewBag.service.Minimumseatingcapacity">
-                                                        </div>
+                                        <div class="fields">
+                                            <div class="four-field">
+                                                <label></label>
+                                                <input type="number" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimensions(in sft)" value="@ViewBag.service.Dimentions">
+                                            </div>
+                                        </div>
+                                        <div class="fields">
+                                            <div class="field-1">
+                                                <label></label>
+                                                <input type="number" placeholder="Min Capacity" id="Minimumseatingcapacity" name="Minimumseatingcapacity" value="@ViewBag.service.Minimumseatingcapacity">
+                                            </div>
 
-                                                        <div class="field-1">
-                                                            <label></label>
-                                                            <input type="number" placeholder="Max Capacity" id="Maximumcapacity" name="Maximumcapacity" value="@ViewBag.service.Maximumcapacity">
-                                                        </div>
-                                                    </div>
+                                            <div class="field-1">
+                                                <label></label>
+                                                <input type="number" placeholder="Max Capacity" id="Maximumcapacity" name="Maximumcapacity" value="@ViewBag.service.Maximumcapacity">
+                                            </div>
+                                        </div>
                                     }
                                 </div>
                                 <br>
@@ -1375,6 +1373,7 @@
                         <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
                             <h3 style="color:black">HALL DETAILS</h3>
                             <div class="row">
+                                <input type="hidden" id="vcalender" name="vcalender" value="">
                                 @foreach (var item in ViewBag.venues)
                                 {
                                     <div class="col-xl-4 isotope-item popular">
@@ -1387,21 +1386,90 @@
                                                 @*}*@
                                             </figure>
                                             <div class="wrapper">
-                                                <h5 class="uk-h5">@item.name<p class="p_0">@item.Landmark,@item.City</p></h5>
+                                                <h5 class="uk-h5">
+                                                    @if (item.name != null && item.name != "")
+                                                    {
+                                                        @item.name
+                                                    }
+                                                    else if (item.VenueType != null && item.VenueType != "")
+                                                    {
+                                                        @item.VenueType
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>Venue</text>
+                                                    }
+
+                                                    @{
+                                                        if (item.Landmark != null && item.Landmark != "")
+                                                        {
+                                                            <p class="p_0"> @item.Landmark</p>
+                                                        }
+                                                        else if (item.City != null && item.City != "")
+                                                        {
+                                                            <p class="p_0"> @item.City </p>
+                                                        }
+                                                        else if (item.City != null && item.City != "" && item.Landamark != null && item.Landmark != "")
+                                                        {
+                                                            <p class="p_0"> @item.Landmark,  @item.City </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="p_0">  </p>
+                                                        }
+                                                    }
+
+                                                </h5>
                                                 <hr style="margin:0;border: 1px lightgray solid;" />
-                                                <div>
+                                                <div align="center">
                                                     <table class="priceslist">
                                                         <tr class="priceslist">
-                                                            <td align="center">@item.VenueType</td>
+                                                            @if (item.name != null && item.name != "")
+                                                            {
+                                                                <td class="priceslist" align="center">@item.name</td>
+                                                            }
+                                                            else if (item.VenueType != null && item.VenueType != "")
+                                                            {
+                                                                <td class="priceslist" align="center">@item.VenueType</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="priceslist" align="center">Venue</td>
+                                                            }
                                                         </tr>
                                                         <tr class="priceslist">
-                                                            <td align="center">@item.Dimentions</td>
+                                                            @if (item.Dimentions != null && item.Dimentions != "")
+                                                            {
+                                                                <td class="priceslist" align="center">@item.Dimentions</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td class="priceslist" align="center">Update Hall Dimentions</td>
+                                                            }
                                                         </tr>
                                                         <tr class="priceslist">
-                                                            <td align="center">@item.Minimumseatingcapacity-@item.Maximumcapacity People</td>
+                                                            @{
+                                                                if (item.Minimumseatingcapacity != 0)
+                                                                {
+                                                                    <td class="priceslist" align="center"> @item.Minimumseatingcapacity</td>
+                                                                }
+                                                                else if (item.Maximumcapacity != 0)
+                                                                {
+                                                                    <td class="priceslist" align="center">@item.Maximumcapacity </td>
+                                                                }
+                                                                else if (item.Maximumcapacity != 0 && item.Minimumseatingcapacity != 0)
+                                                                {
+                                                                    <td class="priceslist" align="center"> @item.Minimumseatingcapacity,  @item.Maximumcapacity People</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td class="priceslist" align="center">Update Seating Capacity </td>
+                                                                }
+                                                            }
+                                                            @*<td class="priceslist" align="center">@item.Minimumseatingcapacity-@item.Maximumcapacity People</td>*@
                                                         </tr>
                                                         <tr class="priceslist">
-                                                            <td align="center">Seating Arrangement</td>
+                                                            <td class="priceslist" align="center">Seating Arrangement</td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -1410,13 +1478,13 @@
                                             <div>
                                                 <div style="color:black;font-weight:700" align="center">Availability Calendar</div>
                                             </div>
-                                            <div style="border:1px black solid">
+                                            <div style="border:1px black solid" id="vcal">
                                                 <input type="hidden" value="@item.Id" id="venusid" name="venusid" />
                                                 <input type="hidden" value="@item.VendorMasterId" id="venusmasterid" name="venusmasterid" />
-                                                <div class='vendorcalendar'></div>
+                                                <div class='vendorcalendar' id="vcal@(++vcalcount)"></div>
                                             </div>
-                                            <div id="kscbook">
-                                                <input type="hidden" id="vcalender" name="vcalender" value="">
+                                            <div class="kscbook" style="display:none">
+
                                                 <input type="number" id="bookguest" name="bookguest" placeholder="no of guest">
                                                 <select name="eventtype" id="eventtype">
                                                     <option value="Select Event">Select Event</option>
@@ -1434,21 +1502,15 @@
                                             <div>
                                                 <div style="color:black;font-weight:700" align="center">Available Packages</div>
                                             </div>
-
-
-
                                             <div>
-
-                                                @foreach (var item1 in @ViewBag.availablepackages)
-                                                {
-                                                    if (item1.VendorSubId == item.Id)
+                                                <table class="priceslist" style="width:100%">
+                                                    @foreach (var item1 in @ViewBag.availablepackages)
                                                     {
-                                                        <table class="priceslist">
+                                                        if (item1.VendorSubId == item.Id)
+                                                        {
                                                             <tr class="priceslist">
-                                                                <td align="center">@item1.PackageName</td>
-                                                            </tr>
-                                                            <tr class="priceslist">
-                                                                <td align="center">
+                                                                <td class="priceslist" style="width:30%">@item1.PackageName</td>
+                                                                <td class="priceslist" style="width:40%">
                                                                     <span>
                                                                         ₹
                                                                         @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
@@ -1460,20 +1522,19 @@
                                                                         / Person
                                                                     </span>
                                                                 </td>
-                                                            </tr>
-                                                            <tr class="priceslist">
-                                                                <td align="center"><input type="button" onclick="booknow(@item1.PackageID)" value="book now" /></td>
+                                                                <td class="priceslist" style="width:30%"><input type="hidden" class="pkgid" value="@item1.PackageID" /><input type="button" class="btnbook" value="book now" /></td> @*onclick="booknow(@item1.PackageID)"*@
                                                             </tr>
 
-                                                        </table>
+                                                        }
+
                                                     }
-                                                }
+                                                </table>
 
                                             </div>
                                         </div>
                                     </div>
 
-                                }
+                                                                }
                                 <!-- /box_grid -->
                             </div>
                             <!-- /row -->
@@ -1489,194 +1550,194 @@
                                     </h5>
                                 </div>
 
-                                        <div id="collapseOne_payment" class="collapse show" role="tabpanel" data-parent="#payment">
-                                            <div class="card-body">
-                                                <table id="today" class="display" style="width:100%">
-                                                    <thead>
+                                <div id="collapseOne_payment" class="collapse show" role="tabpanel" data-parent="#payment">
+                                    <div class="card-body">
+                                        <table id="today" class="display" style="width:100%;padding-left:0">
+                                            <thead>
+                                                <tr>
+                                                    @*<th>S.No</th>*@
+                                                    <th>Order ID</th>
+                                                    <th>Event Type</th>
+                                                    <th>Event Date</th>
+                                                    <th>Package Name</th>
+                                                    <th>Pax Count</th>
+                                                    <th>Balance Due</th>
+                                                    <th>Status</th>
+                                                    @*<th>Actions</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    //var number1 = 0;
+                                                    foreach (var orders in ViewBag.todaysorder)
+                                                    {
+
                                                         <tr>
-                                                            @*<th>S.No</th>*@
-                                                            <th>Order ID</th>
-                                                            <th>Event Type</th>
-                                                            <th>Event Date</th>
-                                                            <th>Package Name</th>
-                                                            <th>Pax Count</th>
-                                                            <th>Balance Due</th>
-                                                            <th>Status</th>
-                                                            @*<th>Actions</th>*@
+                                                            @*<td>@(++number1)</td>*@
+                                                            <td>@orders.OrderId</td>
+                                                            <td>@orders.EventType</td>
+                                                            <td>@orders.BookedDate</td>
+                                                            <td>Package Name</td>
+                                                            <td>Pax Count</td>
+                                                            <td>Balance Due</td>
+                                                            <td>@orders.Status</td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @{
-                                                            //var number1 = 0;
-                                                            foreach (var orders in ViewBag.todaysorder)
-                                                            {
 
-                                                                <tr>
-                                                                    @*<td>@(++number1)</td>*@
-                                                                    <td>@orders.OrderId</td>
-                                                                    <td>@orders.EventType</td>
-                                                                    <td>@orders.BookedDate</td>
-                                                                    <td>Package Name</td>
-                                                                    <td>Pax Count</td>
-                                                                    <td>Balance Due</td>
-                                                                    <td>@orders.Status</td>
-                                                                </tr>
+                                                    } }
+                                                @{
+                                                    foreach (var orders in ViewBag.todaysorder1)
+                                                    {
 
-                                                            } }
-                                                        @{
-                                                            foreach (var orders in ViewBag.todaysorder1)
-                                                            {
-
-                                                                <tr>
-                                                                    @*<td>@(++number1)</td>*@
-                                                                    <td>@orders.OrderId</td>
-                                                                    <td>@orders.EventType</td>
-                                                                    <td>@orders.BookedDate</td>
-                                                                    <td>Package Name</td>
-                                                                    <td>Pax Count</td>
-                                                                    <td>Balance Due</td>
-                                                                    <td>@orders.Status</td>
-                                                                </tr>
-
-                                                            } }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /card -->
-                                    <div class="card">
-                                        <div class="card-header" role="tab">
-                                            <h5 class="mb-0">
-                                                <a class="collapsed" data-toggle="collapse" href="#collapseTwo_payment" aria-expanded="false" style="text-transform:uppercase">
-                                                    <i class="indicator ti-plus"></i>Tomorrow Events
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseTwo_payment" class="collapse" role="tabpanel" data-parent="#payment">
-                                            <div class="card-body">
-                                                <table id="tomorrow" class="display" style="width:100%">
-                                                    <thead>
                                                         <tr>
-                                                            @*<th>S.No</th>*@
-                                                            <th>Order ID</th>
-                                                            <th>Event Type</th>
-                                                            <th>Event Date</th>
-                                                            <th>Package Name</th>
-                                                            <th>Pax Count</th>
-                                                            <th>Balance Due</th>
-                                                            <th>Status</th>
+                                                            @*<td>@(++number1)</td>*@
+                                                            <td>@orders.OrderId</td>
+                                                            <td>@orders.EventType</td>
+                                                            <td>@orders.BookedDate</td>
+                                                            <td>Package Name</td>
+                                                            <td>Pax Count</td>
+                                                            <td>Balance Due</td>
+                                                            <td>@orders.Status</td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @{
-                                                            //var number2 = 0;
-                                                            foreach (var orders in ViewBag.tommaroworder)
-                                                            {
 
-                                                                <tr>
-                                                                    @*<td>@(++number2)</td>*@
-                                                                    <td>@orders.OrderId</td>
-                                                                    <td>@orders.EventType</td>
-                                                                    <td>@orders.BookedDate</td>
-                                                                    <td>Package Name</td>
-                                                                    <td>Pax Count</td>
-                                                                    <td>Balance Due</td>
-                                                                    <td>@orders.Status</td>
-
-                                                                </tr>
-                                                            } }
-                                                        @{
-                                                            //var number2 = 0;
-                                                            foreach (var orders in ViewBag.tommaroworder1)
-                                                            {
-
-                                                                <tr>
-                                                                    @*<td>@(++number2)</td>*@
-                                                                    <td>@orders.OrderId</td>
-                                                                    <td>@orders.EventType</td>
-                                                                    <td>@orders.BookedDate</td>
-                                                                    <td>Package Name</td>
-                                                                    <td>Pax Count</td>
-                                                                    <td>Balance Due</td>
-                                                                    <td>@orders.Status</td>
-
-                                                                </tr>
-                                                            } }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                                                    } }
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <!-- /card -->
-                                    <div class="card">
-                                        <div class="card-header" role="tab">
-                                            <h5 class="mb-0">
-                                                <a class="collapsed" data-toggle="collapse" href="#collapseThree_payment" aria-expanded="false" style="text-transform:uppercase">
-                                                    <i class="indicator ti-plus"></i>Upcoming Events
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseThree_payment" class="collapse" role="tabpanel" data-parent="#payment">
-                                            <div class="card-body">
-                                                <table id="upcoming" class="display" style="width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            @*<th>S.No</th>*@
-                                                            <th>Order ID</th>
-                                                            <th>Event Type</th>
-                                                            <th>Event Date</th>
-                                                            <th>Package Name</th>
-                                                            <th>Pax Count</th>
-                                                            <th>Balance Due</th>
-                                                            <th>Status</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @{
-                                                         /*   var number3 = 0*/;
-                                                            foreach (var orders in ViewBag.upcominforder)
-                                                            {
-                                                                <tr>
-                                                                    @*<td>@(++number3)</td>*@
-                                                                    <td>@orders.OrderId</td>
-                                                                    <td>@orders.EventType</td>
-                                                                    <td>@orders.BookedDate</td>
-                                                                    <td>Package Name</td>
-                                                                    <td>Pax Count</td>
-                                                                    <td>Balance Due</td>
-                                                                    <td>@orders.Status</td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                        @{
-                                                            //var number3 = 0;
-                                                            foreach (var orders in ViewBag.upcominforder1)
-                                                            {
-                                                                <tr>
-                                                                    @*<td>@(++number3)</td>*@
-                                                                    <td>@orders.OrderId</td>
-                                                                    <td>@orders.EventType</td>
-                                                                    <td>@orders.BookedDate</td>
-                                                                    <td>Package Name</td>
-                                                                    <td>Pax Count</td>
-                                                                    <td>Balance Due</td>
-                                                                    <td>@orders.Status</td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /card -->
                                 </div>
-                                <!-- /accordion payment -->
                             </div>
-                                                            }
-                        @if (ViewBag.enable == "orders")
-                        {
+                            <!-- /card -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseTwo_payment" aria-expanded="false" style="text-transform:uppercase">
+                                            <i class="indicator ti-plus"></i>Tomorrow Events
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo_payment" class="collapse" role="tabpanel" data-parent="#payment">
+                                    <div class="card-body">
+                                        <table id="tomorrow" class="display" style="width:100%;padding-left:0">
+                                            <thead>
+                                                <tr>
+                                                    @*<th>S.No</th>*@
+                                                    <th>Order ID</th>
+                                                    <th>Event Type</th>
+                                                    <th>Event Date</th>
+                                                    <th>Package Name</th>
+                                                    <th>Pax Count</th>
+                                                    <th>Balance Due</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    //var number2 = 0;
+                                                    foreach (var orders in ViewBag.tommaroworder)
+                                                    {
+
+                                                        <tr>
+                                                            @*<td>@(++number2)</td>*@
+                                                            <td>@orders.OrderId</td>
+                                                            <td>@orders.EventType</td>
+                                                            <td>@orders.BookedDate</td>
+                                                            <td>Package Name</td>
+                                                            <td>Pax Count</td>
+                                                            <td>Balance Due</td>
+                                                            <td>@orders.Status</td>
+
+                                                        </tr>
+                                                    } }
+                                                @{
+                                                    //var number2 = 0;
+                                                    foreach (var orders in ViewBag.tommaroworder1)
+                                                    {
+
+                                                        <tr>
+                                                            @*<td>@(++number2)</td>*@
+                                                            <td>@orders.OrderId</td>
+                                                            <td>@orders.EventType</td>
+                                                            <td>@orders.BookedDate</td>
+                                                            <td>Package Name</td>
+                                                            <td>Pax Count</td>
+                                                            <td>Balance Due</td>
+                                                            <td>@orders.Status</td>
+
+                                                        </tr>
+                                                    } }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-toggle="collapse" href="#collapseThree_payment" aria-expanded="false" style="text-transform:uppercase">
+                                            <i class="indicator ti-plus"></i>Upcoming Events
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree_payment" class="collapse" role="tabpanel" data-parent="#payment">
+                                    <div class="card-body">
+                                        <table id="upcoming" class="display" style="width:100%;padding-left:0">
+                                            <thead>
+                                                <tr>
+                                                    @*<th>S.No</th>*@
+                                                    <th>Order ID</th>
+                                                    <th>Event Type</th>
+                                                    <th>Event Date</th>
+                                                    <th>Package Name</th>
+                                                    <th>Pax Count</th>
+                                                    <th>Balance Due</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                         /*   var number3 = 0*/;
+                                                    foreach (var orders in ViewBag.upcominforder)
+                                                    {
+                                                        <tr>
+                                                            @*<td>@(++number3)</td>*@
+                                                            <td>@orders.OrderId</td>
+                                                            <td>@orders.EventType</td>
+                                                            <td>@orders.BookedDate</td>
+                                                            <td>Package Name</td>
+                                                            <td>Pax Count</td>
+                                                            <td>Balance Due</td>
+                                                            <td>@orders.Status</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                @{
+                                                    //var number3 = 0;
+                                                    foreach (var orders in ViewBag.upcominforder1)
+                                                    {
+                                                        <tr>
+                                                            @*<td>@(++number3)</td>*@
+                                                            <td>@orders.OrderId</td>
+                                                            <td>@orders.EventType</td>
+                                                            <td>@orders.BookedDate</td>
+                                                            <td>Package Name</td>
+                                                            <td>Pax Count</td>
+                                                            <td>Balance Due</td>
+                                                            <td>@orders.Status</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                        </div>
+                        <!-- /accordion payment -->
+                    </div>
+                                                    }
+                @if (ViewBag.enable == "orders")
+                {
 
                     <div class="col-md-10" style="color:black">
                         <div class="container margin_60_35" style="margin-left:auto;padding-bottom:0px">
@@ -1720,35 +1781,81 @@
                             </form>
                         </div>
 
-                                <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
-                                    <div>
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td><h4 style="text-transform:uppercase">Orders</h4></td>
-                                                <td style="float:right"><button type="button" class="btn btn-primary">New Order</button><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
+                        <div class="isotope-wrapper" style="margin-top: 30px;">
+                            <div>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td><h4 style="text-transform:uppercase">Orders</h4></td>
+                                        <td><button type="button" class="btn btn-primary" style="float:right">New Order</button></td>
+                                        <td style="float:right"><input class="form-control" style="width:100%" id="datetimepicker2" type="text" name="datetimepicker2" placeholder="Select Date Range" required></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <table id="allorders" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Order ID</th>
+                                        <th>Event Type</th>
+                                        <th>Event Date</th>
+                                        <th>Package Name</th>
+                                        <th>Pax Count</th>
+                                        <th>Balance Due</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var number = 0;
+                                        foreach (var orders in ViewBag.order1)
+                                        {
+                                            <tr class="show_hide_row">
+                                                <td>@(++number)</td>
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>Package Name</td>
+                                                <td>Pax Count</td>
+                                                <td>Balance Due</td>
+                                                <td>@orders.Status</td>
+                                                <td>
+                                                    <div class="menu">
+                                                        <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                        <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                            <div class="four column relaxed divided grid">
+                                                                <div class="column">
+                                                                    <div class="link list">
+                                                                        @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
+                                                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
+                                                                        <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                        <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                        <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                        <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
                                             </tr>
-                                        </table>
-                                    </div>
-                                  
-                                        <table id="allorders" class="display" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>S.No</th>
-                                                    <th>Order ID</th>
-                                                    <th>Event Type</th>
-                                                    <th>Event Date</th>
-                                                    <th>Package Name</th>
-                                                    <th>Pax Count</th>
-                                                    <th>Balance Due</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                var number = 0;
-                                                foreach (var orders in ViewBag.order)
-                                                {
+                                            <tr id="hidden_row1" class="hidden_row">
+                                                <td colspan=4>
+                                                    <ul>
+                                                        <li>Event Type:@orders.EventType</li>
+                                                        <li>contact number:@orders.phoneno</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                        foreach (var orders in ViewBag.order)
+                                        {
 
                                             <tr class="show_hide_row">
                                                 <td>@(++number)</td>
@@ -1767,7 +1874,7 @@
                                                                 <div class="column">
                                                                     <div class="link list">
                                                                         @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
-                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
+                                                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
                                                                         <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
                                                                         <hr style="margin:0;color:black;border:1px grey ridge" />
                                                                         <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
@@ -1795,53 +1902,7 @@
                                         }
                                     }
                                     @{
-                                        var numberks = 0;
-                                        foreach (var orders in ViewBag.order1)
-                                        {
 
-                                            <tr class="show_hide_row">
-                                                <td>@(++numberks)</td>
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>Package Name</td>
-                                                <td>Pax Count</td>
-                                                <td>Balance Due</td>
-                                                <td>@orders.Status</td>
-                                                <td>
-                                                    <div class="menu">
-                                                        <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                        <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                            <div class="four column relaxed divided grid">
-                                                                <div class="column">
-                                                                    <div class="link list">
-                                                                        @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
-                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
-                                                                        <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
-                                            </tr>
-                                            <tr id="hidden_row1" class="hidden_row">
-                                                <td colspan=4>
-                                                    <ul>
-                                                        <li>Event Type:@orders.EventType</li>
-                                                        <li>contact number:@orders.phoneno</li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-
-                                        }
                                     }
                                 </tbody>
                             </table>
@@ -1969,7 +2030,7 @@
                     alert("Please at least check one of the checkbox");
                 }
             });
-           // alert(policycheck);
+            // alert(policycheck);
             var vsid = $('#vsid').val();
             var Tax = $("#Tax").val();
             var Decoration_starting_costs = $("#Decoration_starting_costs").val();
@@ -2191,11 +2252,11 @@
                     commondiv = starters;
                 }
                 if (selpkg == 'rice') {
-                    rice = "Veg Fried Rice,Mongolian Rice,Shezwan Rice,Singapore Noodles,Hot Garlic Sauce,American Chopsuey,Veg Dumpling,Veg Chow Chow,Veg Manchurian (Wt),Thai Veg (Wet.),Chilli Veg (Wet),Chilli Paneer,Chilli Baby corn,Gobi Manchurian,Veg Biryani,Tomato Rice,emon Rice,White Rice,Bagara Rice,Curd Rice,Veg Biryani,eg Pulav,Peas Pulav,Malai Koftha,Diwani Handi,Mushroom Kaju,unakkaya Kaju,Mirch Ka Saalan,Bagara Baingan,Capsicum Masala,Tomato Masala,Mirchi Tomato Masala,Dondakaya Masala,Sorakaya Masala,Beerakaya Masala,Mealmaker Masala,Rajma Masala,Chole Masala,hendi Masala,Palak Koftha Curry,kaddu Koftha Curry,Chama Gadda Pulusu,Gumadikaya Pulusu,Bendakaya Pulusu,Kakarkaya Pulusu,Beerakaya Alsandalu,eera Kaya Methi,beera kaya Boondi,Alu Palak,Capsicum Tomata Masala,na Palak,Chikkudukaya Alu,Vankaya Alu,Vankaya Alu Tomato,Dosakaya Tomato,lu Gobi Kurma,Alu Mutter,Mixed Veg Kurma,Gangavali Tomato";
+                    rice = "Veg Fried Rice,Mongolian Rice,Shezwan Rice,Singapore Noodles,Hot Garlic Sauce,American Chopsuey,Veg Dumpling,Veg Chow Chow,Veg Manchurian (Wt),Thai Veg (Wet.),Chilli Veg (Wet),Chilli Paneer,Chilli Baby corn,Gobi Manchurian,Veg Biryani,Tomato Rice,emon Rice,White Rice,Bagara Rice,Curd Rice,Veg Biryani,Veg Pulav,Peas Pulav,Malai Koftha,Diwani Handi,Mushroom Kaju,unakkaya Kaju,Mirch Ka Saalan,Bagara Baingan,Capsicum Masala,Tomato Masala,Mirchi Tomato Masala,Dondakaya Masala,Sorakaya Masala,Beerakaya Masala,Mealmaker Masala,Rajma Masala,Chole Masala,hendi Masala,Palak Koftha Curry,kaddu Koftha Curry,Chama Gadda Pulusu,Gumadikaya Pulusu,Bendakaya Pulusu,Kakarkaya Pulusu,Beerakaya Alsandalu,eera Kaya Methi,beera kaya Boondi,Alu Palak,Capsicum Tomata Masala,na Palak,Chikkudukaya Alu,Vankaya Alu,Vankaya Alu Tomato,Dosakaya Tomato,lu Gobi Kurma,Alu Mutter,Mixed Veg Kurma,Gangavali Tomato";
                     commondiv = rice;
                 }
                 if (selpkg == 'bread') {
-                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Muli Paratha,Makki ki roti,Kulcha";
+                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Mooli Paratha,Makki ki roti,Kulcha";
                     commondiv = bread;
                 }
                 if (selpkg == 'curries') {
@@ -2227,7 +2288,7 @@
                     commondiv = beverages;
                 }
                 if (selpkg == 'fruits') {
-                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Pears,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
+                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
                     commondiv = fruits;
                 }
             }
@@ -2241,15 +2302,15 @@
                     commondiv = starters;
                 }
                 if (selpkg == 'rice') {
-                    rice = "Hyderabad Mutton Biryani,Mutton Sofiyani Biryani,Hyderabad Chicken Biryani,Chicken Sofiyani Biryani,Chicken Pulav,Prawns Pulav,Egg Biryani,Mixed Fried Rice,Egg Fried Rice,Egg Fried Rice,Chicken Fried Rice,Mixed Fried Rice,American Chopsoy (Non-Veg),Chilly Chicken Wet,Chicken Manchurian Wet,Shezwan Chicken Wet,Gralic Chicken (Dry & Wet)";
+                    rice = "Hyderabad Mutton Biryani,Mutton Sofiyani Biryani,Hyderabad Chicken Biryani,Chicken Sofiyani Biryani,Chicken Pulav,Prawns Pulav,Egg Biryani,Mixed Fried Rice,Egg Fried Rice,Egg Fried Rice,Chicken Fried Rice,Mixed Fried Rice,American Chopsoy (Non-Veg),Chilly Chicken Wet,Chicken Manchurian Wet,Shezwan Chicken Wet,Garlic Chicken (Dry & Wet)";
                     commondiv = rice;
                 }
                 if (selpkg == 'bread') {
-                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Kheema Naan,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Muli Paratha,Makki ki roti,Kulcha";
+                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Kheema Naan,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Mooli Paratha,Makki ki roti,Kulcha";
                     commondiv = bread;
                 }
                 if (selpkg == 'curries') {
-                    curries = "Dhumka Chicken,Methi Chicken,Chilli Chicken,Ginger Chicken,Gongoora Chicken,Moghalai Chicken,ariyali Chicken,Ankapur Country Chicken,utter Chicken,Chicken Masala,Chilly Chicken Wet(Chinese),Chicken Manchurian Wet,hicken Diwani Handi,Mutton Curry,Moghalai Mutton,utton Pasinda,Mutton Kali Mirchi,Mutton Roganjosh,Dhum-ka- Bakra,utton Raan,ongoora Maamsam,Chukkakura Maamsam,Palak Mutton,iver Fry,Kidney Fry,okkala Charu,Mutton Dalcha,Boti Dhalcha,Thalakaya Kura,Keema Methi,Keema Palak,Keema Batana,eema Koftha Curry,Paya,Haleem,Butter Chicken,Anda Bhurji,Sarson KA Saag,Makki Ki Roti,Amritsari Kulcha,Punjabi Chole,Dal Makhni,akoda Khadi,Dal Fry,Labadar Paneer,Dal Tadka";
+                    curries = "Dhumka Chicken,Methi Chicken,Chilli Chicken,Ginger Chicken,Gongoora Chicken,Moghalai Chicken,Hariyali Chicken,Ankapur Country Chicken,Butter Chicken,Chicken Masala,Chilly Chicken Wet(Chinese),Chicken Manchurian Wet,Chicken Diwani Handi,Mutton Curry,Moghalai Mutton,utton Pasinda,Mutton Kali Mirchi,Mutton Roganjosh,Dhum-ka- Bakra,utton Raan,ongoora Maamsam,Chukkakura Maamsam,Palak Mutton,iver Fry,Kidney Fry,okkala Charu,Mutton Dalcha,Boti Dhalcha,Thalakaya Kura,Keema Methi,Keema Palak,Keema Batana,eema Koftha Curry,Paya,Haleem,Butter Chicken,Anda Bhurji,Sarson KA Saag,Makki Ki Roti,Amritsari Kulcha,Punjabi Chole,Dal Makhni,akoda Khadi,Dal Fry,Labadar Paneer,Dal Tadka";
                     commondiv = curries;
                 }
                 if (selpkg == 'fry_dry') {
@@ -2277,7 +2338,7 @@
                     commondiv = beverages;
                 }
                 if (selpkg == 'fruits') {
-                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Pears,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
+                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
                     commondiv = fruits;
                 }
             }
@@ -2325,7 +2386,7 @@
         $(document).ready(function () {
 
 
-            $("#kscbook").css('display', 'none');
+            //$("#kscbook").css('display', 'none');
             $("#imageBrowes").change(function () {
 
                 var File = this.files;
@@ -2401,35 +2462,73 @@
             }
         });
 
-
+        var thisdates="";
+        var array = [];
         $(function () {
-            $(".vendorcalendar").datepicker({
-                dayOfWeekStart: 1,
-                lang: 'en',
-                timepicker: false,
-                format: 'dd/MM/yyyy',
-                minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-                maxDate: '+1970/03/02'//tomorrow is maximum date calendar
-            });
+            var listcount = parseInt('@ViewBag.availability.Count') +1;
+            var listarray = @Html.Raw(Json.Encode(@ViewBag.availability));
+            for (var k = 0; k < listcount; k++) {
+                array.push(listarray[k]);
+            }
+            for (var i = 1; i < listcount; i++) {
+                thisdates = array[i-1];
+                var thisid = '#vcal'+i+'';
+                $('#vcal'+i+'').datepicker({
+                    dayOfWeekStart: 1,
+                    lang: 'en',
+                    timepicker: false,
+                    format: 'dd/MM/yyyy',
+                    minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+                    maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+                    //onChangeMonthYear: blockdates,
+                    //    function(){
+                    //    var date = new Date();
+                    //    alert(date);
+                    //    var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
+                    //    return [thisdates.indexOf(string) == -1]
+                    //},
+                    beforeShowDay:function (date) {
+                        var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
+                        return [thisdates.indexOf(string) == -1]
+                    }
+                });
+            }
+
+            function blockdates() {
+                setTimeout(function() {
+                    $(".ui-datepicker-calendar td").filter(function() {
+                        var date = $(this).text();
+                        return /\d/.test(date);
+                    }).find("a").attr('data-custom', 110);
+                }, 0);
+            }
+
+
+            //$(".vendorcalendar").datepicker({
+            //    dayOfWeekStart: 1,
+            //    lang: 'en',
+            //    timepicker: false,
+            //    format: 'dd/MM/yyyy',
+            //    minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+            //    maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+            //    beforeShowDay: function (date) {
+            //        var array = '2018-09-10,2018-09-20,2018-09-15,2018-09-25,2018-09-18,2018-09-30';
+            //        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+            //        return [array.indexOf(string) == -1]
+            //    }
+            //});
         });
 
         $(".vendorcalendar").on("change", function () {
+            $(".kscbook").css('display', 'none');
             var date = new Date($(this).val());
-
             var yr = date.getFullYear();
-            //  var month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth() + 1;
             var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-
             var month = date.getMonth() + 1;
             var selected = yr + '-' + month + '-' + day;
+            alert(selected);
             $("#vcalender").val(selected);
-            //var venusid = $(this).parent().find('input#venusid').val(); var venusmasterid = $(this).parent().find('input#venusmasterid').val();
-
-            //alert(selected); alert(venusid); alert(venusmasterid);
-            $("#kscbook").css('display', 'block');
-            //alert(selected);
-            //alert(sdate);
-
+            $(this).parents("div#vcal").next("div.kscbook").css('display', 'block');
         });
         $('#datetimepicker1,datetimepicker2').daterangepicker({
             singleDatePicker: true,
@@ -2438,8 +2537,6 @@
                 format: 'DD/MM/YYYY'
             }
         });
-
-
     </script>
     <script>
         $(document).ready(function () {
@@ -2569,13 +2666,13 @@
             $('#selectedamenities').val(arr.substr(1));
         });
 
-        function booknow(val) {
-            var packageid = val;
+        $('.btnbook').on('click', function () {
+            var packageid = $(this).prev('input.pkgid').val();
             window.localStorage.removeItem("vpbook");
-
-            var location = 'Hyderabad';//$('#loc').val();
-            var eventtype = $("#eventtype").find("option:selected").text();
-            var guests = $('#bookguest').val();
+            var bookingdiv = $(this).parents('table.priceslist').parents("div").parents("div.box_grid").find("div.kscbook");
+            var location = 'Hyderabad';
+            var guests = bookingdiv.find('#bookguest').val();
+            var eventtype = bookingdiv.find("#eventtype").find("option:selected").text();
             var date = $('#vcalender').val();
             if (location == '') {
                 alert('Enter Location');
@@ -2598,7 +2695,38 @@
                 window.location.href = '/ManageUser/Index?select=' + select;
 
             }
-        }
+        });
+
+        //function booknow(val) {
+        //    var packageid = val;
+        //    window.localStorage.removeItem("vpbook");
+
+        //    var location = 'Hyderabad';//$('#loc').val();
+        //    var eventtype = $("#eventtype").find("option:selected").text();
+        //    var guests = $('#bookguest').val();
+        //    var date = $('#vcalender').val();
+        //    if (location == '') {
+        //        alert('Enter Location');
+        //        $('#loc').focus();
+        //    }
+        //    else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+        //        alert('Select Event Type');
+        //    }
+        //    else if (guests == '') {
+        //        alert('Enter Guests');
+        //        $('#guests').focus();
+        //    }
+        //    else if (date == '') {
+        //        alert('Select date');
+        //        $('#datetimepicker1').focus();
+        //    }
+        //    else {
+        //        var select = location + ',' + guests + "," + date + "," + eventtype + "," + packageid;
+        //        window.localStorage.setItem("vpbook", select);
+        //        window.location.href = '/ManageUser/Index?select=' + select;
+
+        //    }
+        //}
 
         function updatedetails(val) {
             var hdname = $('#hdname').val();

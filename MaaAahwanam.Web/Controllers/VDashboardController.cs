@@ -47,6 +47,7 @@ namespace MaaAahwanam.Web.Controllers
                 var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id)).ToList();
                 var orders1 = orderService.userOrderList1().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
 
+                //Orders Section
                 ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
                 ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
                 ViewBag.order = orders.OrderByDescending(m => m.OrderId);
@@ -61,7 +62,8 @@ namespace MaaAahwanam.Web.Controllers
                 List<VendorVenue> vendor = venues;
                 List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
                 List<VendorImage> vimg = new List<VendorImage>();
-                ViewBag.policy = vendorMasterService.Getpolicy(vid, vsid);
+                List<string> availability = new List<string>();
+                ViewBag.policy = vendorMasterService.Getpolicy(vid, vsid); 
                 //if (date != null)
                 //{
 
@@ -70,9 +72,10 @@ namespace MaaAahwanam.Web.Controllers
                 //    ViewBag.availablepackages = package1;
                 //}
                 //else { package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package; }
+
+                //packages section
                 package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package;
                 ViewBag.particularVenue = vendor;
-                
                 ViewBag.venues = venues;
                 Addservices(vsid);
                 if (venues.Count > 0)
@@ -84,7 +87,8 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.vendorid = vid;
                 if (vsid != null && vsid != "")
                 {
-                    Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
+                    //Loading all services
+                    Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList()); 
                     allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
                     var pkgsks = vendorVenueSignUpService.Getpackages((long.Parse(vid)), long.Parse(vsid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
                     if (pkgsks != null) ViewBag.package = pkgsks;
@@ -100,6 +104,36 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.sliderimages = allimages.Where(m => m.ImageType == "Slider").Take(4).ToList();
                 ViewBag.slidercount = (ViewBag.sliderimages.Count < 4) ? 4 - ViewBag.sliderimages.Count : 0;
                 ViewBag.subtype = venues.FirstOrDefault().VenueType;
+
+                //Dates Availability Section
+                foreach (var item1 in venues)
+                {
+                    var Gettotaldates = vendorDatesService.GetDates(item1.VendorMasterId, item1.Id);
+                    string orderdates = productInfoService.disabledate(item1.VendorMasterId, item1.Id, "Venue").Replace('/', '-');
+                    var betweendates = new List<string>();
+                    int recordcount = Gettotaldates.Count();
+                    foreach (var item in Gettotaldates)
+                    {
+                        var startdate = Convert.ToDateTime(item.StartDate);
+                        var enddate = Convert.ToDateTime(item.EndDate);
+                        if (startdate != enddate)
+                        {
+                            for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
+                            {
+                                betweendates.Add(dt.ToString("dd-MM-yyyy"));
+                            }
+                        }
+                        else
+                        {
+                            betweendates.Add(startdate.ToString("dd-MM-yyyy"));
+                        }
+                    }
+                    var vendoravailabledates = String.Join(",", betweendates);
+                    if (orderdates != "")
+                        vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
+                    availability.Add(vendoravailabledates);
+                }
+                ViewBag.availability = availability.ToList();
             }
             else
             {
