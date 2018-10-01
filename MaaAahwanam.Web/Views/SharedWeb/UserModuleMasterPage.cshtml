@@ -7,16 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @*<meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
-    <meta name="author" content="Ansonika">*@
+        <meta name="author" content="Ansonika">*@
     <title>@ViewBag.Title</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
     @*<img src="~/newdesignstyles/images/favicon.ico" />*@
     @*<link rel="apple-touch-icon" type="image/x-icon" href="~/newdesignstyles/images/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="~/newdesignstyles/images/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="~/newdesignstyles/images/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="~/newdesignstyles/images/apple-touch-icon-144x144-precomposed.png">*@
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="~/newdesignstyles/images/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="~/newdesignstyles/images/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="~/newdesignstyles/images/apple-touch-icon-144x144-precomposed.png">*@
 
     <!-- BASE CSS -->
     <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
@@ -30,43 +30,44 @@
 
     <!-- SPECIFIC CSS -->
     <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/intlTelInput.css" rel="stylesheet">
     @RenderSection("css", false)
     <!-- YOUR CUSTOM CSS -->
     <link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">
-   <style>
-            #modal-example .form-group input.form-control {
-            padding-left: 40px;
-        }
+    <style>
+             #modal-example .form-group input.form-control {
+             padding-left: 40px;
+         }
 
-        #modal-example .form-group i {
-            font-size: 21px;
-            position: absolute;
-            left: 12px;
-            top: 34px;
-            color: #ccc;
-            width: 25px;
-            height: 25px;
-            display: block;
-            font-weight: 400 !important;
+         #modal-example .form-group i {
+             font-size: 21px;
+             position: absolute;
+             left: 12px;
+             top: 34px;
+             color: #ccc;
+             width: 25px;
+             height: 25px;
+             display: block;
+             font-weight: 400 !important;
+         }
+         input.form-control {
+         font-weight:700;
+         }
+
+         .overlay {
+             background: no-repeat scroll center center #FFF;
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             z-index: 9999999;
+             background-color: rgba(0,0,0,0.8);
+             /* END EXTERNAL S */
+         }
+        .btn_1 {
+        margin-left:0;
         }
-        input.form-control {
-        font-weight:700;
-        }
- 
-        .overlay {
-            background: no-repeat scroll center center #FFF;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999999;
-            background-color: rgba(0,0,0,0.8);
-            /* END EXTERNAL S */
-        }
-       .btn_1 {
-       margin-left:0;
-       }
     </style>
 </head>
 
@@ -247,11 +248,10 @@
                     </div>
                     <div class="form-group">
                         <label>Phone Number</label>
-                        @*<input type="password" class="form-control" name="password" id="password" value="">*@
-                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Mobile Number(format: xxxxxxxxxx)" id="txtphone">
-                        <i class="icon_lock_alt"></i>
+                        <input type="text" pattern="^\d{10}$" style="padding-left:80px;" class="form-control" id="txtphone">
+                        <i class="icon_phone"></i>
                     </div>
-
+                    <span id="error-msg" style="color:red"></span>
                     <p>You will receive an email containing a link allowing you to activate</p>
                     <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
@@ -341,10 +341,10 @@
                     </div>
                     <div class="form-group">
                         <label>Phone Number</label>
-                        @*<input type="password" class="form-control" name="password" id="password" value="">*@
-                        <input type="tel" pattern="^\d{10}$" class="form-control" placeholder="Enter Your Mobile Number(format: xxxxxxxxxx)" id="txtphone1" required>
-                        <i class="icon_lock_alt"></i>
+                        <input type="text" pattern="^\d{10}$" style="padding-left:80px;" class="form-control" id="txtphone1">
+                        <i class="icon_phone"></i>
                     </div>
+                    <span id="error-msg1" style="color:red"></span>
 
                     <p>You will receive an email containing a link allowing you to activate</p>
                     <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
@@ -375,6 +375,74 @@
 
     <!-- Masonry Filtering -->
     <script src="~/newdesignstyles/Scripts/isotope.min.js"></script>
+    <script src="~/newdesignstyles/Scripts/intlTelInput.js"></script>
+    <script>
+        var input = document.querySelector("#txtphone"),
+            errorMsg = document.querySelector("#error-msg"),
+            errorMsg1 = document.querySelector("#error-msg1"),
+            input1 = document.querySelector("#txtphone1");
+        var iti = window.intlTelInput(input, {
+            initialCountry: "auto",
+            geoIpLookup: function (success, failure) {
+                $.get("https://ipinfo.io", function () { }, "jsonp").always(function (resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "";
+                    success(countryCode);
+                });
+            },
+            utilsScript: "../newdesignstyles/Scripts/utils.js",
+        });
+        var iti1 = window.intlTelInput(input1, {
+            initialCountry: "auto",
+            geoIpLookup: function (success, failure) {
+                $.get("https://ipinfo.io", function () { }, "jsonp").always(function (resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "";
+                    success(countryCode);
+                });
+            },
+            utilsScript: "../newdesignstyles/Scripts/utils.js",
+        });
+
+        var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+        input.addEventListener('blur', function () {
+            reset();
+            if (input.value.trim()) {
+                if (iti.isValidNumber()) {
+                    //validMsg.classList.remove("hide");
+                } else {
+                    input.classList.add("error");
+                    var errorCode = iti.getValidationError();
+                    errorMsg.innerHTML = errorMap[errorCode];
+                    errorMsg.classList.remove("hide");
+                }
+            }
+        });
+        input1.addEventListener('blur', function () {
+            reset1();
+            if (input1.value.trim()) {
+                if (iti1.isValidNumber()) {
+                    //validMsg.classList.remove("hide");
+                } else {
+                    input1.classList.add("error");
+                    var errorCode = iti1.getValidationError();
+                    errorMsg1.innerHTML = errorMap[errorCode];
+                    errorMsg1.classList.remove("hide");
+                }
+            }
+        });
+
+        var reset = function () {
+            input.classList.remove("error");
+            errorMsg.innerHTML = "";
+            errorMsg.classList.add("hide");
+        };
+        var reset1 = function () {
+            input1.classList.remove("error");
+            errorMsg1.innerHTML = "";
+            errorMsg1.classList.add("hide");
+        };
+
+    </script>
     @RenderSection("scripts", false)
     <script>
         //$(window).load(function () {
@@ -530,10 +598,10 @@
                 alert("Please Enter Name");
                 $("#txtname").focus();
             }
-            //else if (!passwordpattern.test(CustomerName)) {
-            //    alert("Please Enter valid 10 digit Phonenumber");
-            //    $("#txtphone").focus();
-            //}
+                //else if (!passwordpattern.test(CustomerName)) {
+                //    alert("Please Enter valid 10 digit Phonenumber");
+                //    $("#txtphone").focus();
+                //}
             else if (CustomerName.length < 5) {
                 alert("Name must be 5 characters");
                 $("#txtname").focus();

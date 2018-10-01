@@ -67,5 +67,6 @@ namespace MaaAahwanam.Repository.db
         public DbSet<ManageUser> ManageUser { get; set; }
         public DbSet<ManageVendor> ManageVendor { get; set; }
         public DbSet<Policy> Policy { get; set; }
+        public DbSet<Payment> Payment { get; set; }
     }
 }
