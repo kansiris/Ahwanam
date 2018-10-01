@@ -916,10 +916,10 @@
                 alert("Please Enter PhoneNumber");
                 $("#txtphone").focus();
             }
-            else if (!phonepattern.test(CustomerPhoneNumber)) {
-                alert("Please Enter valid 10 digit Phonenumber");
-                $("#txtphone").focus();
-            }
+            //else if (!phonepattern.test(CustomerPhoneNumber)) {
+            //    alert("Please Enter valid 10 digit Phonenumber");
+            //    $("#txtphone").focus();
+            //}
             else if (emailaddressVal == '') {
                 alert("Please Enter Email Address");
 
@@ -929,66 +929,64 @@
                 alert("Please Enter a valid Email Address");
                 $("#txtemail").focus();
             }
+            
+
             else {
-                alert("All Fields Validated");
+                if (clickedvalue == 'Register') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Registration in process....');
+                    $.ajax({
+                        url: '/Home/register',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
+                        type: 'POST',
+                        data: JSON.stringify({ CustomerPhoneNumber: CustomerPhoneNumber, CustomerName: CustomerName, Password: Password, Email: Email }),
+                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("Check your email to active your account to login");
+                                //window.location.href = '/NewOrder/orderview'
+                            }
+                            //else {
+                            //    alert("Customer Registered successfully");
+                            //    $("#txtphone").val('');
+                            //    $("#txtname").val('');
+                            //    $("#txtpassword").val('');
+                            //    $("#txtdeladdress").val('');
+                            //    $("#txtemail").val('');
+                            //    window.location.reload();
+                            //}
+                            if (data == "unique") {
+                                alert("E-Mail ID Already Registered!!! Try Logging with your Password");
+
+                            }
+                            else if (data == "unique1") {
+                                alert("Registration fails");
+
+                            }
+                            else if (data == "Failed") {
+
+                                alert("Registration Failed");
+                                window.location.reload();
+                            }
+                            else {
+                                alert("Registration Failed");
+                                // $("#txtphone").val('');
+                                $("#txtname").val('');
+                                $("#txtpassword").val('');
+                                $("#txtdeladdress").val('');
+                                $("#txtemail").val('');
+                                // window.location.reload();
+                                $("#otpopup").css("display", "block");
+                                $("#txtotp").focus();
+                            }
+                        },
+                        error: function (data) {
+                            alert("Something Went Wrong!!! Try Again Later");
+                        }
+                    });
+                }
             }
-
-            //else {
-            //    if (clickedvalue == 'Register') {
-            //        $('.overlay').show();
-            //        $('#loadermsg').text('Registration in process....');
-            //        $.ajax({
-            //            url: '/Home/register',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
-            //            type: 'POST',
-            //            data: JSON.stringify({ CustomerPhoneNumber: CustomerPhoneNumber, CustomerName: CustomerName, Password: Password, Email: Email }),
-            //            //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
-            //            dataType: 'json',
-            //            contentType: 'application/json',
-            //            success: function (data) {
-            //                if (data == "success") {
-            //                    alert("Check your email to active your account to login");
-            //                    //window.location.href = '/NewOrder/orderview'
-            //                }
-            //                //else {
-            //                //    alert("Customer Registered successfully");
-            //                //    $("#txtphone").val('');
-            //                //    $("#txtname").val('');
-            //                //    $("#txtpassword").val('');
-            //                //    $("#txtdeladdress").val('');
-            //                //    $("#txtemail").val('');
-            //                //    window.location.reload();
-            //                //}
-            //                if (data == "unique") {
-            //                    alert("E-Mail ID Already Registered!!! Try Logging with your Password");
-
-            //                }
-            //                else if (data == "unique1") {
-            //                    alert("Registration fails");
-
-            //                }
-            //                else if (data == "Failed") {
-
-            //                    alert("Registration Failed");
-            //                    window.location.reload();
-            //                }
-            //                else {
-            //                    alert("Registration Failed");
-            //                    // $("#txtphone").val('');
-            //                    $("#txtname").val('');
-            //                    $("#txtpassword").val('');
-            //                    $("#txtdeladdress").val('');
-            //                    $("#txtemail").val('');
-            //                    // window.location.reload();
-            //                    $("#otpopup").css("display", "block");
-            //                    $("#txtotp").focus();
-            //                }
-            //            },
-            //            error: function (data) {
-            //                alert("Something Went Wrong!!! Try Again Later");
-            //            }
-            //        });
-            //    }
-            //}
         }
         function login(clickedvalue) {
             var url1 = document.referrer;
