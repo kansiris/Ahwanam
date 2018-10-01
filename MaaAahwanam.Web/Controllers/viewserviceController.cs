@@ -83,7 +83,7 @@ namespace MaaAahwanam.Web.Controllers
                     policy.Add(p1);
                    
                 }
-                ViewBag.allimages = vimg;
+                ViewBag.allimages = allimages;
                 ViewBag.particularVenue = vendor;
                 ViewBag.availablepackages = package;
                 var allamenities = amenities.Select(m => new
