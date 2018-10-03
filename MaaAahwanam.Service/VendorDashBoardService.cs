@@ -57,6 +57,10 @@ namespace MaaAahwanam.Service
         {
             return mngvendorrepository.GetUserdetails(id);
         }
+        public List<ManageUser> getuserbyemail(string email)
+        {
+            return mngvendorrepository.getuserbyemail(email);
+        }
 
         public ManageUser UpdateUser(ManageUser mnguser, int id)
         {

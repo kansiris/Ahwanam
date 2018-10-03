@@ -459,7 +459,7 @@
                                                 </div>
                                                 <div style="position:absolute; display: inline;">
                                                     <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
-
+                                                    <button id="booknowss" type="button" name="command" class="btn btn-success">save and Book Now</button>
                                                     <button id="CancelUser" type="button" class="btn btn-danger">Cancel</button>
                                                 </div>
                                             </div>
@@ -517,8 +517,8 @@
                 $('#Status').val('');
                 $('#SaveUser').css('display', 'block');
                 $('#EditUser').css('display', 'none');
-              //  $('#booknow').css('display', 'none');
-
+                $('#booknow').css('display', 'none');
+                $('#booknowss').css('display', 'block');
 
             });
 
@@ -536,7 +536,8 @@
                     $('#saverecord').css('display', 'block');
                     $('#SaveUser').css('display', 'none');
                     $('#EditUser').css('display', 'block');
-                    
+                    $('#booknow').css('display', 'block');
+                    $('#booknowss').css('display', 'none');
                     var radataid = $(this).val();
                     $('#id').val(radataid);
                     //alert(radataid);
@@ -667,6 +668,52 @@
                     }
                 });
             });
+
+            $('#booknowss').click(function () {
+                var businessname = $('#Businessname').val();
+                alert(businessname);
+                var firstname = $('#firstname').val();
+                var lastname = $('#lastname').val();
+                var email = $('#email').val();
+                var phoneno = $('#phoneno').val();
+                var adress1 = $('#adress1').val();
+                var adress2 = $('#adress2').val();
+                var city = $('#city').val();
+                var state = $('#state').val();
+                var country = $('#country').val();
+                var pincode = $('#pincode').val();
+                var Status = $('#Status').val();
+                var vid = $("#vendorId").val();
+                var packid = '@ViewBag.pid';
+                var loc = '@ViewBag.loc';
+                var eventtype = '@ViewBag.eventtype';
+                var guests = '@ViewBag.guest';
+                var date = '@ViewBag.date';
+                if (packid == '') {
+                    var selectedp = window.localStorage.getItem("vpbook");
+                }
+                $('.overlay').show();
+                $('#loadermsg').text('Booking in process....');
+                $.ajax({
+                    url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status,
+                    type: 'POST',
+                    contentType: 'application/json',
+
+                    success: function (result) {
+                        if (result == "success") {
+                            alert("Order placed Successfully");
+                            window.location.href = "/VDashboard?c=orders";
+                            window.localStorage.removeItem("vpbook");
+                        } else {
+                            alert("Error Occurred in placing order");
+                        }
+
+
+
+                    }
+                });
+            });
+
 
         </script>
 

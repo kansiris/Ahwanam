@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
+        ReceivePaymentService rcvpmntservice = new ReceivePaymentService();
         // GET: Payments
         public ActionResult Index(string Oid)
         {
@@ -38,6 +39,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
+                        ViewBag.receivedTrnsDate = DateTime.Now;
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                     }
                     else
@@ -50,11 +52,20 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
+                        
+
                     }
                     ViewBag.orderid = Oid;
                 }
             }
             return View();
+        }
+        [HttpPost]
+        public ActionResult Index(Payment payments)
+        {
+                payments.Payment_Date = DateTime.Now;
+                payments = rcvpmntservice.SavePayments(payments);
+                return View();
         }
     }
 }
