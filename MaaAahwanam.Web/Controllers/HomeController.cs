@@ -206,7 +206,7 @@ namespace MaaAahwanam.Web.Controllers
                         }
 
                         TempData["Active"] = "Thanks for Verifying the Email";
-                        return RedirectToAction("Index", "NUserRegistration");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
@@ -221,7 +221,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "home");
+                return RedirectToAction("Index", "Home");
             }
         }
         public JsonResult login(string Password, string Email,string url1)

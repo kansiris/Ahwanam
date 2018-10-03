@@ -65,6 +65,11 @@ namespace MaaAahwanam.Repository.db
             //int count = _dbContext.ManageUser.Where(e => e.email == email && e.id == int.Parse(id)).Count();
             return UseremailCount;
         }
+        public List<ManageUser> getuserbyemail(string email)
+        {
+            return _dbContext.ManageUser.Where(e => e.email == email).ToList();
+           
+        }
         public ManageUser UpdateUser(ManageUser User, int id)
         {
             var GetUser = _dbContext.ManageUser.SingleOrDefault(v => v.id == id);

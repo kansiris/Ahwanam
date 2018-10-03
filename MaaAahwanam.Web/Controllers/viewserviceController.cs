@@ -286,9 +286,10 @@ namespace MaaAahwanam.Web.Controllers
                 cdate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             }
             else {
-                cdate = Convert.ToDateTime(calender);
-            }
-            if (packageid == null)
+                DateTime  ctestdate = Convert.ToDateTime(calender);
+                string cd1 = ctestdate.ToString("dd-mm-yyyy");
+                cdate = Convert.ToDateTime(ctestdate);            }
+            if (packageid == null || packageid == "undefined")
             {
                  packprice = "N/A";
             }
