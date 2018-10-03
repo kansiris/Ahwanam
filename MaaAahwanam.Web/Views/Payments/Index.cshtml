@@ -90,14 +90,14 @@
                             <div class="row">
                                 <div class="col-6">
                                     <address>
-                                        <strong>Order Date:</strong><br>
-                                        @ViewBag.orderdate<br><br>
+                                        <strong>Recived Date:</strong><br>
+                                        @ViewBag.receivedTrnsDate<br><br>
                                     </address>
                                 </div>
-                                <div class="col-6 text-right">
+                                <div class="col-6 total_amount text-right" id="totalprice" name="totalprice">
                                     <address>
                                         <strong>Total Price:</strong><br />
-                                        ₹ @ViewBag.totalprice<br /><br />
+                                        ₹<span>@ViewBag.totalprice</span><br /><br />
                                     </address>
                                 </div>
                                
@@ -118,6 +118,7 @@
                                                 <td class="text-center"><strong>Price</strong></td>
                                                 <td class="text-center"><strong>Quantity</strong></td>
                                                 <td class="text-right"><strong>Total Amount</strong></td>
+                                                <td class="text-right"><strong>Due Amount</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -128,6 +129,7 @@
                                                     <td>@item.EventType</td>
                                                     <td class="text-center">₹ @item.PerunitPrice</td>
                                                     <td class="text-center">@item.Quantity</td>
+                                                    <td class="text-right">₹ @item.TotalPrice</td>
                                                     <td class="text-right">₹ @item.TotalPrice</td>
                                                 </tr>
                                             }
@@ -166,23 +168,23 @@
                             <div class="row payment-options">
                                 <fieldset class="form-check" style="display:inline">
                                     <label class="form-check-label" for="Status1">Cash</label>
-                                    <input type="radio" class="chckcash" id="Type1" name="PaymentType" value="Cash" checked required />
+                                    <input type="radio" class="chckcash" id="Type1" name="Payment_Type" value="Cash" checked required />
                                 </fieldset>
                                 <fieldset class="form-check" style="display:inline">
                                     <label class="form-check-label" for="Status2">Cheque</label>
-                                    <input type="radio" class="chckcheque" id="Type2" name="PaymentType" value="Cheque" required />
+                                    <input type="radio" class="chckcheque" id="Type2" name="Payment_Type" value="Cheque" required />
                                 </fieldset>
                                 <fieldset class="form-check" style="display:inline">
                                     <label class="form-check-label" for="Status2"> Credit / Debit Card</label>
-                                    <input type="radio" class="chckcard" id="Type3" name="PaymentType" value="Credit/DebitCard" required />
+                                    <input type="radio" class="chckcard" id="Type3" name="Payment_Type" value="Credit/DebitCard" required />
                                 </fieldset>
                                 <fieldset class="form-check" style="display:inline">
                                     <label class="form-check-label" for="Status2">Bank Transfer</label>
-                                    <input type="radio" class="chckbt" id="Type4" name="PaymentType" value="Bank Transfer" required />
+                                    <input type="radio" class="chckbt" id="Type4" name="Payment_Type" value="Bank Transfer" required />
                                 </fieldset>
                                 <fieldset class="form-check" style="display:inline">
                                     <label class="form-check-label" for="Status2">Wallet</label>
-                                    <input type="radio" class="chckwallet" id="Type5" name="PaymentType" value="Wallet" required />
+                                    <input type="radio" class="chckwallet" id="Type5" name="Payment_Type" value="Wallet" required />
                                 </fieldset>
                             </div>
                             <br />
@@ -193,7 +195,7 @@
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Cash_Date" name="Cash_Date" type="text" style="padding: 5px;" readonly>
+                                        <input class="form-control datepicker" id="Cash_Date" name="Cash_Date" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -210,7 +212,7 @@
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;" readonly>
+                                        <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -234,7 +236,7 @@
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;" readonly>
+                                        <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -257,7 +259,7 @@
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;" readonly>
+                                        <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -268,13 +270,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Account Number</label>
+                                        <label>Transaction Id</label>
                                         <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_Transaction_ID" style="padding: 5px;">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>IFSC Code</label>
+                                        <label>Bank Name</label>
                                         <input type="text" class="form-control" id="Bank_Transfer_IFSCcode" name="Bank_Transfer_IFSCcode" style="padding: 5px;">
                                     </div>
                                 </div>
@@ -292,7 +294,7 @@
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;" readonly>
+                                        <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -313,10 +315,18 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Opening Balance</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control open_balance" id="opening_Balance" name="opening_Balance" style="padding: 5px;" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-5" style="padding: 14px;">Current Balance</div>
                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
+                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;"   readonly>
                                     </div>
                                 </div>
                             </div>
@@ -365,6 +375,8 @@
 <script>
     $(document).ready(function () {
         var now = new Date();
+        var openamnt = $('#opening_Balance').val();
+        $('#Current_Balance').val(openamnt);
 
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -374,7 +386,7 @@
         $('.datepicker').val(today);
        
 
-        $('input:radio[name="PaymentType"]').change(function () {
+        $('input:radio[name="Payment_Type"]').change(function () {
             if($(this).val()=="Cash")
             {
                 $('#cashdetails').show();
@@ -413,5 +425,24 @@
                 $('#walletdetails').show();
             }
         });
+    });
+
+    var totalAmount = parseFloat($(".total_amount>address>span").text());
+    $("input[type='text'].open_balance").val(totalAmount);
+
+    $('#Received_Amount').keyup(function () {
+        var openamnt = $('#opening_Balance').val();
+        var rcvamnt =$('#Received_Amount').val();
+        if (rcvamnt == null || rcvamnt == "")
+        {
+            alert("Enter Some Amount");
+            $('#Current_Balance').val(openamnt);
+           
+            
+        } else {
+            var result = parseFloat(openamnt) - parseFloat(rcvamnt);
+            $('#Current_Balance').val(result);
+        }
+          
     });
 </script>
