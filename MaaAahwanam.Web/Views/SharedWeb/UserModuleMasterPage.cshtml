@@ -255,7 +255,8 @@
                     <p>You will receive an email containing a link allowing you to activate</p>
                     <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
-                    <div class="text-center"><input type="button" value="Register" onclick="savecustomer(this.value)" class="btn_1"></div>
+                    @*<div class="text-center"><input type="button" value="Register" onclick="savecustomer(this.value)" class="btn_1"></div>*@
+                    <div class="text-center"><input type="button" id="btnregister" value="Register" style="padding:16px 26px" onclick="savecustomer(this.value)" class="btn btn-danger" disabled></div> @*class="btn_1" *@
 
                 </div>
             </div>
@@ -349,7 +350,8 @@
                     <p>You will receive an email containing a link allowing you to activate</p>
                     <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
 
-                    <div class="text-center"><input type="submit" value="Register" onclick="savecustomer1(this.value)" class="btn_1"></div>
+                    @*<div class="text-center"><input type="submit" value="Register" onclick="savecustomer1(this.value)" class="btn_1"></div>*@
+                    <div class="text-center"><input type="button" id="btnregister1" value="Register" style="padding:16px 26px" onclick="savecustomer1(this.value)" class="btn btn-danger" disabled></div> @*class="btn_1" *@
 
                 </div>
             </div>
@@ -409,6 +411,7 @@
             if (input.value.trim()) {
                 if (iti.isValidNumber()) {
                     //validMsg.classList.remove("hide");
+                    $('#btnregister').removeAttr('disabled');
                 } else {
                     input.classList.add("error");
                     var errorCode = iti.getValidationError();
@@ -422,6 +425,7 @@
             if (input1.value.trim()) {
                 if (iti1.isValidNumber()) {
                     //validMsg.classList.remove("hide");
+                    $('#btnregister1').removeAttr('disabled');
                 } else {
                     input1.classList.add("error");
                     var errorCode = iti1.getValidationError();
@@ -644,6 +648,7 @@
                             if (data == "success") {
                                 alert("Check your email to active your account to login");
                                 //window.location.href = '/NewOrder/orderview'
+                                location.reload();
                             }
                             //else {
                             //    alert("Customer Registered successfully");
@@ -654,13 +659,13 @@
                             //    $("#txtemail").val('');
                             //    window.location.reload();
                             //}
-                            if (data == "unique") {
+                            else if (data == "unique") {
                                 alert("E-Mail ID Already Registered!!! Try Logging with your Password");
-
+                                $('.overlay').hide();
                             }
                             else if (data == "unique1") {
                                 alert("Registration fails");
-
+                                $('.overlay').hide();
                             }
                             else if (data == "Failed") {
 
@@ -677,10 +682,12 @@
                                 // window.location.reload();
                                 $("#otpopup").css("display", "block");
                                 $("#txtotp").focus();
+                                $('.overlay').hide();
                             }
                         },
                         error: function (data) {
                             alert("Something Went Wrong!!! Try Again Later");
+                            $('.overlay').hide();
                         }
                     });
                 }
@@ -931,6 +938,8 @@
 
             else {
                 if (clickedvalue == 'Register') {
+                    $('.overlay').show();
+                    $('#loadermsg').text('Registration in process....');
                     $.ajax({
                         url: '/Home/register', type: 'POST',
                         data: JSON.stringify({ CustomerPhoneNumber: CustomerPhoneNumber, CustomerName: CustomerName, Password: Password, Email: Email }),
@@ -945,11 +954,11 @@
                             if (data == "unique") {
                                 alert("E-Mail ID Already Registered!!! Try Logging with your Password");
                                 window.location.reload();
-
+                                
                             }
                             else if (data == "unique1") {
                                 alert("Registration fails");
-
+                                $('.overlay').hide();
                             }
                             else if (data == "Failed") {
 
@@ -966,10 +975,12 @@
                                 // window.location.reload();
                                 $("#otpopup").css("display", "block");
                                 $("#txtotp").focus();
+                                $('.overlay').hide();
                             }
                         },
                         error: function (data) {
-                            alert("error");
+                            alert("Something Went Wrong!!! Try Again Later");
+                            $('.overlay').hide();
                         }
                     });
                 }

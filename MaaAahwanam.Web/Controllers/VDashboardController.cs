@@ -64,19 +64,14 @@ namespace MaaAahwanam.Web.Controllers
                 List<VendorImage> vimg = new List<VendorImage>();
                 List<string> availability = new List<string>();
                 ViewBag.policy = vendorMasterService.Getpolicy(vid, vsid); 
-                //if (date != null)
-                //{
-
-                //   var  data = vendorDatesService.GetVendorsByServicepack().Where(m => m.masterid == long.Parse(vid)).ToList();
-                //   var package1 = seperatedates(data, date, "Venue");
-                //    ViewBag.availablepackages = package1;
-                //}
-                //else { package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package; }
 
                 //packages section
                 package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package;
                 ViewBag.particularVenue = vendor;
-                ViewBag.venues = venues;
+                if (eventtype != null && count != null && date != null)
+                    ViewBag.venues = venues.Where(m=>m.Minimumseatingcapacity > int.Parse(count)).ToList();
+                else
+                    ViewBag.venues = venues;
                 Addservices(vsid);
                 if (venues.Count > 0)
                     ViewBag.enable = "second";
@@ -88,7 +83,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (vsid != null && vsid != "")
                 {
                     //Loading all services
-                    Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList()); 
+                    Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
                     allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
                     var pkgsks = vendorVenueSignUpService.Getpackages((long.Parse(vid)), long.Parse(vsid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
                     if (pkgsks != null) ViewBag.package = pkgsks;

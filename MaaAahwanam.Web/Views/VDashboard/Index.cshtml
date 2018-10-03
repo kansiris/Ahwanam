@@ -2000,6 +2000,7 @@
     </div>
 </div>
 
+<div id="scripttags"></div>
 
 @section scripts{
     <script>
@@ -2382,6 +2383,7 @@
                 });
             });
         </script>*@
+  
     <script>
         $(document).ready(function () {
 
@@ -2467,31 +2469,15 @@
         $(function () {
             var listcount = parseInt('@ViewBag.availability.Count') +1;
             var listarray = @Html.Raw(Json.Encode(@ViewBag.availability));
+            var scripttag = $('#scripttags');
             for (var k = 0; k < listcount; k++) {
                 array.push(listarray[k]);
             }
             for (var i = 1; i < listcount; i++) {
                 thisdates = array[i-1];
-                var thisid = '#vcal'+i+'';
-                $('#vcal'+i+'').datepicker({
-                    dayOfWeekStart: 1,
-                    lang: 'en',
-                    timepicker: false,
-                    format: 'dd/MM/yyyy',
-                    minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-                    maxDate: '+1970/03/02',//tomorrow is maximum date calendar
-                    //onChangeMonthYear: blockdates,
-                    //    function(){
-                    //    var date = new Date();
-                    //    alert(date);
-                    //    var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
-                    //    return [thisdates.indexOf(string) == -1]
-                    //},
-                    beforeShowDay:function (date) {
-                        var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
-                        return [thisdates.indexOf(string) == -1]
-                    }
-                });
+                $('<script>').attr('type', 'text/javascript')
+                    .text("$('#vcal"+i+"').datepicker({dayOfWeekStart: 1,lang: 'en',timepicker: false, format: 'dd/MM/yyyy',minDate: 'new Date()',OnMonthChange:function(e){alert('hi');},beforeShowDay:function (date){ var string = jQuery.datepicker.formatDate('dd-mm-yy', date); return [thisdates.indexOf(string) == -1] }});")
+                    .appendTo(scripttag);
             }
 
             function blockdates() {
@@ -2526,7 +2512,7 @@
             var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
             var month = date.getMonth() + 1;
             var selected = yr + '-' + month + '-' + day;
-            alert(selected);
+            //alert(selected);
             $("#vcalender").val(selected);
             $(this).parents("div#vcal").next("div.kscbook").css('display', 'block');
         });
@@ -2574,11 +2560,12 @@
                 $('#datetimepicker1').focus();
             }
             else {
+                //eventtype != null && count != null && date != null
                 window.localStorage.setItem("guests1", guests);
                 window.localStorage.setItem("location1", location);
                 window.localStorage.setItem("eventtype1", eventtype);
                 window.localStorage.setItem("eventdate1", date);
-                window.location.href = '/VDashboard/Index';
+                window.location.href = '/VDashboard/Index?eventtype='+eventtype+'&&count='+guests+'&&date='+date;
             }
         });
 
