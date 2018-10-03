@@ -50,7 +50,9 @@
     </style>
 
 }
-
+@using MaaAahwanam.Web.Custom
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
 <main>
     <div id="error_page">
         <div class="col-md-12">
@@ -318,7 +320,7 @@
                                 <div class="col-md-5" style="padding: 14px;">Opening Balance</div>
                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                     <div class="form-group">
-                                        <input type="text" class="form-control open_balance" id="opening_Balance" name="opening_Balance" style="padding: 5px;" readonly>
+                                        <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -335,7 +337,7 @@
                     <div class="row" style="padding-left:30px">
                         <div class="col-md-6  remarks margin-top" style="margin-top:-10px">
                             <label>Remarks</label>
-                            <textarea class="form-control" rows="3" id="remarks" name="remarks"></textarea>
+                            <textarea class="form-control" rows="3" id="Remarks" name="Remarks"></textarea>
                         </div>
                     </div>
                     <br />
@@ -344,7 +346,7 @@
                     <div class="row" style="padding-left:30px" align="center">
                         <div class="col-md-1 goback"><a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a></div>
 
-                        <div class="col-md-1 savebtn"><button name="btnsave" class="btn btn-success">Save</button></div>
+                        <div class="col-md-1 savebtn"><button name="btnsave" id="btnadd" class="btn btn-success">Save</button></div>
                         <div class="col-md-1 emailbtn"><button name="btnemail" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button></div>
                         <div class="col-md-1 printbtn"><button name="btnprint" class="btn btn-primary"><i class="icon-print"></i>Print</button></div>
                         <div class="col-md-1 saveasbtn"><button name="btnsaveas" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button></div>
@@ -375,7 +377,7 @@
 <script>
     $(document).ready(function () {
         var now = new Date();
-        var openamnt = $('#opening_Balance').val();
+        var openamnt = $('#Opening_Balance').val();
         $('#Current_Balance').val(openamnt);
 
         var day = ("0" + now.getDate()).slice(-2);
@@ -431,7 +433,7 @@
     $("input[type='text'].open_balance").val(totalAmount);
 
     $('#Received_Amount').keyup(function () {
-        var openamnt = $('#opening_Balance').val();
+        var openamnt = $('#Opening_Balance').val();
         var rcvamnt =$('#Received_Amount').val();
         if (rcvamnt == null || rcvamnt == "")
         {
@@ -445,4 +447,52 @@
         }
           
     });
+
+    $("#btnadd").click(function () {
+        //var paymenttype = $('#Payment_Type').val();
+
+        var payments = {
+            
+            Payment_Type: $("input[name='Payment_Type']:checked").val(),
+            Cash_Date: $("#Cash_Date").val(),
+            Cash_Card_Holdername: $("#Cash_Card_Holdername").val(),
+            Cheque_Date: $("#Cheque_Date").val(),
+            Cheque_Bankname: $("#Cheque_Bankname").val(),
+            Cheque_Number: $("#Cheque_Number").val(),
+            creditORdebitcard_date: $("creditORdebitcard_date").val(),
+            Card_Holder_Name: $("#Card_Holder_Name").val(),
+            Card_Last4digits: $("#Card_Last4digits").val(),
+            Bank_Transfer_date: $("#Bank_Transfer_date").val(),
+            Bank_Transaction_ID: $("#Bank_Transaction_ID").val(),
+            Bank_Transfer_Name: $("#Bank_Transfer_Name").val(),
+            Bank_Transfer_IFSCcode: $("#Bank_Transfer_IFSCcode").val(),
+            Bank_Transfer_Branchname: $("#Bank_Transfer_Branchname").val(),
+            Wallet_Date: $("#Wallet_Date").val(),
+            Wallet_Number: $("#Wallet_Number").val(),
+            Received_Amount: $("#Received_Amount").val(),
+            Current_Balance: $('#Current_Balance').val(),
+            Opening_Balance: $('#Opening_Balance').val(),
+            Remarks: $("#Remarks").val()
+
+
+        }
+        $.ajax({
+            url: '/Payments/Index',
+            type: 'Post',
+            contentType: 'application/json',
+            data: JSON.stringify({ payments: payments }),
+            success: function (data) {
+                alert(data);
+            },
+            error: function (data) {
+                alert("failed");
+            }
+        });
+
+    });
 </script>
+         }
+            else
+                        {
+                            Response.Redirect("/Home");
+                        }

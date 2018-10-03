@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaaAahwanam.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,12 @@ namespace MaaAahwanam.Repository.db
 {
     public class ReceivePyamentRepository
     {
+        readonly ApiContext _dbContext = new ApiContext();
+        public Payment SavePayment(Payment payments)
+        {
+            _dbContext.Payment.Add(payments);
+            _dbContext.SaveChanges();
+            return payments;
+        }
     }
 }
