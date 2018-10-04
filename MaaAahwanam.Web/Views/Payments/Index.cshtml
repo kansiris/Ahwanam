@@ -132,6 +132,7 @@
                                                     <td class="text-center">₹ @item.PerunitPrice</td>
                                                     <td class="text-center">@item.Quantity</td>
                                                     <td class="text-right">₹ @item.TotalPrice</td>
+                                               
                                                     <td class="text-right">₹ @item.TotalPrice</td>
                                                 </tr>
                                             }
@@ -450,6 +451,7 @@
 
     $("#btnadd").click(function () {
         //var paymenttype = $('#Payment_Type').val();
+            var orderid =@Request.QueryString["Oid"];
 
         var payments = {
             
@@ -474,7 +476,6 @@
             Opening_Balance: $('#Opening_Balance').val(),
             Remarks: $("#Remarks").val()
 
-
         }
         $.ajax({
             url: '/Payments/Index',
@@ -483,6 +484,7 @@
             data: JSON.stringify({ payments: payments }),
             success: function (data) {
                 alert(data);
+                window.location.href = '/Payments?Oid=' + orderid;
             },
             error: function (data) {
                 alert("failed");
