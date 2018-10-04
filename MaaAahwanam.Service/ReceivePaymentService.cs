@@ -18,7 +18,7 @@ namespace MaaAahwanam.Service
         }
         public List<Payment> getPayments(string orderid)
         {
-          var  payments = rcvpmntrepo.getPayments(orderid);
+            var payments = rcvpmntrepo.GetPaydetails(orderid);
             return payments;
         }
     }

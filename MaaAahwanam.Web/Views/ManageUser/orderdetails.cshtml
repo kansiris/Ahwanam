@@ -1,4 +1,8 @@
-﻿
+﻿<style>
+    #pkgmodal, #Querymodel, #viewmenuitems {
+            position: relative;
+        }
+</style>
 
 @if (ViewBag.loc != null)
 {
@@ -17,9 +21,26 @@
             <label> guest :</label><label class="kscfont">@ViewBag.guest ,</label>
 
             <label> total :</label><label class="kscfont">@ViewBag.total ,</label>
-            <label> Package name :</label><label class="kscfont">@ViewBag.pname .</label>
-
-
+            <label> Package name :</label> <a class="viewpkg" style="color:#dc3545;cursor:pointer">@ViewBag.pname</a>
         </div>
-    </div>}
+    </div>
+}
 
+
+<div id="viewpkgitems" class="ui long writemsg modal">
+    <div class="header" style="background-color:#573791;color:white">
+        <text class="pkgname"></text> - <text class="pkgtype"></text>
+        <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewmenuitems').modal('hide')">Close</button>
+    </div>
+    <div class="scrolling content" id="pkgitems">
+        @*<textarea placeholder="Selected Menu items" class="form-control" id="pkgitems" rows="5"></textarea>*@
+        @*<label id="pkgitems"></label>*@
+    </div>
+</div>
+
+
+<script>
+    $('.viewpkg').click(function () {
+        $('#viewpkgitems').modal('show');
+    });
+</script>

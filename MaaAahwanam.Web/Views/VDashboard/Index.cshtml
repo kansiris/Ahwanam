@@ -5,8 +5,6 @@
 }
 @section css{
     <style type="text/css">
-        
-
         .button {
             background-color: #fff;
             border: none;
@@ -220,7 +218,7 @@
             box-shadow: none;
         }
     </style>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <style>
         /*.ui-state-default, .ui-widget-content .ui-state-default {
         border: 1px solid red;background: white;font-weight: 700;color: red;
@@ -237,7 +235,15 @@
         background:red;
         }*/
         .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-        background:white;
+            background: white;
+        }
+
+        .ui-widget-header {
+            background: white;
+        }
+
+        #ui-datepicker-div {
+            width: 25%;
         }
     </style>
 
@@ -1811,99 +1817,93 @@
                                         var number = 0;
                                         foreach (var orders in ViewBag.order1)
                                         {
-                                            <tr class="show_hide_row">
-                                                <td>@(++number)</td>
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>Package Name</td>
-                                                <td>Pax Count</td>
-                                                <td>Balance Due</td>
-                                                <td>@orders.Status</td>
-                                                <td>
-                                                    <div class="menu">
-                                                        <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                        <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                            <div class="four column relaxed divided grid">
-                                                                <div class="column">
-                                                                    <div class="link list">
-                                                                        @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
-                                                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
-                                                                        <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
-                                                                    </div>
-                                                                </div>
+                                    <tr class="show_hide_row">
+                                        <td>@(++number)</td>
+                                        <td>@orders.OrderId</td>
+                                        <td>@orders.EventType</td>
+                                        <td>@orders.BookedDate</td>
+                                        <td>Package Name</td>
+                                        <td>Pax Count</td>
+                                        <td>Balance Due</td>
+                                        <td>@orders.Status</td>
+                                        <td>
+                                            <div class="menu">
+                                                <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                    <div class="four column relaxed divided grid">
+                                                        <div class="column">
+                                                            <div class="link list">
+                                                                <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td>
-                                                @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
-                                            </tr>
-                                            <tr id="hidden_row1" class="hidden_row">
-                                                <td colspan=4>
-                                                    <ul>
-                                                        <li>Event Type:@orders.EventType</li>
-                                                        <li>contact number:@orders.phoneno</li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
+                                    </tr>
+                                    <tr id="hidden_row1" class="hidden_row">
+                                        <td colspan=4>
+                                            <ul>
+                                                <li>Event Type:@orders.EventType</li>
+                                                <li>contact number:@orders.phoneno</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
 
                                         }
                                         foreach (var orders in ViewBag.order)
                                         {
 
-                                            <tr class="show_hide_row">
-                                                <td>@(++number)</td>
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>Package Name</td>
-                                                <td>Pax Count</td>
-                                                <td>Balance Due</td>
-                                                <td>@orders.Status</td>
-                                                <td>
-                                                    <div class="menu">
-                                                        <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                        <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                            <div class="four column relaxed divided grid">
-                                                                <div class="column">
-                                                                    <div class="link list">
-                                                                        @*<button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button>
-                                                                            <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button>*@
-                                                                        <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
-                                                                    </div>
-                                                                </div>
+                                    <tr class="show_hide_row">
+                                        <td>@(++number)</td>
+                                        <td>@orders.OrderId</td>
+                                        <td>@orders.EventType</td>
+                                        <td>@orders.BookedDate</td>
+                                        <td>Package Name</td>
+                                        <td>Pax Count</td>
+                                        <td>Balance Due</td>
+                                        <td>@orders.Status</td>
+                                        <td>
+                                            <div class="menu">
+                                                <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                    <div class="four column relaxed divided grid">
+                                                        <div class="column">
+                                                            <div class="link list">
+                                                                <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td>
-                                                @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
-                                            </tr>
-                                            <tr id="hidden_row1" class="hidden_row">
-                                                <td colspan=4>
-                                                    <ul>
-                                                        <li>Event Type:@orders.EventType</li>
-                                                        <li>contact number:@orders.UserPhone</li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
+                                    </tr>
+                                    <tr id="hidden_row1" class="hidden_row">
+                                        <td colspan=4>
+                                            <ul>
+                                                <li>Event Type:@orders.EventType</li>
+                                                <li>contact number:@orders.UserPhone</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
 
                                         }
                                     }
-                                    @{
 
-                                    }
                                 </tbody>
                             </table>
 
@@ -1916,6 +1916,8 @@
     </div>
     <!-- /error_page -->
 </main>
+
+
 <!--/main-->
 <input type="hidden" id="Item1_EmailId" name="Item1.EmailId" class="form-control" value="@ViewBag.Vendor.EmailId">
 <input type="hidden" id="Item1Id" name="Item1.Id" class="form-control" value="@ViewBag.Vendor.Id">
@@ -1994,9 +1996,9 @@
         <div class="ui negative button" style="height:40px;">
             CANCEL
         </div>
-        <div class="ui positive button" id="sendmsg" style="height:40px;">
+        @*<div class="ui positive button" id="sendmsg" style="height:40px;">
             SEND
-        </div>
+        </div>*@
     </div>
 </div>
 
@@ -2365,25 +2367,6 @@
             $('#pkgmodal').modal('show');
         }
     </script>
-    @*<script>
-
-            $(function () {
-                'use strict';
-                $('input[name="dates"]').daterangepicker({
-                    autoUpdateInput: false,
-                    locale: {
-                        cancelLabel: 'Clear'
-                    }
-                });
-                $('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
-                    $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format('MM-DD-YY'));
-                });
-                $('input[name="dates"]').on('cancel.daterangepicker', function (ev, picker) {
-                    $(this).val('');
-                });
-            });
-        </script>*@
-  
     <script>
         $(document).ready(function () {
 
@@ -2476,7 +2459,7 @@
             for (var i = 1; i < listcount; i++) {
                 thisdates = array[i-1];
                 $('<script>').attr('type', 'text/javascript')
-                    .text("$('#vcal"+i+"').datepicker({dayOfWeekStart: 1,lang: 'en',timepicker: false, format: 'dd/MM/yyyy',minDate: 'new Date()',OnMonthChange:function(e){alert('hi');},beforeShowDay:function (date){ var string = jQuery.datepicker.formatDate('dd-mm-yy', date); return [thisdates.indexOf(string) == -1] }});")
+                    .text("$('#vcal"+i+"').datepicker({dayOfWeekStart: 1,lang: 'en',timepicker: false, format: 'dd/MM/yyyy',minDate: new Date(),beforeShowDay:function (date){ var string = jQuery.datepicker.formatDate('dd-mm-yy', date);  return [thisdates.indexOf(string) == -1] }});")
                     .appendTo(scripttag);
             }
 
@@ -2514,34 +2497,42 @@
             var selected = yr + '-' + month + '-' + day;
             //alert(selected);
             $("#vcalender").val(selected);
-            $(this).parents("div#vcal").next("div.kscbook").css('display', 'block');
+           // $(this).parents("div#vcal").next("div.kscbook").css('display', 'block');
         });
-        $('#datetimepicker1,datetimepicker2').daterangepicker({
-            singleDatePicker: true,
-            minDate: new Date(),
-            locale: {
-                format: 'DD/MM/YYYY'
-            }
+        $('#datetimepicker1,datetimepicker2').datepicker({
+            dateFormat:'dd/mm/yy',
+            minDate: new Date()
         });
     </script>
     <script>
         $(document).ready(function () {
-            $('#today,#tomorrow,#upcoming,#allorders').DataTable();
+            $('#today,#tomorrow,#upcoming').DataTable();
+            $('#allorders').DataTable();
         });
 
         $('#spc').on('click', function () {
             $('#profileimage').click();
         });
 
+        $(function(){
+            //var e1 = '@Request.QueryString["eventtype"]'//window.localStorage.getItem("eventtype1");
+            $('#guests').val(window.localStorage.getItem("guests1"));
+            $('#datetimepicker1').val(window.localStorage.getItem("eventdate1"));
+            //alert(e1);
+            //$('.current').text((e1 != '') ? e1 : "Select Event");
+
+        });
+
 
 
         $('#btnsearch').click(function () {
-            window.localStorage.removeItem("guests1");
-            window.localStorage.removeItem("location1");
-            window.localStorage.removeItem("eventtype1");
-            window.localStorage.removeItem("eventdate1");
+            //window.localStorage.removeItem("guests1");
+            //window.localStorage.removeItem("location1");
+            //window.localStorage.removeItem("eventtype1");
+            //window.localStorage.removeItem("eventdate1");
+
             var location = 'Hyderabad';//$('#loc').val();
-            var eventtype = $('.current').text();
+            var eventtype = $('.current').text().replace('1','');
             var guests = $('#guests').val();
             var date = $('#datetimepicker1').val();
             if (location == '') {
@@ -2556,7 +2547,7 @@
                 $('#guests').focus();
             }
             else if (date == '') {
-                alert('Select date');
+                alert('Select Event date');
                 $('#datetimepicker1').focus();
             }
             else {
@@ -2564,6 +2555,7 @@
                 window.localStorage.setItem("guests1", guests);
                 window.localStorage.setItem("location1", location);
                 window.localStorage.setItem("eventtype1", eventtype);
+                //alert(eventtype);
                 window.localStorage.setItem("eventdate1", date);
                 window.location.href = '/VDashboard/Index?eventtype='+eventtype+'&&count='+guests+'&&date='+date;
             }
@@ -2653,19 +2645,26 @@
             $('#selectedamenities').val(arr.substr(1));
         });
 
+
         $('.btnbook').on('click', function () {
             var packageid = $(this).prev('input.pkgid').val();
             window.localStorage.removeItem("vpbook");
-            var bookingdiv = $(this).parents('table.priceslist').parents("div").parents("div.box_grid").find("div.kscbook");
-            var location = 'Hyderabad';
-            var guests = bookingdiv.find('#bookguest').val();
-            var eventtype = bookingdiv.find("#eventtype").find("option:selected").text();
+            //var bookingdiv = $(this).parents('table.priceslist').parents("div").parents("div.box_grid").find("div.kscbook");
+            //var location = 'Hyderabad';
+            //var guests = bookingdiv.find('#bookguest').val();
+            //var eventtype = bookingdiv.find("#eventtype").find("option:selected").text();
+            var location = 'Hyderabad';//$('#loc').val();
+            var eventtype = $('.current').text().replace('1','');
+            var guests = $('#guests').val();
             var date = $('#vcalender').val();
-            if (location == '') {
-                alert('Enter Location');
-                $('#loc').focus();
-            }
-            else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+            if(date == '') date = $('#datetimepicker1').val();
+            //if (location == '') {
+            //    alert('Enter Location');
+            //    $('#loc').focus();
+            //}
+            //alert(eventtype);
+
+            if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
                 alert('Select Event Type');
             }
             else if (guests == '') {
@@ -2680,7 +2679,7 @@
                 var select = location + ',' + guests + "," + date + "," + eventtype + "," + packageid;
                 window.localStorage.setItem("vpbook", select);
                 window.location.href = '/ManageUser/Index?select=' + select;
-
+                //alert('Location = '+location+',Event Type = '+eventtype+',Guests = '+guests+',Event Date = '+date+'');
             }
         });
 
