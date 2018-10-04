@@ -65,6 +65,8 @@
                 </div>
 
                 <div class="col-md-10">
+                    <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.userid" />
+                    <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
                     <div class="row">
                         <div class="col-12" style="padding-left:30px">
                             <div class="Payments-title add_top_30">
@@ -190,7 +192,6 @@
                             </div>
                             <br />
                             <div class="row Cashdetails" id="cashdetails">
-                                <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.userid" />
                                 <div class="col-md-4">
                                     <div class="form-group" style="margin-bottom:0;">
                                         <label>Date:</label>
@@ -386,7 +387,7 @@
         //var today = now.getFullYear() + "-" + (month) + "-" + (day);
         var today = (day) + "-" + (month) + "-" + now.getFullYear();
         $('.datepicker').val(today);
-       
+
 
         $('input:radio[name="Payment_Type"]').change(function () {
             if($(this).val()=="Cash")
@@ -439,21 +440,22 @@
         {
             alert("Enter Some Amount");
             $('#Current_Balance').val(openamnt);
-           
-            
+
+
         } else {
             var result = parseFloat(openamnt) - parseFloat(rcvamnt);
             $('#Current_Balance').val(result);
         }
-          
+
     });
 
     $("#btnadd").click(function () {
         //var paymenttype = $('#Payment_Type').val();
-            var orderid =@Request.QueryString["Oid"];
+            //var orderid =@Request.QueryString["Oid"];
 
         var payments = {
-            
+            OrderId: $("#OrderId").val(),
+            User_Id:$("#User_Id").val(),
             Payment_Type: $("input[name='Payment_Type']:checked").val(),
             Cash_Date: $("#Cash_Date").val(),
             Cash_Card_Holdername: $("#Cash_Card_Holdername").val(),
@@ -483,7 +485,8 @@
             data: JSON.stringify({ payments: payments }),
             success: function (data) {
                 alert(data);
-                window.location.href = '/Payments?Oid=' + orderid;
+                //window.location.href = '/Payments?Oid=' + orderid;
+                window.location.href = "@Url.Action("Index", "Payments")";
             },
             error: function (data) {
                 alert("failed");

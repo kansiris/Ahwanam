@@ -64,13 +64,15 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult Index(Payment payments)
+        public ActionResult Index(Payment payments)
         {
+            payments.User_Type = "VendorUser";
             payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpmntservice.SavePayments(payments);
-           // string msg = "Payment saved";
+             string msg = "Payment saved";
             return Json("Sucess", JsonRequestBehavior.AllowGet);
+            //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>"); 
         }
     }
 }
