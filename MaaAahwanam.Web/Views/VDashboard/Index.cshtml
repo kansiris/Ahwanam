@@ -5,8 +5,6 @@
 }
 @section css{
     <style type="text/css">
-        
-
         .button {
             background-color: #fff;
             border: none;
@@ -220,7 +218,7 @@
             box-shadow: none;
         }
     </style>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <style>
         /*.ui-state-default, .ui-widget-content .ui-state-default {
         border: 1px solid red;background: white;font-weight: 700;color: red;
@@ -237,7 +235,15 @@
         background:red;
         }*/
         .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-        background:white;
+            background: white;
+        }
+
+        .ui-widget-header {
+            background: white;
+        }
+
+        #ui-datepicker-div {
+            width: 25%;
         }
     </style>
 
@@ -1900,10 +1906,7 @@
                                             </tr>
 
                                         }
-                                    }
-                                    @{
-
-                                    }
+                                    }2
                                 </tbody>
                             </table>
 
@@ -1916,869 +1919,866 @@
     </div>
     <!-- /error_page -->
 </main>
-<!--/main-->
-<input type="hidden" id="Item1_EmailId" name="Item1.EmailId" class="form-control" value="@ViewBag.Vendor.EmailId">
-<input type="hidden" id="Item1Id" name="Item1.Id" class="form-control" value="@ViewBag.Vendor.Id">
-<input type="hidden" id="amenities" value="@ViewBag.amenities1" />
-<input type="hidden" id="amenities1" value="@ViewBag.amenities1" />
-
-<input type="hidden" id="vsid" value="@ViewBag.vsid" />
 
 
-<div id="pkgmodal" class="ui mini test modal" style="max-width:300px;width:100%">
-    <i class="close icon"></i>
-    <div class="header">
-        <text class="selectedpkg"></text> Items
-    </div>
-    <div class="scrolling content pkgitemsection">
-        <table class="menuitems"></table>
-    </div>
-    <div class="actions">
-        <div class="ui negative button" style="height:40px;">
-            CANCEL
-        </div>
-        <div class="ui positive button" style="height:40px;" onclick="Addpkgitems()">
-            ADD
-        </div>
-    </div>
-</div>
-<div id="Querymodel" class="ui standard writemsg modal" style="max-width:500px;width:100%">
-    <div class="header">
-        Write Message To: <text class="custemail"></text>
-    </div>
-    <div class="scrolling content">
-        <textarea placeholder="Start typing your message here....." class="form-control" id="txtmsg" rows="5"></textarea>
-    </div>
-    <div class="actions">
-        <div class="ui negative button" style="height:40px;">
-            CANCEL
-        </div>
-        <div class="ui positive button" id="sendmsg" style="height:40px;">
-            SEND
-        </div>
-    </div>
-</div>
+                    <!--/main-->
+                    <input type="hidden" id="Item1_EmailId" name="Item1.EmailId" class="form-control" value="@ViewBag.Vendor.EmailId">
+                    <input type="hidden" id="Item1Id" name="Item1.Id" class="form-control" value="@ViewBag.Vendor.Id">
+                    <input type="hidden" id="amenities" value="@ViewBag.amenities1" />
+                    <input type="hidden" id="amenities1" value="@ViewBag.amenities1" />
 
-<div id="viewmenuitems" class="ui long writemsg modal">
-    <div class="header" style="background-color:#573791;color:white">
-        <text class="pkgname"></text> - <text class="pkgtype"></text>
-        <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewmenuitems').modal('hide')">Close</button>
-        <br />
-        <div class="row" align="center" id="pkgpricesection">
-            <div class="col-md-3">
-                <span>Normal Days Price</span>
-                <span>₹<label id="normaldays"></label></span>
-            </div>
-            <div class="col-md-3">
-                <span>Peak Days Price&emsp;</span>
-                <span>₹<label id="peakdays"></label></span>
-            </div>
-            <div class="col-md-3">
-                <span>Holidays Price&emsp;&emsp;</span>
-                <span>₹<label id="holidays"></label></span>
-            </div>
-            <div class="col-md-3">
-                <span>Choice Days Price</span>
-                <span>₹<label id="choicedays"></label></span>
-            </div>
-        </div>
-        <div class="row" align="center">
-            <span><label id="packagedescription"></label></span>
-        </div>
-    </div>
-    <div class="scrolling content" id="pkgitems">
-        @*<textarea placeholder="Selected Menu items" class="form-control" id="pkgitems" rows="5"></textarea>*@
-        @*<label id="pkgitems"></label>*@
-    </div>
-    <div class="actions">
-        <div class="ui negative button" style="height:40px;">
-            CANCEL
-        </div>
-        <div class="ui positive button" id="sendmsg" style="height:40px;">
-            SEND
-        </div>
-    </div>
-</div>
-
-<div id="scripttags"></div>
-
-@section scripts{
-    <script>
-        $('.menu .browse').popup({
-            inline: true,
-            hoverable: true,
-            position: 'bottom left',
-            delay: {
-                show: 300,
-                hide: 800
-            }
-        })
-        ;
-    </script>
-    <script>
-        $("#buttonClass").click(function () {
-            var policycheck;
-            var chkArray = [];
-            $(".kscpolicy:checked").each(function () {
-                chkArray.push($(this).val());
-                var selected;
-                selected = chkArray.join(',');
-                /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
-                if (selected.length > 0) {
-                    //  alert("You have selected " + selected);
-                    policycheck = selected;
-                } else {
-                    alert("Please at least check one of the checkbox");
-                }
-            });
-            // alert(policycheck);
-            var vsid = $('#vsid').val();
-            var Tax = $("#Tax").val();
-            var Decoration_starting_costs = $("#Decoration_starting_costs").val();
-            var Rooms_Count = $("#Rooms_Count").val();
-            var Advance_Amount = $("#Advance_Amount").val();
-            var Room_Average_Price = $("#Room_Average_Price").val();
-            $.ajax({
-                url: '/VDashboard/updatepolicy?policycheck=' + policycheck + '&&vsid=' + vsid + '&&Tax=' + Tax + '&&Decoration_starting_costs=' + Decoration_starting_costs + '&&Rooms_Count=' + Rooms_Count + '&&Advance_Amount=' + Advance_Amount + '&&Room_Average_Price=' + Room_Average_Price,
-                type: 'post',
-                contentType: 'application-json',
-                success: function (data) {
-                    alert(data);
-                },
-                error: function (er) {
-                    alert("System Encountered Internal Error!!! Try Again After Some Time");
-                }
-            });
-
-        })
+                    <input type="hidden" id="vsid" value="@ViewBag.vsid" />
 
 
-        var validateForm = function () {
-            var checks = $('input[type="checkbox"]:checked').map(function () {
-                return $(this).val();
-            }).get()
-            // alert(checks);
-            var vsid = $('#vsid').val();
-            var hdname = $('#hdname').val();
-            var Dimentions = $('#Dimentions').val();
-            var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
-            var Maximumcapacity = $('#Maximumcapacity').val();
-            var selectedamenuities = checks;
-            var vsid = $('#vsid').val();
-            var Address = $('#Address').val();
-            var Landmark = $('#Landmark').val();
-            var City = $('#City').val();
-            var ZipCode = $('#ZipCode').val();
-            var Description = $('#mainDescription').val();
-            $.ajax({
-                url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&vsid=' + vsid + '&&hdname=' + hdname + '&&vsid=' + vsid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&vsid=' + vsid + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + 'two',
-                type: 'post',
-                contentType: 'application-json',
-                success: function (data) {
-                    alert(data);
-                },
-                error: function (er) {
-                    alert("System Encountered Internal Error!!! Try Again After Some Time");
-                }
-            });
-            return false;
-        }
-        var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Tandoori/Kababs,Deserts,Beverages,Fruits';
-        var pkgdesc = '';
-        $(function () {
-            //var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Tandoori/Kababs,Deserts,Beverages,Fruits';
-            var cvalue = '';
-            for (var i = 0; i < pkgheadings.split(',').length; i++) {
-                cvalue = window.localStorage.getItem(pkgheadings.split(',')[i].toLowerCase());
-                if (cvalue != null) {
-                    if ($(".col-md-2-10 button:contains(" + pkgheadings.split(',')[i] + ")").replaceWith('<button class="button pkgitem">' + pkgheadings.split(',')[i] + '(' + cvalue.split('!').length + ')</button>'));
-                    if (pkgdesc != '') {
-                        pkgdesc = pkgdesc + ',' + pkgheadings.split(',')[i] + '(' + cvalue + ')';
+                    <div id="pkgmodal" class="ui mini test modal" style="max-width:300px;width:100%">
+                        <i class="close icon"></i>
+                        <div class="header">
+                            <text class="selectedpkg"></text> Items
+                        </div>
+                        <div class="scrolling content pkgitemsection">
+                            <table class="menuitems"></table>
+                        </div>
+                        <div class="actions">
+                            <div class="ui negative button" style="height:40px;">
+                                CANCEL
+                            </div>
+                            <div class="ui positive button" style="height:40px;" onclick="Addpkgitems()">
+                                ADD
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Querymodel" class="ui standard writemsg modal" style="max-width:500px;width:100%">
+                        <div class="header">
+                            Write Message To: <text class="custemail"></text>
+                        </div>
+                        <div class="scrolling content">
+                            <textarea placeholder="Start typing your message here....." class="form-control" id="txtmsg" rows="5"></textarea>
+                        </div>
+                        <div class="actions">
+                            <div class="ui negative button" style="height:40px;">
+                                CANCEL
+                            </div>
+                            <div class="ui positive button" id="sendmsg" style="height:40px;">
+                                SEND
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="viewmenuitems" class="ui long writemsg modal">
+                        <div class="header" style="background-color:#573791;color:white">
+                            <text class="pkgname"></text> - <text class="pkgtype"></text>
+                            <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewmenuitems').modal('hide')">Close</button>
+                            <br />
+                            <div class="row" align="center" id="pkgpricesection">
+                                <div class="col-md-3">
+                                    <span>Normal Days Price</span>
+                                    <span>₹<label id="normaldays"></label></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span>Peak Days Price&emsp;</span>
+                                    <span>₹<label id="peakdays"></label></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span>Holidays Price&emsp;&emsp;</span>
+                                    <span>₹<label id="holidays"></label></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span>Choice Days Price</span>
+                                    <span>₹<label id="choicedays"></label></span>
+                                </div>
+                            </div>
+                            <div class="row" align="center">
+                                <span><label id="packagedescription"></label></span>
+                            </div>
+                        </div>
+                        <div class="scrolling content" id="pkgitems">
+                            @*<textarea placeholder="Selected Menu items" class="form-control" id="pkgitems" rows="5"></textarea>*@
+                            @*<label id="pkgitems"></label>*@
+                        </div>
+                        <div class="actions">
+                            <div class="ui negative button" style="height:40px;">
+                                CANCEL
+                            </div>
+                            <div class="ui positive button" id="sendmsg" style="height:40px;">
+                                SEND
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="scripttags"></div>
+
+                    @section scripts{
+                        <script>
+                            $('.menu .browse').popup({
+                                inline: true,
+                                hoverable: true,
+                                position: 'bottom left',
+                                delay: {
+                                    show: 300,
+                                    hide: 800
+                                }
+                            })
+                            ;
+                        </script>
+                        <script>
+                            $("#buttonClass").click(function () {
+                                var policycheck;
+                                var chkArray = [];
+                                $(".kscpolicy:checked").each(function () {
+                                    chkArray.push($(this).val());
+                                    var selected;
+                                    selected = chkArray.join(',');
+                                    /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+                                    if (selected.length > 0) {
+                                        //  alert("You have selected " + selected);
+                                        policycheck = selected;
+                                    } else {
+                                        alert("Please at least check one of the checkbox");
+                                    }
+                                });
+                                // alert(policycheck);
+                                var vsid = $('#vsid').val();
+                                var Tax = $("#Tax").val();
+                                var Decoration_starting_costs = $("#Decoration_starting_costs").val();
+                                var Rooms_Count = $("#Rooms_Count").val();
+                                var Advance_Amount = $("#Advance_Amount").val();
+                                var Room_Average_Price = $("#Room_Average_Price").val();
+                                $.ajax({
+                                    url: '/VDashboard/updatepolicy?policycheck=' + policycheck + '&&vsid=' + vsid + '&&Tax=' + Tax + '&&Decoration_starting_costs=' + Decoration_starting_costs + '&&Rooms_Count=' + Rooms_Count + '&&Advance_Amount=' + Advance_Amount + '&&Room_Average_Price=' + Room_Average_Price,
+                                    type: 'post',
+                                    contentType: 'application-json',
+                                    success: function (data) {
+                                        alert(data);
+                                    },
+                                    error: function (er) {
+                                        alert("System Encountered Internal Error!!! Try Again After Some Time");
+                                    }
+                                });
+
+                            })
+
+
+                            var validateForm = function () {
+                                var checks = $('input[type="checkbox"]:checked').map(function () {
+                                    return $(this).val();
+                                }).get()
+                                // alert(checks);
+                                var vsid = $('#vsid').val();
+                                var hdname = $('#hdname').val();
+                                var Dimentions = $('#Dimentions').val();
+                                var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
+                                var Maximumcapacity = $('#Maximumcapacity').val();
+                                var selectedamenuities = checks;
+                                var vsid = $('#vsid').val();
+                                var Address = $('#Address').val();
+                                var Landmark = $('#Landmark').val();
+                                var City = $('#City').val();
+                                var ZipCode = $('#ZipCode').val();
+                                var Description = $('#mainDescription').val();
+                                $.ajax({
+                                    url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&vsid=' + vsid + '&&hdname=' + hdname + '&&vsid=' + vsid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&vsid=' + vsid + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + 'two',
+                                    type: 'post',
+                                    contentType: 'application-json',
+                                    success: function (data) {
+                                        alert(data);
+                                    },
+                                    error: function (er) {
+                                        alert("System Encountered Internal Error!!! Try Again After Some Time");
+                                    }
+                                });
+                                return false;
+                            }
+                            var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Tandoori/Kababs,Deserts,Beverages,Fruits';
+                            var pkgdesc = '';
+                            $(function () {
+                                //var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Tandoori/Kababs,Deserts,Beverages,Fruits';
+                                var cvalue = '';
+                                for (var i = 0; i < pkgheadings.split(',').length; i++) {
+                                    cvalue = window.localStorage.getItem(pkgheadings.split(',')[i].toLowerCase());
+                                    if (cvalue != null) {
+                                        if ($(".col-md-2-10 button:contains(" + pkgheadings.split(',')[i] + ")").replaceWith('<button class="button pkgitem">' + pkgheadings.split(',')[i] + '(' + cvalue.split('!').length + ')</button>'));
+                                        if (pkgdesc != '') {
+                                            pkgdesc = pkgdesc + ',' + pkgheadings.split(',')[i] + '(' + cvalue + ')';
+                                        }
+                                        else {
+                                            pkgdesc = pkgheadings.split(',')[i] + '(' + cvalue + ')';
+                                        }
+                                    }
+                                }
+                            });
+
+                            $('.viewmenu').click(function () {
+                                var packagename = $('#pkgname').val();
+                                var pkgcategory = $("input[name='checkradio']:checked").val();
+                                var peakdays = $('#pdays').val();
+                                var normaldays = $('#ndays').val();
+                                var holidays = $('#holidays').val();
+                                var choicedays = $('#cdays').val();
+                                var pkgdesc = $('#pkgdesc').val();
+                                var selectedpkgitems = '';
+                                for (var i = 0; i < pkgheadings.split(',').length; i++) {
+                                    var selecteditems = window.localStorage.getItem(pkgheadings.split(',')[i].toLowerCase());
+                                    if (selecteditems != null)
+                                        selectedpkgitems = selectedpkgitems + ',' + (pkgheadings.split(',')[i] + ':' + selecteditems);
+                                }
+                                var selpkgitems = selectedpkgitems.split(',');
+                                //$.each(selpkgitems.splic);
+                                //alert(selectedpkgitems);
+                                $('#viewmenuitems .pkgname').text(packagename);
+                                $('#viewmenuitems .pkgtype').text(pkgcategory);
+                                $('#viewmenuitems #peakdays').text(peakdays);
+                                $('#viewmenuitems #normaldays').text(normaldays);
+                                $('#viewmenuitems #holidays').text(holidays);
+                                $('#viewmenuitems #choicedays').text(choicedays);
+                                $('#viewmenuitems #pkgitems').html(selectedpkgitems.split(':'));
+                                $('#viewmenuitems #packagedescription').text(pkgdesc);
+                                $('#viewmenuitems').modal('show');
+                            });
+                            $('.addpkg').click(function () {
+                                var packagename = $('#pkgname').val();
+                                var pkgcategory = $("input[name='checkradio']:checked").val();
+                                var peakdays = $('#pdays').val();
+                                var normaldays = $('#ndays').val();
+                                var holidays = $('#holidays').val();
+                                var choicedays = $('#cdays').val();
+                                var timeslot = $('#pkgslots').val();
+                                var pkgdesc = $('#pkgdesc').val();
+                                //alert(pkgdesc);
+                                if (packagename == '') {
+                                    $(packagename).focus();
+                                    alert("Enter Package Name");
+                                }
+                                else if (pkgcategory == undefined) {
+                                    alert("Select Package Category");
+                                }
+                                else if (peakdays == '') {
+                                    $(peakdays).focus();
+                                    alert("Enter Peak Days Price");
+                                }
+                                else if (normaldays == '') {
+                                    $(normaldays).focus();
+                                    alert("Enter Normal Days Price");
+                                }
+                                else if (holidays == '') {
+                                    $(holidays).focus();
+                                    alert("Enter Holidays Price");
+                                }
+                                else if (choicedays == '') {
+                                    $(choicedays).focus();
+                                    alert("Enter Choice Days Price");
+                                }
+                                else {
+                                    debugger;
+                                    var package = {
+                                        PackageName: packagename,
+                                        Category: pkgcategory,
+                                        PackageDescription: pkgdesc,
+                                        peakdays: peakdays,
+                                        normaldays: normaldays,
+                                        holidays: holidays,
+                                        choicedays: choicedays,
+                                        VendorId: '@ViewBag.vendorid',
+                                        VendorSubId: '@ViewBag.vsid',
+                                        VendorType: '@ViewBag.Vendor.ServicType',
+                                        VendorSubType: '@ViewBag.subtype',
+                                        timeslot: timeslot
+                                    }
+                                    $.ajax({
+                                        url: '/VDashboard/AddPackage',
+                                        type: 'post',
+                                        datatype: 'json',
+                                        data: package,
+                                        success: function (data) {
+                                            alert(data);
+                                            for (var i = 0; i < pkgheadings.split(',').length; i++) {
+                                                var selecteditems = pkgheadings.split(',')[i].toLowerCase();
+                                                if (selecteditems != null)
+                                                    window.localStorage.removeItem(selecteditems);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+
+                            function Addpkgitems() {
+                                var type = $('#pkgmodal .selectedpkg').text();
+                                var selecteditems = '';
+                                var itemstable = $('#pkgmodal').find('table.menuitems');
+                                $(itemstable).find('tr').each(function () {
+                                    if ($(this).find("input[type='checkbox']").is(':checked')) {
+                                        var checkText = $(this).find('label').text();
+                                        if (selecteditems != '')
+                                            selecteditems = selecteditems + '!' + checkText;
+                                        else
+                                            selecteditems = checkText;
+                                    }
+                                });
+                                window.localStorage.setItem(type.toLowerCase(), selecteditems);
+                                if ($(".col-md-2-10 button:contains(" + type + ")").replaceWith('<button class="button pkgitem">' + type + '(' + selecteditems.split('!').length + ')</button>'));
+                            }
+
+                            function orderemail(val) {
+                                //  alert(val);
+                                $('#Querymodel .custemail').text(val);
+                                $('#Querymodel #txtmsg').val('');
+                                $('#Querymodel').modal('show');
+                            }
+
+                            $(document).on('click', '.pkgitem', function () {
+                                var checkbox = $("input[name='checkradio']:checked").val();
+                                if (checkbox == undefined) {
+                                    alert("Select Menu Type")
+                                }
+                                else {
+                                    var val = $(this).text().split('(')[0];
+                                    var exists = $(this).text().split('(')[1].split(')')[0];
+                                    if (exists > 0) {
+                                        filteritems(checkbox, val, '1');
+                                    }
+                                    else {
+                                        filteritems(checkbox, val, '0');
+                                    }
+                                }
+                            });
+                            //$('.writemsg.modal').modal('attach events', '.writemsg.button', 'show');
+
+                            function filteritems(type, selectedpkg, checked) {
+                                var selpkg = selectedpkg.replace(' ', '_').replace('/', '_').toLowerCase();
+                                var welcome_drinks = ""; var starters = ""; var rice = ""; var bread = ""; var curries = "";
+                                var fry_dry = ""; var salads = ""; var soups = ""; var tandoori_kababs = ""; var deserts = ""; var beverages = ""; var fruits = "";
+                                var tabletr = $('#pkgmodal .pkgitemsection table.menuitems'); var commondiv = "";
+                                var itemsdiv = $('#pkgmodal .pkgitemsection table.menuitems tr#pkgitemstr');
+                                if (type == 'Veg') {
+                                    if (selpkg == 'welcome_drinks') {
+                                        welcome_drinks = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                                        commondiv = welcome_drinks;
+                                    }
+                                    if (selpkg == 'starters') {
+                                        starters = "Gold Coin,Alu 65,Gobi 65,Babycorn 65,Veg. Manchurian,Paneer Manchurian,Gobi Manchurian,Pepper Gobi,Corn Kernel,Boiled Corn,Babycorn Pakoda,Babycorn Manchurian,Capsicum Rings,Onion Rings,Cheese Ball,Boiled Pally,Masala Pally,Chana Roast,Mirchi Bajji,Cut Mirchi,Moongdal Pakoda,Alu Bonda,Minapa Garelu,Paneer Tikka,Paneer Stick,Veg. Stick,Harabara Tikka,Masala Tikka,Dragon Roll,Paneer Roll,Cheese Roll,Veg. Bullet,Alu Samosa,Irani Samosa,Veg. Spring Roll,Cocktail Samosa,Moongdal Pakoda,Corn Pakoda,Finger Paneer,Crispy Babycorn,Crispy Veg.,Smilies,French Fries,Babycorn Golden Fry,Veg. Seekh Kabab,Palak Makkai Kabab";
+                                        commondiv = starters;
+                                    }
+                                    if (selpkg == 'rice') {
+                                        rice = "Veg Fried Rice,Mongolian Rice,Shezwan Rice,Singapore Noodles,Hot Garlic Sauce,American Chopsuey,Veg Dumpling,Veg Chow Chow,Veg Manchurian (Wt),Thai Veg (Wet.),Chilli Veg (Wet),Chilli Paneer,Chilli Baby corn,Gobi Manchurian,Veg Biryani,Tomato Rice,emon Rice,White Rice,Bagara Rice,Curd Rice,Veg Biryani,Veg Pulav,Peas Pulav,Malai Koftha,Diwani Handi,Mushroom Kaju,unakkaya Kaju,Mirch Ka Saalan,Bagara Baingan,Capsicum Masala,Tomato Masala,Mirchi Tomato Masala,Dondakaya Masala,Sorakaya Masala,Beerakaya Masala,Mealmaker Masala,Rajma Masala,Chole Masala,hendi Masala,Palak Koftha Curry,kaddu Koftha Curry,Chama Gadda Pulusu,Gumadikaya Pulusu,Bendakaya Pulusu,Kakarkaya Pulusu,Beerakaya Alsandalu,eera Kaya Methi,beera kaya Boondi,Alu Palak,Capsicum Tomata Masala,na Palak,Chikkudukaya Alu,Vankaya Alu,Vankaya Alu Tomato,Dosakaya Tomato,lu Gobi Kurma,Alu Mutter,Mixed Veg Kurma,Gangavali Tomato";
+                                        commondiv = rice;
+                                    }
+                                    if (selpkg == 'bread') {
+                                        bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Mooli Paratha,Makki ki roti,Kulcha";
+                                        commondiv = bread;
+                                    }
+                                    if (selpkg == 'curries') {
+                                        curries = "Paneer Butter Masala,Paneer Tikka Masala,Paneer Babycorn Masala,Paneer Capsicum,Paneer Chatpata,Paneer Do Pyasa,Bhendi Do Pyasa,Hariyali Paneer,Khaju Paneer,Methi Chaman,Achari Veg.,Palak Paneer,Kadai Paneer,Navratan Kurma,Paneer Shahi Kurma,Veg Chatpata,Veg Kolhapur,Corn Palak,Chum Alu,Tawa Vegetable,Babycorn Do Pyaza,Koftha Palak,Veg. Jaipuri";
+                                        commondiv = curries;
+                                    }
+                                    if (selpkg == 'fry_dry') {
+                                        fry_dry = "Alu Methi Fry,Alu Gobi Fry,Alu Capsicum Fry,Chikkudukaya Alu Fry,Jeera Aloo Fry,Bendi Pakoda Fry,Bendi Kaju Fry,Jaipur Bendi,Chat Pat bendi,Kanda kaju Fry,Donda kaju Fry,Aratikaya Fry,Chamagadda Fry,Beans Coconut Fry,Kakarakaya Fry,Chikkudukaya Fry,Cabbage Coconut Fry,Nutrilla Kaju Fry,Guthivankaya Fry,Mixed Vegetable Fry,Vankaya Pakoda,Dondakaya Pakoda,Veg. Dalcha,Munakkaya Charu,Tomato Charu,Ulawa Charu,Bendakaya Charu,omato Rasam,Miryala Rasam,Pachi Pulusu,Majjiga Pulusu,Kadi Pakoda,Dosa Avakaya,Gobi Avakaya,onda Avakaya,Mango Avakaya,Lime Pickle,Mixed Veg.Pickle,Gongoora Pickle,ongoora Chutney,Tomata Chutney,Cabbage Chutney,Carrot Chutney,Beerakaya Chutney,Kandi Podi,coconut Chutney,Nallakaram Podi,Putnaala Podi,Kariyepak Podi,Nuvvula Karram,Ellipaya Kaaram,Allam Chutney,Pudina Chutney,Chukka Kura Chutney,Kothimeera Chuyney,Kobbari Kaaram Podi,Pudina Coconut Chutney,Mango Coconut Chutney,Vankaya Dosakaya Chutney";
+                                        commondiv = fry_dry;
+                                    }
+                                    if (selpkg == 'salads') {
+                                        salads = "Carrot Salad,Green Salad,Ceaser Salad,Barley Salad,Sprouts Salad,Onion Salad,Green Bean Salad,Leafy Salad with nuts,Lintel Salad";
+                                        commondiv = salads;
+                                    }
+                                    if (selpkg == 'soups') {
+                                        soups = "Tomato Soup,Tomato Shorba,Veg. Corn Soup,Coriander Soup,Hot & Sour Soup,Sweetcorn Soup";
+                                        commondiv = soups;
+                                    }
+                                    //if (selpkg == 'tandoori_kababs') {
+                                    //    tandoori_kababs = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                                    //    commondiv = tandoori_kababs;
+                                    //}
+                                    if (selpkg == 'deserts') {
+                                        deserts = "Vanilla,Strawberry,Chocolate,Mango,Butter Scotch,Seethapal,Choco chips,Pista,Cassata,Kulfi Sticks,Cake Ice Cream,Trifle Pudding,Asmar Cream,Zouceshani,cold Stone,chocobar Stick,King Cone Chocolate,King Cone Butter Scotch,Matka Kulfi,Roller Ice Cream,Jhangri,Khova Burf,Malai Roll,Green Guava,Sweet Tamarind,Black Grapes,Australian Grapes";
+                                        commondiv = deserts;
+                                    }
+                                    if (selpkg == 'beverages') {
+                                        beverages = "Mini Orange,Rambutan,Dragon Fruit,Mango Steam,Cherry,Water bottle,Choclate coffee,Coffee,Tea,Soft drinks,Cuppuccino,Lata";
+                                        commondiv = beverages;
+                                    }
+                                    if (selpkg == 'fruits') {
+                                        fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
+                                        commondiv = fruits;
+                                    }
+                                }
+                                else if (type == 'NonVeg') {
+                                    if (selpkg == 'welcome_drinks') {
+                                        welcome_drinks = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                                        commondiv = welcome_drinks;
+                                    }
+                                    if (selpkg == 'starters') {
+                                        starters = "Chicken 65,Spicy Wings,Chicken Manchurian,Chicken Lollypop,Chicken Tikka,Chicken Satay,Murg Malai Kabab,Chicken Garlic Kabab,Chicken Pahadi Kabab,Chicken Reshmi Kabab,Chicken Hariyali Kabab,Chicken Majestic,Chicken Nuggets,Shezwan Chicken,Chicken Pakoda,Pepper Chicken,Popcorn Chicken,Chilli Chicken,Loose Chilli Prawns,Golden Fried Prawns,Pepper Prawns,Chilli Prawns,Prawn Pakoda,Royyala Vepudu,Garlic Prawns,Prawns Iguru,Finger Fish,Apollo Fish,Fried Fish,Chilly Fish,Fish Tikka,Fish Fry (Murrel With Bone),Fish Amrithsari,Tawa Fish Bone (Murrel),Tawa Fish Boneless (Murrel),Crab Wray Bheemavaram,Crab lguru";
+                                        commondiv = starters;
+                                    }
+                                    if (selpkg == 'rice') {
+                                        rice = "Hyderabad Mutton Biryani,Mutton Sofiyani Biryani,Hyderabad Chicken Biryani,Chicken Sofiyani Biryani,Chicken Pulav,Prawns Pulav,Egg Biryani,Mixed Fried Rice,Egg Fried Rice,Egg Fried Rice,Chicken Fried Rice,Mixed Fried Rice,American Chopsoy (Non-Veg),Chilly Chicken Wet,Chicken Manchurian Wet,Shezwan Chicken Wet,Garlic Chicken (Dry & Wet)";
+                                        commondiv = rice;
+                                    }
+                                    if (selpkg == 'bread') {
+                                        bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Kheema Naan,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Mooli Paratha,Makki ki roti,Kulcha";
+                                        commondiv = bread;
+                                    }
+                                    if (selpkg == 'curries') {
+                                        curries = "Dhumka Chicken,Methi Chicken,Chilli Chicken,Ginger Chicken,Gongoora Chicken,Moghalai Chicken,Hariyali Chicken,Ankapur Country Chicken,Butter Chicken,Chicken Masala,Chilly Chicken Wet(Chinese),Chicken Manchurian Wet,Chicken Diwani Handi,Mutton Curry,Moghalai Mutton,utton Pasinda,Mutton Kali Mirchi,Mutton Roganjosh,Dhum-ka- Bakra,utton Raan,ongoora Maamsam,Chukkakura Maamsam,Palak Mutton,iver Fry,Kidney Fry,okkala Charu,Mutton Dalcha,Boti Dhalcha,Thalakaya Kura,Keema Methi,Keema Palak,Keema Batana,eema Koftha Curry,Paya,Haleem,Butter Chicken,Anda Bhurji,Sarson KA Saag,Makki Ki Roti,Amritsari Kulcha,Punjabi Chole,Dal Makhni,akoda Khadi,Dal Fry,Labadar Paneer,Dal Tadka";
+                                        commondiv = curries;
+                                    }
+                                    if (selpkg == 'fry_dry') {
+                                        fry_dry = "Boti Fry,Kidney Fry,Keema Shikhampuri,Mutton Boti Kabab,Mutton Seekh Kabab,Mutton Shami Kabab,Mutton Chops,Kheema Lukmi,Keema Balls,Liver Fry,Pathar ka Ghosh,Liver Kidney Fry,Mutton Fry (Telangana Style)";
+                                        commondiv = fry_dry;
+                                    }
+                                    if (selpkg == 'salads') {
+                                        salads = "Carrot Salad,Green Salad,Ceaser Salad,Barley Salad,Sprouts Salad,Onion Salad,Green Bean Salad,Leafy Salad with nuts,Lintel Salad";
+                                        commondiv = salads;
+                                    }
+                                    if (selpkg == 'soups') {
+                                        soups = "Chicken Hot & Sour Soup,Paya Shorba,Badami Murg Shorba,Morag Soup,Wanton soup,Chicken clear soup,Canton soup,Chicken noodle soup,Chicken cream soup,Egg drop soup";
+                                        commondiv = soups;
+                                    }
+                                    //if (selpkg == 'tandoori_kababs') {
+                                    //    tandoori_kababs = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
+                                    //    commondiv = tandoori_kababs;
+                                    //}
+                                    if (selpkg == 'deserts') {
+                                        deserts = "Vanilla,Strawberry,Chocolate,Mango,Butter Scotch,Seethapal,Choco chips,Pista,Cassata,Kulfi Sticks,Cake Ice Cream,Trifle Pudding,Asmar Cream,Zouceshani,cold Stone,chocobar Stick,King Cone Chocolate,King Cone Butter Scotch,Matka Kulfi,Roller Ice Cream,Jhangri,Khova Burf,Malai Roll,Kaddu Ka Kheer,Kaddu Ka Halwa,Carrot Halwa,Chocolate Burf,Appricot Trifle,hawa Mitai,Gulab Jamoon,Kala Jamoon,Baadhusha,Mothichur Laddu,Boondi Laddu,Rawa Laddu,Besan Laddu,Mysore Pak,Madatha Kaaja,Chandra Kala,Double Ka Meeta,Rice Phirni,Bakshalu,Poornam Boorelu,Gaajar Ka Halwa,Paneer Jilebi,kesari Jilebi,Ras MalaI,Badam Kun,Jilebi With Rabdi,Mango Rabdi,Rasgulla,Fruit Salad Custard,Khubhani Ka Meeta,Angoori Ras Malai,Baasundi,Sabid Khubhani Ka Meeta,Lichi Gulla,Maal Puva,Mithai Mela,Pan Peta";
+                                        commondiv = deserts;
+                                    }
+                                    if (selpkg == 'beverages') {
+                                        beverages = "Mini Orange,Rambutan,Dragon Fruit,Mango Steam,Cherry,Water bottle,Choclate coffee,Coffee,Tea,Soft drinks,Cuppuccino,Lata";
+                                        commondiv = beverages;
+                                    }
+                                    if (selpkg == 'fruits') {
+                                        fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
+                                        commondiv = fruits;
+                                    }
+                                }
+                                tabletr.empty();
+                                var getlist = window.localStorage.getItem(selectedpkg.toLowerCase());
+                                for (var i = 0; i < commondiv.split(',').length; i++) {
+                                    var row = $("<tr/>");
+                                    if (getlist != null) {
+
+                                        if (getlist.includes(commondiv.split(',')[i])) {
+                                            row.append('<td class="menuitems"><input type="checkbox" class="icheck" checked/><label>' + commondiv.split(',')[i] + '</label></td>');
+                                        }
+                                        else {
+                                            row.append('<td class="menuitems"><input type="checkbox" class="icheck" /><label>' + commondiv.split(',')[i] + '</label></td>');
+                                        }
+                                    }
+                                    else {
+                                        row.append('<td class="menuitems"><input type="checkbox" class="icheck" /><label>' + commondiv.split(',')[i] + '</label></td>');
+                                    }
+                                    tabletr.append(row);
+                                }
+                                $('#pkgmodal .selectedpkg').text(selectedpkg);
+                                $('#pkgmodal').modal('show');
+                            }
+                        </script>
+                        <script>
+                            $(document).ready(function () {
+
+
+                                //$("#kscbook").css('display', 'none');
+                                $("#imageBrowes").change(function () {
+
+                                    var File = this.files;
+
+                                    if (File && File[0]) {
+                                        ReadImage(File[0]);
+                                    }
+
+                                })
+
+                            })
+                            var ReadImage = function (file) {
+
+                                var reader = new FileReader;
+                                var image = new Image;
+
+                                reader.readAsDataURL(file);
+                                reader.onload = function (_file) {
+
+                                    image.src = _file.target.result;
+                                    image.onload = function () {
+
+                                        var height = this.height;
+                                        var width = this.width;
+                                        var type = file.type;
+                                        var size = ~~(file.size / 1024) + "KB";
+
+                                        $("#targetImg").attr('src', _file.target.result);
+                                        $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+                                        $("#imgPreview").show();
+
+                                    }
+
+                                }
+
+                            }
+
+                            //var ClearPreview = function () {
+                            //    $("#imageBrowes").val('');
+                            //    $("#description").text('');
+                            //    $("#imgPreview").hide();
+
+                            //}
+                            var image;
+                            $('.sliderdiv').on('click', function () {
+                                var vsid = $('#vsid').val();
+                                var thisimage = $(this);
+                                var image = $(this).children('img').attr('href');
+                                var file1 = $(this).find('input').attr('id');
+                                image = document.getElementById("" + file1 + "");
+                                image.click();
+                                image.onchange = function () {
+                                    var file = $('#' + file1 + '').get(0).files;
+                                    var data = new FormData;
+                                    if (file.length > 0) {
+                                        data.append("helpSectionImages", file[0]);
+                                    }
+                                    $.ajax({
+                                        url: '/VDashboard/UploadImages?vsid=' + vsid,
+                                        type: "POST",
+                                        contentType: false, // Not to set any content header
+                                        processData: false, // Not to process data
+                                        data: data,
+                                        success: function (result) {
+                                            thisimage.children('img').remove();
+                                            thisimage.append('<img src="/vendorimages/' + result + '" href="s2" style="width:100px;height:100px;padding:0px">')
+                                            //thisimage.attr('border', 'none');
+                                        },
+                                        error: function (err) {
+                                            alert(err.statusText);
+                                        }
+                                    });
+                                }
+                            });
+
+                            var thisdates="";
+                            var array = [];
+                            $(function () {
+                                var listcount = parseInt('@ViewBag.availability.Count') +1;
+                                var listarray = @Html.Raw(Json.Encode(@ViewBag.availability));
+                                var scripttag = $('#scripttags');
+                                for (var k = 0; k < listcount; k++) {
+                                    array.push(listarray[k]);
+                                }
+                                for (var i = 1; i < listcount; i++) {
+                                    thisdates = array[i-1];
+                                    $('<script>').attr('type', 'text/javascript')
+                                        .text("$('#vcal"+i+"').datepicker({dayOfWeekStart: 1,lang: 'en',timepicker: false, format: 'dd/MM/yyyy',minDate: new Date(),OnMonthChange:function(e){alert('hi');},beforeShowDay:function (date){ var string = jQuery.datepicker.formatDate('dd-mm-yy', date);  return [thisdates.indexOf(string) == -1] }});")
+                                        .appendTo(scripttag);
+                                }
+
+                                function blockdates() {
+                                    setTimeout(function() {
+                                        $(".ui-datepicker-calendar td").filter(function() {
+                                            var date = $(this).text();
+                                            return /\d/.test(date);
+                                        }).find("a").attr('data-custom', 110);
+                                    }, 0);
+                                }
+
+
+                                //$(".vendorcalendar").datepicker({
+                                //    dayOfWeekStart: 1,
+                                //    lang: 'en',
+                                //    timepicker: false,
+                                //    format: 'dd/MM/yyyy',
+                                //    minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+                                //    maxDate: '+1970/03/02',//tomorrow is maximum date calendar
+                                //    beforeShowDay: function (date) {
+                                //        var array = '2018-09-10,2018-09-20,2018-09-15,2018-09-25,2018-09-18,2018-09-30';
+                                //        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                                //        return [array.indexOf(string) == -1]
+                                //    }
+                                //});
+                            });
+
+                            $(".vendorcalendar").on("change", function () {
+                                $(".kscbook").css('display', 'none');
+                                var date = new Date($(this).val());
+                                var yr = date.getFullYear();
+                                var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                                var month = date.getMonth() + 1;
+                                var selected = yr + '-' + month + '-' + day;
+                                //alert(selected);
+                                $("#vcalender").val(selected);
+                                //$(this).parents("div#vcal").next("div.kscbook").css('display', 'block');
+                            });
+                            $('#datetimepicker1,datetimepicker2').datepicker({
+                                format:'dd/MM/yyyy',
+                                minDate: new Date()
+                            });
+                        </script>
+                        <script>
+                            $(document).ready(function () {
+                                $('#today,#tomorrow,#upcoming,#allorders').DataTable();
+                            });
+
+                            $('#spc').on('click', function () {
+                                $('#profileimage').click();
+                            });
+
+                            $(function(){
+                                //var e1 = '@Request.QueryString["eventtype"]'//window.localStorage.getItem("eventtype1");
+                                $('#guests').val(window.localStorage.getItem("guests1"));
+                                $('#datetimepicker1').val(window.localStorage.getItem("eventdate1"));
+                                //alert(e1);
+                                //$('.current').text((e1 != '') ? e1 : "Select Event");
+
+                            });
+
+
+
+                            $('#btnsearch').click(function () {
+                                //window.localStorage.removeItem("guests1");
+                                //window.localStorage.removeItem("location1");
+                                //window.localStorage.removeItem("eventtype1");
+                                //window.localStorage.removeItem("eventdate1");
+
+                                var location = 'Hyderabad';//$('#loc').val();
+                                var eventtype = $('.current').text().replace('1','');
+                                var guests = $('#guests').val();
+                                var date = $('#datetimepicker1').val();
+                                if (location == '') {
+                                    alert('Enter Location');
+                                    $('#loc').focus();
+                                }
+                                else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+                                    alert('Select Event Type');
+                                }
+                                else if (guests == '') {
+                                    alert('Enter Guests');
+                                    $('#guests').focus();
+                                }
+                                else if (date == '') {
+                                    alert('Select Event date');
+                                    $('#datetimepicker1').focus();
+                                }
+                                else {
+                                    //eventtype != null && count != null && date != null
+                                    window.localStorage.setItem("guests1", guests);
+                                    window.localStorage.setItem("location1", location);
+                                    window.localStorage.setItem("eventtype1", eventtype);
+                                    alert(eventtype);
+                                    window.localStorage.setItem("eventdate1", date);
+                                    window.location.href = '/VDashboard/Index?eventtype='+eventtype+'&&count='+guests+'&&date='+date;
+                                }
+                            });
+
+
+
+                            $('#profileimage').change(function () {
+                                var ext = $('#profileimage').val().split('.').pop().toLowerCase();
+                                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                                    alert('Invalid File Type');
+                                }
+                                else {
+                                    var data = new FormData();
+                                    var files = $("#profileimage").get(0).files;
+                                    //alert(files);
+                                    if (files.length > 0) {
+                                        data.append("helpSectionImages", files[0]);
+                                    }
+                                    $.ajax({
+                                        url: '/VDashboard/UploadProfilePic?email=' + $('#Item1_EmailId').val(),
+                                        type: "POST",
+                                        processData: false,
+                                        contentType: false,
+                                        data: data,
+                                        success: function (response) {
+                                            $('#profilepic1').removeAttr('src');
+                                            $('#profilepic1').attr('src', '/ProfilePictures/' + response + '');
+                                            //var url = '/vdashboard/profilepic';
+                                            //$('#profilepipccontent').empty().load(url);
+                                        }
+                                    });
+                                }
+                            });
+                        </script>
+                        <script>
+                            $(document).ready(function () {
+                                if ('@ViewBag.service.VenueType' != null && '@ViewBag.service.VenueType' != "") {
+                                    $('#selectedservice').val('@ViewBag.service.VenueType'); //Assign value to service dropdown here
+                                }
+                            });
+
+                            $('#selectedservice').on('change', function () {
+                                //function addsubcategory(val) {
+                                var subid = '@Request.QueryString["vsid"]';
+                                var subcategory1 = $(this).val();
+                                var category = '@ViewBag.Vendor.ServicType';
+                                //alert(subcategory1);
+                                //alert(subid);
+                                $.ajax({
+                                    url: '/VDashboard/AddSubService?type=' + category + '&&subcategory=' + subcategory1 + '&&subid=' + subid,
+                                    type: 'post',
+                                    contentType: 'application-json',
+                                    success: function (data) {
+                                        alert(data);
+                                        window.location.reload();
+                                    },
+                                    error: function (er) {
+                                        alert("System Encountered Internal Error!!! Try Again After Some Time");
+                                    }
+                                });
+                                //}
+                            });
+
+                            $('.grid-item').click(function () {
+                                var arr = $('#amenities').val();
+                                var arr1 = $('#amenities1').val();
+                                var checkbox = $(this).find('input[type=checkbox]');
+                                if (checkbox.is(':checked')) {
+                                    checkbox.removeAttr('checked');
+                                    if (arr != '')
+                                        arr1 = arr + arr1.replace(',' + checkbox.attr('id'), '');
+                                    else
+                                        arr1 = arr1.replace(',' + checkbox.attr('id'), '');
+                                    $(this).css('background-color', 'white');
+                                }
+                                else {
+                                    checkbox.prop('checked', 'checked');
+                                    if (arr != '')
+                                        arr1 = arr + arr1 + ',' + checkbox.attr('id');
+                                    else
+                                        arr1 = arr1 + ',' + checkbox.attr('id');
+                                    //alert(checkbox.attr('id'));
+                                    $(this).css('background-color', 'yellow');
+                                }
+                                $('#amenities1').val(arr1.substr(1));
+                                $('#selectedamenities').val(arr.substr(1));
+                            });
+
+
+                            $('.btnbook').on('click', function () {
+                                var packageid = $(this).prev('input.pkgid').val();
+                                window.localStorage.removeItem("vpbook");
+                                //var bookingdiv = $(this).parents('table.priceslist').parents("div").parents("div.box_grid").find("div.kscbook");
+                                //var location = 'Hyderabad';
+                                //var guests = bookingdiv.find('#bookguest').val();
+                                //var eventtype = bookingdiv.find("#eventtype").find("option:selected").text();
+                                var location = 'Hyderabad';//$('#loc').val();
+                                var eventtype = $('.current').text().replace('1','');
+                                var guests = $('#guests').val();
+                                var date = $('#vcalender').val();
+                                //if (location == '') {
+                                //    alert('Enter Location');
+                                //    $('#loc').focus();
+                                //}
+                                //alert(eventtype);
+
+                                if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+                                    alert('Select Event Type');
+                                }
+                                else if (guests == '') {
+                                    alert('Enter Guests');
+                                    $('#guests').focus();
+                                }
+                                else if (date == '') {
+                                    alert('Select date');
+                                    $('#datetimepicker1').focus();
+                                }
+                                else {
+                                    var select = location + ',' + guests + "," + date + "," + eventtype + "," + packageid;
+                                    window.localStorage.setItem("vpbook", select);
+                                    //window.location.href = '/ManageUser/Index?select=' + select;
+                                    alert('Location = '+location+',Event Type = '+eventtype+',Guests = '+guests+',Event Date = '+date+'');
+                                }
+                            });
+
+                            //function booknow(val) {
+                            //    var packageid = val;
+                            //    window.localStorage.removeItem("vpbook");
+
+                            //    var location = 'Hyderabad';//$('#loc').val();
+                            //    var eventtype = $("#eventtype").find("option:selected").text();
+                            //    var guests = $('#bookguest').val();
+                            //    var date = $('#vcalender').val();
+                            //    if (location == '') {
+                            //        alert('Enter Location');
+                            //        $('#loc').focus();
+                            //    }
+                            //    else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+                            //        alert('Select Event Type');
+                            //    }
+                            //    else if (guests == '') {
+                            //        alert('Enter Guests');
+                            //        $('#guests').focus();
+                            //    }
+                            //    else if (date == '') {
+                            //        alert('Select date');
+                            //        $('#datetimepicker1').focus();
+                            //    }
+                            //    else {
+                            //        var select = location + ',' + guests + "," + date + "," + eventtype + "," + packageid;
+                            //        window.localStorage.setItem("vpbook", select);
+                            //        window.location.href = '/ManageUser/Index?select=' + select;
+
+                            //    }
+                            //}
+
+                            function updatedetails(val) {
+                                var hdname = $('#hdname').val();
+                                var Dimentions = $('#Dimentions').val();
+                                var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
+                                var Maximumcapacity = $('#Maximumcapacity').val();
+                                var selectedamenuities = $('#amenities').val();
+                                var vsid = $('#vsid').val();
+                                var Address = $('#Address').val();
+                                var Landmark = $('#Landmark').val();
+                                var City = $('#City').val();
+                                var ZipCode = $('#ZipCode').val();
+                                var Description = $('#mainDescription').val();
+                                $.ajax({
+                                    url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&vsid=' + vsid + '&&hdname=' + hdname + '&&vsid=' + vsid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&vsid=' + vsid + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + val,
+                                    type: 'post',
+                                    contentType: 'application-json',
+                                    success: function (data) {
+                                        alert(data);
+                                    },
+                                    error: function (er) {
+                                        alert("System Encountered Internal Error!!! Try Again After Some Time");
+                                    }
+                                });
+                            }
+                        </script>
+                        <script>
+                            $('#pkgsubcat').click(function () {
+                                alert('First Add Sub Service');
+                            });
+                        </script>
+                        <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+                        <script type="text/javascript">
+                            //function show_hide_row(row)
+                            //{
+                            // $("#"+row).toggle();
+                            //}
+                            $('.show_hide_row').click(function () {
+                                //$('.hidden_row').toggle();
+                                //alert($(this).parent('td').html());
+                                // $(this).parents('td').parent('tr').next('tr#hidden_row1').toggle();
+                                $(this).next('tr#hidden_row1').toggle();
+                            });
+                            $('#sendmsg').click(function () {
+                                var msg = $('#txtmsg').val();
+                                var Email = $('#Querymodel .custemail').text();
+                                $.ajax({
+                                    url: '/VDashboard/Sendmsg',
+                                    type: 'POST',
+                                    data: JSON.stringify({ msg: msg, Email: Email }),
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    success: function (data) {
+                                        if (data == "success" || data == "unique") {
+                                            alertify.alert("We will contact you soon");
+                                        }
+                                        else if (data == "Failed") {
+                                            alertify.alert("Something Went Wrong!!! Try Again Later");
+                                        }
+                                        else {
+                                            alertify.alertmsg("error");
+                                        }
+                                    }
+                                });
+                            })
+
+                        </script>
                     }
-                    else {
-                        pkgdesc = pkgheadings.split(',')[i] + '(' + cvalue + ')';
-                    }
-                }
-            }
-        });
-
-        $('.viewmenu').click(function () {
-            var packagename = $('#pkgname').val();
-            var pkgcategory = $("input[name='checkradio']:checked").val();
-            var peakdays = $('#pdays').val();
-            var normaldays = $('#ndays').val();
-            var holidays = $('#holidays').val();
-            var choicedays = $('#cdays').val();
-            var pkgdesc = $('#pkgdesc').val();
-            var selectedpkgitems = '';
-            for (var i = 0; i < pkgheadings.split(',').length; i++) {
-                var selecteditems = window.localStorage.getItem(pkgheadings.split(',')[i].toLowerCase());
-                if (selecteditems != null)
-                    selectedpkgitems = selectedpkgitems + ',' + (pkgheadings.split(',')[i] + ':' + selecteditems);
-            }
-            var selpkgitems = selectedpkgitems.split(',');
-            //$.each(selpkgitems.splic);
-            //alert(selectedpkgitems);
-            $('#viewmenuitems .pkgname').text(packagename);
-            $('#viewmenuitems .pkgtype').text(pkgcategory);
-            $('#viewmenuitems #peakdays').text(peakdays);
-            $('#viewmenuitems #normaldays').text(normaldays);
-            $('#viewmenuitems #holidays').text(holidays);
-            $('#viewmenuitems #choicedays').text(choicedays);
-            $('#viewmenuitems #pkgitems').html(selectedpkgitems.split(':'));
-            $('#viewmenuitems #packagedescription').text(pkgdesc);
-            $('#viewmenuitems').modal('show');
-        });
-        $('.addpkg').click(function () {
-            var packagename = $('#pkgname').val();
-            var pkgcategory = $("input[name='checkradio']:checked").val();
-            var peakdays = $('#pdays').val();
-            var normaldays = $('#ndays').val();
-            var holidays = $('#holidays').val();
-            var choicedays = $('#cdays').val();
-            var timeslot = $('#pkgslots').val();
-            var pkgdesc = $('#pkgdesc').val();
-            //alert(pkgdesc);
-            if (packagename == '') {
-                $(packagename).focus();
-                alert("Enter Package Name");
-            }
-            else if (pkgcategory == undefined) {
-                alert("Select Package Category");
-            }
-            else if (peakdays == '') {
-                $(peakdays).focus();
-                alert("Enter Peak Days Price");
-            }
-            else if (normaldays == '') {
-                $(normaldays).focus();
-                alert("Enter Normal Days Price");
-            }
-            else if (holidays == '') {
-                $(holidays).focus();
-                alert("Enter Holidays Price");
-            }
-            else if (choicedays == '') {
-                $(choicedays).focus();
-                alert("Enter Choice Days Price");
-            }
-            else {
-                debugger;
-                var package = {
-                    PackageName: packagename,
-                    Category: pkgcategory,
-                    PackageDescription: pkgdesc,
-                    peakdays: peakdays,
-                    normaldays: normaldays,
-                    holidays: holidays,
-                    choicedays: choicedays,
-                    VendorId: '@ViewBag.vendorid',
-                    VendorSubId: '@ViewBag.vsid',
-                    VendorType: '@ViewBag.Vendor.ServicType',
-                    VendorSubType: '@ViewBag.subtype',
-                    timeslot: timeslot
-                }
-                $.ajax({
-                    url: '/VDashboard/AddPackage',
-                    type: 'post',
-                    datatype: 'json',
-                    data: package,
-                    success: function (data) {
-                        alert(data);
-                        for (var i = 0; i < pkgheadings.split(',').length; i++) {
-                            var selecteditems = pkgheadings.split(',')[i].toLowerCase();
-                            if (selecteditems != null)
-                                window.localStorage.removeItem(selecteditems);
-                        }
-                    }
-                });
-            }
-        });
-
-        function Addpkgitems() {
-            var type = $('#pkgmodal .selectedpkg').text();
-            var selecteditems = '';
-            var itemstable = $('#pkgmodal').find('table.menuitems');
-            $(itemstable).find('tr').each(function () {
-                if ($(this).find("input[type='checkbox']").is(':checked')) {
-                    var checkText = $(this).find('label').text();
-                    if (selecteditems != '')
-                        selecteditems = selecteditems + '!' + checkText;
-                    else
-                        selecteditems = checkText;
-                }
-            });
-            window.localStorage.setItem(type.toLowerCase(), selecteditems);
-            if ($(".col-md-2-10 button:contains(" + type + ")").replaceWith('<button class="button pkgitem">' + type + '(' + selecteditems.split('!').length + ')</button>'));
-        }
-
-        function orderemail(val) {
-            //  alert(val);
-            $('#Querymodel .custemail').text(val);
-            $('#Querymodel #txtmsg').val('');
-            $('#Querymodel').modal('show');
-        }
-
-        $(document).on('click', '.pkgitem', function () {
-            var checkbox = $("input[name='checkradio']:checked").val();
-            if (checkbox == undefined) {
-                alert("Select Menu Type")
-            }
-            else {
-                var val = $(this).text().split('(')[0];
-                var exists = $(this).text().split('(')[1].split(')')[0];
-                if (exists > 0) {
-                    filteritems(checkbox, val, '1');
-                }
-                else {
-                    filteritems(checkbox, val, '0');
-                }
-            }
-        });
-        //$('.writemsg.modal').modal('attach events', '.writemsg.button', 'show');
-
-        function filteritems(type, selectedpkg, checked) {
-            var selpkg = selectedpkg.replace(' ', '_').replace('/', '_').toLowerCase();
-            var welcome_drinks = ""; var starters = ""; var rice = ""; var bread = ""; var curries = "";
-            var fry_dry = ""; var salads = ""; var soups = ""; var tandoori_kababs = ""; var deserts = ""; var beverages = ""; var fruits = "";
-            var tabletr = $('#pkgmodal .pkgitemsection table.menuitems'); var commondiv = "";
-            var itemsdiv = $('#pkgmodal .pkgitemsection table.menuitems tr#pkgitemstr');
-            if (type == 'Veg') {
-                if (selpkg == 'welcome_drinks') {
-                    welcome_drinks = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
-                    commondiv = welcome_drinks;
-                }
-                if (selpkg == 'starters') {
-                    starters = "Gold Coin,Alu 65,Gobi 65,Babycorn 65,Veg. Manchurian,Paneer Manchurian,Gobi Manchurian,Pepper Gobi,Corn Kernel,Boiled Corn,Babycorn Pakoda,Babycorn Manchurian,Capsicum Rings,Onion Rings,Cheese Ball,Boiled Pally,Masala Pally,Chana Roast,Mirchi Bajji,Cut Mirchi,Moongdal Pakoda,Alu Bonda,Minapa Garelu,Paneer Tikka,Paneer Stick,Veg. Stick,Harabara Tikka,Masala Tikka,Dragon Roll,Paneer Roll,Cheese Roll,Veg. Bullet,Alu Samosa,Irani Samosa,Veg. Spring Roll,Cocktail Samosa,Moongdal Pakoda,Corn Pakoda,Finger Paneer,Crispy Babycorn,Crispy Veg.,Smilies,French Fries,Babycorn Golden Fry,Veg. Seekh Kabab,Palak Makkai Kabab";
-                    commondiv = starters;
-                }
-                if (selpkg == 'rice') {
-                    rice = "Veg Fried Rice,Mongolian Rice,Shezwan Rice,Singapore Noodles,Hot Garlic Sauce,American Chopsuey,Veg Dumpling,Veg Chow Chow,Veg Manchurian (Wt),Thai Veg (Wet.),Chilli Veg (Wet),Chilli Paneer,Chilli Baby corn,Gobi Manchurian,Veg Biryani,Tomato Rice,emon Rice,White Rice,Bagara Rice,Curd Rice,Veg Biryani,Veg Pulav,Peas Pulav,Malai Koftha,Diwani Handi,Mushroom Kaju,unakkaya Kaju,Mirch Ka Saalan,Bagara Baingan,Capsicum Masala,Tomato Masala,Mirchi Tomato Masala,Dondakaya Masala,Sorakaya Masala,Beerakaya Masala,Mealmaker Masala,Rajma Masala,Chole Masala,hendi Masala,Palak Koftha Curry,kaddu Koftha Curry,Chama Gadda Pulusu,Gumadikaya Pulusu,Bendakaya Pulusu,Kakarkaya Pulusu,Beerakaya Alsandalu,eera Kaya Methi,beera kaya Boondi,Alu Palak,Capsicum Tomata Masala,na Palak,Chikkudukaya Alu,Vankaya Alu,Vankaya Alu Tomato,Dosakaya Tomato,lu Gobi Kurma,Alu Mutter,Mixed Veg Kurma,Gangavali Tomato";
-                    commondiv = rice;
-                }
-                if (selpkg == 'bread') {
-                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Mooli Paratha,Makki ki roti,Kulcha";
-                    commondiv = bread;
-                }
-                if (selpkg == 'curries') {
-                    curries = "Paneer Butter Masala,Paneer Tikka Masala,Paneer Babycorn Masala,Paneer Capsicum,Paneer Chatpata,Paneer Do Pyasa,Bhendi Do Pyasa,Hariyali Paneer,Khaju Paneer,Methi Chaman,Achari Veg.,Palak Paneer,Kadai Paneer,Navratan Kurma,Paneer Shahi Kurma,Veg Chatpata,Veg Kolhapur,Corn Palak,Chum Alu,Tawa Vegetable,Babycorn Do Pyaza,Koftha Palak,Veg. Jaipuri";
-                    commondiv = curries;
-                }
-                if (selpkg == 'fry_dry') {
-                    fry_dry = "Alu Methi Fry,Alu Gobi Fry,Alu Capsicum Fry,Chikkudukaya Alu Fry,Jeera Aloo Fry,Bendi Pakoda Fry,Bendi Kaju Fry,Jaipur Bendi,Chat Pat bendi,Kanda kaju Fry,Donda kaju Fry,Aratikaya Fry,Chamagadda Fry,Beans Coconut Fry,Kakarakaya Fry,Chikkudukaya Fry,Cabbage Coconut Fry,Nutrilla Kaju Fry,Guthivankaya Fry,Mixed Vegetable Fry,Vankaya Pakoda,Dondakaya Pakoda,Veg. Dalcha,Munakkaya Charu,Tomato Charu,Ulawa Charu,Bendakaya Charu,omato Rasam,Miryala Rasam,Pachi Pulusu,Majjiga Pulusu,Kadi Pakoda,Dosa Avakaya,Gobi Avakaya,onda Avakaya,Mango Avakaya,Lime Pickle,Mixed Veg.Pickle,Gongoora Pickle,ongoora Chutney,Tomata Chutney,Cabbage Chutney,Carrot Chutney,Beerakaya Chutney,Kandi Podi,coconut Chutney,Nallakaram Podi,Putnaala Podi,Kariyepak Podi,Nuvvula Karram,Ellipaya Kaaram,Allam Chutney,Pudina Chutney,Chukka Kura Chutney,Kothimeera Chuyney,Kobbari Kaaram Podi,Pudina Coconut Chutney,Mango Coconut Chutney,Vankaya Dosakaya Chutney";
-                    commondiv = fry_dry;
-                }
-                if (selpkg == 'salads') {
-                    salads = "Carrot Salad,Green Salad,Ceaser Salad,Barley Salad,Sprouts Salad,Onion Salad,Green Bean Salad,Leafy Salad with nuts,Lintel Salad";
-                    commondiv = salads;
-                }
-                if (selpkg == 'soups') {
-                    soups = "Tomato Soup,Tomato Shorba,Veg. Corn Soup,Coriander Soup,Hot & Sour Soup,Sweetcorn Soup";
-                    commondiv = soups;
-                }
-                //if (selpkg == 'tandoori_kababs') {
-                //    tandoori_kababs = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
-                //    commondiv = tandoori_kababs;
-                //}
-                if (selpkg == 'deserts') {
-                    deserts = "Vanilla,Strawberry,Chocolate,Mango,Butter Scotch,Seethapal,Choco chips,Pista,Cassata,Kulfi Sticks,Cake Ice Cream,Trifle Pudding,Asmar Cream,Zouceshani,cold Stone,chocobar Stick,King Cone Chocolate,King Cone Butter Scotch,Matka Kulfi,Roller Ice Cream,Jhangri,Khova Burf,Malai Roll,Green Guava,Sweet Tamarind,Black Grapes,Australian Grapes";
-                    commondiv = deserts;
-                }
-                if (selpkg == 'beverages') {
-                    beverages = "Mini Orange,Rambutan,Dragon Fruit,Mango Steam,Cherry,Water bottle,Choclate coffee,Coffee,Tea,Soft drinks,Cuppuccino,Lata";
-                    commondiv = beverages;
-                }
-                if (selpkg == 'fruits') {
-                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
-                    commondiv = fruits;
-                }
-            }
-            else if (type == 'NonVeg') {
-                if (selpkg == 'welcome_drinks') {
-                    welcome_drinks = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
-                    commondiv = welcome_drinks;
-                }
-                if (selpkg == 'starters') {
-                    starters = "Chicken 65,Spicy Wings,Chicken Manchurian,Chicken Lollypop,Chicken Tikka,Chicken Satay,Murg Malai Kabab,Chicken Garlic Kabab,Chicken Pahadi Kabab,Chicken Reshmi Kabab,Chicken Hariyali Kabab,Chicken Majestic,Chicken Nuggets,Shezwan Chicken,Chicken Pakoda,Pepper Chicken,Popcorn Chicken,Chilli Chicken,Loose Chilli Prawns,Golden Fried Prawns,Pepper Prawns,Chilli Prawns,Prawn Pakoda,Royyala Vepudu,Garlic Prawns,Prawns Iguru,Finger Fish,Apollo Fish,Fried Fish,Chilly Fish,Fish Tikka,Fish Fry (Murrel With Bone),Fish Amrithsari,Tawa Fish Bone (Murrel),Tawa Fish Boneless (Murrel),Crab Wray Bheemavaram,Crab lguru";
-                    commondiv = starters;
-                }
-                if (selpkg == 'rice') {
-                    rice = "Hyderabad Mutton Biryani,Mutton Sofiyani Biryani,Hyderabad Chicken Biryani,Chicken Sofiyani Biryani,Chicken Pulav,Prawns Pulav,Egg Biryani,Mixed Fried Rice,Egg Fried Rice,Egg Fried Rice,Chicken Fried Rice,Mixed Fried Rice,American Chopsoy (Non-Veg),Chilly Chicken Wet,Chicken Manchurian Wet,Shezwan Chicken Wet,Garlic Chicken (Dry & Wet)";
-                    commondiv = rice;
-                }
-                if (selpkg == 'bread') {
-                    bread = "Naan,Butter Naan,Garlic Naan,Tandoor Roti,Jawar Roti,Kheema Naan,Paratha,Sheermal,Pulkha,Aloo Paratha,Methi Paratha,Mooli Paratha,Makki ki roti,Kulcha";
-                    commondiv = bread;
-                }
-                if (selpkg == 'curries') {
-                    curries = "Dhumka Chicken,Methi Chicken,Chilli Chicken,Ginger Chicken,Gongoora Chicken,Moghalai Chicken,Hariyali Chicken,Ankapur Country Chicken,Butter Chicken,Chicken Masala,Chilly Chicken Wet(Chinese),Chicken Manchurian Wet,Chicken Diwani Handi,Mutton Curry,Moghalai Mutton,utton Pasinda,Mutton Kali Mirchi,Mutton Roganjosh,Dhum-ka- Bakra,utton Raan,ongoora Maamsam,Chukkakura Maamsam,Palak Mutton,iver Fry,Kidney Fry,okkala Charu,Mutton Dalcha,Boti Dhalcha,Thalakaya Kura,Keema Methi,Keema Palak,Keema Batana,eema Koftha Curry,Paya,Haleem,Butter Chicken,Anda Bhurji,Sarson KA Saag,Makki Ki Roti,Amritsari Kulcha,Punjabi Chole,Dal Makhni,akoda Khadi,Dal Fry,Labadar Paneer,Dal Tadka";
-                    commondiv = curries;
-                }
-                if (selpkg == 'fry_dry') {
-                    fry_dry = "Boti Fry,Kidney Fry,Keema Shikhampuri,Mutton Boti Kabab,Mutton Seekh Kabab,Mutton Shami Kabab,Mutton Chops,Kheema Lukmi,Keema Balls,Liver Fry,Pathar ka Ghosh,Liver Kidney Fry,Mutton Fry (Telangana Style)";
-                    commondiv = fry_dry;
-                }
-                if (selpkg == 'salads') {
-                    salads = "Carrot Salad,Green Salad,Ceaser Salad,Barley Salad,Sprouts Salad,Onion Salad,Green Bean Salad,Leafy Salad with nuts,Lintel Salad";
-                    commondiv = salads;
-                }
-                if (selpkg == 'soups') {
-                    soups = "Chicken Hot & Sour Soup,Paya Shorba,Badami Murg Shorba,Morag Soup,Wanton soup,Chicken clear soup,Canton soup,Chicken noodle soup,Chicken cream soup,Egg drop soup";
-                    commondiv = soups;
-                }
-                //if (selpkg == 'tandoori_kababs') {
-                //    tandoori_kababs = "Hot Badam Milk,Cold Badam Milk,Mosambi Juice,Pineapple Juice,Water Melon,Black Grape,Orange Juice,Apple Juice,Fruit Juice,Lychee Punch,Mango Blossom,Orange Blossom,Sweet Lassi,Salted Lassi,Pink Lady,Strawberry Surprise,Kiwi Kiss,Passion Punch,Blue Passion,Misty Mint,Virgin Mojito,200 ML Water Bottle (Branded),Tea or Coffee,Any Soft Drinks (Branded)";
-                //    commondiv = tandoori_kababs;
-                //}
-                if (selpkg == 'deserts') {
-                    deserts = "Vanilla,Strawberry,Chocolate,Mango,Butter Scotch,Seethapal,Choco chips,Pista,Cassata,Kulfi Sticks,Cake Ice Cream,Trifle Pudding,Asmar Cream,Zouceshani,cold Stone,chocobar Stick,King Cone Chocolate,King Cone Butter Scotch,Matka Kulfi,Roller Ice Cream,Jhangri,Khova Burf,Malai Roll,Kaddu Ka Kheer,Kaddu Ka Halwa,Carrot Halwa,Chocolate Burf,Appricot Trifle,hawa Mitai,Gulab Jamoon,Kala Jamoon,Baadhusha,Mothichur Laddu,Boondi Laddu,Rawa Laddu,Besan Laddu,Mysore Pak,Madatha Kaaja,Chandra Kala,Double Ka Meeta,Rice Phirni,Bakshalu,Poornam Boorelu,Gaajar Ka Halwa,Paneer Jilebi,kesari Jilebi,Ras MalaI,Badam Kun,Jilebi With Rabdi,Mango Rabdi,Rasgulla,Fruit Salad Custard,Khubhani Ka Meeta,Angoori Ras Malai,Baasundi,Sabid Khubhani Ka Meeta,Lichi Gulla,Maal Puva,Mithai Mela,Pan Peta";
-                    commondiv = deserts;
-                }
-                if (selpkg == 'beverages') {
-                    beverages = "Mini Orange,Rambutan,Dragon Fruit,Mango Steam,Cherry,Water bottle,Choclate coffee,Coffee,Tea,Soft drinks,Cuppuccino,Lata";
-                    commondiv = beverages;
-                }
-                if (selpkg == 'fruits') {
-                    fruits = "Apple,Lichi,Dates,Pears,Sapota,Grapes,Peaches,Thailand,Orange,Anjeer,Guava,Plums,Kiwi,Pineapple,Papaya,Water Melon,Musk Melon,pomegranate,Mango,Fuji Apple,Strawberry,Red Guava";
-                    commondiv = fruits;
-                }
-            }
-            tabletr.empty();
-            var getlist = window.localStorage.getItem(selectedpkg.toLowerCase());
-            for (var i = 0; i < commondiv.split(',').length; i++) {
-                var row = $("<tr/>");
-                if (getlist != null) {
-
-                    if (getlist.includes(commondiv.split(',')[i])) {
-                        row.append('<td class="menuitems"><input type="checkbox" class="icheck" checked/><label>' + commondiv.split(',')[i] + '</label></td>');
-                    }
-                    else {
-                        row.append('<td class="menuitems"><input type="checkbox" class="icheck" /><label>' + commondiv.split(',')[i] + '</label></td>');
-                    }
-                }
-                else {
-                    row.append('<td class="menuitems"><input type="checkbox" class="icheck" /><label>' + commondiv.split(',')[i] + '</label></td>');
-                }
-                tabletr.append(row);
-            }
-            $('#pkgmodal .selectedpkg').text(selectedpkg);
-            $('#pkgmodal').modal('show');
-        }
-    </script>
-    @*<script>
-
-            $(function () {
-                'use strict';
-                $('input[name="dates"]').daterangepicker({
-                    autoUpdateInput: false,
-                    locale: {
-                        cancelLabel: 'Clear'
-                    }
-                });
-                $('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
-                    $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format('MM-DD-YY'));
-                });
-                $('input[name="dates"]').on('cancel.daterangepicker', function (ev, picker) {
-                    $(this).val('');
-                });
-            });
-        </script>*@
-  
-    <script>
-        $(document).ready(function () {
-
-
-            //$("#kscbook").css('display', 'none');
-            $("#imageBrowes").change(function () {
-
-                var File = this.files;
-
-                if (File && File[0]) {
-                    ReadImage(File[0]);
-                }
-
-            })
-
-        })
-        var ReadImage = function (file) {
-
-            var reader = new FileReader;
-            var image = new Image;
-
-            reader.readAsDataURL(file);
-            reader.onload = function (_file) {
-
-                image.src = _file.target.result;
-                image.onload = function () {
-
-                    var height = this.height;
-                    var width = this.width;
-                    var type = file.type;
-                    var size = ~~(file.size / 1024) + "KB";
-
-                    $("#targetImg").attr('src', _file.target.result);
-                    $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
-                    $("#imgPreview").show();
-
-                }
-
-            }
-
-        }
-
-        //var ClearPreview = function () {
-        //    $("#imageBrowes").val('');
-        //    $("#description").text('');
-        //    $("#imgPreview").hide();
-
-        //}
-        var image;
-        $('.sliderdiv').on('click', function () {
-            var vsid = $('#vsid').val();
-            var thisimage = $(this);
-            var image = $(this).children('img').attr('href');
-            var file1 = $(this).find('input').attr('id');
-            image = document.getElementById("" + file1 + "");
-            image.click();
-            image.onchange = function () {
-                var file = $('#' + file1 + '').get(0).files;
-                var data = new FormData;
-                if (file.length > 0) {
-                    data.append("helpSectionImages", file[0]);
-                }
-                $.ajax({
-                    url: '/VDashboard/UploadImages?vsid=' + vsid,
-                    type: "POST",
-                    contentType: false, // Not to set any content header
-                    processData: false, // Not to process data
-                    data: data,
-                    success: function (result) {
-                        thisimage.children('img').remove();
-                        thisimage.append('<img src="/vendorimages/' + result + '" href="s2" style="width:100px;height:100px;padding:0px">')
-                        //thisimage.attr('border', 'none');
-                    },
-                    error: function (err) {
-                        alert(err.statusText);
-                    }
-                });
-            }
-        });
-
-        var thisdates="";
-        var array = [];
-        $(function () {
-            var listcount = parseInt('@ViewBag.availability.Count') +1;
-            var listarray = @Html.Raw(Json.Encode(@ViewBag.availability));
-            var scripttag = $('#scripttags');
-            for (var k = 0; k < listcount; k++) {
-                array.push(listarray[k]);
-            }
-            for (var i = 1; i < listcount; i++) {
-                thisdates = array[i-1];
-                $('<script>').attr('type', 'text/javascript')
-                    .text("$('#vcal"+i+"').datepicker({dayOfWeekStart: 1,lang: 'en',timepicker: false, format: 'dd/MM/yyyy',minDate: 'new Date()',OnMonthChange:function(e){alert('hi');},beforeShowDay:function (date){ var string = jQuery.datepicker.formatDate('dd-mm-yy', date); return [thisdates.indexOf(string) == -1] }});")
-                    .appendTo(scripttag);
-            }
-
-            function blockdates() {
-                setTimeout(function() {
-                    $(".ui-datepicker-calendar td").filter(function() {
-                        var date = $(this).text();
-                        return /\d/.test(date);
-                    }).find("a").attr('data-custom', 110);
-                }, 0);
-            }
-
-
-            //$(".vendorcalendar").datepicker({
-            //    dayOfWeekStart: 1,
-            //    lang: 'en',
-            //    timepicker: false,
-            //    format: 'dd/MM/yyyy',
-            //    minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-            //    maxDate: '+1970/03/02',//tomorrow is maximum date calendar
-            //    beforeShowDay: function (date) {
-            //        var array = '2018-09-10,2018-09-20,2018-09-15,2018-09-25,2018-09-18,2018-09-30';
-            //        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-            //        return [array.indexOf(string) == -1]
-            //    }
-            //});
-        });
-
-        $(".vendorcalendar").on("change", function () {
-            $(".kscbook").css('display', 'none');
-            var date = new Date($(this).val());
-            var yr = date.getFullYear();
-            var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-            var month = date.getMonth() + 1;
-            var selected = yr + '-' + month + '-' + day;
-            //alert(selected);
-            $("#vcalender").val(selected);
-            $(this).parents("div#vcal").next("div.kscbook").css('display', 'block');
-        });
-        $('#datetimepicker1,datetimepicker2').daterangepicker({
-            singleDatePicker: true,
-            minDate: new Date(),
-            locale: {
-                format: 'DD/MM/YYYY'
-            }
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#today,#tomorrow,#upcoming,#allorders').DataTable();
-        });
-
-        $('#spc').on('click', function () {
-            $('#profileimage').click();
-        });
-
-
-
-        $('#btnsearch').click(function () {
-            window.localStorage.removeItem("guests1");
-            window.localStorage.removeItem("location1");
-            window.localStorage.removeItem("eventtype1");
-            window.localStorage.removeItem("eventdate1");
-            var location = 'Hyderabad';//$('#loc').val();
-            var eventtype = $('.current').text();
-            var guests = $('#guests').val();
-            var date = $('#datetimepicker1').val();
-            if (location == '') {
-                alert('Enter Location');
-                $('#loc').focus();
-            }
-            else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
-                alert('Select Event Type');
-            }
-            else if (guests == '') {
-                alert('Enter Guests');
-                $('#guests').focus();
-            }
-            else if (date == '') {
-                alert('Select date');
-                $('#datetimepicker1').focus();
-            }
-            else {
-                //eventtype != null && count != null && date != null
-                window.localStorage.setItem("guests1", guests);
-                window.localStorage.setItem("location1", location);
-                window.localStorage.setItem("eventtype1", eventtype);
-                window.localStorage.setItem("eventdate1", date);
-                window.location.href = '/VDashboard/Index?eventtype='+eventtype+'&&count='+guests+'&&date='+date;
-            }
-        });
-
-
-
-        $('#profileimage').change(function () {
-            var ext = $('#profileimage').val().split('.').pop().toLowerCase();
-            if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
-                alert('Invalid File Type');
-            }
-            else {
-                var data = new FormData();
-                var files = $("#profileimage").get(0).files;
-                //alert(files);
-                if (files.length > 0) {
-                    data.append("helpSectionImages", files[0]);
-                }
-                $.ajax({
-                    url: '/VDashboard/UploadProfilePic?email=' + $('#Item1_EmailId').val(),
-                    type: "POST",
-                    processData: false,
-                    contentType: false,
-                    data: data,
-                    success: function (response) {
-                        $('#profilepic1').removeAttr('src');
-                        $('#profilepic1').attr('src', '/ProfilePictures/' + response + '');
-                        //var url = '/vdashboard/profilepic';
-                        //$('#profilepipccontent').empty().load(url);
-                    }
-                });
-            }
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            if ('@ViewBag.service.VenueType' != null && '@ViewBag.service.VenueType' != "") {
-                $('#selectedservice').val('@ViewBag.service.VenueType'); //Assign value to service dropdown here
-            }
-        });
-
-        $('#selectedservice').on('change', function () {
-            //function addsubcategory(val) {
-            var subid = '@Request.QueryString["vsid"]';
-            var subcategory1 = $(this).val();
-            var category = '@ViewBag.Vendor.ServicType';
-            //alert(subcategory1);
-            //alert(subid);
-            $.ajax({
-                url: '/VDashboard/AddSubService?type=' + category + '&&subcategory=' + subcategory1 + '&&subid=' + subid,
-                type: 'post',
-                contentType: 'application-json',
-                success: function (data) {
-                    alert(data);
-                    window.location.reload();
-                },
-                error: function (er) {
-                    alert("System Encountered Internal Error!!! Try Again After Some Time");
-                }
-            });
-            //}
-        });
-
-        $('.grid-item').click(function () {
-            var arr = $('#amenities').val();
-            var arr1 = $('#amenities1').val();
-            var checkbox = $(this).find('input[type=checkbox]');
-            if (checkbox.is(':checked')) {
-                checkbox.removeAttr('checked');
-                if (arr != '')
-                    arr1 = arr + arr1.replace(',' + checkbox.attr('id'), '');
-                else
-                    arr1 = arr1.replace(',' + checkbox.attr('id'), '');
-                $(this).css('background-color', 'white');
-            }
-            else {
-                checkbox.prop('checked', 'checked');
-                if (arr != '')
-                    arr1 = arr + arr1 + ',' + checkbox.attr('id');
-                else
-                    arr1 = arr1 + ',' + checkbox.attr('id');
-                //alert(checkbox.attr('id'));
-                $(this).css('background-color', 'yellow');
-            }
-            $('#amenities1').val(arr1.substr(1));
-            $('#selectedamenities').val(arr.substr(1));
-        });
-
-        $('.btnbook').on('click', function () {
-            var packageid = $(this).prev('input.pkgid').val();
-            window.localStorage.removeItem("vpbook");
-            var bookingdiv = $(this).parents('table.priceslist').parents("div").parents("div.box_grid").find("div.kscbook");
-            var location = 'Hyderabad';
-            var guests = bookingdiv.find('#bookguest').val();
-            var eventtype = bookingdiv.find("#eventtype").find("option:selected").text();
-            var date = $('#vcalender').val();
-            if (location == '') {
-                alert('Enter Location');
-                $('#loc').focus();
-            }
-            else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
-                alert('Select Event Type');
-            }
-            else if (guests == '') {
-                alert('Enter Guests');
-                $('#guests').focus();
-            }
-            else if (date == '') {
-                alert('Select date');
-                $('#datetimepicker1').focus();
-            }
-            else {
-                var select = location + ',' + guests + "," + date + "," + eventtype + "," + packageid;
-                window.localStorage.setItem("vpbook", select);
-                window.location.href = '/ManageUser/Index?select=' + select;
-
-            }
-        });
-
-        //function booknow(val) {
-        //    var packageid = val;
-        //    window.localStorage.removeItem("vpbook");
-
-        //    var location = 'Hyderabad';//$('#loc').val();
-        //    var eventtype = $("#eventtype").find("option:selected").text();
-        //    var guests = $('#bookguest').val();
-        //    var date = $('#vcalender').val();
-        //    if (location == '') {
-        //        alert('Enter Location');
-        //        $('#loc').focus();
-        //    }
-        //    else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
-        //        alert('Select Event Type');
-        //    }
-        //    else if (guests == '') {
-        //        alert('Enter Guests');
-        //        $('#guests').focus();
-        //    }
-        //    else if (date == '') {
-        //        alert('Select date');
-        //        $('#datetimepicker1').focus();
-        //    }
-        //    else {
-        //        var select = location + ',' + guests + "," + date + "," + eventtype + "," + packageid;
-        //        window.localStorage.setItem("vpbook", select);
-        //        window.location.href = '/ManageUser/Index?select=' + select;
-
-        //    }
-        //}
-
-        function updatedetails(val) {
-            var hdname = $('#hdname').val();
-            var Dimentions = $('#Dimentions').val();
-            var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
-            var Maximumcapacity = $('#Maximumcapacity').val();
-            var selectedamenuities = $('#amenities').val();
-            var vsid = $('#vsid').val();
-            var Address = $('#Address').val();
-            var Landmark = $('#Landmark').val();
-            var City = $('#City').val();
-            var ZipCode = $('#ZipCode').val();
-            var Description = $('#mainDescription').val();
-            $.ajax({
-                url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&vsid=' + vsid + '&&hdname=' + hdname + '&&vsid=' + vsid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&vsid=' + vsid + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + val,
-                type: 'post',
-                contentType: 'application-json',
-                success: function (data) {
-                    alert(data);
-                },
-                error: function (er) {
-                    alert("System Encountered Internal Error!!! Try Again After Some Time");
-                }
-            });
-        }
-    </script>
-    <script>
-        $('#pkgsubcat').click(function () {
-            alert('First Add Sub Service');
-        });
-    </script>
-    <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
-    <script type="text/javascript">
-        //function show_hide_row(row)
-        //{
-        // $("#"+row).toggle();
-        //}
-        $('.show_hide_row').click(function () {
-            //$('.hidden_row').toggle();
-            //alert($(this).parent('td').html());
-            // $(this).parents('td').parent('tr').next('tr#hidden_row1').toggle();
-            $(this).next('tr#hidden_row1').toggle();
-        });
-        $('#sendmsg').click(function () {
-            var msg = $('#txtmsg').val();
-            var Email = $('#Querymodel .custemail').text();
-            $.ajax({
-                url: '/VDashboard/Sendmsg',
-                type: 'POST',
-                data: JSON.stringify({ msg: msg, Email: Email }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data == "success" || data == "unique") {
-                        alertify.alert("We will contact you soon");
-                    }
-                    else if (data == "Failed") {
-                        alertify.alert("Something Went Wrong!!! Try Again Later");
-                    }
-                    else {
-                        alertify.alertmsg("error");
-                    }
-                }
-            });
-        })
-
-    </script>
-}
