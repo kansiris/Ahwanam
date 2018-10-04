@@ -29,18 +29,42 @@
 
 <div id="viewpkgitems" class="ui long writemsg modal">
     <div class="header" style="background-color:#573791;color:white">
-        <text class="pkgname"></text> - <text class="pkgtype"></text>
-        <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewmenuitems').modal('hide')">Close</button>
+        <text class="pkgname"></text> @*- <text class="pkgtype"></text>*@
+        <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewpkgitems').modal('hide')">Close</button>
     </div>
     <div class="scrolling content" id="pkgitems">
-        @*<textarea placeholder="Selected Menu items" class="form-control" id="pkgitems" rows="5"></textarea>*@
-        @*<label id="pkgitems"></label>*@
+    </div>
+    <div class="actions">
+        <div class="ui negative button" style="height:40px;">
+            CANCEL
+        </div>
     </div>
 </div>
 
-
+<script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
+<script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
 <script>
     $('.viewpkg').click(function () {
-        $('#viewpkgitems').modal('show');
+        var pkgid = '@ViewBag.pid';
+        var maindiv = '';
+        $.ajax({
+            url: '/ManageUser/GetParticularPackage?pid=' + pkgid,
+            type: 'post',
+            datatype: 'json',
+            data: pkgid,
+            success: function (data) {
+                $('#viewpkgitems .pkgname').text(data.PackageName);
+                var count = data.menuitems.split(',').length;
+                for (var i = 0; i < count; i++) {
+                    var totalitem = data.menuitems.split(',')[i];
+                    var heading = totalitem.split('(')[0];
+                    var items = totalitem.split('(')[1].split(')')[0].split('!');
+                    maindiv+= '<div class="heading">'+heading+'</div><div class="items">'+items+'</div><br/>';
+                }
+                $('#viewpkgitems #pkgitems').append(maindiv);
+                $('#viewpkgitems').modal('show');
+            }
+        });
     });
 </script>

@@ -736,6 +736,23 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult UpdatePackage(Package package)
+        {
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.price1 = package.PackagePrice = package.normaldays;
+            //Add Package Code
+            package.Status = "Active";
+            package.UpdatedDate = updateddate;
+            package.timeslot = package.timeslot.Trim(',');
+            package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = "Package Updated SuccessFully!!!";
+            else msg = "Failed TO Update Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         public JsonResult Sendmsg(string msg, string Email)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

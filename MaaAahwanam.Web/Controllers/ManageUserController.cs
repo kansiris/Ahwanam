@@ -441,5 +441,15 @@ namespace MaaAahwanam.Web.Controllers
             }
             return View("orderdetails");
         }
+
+        public JsonResult GetParticularPackage(string pid)
+        {
+            if (pid != null && pid != "")
+            {
+                SPGETpartpkg_Result package = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                return Json(package,JsonRequestBehavior.AllowGet);
+            }
+            return Json("Failed!!!");
+        }
     }
 }

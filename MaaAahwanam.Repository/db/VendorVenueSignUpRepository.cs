@@ -75,7 +75,7 @@ namespace MaaAahwanam.Repository.db
             package.PackageID = Getpackage.PackageID;
             package.VendorId = Getpackage.VendorId;
             package.VendorSubId = Getpackage.VendorSubId;
-            package.Category = Getpackage.Category;
+            //package.Category = Getpackage.Category;
             package.VendorType = Getpackage.VendorType;
             package.VendorSubType = Getpackage.VendorSubType;
 
