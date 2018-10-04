@@ -16,6 +16,8 @@ namespace MaaAahwanam.Web.Controllers
         OrderService orderService = new OrderService();
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
         ReceivePaymentService rcvpmntservice = new ReceivePaymentService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+        decimal amount;
         // GET: Payments
         public ActionResult Index(string Oid)
         {
@@ -23,6 +25,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
+                ViewBag.userid = id;
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
@@ -39,8 +42,24 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
-                        ViewBag.receivedTrnsDate = DateTime.Now;
+                        ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
+                        var payments = rcvpmntservice.getPayments(Oid).ToList();
+                       
+                        foreach (var reports in payments)
+                        {
+                           string  amount1 = reports.Received_Amount;
+
+                            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+
+                        }
+                        decimal paidamount;
+                        if (amount == '0')
+                        {
+                             paidamount = orderdetails1.FirstOrDefault().TotalPrice;
+                        }
+                        else {  paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount; }
+                        ViewBag.paidamount = paidamount;
                     }
                     else
                     {
@@ -63,9 +82,13 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(Payment payments)
         {
-                payments.Payment_Date = DateTime.Now;
-                payments = rcvpmntservice.SavePayments(payments);
-                return View();
+            payments.User_Type = "VendorUser";
+            payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments = rcvpmntservice.SavePayments(payments);
+             string msg = "Payment saved";
+            return Json("Sucess", JsonRequestBehavior.AllowGet);
+            //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>"); 
         }
     }
 }

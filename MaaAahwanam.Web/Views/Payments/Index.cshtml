@@ -50,9 +50,7 @@
     </style>
 
 }
-@using MaaAahwanam.Web.Custom
-@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-{
+
 <main>
     <div id="error_page">
         <div class="col-md-12">
@@ -67,6 +65,8 @@
                 </div>
 
                 <div class="col-md-10">
+                    <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.userid" />
+                    <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
                     <div class="row">
                         <div class="col-12" style="padding-left:30px">
                             <div class="Payments-title add_top_30">
@@ -132,7 +132,8 @@
                                                     <td class="text-center">₹ @item.PerunitPrice</td>
                                                     <td class="text-center">@item.Quantity</td>
                                                     <td class="text-right">₹ @item.TotalPrice</td>
-                                                    <td class="text-right">₹ @item.TotalPrice</td>
+                                               
+                                                    <td class="text-right">₹ @ViewBag.paidamount</td>
                                                 </tr>
                                             }
                                             @*<tr>
@@ -309,6 +310,14 @@
                         </div>
                         <div class="col-md-4">
                             <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" style="padding: 5px;" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-5" style="padding: 14px;">Received Amount</div>
                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                     <div class="form-group">
@@ -386,7 +395,7 @@
         //var today = now.getFullYear() + "-" + (month) + "-" + (day);
         var today = (day) + "-" + (month) + "-" + now.getFullYear();
         $('.datepicker').val(today);
-       
+
 
         $('input:radio[name="Payment_Type"]').change(function () {
             if($(this).val()=="Cash")
@@ -439,20 +448,22 @@
         {
             alert("Enter Some Amount");
             $('#Current_Balance').val(openamnt);
-           
-            
+
+
         } else {
             var result = parseFloat(openamnt) - parseFloat(rcvamnt);
             $('#Current_Balance').val(result);
         }
-          
+
     });
 
     $("#btnadd").click(function () {
         //var paymenttype = $('#Payment_Type').val();
+            //var orderid =@Request.QueryString["Oid"];
 
         var payments = {
-            
+            OrderId: $("#OrderId").val(),
+            User_Id:$("#User_Id").val(),
             Payment_Type: $("input[name='Payment_Type']:checked").val(),
             Cash_Date: $("#Cash_Date").val(),
             Cash_Card_Holdername: $("#Cash_Card_Holdername").val(),
@@ -474,7 +485,6 @@
             Opening_Balance: $('#Opening_Balance').val(),
             Remarks: $("#Remarks").val()
 
-
         }
         $.ajax({
             url: '/Payments/Index',
@@ -483,6 +493,8 @@
             data: JSON.stringify({ payments: payments }),
             success: function (data) {
                 alert(data);
+                window.location.href = "/VDashboard?c=orders";
+               // window.location.href = "@Url.Action("Index", "Payments")";
             },
             error: function (data) {
                 alert("failed");
@@ -491,8 +503,3 @@
 
     });
 </script>
-         }
-            else
-                        {
-                            Response.Redirect("/Home");
-                        }

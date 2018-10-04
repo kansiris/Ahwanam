@@ -21,13 +21,16 @@ namespace MaaAahwanam.Web.Controllers
         [HttpGet]
         public ActionResult Index(string VendorId)
         {
-            var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            string uid = user.UserId.ToString();
-            string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
-            vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
-            VendorId = vendorMaster.Id.ToString();
-            ViewBag.masterid = VendorId;
-            ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string uid = user.UserId.ToString();
+                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
+                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
+                VendorId = vendorMaster.Id.ToString();
+                ViewBag.masterid = VendorId;
+                ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
+            }
             return View();
         }
 
