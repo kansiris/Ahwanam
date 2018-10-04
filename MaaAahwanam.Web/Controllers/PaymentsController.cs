@@ -49,7 +49,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
-                       
+                        ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
                            string  amount1 = reports.Received_Amount;
