@@ -4,29 +4,29 @@
 }
 
 @section css{
-<link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
+    <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
 
-<!-- BASE CSS -->
-<link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
-<link href="~/newdesignstyles/css/style.css" rel="stylesheet">
-<link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
-<link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
+    <!-- BASE CSS -->
+    <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/newdesignstyles/css/style.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
 
-<!-- SPECIFIC CSS -->
-<link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
+    <!-- SPECIFIC CSS -->
+    <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
 
-<!-- ALTERNATIVE COLORS CSS -->
-<link href="#" id="colors" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- ALTERNATIVE COLORS CSS -->
+    <link href="#" id="colors" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- YOUR CUSTOM CSS -->
-<link href="http://design.maa-aahwanam.com/panagea/css/custom1.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
-<!-- semantic -->
-<link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
-<link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
+    <!-- YOUR CUSTOM CSS -->
+    <link href="http://design.maa-aahwanam.com/panagea/css/custom1.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
+    <!-- semantic -->
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
+    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
 
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <style>
         .Payments-title h2, .invoice-title h3 {
             display: inline-block;
@@ -52,7 +52,7 @@
 }
 
 <main>
-    <div id="error_page">
+    <div id="Payment_page">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-2">
@@ -65,302 +65,356 @@
                 </div>
 
                 <div class="col-md-10">
-                    <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.userid" />
-                    <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
-                    <div class="row">
-                        <div class="col-12" style="padding-left:30px">
-                            <div class="Payments-title add_top_30">
-                                <h3 style="color:black;display:inline">Received Payment</h3>
-                                <h3 class="float-right" style="display:inline">Order # @ViewBag.orderid</h3>
-                            </div>
-                             <hr />
-                            <div class="row">
-                                <div class="col-6">
-                                    <address>
-                                        <strong>Billed To:</strong><br>
-                                        @ViewBag.vendorname<br>
-                                        @ViewBag.vendoraddress
-                                    </address>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <address>
-                                        <strong>Customer Name:</strong><br>
-                                        @ViewBag.username<br>
-                                    </address>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <address>
-                                        <strong>Recived Date:</strong><br>
-                                        @ViewBag.receivedTrnsDate<br><br>
-                                    </address>
-                                </div>
-                                <div class="col-6 total_amount text-right" id="totalprice" name="totalprice">
-                                    <address>
-                                        <strong>Total Price:</strong><br />
-                                        ₹<span>@ViewBag.totalprice</span><br /><br />
-                                    </address>
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </div>
+                    <div id="print-content">
+                        <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.userid" />
+                        <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
+                        <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
 
-                    <div class="row">
-                        <div class="col-lg-12" style="padding-left:30px">
-                            <div class="add_top_15">
-                                <h3><strong>Order summary</strong></h3>
-                                <div class="table-responsive">
-                                    <table class="table table-condensed" style="width:100%;max-width:100%">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Select</strong></td>
-                                                <td><strong>Event Type</strong></td>
-                                                <td class="text-center"><strong>Price</strong></td>
-                                                <td class="text-center"><strong>Quantity</strong></td>
-                                                <td class="text-right"><strong>Total Amount</strong></td>
-                                                <td class="text-right"><strong>Due Amount</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in ViewBag.orderdetails)
-                                            {
-                                                <tr>
-                                                    <td><input type="checkbox" class="chcktbl" value="" /></td>
-                                                    <td>@item.EventType</td>
-                                                    <td class="text-center">₹ @item.PerunitPrice</td>
-                                                    <td class="text-center">@item.Quantity</td>
-                                                    <td class="text-right">₹ @item.TotalPrice</td>
-                                               
-                                                    <td class="text-right">₹ @ViewBag.paidamount</td>
-                                                </tr>
-                                            }
-                                            @*<tr>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                                <td class="thick-line text-right">₹ @ViewBag.totalprice</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="no-line"></td>
-                                                <td class="no-line"></td>
-                                                <td class="no-line text-center"><strong>Shipping</strong></td>
-                                                <td class="no-line text-right">₹ 0</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="no-line"></td>
-                                                <td class="no-line"></td>
-                                                <td class="no-line text-center"><strong>Total</strong></td>
-                                                <td class="no-line text-right">₹ @ViewBag.totalprice</td>
-                                            </tr>*@
-                                        </tbody>
-                                    </table>
+                        <div class="row">
+                            <div class="col-12" style="padding-left:30px">
+                                <div class="Payments-title add_top_30">
+                                    <h3 style="color:black;display:inline">Received Payment</h3>
+                                    <h3 class="float-right" style="display:inline">Order # @ViewBag.orderid</h3>
                                 </div>
                                 <hr />
-                                @*<div class="row PaymentType">
-                                    <h2 class="col-sm-12 col-md-12"><strong>Payments</strong></h2>
-                                </div>*@
-                                @*<a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>*@
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row PaymentType" style="padding-left:30px">
-                        <h3 class="col-md-12"><strong> Payment Mode</strong></h3>
-                        <div class="col-md-8">
-                            <div class="row payment-options">
-                                <fieldset class="form-check" style="display:inline">
-                                    <label class="form-check-label" for="Status1">Cash</label>
-                                    <input type="radio" class="chckcash" id="Type1" name="Payment_Type" value="Cash" checked required />
-                                </fieldset>
-                                <fieldset class="form-check" style="display:inline">
-                                    <label class="form-check-label" for="Status2">Cheque</label>
-                                    <input type="radio" class="chckcheque" id="Type2" name="Payment_Type" value="Cheque" required />
-                                </fieldset>
-                                <fieldset class="form-check" style="display:inline">
-                                    <label class="form-check-label" for="Status2"> Credit / Debit Card</label>
-                                    <input type="radio" class="chckcard" id="Type3" name="Payment_Type" value="Credit/DebitCard" required />
-                                </fieldset>
-                                <fieldset class="form-check" style="display:inline">
-                                    <label class="form-check-label" for="Status2">Bank Transfer</label>
-                                    <input type="radio" class="chckbt" id="Type4" name="Payment_Type" value="Bank Transfer" required />
-                                </fieldset>
-                                <fieldset class="form-check" style="display:inline">
-                                    <label class="form-check-label" for="Status2">Wallet</label>
-                                    <input type="radio" class="chckwallet" id="Type5" name="Payment_Type" value="Wallet" required />
-                                </fieldset>
-                            </div>
-                            <br />
-                            <div class="row Cashdetails" id="cashdetails">
-                                <div class="col-md-4">
-                                    <div class="form-group" style="margin-bottom:0;">
-                                        <label>Date:</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <address>
+                                            <strong>Billed To:</strong><br>
+                                            @ViewBag.vendorname<br>
+                                            @ViewBag.vendoraddress
+                                        </address>
                                     </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Cash_Date" name="Cash_Date" type="text" style="padding: 5px;">
+                                    <div class="col-6 text-right">
+                                        <address>
+                                            <strong>Customer Name:</strong><br>
+                                            @ViewBag.username<br>
+                                        </address>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Cashier Name:</label>
-                                        <input type="text" class="form-control" id="Cash_Card_Holdername" name="Cash_Card_Holdername" style="padding: 5px;">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <address>
+                                            <strong>Recived Date:</strong><br>
+                                            @ViewBag.receivedTrnsDate<br><br>
+                                        </address>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row Chequedetails" id="chequedetails" style="display:none;">
-                                <div class="col-md-4">
-                                    <div class="form-group" style="margin-bottom:0;">
-                                        <label>Date:</label>
+                                    <div class="col-6 total_amount text-right" id="totalprice" name="totalprice">
+                                        <address>
+                                            <strong>Total Price:</strong><br />
+                                            ₹<span>@ViewBag.totalprice</span><br /><br />
+                                        </address>
                                     </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Bank name</label>
-                                        <input type="text" class="form-control" id="Cheque_Bankname" name="Cheque_Bankname" style="padding: 5px;">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Cheque No</label>
-                                        <input type="text" class="form-control" id="Cheque_Number" name="Cheque_Number" style="padding: 5px;">
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div class="row credit/debitcarddetails" id="carddetails" style="display:none;">
-                                <div class="col-md-4">
-                                    <div class="form-group" style="margin-bottom:0;">
-                                        <label>Date:</label>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Card Holder Name</label>
-                                        <input type="text" class="form-control" id="Card_Holder_Name" name="Card_Holder_Name" style="padding: 5px;">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Last 4 digits</label>
-                                        <input type="text" class="form-control" id="Card_Last4digits" name="Card_Last4digits" style="padding: 5px;">
-                                    </div>
                                 </div>
                             </div>
-                            <div class="row Bankdetails" id="bankdetails" style="display:none;">
-                                <div class="col-md-4">
-                                    <div class="form-group" style="margin-bottom:0;">
-                                        <label>Date:</label>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12" style="padding-left:30px">
+                                <div class="add_top_15">
+                                    <h3><strong>Order summary</strong></h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed" style="width:100%;max-width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <td><strong>Select</strong></td>
+                                                    <td><strong>Event Type</strong></td>
+                                                    <td class="text-center"><strong>Price</strong></td>
+                                                    <td class="text-center"><strong>Quantity</strong></td>
+                                                    <td class="text-right"><strong>Total Amount</strong></td>
+                                                    <td class="text-right"><strong>Due Amount</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in ViewBag.orderdetails)
+                                                {
+                                                    <tr>
+                                                        <td><input type="checkbox" class="chcktbl" value="" /></td>
+                                                        <td>@item.EventType</td>
+                                                        <td class="text-center">₹ @item.PerunitPrice</td>
+                                                        <td class="text-center">@item.Quantity</td>
+                                                        <td class="text-right">₹ @item.TotalPrice</td>
+
+                                                        <td class="text-right">₹ @ViewBag.paidamount</td>
+                                                    </tr>
+                                                }
+                                                @*<tr>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                                    <td class="thick-line text-right">₹ @ViewBag.totalprice</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line text-center"><strong>Shipping</strong></td>
+                                    <td class="no-line text-right">₹ 0</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line text-center"><strong>Total</strong></td>
+                                    <td class="no-line text-right">₹ @ViewBag.totalprice</td>
+                                </tr>*@
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                    <hr />
+                                    @*<div class="row PaymentType">
+                        <h2 class="col-sm-12 col-md-12"><strong>Payments</strong></h2>
+                    </div>*@
+                                    @*<a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>*@
+                                </div>
+                            </div>
+                        </div>
+                        @if (ViewBag.payment.Count != 0)
+                        { <div class="row">
+                            <div class="col-lg-12" style="padding-left:30px">
+                                <div class="add_top_15">
+                                    <h3><strong>Payment summary</strong></h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed" style="width:100%;max-width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <td><strong>Select</strong></td>
+                                                    <td><strong>Payment_Id</strong></td>
+                                                    <td class="text-center"><strong>Payment_Type</strong></td>
+                                                    <td class="text-center"><strong>Payment_Date</strong></td>
+                                                    <td class="text-right"><strong>Received_Amount</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in ViewBag.payment)
+                                                {
+                                                    <tr>
+                                                        <td><input type="checkbox" class="chcktbl" value="" /></td>
+                                                        <td>@item.Payment_Id</td>
+                                                        <td class="text-center">₹ @item.Payment_Type</td>
+                                                        <td class="text-center">@item.Payment_Date</td>
+                                                        <td class="text-right">₹ @item.Received_Amount</td>
+
+                                                       
+                                                    </tr>
+                                                }
+                                                @*<tr>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                                    <td class="thick-line text-right">₹ @ViewBag.totalprice</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line text-center"><strong>Shipping</strong></td>
+                                    <td class="no-line text-right">₹ 0</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line text-center"><strong>Total</strong></td>
+                                    <td class="no-line text-right">₹ @ViewBag.totalprice</td>
+                                </tr>*@
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr />
+                                    @*<div class="row PaymentType">
+                        <h2 class="col-sm-12 col-md-12"><strong>Payments</strong></h2>
+                    </div>*@
+                                    @*<a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>*@
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        <div class="row PaymentType" style="padding-left:30px">
+                            <h3 class="col-md-12"><strong> Payment Mode</strong></h3>
+                            <div class="col-md-8">
+                                <div class="row payment-options">
+                                    <fieldset class="form-check" style="display:inline">
+                                        <label class="form-check-label" for="Status1">Cash</label>
+                                        <input type="radio" class="chckcash" id="Type1" name="Payment_Type" value="Cash" checked required />
+                                    </fieldset>
+                                    <fieldset class="form-check" style="display:inline">
+                                        <label class="form-check-label" for="Status2">Cheque</label>
+                                        <input type="radio" class="chckcheque" id="Type2" name="Payment_Type" value="Cheque" required />
+                                    </fieldset>
+                                    <fieldset class="form-check" style="display:inline">
+                                        <label class="form-check-label" for="Status2"> Credit / Debit Card</label>
+                                        <input type="radio" class="chckcard" id="Type3" name="Payment_Type" value="Credit/DebitCard" required />
+                                    </fieldset>
+                                    <fieldset class="form-check" style="display:inline">
+                                        <label class="form-check-label" for="Status2">Bank Transfer</label>
+                                        <input type="radio" class="chckbt" id="Type4" name="Payment_Type" value="Bank Transfer" required />
+                                    </fieldset>
+                                    <fieldset class="form-check" style="display:inline">
+                                        <label class="form-check-label" for="Status2">Wallet</label>
+                                        <input type="radio" class="chckwallet" id="Type5" name="Payment_Type" value="Wallet" required />
+                                    </fieldset>
+                                </div>
+                                <br />
+                                <div class="row Cashdetails" id="cashdetails">
+                                    <div class="col-md-4">
+                                        <div class="form-group" style="margin-bottom:0;">
+                                            <label>Date:</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"></div>
+                                            <input class="form-control datepicker" id="Cash_Date" name="Cash_Date" type="text" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Cashier Name:</label>
+                                            <input type="text" class="form-control" id="Cash_Card_Holdername" name="Cash_Card_Holdername" style="padding: 5px;">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Account Holder Name</label>
-                                        <input type="text" class="form-control" id="Bank_Transfer_Name" name="Bank_Transfer_Name" style="padding: 5px;">
+                                <div class="row Chequedetails" id="chequedetails" style="display:none;">
+                                    <div class="col-md-4">
+                                        <div class="form-group" style="margin-bottom:0;">
+                                            <label>Date:</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"></div>
+                                            <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Bank name</label>
+                                            <input type="text" class="form-control" id="Cheque_Bankname" name="Cheque_Bankname" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Cheque No</label>
+                                            <input type="text" class="form-control" id="Cheque_Number" name="Cheque_Number" style="padding: 5px;">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row credit/debitcarddetails" id="carddetails" style="display:none;">
+                                    <div class="col-md-4">
+                                        <div class="form-group" style="margin-bottom:0;">
+                                            <label>Date:</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"></div>
+                                            <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Card Holder Name</label>
+                                            <input type="text" class="form-control" id="Card_Holder_Name" name="Card_Holder_Name" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Last 4 digits</label>
+                                            <input type="text" class="form-control" id="Card_Last4digits" name="Card_Last4digits" style="padding: 5px;">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Transaction Id</label>
-                                        <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_Transaction_ID" style="padding: 5px;">
+                                <div class="row Bankdetails" id="bankdetails" style="display:none;">
+                                    <div class="col-md-4">
+                                        <div class="form-group" style="margin-bottom:0;">
+                                            <label>Date:</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"></div>
+                                            <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Account Holder Name</label>
+                                            <input type="text" class="form-control" id="Bank_Transfer_Name" name="Bank_Transfer_Name" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transaction Id</label>
+                                            <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_Transaction_ID" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Bank Name</label>
+                                            <input type="text" class="form-control" id="Bank_Transfer_IFSCcode" name="Bank_Transfer_IFSCcode" style="padding: 5px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Branch Name</label>
+                                            <input type="text" class="form-control" id="Bank_Transfer_Branchname" name="Bank_Transfer_Branchname" style="padding: 5px;">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Bank Name</label>
-                                        <input type="text" class="form-control" id="Bank_Transfer_IFSCcode" name="Bank_Transfer_IFSCcode" style="padding: 5px;">
+                                <div class="row Walletdetails" id="walletdetails" style="display:none;">
+                                    <div class="col-md-4">
+                                        <div class="form-group" style="margin-bottom:0;">
+                                            <label>Date:</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"></div>
+                                            <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Branch Name</label>
-                                        <input type="text" class="form-control" id="Bank_Transfer_Branchname" name="Bank_Transfer_Branchname" style="padding: 5px;">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Mobile Number</label>
+                                            <input type="text" class="form-control" id="Wallet_Number" name="Wallet_Number" style="padding: 5px;">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row Walletdetails" id="walletdetails" style="display:none;">
-                                <div class="col-md-4">
-                                    <div class="form-group" style="margin-bottom:0;">
-                                        <label>Date:</label>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon"></div>
-                                        <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Received Amount</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Mobile Number</label>
-                                        <input type="text" class="form-control" id="Wallet_Number" name="Wallet_Number" style="padding: 5px;">
+                                <div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Opening Balance</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Current Balance</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
-                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" style="padding: 5px;" readonly>
-                                    </div>
-                                </div>
+                        <div class="row" style="padding-left:30px">
+                            <div class="col-md-6  remarks margin-top" style="margin-top:-10px">
+                                <label>Remarks</label>
+                                <textarea class="form-control" rows="3" id="Remarks" name="Remarks"></textarea>
                             </div>
-                            <div class="row">
-                                <div class="col-md-5" style="padding: 14px;">Received Amount</div>
-                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5" style="padding: 14px;">Opening Balance</div>
-                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5" style="padding: 14px;">Current Balance</div>
-                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;"   readonly>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-                    <div class="row" style="padding-left:30px">
-                        <div class="col-md-6  remarks margin-top" style="margin-top:-10px">
-                            <label>Remarks</label>
-                            <textarea class="form-control" rows="3" id="Remarks" name="Remarks"></textarea>
                         </div>
                     </div>
-                    <br />
-                    <br/>
+                    <div id="editor"></div>
 
                     <div class="row" style="padding-left:30px" align="center">
                         <div class="col-md-1 goback"><a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a></div>
 
                         <div class="col-md-1 savebtn"><button name="btnsave" id="btnadd" class="btn btn-success">Save</button></div>
                         <div class="col-md-1 emailbtn"><button name="btnemail" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button></div>
-                        <div class="col-md-1 printbtn"><button name="btnprint" class="btn btn-primary"><i class="icon-print"></i>Print</button></div>
-                        <div class="col-md-1 saveasbtn"><button name="btnsaveas" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button></div>
+                        <div class="col-md-1 printbtn"><button name="btnprint" onclick="printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Print</button></div>
+                        <div class="col-md-1 saveasbtn"><button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button></div>
                     </div>
-                    
+
 
                 </div>
 
@@ -370,7 +424,7 @@
     </div>
     <!-- /error_page -->
 </main>
-  <!-- COMMON SCRIPTS -->
+<!-- COMMON SCRIPTS -->
 <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
 <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
 <script src="~/newdesignstyles/Scripts/main.js"></script>
@@ -382,11 +436,12 @@
 <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
 <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
 
 <script>
     $(document).ready(function () {
         var now = new Date();
-        var openamnt = $('#Opening_Balance').val();
+        var openamnt = $('#paidamount').val();
         $('#Current_Balance').val(openamnt);
 
         var day = ("0" + now.getDate()).slice(-2);
@@ -398,16 +453,14 @@
 
 
         $('input:radio[name="Payment_Type"]').change(function () {
-            if($(this).val()=="Cash")
-            {
+            if ($(this).val() == "Cash") {
                 $('#cashdetails').show();
                 $('#chequedetails').hide();
                 $('#carddetails').hide();
                 $('#bankdetails').hide();
                 $('#walletdetails').hide();
             }
-            else if($(this).val()=="Cheque")
-            {
+            else if ($(this).val() == "Cheque") {
                 $('#cashdetails').hide();
                 $('#chequedetails').show();
                 $('#carddetails').hide();
@@ -442,10 +495,11 @@
     $("input[type='text'].open_balance").val(totalAmount);
 
     $('#Received_Amount').keyup(function () {
-        var openamnt = $('#Opening_Balance').val();
-        var rcvamnt =$('#Received_Amount').val();
-        if (rcvamnt == null || rcvamnt == "")
-        {
+        var openamnt = $('#paidamount').val();
+        var rcvamnt = $('#Received_Amount').val();
+        //if (rcvamnt > openamnt) { alert("Enter valid amount"); }
+        //else
+        if (rcvamnt == null || rcvamnt == "") {
             alert("Enter Some Amount");
             $('#Current_Balance').val(openamnt);
 
@@ -456,6 +510,33 @@
         }
 
     });
+
+    function printDiv(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
+
+        var doc = new jsPDF();
+    var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+            return true;
+    }
+};
+
+    $('#savepdf').click(function () {
+        doc.fromHTML($('#print-content').html(), 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+        doc.save('sample-file.pdf');
+    });
+
+    // This code is collected but useful, click below to jsfiddle link.
+
 
     $("#btnadd").click(function () {
         //var paymenttype = $('#Payment_Type').val();
