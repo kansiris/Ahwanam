@@ -45,7 +45,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
-                       
+                        ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
                            string  amount1 = reports.Received_Amount;
@@ -87,7 +87,7 @@ namespace MaaAahwanam.Web.Controllers
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpmntservice.SavePayments(payments);
              string msg = "Payment saved";
-            return Json("Sucess", JsonRequestBehavior.AllowGet);
+            return Json(msg, JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>"); 
         }
     }
