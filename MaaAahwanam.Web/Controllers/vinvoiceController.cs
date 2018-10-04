@@ -52,7 +52,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
                     }
-                    ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
+                    //ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
                     ViewBag.orderid = oid;
                     
                 }
