@@ -16,5 +16,10 @@ namespace MaaAahwanam.Service
             payments = rcvpmntrepo.SavePayment(payments);
             return payments;
         }
+        public List<Payment> getPayments(string orderid)
+        {
+          var  payments = rcvpmntrepo.getPayments(orderid);
+            return payments;
+        }
     }
 }

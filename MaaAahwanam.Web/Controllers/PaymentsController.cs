@@ -17,7 +17,7 @@ namespace MaaAahwanam.Web.Controllers
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
         ReceivePaymentService rcvpmntservice = new ReceivePaymentService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-
+        decimal amount;
         // GET: Payments
         public ActionResult Index(string Oid)
         {
@@ -44,6 +44,22 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdetails = orderdetails1;
                         ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
+                        var payments = rcvpmntservice.getPayments(Oid).ToList();
+                       
+                        foreach (var reports in payments)
+                        {
+                           string  amount1 = reports.Received_Amount;
+
+                            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+
+                        }
+                        decimal paidamount;
+                        if (amount == '0')
+                        {
+                             paidamount = orderdetails1.FirstOrDefault().TotalPrice;
+                        }
+                        else {  paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount; }
+                        ViewBag.paidamount = paidamount;
                     }
                     else
                     {
