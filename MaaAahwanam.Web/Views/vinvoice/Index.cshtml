@@ -34,145 +34,182 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-2">
-                    
-                        <div class="card" id="profilepipccontent">
-                            @{Html.RenderAction("profilepic", "VDashboard");}
-                        </div>
-                        @{Html.RenderAction("sidebar", "VDashboard"); }
-                    
-                </div>
 
+                    <div class="card" id="profilepipccontent">
+                        @{Html.RenderAction("profilepic", "VDashboard");}
+                    </div>
+                    @{Html.RenderAction("sidebar", "VDashboard"); }
+
+                </div>
                 <div class="col-md-10">
-                    <div class="row">
-                        <div class="col-12" style="padding-left:30px">
-                            <div class="invoice-title add_top_30">
-                                <h3 style="color:black">Invoice</h3><h3 class="float-right">Order # @ViewBag.orderid</h3>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-6">
-                                    <address>
-                                        <strong>Billed To:</strong><br>
-                                        @ViewBag.vendorname<br>
-                                        @ViewBag.vendoraddress
-                                    </address>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <address>
-                                        <strong>Shipped To:</strong><br>
-                                        @ViewBag.username<br>
-                                    </address>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <address>
-                                        <strong>Booked Date:</strong><br>
-                                        @ViewBag.bookeddate<br><br>
-                                    </address>
-                                    <address>
-                                        <strong>Payment Method:</strong><br>
-                                        Visa ending **** 4242<br>
-                                        @*jsmith@email.com*@
-                                    </address>
-                                    
-                                </div>
-                                <div class="col-6 text-right">
-                                    <address>
-                                        <strong>Order Date:</strong><br>
-                                       @ViewBag.orderdate<br><br>
-                                    </address>
+                    <div id="print-content">
 
-                                    
+                        <div class="row">
+                            <div class="col-12" style="padding-left:30px">
+                                <div class="invoice-title add_top_30">
+                                    <h3 style="color:black">Invoice</h3><h3 class="float-right">Order # @ViewBag.orderid</h3>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <address>
+                                            <strong>Billed To:</strong><br>
+                                            @ViewBag.vendorname<br>
+                                            @ViewBag.vendoraddress
+                                        </address>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <address>
+                                            <strong>Shipped To:</strong><br>
+                                            @ViewBag.username<br>
+                                        </address>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <address>
+                                            <strong>Booked Date:</strong><br>
+                                            @ViewBag.bookeddate<br><br>
+                                        </address>
+                                        <address>
+                                            <strong>Payment Method:</strong><br>
+                                            Visa ending **** 4242<br>
+                                            @*jsmith@email.com*@
+                                        </address>
+
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <address>
+                                            <strong>Order Date:</strong><br>
+                                            @ViewBag.orderdate<br><br>
+                                        </address>
+
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-lg-12" style="padding-left:30px">
-                            <div class="add_top_15">
-                                <h3><strong>Order summary</strong></h3>
-                                <div class="table-responsive">
-                                    <table class="table table-condensed" style="width:100%;max-width:100%">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Package Name</strong></td>
-                                                <td class="text-center"><strong>Price</strong></td>
-                                                <td class="text-center"><strong>Quantity</strong></td>
-                                                <td class="text-right"><strong>Total</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in ViewBag.orderdetails)
-                                            {
+                        <div class="row">
+                            <div class="col-lg-12" style="padding-left:30px">
+                                <div class="add_top_15">
+                                    <h3><strong>Order summary</strong></h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed" style="width:100%;max-width:100%">
+                                            <thead>
                                                 <tr>
-                                                    <td>@item.EventType</td>
-                                                    <td class="text-center">₹ @item.PerunitPrice</td>
-                                                    <td class="text-center">@item.Quantity</td>
-                                                    <td class="text-right">₹ @item.TotalPrice</td>
+                                                    <td><strong>Package Name</strong></td>
+                                                    <td class="text-center"><strong>Price</strong></td>
+                                                    <td class="text-center"><strong>Quantity</strong></td>
+                                                    <td class="text-right"><strong>Total</strong></td>
                                                 </tr>
-                                            }
-                                            <tr>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line"></td>
-                                                <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                                <td class="thick-line text-right">₹ @ViewBag.totalprice</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="no-line"></td>
-                                                <td class="no-line"></td>
-                                                <td class="no-line text-center"><strong>GST</strong></td>
-                                                <td class="no-line text-right">₹ 0</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="no-line"></td>
-                                                <td class="no-line"></td>
-                                                <td class="no-line text-center"><strong>Total</strong></td>
-                                                <td class="no-line text-right">₹ @ViewBag.totalprice</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in ViewBag.orderdetails)
+                                                {
+                                                    <tr>
+                                                        <td>@item.EventType</td>
+                                                        <td class="text-center">₹ @item.PerunitPrice</td>
+                                                        <td class="text-center">@item.Quantity</td>
+                                                        <td class="text-right">₹ @item.TotalPrice</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td class="thick-line"></td>
+                                                    <td class="thick-line"></td>
+                                                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                                                    <td class="thick-line text-right">₹ @ViewBag.totalprice</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="no-line"></td>
+                                                    <td class="no-line"></td>
+                                                    <td class="no-line text-center"><strong>GST</strong></td>
+                                                    <td class="no-line text-right">₹ 0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="no-line"></td>
+                                                    <td class="no-line"></td>
+                                                    <td class="no-line text-center"><strong>Total</strong></td>
+                                                    <td class="no-line text-right">₹ @ViewBag.totalprice</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @*<hr />
+                                        <div class="paymnttable">
+                                            <table class="table table-condensed" style="width:100%;max-width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <td><strong>Payment Id</strong></td>
+                                                        <td class="text-center"><strong>Payment Type</strong></td>
+                                                        <td class="text-center"><strong>Received Ammount</strong></td>
+                                                        <td class="text-right"><strong>Payment Date</strong></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in ViewBag.paymentlist)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Payment_Id</td>
+                                                            <td class="text-center">@item.Payment_Type</td>
+                                                            <td class="text-center">@item.Received_Amount</td>
+                                                            <td class="text-right">@item.Payment_Date</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                        <hr />*@
+                                    <a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>
+                                    @*<button type="button" class="btn btn-primary"><i class="icon-download"></i>Save</button>*@
+                                    <button type="button" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Pay Now</button>
+                                    <button name="btnprint" onclick="printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Print</button>
+                                    <button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>
+
                                 </div>
-                                @*<hr />
-                                <div class="paymnttable">
-                                    <table class="table table-condensed" style="width:100%;max-width:100%">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Payment Id</strong></td>
-                                                <td class="text-center"><strong>Payment Type</strong></td>
-                                                <td class="text-center"><strong>Received Ammount</strong></td>
-                                                <td class="text-right"><strong>Payment Date</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in ViewBag.paymentlist)
-                                            {
-                                                <tr>
-                                                    <td>@item.Payment_Id</td>
-                                                    <td class="text-center">@item.Payment_Type</td>
-                                                    <td class="text-center">@item.Received_Amount</td>
-                                                    <td class="text-right">@item.Payment_Date</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                     </table>
-                                  </div>
-                                <hr />*@
-                                <a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>
-                                <button type="button" class="btn btn-primary"><i class="icon-download"></i>Save</button>
-                                <button type="button" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
-                                <button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Pay Now</button>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- /container -->
             </div>
         </div>
     </div>
     <!-- /error_page -->
 </main>
+<script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+
+<script>
+    function printDiv(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
+
+    var doc = new jsPDF();
+    var specialElementHandlers = {
+        '#editor': function (element, renderer) {
+            return true;
+        }
+    };
+
+    $('#savepdf').click(function () {
+        doc.fromHTML($('#print-content').html(), 15, 15, {
+            'width': 170,
+            'elementHandlers': specialElementHandlers
+        });
+        doc.save('sample-file.pdf');
+    });
+
+    // This code is collected but useful, click below to jsfiddle link.
+
+
+
+</script>
