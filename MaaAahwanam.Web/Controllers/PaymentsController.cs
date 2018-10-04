@@ -16,6 +16,8 @@ namespace MaaAahwanam.Web.Controllers
         OrderService orderService = new OrderService();
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
         ReceivePaymentService rcvpmntservice = new ReceivePaymentService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
         // GET: Payments
         public ActionResult Index(string Oid)
         {
@@ -39,7 +41,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
-                        ViewBag.receivedTrnsDate = DateTime.Now;
+                        ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                     }
                     else
@@ -61,11 +63,13 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(Payment payments)
+        public JsonResult Index(Payment payments)
         {
-                payments.Payment_Date = DateTime.Now;
-                payments = rcvpmntservice.SavePayments(payments);
-                return View();
+            payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments = rcvpmntservice.SavePayments(payments);
+           // string msg = "Payment saved";
+            return Json("Sucess", JsonRequestBehavior.AllowGet);
         }
     }
 }
