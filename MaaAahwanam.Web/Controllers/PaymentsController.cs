@@ -25,6 +25,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
+                ViewBag.userid = id;
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
