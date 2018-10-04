@@ -119,7 +119,7 @@ namespace MaaAahwanam.Web.Controllers
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", name);
-                readFile = readFile.Replace("[orderid]", OrderId);
+                //readFile = readFile.Replace("[orderid]", OrderId);
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
