@@ -25,6 +25,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
+                ViewBag.userid = id;
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
@@ -63,13 +64,15 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult Index(Payment payments)
+        public ActionResult Index(Payment payments)
         {
+            payments.User_Type = "VendorUser";
             payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpmntservice.SavePayments(payments);
-           // string msg = "Payment saved";
+             string msg = "Payment saved";
             return Json("Sucess", JsonRequestBehavior.AllowGet);
+            //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>"); 
         }
     }
 }
