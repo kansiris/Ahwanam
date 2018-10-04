@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MaaAahwanam.Models;
+using MaaAahwanam.Utility;
+using System.IO;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -15,6 +17,7 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
+        VendorDashBoardService mnguserservice = new VendorDashBoardService();
         ReceivePaymentService rcvpmntservice = new ReceivePaymentService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         decimal amount;
@@ -27,6 +30,7 @@ namespace MaaAahwanam.Web.Controllers
                 string id = user.UserId.ToString();
                 ViewBag.userid = id;
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
+                ViewBag.vemail = email;
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
                 if (Oid != null && Oid != "")
@@ -86,9 +90,45 @@ namespace MaaAahwanam.Web.Controllers
             payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpmntservice.SavePayments(payments);
-             string msg = "Payment saved";
+             //string msg = "Payment saved";
             return Json("Sucess", JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>"); 
         }
-    }
+
+        public ActionResult Email(string uid,string oid)
+        {
+            HomeController home = new HomeController();
+            int userid = Convert.ToInt32(uid);
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string id = user.UserId.ToString();
+                ViewBag.userid = id;
+                string email = userLoginDetailsService.Getusername(long.Parse(id));
+                ViewBag.vemail = email;
+                Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
+                List<Payment> payment = rcvpmntservice.getPayments(oid);
+                var userlogdetails = mnguserservice.getuserbyid(userid);
+                string txtto = userlogdetails.email;
+
+                string name = userlogdetails.firstname;
+                name = home.Capitalise(name);
+                //string OrderId = Convert.ToString(order.OrderId);
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                readFile = readFile.Replace("[orderid]", OrderId);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Thanks for your order";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+            }
+
+              return View();
+
+            }
+        }
 }
