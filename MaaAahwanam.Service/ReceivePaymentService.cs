@@ -16,5 +16,12 @@ namespace MaaAahwanam.Service
             payments = rcvpmntrepo.SavePayment(payments);
             return payments;
         }
+
+        public List<Payment> Getpmntdetails(string oid)
+        {
+            List<Payment> payments = new List<Payment>();
+           payments= rcvpmntrepo.GetPaydetails(oid);
+            return payments;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         OrderService orderService = new OrderService();
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
+        ReceivePaymentService rcvpaymentservice = new ReceivePaymentService();
         // GET: vinvoice
         public ActionResult Index(string oid)
         {
@@ -51,6 +52,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
                     }
+                    ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
                     ViewBag.orderid = oid;
                     
                 }
