@@ -28,6 +28,8 @@ namespace MaaAahwanam.Web.Controllers
         // GET: ManageUser
         public ActionResult Index(string VendorId,string select)
         {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string uid = user.UserId.ToString();
                 string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
@@ -35,28 +37,30 @@ namespace MaaAahwanam.Web.Controllers
                 VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 ViewBag.Userlist = mnguserservice.getuser(VendorId);
-            if (select != null)
-            {
-                var select1 = select.Split(',');
+                if (select != null)
+                {
+                    var select1 = select.Split(',');
 
-                ViewBag.loc = select1[0];
-                var guests = select1[1];
-                DateTime date = Convert.ToDateTime(select1[2]);
-                string date1 = date.ToString("dd-MM-yyyy");
-                ViewBag.date = date1;
-                ViewBag.eventtype = select1[3];
-                var pid = select1[4];
-                var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
-                string price = "";
-                if (pkgs.PackagePrice == null)
-                { price = Convert.ToString(pkgs.price1); }
-                else { price = Convert.ToString(pkgs.PackagePrice); }
+                    ViewBag.loc = select1[0];
+                    var guests = select1[1];
+                    DateTime date = Convert.ToDateTime(select1[2]);
+                    string date1 = date.ToString("dd-MM-yyyy");
+                    ViewBag.date = date1;
+                    ViewBag.eventtype = select1[3];
+                    var pid = select1[4];
+                    var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                    string price = "";
+                    if (pkgs.PackagePrice == null)
+                    { price = Convert.ToString(pkgs.price1); }
+                    else { price = Convert.ToString(pkgs.PackagePrice); }
 
-                var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
-                ViewBag.guest = guests;
-                ViewBag.total = total;
-                ViewBag.price = price;
-                ViewBag.pid = pid;
+                    var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
+                    ViewBag.guest = guests;
+                    ViewBag.total = total;
+                    ViewBag.price = price;
+                    ViewBag.pid = pid;
+                    ViewBag.pname = pkgs.PackageName;
+                }
             }
                 return View();
         }
@@ -236,9 +240,10 @@ namespace MaaAahwanam.Web.Controllers
                 string txtmessage1 = readfile1;
                 string subj1 = "order has been placed";
                 emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
-            
-        
-                return Json("success", JsonRequestBehavior.AllowGet);
+            string msg = OrderId;
+
+
+                return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -399,9 +404,9 @@ namespace MaaAahwanam.Web.Controllers
             string txtmessage1 = readfile1;
             string subj1 = "order has been placed";
             emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+            string msg = OrderId;
 
-
-            return Json("success", JsonRequestBehavior.AllowGet);
+            return Json(msg, JsonRequestBehavior.AllowGet);
         }
     }
 }
