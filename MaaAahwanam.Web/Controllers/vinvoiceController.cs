@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -96,7 +97,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Email(string oid)
         {
             HomeController home = new HomeController();
-           
+          
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -112,7 +113,16 @@ namespace MaaAahwanam.Web.Controllers
                 string name = userlogdetails.firstname;
                 name = home.Capitalise(name);
                 //string OrderId = Convert.ToString(order.OrderId);
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                StringBuilder cds = new StringBuilder();
+                cds.Append("<table style='border:1px black solid;'><tbody>");
+                cds.Append("<tr><td> Payment Id</td><td> Payment Type </td><td> Payment Date </td><td> Received Amount </td></tr>");
+                foreach (var item in payment)
+                {
+                    cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                }
+                cds.Append("</tbody></table>");
+                //string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                string url = cds.ToString();
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
@@ -123,9 +133,10 @@ namespace MaaAahwanam.Web.Controllers
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                 emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+                
             }
 
-            return View();
+            return Json("success", JsonRequestBehavior.AllowGet);
 
         }
     }
