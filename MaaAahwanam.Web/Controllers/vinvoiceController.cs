@@ -1,8 +1,10 @@
 ﻿using MaaAahwanam.Models;
 using MaaAahwanam.Service;
+using MaaAahwanam.Utility;
 using MaaAahwanam.Web.Custom;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +18,8 @@ namespace MaaAahwanam.Web.Controllers
         OrderService orderService = new OrderService();
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
         ReceivePaymentService rcvpaymentservice = new ReceivePaymentService();
+        VendorDashBoardService mnguserservice = new VendorDashBoardService();
+
         // GET: vinvoice
         public ActionResult Index(string oid)
         {
@@ -58,6 +62,42 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return View();
+        }
+
+        public ActionResult Email(string oid)
+        {
+            HomeController home = new HomeController();
+           
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string vid = user.UserId.ToString();
+                ViewBag.userid = vid;
+                string email = userLoginDetailsService.Getusername(long.Parse(vid));
+                ViewBag.vemail = email;
+                Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
+                List<Payment> payment = rcvpaymentservice.getPayments(oid);
+                var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(vid));
+                string txtto = userlogdetails.email;
+
+                string name = userlogdetails.firstname;
+                name = home.Capitalise(name);
+                //string OrderId = Convert.ToString(order.OrderId);
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                //readFile = readFile.Replace("[orderid]", OrderId);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Thanks for your order";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+            }
+
+            return View();
+
         }
     }
 }

@@ -162,7 +162,7 @@
                                         <hr />*@
                                     <a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>
                                     @*<button type="button" class="btn btn-primary"><i class="icon-download"></i>Save</button>*@
-                                    <button type="button" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
+                                    <button type="button" onclick="email(@ViewBag.orderid)"class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
                                     <button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Pay Now</button>
                                     <button name="btnprint" onclick="printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Print</button>
                                     <button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>
@@ -210,6 +210,24 @@
 
     // This code is collected but useful, click below to jsfiddle link.
 
+    function email(val) {
+        $.ajax({
+            url: '/vinvoice/Email?oid=' + val ,
+            type: 'POST',
+            contentType: 'application/json',
+
+            success: function (result) {
+                if (result == "success") {
+                    alert("Email sent Successfully");
+                } else {
+                    alert("Error Occurred in sending email");
+                }
+
+
+
+            }
+        })
+        alert(val);}
 
 
 </script>
