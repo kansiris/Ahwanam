@@ -16,7 +16,6 @@ namespace MaaAahwanam.Repository
         public long OrderId { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public string Status { get; set; }
-        public decimal TotalPrice { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
         public long id { get; set; }
@@ -30,6 +29,12 @@ namespace MaaAahwanam.Repository
         public decimal PerunitPrice { get; set; }
         public int Quantity { get; set; }
         public string phoneno { get; set; }
+        public string PackageName { get; set; }
+        public long PackageID { get; set; }
+        public string Invoiced_Amount { get; set; }
+        public decimal TotalPrice { get; set; }
+        public Nullable<int> SUM_AP { get; set; }
+        public Nullable<decimal> Due { get; set; }
         public string username { get; set; }
         public string Isdeal { get; set; }
         public long vid { get; set; }
