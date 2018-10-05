@@ -393,9 +393,6 @@
           <FunctionImport Name="SPGETNpkg" ReturnType="Collection(MaaAahwanamModel.SPGETNpkg_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="SPGETpartpkg" ReturnType="Collection(MaaAahwanamModel.SPGETpartpkg_Result)">
-          <Parameter Name="Id" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="sp_LeastBidRecord" ReturnType="Collection(MaaAahwanamModel.sp_LeastBidRecord_Result)">
           <Parameter Name="RequestId" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -409,6 +406,9 @@
           <FunctionImport Name="GetPhotographers" ReturnType="Collection(MaaAahwanamModel.GetPhotographers_Result)" />
           <FunctionImport Name="packagevendordates" ReturnType="Collection(MaaAahwanamModel.packagevendordates_Result)" />
           <FunctionImport Name="sp_vendoruserorddisplay" ReturnType="Collection(MaaAahwanamModel.sp_vendoruserorddisplay_Result)" />
+          <FunctionImport Name="SPGETpartpkg" ReturnType="Collection(MaaAahwanamModel.SPGETpartpkg_Result)">
+            <Parameter Name="Id" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -1284,32 +1284,6 @@
           <Property Type="String" Name="price7" Nullable="true" />
           <Property Type="String" Name="price8" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="SPGETpartpkg_Result">
-          <Property Type="Int64" Name="PackageID" Nullable="false" />
-          <Property Type="Int64" Name="VendorId" Nullable="false" />
-          <Property Type="Int64" Name="VendorSubId" Nullable="false" />
-          <Property Type="String" Name="VendorType" Nullable="true" />
-          <Property Type="String" Name="VendorSubType" Nullable="true" />
-          <Property Type="String" Name="Category" Nullable="true" />
-          <Property Type="String" Name="PackageName" Nullable="true" />
-          <Property Type="String" Name="PackagePrice" Nullable="true" />
-          <Property Type="String" Name="PackageDescription" Nullable="true" />
-          <Property Type="String" Name="Status" Nullable="true" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="MinPrice" Nullable="true" />
-          <Property Type="String" Name="MaxPrice" Nullable="true" />
-          <Property Type="String" Name="MinGuests" Nullable="true" />
-          <Property Type="String" Name="MaxGuests" Nullable="true" />
-          <Property Type="String" Name="images" Nullable="true" />
-          <Property Type="String" Name="price1" Nullable="true" />
-          <Property Type="String" Name="price2" Nullable="true" />
-          <Property Type="String" Name="price3" Nullable="true" />
-          <Property Type="String" Name="price4" Nullable="true" />
-          <Property Type="String" Name="price5" Nullable="true" />
-          <Property Type="String" Name="price6" Nullable="true" />
-          <Property Type="String" Name="price7" Nullable="true" />
-          <Property Type="String" Name="price8" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_LeastBidRecord_Result">
           <Property Type="Int64" Name="ResponseId" Nullable="false" />
           <Property Type="String" Name="EventName" Nullable="true" />
@@ -1524,6 +1498,38 @@
           <Property Type="String" Name="Landmark" Nullable="true" />
           <Property Type="String" Name="ContactNumber" Nullable="true" />
           <Property Type="String" Name="ServicType" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SPGETpartpkg_Result">
+          <Property Type="Int64" Name="PackageID" Nullable="false" />
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="Int64" Name="VendorSubId" Nullable="false" />
+          <Property Type="String" Name="VendorType" Nullable="true" />
+          <Property Type="String" Name="VendorSubType" Nullable="true" />
+          <Property Type="String" Name="Category" Nullable="true" />
+          <Property Type="String" Name="PackageName" Nullable="true" />
+          <Property Type="String" Name="PackagePrice" Nullable="true" />
+          <Property Type="String" Name="PackageDescription" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MinPrice" Nullable="true" />
+          <Property Type="String" Name="MaxPrice" Nullable="true" />
+          <Property Type="String" Name="MinGuests" Nullable="true" />
+          <Property Type="String" Name="MaxGuests" Nullable="true" />
+          <Property Type="String" Name="images" Nullable="true" />
+          <Property Type="String" Name="price1" Nullable="true" />
+          <Property Type="String" Name="price2" Nullable="true" />
+          <Property Type="String" Name="price3" Nullable="true" />
+          <Property Type="String" Name="price4" Nullable="true" />
+          <Property Type="String" Name="price5" Nullable="true" />
+          <Property Type="String" Name="price6" Nullable="true" />
+          <Property Type="String" Name="price7" Nullable="true" />
+          <Property Type="String" Name="price8" Nullable="true" />
+          <Property Type="String" Name="peakdays" Nullable="true" />
+          <Property Type="String" Name="normaldays" Nullable="true" />
+          <Property Type="String" Name="holidays" Nullable="true" />
+          <Property Type="String" Name="choicedays" Nullable="true" />
+          <Property Type="String" Name="timeslot" Nullable="true" />
+          <Property Type="String" Name="menuitems" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2626,36 +2632,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPGETpartpkg" FunctionName="MaaAahwanamModel.Store.SPGETpartpkg">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.SPGETpartpkg_Result">
-                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="VendorSubId" ColumnName="VendorSubId" />
-                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
-                <ScalarProperty Name="VendorSubType" ColumnName="VendorSubType" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
-                <ScalarProperty Name="PackagePrice" ColumnName="PackagePrice" />
-                <ScalarProperty Name="PackageDescription" ColumnName="PackageDescription" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
-                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
-                <ScalarProperty Name="MinGuests" ColumnName="MinGuests" />
-                <ScalarProperty Name="MaxGuests" ColumnName="MaxGuests" />
-                <ScalarProperty Name="images" ColumnName="images" />
-                <ScalarProperty Name="price1" ColumnName="price1" />
-                <ScalarProperty Name="price2" ColumnName="price2" />
-                <ScalarProperty Name="price3" ColumnName="price3" />
-                <ScalarProperty Name="price4" ColumnName="price4" />
-                <ScalarProperty Name="price5" ColumnName="price5" />
-                <ScalarProperty Name="price6" ColumnName="price6" />
-                <ScalarProperty Name="price7" ColumnName="price7" />
-                <ScalarProperty Name="price8" ColumnName="price8" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_LeastBidRecord" FunctionName="MaaAahwanamModel.Store.sp_LeastBidRecord">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_LeastBidRecord_Result">
@@ -2896,6 +2872,42 @@
                 <ScalarProperty Name="Landmark" ColumnName="Landmark" />
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGETpartpkg" FunctionName="MaaAahwanamModel.Store.SPGETpartpkg">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.SPGETpartpkg_Result">
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="VendorSubId" ColumnName="VendorSubId" />
+                <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+                <ScalarProperty Name="VendorSubType" ColumnName="VendorSubType" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="PackagePrice" ColumnName="PackagePrice" />
+                <ScalarProperty Name="PackageDescription" ColumnName="PackageDescription" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="MinGuests" ColumnName="MinGuests" />
+                <ScalarProperty Name="MaxGuests" ColumnName="MaxGuests" />
+                <ScalarProperty Name="images" ColumnName="images" />
+                <ScalarProperty Name="price1" ColumnName="price1" />
+                <ScalarProperty Name="price2" ColumnName="price2" />
+                <ScalarProperty Name="price3" ColumnName="price3" />
+                <ScalarProperty Name="price4" ColumnName="price4" />
+                <ScalarProperty Name="price5" ColumnName="price5" />
+                <ScalarProperty Name="price6" ColumnName="price6" />
+                <ScalarProperty Name="price7" ColumnName="price7" />
+                <ScalarProperty Name="price8" ColumnName="price8" />
+                <ScalarProperty Name="peakdays" ColumnName="peakdays" />
+                <ScalarProperty Name="normaldays" ColumnName="normaldays" />
+                <ScalarProperty Name="holidays" ColumnName="holidays" />
+                <ScalarProperty Name="choicedays" ColumnName="choicedays" />
+                <ScalarProperty Name="timeslot" ColumnName="timeslot" />
+                <ScalarProperty Name="menuitems" ColumnName="menuitems" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
