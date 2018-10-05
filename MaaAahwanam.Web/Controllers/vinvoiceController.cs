@@ -19,6 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
         ReceivePaymentService rcvpaymentservice = new ReceivePaymentService();
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         decimal amount;
         // GET: vinvoice
         public ActionResult Index(string oid)
@@ -78,6 +79,18 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return View();
+        }
+        [HttpPost]
+        public ActionResult Index(Payment payments)
+        {
+            payments.User_Type = "VendorUser";
+            payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments = rcvpaymentservice.SavePayments(payments);
+
+            //return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
+            return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
+
         }
 
         public ActionResult Email(string oid)
