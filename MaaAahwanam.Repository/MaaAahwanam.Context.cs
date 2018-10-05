@@ -628,15 +628,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETNpkg_Result>("SPGETNpkg", idParameter);
         }
     
-        public virtual ObjectResult<SPGETpartpkg_Result> SPGETpartpkg(Nullable<long> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETpartpkg_Result>("SPGETpartpkg", idParameter);
-        }
-    
         public virtual ObjectResult<sp_LeastBidRecord_Result> sp_LeastBidRecord(Nullable<long> requestId)
         {
             var requestIdParameter = requestId.HasValue ?
@@ -682,6 +673,15 @@ namespace MaaAahwanam.Repository
         public virtual ObjectResult<sp_vendoruserorddisplay_Result> sp_vendoruserorddisplay()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vendoruserorddisplay_Result>("sp_vendoruserorddisplay");
+        }
+    
+        public virtual ObjectResult<SPGETpartpkg_Result> SPGETpartpkg(Nullable<long> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETpartpkg_Result>("SPGETpartpkg", idParameter);
         }
     }
 }
