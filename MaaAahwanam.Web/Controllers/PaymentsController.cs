@@ -141,7 +141,7 @@ namespace MaaAahwanam.Web.Controllers
                 emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
             }
 
-              return Json("Email sending is completed", JsonRequestBehavior.AllowGet);
+              return Json("Email sent Successfully", JsonRequestBehavior.AllowGet);
 
             }
         }
