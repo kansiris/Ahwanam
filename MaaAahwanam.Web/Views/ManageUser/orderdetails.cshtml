@@ -1,7 +1,7 @@
 ﻿<style>
     #pkgmodal, #Querymodel, #viewmenuitems {
-            position: relative;
-        }
+        position: relative;
+    }
 </style>
 
 @if (ViewBag.loc != null)
@@ -55,14 +55,19 @@
             data: pkgid,
             success: function (data) {
                 $('#viewpkgitems .pkgname').text(data.PackageName);
-                var count = data.menuitems.split(',').length;
-                for (var i = 0; i < count; i++) {
-                    var totalitem = data.menuitems.split(',')[i];
-                    var heading = totalitem.split('(')[0];
-                    var items = totalitem.split('(')[1].split(')')[0].split('!');
-                    maindiv+= '<div class="heading">'+heading+'</div><div class="items">'+items+'</div><br/>';
+                if (data.menuitems != '' && data.menuitems != null) {
+                    var count = data.menuitems.split(',').length;
+                    for (var i = 0; i < count; i++) {
+                        var totalitem = data.menuitems.split(',')[i];
+                        var heading = totalitem.split('(')[0];
+                        var items = totalitem.split('(')[1].split(')')[0].split('!');
+                        maindiv += '<div class="heading">' + heading + '</div><div class="items">' + items + '</div><br/>';
+                    }
                 }
-                $('#viewpkgitems #pkgitems').append(maindiv);
+                else {
+                    maindiv = "No Menu Items";
+                }
+                $('#viewpkgitems #pkgitems').empty().append(maindiv);
                 $('#viewpkgitems').modal('show');
             }
         });
