@@ -77,7 +77,22 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
-                        
+                        var payments = rcvpmntservice.getPayments(Oid).ToList();
+                        ViewBag.payment = payments;
+                        foreach (var reports in payments)
+                        {
+                            string amount1 = reports.Received_Amount;
+
+                            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+
+                        }
+                        decimal paidamount;
+                        if (amount == '0')
+                        {
+                            paidamount = orderdetails.FirstOrDefault().TotalPrice;
+                        }
+                        else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; }
+                        ViewBag.paidamount = paidamount;
 
                     }
                     ViewBag.orderid = Oid;
