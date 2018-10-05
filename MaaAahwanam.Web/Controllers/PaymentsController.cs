@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using MaaAahwanam.Models;
 using MaaAahwanam.Utility;
 using System.IO;
+using System.Text;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -39,6 +40,7 @@ namespace MaaAahwanam.Web.Controllers
                     if (orderdetails == null || orderdetails.Count == 0)
                     {
                         var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(Oid)).ToList();
+                        ViewBag.UserID = orderdetails1.FirstOrDefault().id;
                         ViewBag.username = orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname;
                         ViewBag.vendorname = orderdetails1.FirstOrDefault().BusinessName;
                         ViewBag.vendoraddress = orderdetails1.FirstOrDefault().Address + "," + orderdetails1.FirstOrDefault().Landmark + "," + orderdetails1.FirstOrDefault().City;
@@ -46,7 +48,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
-                        ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                        ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).ToString("dd - MMM - yyyy");
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
                         ViewBag.payment = payments;
@@ -87,39 +89,51 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(Payment payments)
         {
             payments.User_Type = "VendorUser";
-            payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments.UpdatedDate =TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments.Payment_Date =TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpmntservice.SavePayments(payments);
              //string msg = "Payment saved";
-            return Json("Sucess", JsonRequestBehavior.AllowGet);
+            return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>"); 
         }
 
-        public ActionResult Email(string uid,string oid)
+        public JsonResult Email(string Oid)
         {
             HomeController home = new HomeController();
-            int userid = Convert.ToInt32(uid);
+           
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
                 ViewBag.userid = id;
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
-                ViewBag.vemail = email;
+                //ViewBag.vemail = email;
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
-                List<Payment> payment = rcvpmntservice.getPayments(oid);
-                var userlogdetails = mnguserservice.getuserbyid(userid);
+                List<Payment> payment = rcvpmntservice.getPayments(Oid);
+               
+                var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(Oid)).ToList();
+                var userid= orderdetails1.FirstOrDefault().id;
+                var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(userid));
                 string txtto = userlogdetails.email;
 
-                string name = userlogdetails.firstname;
+                string name = userlogdetails.firstname+" "+userlogdetails.lastname;
                 name = home.Capitalise(name);
-                //string OrderId = Convert.ToString(order.OrderId);
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                //string OrderId = Convert.ToString(payments.OrderId);
+                StringBuilder cds = new StringBuilder();
+                cds.Append("<table style='border:1px black solid;'><tbody>");
+                cds.Append("<tr><td> Payment Id</td><td> Payment Type </td><td> Payment Date </td><td> Received Amount </td></tr>");
+                foreach (var item in payment)
+                {
+                    cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                }
+                cds.Append("</tbody></table>");
+                //string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                string url = cds.ToString();
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", name);
-                //readFile = readFile.Replace("[orderid]", OrderId);
+                readFile = readFile.Replace("[orderid]", Oid);
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
@@ -127,7 +141,7 @@ namespace MaaAahwanam.Web.Controllers
                 emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
             }
 
-              return View();
+              return Json("Email sending is completed", JsonRequestBehavior.AllowGet);
 
             }
         }
