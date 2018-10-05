@@ -243,24 +243,24 @@ namespace MaaAahwanam.Web.Controllers
                     ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
                     ViewBag.userid = userResponse1.UserLoginId;
 
-                    string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com,sireesh.k@xsilica.com";
-                    int id = Convert.ToInt32(userResponse.UserLoginId);
-                    var userdetails = userLoginDetailsService.GetUser(id);
+                    //string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com,sireesh.k@xsilica.com";
+                    //int id = Convert.ToInt32(userResponse.UserLoginId);
+                    //var userdetails = userLoginDetailsService.GetUser(id);
                     
-                    string username = userdetails.FirstName;
-                    username = Capitalise(username);
-                    string emailid = userLogin.UserName;
-                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
-                    string readFile = File.OpenText().ReadToEnd();
-                    readFile = readFile.Replace("[ActivationLink]", url1);
-                    readFile = readFile.Replace("[name]", username);
-                    readFile = readFile.Replace("[Ipaddress]", ipaddress);
-                    readFile = readFile.Replace("[email]", Email);
+                    //string username = userdetails.FirstName;
+                    //username = Capitalise(username);
+                    //string emailid = userLogin.UserName;
+                    //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+                    //string readFile = File.OpenText().ReadToEnd();
+                    //readFile = readFile.Replace("[ActivationLink]", url1);
+                    //readFile = readFile.Replace("[name]", username);
+                    //readFile = readFile.Replace("[Ipaddress]", ipaddress);
+                    //readFile = readFile.Replace("[email]", Email);
 
-                    string txtmessage = readFile;//readFile + body;
-                    string subj = "User login from ahwanam";
-                    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                    //string txtmessage = readFile;//readFile + body;
+                    //string subj = "User login from ahwanam";
+                    //EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
                     return Json("success", JsonRequestBehavior.AllowGet);
                 }
                 return Json("Failed", JsonRequestBehavior.AllowGet);
