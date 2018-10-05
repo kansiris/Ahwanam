@@ -73,6 +73,22 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
+                        var payments = rcvpaymentservice.getPayments(oid).ToList();
+                        ViewBag.payment = payments;
+                        foreach (var reports in payments)
+                        {
+                            string amount1 = reports.Received_Amount;
+
+                            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+
+                        }
+                        decimal paidamount;
+                        if (amount == '0')
+                        {
+                            paidamount = orderdetails.FirstOrDefault().TotalPrice;
+                        }
+                        else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; }
+                        ViewBag.paidamount = paidamount;
                     }
                     //ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
                     ViewBag.orderid = oid;
@@ -89,8 +105,8 @@ namespace MaaAahwanam.Web.Controllers
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpaymentservice.SavePayments(payments);
 
-            //return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
-            return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
+            return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
+            //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
 
         }
 
