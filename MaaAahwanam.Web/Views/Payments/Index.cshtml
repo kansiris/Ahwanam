@@ -404,13 +404,14 @@
                             </div>
                         </div>
                     </div>
+                    <br />
                     <div id="editor"></div>
 
                     <div class="row" style="padding-left:30px" align="center">
                         <div class="col-md-1 goback"><a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a></div>
 
                         <div class="col-md-1 savebtn"><button name="btnsave" id="btnadd" class="btn btn-success">Save</button></div>
-                        <div class="col-md-1 emailbtn"><button name="btnemail" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button></div>
+                        <div class="col-md-1 emailbtn"><button name="btnemail" id="btnemail" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button></div>
                         <div class="col-md-1 printbtn"><button name="btnprint" onclick="printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Print</button></div>
                         <div class="col-md-1 saveasbtn"><button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button></div>
                     </div>
@@ -582,5 +583,43 @@
             }
         });
 
+    });
+    $("#btnemail").click(function () {
+       
+            OrderId= $("#OrderId").val(),
+            User_Id= $("#User_Id").val(),
+            Payment_Type= $("input[name='Payment_Type']:checked").val(),
+            Cash_Date= $("#Cash_Date").val(),
+            Cash_Card_Holdername= $("#Cash_Card_Holdername").val(),
+            Cheque_Date= $("#Cheque_Date").val(),
+            Cheque_Bankname= $("#Cheque_Bankname").val(),
+            Cheque_Number= $("#Cheque_Number").val(),
+            creditORdebitcard_date= $("creditORdebitcard_date").val(),
+            Card_Holder_Name= $("#Card_Holder_Name").val(),
+            Card_Last4digits= $("#Card_Last4digits").val(),
+            Bank_Transfer_date= $("#Bank_Transfer_date").val(),
+            Bank_Transaction_ID= $("#Bank_Transaction_ID").val(),
+            Bank_Transfer_Name= $("#Bank_Transfer_Name").val(),
+            Bank_Transfer_IFSCcode= $("#Bank_Transfer_IFSCcode").val(),
+            Bank_Transfer_Branchname= $("#Bank_Transfer_Branchname").val(),
+            Wallet_Date= $("#Wallet_Date").val(),
+            Wallet_Number= $("#Wallet_Number").val(),
+            Received_Amount= $("#Received_Amount").val(),
+            Current_Balance= $('#Current_Balance').val(),
+            Opening_Balance= $('#Opening_Balance').val(),
+            Remarks= $("#Remarks").val()
+       
+        $.ajax({
+            url: '/Payments/Email?oid=' + OrderId,
+            type: 'Post',
+            contentType: 'application/json',
+            success: function (result) {
+                alert(result);
+            },
+            error: function (result) {
+                alert("failed");
+            }
+            
+        })
     });
 </script>
