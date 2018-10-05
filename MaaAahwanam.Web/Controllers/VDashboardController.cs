@@ -69,7 +69,7 @@ namespace MaaAahwanam.Web.Controllers
                 package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package;
                 ViewBag.particularVenue = vendor;
                 if (eventtype != null && count != null && date != null)
-                    ViewBag.venues = venues.Where(m=>m.Minimumseatingcapacity > int.Parse(count)).ToList();
+                    ViewBag.venues = venues.Where(m=>m.Minimumseatingcapacity >= int.Parse(count)).ToList();
                 else
                     ViewBag.venues = venues;
                 Addservices(vsid);

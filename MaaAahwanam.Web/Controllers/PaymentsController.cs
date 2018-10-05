@@ -48,7 +48,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
-                        ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                        ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).ToString("dd - MMM - yyyy");
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
                         ViewBag.payment = payments;
@@ -89,11 +89,11 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(Payment payments)
         {
             payments.User_Type = "VendorUser";
-            payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments.UpdatedDate =TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            payments.Payment_Date =TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpmntservice.SavePayments(payments);
              //string msg = "Payment saved";
-            return Json("Sucess", JsonRequestBehavior.AllowGet);
+            return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>"); 
         }
 
