@@ -26,8 +26,9 @@ namespace MaaAahwanam.Web.Controllers
         viewservicesservice viewservicesss = new viewservicesservice();
         ProductInfoService productInfoService = new ProductInfoService();
         VendorDatesService vendorDatesService = new VendorDatesService();
+        VendorDashBoardService vendorDashBoardService = new VendorDashBoardService();
 
-      
+
         const string imagepath = @"/vendorimages/";
         
         // GET: VDashboard
@@ -136,7 +137,6 @@ namespace MaaAahwanam.Web.Controllers
             }
             return View();
         }
-
 
         public List<string[]> seperatedates(List<packagevendordates_Result> data, string date, string type)
         {
@@ -574,7 +574,7 @@ namespace MaaAahwanam.Web.Controllers
             long count = 0;
             if (category == "Venue")
             {
-                VendorVenue vendorVenue = new VendorVenue();
+                VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(id, vid);
                 vendorVenue.VendorMasterId = id;
                 vendorVenue.VenueType = subcategory;
                 vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, id, vid);
@@ -582,7 +582,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (category == "Catering")
             {
-                VendorsCatering vendorsCatering = new VendorsCatering();
+                VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(id, vid);
                 vendorsCatering.VendorMasterId = id;
                 vendorsCatering.CuisineType = subcategory;
                 vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, id, vid);
@@ -590,7 +590,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (category == "Photography")
             {
-                VendorsPhotography vendorsPhotography = new VendorsPhotography();
+                VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(id, vid);
                 vendorsPhotography.VendorMasterId = id;
                 vendorsPhotography.PhotographyType = subcategory;
                 vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, id, vid);
@@ -598,7 +598,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             else if (category == "Decorator")
             {
-                VendorsDecorator vendorsDecorator = new VendorsDecorator();
+                VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(id, vid);
                 vendorsDecorator.VendorMasterId = id;
                 vendorsDecorator.DecorationType = subcategory;
                 vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, id, vid);
@@ -613,7 +613,7 @@ namespace MaaAahwanam.Web.Controllers
             //}
             else if (category == "Other")
             {
-                VendorsOther vendorsOther = new VendorsOther();
+                VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(id, vid);
                 vendorsOther.VendorMasterId = id;
                 vendorsOther.MinOrder = "0";
                 vendorsOther.MaxOrder = "0";
@@ -751,8 +751,6 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
-
-
         public JsonResult Sendmsg(string msg, string Email)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -838,7 +836,45 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg);
 
         }
-    }
 
+        public JsonResult GetPackagemenuItem(string menuitem, string category,string vsid)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                List<VendorImage> allimages = new List<VendorImage>();
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string email = userLoginDetailsService.Getusername(long.Parse(user.UserId.ToString()));
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                var particularitem = "";
+                var package = vendorDashBoardService.GetParticularMenu(category, vendorMaster.Id.ToString(), vsid).Select(m=>new
+                {
+                    m.Welcome_Drinks,m.Starters,m.Rice,m.Bread,m.Curries,m.Fry_Dry,m.Salads,m.Soups,m.Deserts,m.Beverages,m.Fruits
+                }).ToList();
+                var serialised = String.Join("#", package).Replace("{", "").Replace("}", "");
+                var convertedlist = serialised.Split('#',',');
+                var mitem = menuitem.Replace(" ", "_").Replace("/","_");
+                for (int i = 0; i < convertedlist.Count(); i++)
+                {
+                    if (convertedlist[i].Split('=')[0].Trim() == mitem)  particularitem = convertedlist[i].Split('=')[1]; 
+                }
+                return Json(particularitem, JsonRequestBehavior.AllowGet);
+            }
+            return Json("Failed");
+        }
+
+        public JsonResult GetMenuItem(string pkgid)
+        {
+            var pkg = vendorProductsService.getpartpkgs(pkgid).Select(m=>m.menuitems).FirstOrDefault();
+            return Json(pkg,JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateMenuItems(PackageMenu PackageMenu,string type)
+        {
+            PackageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
+            string status = vendorDashBoardService.UpdateMenuItems(PackageMenu, type);
+            if (status == "Updated") status = ""+type+" Items Updated!!!Reload To See Changes";
+            return Json(status,JsonRequestBehavior.AllowGet);
+        }
+    }
 }
 

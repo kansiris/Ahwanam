@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Repository.db
 {
-  public class VendorDashBoardRepository
+    public class VendorDashBoardRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
 
@@ -24,9 +24,9 @@ namespace MaaAahwanam.Repository.db
         //public int GetSubVendorId(string Vid)
         //{
         //    var query = from Vendorsubid in _dbContext.ManageVendor where ManageVendor.vendorId == Vid select ManageVendor.id;
-            
+
         //}
-        public ManageVendor UpdateVendor(ManageVendor vendor,int id)
+        public ManageVendor UpdateVendor(ManageVendor vendor, int id)
         {
             var GetVendor = _dbContext.ManageVendor.SingleOrDefault(v => v.id == id);
             vendor.id = GetVendor.id;
@@ -42,7 +42,7 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.ManageVendor.Where(v => v.id == id).FirstOrDefault();
 
         }
-        public int checkvendoremail(string email,string id)
+        public int checkvendoremail(string email, string id)
         {
             int c = _dbContext.ManageVendor.Where(e => e.email == email && e.vendorId == id).Count();
             //int count = _dbContext.ManageVendor.Where(e => e.email == email && e.id == int.Parse(id)).Count();
@@ -59,7 +59,7 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ManageUser.Where(v => v.vendorId == Vid).ToList();
         }
-         public int checkuseremail(string email,string id)
+        public int checkuseremail(string email, string id)
         {
             int UseremailCount = _dbContext.ManageUser.Where(e => e.email == email && e.vendorId == id).Count();
             //int count = _dbContext.ManageUser.Where(e => e.email == email && e.id == int.Parse(id)).Count();
@@ -68,7 +68,7 @@ namespace MaaAahwanam.Repository.db
         public List<ManageUser> getuserbyemail(string email)
         {
             return _dbContext.ManageUser.Where(e => e.email == email).ToList();
-           
+
         }
         public ManageUser UpdateUser(ManageUser User, int id)
         {
@@ -80,12 +80,37 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return GetUser;
         }
-       
+
         public ManageUser GetUserdetails(int id)
         {
             //var query = from vendor in _dbContext.ManageVendor where vendor.id == id select vendor;
             return _dbContext.ManageUser.Where(v => v.id == id).FirstOrDefault();
 
+        }
+
+        public List<PackageMenu> GetParticularMenu(string category, string id, string vid)
+        {
+            return _dbContext.PackageMenu.Where(m => m.VendorMasterID == id && m.VendorID == vid && m.Category == category).ToList();
+        }
+
+        public string UpdateMenuItems(PackageMenu packageMenu,string type)
+        {
+            var GetItem = _dbContext.PackageMenu.FirstOrDefault(m => m.VendorMasterID == packageMenu.VendorMasterID && m.VendorID == packageMenu.VendorID && m.Category == packageMenu.Category);
+            if (type != "Welcome Drinks") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks;
+            if (type != "Starters") packageMenu.Starters = GetItem.Starters;
+            if (type != "Rice") packageMenu.Rice = GetItem.Rice;
+            if (type != "Bread") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks;
+            if (type != "Curries") packageMenu.Curries = GetItem.Curries;
+            if (type != "Fry/Dry") packageMenu.Fry_Dry = GetItem.Fry_Dry;
+            if (type != "Salads") packageMenu.Salads = GetItem.Salads;
+            if (type != "Soups") packageMenu.Soups = GetItem.Soups;
+            if (type != "Deserts") packageMenu.Deserts = GetItem.Deserts;
+            if (type != "Beverages") packageMenu.Beverages = GetItem.Beverages;
+            if (type != "Fruits") packageMenu.Fruits = GetItem.Fruits;
+            packageMenu.MenuID = GetItem.MenuID;
+            _dbContext.Entry(GetItem).CurrentValues.SetValues(packageMenu);
+            _dbContext.SaveChanges();
+            return "Updated";
         }
     }
 }
