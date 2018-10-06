@@ -201,7 +201,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.subid = pkgs.VendorSubId;
             orderDetail.BookedDate = Convert.ToDateTime(date1);
             orderDetail.EventType = etype1;
-            //                orderDetail.DealId = long.Parse(did);
+                          orderDetail.DealId = long.Parse(pid);
 
 
             orderdetailsServices.SaveOrderDetail(orderDetail);
@@ -365,7 +365,7 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.subid = pkgs.VendorSubId;
             orderDetail.BookedDate = Convert.ToDateTime(date1);
             orderDetail.EventType = etype1;
-            //                orderDetail.DealId = long.Parse(did);
+            orderDetail.DealId = long.Parse(pid);
 
 
             orderdetailsServices.SaveOrderDetail(orderDetail);

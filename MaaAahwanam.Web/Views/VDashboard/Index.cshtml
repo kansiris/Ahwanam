@@ -1121,9 +1121,9 @@
                                                             <td style="padding-left:0px">
 
                                                                 @if (ViewBag.amenities[first].Split('=')[1].Trim() == "Yes")
-                                                                {<input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))" checked />}
+                                                                {<input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" checked />}
                                                                 else
-                                                                { <input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))" />}
+                                                                { <input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" />}
                                                             </td>
                                                             <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
                                                             <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
@@ -1131,9 +1131,9 @@
                                                             {
                                                                 <td style="padding-left:0px">
                                                                     @if (ViewBag.amenities[next].Split('=')[1].Trim() == "Yes")
-                                                                    {<input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))" checked />}
+                                                                    {<input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" checked />}
                                                                     else
-                                                                    { <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))" />}
+                                                                    { <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" />}
                                                                 </td>
                                                                 <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
                                                                                                     <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
@@ -1620,9 +1620,9 @@
                                                             <td>@orders.OrderId</td>
                                                             <td>@orders.EventType</td>
                                                             <td>@orders.BookedDate</td>
-                                                            <td>Package Name</td>
-                                                            <td>Pax Count</td>
-                                                            <td>Balance Due</td>
+                                                            <td>@orders.PackageName</td>
+                                                            <td>@orders.TotalPrice</td>
+                                                            <td>@orders.SUM_AP</td>
                                                             <td>@orders.Status</td>
                                                         </tr>
 
@@ -1685,9 +1685,9 @@
                                                             <td>@orders.OrderId</td>
                                                             <td>@orders.EventType</td>
                                                             <td>@orders.BookedDate</td>
-                                                            <td>Package Name</td>
-                                                            <td>Pax Count</td>
-                                                            <td>Balance Due</td>
+                                                            <td>@orders.PackageName</td>
+                                                            <td>@orders.TotalPrice</td>
+                                                            <td>@orders.SUM_AP</td>
                                                             <td>@orders.Status</td>
 
                                                         </tr>
@@ -1747,9 +1747,9 @@
                                                             <td>@orders.OrderId</td>
                                                             <td>@orders.EventType</td>
                                                             <td>@orders.BookedDate</td>
-                                                            <td>Package Name</td>
-                                                            <td>Pax Count</td>
-                                                            <td>Balance Due</td>
+                                                            <td>@orders.PackageName</td>
+                                                            <td>@orders.TotalPrice</td>
+                                                            <td>@orders.SUM_AP</td>
                                                             <td>@orders.Status</td>
                                                         </tr>
                                                     }
@@ -1834,46 +1834,46 @@
                                         var number = 0;
                                         foreach (var orders in ViewBag.order1)
                                         {
-                                            <tr class="show_hide_row">
-                                                <td>@(++number)</td>
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>Package Name</td>
-                                                <td>Pax Count</td>
-                                                <td>Balance Due</td>
-                                                <td>@orders.Status</td>
-                                                <td>
-                                                    <div class="menu">
-                                                        <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                        <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                            <div class="four column relaxed divided grid">
-                                                                <div class="column">
-                                                                    <div class="link list">
-                                                                        <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                                        <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                        <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
-                                                                    </div>
-                                                                </div>
+                                    <tr class="show_hide_row">
+                                        <td>@(++number)</td>
+                                        <td>@orders.OrderId</td>
+                                        <td>@orders.EventType</td>
+                                        <td>@orders.BookedDate</td>                                    
+                                        <td>@orders.PackageName</td>
+                                        <td>@orders.TotalPrice</td>
+                                        <td>@orders.SUM_AP</td>
+                                      <td>@orders.Status</td>
+                                        <td>
+                                            <div class="menu">
+                                                <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                    <div class="four column relaxed divided grid">
+                                                        <div class="column">
+                                                            <div class="link list">
+                                                                <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                                <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td>
-                                                @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
-                                            </tr>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        @*<td><button class="btn btn-primary show_hide_row" id="acc1" value="number">View Details</button> <button type="button" class="writemsg button btn btn-success" onclick="orderemail('@orders.username')" value="Query">Send Message</button></td>*@
+                                    </tr>
+                                    <tr id="hidden_row1" class="hidden_row">
+                                        <td colspan=4>
+                                            <ul>
+                                                <li>Event Type:@orders.EventType</li>
+                                                <li>contact number:@orders.phoneno</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
 
-                                            <tr id="hidden_row1" class="hidden_row">
-                                                <td colspan=4>
-                                                    <ul>
-                                                        <li>Event Type:@orders.EventType</li>
-                                                        <li>contact number:@orders.phoneno</li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
                                         }
                                         foreach (var orders in ViewBag.order)
                                         {
