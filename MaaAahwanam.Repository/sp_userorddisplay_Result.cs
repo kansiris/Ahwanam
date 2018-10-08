@@ -34,7 +34,6 @@ namespace MaaAahwanam.Repository
         public long PackageID { get; set; }
         public long userid { get; set; }
         public long OrderDetailId { get; set; }
-        public decimal TotalPrice1 { get; set; }
         public Nullable<int> SUM_AP { get; set; }
         public string invoice { get; set; }
         public Nullable<decimal> Due { get; set; }

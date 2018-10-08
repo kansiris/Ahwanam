@@ -674,14 +674,14 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETpartpkg_Result>("SPGETpartpkg", idParameter);
         }
     
-        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
-        }
-    
         public virtual ObjectResult<sp_vendoruserorddisplay_Result> sp_vendoruserorddisplay()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vendoruserorddisplay_Result>("sp_vendoruserorddisplay");
+        }
+    
+        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
         }
     }
 }
