@@ -101,10 +101,10 @@
                                             <thead>
                                                 <tr>
                                                     <td><strong>Event Type</strong></td>
-                                                    <td class="text-center"><strong>₹Price</strong></td>
+                                                    <td class="text-center"><strong>Price</strong></td>
                                                     <td class="text-center"><strong>Quantity</strong></td>
-                                                    <td class="text-right"><strong>₹Total Amount</strong></td>
-                                                    <td class="text-right"><strong>₹Due Amount</strong></td>
+                                                    <td class="text-right"><strong>Total Amount</strong></td>
+                                                    <td class="text-right"><strong>Due Amount</strong></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -112,10 +112,10 @@
                                                 {
                                                     <tr>
                                                         <td>@item.EventType</td>
-                                                        <td class="text-center"> @item.PerunitPrice</td>
+                                                        <td class="text-center">₹ @item.PerunitPrice</td>
                                                         <td class="text-center">@item.Quantity</td>
-                                                        <td class="text-right">@item.TotalPrice</td>
-                                                        <td class="text-right"> @ViewBag.paidamount</td>
+                                                        <td class="text-right">₹ @item.TotalPrice</td>
+                                                        <td class="text-right">₹ @ViewBag.paidamount</td>
                                                     </tr>
                                                 }
                                                 <tr>
@@ -151,24 +151,26 @@
                                                         <thead>
                                                             <tr>
                                                                 <td><strong>Select</strong></td>
+                                                                <td><strong>Order DetailId</strong></td>
                                                                 <td><strong>Event Type</strong></td>
-                                                                <td class="text-center"><strong>₹Price</strong></td>
+                                                                <td class="text-center"><strong>Price</strong></td>
                                                                 <td class="text-center"><strong>Quantity</strong></td>
-                                                                <td class="text-right"><strong>₹Total Amount</strong></td>
-                                                                <td class="text-right"><strong>₹Due Amount</strong></td>
+                                                                <td class="text-right"><strong>Total Amount</strong></td>
+                                                                <td class="text-right"><strong>Due Amount</strong></td>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
                                                                 <tr>
-                                                                    <td><input type="checkbox" class="chcktbl" value="" /></td>
+                                                                    <td><input type="checkbox" class="chcktbl" value="@ViewBag.paidamount,@item.OrderDetailId" onclick="addamnttotal()" /></td>
+                                                                    <td>@item.OrderDetailId</td>
                                                                     <td>@item.EventType</td>
-                                                                    <td class="text-center"> @item.PerunitPrice</td>
+                                                                    <td class="text-center">₹ @item.PerunitPrice</td>
                                                                     <td class="text-center">@item.Quantity</td>
-                                                                    <td class="text-right"> @item.TotalPrice</td>
+                                                                    <td class="text-right">₹ @item.TotalPrice</td>
 
-                                                                    <td class="text-right"> @ViewBag.paidamount</td>
+                                                                    <td class="text-right">₹ @ViewBag.paidamount</td>
                                                                 </tr>
                                                             }
                                                         </tbody>
@@ -364,6 +366,14 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="row">
+                                                                <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
+                                                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" style="padding: 5px;" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
                                                                 <div class="col-md-5" style="padding: 14px;">Received Amount</div>
                                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                                     <div class="form-group">
@@ -530,6 +540,7 @@
     });
 
     $('#Received_Amount').keyup(function () {
+        var invamnt = $("#invoiced_amount").val();
         var openamnt = $('#paidamount').val();
         var rcvamnt = $('#Received_Amount').val();
         //if (rcvamnt > openamnt) { alert("Enter valid amount"); }
@@ -539,7 +550,13 @@
             $('#Current_Balance').val(openamnt);
 
 
-        } else {
+        }
+        else if(parseFloat(rcvamnt)>parseFloat(invamnt))
+        {
+           aelrt("Enter less than or Equal Of Invoiced Amount...");
+            $('#Received_amount').val("");
+        }
+        else {
             var result = parseFloat(openamnt) - parseFloat(rcvamnt);
             $('#Current_Balance').val(result);
         }
@@ -592,4 +609,18 @@
         });
 
     });
+
+    function  addamnttotal()
+    {
+        var sum = 0;
+        var totalamnt = $("input:checkbox:checked").map(function () {
+            return this.value.split(',')[0];
+        }).toArray();
+        var poid = $("input:checkbox:checked").map(function () { return this.value.split(',')[1]; }).toArray();
+        var sum = 0;
+        var lent = totalamnt.length;
+        for (var i = 0; i < lent; i++) {
+            sum = sum + parseFloat(totalamnt[i]);
+        }
+    }
 </script>
