@@ -25,5 +25,11 @@ namespace MaaAahwanam.Service
         {
             return orderdetailsRepository.OrdersCount(id);
         }
+
+        public List<OrderDetail> GetOrderDetails(string oid)
+        {
+            var orderdetails = orderdetailsRepository.GetOrderDetails(Convert.ToInt64(oid));
+            return orderdetails;
+        }
     }
 }
