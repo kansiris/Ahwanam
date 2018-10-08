@@ -260,7 +260,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                     var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                    var orderscount = orders.Where(m => m.Id == long.Parse(id)).Count();
+                    var orderscount = orders.Where(m => m.vid == long.Parse(id)).Count();
                     var serviceselected = orders.Where(m => m.ServicType.Split(',').Contains(type)).Count();
                     if (orderscount > 0 && serviceselected > 0)
                     {

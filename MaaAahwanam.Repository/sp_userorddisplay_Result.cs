@@ -30,9 +30,17 @@ namespace MaaAahwanam.Repository
         public decimal PerunitPrice { get; set; }
         public int Quantity { get; set; }
         public string UserPhone { get; set; }
+        public string PackageName { get; set; }
+        public long PackageID { get; set; }
+        public long userid { get; set; }
+        public long OrderDetailId { get; set; }
+        public decimal TotalPrice1 { get; set; }
+        public Nullable<int> SUM_AP { get; set; }
+        public string invoice { get; set; }
+        public Nullable<decimal> Due { get; set; }
         public string username { get; set; }
         public string Isdeal { get; set; }
-        public long Id { get; set; }
+        public long vid { get; set; }
         public string BusinessName { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
