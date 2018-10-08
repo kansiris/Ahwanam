@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
+                ViewBag.userid = id;
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
@@ -100,11 +101,35 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(Payment payments)
         {
+            var orderdetails = orderService.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
             payments.User_Type = "VendorUser";
             payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments = rcvpaymentservice.SavePayments(payments);
+            var paymentlist = rcvpaymentservice.getPayments(payments.OrderId).ToList();
+            ViewBag.payment = payments;
+            foreach (var reports in paymentlist)
+            {
+                string amount1 = reports.Received_Amount;
 
+                amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+
+            }
+            decimal paidamount;
+            if (amount == '0')
+            {
+                paidamount = orderdetails.FirstOrDefault().TotalPrice;
+            }
+            else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; }
+            ViewBag.paidamount = paidamount;
+            if(amount == orderdetails.FirstOrDefault().TotalPrice)
+            {
+                payments.Status = "Payment Completed";
+            }
+            else
+            {
+                payments.Status = "Payment Pending";
+            }
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
 
