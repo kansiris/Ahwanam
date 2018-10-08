@@ -31,9 +31,11 @@ namespace MaaAahwanam.Repository
         public string phoneno { get; set; }
         public string PackageName { get; set; }
         public long PackageID { get; set; }
-        public string Invoiced_Amount { get; set; }
+        public long userid { get; set; }
+        public long OrderDetailId { get; set; }
         public decimal TotalPrice { get; set; }
         public Nullable<int> SUM_AP { get; set; }
+        public string invoice { get; set; }
         public Nullable<decimal> Due { get; set; }
         public string username { get; set; }
         public string Isdeal { get; set; }
