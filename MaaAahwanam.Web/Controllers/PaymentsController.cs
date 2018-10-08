@@ -143,13 +143,14 @@ namespace MaaAahwanam.Web.Controllers
                     cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 }
                 cds.Append("</tbody></table>");
-                //string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-                string url = cds.ToString();
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                //string url = cds.ToString();
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", name);
                 readFile = readFile.Replace("[orderid]", Oid);
+                readFile = readFile.Replace("[table]", cds.ToString());
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
