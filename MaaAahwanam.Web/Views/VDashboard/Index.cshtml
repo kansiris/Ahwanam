@@ -2369,7 +2369,8 @@
             var itemsdiv = $('#pkgmodal .pkgitemsection table.menuitems tr#pkgitemstr');
             tabletr.empty();
 
-            $.get( "/VDashboard/GetPackagemenuItem?menuitem="+selectedpkg+"&&category="+type+"&&vsid="+@ViewBag.vsid+"",function(data){
+            $.get("/VDashboard/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +@ViewBag.vsid+"",
+                function (data) {
                 commondiv = data;
                 var getlist = window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
                 for (var i = 0; i < commondiv.split('!').length; i++) {
@@ -2799,6 +2800,33 @@
         }
     </script>
     <script>
+        $(document).on('click', '.subcatclose', function () {
+            alert($(this).attr('value'));
+                     
+            var    val1 = $(this).attr('value').split(',');
+            var text = val1[1];
+            var vsid = val1[0];
+            var type = val1[3];
+            var r = confirm("Do you want to delete" + text);
+            if (r == true) {
+                $.ajax({
+                    url: '/VDashboard/deleteservice?vsid=' + vsid + '&&type=' + type,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (result) {
+                        if (result = 'success') {
+                            alert("service removed");
+                        } else { alert("error occured");}
+                        var url1 = document.referrer;
+                        window.location.href = url1;
+                    },
+                })
+            }
+
+
+        });
+
+       
         $('#pkgsubcat').click(function () {
             alert('First Add Sub Service');
         });

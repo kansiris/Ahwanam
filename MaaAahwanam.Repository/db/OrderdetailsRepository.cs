@@ -19,7 +19,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return orderDetail;
         }
-
+        public List<OrderDetail> GetOrderDetails(long oid)
+        {
+            return _dbContext.OrderDetail.Where(O => O.OrderId == oid).ToList();
+        }
         public List<OrderDetail> GetCount(long vid,long subid,string servicetype)
         {
             return _dbContext.OrderDetail.Where(m => m.VendorId == vid && m.subid == subid && m.ServiceType == servicetype).ToList();

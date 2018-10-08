@@ -131,7 +131,7 @@ namespace MaaAahwanam.Web.Controllers
                         orderdetail.Status = "Cancelled";
                         order = orderService.updateOrderstatus(order, orderdetail, Convert.ToInt64(orderid));
                         TempData["Active"] = "Order Cancelled";
-                        SendEmail((int)user.UserId,orderid,orders.FirstOrDefault().Id.ToString(), "Order Cancelled");
+                        SendEmail((int)user.UserId,orderid,orders.FirstOrDefault().vid.ToString(), "Order Cancelled");
                         return RedirectToAction("Index", "NUserProfile");
                     }
                     TempData["Active"] = "Please Login";

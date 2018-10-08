@@ -45,7 +45,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 string vid = vendorMaster.Id.ToString();
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(vendorMaster.Id));
-                var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id)).ToList();
+                var orders = orderService.userOrderList().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
                 var orders1 = orderService.userOrderList1().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
 
                 //Orders Section
@@ -873,6 +873,28 @@ namespace MaaAahwanam.Web.Controllers
             if (status == "Updated") status = ""+type+" Items Updated!!!Reload To See Changes";
             return Json(status,JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult deleteservice(string ks, string vsid, string type)
+        {
+            try
+            {
+                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
+
+                    string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
+                    string message = vendorImageService.DeleteAllImages(long.Parse(vid), long.Parse(vsid));
+                    return Json(message, JsonRequestBehavior.AllowGet);
+                        
+            }
+            catch (Exception)
+            {
+                return Json("something went wrong",JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }
 
