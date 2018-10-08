@@ -185,7 +185,7 @@ namespace MaaAahwanam.Web.Controllers
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.OrderId = order.OrderId;
-            orderDetail.OrderBy = userid;
+            orderDetail.OrderBy = long.Parse(uid);
             orderDetail.PaymentId = '1';
             // orderDetail.ServiceType = type;
             orderDetail.ServicePrice = decimal.Parse(price);
@@ -412,7 +412,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public ActionResult orderdetails(string select)
         {
-            if (select != null)
+            if(select != null && select != "null" && select != "")
             {
                 var select1 = select.Split(',');
 
