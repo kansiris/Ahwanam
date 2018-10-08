@@ -36,7 +36,7 @@ namespace MaaAahwanam.Web.Controllers
                 string id = "";
                 arrIndMsg = arrMsgs[0].Split('='); //Get the id
                 id = arrIndMsg[1].ToString().Trim();
-                var orders = orderService.userOrderList().Where(m => m.Id == int.Parse(id));
+                var orders = orderService.userOrderList().Where(m => m.vid == int.Parse(id));
                 ViewBag.order = orders.OrderByDescending(m => m.OrderId);
                 return View();
             }

@@ -29,28 +29,28 @@
                     {
                         if (item.VenueType == "" || item.VenueType == null)
                         {
-                            <div> <a class="subcatclose" onclick="subcatremove(@item.Id)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">Venue</a></div>
+                            <div> <a class="subcatclose" value="@item.Id,Venue" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">Venue</a></div>
                         }
                         else
                         {
-                            <div>  <a class="subcatclose" onclick="subcatremove(@item.Id-@item.name-@item.VenueType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a>  <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">  @item.name - @item.VenueType</a> </div>
+                            <div>  <a class="subcatclose" value="@item.Id,@item.name,@item.VenueType,Venue"  style="padding-left: 20px;color: red;font-size: 12px;">X</a>  <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">  @item.name - @item.VenueType</a> </div>
                         }
                     }
                     @foreach (var item in ViewBag.catering)
                     {
-                        <div><a class="subcatclose" onclick="subcatremove(@item.Id-@item.CuisineType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.CuisineType</a></div>
+                        <div><a class="subcatclose" onclick="subcatremove(@item.Id,@item.CuisineType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.CuisineType</a></div>
                     }
                     @foreach (var item in ViewBag.photography)
                     {
-                      <div>  <a class="subcatclose" onclick="subcatremove(@item.Id-@item.PhotographyType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.PhotographyType</a></div>
+                      <div>  <a class="subcatclose" onclick="subcatremove(@item.Id,@item.PhotographyType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.PhotographyType</a></div>
                     }
                     @foreach (var item in ViewBag.decorators)
                     {
-                        <div><a class="subcatclose" onclick="subcatremove(@item.Id-@item.DecorationType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.DecorationType</a></div>
+                        <div><a class="subcatclose" onclick="subcatremove(@item.Id,@item.DecorationType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.DecorationType</a></div>
                     }
                     @foreach (var item in ViewBag.others)
                     {
-                     <div>   <a class="subcatclose" onclick="subcatremove(@item.Id-@item.type)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.type</a></div>
+                     <div>   <a class="subcatclose" onclick="subcatremove(@item.Id,@item.type)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.type</a></div>
                     }
                 </div>
             </div>
@@ -106,25 +106,3 @@
 </div>
 
 
-<script>
-    function subcatremove(val) {
-        alert(val);
-        val1 = val.split('-');
-        var text = val1[1];
-
-        var txt;
-        var r = confirm("Do you want to delete"+ text);
-        if (r == true) {
-            $.ajax({
-                url:'/VDashboard/'
-
-            })
-
-
-        } else {
-            txt = "You pressed Cancel!";
-        }
-    }
-
-
-    </script>

@@ -45,7 +45,7 @@ namespace MaaAahwanam.Web.Controllers
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 string vid = vendorMaster.Id.ToString();
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(vendorMaster.Id));
-                var orders = orderService.userOrderList().Where(m => m.Id == Convert.ToInt64(vendorMaster.Id)).ToList();
+                var orders = orderService.userOrderList().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
                 var orders1 = orderService.userOrderList1().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
 
                 //Orders Section
@@ -874,63 +874,24 @@ namespace MaaAahwanam.Web.Controllers
             return Json(status,JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult deleteservice(string ks, string vid, string type)
+        public JsonResult deleteservice(string ks, string vsid, string type)
         {
             try
             {
-                string strReq = "";
-                encptdecpt encript = new encptdecpt();
-                strReq = encript.Decrypt(ks);
-                //Parse the value... this is done is very raw format.. you can add loops or so to get the values out of the query string...
-                string[] arrMsgs = strReq.Split('&');
-                string[] arrIndMsg;
-                string id = "";
-                arrIndMsg = arrMsgs[0].Split('='); //Get the id
-                id = arrIndMsg[1].ToString().Trim();
-                ViewBag.id = ks;
-                int count = 0;
-                if (type == "Venue")
-                    count = vendorVenueSignUpService.GetVendorVenue(long.Parse(id)).ToList().Count;
-                if (type == "Catering")
-                    count = vendorVenueSignUpService.GetVendorCatering(long.Parse(id)).ToList().Count;
-                if (type == "Photography")
-                    count = vendorVenueSignUpService.GetVendorPhotography(long.Parse(id)).Count;
-                if (type == "EventManagement")
-                    count = vendorVenueSignUpService.GetVendorEventOrganiser(long.Parse(id)).Count;
-                if (type == "Decorator")
-                    count = vendorVenueSignUpService.GetVendorDecorator(long.Parse(id)).Count;
-                if (type == "Other")
-                    count = vendorVenueSignUpService.GetVendorOther(long.Parse(id)).Count;
-                if (count > 1)
-                {
-                    string msg = vendorVenueSignUpService.RemoveVendorService(vid, type);
-                    string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
+                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+            string uid = user.UserId.ToString();
+            string email = userLoginDetailsService.Getusername(long.Parse(uid));
+            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+            string vid = vendorMaster.Id.ToString();
 
-                    //  TempData["Active"] = "Service " + msg + "";
-                    // return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                    return Content("<script language='javascript' type='text/javascript'>alert('Service " + msg + "');location.href='/NVendorStoreFront/Index?ks=" + ks + "'</script>");
-                }
-                else
-                {
-                    long value = vendorVenueSignUpService.UpdateVendorService(id, vid, type);
-                    string message = vendorImageService.DeleteAllImages(long.Parse(id), long.Parse(vid));
-                    if (value > 0)
-                    {
-                        //TempData["Active"] = "Service Removed";
-                        // return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                        return Content("<script language='javascript' type='text/javascript'>alert('Service Removed');location.href='/NVendorStoreFront/Index?ks=" + ks + "'</script>");
-
-                    }
-                    else
-
-                        // TempData["Active"] = "Something Went Wrong!!! Try Again After Some Time";
-                        //return RedirectToAction("Index", "NVendorStoreFront", new { id = id });
-                        return Content("<script language='javascript' type='text/javascript'>alert('Something Went Wrong!!! Try Again After Some Time');location.href='/NVendorStoreFront/Index?ks=" + ks + "'</script>");
-                }
+                    string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
+                    string message = vendorImageService.DeleteAllImages(long.Parse(vid), long.Parse(vsid));
+                    return Json(message, JsonRequestBehavior.AllowGet);
+                        
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "Nhomepage");
+                return Json("something went wrong",JsonRequestBehavior.AllowGet);
             }
         }
 
