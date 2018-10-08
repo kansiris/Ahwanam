@@ -72,7 +72,13 @@ function gtag_report_conversion(url) {
     <!--google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Alex+Brush" rel="stylesheet">
     <link href="~/newdesignstyles/css/landingpage.css" rel="stylesheet" />
+    <link href="~/newdesignstyles/css/intlTelInput.css" rel="stylesheet" />
 
+    <style>
+        .intl-tel-input.allow-dropdown .flag-container, .intl-tel-input.separate-dial-code .flag-container {
+            left: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -171,16 +177,16 @@ function gtag_report_conversion(url) {
                             <h5 style="font-family: banglamn;font-size: 36px;text-transform:capitalize;color:white;">Contact Us Today!</h5>
                             <p style="margin-top: 20px;font-family: roboto;font-size: 19px;color: #fff;">Ahwanam expert party planners are standing by. Call us at <a href="tel:+917702053510" style="color:white">+91 7702053510</a> or submit the form below for a custom quote.</p>
                             <div id="message-contact"></div>
-                            <form method="post" action="assets/contact.php" id="contactform" autocomplete="off">
+                            <form method="post" id="contactform" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <input type="text" class="text-line" placeholder="First Name*" id="fname" name="fname" />
+                                            <input type="text" class="text-line" placeholder="First Name*" id="fname" name="fname" title="Enter First Name" />
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group">
-                                            <input type="text" class="text-line" placeholder="Last Name*" id="lname" name="lname" />
+                                            <input type="text" class="text-line" placeholder="Last Name*" id="lname" name="lname" title="Enter Last Name" />
                                         </div>
                                     </div>
                                 </div>
@@ -188,22 +194,23 @@ function gtag_report_conversion(url) {
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <input type="text" class="text-line" placeholder="Email Address*" id="emailid" name="emailid" />
+                                            <input type="text" class="text-line" placeholder="Email Address*" id="emailid" name="emailid" title="Enter your Email ID" />
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group">
-                                            <input type="text" class="text-line" placeholder="Phone Number*" id="phoneno" name="phoneno" />
+                                            <input type="text" class="text-line" id="phoneno" name="phoneno" title="Enter your Mobile Number" />
                                         </div>
+                                        <span id="error-msg" style="color:white"></span>
                                     </div>
                                 </div>
                                 <!-- /row -->
                                 <div class="form-group">
-                                    <input class="text-line" id="datetimepicker" type="text" name="datetimepicker" placeholder="Event Date*">
-                                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
+                                    <input class="text-line" id="datetimepicker" type="text" name="datetimepicker" placeholder="Event Date*" readonly="readonly" title="Select Calendar -->">
+                                    <img id="calendar" src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" title="Click to Open Calendar">
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" style="margin-left:0;position:relative;width:50%;margin-top:50px" class="btn btn-dark-green" onclick="contactform('Birthday')">SUBMIT</button>
+                                    <button type="button" disabled id="btnsubmit" style="margin-left:0;position:relative;width:50%;margin-top:50px" class="btn btn-dark-green" onclick="contactform('Wedding')">SUBMIT</button>
                                 </div>
                             </form>
                         </div>
@@ -249,16 +256,19 @@ function gtag_report_conversion(url) {
     <script src="http://design.maa-aahwanam.com/landingpages/layerslider/js/greensock.js"></script>
     <script src="http://design.maa-aahwanam.com/landingpages/layerslider/js/layerslider.transitions.js"></script>
     <script src="http://design.maa-aahwanam.com/landingpages/layerslider/js/layerslider.kreaturamedia.jquery.js"></script>
+    <script src="~/newdesignstyles/Scripts/intlTelInput.js"></script>
     <script src="~/newdesignstyles/Scripts/landingpage.js"></script>
     <script>
         /*--- Date and Time ----*/
-        $('#datetimepicker').datetimepicker({
+        $('#calendar').datetimepicker({
             dayOfWeekStart: 1,
             lang: 'en',
             timepicker: false,
             format: 'd/m/Y',
             minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
             maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+        }).on('change', function () {
+            $('#datetimepicker').val($('#calendar').val());
         });
         /*------------ Date and Time --------------*/
     </script>

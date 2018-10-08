@@ -28,6 +28,7 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+
                 string id = user.UserId.ToString();
                 ViewBag.userid = id;
                 string email = userLoginDetailsService.Getusername(long.Parse(id));
