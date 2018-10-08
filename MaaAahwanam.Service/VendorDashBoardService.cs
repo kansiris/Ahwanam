@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Service
 {
-  public class VendorDashBoardService
+    public class VendorDashBoardService
     {
         VendorDashBoardRepository mngvendorrepository = new VendorDashBoardRepository();
         public ManageVendor SaveVendor(ManageVendor mngvendor)
@@ -16,7 +16,7 @@ namespace MaaAahwanam.Service
             mngvendor = mngvendorrepository.AddVendor(mngvendor);
             return mngvendor;
         }
-       public List<ManageVendor> getvendor(string Vid)
+        public List<ManageVendor> getvendor(string Vid)
         {
             List<ManageVendor> mngvendorlist = new List<ManageVendor>();
             mngvendorlist = mngvendorrepository.GetVendorList(Vid);
@@ -25,7 +25,7 @@ namespace MaaAahwanam.Service
         public int checkvendoremail(string email, string id)
         {
             //int vendorsubid = int.Parse(id);
-           // return mngvendorrepository.checkvendoremail(email,id);
+            // return mngvendorrepository.checkvendoremail(email,id);
             return mngvendorrepository.checkvendoremail(email, id);
         }
         public ManageVendor getvendorbyid(int id)
@@ -35,7 +35,7 @@ namespace MaaAahwanam.Service
 
         public ManageVendor UpdateVendor(ManageVendor mngvendor, int id)
         {
-            return mngvendorrepository.UpdateVendor(mngvendor,id);
+            return mngvendorrepository.UpdateVendor(mngvendor, id);
         }
         public ManageUser AddUser(ManageUser mnguser)
         {
@@ -50,7 +50,7 @@ namespace MaaAahwanam.Service
         }
         public int checkuseremail(string email, string id)
         {
-           
+
             return mngvendorrepository.checkuseremail(email, id);
         }
         public ManageUser getuserbyid(int id)
@@ -67,5 +67,14 @@ namespace MaaAahwanam.Service
             return mngvendorrepository.UpdateUser(mnguser, id);
         }
 
+        public List<PackageMenu> GetParticularMenu(string category, string id, string vid)
+        {
+            return mngvendorrepository.GetParticularMenu(category, id, vid);
+        }
+
+        public string UpdateMenuItems(PackageMenu packageMenu, string type)
+        {
+            return mngvendorrepository.UpdateMenuItems(packageMenu,type);
+        }
     }
 }
