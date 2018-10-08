@@ -13,6 +13,7 @@ namespace MaaAahwanam.Models
         public long Payment_Id { get; set; }
         public string Payment_Type { get; set; }
         public string OrderId { get; set; }
+        public string OrderDetailId { get; set; }
         public string User_Id { get; set; }
         public string User_Type { get; set; }
         public DateTime Payment_Date { get; set; }
