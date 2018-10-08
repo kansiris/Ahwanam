@@ -27,30 +27,30 @@
                 <div class="card-body" style="padding: 5px 0px 0px 10px;">
                     @foreach (var item in ViewBag.venues)
                     {
-                    if (item.VenueType == "" || item.VenueType == null)
-                    {
-                        <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">Venue</h6>
-                    }
-                    else
-                    {
-                        <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.name - @item.VenueType</h6>
+                        if (item.VenueType == "" || item.VenueType == null)
+                        {
+                            <div> <a class="subcatclose" onclick="subcatremove(@item.Id)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">Venue</a></div>
+                        }
+                        else
+                        {
+                            <div>  <a class="subcatclose" onclick="subcatremove(@item.Id-@item.name-@item.VenueType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a>  <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">  @item.name - @item.VenueType</a> </div>
                         }
                     }
                     @foreach (var item in ViewBag.catering)
                     {
-                        <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.CuisineType</h6>
+                        <div><a class="subcatclose" onclick="subcatremove(@item.Id-@item.CuisineType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.CuisineType</a></div>
                     }
                     @foreach (var item in ViewBag.photography)
                     {
-                        <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.PhotographyType</h6>
+                      <div>  <a class="subcatclose" onclick="subcatremove(@item.Id-@item.PhotographyType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.PhotographyType</a></div>
                     }
                     @foreach (var item in ViewBag.decorators)
                     {
-                        <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.DecorationType</h6>
+                        <div><a class="subcatclose" onclick="subcatremove(@item.Id-@item.DecorationType)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.DecorationType</a></div>
                     }
                     @foreach (var item in ViewBag.others)
                     {
-                        <h6 class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.type</h6>
+                     <div>   <a class="subcatclose" onclick="subcatremove(@item.Id-@item.type)" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.type</a></div>
                     }
                 </div>
             </div>
@@ -104,3 +104,27 @@
         </button>
     </div>
 </div>
+
+
+<script>
+    function subcatremove(val) {
+        alert(val);
+        val1 = val.split('-');
+        var text = val1[1];
+
+        var txt;
+        var r = confirm("Do you want to delete"+ text);
+        if (r == true) {
+            $.ajax({
+                url:'/VDashboard/'
+
+            })
+
+
+        } else {
+            txt = "You pressed Cancel!";
+        }
+    }
+
+
+    </script>
