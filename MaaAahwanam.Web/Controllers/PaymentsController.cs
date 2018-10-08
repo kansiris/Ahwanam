@@ -37,6 +37,8 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
                 if (Oid != null && Oid != "")
                 {
+                    var OrderDetailsbyOid = orderdetailService.GetOrderDetails(Oid).ToList();
+                    ViewBag.OrderDetailsbyOid = OrderDetailsbyOid;
                     var orderdetails = orderService.userOrderList().Where(m => m.OrderId == long.Parse(Oid)).ToList();
                     if (orderdetails == null || orderdetails.Count == 0)
                     {
