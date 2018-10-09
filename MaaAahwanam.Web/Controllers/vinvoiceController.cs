@@ -147,14 +147,19 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.vemail = email;
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 List<Payment> payment = rcvpaymentservice.getPayments(oid);
+                string txtto = ""; string name = "";
                 var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
-                var userid = orderdetails1.FirstOrDefault().id;
-                var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(userid));
-                string txtto = userlogdetails.email;
-
-                string name = userlogdetails.firstname + " " + userlogdetails.lastname;
-                name = home.Capitalise(name);
-                //string OrderId = Convert.ToString(order.OrderId);
+                if (orderdetails1.Count == 0)
+                {
+                    var orderdetails = orderService.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(oid));
+                    txtto = orderdetails.username;
+                    name = home.Capitalise(orderdetails.FirstName + " " + orderdetails.LastName);
+                }
+                else
+                {
+                    txtto = orderdetails1.FirstOrDefault().username;
+                    name = home.Capitalise(orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname);
+                }
                 StringBuilder cds = new StringBuilder();
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td> Payment Id</td><td> Payment Type </td><td> Payment Date </td><td> Received Amount </td></tr>");
@@ -163,19 +168,20 @@ namespace MaaAahwanam.Web.Controllers
                     cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 }
                 cds.Append("</tbody></table>");
-                //string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-                string url = cds.ToString();
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                //string url = cds.ToString();
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", name);
-                //readFile = readFile.Replace("[orderid]", OrderId);
+                readFile = readFile.Replace("[table]", cds.ToString());
+                readFile = readFile.Replace("[orderid]", oid);
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
-
+                string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
+                emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
             }
 
             return Json("success", JsonRequestBehavior.AllowGet);
