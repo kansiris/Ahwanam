@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -213,17 +214,27 @@ namespace MaaAahwanam.Web.Controllers
             string name = userlogdetails.firstname;
             name = home.Capitalise(name);
             string OrderId = Convert.ToString(order.OrderId);
+            StringBuilder cds = new StringBuilder();
+            cds.Append("<table style='border:1px black solid;'><tbody>");
+            cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
+          
+            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+          
+            cds.Append("</tbody></table>");
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
             string readFile = File.OpenText().ReadToEnd();
             readFile = readFile.Replace("[ActivationLink]", url);
             readFile = readFile.Replace("[name]", name);
             readFile = readFile.Replace("[orderid]", OrderId);
+            readFile = readFile.Replace("[table]", cds.ToString());
             string txtmessage = readFile;//readFile + body;
             string subj = "Thanks for your order";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-            emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+            //emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+            string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
+            emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
 
             var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vid));
 
@@ -237,6 +248,7 @@ namespace MaaAahwanam.Web.Controllers
             readfile1 = readfile1.Replace("[ActivationLink]", url1);
             readfile1 = readfile1.Replace("[name]", name);
             readfile1 = readfile1.Replace("[vname]", vname);
+            readFile = readFile.Replace("[table]", cds.ToString());
             readfile1 = readfile1.Replace("[orderid]", OrderId);
             string txtmessage1 = readfile1;
             string subj1 = "order has been placed";
@@ -262,6 +274,7 @@ namespace MaaAahwanam.Web.Controllers
             string etype1 = "";
             string date1 = "";
             ManageUser mnguser = new ManageUser();
+            mnguser.vendorId = vid;
             mnguser.registereddate = DateTime.Now;
             mnguser.updateddate = DateTime.Now;
             mnguser.Businessname = businessname;
