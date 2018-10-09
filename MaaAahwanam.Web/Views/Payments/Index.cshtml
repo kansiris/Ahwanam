@@ -120,12 +120,12 @@
                                             <thead>
                                                 <tr>
                                                     <td><strong>Select</strong></td>
-                                                    <td><strong>Event Type</strong></td>
-                                                    <td><strong>Order DetailId</strong></td>
-                                                    <td class="text-center"><strong>₹Price</strong></td>
+                                                    <td class="text-center"><strong>Order DetailId</strong></td>
+                                                    <td  class="text-center"><strong>Event Type</strong></td>
+                                                    <td class="text-center"><strong>Price</strong></td>
                                                     <td class="text-center"><strong>Quantity</strong></td>
-                                                    <td class="text-right"><strong>₹Total Amount</strong></td>
-                                                    <td class="text-right"><strong>₹Due Amount</strong></td>
+                                                    <td class="text-right"><strong>Total Amount</strong></td>
+                                                    <td class="text-right"><strong>Due Amount</strong></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -133,13 +133,12 @@
                                                 {
                                                     <tr>
                                                         <td><input type="checkbox" class="chcktbl" value="@item.Due,@item.OrderDetailId" onclick="amnttotal()" /></td>
-                                                        <td>@item.EventType</td>
-                                                        <td>@item.OrderDetailId</td>
-                                                        <td class="text-center"> @item.PerunitPrice</td>
+                                                        <td class="text-center">@item.OrderDetailId</td>
+                                                        <td class="text-center">@item.EventType</td>
+                                                        <td class="text-center">₹ @item.PerunitPrice</td>
                                                         <td class="text-center">@item.Quantity</td>
-                                                        <td class="text-right"> @item.TotalPrice</td>
-
-                                                        <td class="text-right"> @ViewBag.paidamount</td>
+                                                        <td class="text-right">₹ @item.TotalPrice</td>
+                                                        <td class="text-right">₹ @ViewBag.paidamount</td>
                                                     </tr>
                                                 }
                                             </tbody>
@@ -158,20 +157,20 @@
                                         <table class="table table-condensed" style="width:100%;max-width:100%">
                                             <thead>
                                                 <tr>
-                                                    <td class="text-center"><strong>Payment_Date</strong></td>
-                                                    <td><strong>Payment_Id</strong></td>
-                                                    <td class="text-center"><strong>Payment_Type</strong></td>
-                                                    <td class="text-right"><strong>₹Received_Amount</strong></td>
+                                                    <td ><strong>Payment Date</strong></td>
+                                                    <td class="text-center"><strong>Payment Id</strong></td>
+                                                    <td class="text-center"><strong>Payment Type</strong></td>
+                                                    <td class="text-right"><strong>Received Amount</strong></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach (var item in ViewBag.payment)
                                                 {
                                                     <tr>
-                                                        <td class="text-center">@item.Payment_Date.ToString("dd-MMM-yyyy")</td>
-                                                        <td>@item.Payment_Id</td>
+                                                        <td >@item.Payment_Date.ToString("dd-MMM-yyyy")</td>
+                                                        <td class="text-center">@item.Payment_Id</td>
                                                         <td class="text-center">@item.Payment_Type</td>
-                                                        <td class="text-right"> @item.Received_Amount</td>
+                                                        <td class="text-right">₹ @item.Received_Amount</td>
                                                     </tr>
                                                 }                 
                                             </tbody>
@@ -326,28 +325,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4">    
+                                <div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Total Amount</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" value="@ViewBag.totalprice" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Balance Due</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-5" style="padding: 14px;">Received Amount</div>
                                     <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Opening Balance</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" value="@ViewBag.paidamount" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Current Balance</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -576,17 +575,17 @@
             
         })
     });
-    function amnttotal() {
-        $('#Paymentmode').css('display', 'block');
-        var sum = 0;
+    //function amnttotal() {
+    //    $('#Paymentmode').css('display', 'block');
+    //    var sum = 0;
 
-        var poid1 = $("input:checkbox:checked").map(function () { return this.value.split(',')[0]; }).toArray();
-        var poid12 = $("input:checkbox:checked").map(function () { return this.value.split(',')[1]; }).toArray()
-        alert(poid1); alert(poid12);
-        var lent = poid1.length;
-        for (var i = 0; i < lent; i++) {
-            sum = sum + parseFloat(poid1[i]);
-            alert(sum);
-        }
-    }
+    //    var poid1 = $("input:checkbox:checked").map(function () { return this.value.split(',')[0]; }).toArray();
+    //    var poid12 = $("input:checkbox:checked").map(function () { return this.value.split(',')[1]; }).toArray()
+    //    alert(poid1); alert(poid12);
+    //    var lent = poid1.length;
+    //    for (var i = 0; i < lent; i++) {
+    //        sum = sum + parseFloat(poid1[i]);
+    //        alert(sum);
+    //    }
+    //}
 </script>
