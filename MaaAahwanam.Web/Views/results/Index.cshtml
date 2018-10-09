@@ -249,10 +249,12 @@
             pageIndex++;
             //alert(pageIndex);
             var servicetype = 'Venue';
+            var slider = $(this).find(".irs-single").text;
+            alert(slider);
             var selectedservices = $('#selectedservices').text();
             $.ajax({
                 type: "POST",
-                url: "/results/LazyLoad?count=" + pageIndex + "&&type=" + selectedservices,
+                url: "/results/LazyLoad?count=" + pageIndex + "&&type=" + selectedservices + "&&slider=" +slider,
                 data: $('#rcount').val(),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -316,12 +318,32 @@
             prefix: "Min. ",
             grid: false,
             onFinish: function (data) {
-                //alert(data.from +'-'+data.to);
-                var from = data.from;
-                var to = data.to;
-                // code here for filtering records based on budget
+                load_product(data);
             }
+
+
+           
         });
+                        // code here for filtering records based on budget
+
+        function load_product(data) {
+          //  alert(data.from + '-' + data.to);
+            var fromto = data.from + ',' + data.to;
+              
+            $.ajax({
+                url: "/results/Loadmore?to_from=" + fromto +"&&type=" + $("#selectedservices").text(),
+                method: "POST",
+                //data: { minimum_range: minimum_range, maximum_range: maximum_range },
+                success: function (data) {
+                    //  $('#load_product').fadeIn('slow').html(data);
+                    $('#loadresults').empty().html(data);
+                 
+                }
+            });
+        }
+
+
+
     </script>
     <script type="text/javascript">
         $('.list input').click(function (e) {

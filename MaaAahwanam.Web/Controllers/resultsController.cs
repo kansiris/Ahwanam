@@ -32,16 +32,31 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
 
-        public PartialViewResult Loadmore(string count, string type)
+        public PartialViewResult Loadmore(string count, string type, string to_from)
+
         {
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');
             ViewBag.count = 6;
-            ViewBag.venues = vendorlist(6, selectedservices, "first", 6); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
+
+            if (to_from == null) {
+                ViewBag.venues = vendorlist(6, selectedservices, "first", 6); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
+
+            }
+            else
+            {
+                var to_from1 = to_from.Split(',');
+                var min = to_from1[0];
+                var max = to_from1[1];
+                var data = vendorlist(6, selectedservices, "first", 6).Where(m => m.cost1 >= decimal.Parse(min) && m.cost1 <= decimal.Parse(max)).ToList(); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
+                ViewBag.venues = data;
+            }
             return PartialView("Loadmore");
         }
 
-        public JsonResult LazyLoad(string count, string type)
+
+       
+        public JsonResult LazyLoad(string count, string type, string slider)
         {
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');
