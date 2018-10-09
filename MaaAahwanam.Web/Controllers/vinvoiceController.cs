@@ -47,6 +47,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
+                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
@@ -74,6 +75,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
+                        ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
@@ -105,31 +107,27 @@ namespace MaaAahwanam.Web.Controllers
             payments.User_Type = "VendorUser";
             payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            payments = rcvpaymentservice.SavePayments(payments);
-            var paymentlist = rcvpaymentservice.getPayments(payments.OrderId).ToList();
-            ViewBag.payment = payments;
-            foreach (var reports in paymentlist)
+            if (payments.Current_Balance == "0")
             {
-                string amount1 = reports.Received_Amount;
-
-                amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
-
-            }
-            decimal paidamount;
-            if (amount == '0')
-            {
-                paidamount = orderdetails.FirstOrDefault().TotalPrice;
-            }
-            else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; }
-            ViewBag.paidamount = paidamount;
-            if(amount == orderdetails.FirstOrDefault().TotalPrice)
-            {
-                payments.Status = "Payment Completed";
+                Order orders = new Order();
+                OrderDetail orderdetils = new OrderDetail();
+                orders.Status = "Payment pending";
+                orderdetils.Status = "Payment pending";
+                var status = orderService.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                payments.Status = "Payment completed";
             }
             else
             {
-                payments.Status = "Payment Pending";
+                Order orders = new Order();
+                OrderDetail orderdetils = new OrderDetail();
+                orders.Status = "Payment pending";
+                orderdetils.Status = "Payment pending";
+                var status = orderService.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+
+                payments.Status = "Payment pending";
             }
+            payments = rcvpaymentservice.SavePayments(payments);
+           
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
 
@@ -138,45 +136,46 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Email(string oid)
         {
             HomeController home = new HomeController();
-          
-            //if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            //{
-            //    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            //    string vid = user.UserId.ToString();
-            //    ViewBag.userid = vid;
-            //    string email = userLoginDetailsService.Getusername(long.Parse(vid));
-            //    ViewBag.vemail = email;
-            //    Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
-            //    var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
-            //    List<Payment> payment = rcvpaymentservice.getPayments(oid);
-            //    var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32((orderdetails1.FirstOrDefault()).UpdatedBy));
-            //    string txtto = userlogdetails.email;
 
-            //    string name = userlogdetails.firstname;
-            //    name = home.Capitalise(name);
-            //    //string OrderId = Convert.ToString(order.OrderId);
-            //    StringBuilder cds = new StringBuilder();
-            //    cds.Append("<table style='border:1px black solid;'><tbody>");
-            //    cds.Append("<tr><td> Payment Id</td><td> Payment Type </td><td> Payment Date </td><td> Received Amount </td></tr>");
-            //    foreach (var item in payment)
-            //    {
-            //        cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
-            //    }
-            //    cds.Append("</tbody></table>");
-            //    //string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-            //    string url = cds.ToString();
-            //    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
-            //    string readFile = File.OpenText().ReadToEnd();
-            //    readFile = readFile.Replace("[ActivationLink]", url);
-            //    readFile = readFile.Replace("[name]", name);
-            //    //readFile = readFile.Replace("[orderid]", OrderId);
-            //    string txtmessage = readFile;//readFile + body;
-            //    string subj = "Thanks for your order";
-            //    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            //    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-            //    emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
-                
-            //}
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string vid = user.UserId.ToString();
+                ViewBag.userid = vid;
+                string email = userLoginDetailsService.Getusername(long.Parse(vid));
+                ViewBag.vemail = email;
+                Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
+                List<Payment> payment = rcvpaymentservice.getPayments(oid);
+                var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
+                var userid = orderdetails1.FirstOrDefault().id;
+                var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(userid));
+                string txtto = userlogdetails.email;
+
+                string name = userlogdetails.firstname + " " + userlogdetails.lastname;
+                name = home.Capitalise(name);
+                //string OrderId = Convert.ToString(order.OrderId);
+                StringBuilder cds = new StringBuilder();
+                cds.Append("<table style='border:1px black solid;'><tbody>");
+                cds.Append("<tr><td> Payment Id</td><td> Payment Type </td><td> Payment Date </td><td> Received Amount </td></tr>");
+                foreach (var item in payment)
+                {
+                    cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                }
+                cds.Append("</tbody></table>");
+                //string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+                string url = cds.ToString();
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", name);
+                //readFile = readFile.Replace("[orderid]", OrderId);
+                string txtmessage = readFile;//readFile + body;
+                string subj = "Thanks for your order";
+                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+
+            }
 
             return Json("success", JsonRequestBehavior.AllowGet);
 

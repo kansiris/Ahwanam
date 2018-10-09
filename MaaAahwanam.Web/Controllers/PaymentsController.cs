@@ -53,6 +53,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdetails = orderdetails1;
                         ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).ToString("dd - MMM - yyyy");
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
+                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
@@ -80,10 +81,12 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
+                        ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
+                            
                             string amount1 = reports.Received_Amount;
 
                             amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
@@ -109,6 +112,25 @@ namespace MaaAahwanam.Web.Controllers
             payments.User_Type = "VendorUser";
             payments.UpdatedDate =TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date =TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            if(payments.Current_Balance =="0")
+            {
+                Order orders = new Order();
+                OrderDetail orderdetils = new OrderDetail();
+                orders.Status = "Payment pending";
+                orderdetils.Status = "Payment pending";
+                var status = orderService.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                payments.Status = "Payment completed";
+            }
+            else
+            {
+                Order orders = new Order();
+                OrderDetail orderdetils = new OrderDetail();
+                orders.Status = "Payment pending";
+                orderdetils.Status = "Payment pending";
+                var status = orderService.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+               
+                payments.Status = "Payment pending";
+            }
             payments = rcvpmntservice.SavePayments(payments);
              //string msg = "Payment saved";
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);

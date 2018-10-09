@@ -69,6 +69,7 @@
                         <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.userid" />
                         <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
                         <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
+                        <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="@ViewBag.orderdetailid" />
 
                         <div class="row">
                             <div class="col-12" style="padding-left:30px">
@@ -131,7 +132,7 @@
                                                 @foreach (var item in ViewBag.orderdetails)
                                                 {
                                                     <tr>
-                                                        <td><input type="checkbox" class="chcktbl" value="" /></td>
+                                                        <td><input type="checkbox" class="chcktbl" value="@item.Due,@item.OrderDetailId" onclick="amnttotal()" /></td>
                                                         <td>@item.EventType</td>
                                                         <td>@item.OrderDetailId</td>
                                                         <td class="text-center"> @item.PerunitPrice</td>
@@ -496,7 +497,8 @@
 
         var payments = {
             OrderId: $("#OrderId").val(),
-            User_Id:$("#User_Id").val(),
+            User_Id: $("#User_Id").val(),
+            OrderDetailId:$("#OrderDetailId").val(),
             Payment_Type: $("input[name='Payment_Type']:checked").val(),
             Cash_Date: $("#Cash_Date").val(),
             Cash_Card_Holdername: $("#Cash_Card_Holdername").val(),
@@ -526,7 +528,8 @@
             data: JSON.stringify({ payments: payments }),
             success: function (data) {
                 alert(data);
-                window.location.href = "/VDashboard?c=orders";
+                location.reload();
+                //window.location.href = "/VDashboard?c=orders";
                // window.location.href = "@Url.Action("Index", "Payments")";
             },
             error: function (data) {
@@ -573,4 +576,17 @@
             
         })
     });
+    function amnttotal() {
+        $('#Paymentmode').css('display', 'block');
+        var sum = 0;
+
+        var poid1 = $("input:checkbox:checked").map(function () { return this.value.split(',')[0]; }).toArray();
+        var poid12 = $("input:checkbox:checked").map(function () { return this.value.split(',')[1]; }).toArray()
+        alert(poid1); alert(poid12);
+        var lent = poid1.length;
+        for (var i = 0; i < lent; i++) {
+            sum = sum + parseFloat(poid1[i]);
+            alert(sum);
+        }
+    }
 </script>
