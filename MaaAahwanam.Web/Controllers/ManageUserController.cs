@@ -87,9 +87,10 @@ namespace MaaAahwanam.Web.Controllers
         {
             int query = mnguserservice.checkuseremail(email, id);
             if (query == 0)
-                return Json("valid email");
+                return Json("success");
             else
-                return Json("already email is added");
+                return Json("sucess1");
+        
         }
         [HttpPost]
         public JsonResult GetUserDetails(string id)
@@ -292,7 +293,7 @@ namespace MaaAahwanam.Web.Controllers
                 mnguser.pincode = pincode;
                 mnguser.Status = Status;
                 mnguser.type = ctype;
-
+            mnguser.vendorId = vid;
                 mnguser = mnguserservice.AddUser(mnguser);
                 var ksc = mnguserservice.getuserbyemail(email).FirstOrDefault();
                 int userid = Convert.ToInt32(ksc.id);
