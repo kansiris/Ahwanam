@@ -102,6 +102,7 @@ namespace MaaAahwanam.Web.Controllers
         }
         [HttpPost]
         public ActionResult Index(Payment payments)
+
         {
             var orderdetails = orderService.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
             payments.User_Type = "VendorUser";
