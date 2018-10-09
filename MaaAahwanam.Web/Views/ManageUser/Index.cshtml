@@ -426,11 +426,11 @@
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <label class="d-block mb-0" style="font-weight:bold">Status</label>
                                                         <fieldset class="form-check" style="display:inline">
-                                                            <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" required />
+                                                            <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" checked required />
                                                             <label class="form-check-label" for="Status1">Active</label>
                                                         </fieldset>
                                                         <fieldset class="form-check" style="display:inline">
-                                                            <input type="radio" class="chckinactive" id="Status2" name="Status" value="InActive" checked required />
+                                                            <input type="radio" class="chckinactive" id="Status2" name="Status" value="InActive"  required />
                                                             <label class="form-check-label" for="Status2">InActive</label>
                                                         </fieldset>
                                                     </div>
@@ -572,7 +572,7 @@
                             $("#state").val(result.state);
                             $("#country").val(result.country);
                             $("#pincode").val(result.pincode);
-                            //$("#Status").val(result.Status);
+                           $("#Status").val(result.Status);
                             if (result.Status == "Active") {
 
                                 $("input[name=Status][value='Active']").prop('checked', true);
@@ -664,7 +664,12 @@
                     contentType: 'application/json',
 
                     success: function (result) {
-                        if (result != "") {
+                        if (result == "please active the user") {
+
+                            alert(result);
+                        }
+                        else if (result != "") {
+
                             alert("Order placed Successfully");
                             window.location.href = "/vinvoice/Index?oid=" + result;
                             window.localStorage.removeItem("vpbook");
@@ -680,7 +685,8 @@
 
             $('#booknowss').click(function () {
                 var businessname = $('#Businessname').val();
-                alert(businessname);
+                alert(businessname); 
+                var type = $('input[name=type]:checked').val();
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
                 var email = $('#email').val();
@@ -691,7 +697,7 @@
                 var state = $('#state').val();
                 var country = $('#country').val();
                 var pincode = $('#pincode').val();
-                var Status = $('#Status').val();
+                var Status = $('input[name=Status]:checked').val(); //$('#Status').val();
                 var vid = $("#vendorId").val();
                 var packid = '@ViewBag.pid';
                 var loc = '@ViewBag.loc';
@@ -704,12 +710,16 @@
                 $('.overlay').show();
                 $('#loadermsg').text('Booking in process....');
                 $.ajax({
-                    url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status,
+                    url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status+ '&&ctype=' + type,
                     type: 'POST',
                     contentType: 'application/json',
 
                     success: function (result) {
-                        if (result == "success") {
+                        if (result == "please active the user") {
+
+                            alert(result);
+                        }
+                        else if (result != "") {
                             alert("Order placed Successfully");
                             window.location.href = "/vinvoice/Index?oid=" + result;
                             window.localStorage.removeItem("vpbook");
