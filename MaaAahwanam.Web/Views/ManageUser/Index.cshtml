@@ -532,11 +532,12 @@
             });
 
 
-
-
-
-            $(document).on('click', '.chcktbl', function () {
+            $(document).on('change', '.chcktbl', function () {
+              
+               
                 if ($(this).is(':checked')) {
+                    $('input.chcktbl').not(this).prop('checked', false);
+                    $(this).attr("checked", "checked");
                     $(this).closest('tr').find('#btnBook').removeAttr('disabled');
                     $('#saverecord').css('display', 'block');
                     $('#SaveUser').css('display', 'none');
@@ -590,6 +591,7 @@
                     })
                 }
                 else {
+                    //$(this).attr("checked", false);
                     $(this).closest('tr').find('#btnBook').attr('disabled', 'disabled');
                     $('#saverecord').css('display', 'none');
                 }
