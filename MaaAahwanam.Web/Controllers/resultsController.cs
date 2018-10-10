@@ -58,15 +58,19 @@ namespace MaaAahwanam.Web.Controllers
        
         public JsonResult LazyLoad(string count, string type, string slider)
         {
+            var slider1 = slider.Split(';');
+            var min = slider1[0];
+            var max = slider1[1];
+            
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');
             int takecount = (count == "" || count == null) ? 6 : int.Parse(count) * 6;
             ViewBag.count = takecount;
             List<GetVendors_Result> vendorslist;
             if (takecount == 6)
-                vendorslist = vendorlist(12, selectedservices, "first", takecount);//resultsPageService.GetAllVendors(type).Take(12).ToList(); 
+                vendorslist = vendorlist(12, selectedservices, "first", takecount).Where(m => m.cost1 >= decimal.Parse(min) && m.cost1 <= decimal.Parse(max)).ToList();//resultsPageService.GetAllVendors(type).Take(12).ToList(); 
             else
-                vendorslist = vendorlist(6, selectedservices, "next", takecount);//resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList(); 
+                vendorslist = vendorlist(6, selectedservices, "next", takecount).Where(m => m.cost1 >= decimal.Parse(min) && m.cost1 <= decimal.Parse(max)).ToList(); //resultsPageService.GetAllVendors(type).Skip(takecount).Take(6).ToList(); 
             return Json(vendorslist);
         }
 
