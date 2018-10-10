@@ -92,12 +92,15 @@ namespace MaaAahwanam.Web.Controllers
                     var policy1 = vendorMasterService.Getpolicy(vid, vsid);
                     ViewBag.policy = policy1;
                     var pkgmenuitems = vendorDashBoardService.GetParticularMenu("Veg", vid, vsid).FirstOrDefault();
-                    //var extramenuitems = "";
-                    //for (int i = 0; i < pkgmenuitems.Extra_Menu_Items.Split(',').Length; i++)
-                    //{
-                    //    extramenuitems = extramenuitems+ "," + pkgmenuitems.Extra_Menu_Items.Split(',')[i].Split('(')[0];
-                    //}
-                    //ViewBag.extramenuitems = extramenuitems.Trim(',');
+                    var extramenuitems = "";
+                    if (pkgmenuitems.Extra_Menu_Items != "" && pkgmenuitems.Extra_Menu_Items != null)
+                    {
+                        for (int i = 0; i < pkgmenuitems.Extra_Menu_Items.Split(',').Length; i++)
+                        {
+                            extramenuitems = extramenuitems + "," + pkgmenuitems.Extra_Menu_Items.Split(',')[i].Split('(')[0];
+                        }
+                    }
+                    ViewBag.extramenuitems = extramenuitems.Trim(',');
                 }
                 else
                     ViewBag.package = new Package();

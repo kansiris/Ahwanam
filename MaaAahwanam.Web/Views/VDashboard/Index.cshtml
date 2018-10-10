@@ -557,7 +557,7 @@
                                 <button class="button pkgitem">Deserts(0)</button>
                                 <button class="button pkgitem">Beverages(0)</button>
                                 <button class="button pkgitem">Fruits(0)</button>
-                                <input name="tags" placeholder="Add New Course...." > @*value="@ViewBag.extramenuitems"*@
+                                <input name="tags" placeholder="Add New Course...." value="@ViewBag.extramenuitems"> 
                                 @*<br><br>*@
                                 @*<input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />*@
                                 <div align="right" class="pkgsave">
@@ -2380,7 +2380,7 @@
                 function (data) {
                     commondiv = data;
                     var getlist = window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
-                    var newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success sni">Save All</button></div></td></tr>';
+                    var newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall">Save All</button></div></td></tr>';
                     for (var i = 0; i < commondiv.split('!').length; i++) {
                         var row = $("<tr/>");
                         if (getlist != null) {
@@ -2406,19 +2406,22 @@
 
         $(document).on('click','.sni',function(){
             var item = $(this).parents("td").find("input").val();
-
-            var nitem = '<tr><td class="menuitems"><a class="removemitem" style="color:red">X</a> <input type="checkbox" style="margin-left:5px;"/>  <label>' + item + '</label></td></tr>';
-            $(this).parents("tr.newtr").before(nitem);
-            var totalitems = '';
-            var favorite = [];
-            $.each($('#pkgmodal .pkgitemsection table.menuitems input[type=checkbox]'), function () {
-                favorite.push($(this).next("label").text());
-                totalitems = favorite.join('!');
-            });
-            //alert(totalitems);
-            $(this).parents("td").find("input").val('').focus();
-
-
+            if (item != '') {
+                var nitem = '<tr><td class="menuitems"><a class="removemitem" style="color:red">X</a> <input type="checkbox" style="margin-left:5px;"/>  <label>' + item + '</label></td></tr>';
+                $(this).parents("tr.newtr").before(nitem);
+                var totalitems = '';
+                var favorite = [];
+                $.each($('#pkgmodal .pkgitemsection table.menuitems input[type=checkbox]'), function () {
+                    favorite.push($(this).next("label").text());
+                    totalitems = favorite.join('!');
+                });
+                $(this).parents("td").find("input").val('').focus();
+            }
+            else {
+                alert("Item Name Cannot be Blank");
+                $(this).parents("td").find("input").focus();
+            }
+            
         });
 
         $(document).on('click','tags span',function(){
@@ -2429,7 +2432,7 @@
             tabletr.empty();
             var newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall1">Save All</button></div></td></tr>';
             if (course != '') {
-                //filteritems(pkgcategory, course,pkgid); uncomment this section to load items from db
+                filteritems(pkgcategory, course,pkgid); //uncomment this section to load items from db
                 tabletr.append(newitem);
                 $('#pkgmodal .selectedpkg').text(course);
                 $('#pkgmodal').modal('show');

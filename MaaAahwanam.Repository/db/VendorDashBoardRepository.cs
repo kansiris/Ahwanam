@@ -96,17 +96,17 @@ namespace MaaAahwanam.Repository.db
         public string UpdateMenuItems(PackageMenu packageMenu,string type)
         {
             var GetItem = _dbContext.PackageMenu.FirstOrDefault(m => m.VendorMasterID == packageMenu.VendorMasterID && m.VendorID == packageMenu.VendorID && m.Category == packageMenu.Category);
-            if (type != "Welcome Drinks") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks;
-            if (type != "Starters") packageMenu.Starters = GetItem.Starters;
-            if (type != "Rice") packageMenu.Rice = GetItem.Rice;
-            if (type != "Bread") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks;
-            if (type != "Curries") packageMenu.Curries = GetItem.Curries;
-            if (type != "Fry/Dry") packageMenu.Fry_Dry = GetItem.Fry_Dry;
-            if (type != "Salads") packageMenu.Salads = GetItem.Salads;
-            if (type != "Soups") packageMenu.Soups = GetItem.Soups;
-            if (type != "Deserts") packageMenu.Deserts = GetItem.Deserts;
-            if (type != "Beverages") packageMenu.Beverages = GetItem.Beverages;
-            if (type != "Fruits") packageMenu.Fruits = GetItem.Fruits;
+            if (type != "Welcome Drinks") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks.Replace("Welcome Drinks(", "").Replace(")", "");
+            if (type != "Starters") packageMenu.Starters = GetItem.Starters.Replace("Starters(", "").Replace(")", "");
+            if (type != "Rice") packageMenu.Rice = GetItem.Rice.Replace("Rice(", "").Replace(")", "");
+            if (type != "Bread") packageMenu.Bread = GetItem.Bread.Replace("Bread(", "").Replace(")", "");
+            if (type != "Curries") packageMenu.Curries = GetItem.Curries.Replace("Curries(", "").Replace(")", "");
+            if (type != "Fry/Dry") packageMenu.Fry_Dry = GetItem.Fry_Dry.Replace("Fry/Dry(", "").Replace(")", "");
+            if (type != "Salads") packageMenu.Salads = GetItem.Salads.Replace("Salads(", "").Replace(")", "");
+            if (type != "Soups") packageMenu.Soups = GetItem.Soups.Replace("Soups(", "").Replace(")", "");
+            if (type != "Deserts") packageMenu.Deserts = GetItem.Deserts.Replace("Deserts(", "").Replace(")", "");
+            if (type != "Beverages") packageMenu.Beverages = GetItem.Beverages.Replace("Beverages(", "").Replace(")", "");
+            if (type != "Fruits") packageMenu.Fruits = GetItem.Fruits.Replace("Fruits(","").Replace(")","");
             packageMenu.MenuID = GetItem.MenuID;
             _dbContext.Entry(GetItem).CurrentValues.SetValues(packageMenu);
             _dbContext.SaveChanges();
