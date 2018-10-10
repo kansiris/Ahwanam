@@ -293,7 +293,7 @@ namespace MaaAahwanam.Web.Controllers
                 mnguser.pincode = pincode;
                 mnguser.Status = Status;
                 mnguser.type = ctype;
-            mnguser.vendorId = vid;
+                mnguser.vendorId = vid;
                 mnguser = mnguserservice.AddUser(mnguser);
                 var ksc = mnguserservice.getuserbyemail(email).FirstOrDefault();
                 int userid = Convert.ToInt32(ksc.id);
@@ -394,17 +394,27 @@ namespace MaaAahwanam.Web.Controllers
                 string name = userlogdetails.firstname;
                 name = home.Capitalise(name);
                 string OrderId = Convert.ToString(order.OrderId);
+                StringBuilder cds = new StringBuilder();
+                cds.Append("<table style='border:1px black solid;'><tbody>");
+                cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
+
+                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+
+                cds.Append("</tbody></table>");
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
                 readFile = readFile.Replace("[name]", name);
                 readFile = readFile.Replace("[orderid]", OrderId);
+                readFile = readFile.Replace("[table]", cds.ToString());
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+                //emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+                string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
+                emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
 
                 var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vid));
 
