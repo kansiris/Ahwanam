@@ -187,6 +187,7 @@ namespace MaaAahwanam.Web.Controllers
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.OrderId = order.OrderId;
+            ViewBag.orderid = orderDetail.OrderId;
             orderDetail.OrderBy = long.Parse(uid);
             orderDetail.PaymentId = '1';
             // orderDetail.ServiceType = type;
@@ -202,13 +203,14 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.UpdatedBy = userid;
             orderDetail.subid = pkgs.VendorSubId;
             orderDetail.BookedDate = Convert.ToDateTime(date1);
+            ViewBag.orderdate = orderDetail.BookedDate;
             orderDetail.EventType = etype1;
                           orderDetail.DealId = long.Parse(pid);
 
 
             orderdetailsServices.SaveOrderDetail(orderDetail);
             var userlogdetails = mnguserservice.getuserbyid(userid);
-
+            ViewBag.userdetails = userlogdetails;
 
             string txtto = userlogdetails.email;
 
@@ -242,14 +244,18 @@ namespace MaaAahwanam.Web.Controllers
             string txtto1 = vendordetails.EmailId;
             string vname = vendordetails.BusinessName;
             vname = home.Capitalise(vname);
-
+            StringBuilder cds2 = new StringBuilder();
+            cds2.Append("<table style='border:1px black solid;'><tbody>");
+            cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
+            cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname +" "+ userlogdetails.lastname+ " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            cds2.Append("</tbody></table>");
             string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
             FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
             string readfile1 = file1.OpenText().ReadToEnd();
             readfile1 = readfile1.Replace("[ActivationLink]", url1);
             readfile1 = readfile1.Replace("[name]", name);
             readfile1 = readfile1.Replace("[vname]", vname);
-            readFile = readFile.Replace("[table]", cds.ToString());
+            readfile1 = readfile1.Replace("[msg]", cds2.ToString());
             readfile1 = readfile1.Replace("[orderid]", OrderId);
             string txtmessage1 = readfile1;
             string subj1 = "order has been placed";
@@ -421,13 +427,18 @@ namespace MaaAahwanam.Web.Controllers
                 string txtto1 = vendordetails.EmailId;
                 string vname = vendordetails.BusinessName;
                 vname = home.Capitalise(vname);
-
+                StringBuilder cds2 = new StringBuilder();
+                cds2.Append("<table style='border:1px black solid;'><tbody>");
+                cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
+                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds2.Append("</tbody></table>");
                 string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
                 string readfile1 = file1.OpenText().ReadToEnd();
                 readfile1 = readfile1.Replace("[ActivationLink]", url1);
                 readfile1 = readfile1.Replace("[name]", name);
                 readfile1 = readfile1.Replace("[vname]", vname);
+                readfile1 = readfile1.Replace("[msg]", cds2.ToString());
                 readfile1 = readfile1.Replace("[orderid]", OrderId);
                 string txtmessage1 = readfile1;
                 string subj1 = "order has been placed";
