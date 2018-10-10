@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>:: Users ::</title>
     <!-- Favicons-->
-    <link rel="shortcut icon" href="http://design.maa-aahwanam.com/contest/images/favIcn.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/CSSWeb/images/favicon.png" type="image/x-icon">
 
     <!-- BASE CSS -->
     <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- YOUR CUSTOM CSS -->
-    <link href="http://design.maa-aahwanam.com/panagea/css/custom1.css" rel="stylesheet">
+    <link href="~/newdesignstyles/css/custom1.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
     <!-- semantic -->
     <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
@@ -61,7 +61,7 @@
                     font-size: 16px;
                 }*/
 
-        input[type=text], input[type="email"], input[type="tel"] {
+        input[type=text], input[type="email"], input[type="tel"], input[type="number"] {
             width: 101%;
             padding: 12px 26px 0px 10px;
             margin: 15px 5px 15px 0px;
@@ -363,7 +363,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+" title="Enter Numbers and 10 digits only" maxlength="10" pattern="[0-9]+" title="number only" value="" required />
+                                                            <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+"  maxlength="10" pattern="[0-9]+" title="Enter Numbers and 10 digits only" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
                                                                 <span class="input__label-content input__label-content--hoshi">Phone Number</span>
                                                             </label>
@@ -389,7 +389,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+(!000000)+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+" title="Enter number only and enter 6 digits only" required />
+                                                            <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+(!000000)+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+"  required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
                                                                 <span class="input__label-content input__label-content--hoshi">PinCode</span>
                                                             </label>
@@ -426,11 +426,11 @@
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <label class="d-block mb-0" style="font-weight:bold">Status</label>
                                                         <fieldset class="form-check" style="display:inline">
-                                                            <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" required />
+                                                            <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" checked required />
                                                             <label class="form-check-label" for="Status1">Active</label>
                                                         </fieldset>
                                                         <fieldset class="form-check" style="display:inline">
-                                                            <input type="radio" class="chckinactive" id="Status2" name="Status" value="InActive" checked required />
+                                                            <input type="radio" class="chckinactive" id="Status2" name="Status" value="InActive"  required />
                                                             <label class="form-check-label" for="Status2">InActive</label>
                                                         </fieldset>
                                                     </div>
@@ -469,7 +469,7 @@
         <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
         <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
         <script src="~/newdesignstyles/Scripts/main.js"></script>
-        <script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>
+        @*<script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>*@
         <!-- DATEPICKER  -->
         <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
         <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
@@ -572,7 +572,7 @@
                             $("#state").val(result.state);
                             $("#country").val(result.country);
                             $("#pincode").val(result.pincode);
-                            //$("#Status").val(result.Status);
+                           $("#Status").val(result.Status);
                             if (result.Status == "Active") {
 
                                 $("input[name=Status][value='Active']").prop('checked', true);
@@ -637,7 +637,9 @@
                     type: 'Post',
                     contentType: 'application/json',
                     success: function (result) {
-                        //alert(result);
+                        if (result == "sucess1" ) {
+                            alert("email is already existed select another email");
+                        }
                     },
                     error: function (result) {
                         alert("failed");
@@ -665,7 +667,12 @@
                     contentType: 'application/json',
 
                     success: function (result) {
-                        if (result != "") {
+                        if (result == "please active the user") {
+
+                            alert(result);
+                        }
+                        else if (result != "") {
+
                             alert("Order placed Successfully");
                             window.location.href = "/vinvoice/Index?oid=" + result;
                             window.localStorage.removeItem("vpbook");
@@ -681,8 +688,8 @@
 
             $('#booknowss').click(function () {
                 var businessname = $('#Businessname').val();
-                alert(businessname);
-
+                alert(businessname); 
+                var type = $('input[name=type]:checked').val();
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
                 var email = $('#email').val();
@@ -693,7 +700,7 @@
                 var state = $('#state').val();
                 var country = $('#country').val();
                 var pincode = $('#pincode').val();
-                var Status = $('#Status').val();
+                var Status = $('input[name=Status]:checked').val(); //$('#Status').val();
                 var vid = $("#vendorId").val();
                 var packid = '@ViewBag.pid';
                 var loc = '@ViewBag.loc';
@@ -706,12 +713,16 @@
                 $('.overlay').show();
                 $('#loadermsg').text('Booking in process....');
                 $.ajax({
-                    url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status,
+                    url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status+ '&&ctype=' + type,
                     type: 'POST',
                     contentType: 'application/json',
 
                     success: function (result) {
-                        if (result != "") {
+                        if (result == "please active the user") {
+
+                            alert(result);
+                        }
+                        else if (result != "") {
                             alert("Order placed Successfully");
                             window.location.href = "/vinvoice/Index?oid=" + result;
                             window.localStorage.removeItem("vpbook");

@@ -56,7 +56,7 @@ namespace MaaAahwanam.Web.Controllers
 
 
        
-        public JsonResult LazyLoad(string count, string type)
+        public JsonResult LazyLoad(string count, string type, string slider)
         {
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');

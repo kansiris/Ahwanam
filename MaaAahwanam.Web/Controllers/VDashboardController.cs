@@ -14,7 +14,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class VDashboardController : Controller
     {
-        
+
         Vendormaster vendorMaster = new Vendormaster();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         OrderService orderService = new OrderService();
@@ -30,7 +30,7 @@ namespace MaaAahwanam.Web.Controllers
 
 
         const string imagepath = @"/vendorimages/";
-        
+
         // GET: VDashboard
         public ActionResult Index(string c, string vsid, string loc, string eventtype, string count, string date)
         {
@@ -64,13 +64,13 @@ namespace MaaAahwanam.Web.Controllers
                 List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
                 List<VendorImage> vimg = new List<VendorImage>();
                 List<string> availability = new List<string>();
-                ViewBag.policy = vendorMasterService.Getpolicy(vid, vsid); 
+                ViewBag.policy = vendorMasterService.Getpolicy(vid, vsid);
 
                 //packages section
                 package = viewservicesss.getvendorpkgs(vid).ToList(); ViewBag.availablepackages = package;
                 ViewBag.particularVenue = vendor;
                 if (eventtype != null && count != null && date != null)
-                    ViewBag.venues = venues.Where(m=>m.Minimumseatingcapacity >= int.Parse(count)).ToList();
+                    ViewBag.venues = venues.Where(m => m.Minimumseatingcapacity >= int.Parse(count)).ToList();
                 else
                     ViewBag.venues = venues;
                 Addservices(vsid);
@@ -91,6 +91,13 @@ namespace MaaAahwanam.Web.Controllers
                     else ViewBag.package = new Package();
                     var policy1 = vendorMasterService.Getpolicy(vid, vsid);
                     ViewBag.policy = policy1;
+                    var pkgmenuitems = vendorDashBoardService.GetParticularMenu("Veg", vid, vsid).FirstOrDefault();
+                    //var extramenuitems = "";
+                    //for (int i = 0; i < pkgmenuitems.Extra_Menu_Items.Split(',').Length; i++)
+                    //{
+                    //    extramenuitems = extramenuitems+ "," + pkgmenuitems.Extra_Menu_Items.Split(',')[i].Split('(')[0];
+                    //}
+                    //ViewBag.extramenuitems = extramenuitems.Trim(',');
                 }
                 else
                     ViewBag.package = new Package();
@@ -142,8 +149,8 @@ namespace MaaAahwanam.Web.Controllers
         {
             List<string[]> betweendates = new List<string[]>();
             string dates = "";
-         // var  dates1 = date.Split('-');
-            
+            // var  dates1 = date.Split('-');
+
             //var Gettotaldates = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
             int recordcount = data.Count();
             foreach (var item in data)
@@ -774,7 +781,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json(message);
         }
 
-        public JsonResult updatepolicy( string policycheck,string vsid, string Tax,string Decoration_starting_costs,string Rooms_Count,string Advance_Amount,string Room_Average_Price)
+        public JsonResult updatepolicy(string policycheck, string vsid, string Tax, string Decoration_starting_costs, string Rooms_Count, string Advance_Amount, string Room_Average_Price)
         {
 
             var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
@@ -816,13 +823,14 @@ namespace MaaAahwanam.Web.Controllers
 
             string msg;
 
-           policy.Decoration_starting_costs = Decoration_starting_costs;
-           policy.Tax = Tax;
-           policy.Advance_Amount = Advance_Amount;
-           policy.Room_Average_Price = Room_Average_Price;
-           policy.Rooms_Count = Rooms_Count ;
+            policy.Decoration_starting_costs = Decoration_starting_costs;
+            policy.Tax = Tax;
+            policy.Advance_Amount = Advance_Amount;
+            policy.Room_Average_Price = Room_Average_Price;
+            policy.Rooms_Count = Rooms_Count;
             var policy1 = vendorMasterService.Getpolicy(vid, vsid);
-            if (policy1 == null) {
+            if (policy1 == null)
+            {
                 var data = vendorMasterService.insertpolicy(policy, vid, vsid);
                 msg = "policies inserted";
             }
@@ -835,7 +843,7 @@ namespace MaaAahwanam.Web.Controllers
 
         }
 
-        public JsonResult GetPackagemenuItem(string menuitem, string category,string vsid)
+        public JsonResult GetPackagemenuItem(string menuitem, string category, string vsid)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -844,55 +852,86 @@ namespace MaaAahwanam.Web.Controllers
                 string email = userLoginDetailsService.Getusername(long.Parse(user.UserId.ToString()));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
                 var particularitem = "";
-                var package = vendorDashBoardService.GetParticularMenu(category, vendorMaster.Id.ToString(), vsid).Select(m=>new
+                var package = vendorDashBoardService.GetParticularMenu(category, vendorMaster.Id.ToString(), vsid).Select(m => new
                 {
-                    m.Welcome_Drinks,m.Starters,m.Rice,m.Bread,m.Curries,m.Fry_Dry,m.Salads,m.Soups,m.Deserts,m.Beverages,m.Fruits
+                    m.Welcome_Drinks,
+                    m.Starters,
+                    m.Rice,
+                    m.Bread,
+                    m.Curries,
+                    m.Fry_Dry,
+                    m.Salads,
+                    m.Soups,
+                    m.Deserts,
+                    m.Beverages,
+                    m.Fruits,m.Extra_Menu_Items
                 }).ToList();
                 var serialised = String.Join("#", package).Replace("{", "").Replace("}", "");
-                var convertedlist = serialised.Split('#',',');
-                var mitem = menuitem.Replace(" ", "_").Replace("/","_");
-                for (int i = 0; i < convertedlist.Count(); i++)
+                var convertedlist = serialised.Split('#', ',');
+                if (new[] { "Welcome Drinks", "Starters", "Rice", "Bread", "Curries", "Fry/Dry", "Salads", "Soups", "Deserts", "Beverages", "Fruits"}.Contains(menuitem))
                 {
-                    if (convertedlist[i].Split('=')[0].Trim() == mitem)  particularitem = convertedlist[i].Split('=')[1]; 
+                    var mitem = menuitem.Replace(" ", "_").Replace("/", "_");
+                    for (int i = 0; i < convertedlist.Count(); i++)
+                    {
+                        if (convertedlist[i].Split('=')[0].Trim() == mitem) particularitem = convertedlist[i].Split('=')[1];
+                    }
+                    return Json(particularitem, JsonRequestBehavior.AllowGet);
                 }
-                return Json(particularitem, JsonRequestBehavior.AllowGet);
+                else
+                {
+                    var extramenus = package.FirstOrDefault().Extra_Menu_Items.Trim(',').Split(',');
+                    for (int i = 0; i < extramenus.Count(); i++)
+                    {
+                        if (extramenus[i].Split('(')[0].Trim() == menuitem.Trim()) particularitem = extramenus[i].Split('(')[1].Split(')')[0];
+                    }
+                    return Json(particularitem, JsonRequestBehavior.AllowGet);
+                }
             }
             return Json("Failed");
         }
 
         public JsonResult GetMenuItem(string pkgid)
         {
-            var pkg = vendorProductsService.getpartpkgs(pkgid).Select(m=>m.menuitems).FirstOrDefault();
-            return Json(pkg,JsonRequestBehavior.AllowGet);
+            var pkg = vendorProductsService.getpartpkgs(pkgid).Select(m => m.menuitems).FirstOrDefault();
+            return Json(pkg, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateMenuItems(PackageMenu PackageMenu,string type)
+        public JsonResult UpdateMenuItems(PackageMenu PackageMenu, string type)
         {
             PackageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             string status = vendorDashBoardService.UpdateMenuItems(PackageMenu, type);
-            if (status == "Updated") status = ""+type+" Items Updated!!!Reload To See Changes";
-            return Json(status,JsonRequestBehavior.AllowGet);
+            if (status == "Updated") status = "" + type + " Items Updated";
+            return Json(status, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult deleteservice(string ks, string vsid, string type)
         {
             try
             {
-                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-            string uid = user.UserId.ToString();
-            string email = userLoginDetailsService.Getusername(long.Parse(uid));
-            vendorMaster = vendorMasterService.GetVendorByEmail(email);
-            string vid = vendorMaster.Id.ToString();
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string uid = user.UserId.ToString();
+                string email = userLoginDetailsService.Getusername(long.Parse(uid));
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                string vid = vendorMaster.Id.ToString();
+                string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
+                string message = vendorImageService.DeleteAllImages(long.Parse(vid), long.Parse(vsid));
+                return Json(message, JsonRequestBehavior.AllowGet);
 
-                    string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
-                    string message = vendorImageService.DeleteAllImages(long.Parse(vid), long.Parse(vsid));
-                    return Json(message, JsonRequestBehavior.AllowGet);
-                        
             }
             catch (Exception)
             {
-                return Json("something went wrong",JsonRequestBehavior.AllowGet);
+                return Json("something went wrong", JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public JsonResult NewCourse(PackageMenu packageMenu,string type)
+        {
+            var getmenu = vendorDashBoardService.GetParticularMenu(packageMenu.Category, packageMenu.VendorMasterID, packageMenu.VendorID).FirstOrDefault();
+            packageMenu.Extra_Menu_Items = packageMenu.Extra_Menu_Items+ "," + getmenu.Extra_Menu_Items;
+            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
+            string status = vendorDashBoardService.UpdateMenuItems(packageMenu, type);
+            if (status == "Updated") status = "New Course & Course Items Added";
+            return Json(status ,JsonRequestBehavior.AllowGet);
         }
 
     }
