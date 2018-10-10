@@ -882,10 +882,13 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    var extramenus = package.FirstOrDefault().Extra_Menu_Items.Trim(',').Split(',');
-                    for (int i = 0; i < extramenus.Count(); i++)
+                    if (package.FirstOrDefault().Extra_Menu_Items != "" && package.FirstOrDefault().Extra_Menu_Items != null)
                     {
-                        if (extramenus[i].Split('(')[0].Trim() == menuitem.Trim()) particularitem = extramenus[i].Split('(')[1].Split(')')[0];
+                        var extramenus = package.FirstOrDefault().Extra_Menu_Items.Trim(',').Split(',');
+                        for (int i = 0; i < extramenus.Count(); i++)
+                        {
+                            if (extramenus[i].Split('(')[0].Trim() == menuitem.Trim()) particularitem = extramenus[i].Split('(')[1].Split(')')[0];
+                        }
                     }
                     return Json(particularitem, JsonRequestBehavior.AllowGet);
                 }
@@ -901,6 +904,8 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult UpdateMenuItems(PackageMenu PackageMenu, string type)
         {
+            var getmenu = vendorDashBoardService.GetParticularMenu(PackageMenu.Category, PackageMenu.VendorMasterID, PackageMenu.VendorID).FirstOrDefault();
+            PackageMenu.Extra_Menu_Items = getmenu.Extra_Menu_Items.Trim(',');
             PackageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             string status = vendorDashBoardService.UpdateMenuItems(PackageMenu, type);
             if (status == "Updated") status = "" + type + " Items Updated";

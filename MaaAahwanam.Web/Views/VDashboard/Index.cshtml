@@ -2380,7 +2380,12 @@
                 function (data) {
                     commondiv = data;
                     var getlist = window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
-                    var newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall">Save All</button></div></td></tr>';
+                    var newitem = '';
+                    if(pkgid == 'New')
+                        newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall1">Save All</button></div></td></tr>';
+                    else
+                        newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall">Save All</button></div></td></tr>';
+
                     for (var i = 0; i < commondiv.split('!').length; i++) {
                         var row = $("<tr/>");
                         if (getlist != null) {
@@ -2391,7 +2396,7 @@
                                 row.append('<td class="menuitems"> <a class="removemitem" style="color:red">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;"/>  <label>' + commondiv.split('!')[i] + '</label></td>');
                             }
                         }
-                        else {
+                        else if(commondiv != ''){
                             row.append('<td class="menuitems"> <a class="removemitem" style="color:red">X</a> <input type="checkbox" style="margin-left:5px;"/>  <label>' + commondiv.split('!')[i] + '</label></td>');
                         }
                         tabletr.append(row);
@@ -2426,14 +2431,14 @@
 
         $(document).on('click','tags span',function(){
             var course = $(this).text();
-            var pkgid = $(this).parent("div.col-md-2-10").find("div.pkgsave").find("input.packageid").val();
+            var pkgid = 'New';//$(this).parent("div.col-md-2-10").find("div.pkgsave").find("input.packageid").val();
             var pkgcategory = $("input[name='checkradio']:checked").val();
             var tabletr = $('#pkgmodal .pkgitemsection table.menuitems');
             tabletr.empty();
             var newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall1">Save All</button></div></td></tr>';
             if (course != '') {
                 filteritems(pkgcategory, course,pkgid); //uncomment this section to load items from db
-                tabletr.append(newitem);
+                //tabletr.append(newitem);
                 $('#pkgmodal .selectedpkg').text(course);
                 $('#pkgmodal').modal('show');
             }
@@ -2448,7 +2453,7 @@
                 favorite.push($(this).next("label").text());
                 totalitems = favorite.join('!');
             });
-            totalitems = type + '(' + totalitems + ')';
+            totalitems = totalitems;
             //alert(totalitems);
             var PackageMenu = {
                 VendorID :'@ViewBag.vsid',
@@ -2464,7 +2469,7 @@
                 Soups:totalitems,
                 Deserts:totalitems,
                 Beverages:totalitems,
-                Fruits:totalitems
+                Fruits:totalitems,
             }
 
             $.ajax({
