@@ -99,7 +99,7 @@ namespace MaaAahwanam.Repository.db
             if (type != "Welcome Drinks") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks;
             if (type != "Starters") packageMenu.Starters = GetItem.Starters;
             if (type != "Rice") packageMenu.Rice = GetItem.Rice;
-            if (type != "Bread") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks;
+            if (type != "Bread") packageMenu.Bread = GetItem.Bread;
             if (type != "Curries") packageMenu.Curries = GetItem.Curries;
             if (type != "Fry/Dry") packageMenu.Fry_Dry = GetItem.Fry_Dry;
             if (type != "Salads") packageMenu.Salads = GetItem.Salads;
