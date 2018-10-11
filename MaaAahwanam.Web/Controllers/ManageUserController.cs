@@ -15,14 +15,13 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class ManageUserController : Controller
     {
-        Vendormaster vendorMaster = new Vendormaster();
+
+        newmanageuser newmanageuse = new newmanageuser();
+       Vendormaster vendorMaster = new Vendormaster();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-        VendorMasterService vendorMasterService = new VendorMasterService();
-        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
-        VendorDashBoardService mnguserservice = new VendorDashBoardService();
-        viewservicesservice viewservicesss = new viewservicesservice();
-        VendorProductsService vendorProductsService = new VendorProductsService();
+     VendorDashBoardService mnguserservice = new VendorDashBoardService();
+     
+       // VendorProductsService vendorProductsService = new VendorProductsService();
 
 
 
@@ -33,8 +32,8 @@ namespace MaaAahwanam.Web.Controllers
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string uid = user.UserId.ToString();
-                string vemail = userLoginDetailsService.Getusername(long.Parse(uid));
-                vendorMaster = vendorMasterService.GetVendorByEmail(vemail);
+                string vemail = newmanageuse.Getusername(long.Parse(uid));
+                vendorMaster = newmanageuse.GetVendorByEmail(vemail);
                 VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 ViewBag.Userlist = mnguserservice.getuser(VendorId);
@@ -49,7 +48,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.date = date1;
                     ViewBag.eventtype = select1[3];
                     var pid = select1[4];
-                    var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                    var pkgs = newmanageuse.getpartpkgs(pid).FirstOrDefault();
                     string price = "";
                     if (pkgs.PackagePrice == null)
                     { price = Convert.ToString(pkgs.price1); }
@@ -121,9 +120,9 @@ namespace MaaAahwanam.Web.Controllers
             if (loc != "")
             {
                 pid1 = pid;
-                var userdata = userLoginDetailsService.GetUser(userid);
+                var userdata = newmanageuse.GetUser(userid);
                 //Payment Section
-                var pkgs1 = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                var pkgs1 = newmanageuse.getpartpkgs(pid).FirstOrDefault();
                 type = pkgs1.VendorType;
                 guest = count;
                 date1 = date;
@@ -158,7 +157,7 @@ namespace MaaAahwanam.Web.Controllers
                 etype1 = ViewBag.eventtype = select1[3];
                 string pid2 = select1[4];
                 pid1 = pid2;
-                var pkgs2 = vendorProductsService.getpartpkgs(pid2).FirstOrDefault();
+                var pkgs2 = newmanageuse.getpartpkgs(pid2).FirstOrDefault();
                 if (pkgs2.PackagePrice == null)
                 { price = Convert.ToString(pkgs2.price1); }
                 else { price = Convert.ToString(pkgs2.PackagePrice); }
@@ -166,10 +165,12 @@ namespace MaaAahwanam.Web.Controllers
                 totalprice = (Convert.ToInt64(guests) * Convert.ToInt64(price)).ToString();
                 guest = guests;
             }
-            var pkgs = vendorProductsService.getpartpkgs(pid1).FirstOrDefault();
+            var pkgs = newmanageuse.getpartpkgs(pid1).FirstOrDefault();
+
+
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             //Saving Record in order Table
-            OrderService orderService = new OrderService();
+          //  OrderService orderService = new OrderService();
             MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
             order.TotalPrice = Convert.ToDecimal(totalprice);
             order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
@@ -177,10 +178,10 @@ namespace MaaAahwanam.Web.Controllers
             order.OrderedBy = long.Parse(vid);
             order.UpdatedDate = Convert.ToDateTime(updateddate);
             order.Status = "Pending";
-            order = orderService.SaveOrder(order);
+            order = newmanageuse.SaveOrder(order);
 
             //Saving Order Details
-            OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
+          //  OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.OrderId = order.OrderId;
             orderDetail.OrderBy = long.Parse(uid);
@@ -200,8 +201,10 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.BookedDate = Convert.ToDateTime(date1);
             ViewBag.orderdate = orderDetail.BookedDate;
             orderDetail.EventType = etype1;
-            orderDetail.DealId = long.Parse(pid);
-            orderdetailsServices.SaveOrderDetail(orderDetail);
+                          orderDetail.DealId = long.Parse(pid);
+
+
+            newmanageuse.SaveOrderDetail(orderDetail);
             var userlogdetails = mnguserservice.getuserbyid(userid);
             string txtto = userlogdetails.email;
             string name = userlogdetails.firstname;
@@ -227,7 +230,7 @@ namespace MaaAahwanam.Web.Controllers
             string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
             emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
 
-            var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vid));
+            var vendordetails = newmanageuse.getvendor(Convert.ToInt32(vid));
 
             string txtto1 = vendordetails.EmailId;
             string vname = vendordetails.BusinessName;
@@ -296,9 +299,9 @@ namespace MaaAahwanam.Web.Controllers
                 if (loc != "")
                 {
                     pid1 = pid;
-                    var userdata = userLoginDetailsService.GetUser(userid);
+                    var userdata = newmanageuse.GetUser(userid);
                     //Payment Section
-                    var pkgs1 = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                    var pkgs1 = newmanageuse.getpartpkgs(pid).FirstOrDefault();
                     type = pkgs1.VendorType;
                     guest = count;
                     date1 = date;
@@ -333,7 +336,7 @@ namespace MaaAahwanam.Web.Controllers
                     etype1 = ViewBag.eventtype = select1[3];
                     string pid2 = select1[4];
                     pid1 = pid2;
-                    var pkgs2 = vendorProductsService.getpartpkgs(pid2).FirstOrDefault();
+                    var pkgs2 = newmanageuse.getpartpkgs(pid2).FirstOrDefault();
                     if (pkgs2.PackagePrice == null)
                     { price = Convert.ToString(pkgs2.price1); }
                     else { price = Convert.ToString(pkgs2.PackagePrice); }
@@ -341,7 +344,7 @@ namespace MaaAahwanam.Web.Controllers
                     totalprice = (Convert.ToInt64(guests) * Convert.ToInt64(price)).ToString();
                     guest = guests;
                 }
-                var pkgs = vendorProductsService.getpartpkgs(pid1).FirstOrDefault();
+                var pkgs = newmanageuse.getpartpkgs(pid1).FirstOrDefault();
 
 
                 DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
@@ -410,7 +413,7 @@ namespace MaaAahwanam.Web.Controllers
                 string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
                 emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
 
-                var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vid));
+                var vendordetails = newmanageuse.getvendor(Convert.ToInt32(vid));
 
                 string txtto1 = vendordetails.EmailId;
                 string vname = vendordetails.BusinessName;
@@ -453,7 +456,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.date = date1;
                 ViewBag.eventtype = select1[3];
                 var pid = select1[4];
-                var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                var pkgs = newmanageuse.getpartpkgs(pid).FirstOrDefault();
                 string price = "";
                 if (pkgs.PackagePrice == null)
                 {
@@ -476,7 +479,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (pid != null && pid != "")
             {
-                SPGETpartpkg_Result package = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
+                SPGETpartpkg_Result package = newmanageuse.getpartpkgs(pid).FirstOrDefault();
                 return Json(package,JsonRequestBehavior.AllowGet);
             }
             return Json("Failed!!!");

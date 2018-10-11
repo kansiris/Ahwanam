@@ -237,6 +237,9 @@
                             </div>
                             <div class="col-md-10" style="color:black">
                                 <div class="isotope-wrapper" style="padding: 30px;margin-top: 70px;">
+                                    <div class="center">
+                                        @{Html.RenderAction("orderdetails", "ManageUser"); }
+                                    </div>
                                     <div>
                                         <table style="width:100%">
                                             <tr>
@@ -300,9 +303,7 @@
                                         </table>
                                     </div>
 
-                                    <div class="center">
-                                        @{Html.RenderAction("orderdetails", "ManageUser"); }
-                                    </div>
+                                    
 
                                     <div class="row" id="saverecord" style="display:none;margin-top:50px">
                                         <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
@@ -325,7 +326,7 @@
                                                             <label class="form-check-label" for="radio2">Corporate</label>
                                                         </span>
                                                     </div>
-                                                    <div class="col-12 col-sm-4 col-md-4" style="display:block;">
+                                                    <div class="col-12 col-sm-4 col-md-4" id="company" style="display:block;">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
@@ -479,6 +480,14 @@
 
         <script>
             $(document).ready(function () {
+                $("#radio2").click(function () {
+                    $("#company").show('slow');
+                });
+                $("#radio1").click(function () {
+                    $("#company").hide('slow');
+                });
+
+
                 $('#allorders').DataTable();
                 $('#addservices').css("display", "none");
                 var vpbook1 = window.localStorage.getItem("vpbook");

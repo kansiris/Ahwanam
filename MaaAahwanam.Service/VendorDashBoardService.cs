@@ -76,5 +76,15 @@ namespace MaaAahwanam.Service
         {
             return mngvendorrepository.UpdateMenuItems(packageMenu,type);
         }
+
+        public int AddVegMenu(PackageMenu packageMenu)
+        {
+            return mngvendorrepository.AddVegMenu(packageMenu);
+        }
+
+        public int AddNonVegMenu(PackageMenu packageMenu)
+        {
+            return mngvendorrepository.AddNonVegMenu(packageMenu);
+        }
     }
 }

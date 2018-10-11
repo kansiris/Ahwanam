@@ -93,7 +93,7 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.PackageMenu.Where(m => m.VendorMasterID == id && m.VendorID == vid && m.Category == category).ToList();
         }
 
-        public string UpdateMenuItems(PackageMenu packageMenu,string type)
+        public string UpdateMenuItems(PackageMenu packageMenu, string type)
         {
             var GetItem = _dbContext.PackageMenu.FirstOrDefault(m => m.VendorMasterID == packageMenu.VendorMasterID && m.VendorID == packageMenu.VendorID && m.Category == packageMenu.Category);
             if (type != "Welcome Drinks") packageMenu.Welcome_Drinks = GetItem.Welcome_Drinks;
@@ -111,6 +111,20 @@ namespace MaaAahwanam.Repository.db
             _dbContext.Entry(GetItem).CurrentValues.SetValues(packageMenu);
             _dbContext.SaveChanges();
             return "Updated";
+        }
+
+        public int AddVegMenu(PackageMenu packageMenu)
+        {
+            _dbContext.PackageMenu.Add(packageMenu);
+            int count = _dbContext.SaveChanges();
+            return count;
+        }
+
+        public int AddNonVegMenu(PackageMenu packageMenu)
+        {
+            _dbContext.PackageMenu.Add(packageMenu);
+            int count = _dbContext.SaveChanges();
+            return count;
         }
     }
 }

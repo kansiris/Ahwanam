@@ -14,10 +14,12 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class vinvoiceController : Controller
     {
+        newmanageuser newmanageuse = new newmanageuser();
+
         VendorMasterService vendorMasterService = new VendorMasterService();
-        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        OrderService orderService = new OrderService();
-        OrderdetailsServices orderdetailService = new OrderdetailsServices();
+
+        
+     
         ReceivePaymentService rcvpaymentservice = new ReceivePaymentService();
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
@@ -30,15 +32,15 @@ namespace MaaAahwanam.Web.Controllers
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
                 ViewBag.userid = id;
-                string email = userLoginDetailsService.Getusername(long.Parse(id));
+                string email = newmanageuse.Getusername(long.Parse(id));
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
                 if (oid != null && oid != "")
                 {
-                    var orderdetails = orderService.userOrderList().Where(m=>m.OrderId == long.Parse(oid)).ToList();
+                    var orderdetails = newmanageuse.userOrderList().Where(m=>m.OrderId == long.Parse(oid)).ToList();
                     if (orderdetails == null || orderdetails.Count == 0)
                     {
-                      var  orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
+                      var  orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
                         ViewBag.username = orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname;
                         ViewBag.vendorname = orderdetails1.FirstOrDefault().BusinessName;
                         ViewBag.vendoraddress = orderdetails1.FirstOrDefault().Address + "," + orderdetails1.FirstOrDefault().Landmark + "," + orderdetails1.FirstOrDefault().City;
@@ -104,7 +106,7 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(Payment payments)
 
         {
-            var orderdetails = orderService.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
+            var orderdetails = newmanageuse.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
             payments.User_Type = "VendorUser";
             payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
@@ -114,7 +116,7 @@ namespace MaaAahwanam.Web.Controllers
                 OrderDetail orderdetils = new OrderDetail();
                 orders.Status = "Payment pending";
                 orderdetils.Status = "Payment pending";
-                var status = orderService.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
                 payments.Status = "Payment completed";
             }
             else
@@ -123,7 +125,7 @@ namespace MaaAahwanam.Web.Controllers
                 OrderDetail orderdetils = new OrderDetail();
                 orders.Status = "Payment pending";
                 orderdetils.Status = "Payment pending";
-                var status = orderService.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
 
                 payments.Status = "Payment pending";
             }
@@ -143,15 +145,15 @@ namespace MaaAahwanam.Web.Controllers
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string vid = user.UserId.ToString();
                 ViewBag.userid = vid;
-                string email = userLoginDetailsService.Getusername(long.Parse(vid));
+                string email = newmanageuse.Getusername(long.Parse(vid));
                 ViewBag.vemail = email;
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 List<Payment> payment = rcvpaymentservice.getPayments(oid);
                 string txtto = ""; string name = "";
-                var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
+                var orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
                 if (orderdetails1.Count == 0)
                 {
-                    var orderdetails = orderService.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(oid));
+                    var orderdetails = newmanageuse.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(oid));
                     txtto = orderdetails.username;
                     name = home.Capitalise(orderdetails.FirstName + " " + orderdetails.LastName);
                 }
