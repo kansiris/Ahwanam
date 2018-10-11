@@ -545,23 +545,32 @@
                             </div>
                             <div class="col-md-2-10">
                                 @*<br>*@
-                                <button class="button pkgitem" value="Welcome Drinks">Welcome Drinks(0)</button>
-                                <button class="button pkgitem" value="Starters">Starters(0)</button>
-                                <button class="button pkgitem" value="Rice">Rice(0)</button>
-                                <button class="button pkgitem" value="Bread">Bread(0)</button>
-                                <button class="button pkgitem" value="Curries">Curries(0)</button>
-                                <button class="button pkgitem" value="Fry/Dry">Fry/Dry(0)</button>
-                                <button class="button pkgitem" value="Salads">Salads(0)</button>
-                                <button class="button pkgitem" value="Soups">Soups(0)</button>
-                                @*<button class="button pkgitem">Tandoori/Kababs(0)</button>*@
-                                <button class="button pkgitem" value="Deserts">Deserts(0)</button>
-                                <button class="button pkgitem" value="Beverages">Beverages(0)</button>
-                                <button class="button pkgitem" value="Fruits">Fruits(0)</button>
+                                @if (ViewBag.pkgitems != null) {
+                                    foreach (var item in ViewBag.pkgitems)
+                                    {
+                                        <button class="button pkgitem" value="@item.Split('(')[0]">@item.Split('(')[0] (@item.Split('(')[1].Split(')')[0].Split('!').Length)</button>
+                                    }
+                                }
+                                else
+                                {
+                                    <button class="button pkgitem" value="Welcome Drinks">Welcome Drinks(0)</button>
+                                    <button class="button pkgitem" value="Starters">Starters(0)</button>
+                                    <button class="button pkgitem" value="Rice">Rice(0)</button>
+                                    <button class="button pkgitem" value="Bread">Bread(0)</button>
+                                    <button class="button pkgitem" value="Curries">Curries(0)</button>
+                                    <button class="button pkgitem" value="Fry/Dry">Fry/Dry(0)</button>
+                                    <button class="button pkgitem" value="Salads">Salads(0)</button>
+                                    <button class="button pkgitem" value="Soups">Soups(0)</button>
+                                    <button class="button pkgitem" value="Deserts">Deserts(0)</button>
+                                    <button class="button pkgitem" value="Beverages">Beverages(0)</button>
+                                    <button class="button pkgitem" value="Fruits">Fruits(0)</button>
+                                }
                                 <input name="tags" placeholder="Add New Course...." value="@ViewBag.extramenuitems"> 
                                 @*<br><br>*@
                                 @*<input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />*@
                                 <div align="right" class="pkgsave">
                                     <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />
+                                    <input type="hidden" class="selpkgitems" />
                                     <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
                                     <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
                                     @if (ViewBag.package.PackageID != 0)
@@ -1952,10 +1961,11 @@
     <i class="close icon"></i>
     <div class="header">
         <input type="text" class="selectedpkg" style="max-width:300px;width:70%;padding:0;margin:0"/>Items
+        <text>Max items Customer can choose</text><input class="maxcount" type="number" value="0" style="width:20%;" />
     </div>
     <div class="scrolling content pkgitemsection">
+        <p style="display:none" id="ctype" />
         <table class="menuitems"></table>
-        <label>Max items Customer can choose</label><input type="text" placeholder="Enter Count" style="max-width:300px;width:75%"/>
     </div>
     <div class="actions">
         <div class="ui negative button" style="height:40px;">
@@ -2127,6 +2137,7 @@
         }
 
         var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Deserts,Beverages,Fruits';
+        var totallist = $('.pkgmenuitems').val();
         var pkgdesc = '';
         $(function () {
             var cvalue = '';
@@ -2191,6 +2202,7 @@
             var timeslot = $('#pkgslots').val();
             var pkgdescription = $('#pkgdesc').val();
             var menuitems = pkgdesc;
+            var menu = $(this).parent('div').find('input.selpkgitems').val();
             //alert(pkgdesc);
             if (packagename == '') {
                 $(packagename).focus();
@@ -2232,7 +2244,8 @@
                     VendorType: '@ViewBag.Vendor.ServicType',
                     VendorSubType: '@ViewBag.subtype',
                     timeslot: timeslot,
-                    menuitems : menuitems
+                    menuitems : menuitems,
+                    menu : menu
                 }
                 $.ajax({
                     url: '/VDashboard/AddPackage',
@@ -2262,6 +2275,7 @@
             var timeslot = $('#pkgslots').val();
             var pkgdescription = $('#pkgdesc').val();
             var menuitems = $(this).parent('div').find('input.pkgmenuitems').val();
+            var menu = $(this).parent('div').find('input.selpkgitems').val();
             if (packagename == '') {
                 $(packagename).focus();
                 alert("Enter Package Name");
@@ -2303,7 +2317,8 @@
                     VendorType: '@ViewBag.Vendor.ServicType',
                     VendorSubType: '@ViewBag.subtype',
                     timeslot: timeslot,
-                    menuitems : menuitems
+                    menuitems : menuitems,
+                    menu:menu
                 }
                 //alert(menuitems);
                 $.ajax({
@@ -2324,7 +2339,9 @@
         });
 
         function Addpkgitems() {
+            var ctype = $('#pkgmodal .pkgitemsection p#ctype').text(); alert(ctype);
             var type = $('#pkgmodal .selectedpkg').val();
+            var maxcount = $('#pkgmodal .maxcount').val();
             var selecteditems = '';
             var itemstable = $('#pkgmodal').find('table.menuitems');
             $(itemstable).find('tr').each(function () {
@@ -2336,12 +2353,12 @@
                         selecteditems = checkText;
                 }
             });
-            window.localStorage.setItem(type.toLowerCase()+'@ViewBag.vsid', selecteditems);
-            var totallist = $('.pkgmenuitems').val();
+            //window.localStorage.setItem(type.toLowerCase()+'@ViewBag.vsid', selecteditems);
+            var totallist = $('.selpkgitems').val();
             if(totallist == '') totallist = type +'('+selecteditems+')';
             else totallist= totallist + ',' + type +'('+selecteditems+')';
-            $('.pkgmenuitems').val(totallist);
-            if ($(".col-md-2-10 button:contains(" + type + ")").replaceWith('<button class="button pkgitem">' + type + '(' + selecteditems.split('!').length + ')</button>'));
+            $('.selpkgitems').val(totallist);
+            if ($(".col-md-2-10 button:contains(" + type + ")").replaceWith('<button class="button pkgitem" value='+ ctype.replace(' ','_') +'>' + type + '(' + maxcount + ')</button>'));
         }
 
         function orderemail(val) {
@@ -2358,7 +2375,9 @@
                 alert("Select Menu Type")
             }
             else {
-                var val = $(this).text().split('(')[0];
+                var val = $(this).val().replace('_',' ');
+                var pkgid = $(this).text().split('(')[0]; // Course name
+                $('#pkgmodal .pkgitemsection #ctype').text(val);
                 var exists = $(this).text().split('(')[1].split(')')[0];
                 filteritems(checkbox, val,pkgid);
             }
@@ -2378,7 +2397,11 @@
             $.get("/VDashboard/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +@ViewBag.vsid+"",
                 function (data) {
                     commondiv = data;
-                    var getlist = window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
+                    var getlist = '';//window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
+                    for (var i = 0; i < totallist.split(',').length; i++) {
+                        if(totallist.split(',')[i] == type)
+                            getlist = totallist.split(',')[i].split('(')[1].split(')')[0];
+                    }
                     var newitem = '';
                     if(pkgid == 'New')
                         newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall1">Save All</button></div></td></tr>';
@@ -2401,7 +2424,7 @@
                         tabletr.append(row);
                     }
                     tabletr.append(newitem);
-                    $('#pkgmodal .selectedpkg').val(selectedpkg);
+                    $('#pkgmodal .selectedpkg').val(pkgid);
                     $('#pkgmodal').modal('show');
                 });
 
@@ -2425,7 +2448,7 @@
                 alert("Item Name Cannot be Blank");
                 $(this).parents("td").find("input").focus();
             }
-            
+
         });
 
         $(document).on('click','tags span',function(){

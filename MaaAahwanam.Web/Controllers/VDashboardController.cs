@@ -87,7 +87,13 @@ namespace MaaAahwanam.Web.Controllers
                     Amenities(venues.Where(m => m.Id == long.Parse(vsid)).ToList());
                     allimages = vendorImageService.GetImages(long.Parse(vid), long.Parse(vsid));
                     var pkgsks = vendorVenueSignUpService.Getpackages((long.Parse(vid)), long.Parse(vsid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
-                    if (pkgsks != null) ViewBag.package = pkgsks;
+                    if (pkgsks != null)
+                    {
+                        ViewBag.package = pkgsks;
+                        if (pkgsks.menu != "" && pkgsks.menu != null) ViewBag.pkgitems = pkgsks.menu.Split(',');
+                        //else if (pkgsks.menuitems != "" && pkgsks.menuitems != null) ViewBag.pkgitems = pkgsks.menuitems.Split(',');
+                        //else ViewBag.pkgitems = "Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Deserts,Beverages,Fruits";
+                    }
                     else ViewBag.package = new Package();
                     var policy1 = vendorMasterService.Getpolicy(vid, vsid);
                     ViewBag.policy = policy1;
@@ -886,8 +892,10 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult GetMenuItem(string pkgid)
         {
-            var pkg = vendorProductsService.getpartpkgs(pkgid).Select(m => m.menuitems).FirstOrDefault();
-            return Json(pkg, JsonRequestBehavior.AllowGet);
+            var pkg = vendorProductsService.getpartpkgs(pkgid);//.Select(m => m.menuitems).FirstOrDefault();
+            var list = pkg.Select(m => m.menu).FirstOrDefault();
+            if(list == "") list = pkg.Select(m => m.menuitems).FirstOrDefault();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateMenuItems(PackageMenu PackageMenu, string type)
