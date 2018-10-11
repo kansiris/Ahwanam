@@ -117,9 +117,7 @@ namespace MaaAahwanam.Web.Controllers
             string pid1 = "";
             string etype1 = "";
             string date1 = "";
-
             HomeController home = new HomeController();
-
             if (loc != "")
             {
                 pid1 = pid;
@@ -169,8 +167,6 @@ namespace MaaAahwanam.Web.Controllers
                 guest = guests;
             }
             var pkgs = vendorProductsService.getpartpkgs(pid1).FirstOrDefault();
-
-
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             //Saving Record in order Table
             OrderService orderService = new OrderService();
@@ -187,7 +183,6 @@ namespace MaaAahwanam.Web.Controllers
             OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.OrderId = order.OrderId;
-            ViewBag.orderid = orderDetail.OrderId;
             orderDetail.OrderBy = long.Parse(uid);
             orderDetail.PaymentId = '1';
             // orderDetail.ServiceType = type;
@@ -205,24 +200,17 @@ namespace MaaAahwanam.Web.Controllers
             orderDetail.BookedDate = Convert.ToDateTime(date1);
             ViewBag.orderdate = orderDetail.BookedDate;
             orderDetail.EventType = etype1;
-                          orderDetail.DealId = long.Parse(pid);
-
-
+            orderDetail.DealId = long.Parse(pid);
             orderdetailsServices.SaveOrderDetail(orderDetail);
             var userlogdetails = mnguserservice.getuserbyid(userid);
-            ViewBag.userdetails = userlogdetails;
-
             string txtto = userlogdetails.email;
-
             string name = userlogdetails.firstname;
             name = home.Capitalise(name);
             string OrderId = Convert.ToString(order.OrderId);
             StringBuilder cds = new StringBuilder();
             cds.Append("<table style='border:1px black solid;'><tbody>");
-            cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
-          
-            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
-          
+            cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");         
+            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>         
             cds.Append("</tbody></table>");
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
