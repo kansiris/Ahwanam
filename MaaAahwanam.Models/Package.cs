@@ -40,6 +40,6 @@ namespace MaaAahwanam.Models
         public string choicedays { get; set; }
         public string timeslot { get; set; }
         public string menuitems { get; set; }
-
+        public string menu { get; set; }
     }
 }
