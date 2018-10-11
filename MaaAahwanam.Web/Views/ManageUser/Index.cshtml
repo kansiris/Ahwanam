@@ -330,7 +330,7 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4" id="company" style="display:block;">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value="" required />
+                                                            <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value=""  />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
                                                                 <span class="input__label-content input__label-content--hoshi">Company Name</span>
                                                             </label>
@@ -639,6 +639,15 @@
                 }
             });
         });*@
+
+            $("input[type=text]").on('input', function () {
+                var type = $('input[name=type]:checked').val();
+                var Businessname = $('#Businessname').val();
+                if (type == "Corporate" && Businessname == '' || type != "Individual") {
+                    alert("Please enter business name");
+                }
+            })
+
             function checkEmail(val) {
                 //alert(val);
                 vendorId = $('#vendorId').val();
@@ -698,7 +707,6 @@
 
             $('#booknowss').click(function () {
                 var businessname = $('#Businessname').val();
-                alert(businessname); 
                 var type = $('input[name=type]:checked').val();
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
@@ -720,6 +728,8 @@
                 if (packid == '') {
                     var selectedp = window.localStorage.getItem("vpbook");
                 }
+                if (type == "Corporate" && businessname != '' || type == "Individual") {
+
                 $('.overlay').show();
                 $('#loadermsg').text('Booking in process....');
                 $.ajax({
@@ -744,8 +754,12 @@
 
                     }
                 });
+               
+            }
+            else {
+                alert('Please enter businessname');
+            }
             });
-
 
         </script>
 

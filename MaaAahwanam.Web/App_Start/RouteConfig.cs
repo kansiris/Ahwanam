@@ -23,6 +23,11 @@ namespace MaaAahwanam.Web
                new { controller = "viewservice", action = "Index" }    // Parameter defaults
            );
             routes.MapRoute(
+             "theme",                                           // Route name
+             "themes/",                                         // URL with parameters
+             new { controller = "theme", action = "Index" }    // Parameter defaults
+         );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "wedding", action = "Index", id = UrlParameter.Optional },
