@@ -67,20 +67,24 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public ActionResult Index(ManageUser mnguser, string id, string command)
         {
-            string msg = string.Empty;
-            mnguser.registereddate = DateTime.Now;
-            mnguser.updateddate = DateTime.Now;
-            if (command == "Save")
+            if (mnguser.type == "Corporate" && mnguser.Businessname != null || mnguser.type == "Individual")
             {
-                mnguser = mnguserservice.AddUser(mnguser);
-                msg = "Added New User";
+                string msg = string.Empty;
+                mnguser.registereddate = DateTime.Now;
+                mnguser.updateddate = DateTime.Now;
+                if (command == "Save")
+                {
+                    mnguser = mnguserservice.AddUser(mnguser);
+                    msg = "Added New User";
+                }
+                else if (command == "Update")
+                {
+                    mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
+                    msg = "Updated User";
+                }
+                return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageUser'</script>");
             }
-            else if (command == "Update")
-            {
-                mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
-                msg = "Updated User";
-            }
-            return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageUser'</script>");
+            else { return Content("<script language='javascript' type='text/javascript'>alert('please enter businessname');location.href='/ManageUser'</script>"); }
         }
         public JsonResult checkemail(string email, string id)
         {
