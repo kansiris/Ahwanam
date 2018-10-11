@@ -1097,13 +1097,19 @@
 
         var unavailableDates1 = "";
         function addCustomInformation() {
+            var price = '';
+            var price1 = $('#PackagePrice').val();
+          var  price2 = $('#PackagePrice1').val();
+            if (price1 == '' || price1 == 'undefined') { price = price2; }
+            if (price2 == '' || price2 == 'undefined') { price = "N/A";}
+            var PackagePrice = price;
             setTimeout(function () {
            //     alert('ks');
                   $(".ui-datepicker-calendar td").filter(function () {
                     var date = $(this).text();
                     return /\d/.test(date);
                 }).find("a, span").html(function (i, html) {
-                    return html + "<br><small>₹100</small>";
+                    return html + "<br><small>₹"+PackagePrice+"</small>";
                 });
             }, 0)
 
