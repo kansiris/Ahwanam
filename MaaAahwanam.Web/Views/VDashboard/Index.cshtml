@@ -1951,10 +1951,11 @@
 <div id="pkgmodal" class="ui mini test modal" style="max-width:300px;width:100%">
     <i class="close icon"></i>
     <div class="header">
-        <text class="selectedpkg"></text> Items
+        <input type="text" class="selectedpkg" style="max-width:300px;width:70%;padding:0;margin:0"/>Items
     </div>
     <div class="scrolling content pkgitemsection">
         <table class="menuitems"></table>
+        <label>Max items Customer can choose</label><input type="text" placeholder="Enter Count" style="max-width:300px;width:75%"/>
     </div>
     <div class="actions">
         <div class="ui negative button" style="height:40px;">
@@ -2029,11 +2030,9 @@
 @section scripts{
     <script src="https://www.jqueryscript.net/demo/Tiny-Text-Field-Based-Tags-Input-Plugin-For-jQuery-Tagify/jQuery.tagify.js"></script>
 
-        <script>
-            $('[name=tags]').tagify();
-        </script>
-   
-
+    <script>
+        $('[name=tags]').tagify();
+    </script>
     <script>
         $('.menu .browse').popup({
             inline: true,
@@ -2325,7 +2324,7 @@
         });
 
         function Addpkgitems() {
-            var type = $('#pkgmodal .selectedpkg').text();
+            var type = $('#pkgmodal .selectedpkg').val();
             var selecteditems = '';
             var itemstable = $('#pkgmodal').find('table.menuitems');
             $(itemstable).find('tr').each(function () {
@@ -2402,7 +2401,7 @@
                         tabletr.append(row);
                     }
                     tabletr.append(newitem);
-                    $('#pkgmodal .selectedpkg').text(selectedpkg);
+                    $('#pkgmodal .selectedpkg').val(selectedpkg);
                     $('#pkgmodal').modal('show');
                 });
 
@@ -2439,14 +2438,14 @@
             if (course != '') {
                 filteritems(pkgcategory, course,pkgid); //uncomment this section to load items from db
                 //tabletr.append(newitem);
-                $('#pkgmodal .selectedpkg').text(course);
+                $('#pkgmodal .selectedpkg').val(course);
                 $('#pkgmodal').modal('show');
             }
 
         });
 
         $(document).on('click','.saveall',function(){
-            var type = $('#pkgmodal .selectedpkg').text();
+            var type = $('#pkgmodal .selectedpkg').val();
             var pkgcategory = $("input[name='checkradio']:checked").val();
             var totalitems = '';var favorite = [];
             $.each($('#pkgmodal .pkgitemsection table.menuitems input[type=checkbox]'), function () {
@@ -2486,7 +2485,7 @@
         });
 
         $(document).on('click','.saveall1',function(){
-            var type = $('#pkgmodal .selectedpkg').text();
+            var type = $('#pkgmodal .selectedpkg').val();
             var pkgcategory = $("input[name='checkradio']:checked").val();
             var totalitems = '';var favorite = [];
             $.each($('#pkgmodal .pkgitemsection table.menuitems input[type=checkbox]'), function () {
@@ -2517,7 +2516,7 @@
 
         $(document).on('click','.removemitem',function(){
             var item = $(this).next("input").next("label").text();
-            var selpkg = $('#pkgmodal .selectedpkg').text();
+            var selpkg = $('#pkgmodal .selectedpkg').val();
             var totalitems = '';
             var favorite = [];
             var pkgcategory = $("input[name='checkradio']:checked").val();
