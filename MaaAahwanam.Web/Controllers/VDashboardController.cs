@@ -742,6 +742,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.price1 = package.PackagePrice = package.normaldays;
+            package.menuitems = package.menuitems.Trim(',');
             //Add Package Code
             package.Status = "Active";
             package.UpdatedDate = updateddate;
@@ -894,7 +895,7 @@ namespace MaaAahwanam.Web.Controllers
         {
             var pkg = vendorProductsService.getpartpkgs(pkgid);//.Select(m => m.menuitems).FirstOrDefault();
             var list = pkg.Select(m => m.menu).FirstOrDefault();
-            if(list == "") list = pkg.Select(m => m.menuitems).FirstOrDefault();
+            if(list == "" || list == null) list = pkg.Select(m => m.menuitems).FirstOrDefault();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -931,7 +932,10 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult NewCourse(PackageMenu packageMenu,string type)
         {
             var getmenu = vendorDashBoardService.GetParticularMenu(packageMenu.Category, packageMenu.VendorMasterID, packageMenu.VendorID).FirstOrDefault();
-            packageMenu.Extra_Menu_Items = packageMenu.Extra_Menu_Items+ "," + getmenu.Extra_Menu_Items;
+            if (getmenu.Extra_Menu_Items != null)
+                packageMenu.Extra_Menu_Items = packageMenu.Extra_Menu_Items + "," + getmenu.Extra_Menu_Items;
+            else
+                packageMenu.Extra_Menu_Items = packageMenu.Extra_Menu_Items;
             packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             string status = vendorDashBoardService.UpdateMenuItems(packageMenu, type);
             if (status == "Updated") status = "New Course & Course Items Added";
