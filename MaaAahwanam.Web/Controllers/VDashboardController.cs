@@ -90,7 +90,18 @@ namespace MaaAahwanam.Web.Controllers
                     if (pkgsks != null)
                     {
                         ViewBag.package = pkgsks;
-                        if (pkgsks.menu != "" && pkgsks.menu != null) ViewBag.pkgitems = pkgsks.menu.Split(',');
+                        if (pkgsks.menu != "" && pkgsks.menu != null)
+                        {
+                            var pkgitems = pkgsks.menu.Trim(',').Split(',');
+                            var pkgmitems = pkgsks.menuitems.Trim(',');
+                            List<string> selecteditems = new List<string>();
+                            for (int i = 0; i < pkgitems.Count(); i++)
+                            {
+                                selecteditems.Add(pkgmitems.Split(',')[i].Split('(')[0].Replace('/','_'));
+                            }
+                            ViewBag.selecteditems = string.Join("," ,selecteditems);
+                            ViewBag.pkgitems = pkgitems;
+                        }
                         //else if (pkgsks.menuitems != "" && pkgsks.menuitems != null) ViewBag.pkgitems = pkgsks.menuitems.Split(',');
                         //else ViewBag.pkgitems = "Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Deserts,Beverages,Fruits";
                     }
@@ -99,13 +110,18 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.policy = policy1;
                     var pkgmenuitems = vendorDashBoardService.GetParticularMenu("Veg", vid, vsid).FirstOrDefault();
                     var extramenuitems = "";
-                    if (pkgmenuitems.Extra_Menu_Items != "" && pkgmenuitems.Extra_Menu_Items != null)
+                    if (pkgmenuitems != null)
                     {
-                        for (int i = 0; i < pkgmenuitems.Extra_Menu_Items.Split(',').Length; i++)
+                        if (pkgmenuitems.Extra_Menu_Items != "" && pkgmenuitems.Extra_Menu_Items != null)
                         {
-                            extramenuitems = extramenuitems + "," + pkgmenuitems.Extra_Menu_Items.Split(',')[i].Split('(')[0];
+                            for (int i = 0; i < pkgmenuitems.Extra_Menu_Items.Split(',').Length; i++)
+                            {
+                                extramenuitems = extramenuitems + "," + pkgmenuitems.Extra_Menu_Items.Split(',')[i].Split('(')[0];
+                            }
                         }
                     }
+                    else
+                    { int status = AddMenuList(vsid, vid); } // Adding Menu Items
                     ViewBag.extramenuitems = extramenuitems.Trim(',');
                 }
                 else
@@ -487,7 +503,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 long count = 0;
                 count = addnewservice1(serviceselection, subcategory, long.Parse(vid));
-                AddMenuList(count.ToString(),vid); // Adding Menu Items
+                int status = AddMenuList(count.ToString(),vid); // Adding Menu Items
                 if (count > 0)
                     msg = "Service Added Successfully";
                 else if (serviceselection == "Select Service Type")
@@ -945,6 +961,7 @@ namespace MaaAahwanam.Web.Controllers
         public int AddMenuList(string VendorID,string VendorMasterID)
         {
             PackageMenu packageMenu = new PackageMenu();
+            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             //Adding Veg Menu
             packageMenu.VendorID = VendorID;
             packageMenu.VendorMasterID = VendorMasterID;
@@ -969,6 +986,7 @@ namespace MaaAahwanam.Web.Controllers
             packageMenu.Curries = "Dhumka Chicken!Methi Chicken!Chilli Chicken!Ginger Chicken!Gongoora Chicken!Moghalai Chicken!Hariyali Chicken!Ankapur Country Chicken!Butter Chicken!Chicken Masala!Chilly Chicken Wet(Chinese)!Chicken Manchurian Wet!Chicken Diwani Handi!Mutton Curry!Moghalai Mutton!utton Pasinda!Mutton Kali Mirchi!Mutton Roganjosh!Dhum-ka- Bakra!utton Raan!ongoora Maamsam!Chukkakura Maamsam!Palak Mutton!iver Fry!Kidney Fry!okkala Charu!Mutton Dalcha!Boti Dhalcha!Thalakaya Kura!Keema Methi!Keema Palak!Keema Batana!eema Koftha Curry!Paya!Haleem!Butter Chicken!Anda Bhurji!Sarson KA Saag!Makki Ki Roti!Amritsari Kulcha!Punjabi Chole!Dal Makhni!akoda Khadi!Dal Fry!Labadar Paneer!Dal Tadka";
             packageMenu.Fry_Dry = "Boti Fry!Kidney Fry!Keema Shikhampuri!Mutton Boti Kabab!Mutton Seekh Kabab!Mutton Shami Kabab!Mutton Chops!Kheema Lukmi!Keema Balls!Liver Fry!Pathar ka Ghosh!Liver Kidney Fry!Mutton Fry (Telangana Style)";
             packageMenu.Soups = "Chicken Hot & Sour Soup!Paya Shorba!Badami Murg Shorba!Morag Soup!Wanton soup!Chicken clear soup!Canton soup!Chicken noodle soup!Chicken cream soup!Egg drop soup";
+            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             //Saving Non-Veg Menu
             count = vendorDashBoardService.AddNonVegMenu(packageMenu);
             return count;

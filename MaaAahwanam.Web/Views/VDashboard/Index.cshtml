@@ -548,9 +548,13 @@
                                 <div id="coursesection" style="overflow-y: scroll;min-height: 140px;height: 20%;overflow-x: hidden;">
                                     @if (ViewBag.pkgitems != null)
                                     {
-                                        foreach (var item in ViewBag.pkgitems)
+                                        @*foreach (var item in ViewBag.pkgitems)
                                         {
-                                            <button class="button pkgitem" value="@item.Split('(')[0]">@item.Split('(')[0] (@item.Split('(')[1].Split(')')[0].Split('!').Length)</button>
+                                            <button class="button pkgitem" value="@item.Split('(')[0]">@item.Split('(')[0] (@item.Split('(')[1].Split(')')[0])</button>
+                                        }*@
+                                        for (int i = 0; i < ViewBag.pkgitems.Length; i++)
+                                        {
+                                            <button class="button pkgitem" value="@ViewBag.selecteditems.Split(',')[i]">@ViewBag.pkgitems[i].Split('(')[0] (@ViewBag.pkgitems[i].Split('(')[1].Split(')')[0])</button>
                                         }
                                         <div id="extracourse"></div>
                                     }
@@ -561,7 +565,7 @@
                                         <button class="button pkgitem" value="Rice">Rice(0)</button>
                                         <button class="button pkgitem" value="Bread">Bread(0)</button>
                                         <button class="button pkgitem" value="Curries">Curries(0)</button>
-                                        <button class="button pkgitem" value="Fry/Dry">Fry/Dry(0)</button>
+                                        <button class="button pkgitem" value="Fry_Dry">Fry/Dry(0)</button>
                                         <button class="button pkgitem" value="Salads">Salads(0)</button>
                                         <button class="button pkgitem" value="Soups">Soups(0)</button>
                                         <button class="button pkgitem" value="Deserts">Deserts(0)</button>
@@ -582,8 +586,9 @@
                                 @*<br><br>*@
                                 @*<input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />*@
                                 <div align="right" class="pkgsave">
-                                    <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />
+                                    <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems.Trim(',')" />
                                     <input type="hidden" class="selpkgitems" />
+                                    <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems"/>
                                     <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
                                     <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
                                     <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
@@ -594,7 +599,7 @@
                                     }
                                     else
                                     {
-                                        <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer; ">Publish</a>
+                                        <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;">Publish</a>
                                     }
                                     <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
                                 </div>
@@ -1975,7 +1980,7 @@
     <i class="close icon"></i>
     <div class="header">
         <input type="text" class="selectedpkg" style="max-width:300px;width:70%;padding:0;margin:0"/>Items
-        <text style="font-size:15px">Customer can choose</text> <input class="maxcount" type="number" value="0" style="width:15%;" />
+        <text style="font-size:15px">Customer can choose</text> <input class="maxcount" type="number" value="0" style="width:15%;" min="0"/>
     </div>
     <div class="scrolling content pkgitemsection">
         <p style="display:none" id="ctype" />
@@ -2596,14 +2601,13 @@
         //Loading Menu on Load
         var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Deserts,Beverages,Fruits';
         var totallist = '';//$('.pkgmenuitems').val();
-        var pkgdesc = '';
-        $(function () {
+        //var pkgdesc = '';
+        @*$(function () {
             var cvalue = '';var ami=[];
             $.get( "/VDashboard/GetMenuItem?pkgid="+@ViewBag.package.PackageID+"",function(data){
                 var list = data.split(',');
                 for (var i = 0; i < list.length; i++) {
                     cvalue = list[i].split('(')[1].split(')')[0];
-                    //alert(list[i].split('(')[0] +' -->'+cvalue);
                     if (cvalue != null) {
                         if(cvalue.length < 3)
                         {
@@ -2612,7 +2616,7 @@
                         else {
                             if ($(".col-md-2-10 button:contains(" + list[i].split('(')[0] + ")").replaceWith('<button class="button pkgitem" value='+list[i].split('(')[0].replace(' ','_')+'>' + list[i].split('(')[0] + '(' + cvalue.split('!').length + ')</button>'));
                         }
-                        
+
                         if (pkgdesc != '') {
                             pkgdesc = pkgdesc + ',' + list[i].split('(')[0] + '(' + cvalue + ')';
                         }
@@ -2620,14 +2624,12 @@
                             pkgdesc = list[i].split('(')[0] + '(' + cvalue + ')';
                         }
                         window.localStorage.setItem(list[i].split('(')[0].replace(' ','_').toLowerCase()+'@ViewBag.vsid',cvalue);
-                        //alert(cvalue);
                         ami.push(list[i].split('(')[0].replace(' ','_'));
                     }
                 }
                 window.localStorage.setItem("amilists",ami.join(','));
-                //alert(ami.join(','));
             });
-        });
+        });*@
 
         //Add Course Button
         $('.addcourse').click(function(){
@@ -2651,49 +2653,43 @@
                         selecteditems = checkText;
                 }
             });
-            //var availlists = window.localStorage.getItem("amilists");
-            //if (availlists != null) {
-            //    for (var i = 0; i < availlists.split(',').length; i++) {
-            //        if (true) {
-    
-            //        }
-            //    }
-            //}
-            
-            //var availableitems = totallist.split(',');
-            var availableitems = window.localStorage.getItem("amilists");
-            //alert(availableitems);
+            var availableitems = $('#availablepkgitems').val();
+            if(availableitems == '' || availableitems == undefined) availableitems = $('.selpkgitems').val();
             var finallist=totallist.split(',');
             if ($('.pkgmenuitems').val() != '') {
                 if (availableitems.indexOf(ctype) != -1) {
                     for (var i = 0; i < availableitems.split(',').length; i++) {
                         if (availableitems.split(',')[i] == ctype) {
-                            finallist.push(type+'('+selecteditems+')');
+                            finallist.push(ctype+'('+selecteditems+')');
                         }
                     }
                     totallist = finallist.join(',');
                 }
                 else {
-                    finallist.push(type+'('+selecteditems+')');
+                    finallist.push(ctype+'('+selecteditems+')');
                     totallist= totallist = finallist.join(',');
                 }
             }
             else {
-                finallist.push(type+'('+selecteditems+')');
-                totallist= totallist = finallist.join(',');
+                if (availableitems.indexOf(ctype) != -1) {
+                    for (var i = 0; i < availableitems.split(',').length; i++) {
+                        if (availableitems.split(',')[i] == ctype) {
+                            finallist.push(ctype+'('+selecteditems+')');
+                        }
+                    }
+                    totallist = finallist.join(',');
+                }
+                else {
+                    finallist.push(ctype+'('+selecteditems+')');
+                    totallist= totallist +','+ finallist.join(',');
+                }
             }
-            
-            //var totallist = totallist = finallist.join(',');
-            //if(totallist == '') totallist = ($('.pkgmenuitems').val() != undefined) ? $('.pkgmenuitems').val() +',' + type +'('+selecteditems+')' : type +'('+selecteditems+')';
-            //else totallist= totallist + ',' + type +'('+selecteditems+')';
-            //alert(totallist);
             $('.selpkgitems').val(totallist);
-            alert(totallist);
             if(mtype == 'old')
             {
-                if ($(".col-md-2-10 button[value = " + ctype + "]").replaceWith('<button class="button pkgitem" value='+ ctype +'>' + type + '(' + maxcount + ')</button>'));
+                if ($(".col-md-2-10 button[value = " + ctype.replace('/','_') + "]").replaceWith('<button class="button pkgitem" value='+ ctype +'>' + type + '(' + maxcount + ')</button>'));
             }
-            else 
+            else
             {
                 if ($(".col-md-2-10 #extracourse button:contains(" + mtype + ")").replaceWith('<button class="button extraitem" value='+ type +'>' + type + '(' + maxcount + ')</button>'));
             }
@@ -2701,6 +2697,8 @@
 
         // Loading Package Menu
         $(document).on('click', '.pkgitem', function () {
+            $('.overlay').show();
+            $('#loadermsg').text("Fetching Menu Items");
             var checkbox = $("input[name='checkradio']:checked").val();
             var pkgid = $(this).parent("div.col-md-2-10").find("div.pkgsave").find("input.packageid").val();
             if (checkbox == undefined) {
@@ -2708,6 +2706,7 @@
             }
             else {
                 var val = $(this).val();
+                if(val == "Fry_Dry") val="Fry/Dry";
                 var pkgid = $(this).text().split('(')[0]; // Course name
                 $('#pkgmodal .pkgitemsection #ctype').text(val);
                 $('#pkgmodal .maxcount').val($(this).text().split('(')[1].split(')')[0]);
@@ -2720,6 +2719,8 @@
 
         // Loading Extra Menus
         $(document).on('click', '.extraitem', function () {
+            $('.overlay').show();
+            $('#loadermsg').text("Fetching Menu Items");
             var checkbox = $("input[name='checkradio']:checked").val();
             var pkgid = $(this).parent("div.col-md-2-10").find("div.pkgsave").find("input.packageid").val();
             if (checkbox == undefined) {
@@ -2728,7 +2729,7 @@
             else {
                 var val = $(this).text().split('(')[0];
                 //var pkgid = $(this).text(); // Course name
-                //$('#pkgmodal .pkgitemsection #ctype').text(val);
+                $('#pkgmodal .pkgitemsection #ctype').text(val);
                 $('#pkgmodal .maxcount').val($(this).text().split('(')[1].split(')')[0]);
                 $('#pkgmodal .selectedpkg').val(val);
                 $('#pkgmodal .add').attr('onclick','Addpkgitems("'+val+'")');
@@ -2750,7 +2751,8 @@
             $.get("/VDashboard/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +@ViewBag.vsid+"",
                 function (data) {
                     commondiv = data;
-                    var getlist = window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
+                    var getlist =  $('.selpkgitems').val();//window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
+                    if(getlist == '' || getlist == undefined) getlist =$('.pkgmenuitems').val();
                     for (var i = 0; i < totallist.split(',').length; i++) {
                         if(totallist.split(',')[i] == type)
                             getlist = totallist.split(',')[i].split('(')[1].split(')')[0];
@@ -2765,19 +2767,19 @@
                         var row = $("<tr/>");
                         if (getlist != null) {
                             if (getlist.includes(commondiv.split('!')[i])) {
-                                row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" checked/>  <label>' + commondiv.split('!')[i] + '</label></td>');
+                                row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" checked id="'+commondiv.split('!')[i]+'"/>  <label for="'+commondiv.split('!')[i]+'">' + commondiv.split('!')[i] + '</label></td>');
                             }
                             else {
-                                row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;"/>  <label>' + commondiv.split('!')[i] + '</label></td>');
+                                row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" id="'+commondiv.split('!')[i]+'"/>  <label for="'+commondiv.split('!')[i]+'">' + commondiv.split('!')[i] + '</label></td>');
                             }
                         }
                         else if(commondiv != ''){
-                            row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" style="margin-left:5px;"/>  <label>' + commondiv.split('!')[i] + '</label></td>');
+                            row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" style="margin-left:5px;" id="'+commondiv.split('!')[i]+'"/>  <label for="'+commondiv.split('!')[i]+'">' + commondiv.split('!')[i] + '</label></td>');
                         }
                         tabletr.append(row);
                     }
                     tabletr.append(newitem);
-                    
+                    $('.overlay').hide();
                     $('#pkgmodal').modal('show');
                 });
 
@@ -2807,6 +2809,8 @@
 
         //Save All for existing items
         $(document).on('click','.saveall',function(){
+            $('.overlay').show();
+            $('#loadermsg').text("Updating items list...");
             var type = $('#pkgmodal .selectedpkg').val();
             var pkgcategory = $("input[name='checkradio']:checked").val();
             var totalitems = '';var favorite = [];
@@ -2840,6 +2844,7 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 success:function(data){
+                    $('.overlay').hide();
                     alert(data + '!!!Select items and click Add');
                     //$('#pkgmodal').modal('hide');
                 }
@@ -2848,6 +2853,8 @@
 
         //Save All for Extra Items
         $(document).on('click','.saveall1',function(){
+            $('.overlay').show();
+            $('#loadermsg').text("Updating items list...");
             var type = $('#pkgmodal .selectedpkg').val();
             var pkgcategory = $("input[name='checkradio']:checked").val();
             var totalitems = '';var favorite = [];
@@ -2871,6 +2878,7 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 success:function(data){
+                    $('.overlay').hide();
                     alert(data + '!!!Select items and click Add');
                     //$('#pkgmodal').modal('hide');
                 }
@@ -2912,10 +2920,13 @@
 
         //Saving Package
         $('.addpkg').click(function () {
+            //validation('AddPackage');
+            $('.overlay').show();
+            $('#loadermsg').text("Saving Package...");
             var allbuttons = $(".col-md-2-10 button").text();
             var list=[];
             for (var i = 0; i < allbuttons.split(')').length; i++) {
-                if(allbuttons.split(')')[i] != '')
+                if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
                     list.push(allbuttons.split(')')[i]+')');
             }
             var packagename = $('#pkgname').val();
@@ -2926,7 +2937,7 @@
             var choicedays = $('#cdays').val();
             var timeslot = $('#pkgslots').val();
             var pkgdescription = $('#pkgdesc').val();
-            var menuitems = $(this).parent('div').find('input.pkgmenuitems').val();//pkgdesc;
+            var menuitems = $(this).parent('div').find('input.selpkgitems').val();//pkgdesc;
             var menu = list.join(','); //$(this).parent('div').find('input.selpkgitems').val();
             //alert(pkgdesc);
             if (packagename == '') {
@@ -2979,6 +2990,7 @@
                     data: package,
                     success: function (data) {
                         alert(data);
+                        $('.overlay').hide();
                         for (var i = 0; i < pkgheadings.split(',').length; i++) {
                             var selecteditems = pkgheadings.split(',')[i].toLowerCase()+'@ViewBag.vsid';
                             if (selecteditems != null)
@@ -2991,12 +3003,43 @@
 
         //Updating Package
         $('.updatepkg').click(function () {
+            var menuitems='';
+            //validation('UpdatePackage');
+            $('.overlay').show();
+            $('#loadermsg').text("Updating Package...");
             var allbuttons = $(".col-md-2-10 button").text();
             var list=[];
             for (var i = 0; i < allbuttons.split(')').length; i++) {
                 if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
                     list.push(allbuttons.split(')')[i]+')');
             }
+            var allVal = '';
+            $(".col-md-2-10 button").each(function() {
+                if($(this).text().split('(')[1].split(')')[0] != 0)
+                allVal += ',' + $(this).val();
+            });
+            var allbuttonsvals = allVal.substring(1, allVal.length);
+            var newlists = $('.selpkgitems').val().substring(1,$('.selpkgitems').val().length);
+            var dblist = $('.pkgmenuitems').val();
+            var selectedlist = $('.availablepkgitems').val();
+            var splitteddblist = dblist.split(',');
+            var a =[];
+            for (var i = 0; i < newlists.split(',').length; i++) {
+                var thisval = newlists.split(',')[i].split('(')[0]
+                if(thisval != '')
+                    a.push(thisval);
+            }
+            var availableitems = a;
+            for (var i = 0; i < availableitems.length; i++) {
+                var value = $.inArray(availableitems[i].replace('/','_'),selectedlist.split(','));
+                if (value != -1) {
+                    splitteddblist[value] = newlists.split(',')[i];
+                }
+                else {
+                    splitteddblist.push(newlists.split(',')[i]);
+                }
+            }
+            menuitems =splitteddblist.join(',');
             var pkgid = $(this).prev('input.packageid').val();
             var packagename = $('#pkgname').val();
             var pkgcategory = $("input[name='checkradio']:checked").val();
@@ -3006,7 +3049,7 @@
             var choicedays = $('#cdays').val();
             var timeslot = $('#pkgslots').val();
             var pkgdescription = $('#pkgdesc').val();
-            var menuitems = $(this).parent('div').find('input.selpkgitems').val();
+            //var menuitems = $(this).parent('div').find('input.selpkgitems').val();
             var menu = list.join(',');//$(this).parent('div').find('input.selpkgitems').val();
             if (packagename == '') {
                 $(packagename).focus();
@@ -3060,6 +3103,7 @@
                     data: package,
                     success: function (data) {
                         alert(data);
+                        $('.overlay').hide();
                         for (var i = 0; i < pkgheadings.split(',').length; i++) {
                             var selecteditems = pkgheadings.split(',')[i].toLowerCase()+'@ViewBag.vsid';
                             if (selecteditems != null)
@@ -3070,8 +3114,91 @@
             }
         });
 
+        function validation(val) {
+            var allbuttons = $(".col-md-2-10 button").text();
+            var list=[];
+            for (var i = 0; i < allbuttons.split(')').length; i++) {
+                if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
+                    list.push(allbuttons.split(')')[i]+')');
+            }
+            var pkgid = $(this).prev('input.packageid').val();
+            var packagename = $('#pkgname').val();
+            var pkgcategory = $("input[name='checkradio']:checked").val();
+            var peakdays = $('#pdays').val();
+            var normaldays = $('#ndays').val();
+            var holidays = $('#holidays').val();
+            var choicedays = $('#cdays').val();
+            var timeslot = $('#pkgslots').val();
+            var pkgdescription = $('#pkgdesc').val();
+            var menuitems = $(this).parent('div').find('input.selpkgitems').val();//pkgdesc;
+            var menu = list.join(','); //$(this).parent('div').find('input.selpkgitems').val();
+            //alert(pkgdesc);
+            if (packagename == '') {
+                $(packagename).focus();
+                alert("Enter Package Name");
+            }
+            else if (pkgcategory == undefined) {
+                alert("Select Package Category");
+            }
+            else if (timeslot == '') {
+                alert("Select TimeSlots");
+            }
+            else if (normaldays == '') {
+                $('#ndays').focus();
+                alert("Enter Normal Days Price");
+            }
+            else if (peakdays == '') {
+                $('#pdays').focus();
+                alert("Enter Peak Days Price");
+            }
+            else if (holidays == '') {
+                $('#holidays').focus();
+                alert("Enter Holidays Price");
+            }
+            else if (choicedays == '') {
+                $('#cdays').focus();
+                alert("Enter Choice Days Price");
+            }
+            else {
+                var package = {
+                    PackageID:pkgid,
+                    PackageName: packagename,
+                    Category: pkgcategory,
+                    PackageDescription: pkgdescription,
+                    peakdays: peakdays,
+                    normaldays: normaldays,
+                    holidays: holidays,
+                    choicedays: choicedays,
+                    VendorId: '@ViewBag.vendorid',
+                    VendorSubId: '@ViewBag.vsid',
+                    VendorType: '@ViewBag.Vendor.ServicType',
+                    VendorSubType: '@ViewBag.subtype',
+                    timeslot: timeslot,
+                    menuitems : menuitems,
+                    menu : menu
+                }
+                alert(menuitems);
+                @*$.ajax({
+                    url: '/VDashboard/'+val,
+                    type: 'post',
+                    datatype: 'json',
+                    data: package,
+                    success: function (data) {
+                        alert(data);
+                        for (var i = 0; i < pkgheadings.split(',').length; i++) {
+                            var selecteditems = pkgheadings.split(',')[i].toLowerCase()+'@ViewBag.vsid';
+                            if (selecteditems != null)
+                                window.localStorage.removeItem(selecteditems);
+                        }
+                    }
+                });*@
+            }
+        }
+
         // Removing Item from list
         $(document).on('click','.removemitem',function(){
+            $('.overlay').show();
+            $('#loadermsg').text("Removing item from list...");
             var item = $(this).next("input").next("label").text();
             var selpkg = $('#pkgmodal .selectedpkg').val();
             var totalitems = '';
@@ -3106,6 +3233,7 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 success:function(data){
+                    $('.overlay').hide();
                     alert(data);
                     tr.remove();
                 }
