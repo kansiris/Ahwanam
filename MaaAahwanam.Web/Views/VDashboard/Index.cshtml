@@ -2601,35 +2601,6 @@
         //Loading Menu on Load
         var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Soups,Deserts,Beverages,Fruits';
         var totallist = '';//$('.pkgmenuitems').val();
-        //var pkgdesc = '';
-        @*$(function () {
-            var cvalue = '';var ami=[];
-            $.get( "/VDashboard/GetMenuItem?pkgid="+@ViewBag.package.PackageID+"",function(data){
-                var list = data.split(',');
-                for (var i = 0; i < list.length; i++) {
-                    cvalue = list[i].split('(')[1].split(')')[0];
-                    if (cvalue != null) {
-                        if(cvalue.length < 3)
-                        {
-                            if ($(".col-md-2-10 button:contains(" + list[i].split('(')[0] + ")").replaceWith('<button class="button pkgitem" value='+list[i].split('(')[0].replace(' ','_')+'>' + list[i].split('(')[0] + '(' + cvalue + ')</button>'));
-                        }
-                        else {
-                            if ($(".col-md-2-10 button:contains(" + list[i].split('(')[0] + ")").replaceWith('<button class="button pkgitem" value='+list[i].split('(')[0].replace(' ','_')+'>' + list[i].split('(')[0] + '(' + cvalue.split('!').length + ')</button>'));
-                        }
-
-                        if (pkgdesc != '') {
-                            pkgdesc = pkgdesc + ',' + list[i].split('(')[0] + '(' + cvalue + ')';
-                        }
-                        else {
-                            pkgdesc = list[i].split('(')[0] + '(' + cvalue + ')';
-                        }
-                        window.localStorage.setItem(list[i].split('(')[0].replace(' ','_').toLowerCase()+'@ViewBag.vsid',cvalue);
-                        ami.push(list[i].split('(')[0].replace(' ','_'));
-                    }
-                }
-                window.localStorage.setItem("amilists",ami.join(','));
-            });
-        });*@
 
         //Add Course Button
         $('.addcourse').click(function(){
@@ -2653,7 +2624,7 @@
                         selecteditems = checkText;
                 }
             });
-            var availableitems = $('#availablepkgitems').val();
+            var availableitems = $('.availablepkgitems').val();
             if(availableitems == '' || availableitems == undefined) availableitems = $('.selpkgitems').val();
             var finallist=totallist.split(',');
             if ($('.pkgmenuitems').val() != '') {
@@ -2751,8 +2722,8 @@
             $.get("/VDashboard/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +@ViewBag.vsid+"",
                 function (data) {
                     commondiv = data;
-                    var getlist =  $('.selpkgitems').val();//window.localStorage.getItem(selectedpkg.toLowerCase()+'@ViewBag.vsid');
-                    if(getlist == '' || getlist == undefined) getlist =$('.pkgmenuitems').val();
+                    var getlist =  $('.selpkgitems').val() + ',' + $('.pkgmenuitems').val();
+                    //if(getlist == '' || getlist == undefined) getlist =$('.pkgmenuitems').val();
                     for (var i = 0; i < totallist.split(',').length; i++) {
                         if(totallist.split(',')[i] == type)
                             getlist = totallist.split(',')[i].split('(')[1].split(')')[0];
@@ -2991,11 +2962,6 @@
                     success: function (data) {
                         alert(data);
                         $('.overlay').hide();
-                        for (var i = 0; i < pkgheadings.split(',').length; i++) {
-                            var selecteditems = pkgheadings.split(',')[i].toLowerCase()+'@ViewBag.vsid';
-                            if (selecteditems != null)
-                                window.localStorage.removeItem(selecteditems);
-                        }
                     }
                 });
             }
@@ -3019,11 +2985,11 @@
                 allVal += ',' + $(this).val();
             });
             var allbuttonsvals = allVal.substring(1, allVal.length);
-            var newlists = $('.selpkgitems').val().substring(1,$('.selpkgitems').val().length);
+            var newlists = $('.selpkgitems').val().substring(1,$('.selpkgitems').val().length) +',' + $('.pkgmenuitems').val();
             var dblist = $('.pkgmenuitems').val();
             var selectedlist = $('.availablepkgitems').val();
             var splitteddblist = dblist.split(',');
-            var a =[];
+            var a =[];var b=[];
             for (var i = 0; i < newlists.split(',').length; i++) {
                 var thisval = newlists.split(',')[i].split('(')[0]
                 if(thisval != '')
@@ -3032,11 +2998,14 @@
             var availableitems = a;
             for (var i = 0; i < availableitems.length; i++) {
                 var value = $.inArray(availableitems[i].replace('/','_'),selectedlist.split(','));
-                if (value != -1) {
-                    splitteddblist[value] = newlists.split(',')[i];
-                }
-                else {
-                    splitteddblist.push(newlists.split(',')[i]);
+                if (b.indexOf(value) == -1) {
+                    if (value != -1) {
+                        b.push(value);
+                        splitteddblist[value] = newlists.split(',')[i];
+                    }
+                    else {
+                        splitteddblist.push(newlists.split(',')[i]);
+                    }
                 }
             }
             menuitems =splitteddblist.join(',');
@@ -3104,96 +3073,10 @@
                     success: function (data) {
                         alert(data);
                         $('.overlay').hide();
-                        for (var i = 0; i < pkgheadings.split(',').length; i++) {
-                            var selecteditems = pkgheadings.split(',')[i].toLowerCase()+'@ViewBag.vsid';
-                            if (selecteditems != null)
-                                window.localStorage.removeItem(selecteditems);
-                        }
                     }
                 });
             }
         });
-
-        function validation(val) {
-            var allbuttons = $(".col-md-2-10 button").text();
-            var list=[];
-            for (var i = 0; i < allbuttons.split(')').length; i++) {
-                if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
-                    list.push(allbuttons.split(')')[i]+')');
-            }
-            var pkgid = $(this).prev('input.packageid').val();
-            var packagename = $('#pkgname').val();
-            var pkgcategory = $("input[name='checkradio']:checked").val();
-            var peakdays = $('#pdays').val();
-            var normaldays = $('#ndays').val();
-            var holidays = $('#holidays').val();
-            var choicedays = $('#cdays').val();
-            var timeslot = $('#pkgslots').val();
-            var pkgdescription = $('#pkgdesc').val();
-            var menuitems = $(this).parent('div').find('input.selpkgitems').val();//pkgdesc;
-            var menu = list.join(','); //$(this).parent('div').find('input.selpkgitems').val();
-            //alert(pkgdesc);
-            if (packagename == '') {
-                $(packagename).focus();
-                alert("Enter Package Name");
-            }
-            else if (pkgcategory == undefined) {
-                alert("Select Package Category");
-            }
-            else if (timeslot == '') {
-                alert("Select TimeSlots");
-            }
-            else if (normaldays == '') {
-                $('#ndays').focus();
-                alert("Enter Normal Days Price");
-            }
-            else if (peakdays == '') {
-                $('#pdays').focus();
-                alert("Enter Peak Days Price");
-            }
-            else if (holidays == '') {
-                $('#holidays').focus();
-                alert("Enter Holidays Price");
-            }
-            else if (choicedays == '') {
-                $('#cdays').focus();
-                alert("Enter Choice Days Price");
-            }
-            else {
-                var package = {
-                    PackageID:pkgid,
-                    PackageName: packagename,
-                    Category: pkgcategory,
-                    PackageDescription: pkgdescription,
-                    peakdays: peakdays,
-                    normaldays: normaldays,
-                    holidays: holidays,
-                    choicedays: choicedays,
-                    VendorId: '@ViewBag.vendorid',
-                    VendorSubId: '@ViewBag.vsid',
-                    VendorType: '@ViewBag.Vendor.ServicType',
-                    VendorSubType: '@ViewBag.subtype',
-                    timeslot: timeslot,
-                    menuitems : menuitems,
-                    menu : menu
-                }
-                alert(menuitems);
-                @*$.ajax({
-                    url: '/VDashboard/'+val,
-                    type: 'post',
-                    datatype: 'json',
-                    data: package,
-                    success: function (data) {
-                        alert(data);
-                        for (var i = 0; i < pkgheadings.split(',').length; i++) {
-                            var selecteditems = pkgheadings.split(',')[i].toLowerCase()+'@ViewBag.vsid';
-                            if (selecteditems != null)
-                                window.localStorage.removeItem(selecteditems);
-                        }
-                    }
-                });*@
-            }
-        }
 
         // Removing Item from list
         $(document).on('click','.removemitem',function(){

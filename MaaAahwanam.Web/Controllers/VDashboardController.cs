@@ -97,7 +97,7 @@ namespace MaaAahwanam.Web.Controllers
                             List<string> selecteditems = new List<string>();
                             for (int i = 0; i < pkgitems.Count(); i++)
                             {
-                                selecteditems.Add(pkgmitems.Split(',')[i].Split('(')[0].Replace('/','_'));
+                                selecteditems.Add(pkgmitems.Split(',')[i].Split('(')[0].Replace('/','_').Trim());
                             }
                             ViewBag.selecteditems = string.Join("," ,selecteditems);
                             ViewBag.pkgitems = pkgitems;
