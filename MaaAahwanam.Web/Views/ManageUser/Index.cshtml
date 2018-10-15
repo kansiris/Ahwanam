@@ -431,11 +431,8 @@
                                                 </div>
                                                 <div align="center">
                                                     <div style="position:absolute; left: 485px; margin-left: -94px;">
-                                                        @if (@Request.QueryString["select"] != null)
-                                                        {
                                                             <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
                                                             <button id="booknowss" type="button" name="command" class="btn btn-success" style="margin-left: -55px;">save and Book Now</button>
-                                                        }
                                                     </div>
                                                     <div style="position: absolute; display: inline;">
                                                         <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
@@ -487,16 +484,26 @@
 
                 $('#allorders').DataTable();
                 $('#addservices').css("display", "none");
-                var vpbook1 = window.localStorage.getItem("vpbook");
-                var vpbook = '';
+                var vpbook = window.localStorage.getItem("vpbook");
+                var date = window.localStorage.getItem("vpbookdate");
+                var timeslot = window.localStorage.getItem("vpbooktimeslot");
+                var packageid = window.localStorage.getItem("vpbookpid");
+                if (vpbook == "") {
+                    $('#booknow').css('display', 'none');
+                    $('#booknowss').css('display', 'none');
+                }
+                else {
+                    $('#booknow').css('display', 'block');
+                    $('#booknowss').css('display', 'block'); }
+               @* var vpbook = '';
                var vpbook2 = '@Request.QueryString["select"]';
                 $('#vpbookdetails').val(vpbook);
-                if (vpbook1 != "") { vpbook = vpbook2; } else { vpbook = vpbook1; }
+                if (vpbook1 != "") { vpbook = vpbook2; } else { vpbook = vpbook1; }*@
 
                 $.ajax({
                     //alert(defcalender);
 
-                    url: '/ManageUser/orderdetails?select=' + vpbook,
+                    url: '/ManageUser/orderdetails?select=' + vpbook +'&date='+date+'&timeslot='+timeslot+'&packageid='+packageid,
                     type: 'POST',
                     contentType: false,
                     processData: false,
@@ -665,18 +672,24 @@
             $('#booknow').click(function () {
                 var vid = $("#vendorId").val();
                 var userid = $("#usedid").val();
-                var packid = '@ViewBag.pid';
-                var loc = '@ViewBag.loc';
-                var eventtype = '@ViewBag.eventtype';
-                var guests = '@ViewBag.guest';
-                var date = '@ViewBag.date';
+                var packageid = window.localStorage.getItem("vpbookpid");
+                var vpbook = window.localStorage.getItem("vpbook");
+                var date = window.localStorage.getItem("vpbookdate");
+                var timeslot = window.localStorage.getItem("vpbooktimeslot");
+                var packid = packageid;
+                var vpbook1 = vpbook.split(',');
+                var loc = vpbook1[0];
+                var eventtype = vpbook[2];
+                var guests = vpbook1[1];
+                var date = date;
+                var timeslot = timeslot;
                 if (packid == '') {
                     var selectedp = window.localStorage.getItem("vpbook");
                 }
                 $('.overlay').show();
                 $('#loadermsg').text('Booking in process....');
                 $.ajax({
-                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp,
+                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&timeslot=' + timeslot,
                     type: 'POST',
                     contentType: 'application/json',
 
@@ -684,13 +697,17 @@
                         if (result == "please active the user") {
 
                             alert(result);
+
                         }
                         else if (result != "") {
 
                             alert("Order placed Successfully");
-                            window.location.href = "/vinvoice/Index?oid=" + result;
                             window.localStorage.removeItem("vpbook");
-                        } else {
+                            window.localStorage.removeItem("vpbookdate");
+                            window.localStorage.removeItem("vpbooktimeslot");
+                            window.localStorage.removeItem("vpbookpid");
+                            window.location.href = "/vinvoice/Index?oid=" + result;
+} else {
                             alert("Error Occurred in placing order");
                         }
 
