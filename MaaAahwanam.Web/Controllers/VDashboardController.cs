@@ -37,8 +37,8 @@ namespace MaaAahwanam.Web.Controllers
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 List<VendorImage> allimages = new List<VendorImage>();
-                DateTime todatedate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
-                DateTime tommarowdate = todatedate.AddDays(1);
+                DateTime todatedate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).Date;//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                DateTime tommarowdate = todatedate.AddDays(1).Date;
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 string id = user.UserId.ToString();
                 string email = userLoginDetailsService.Getusername(long.Parse(id));

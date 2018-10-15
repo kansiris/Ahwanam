@@ -1405,7 +1405,7 @@
                         </div>
 
                         <div class="isotope-wrapper" style="padding: 30px;margin-top: 30px;">
-                            <h3 style="color:black">HALL DETAILS</h3>
+                            <h3 style="color:black">HALL DETAILS</h3><input type="button" class="btnbook" value="Choose" />
                             <div class="row">
                                 <input type="hidden" id="vcalender" name="vcalender" value="">
                                 @foreach (var item in ViewBag.venues)
@@ -1551,22 +1551,21 @@
                                                                         ₹
                                                                         @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
                                                                         {<b style="font-size:17px">@item1.PackagePrice</b>}
-                                                                        else
-                                                                        {
-                                                                            <b style="font-size:17px">@item1.price1</b>
-
-                                                                        }
+                                                                    else
+                                                                    {
+                                                                        <b style="font-size:17px">@item1.price1</b>
+                                                                    }
                                                                         / Person
                                                                     </span>
                                                                 </td>
-                                                                <td class="priceslist" style="width:30%"><input type="hidden" class="pkgid" value="@item1.PackageID" /><input type="button" class="btnbook" value="Choose" /></td> @*onclick="booknow(@item1.PackageID)"*@
+                                                                <td class="priceslist" style="width:30%"><input type="hidden" class="pkgid" value="@item1.PackageID" /> <input type="checkbox" value="@item1.PackageID" name="kspackage" class="kspackage"></td> @*onclick="booknow(@item1.PackageID)"*@
                                                             </tr>
 
                                                         }
 
                                                     }
                                                 </table>
-
+                                                <input type="hidden" id="selectedcart" name="selectedcart" class="selectedcart" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -2848,26 +2847,39 @@
             $('#amenities1').val(arr1.substr(1));
             $('#selectedamenities').val(arr.substr(1));
         });
+    
 
 
-        $('.btnbook').on('click', function () {
-            var packageid = $(this).prev('input.pkgid').val();
+            $('.btnbook').on('click', function () {
+             //   getValueUsingClass();
+                /* declare an checkbox array */
+                var chkArray = [];
+
+                /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+                $(".kspackage:checked").each(function () {
+                    chkArray.push($(this).val());
+                });
+
+                /* we join the array separated by the comma */
+                var selected;
+                selected = chkArray.join(',');
+
+                /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+                if (selected.length > 0) {
+                  //  alert("You have selected " + selected);
+                } else {
+                    alert("Please at least check one of the checkbox");
+                }
+         
+                var packageid = selected;
             window.localStorage.removeItem("vpbook");
-            //var bookingdiv = $(this).parents('table.priceslist').parents("div").parents("div.box_grid").find("div.kscbook");
-            //var location = 'Hyderabad';
-            //var guests = bookingdiv.find('#bookguest').val();
-            //var eventtype = bookingdiv.find("#eventtype").find("option:selected").text();
+         
             var location = 'Hyderabad';//$('#loc').val();
             var eventtype = $('.current').text().replace('1','');
             var guests = $('#guests').val();
             var date = $('#vcalender').val();
             if(date == '') date = $('#datetimepicker1').val();
-            //if (location == '') {
-            //    alert('Enter Location');
-            //    $('#loc').focus();
-            //}
-            //alert(eventtype);
-
+          
             if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
                 alert('Select Event Type');
             }
@@ -2880,9 +2892,10 @@
                 $('#datetimepicker1').focus();
             }
             else {
-                var select = location + ',' + guests + "," + date + "," + eventtype + "," + packageid;
+                var select = location + ',' + guests + "," + date + "," + eventtype ;
                 window.localStorage.setItem("vpbook", select);
-                window.location.href = '/ManageUser/Index?select=' + select;
+             //   alert(select);
+                window.location.href = '/ManageUser/Index?select=' + select + '&&packageid=' + selected;
                 //alert('Location = '+location+',Event Type = '+eventtype+',Guests = '+guests+',Event Date = '+date+'');
             }
         });

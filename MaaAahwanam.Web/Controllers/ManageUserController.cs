@@ -15,18 +15,19 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class ManageUserController : Controller
     {
+        VendorVenueService vendorVenueService = new VendorVenueService();
 
         newmanageuser newmanageuse = new newmanageuser();
        Vendormaster vendorMaster = new Vendormaster();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
      VendorDashBoardService mnguserservice = new VendorDashBoardService();
-     
-       // VendorProductsService vendorProductsService = new VendorProductsService();
 
+        // VendorProductsService vendorProductsService = new VendorProductsService();
 
+        int price1;
 
         // GET: ManageUser
-        public ActionResult Index(string VendorId, string select)
+        public ActionResult Index(string VendorId, string select,string packageid)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -47,19 +48,37 @@ namespace MaaAahwanam.Web.Controllers
                     string date1 = date.ToString("dd-MM-yyyy");
                     ViewBag.date = date1;
                     ViewBag.eventtype = select1[3];
-                    var pid = select1[4];
-                    var pkgs = newmanageuse.getpartpkgs(pid).FirstOrDefault();
-                    string price = "";
-                    if (pkgs.PackagePrice == null)
-                    { price = Convert.ToString(pkgs.price1); }
-                    else { price = Convert.ToString(pkgs.PackagePrice); }
+                    // var pid = select1[4];
+                    var pakageid = packageid.Split(',');
+                    int price; StringBuilder pakg = new StringBuilder();
+                    for (int i = 0; i < pakageid.Count(); i++)
+                    {
+                        if (pakageid[i] == "" || pakageid[i] == null)
+                        {
+                            price1 = 0;
+                        }
+                        else
+                        {
+                            var pkgs = newmanageuse.getpartpkgs(pakageid[i]).FirstOrDefault();
+                            if (pkgs.PackagePrice == null)
+                            {
+                                price = Convert.ToInt32(pkgs.price1);
+                            }
+                            else { price = Convert.ToInt32(pkgs.PackagePrice); }
+                            price1 = price1 + price;
 
-                    var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
+                            pakg.Append("pkgs.PackageName + ',' +");
+                        }
+
+                    }
+                    
+
+                    var total = Convert.ToInt64(guests) * Convert.ToInt64(price1);
                     ViewBag.guest = guests;
                     ViewBag.total = total;
-                    ViewBag.price = price;
-                    ViewBag.pid = pid;
-                    ViewBag.pname = pkgs.PackageName;
+                    ViewBag.price = price1;
+                    ViewBag.pid = packageid;
+                    ViewBag.pname = pakg;
                 }
             }
             return View();
@@ -447,7 +466,7 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult orderdetails(string select)
+        public ActionResult orderdetails(string select,string packageid)
         {
             if(select != null && select != "null" && select != "")
             {
@@ -459,21 +478,24 @@ namespace MaaAahwanam.Web.Controllers
                 string date1 = date.ToString("dd-MM-yyyy");
                 ViewBag.date = date1;
                 ViewBag.eventtype = select1[3];
-                var pid = select1[4];
-                var pkgs = newmanageuse.getpartpkgs(pid).FirstOrDefault();
+                //  var pid = select1[4];
+                //     var pkgs = newmanageuse.getpartpkgs(pid).FirstOrDefault();
+                //     var vsid = pkgs.VendorSubId;
+                //var vid = pkgs.VendorId;
+                ViewBag.service = "non";//vendorVenueService.GetVendorVenue(vid, vsid);
                 string price = "";
-                if (pkgs.PackagePrice == null)
-                {
-                    price = Convert.ToString(pkgs.price1);
-                }
-                else { price = Convert.ToString(pkgs.PackagePrice); }
+                //if (pkgs.PackagePrice == null)
+                //{
+                //    price = Convert.ToString(pkgs.price1);
+                //}
+                //else { price = Convert.ToString(pkgs.PackagePrice); }
 
-                var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
+               // var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
                 ViewBag.guest = guests;
-                ViewBag.total = total;
-                ViewBag.price = price;
-                ViewBag.pid = pid;
-                ViewBag.pname = pkgs.PackageName;
+                ViewBag.total = "non";// total;
+                ViewBag.price = "non"; // price;
+                ViewBag.pid = "non";//pid;
+                ViewBag.pname = "non";//pkgs.PackageName;
 
             }
             return View("orderdetails");
