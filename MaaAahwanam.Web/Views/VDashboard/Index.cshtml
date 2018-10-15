@@ -586,7 +586,14 @@
                                 @*<br><br>*@
                                 @*<input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />*@
                                 <div align="right" class="pkgsave">
-                                    <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems.Trim(',')" />
+                                    @if (ViewBag.package.menuitems == null)
+                                    {
+                                    <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems.Trim()" />
+                                    }
                                     <input type="hidden" class="selpkgitems" />
                                     <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems"/>
                                     <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
@@ -2736,7 +2743,7 @@
 
                     for (var i = 0; i < commondiv.split('!').length; i++) {
                         var row = $("<tr/>");
-                        if (getlist != null) {
+                        if (getlist != null && getlist!= ',') {
                             if (getlist.includes(commondiv.split('!')[i])) {
                                 row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" checked id="'+commondiv.split('!')[i]+'"/>  <label for="'+commondiv.split('!')[i]+'">' + commondiv.split('!')[i] + '</label></td>');
                             }

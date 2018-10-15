@@ -1,0 +1,574 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/SharedWeb/vmp.cshtml";
+}
+
+@section css{
+    @if (ViewBag.enable == "first")
+    {
+        <style>
+            .upload-section table, tr, td {
+                border: 0px;
+            }
+
+            .side-content-2 input[type=text], .side-content-1 input[type=text] {
+                height: 49px;
+                width: 90%;
+                background: #f4f5f7;
+                border: 0px solid rgba(34,36,38,.15);
+                font-weight: 600;
+                margin-left: 15px;
+                margin-top: 14px;
+                border-radius: 0px;
+            }
+
+            .side-content-1 textarea {
+                width: 90%;
+                background: #f4f5f7;
+                border: 0px solid rgba(34,36,38,.15);
+                font-weight: 600;
+                margin-left: 15px;
+            }
+        </style>
+    }
+
+    @if (ViewBag.enable == "second")
+    {
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <style>
+                .search-box2 {
+                width: 94%;
+            }
+                .select2-container--default .select2-selection--single {
+                height:37px;
+                }
+                p {
+                    color: red;
+                }
+
+                hr {
+                    margin: 0;
+                    border: 1px lightgray solid;
+                }
+
+                .card-body {
+                    padding: 10px;
+                }
+
+                .card-img-top {
+                    height: 140px;
+                    width: 100%;
+                }
+
+                .card-title, .divheading {
+                    font-family: lato;
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+
+                .card-body table, tr, td {
+                    border: 0px;
+                    padding: 0;
+                }
+
+                .ui-datepicker {
+                    width: 100%;
+                }
+
+                .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+                    background: white;
+                }
+
+                .ui-widget-header {
+                    background: white;
+                }
+        </style>
+        <style>
+            .accordion {
+                background-color: #eee;
+                color: #444;
+                cursor: pointer;
+                padding: 18px;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                font-size: 15px;
+                transition: 0.4s;
+            }
+
+                .active, .accordion:hover {
+                    background-color: #ccc;
+                }
+
+                .accordion:after {
+                    content: '\002B';
+                    color: #777;
+                    font-weight: bold;
+                    float: right;
+                    margin-left: 5px;
+                }
+
+            .active:after {
+                content: "\2212";
+            }
+
+            .panel {
+                padding: 0 18px;
+                background-color: white;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+            }
+        </style>
+    }
+}
+
+@if (ViewBag.enable == "first")
+{
+    <div class="col-md-6">
+        <div class="container-fluid">
+            <div class="row main-tab">
+                <img src="http://design.maa-aahwanam.com/panagea/images/banner3.jpg" id="banner3">
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <h6>Hotel Radisson</h6>
+                    </div>
+                    <div class="row">
+                        <label id="typemsg">Service Type:</label>
+                        <select id="selectedservice" style="width:auto">
+                            <option disabled selected>Select Category</option>
+                            <option value="Convention Hall">Convention Hall</option>
+                            <option value="Function Hall">Function Hall</option>
+                            <option value="Banquet Hall">Banquet Hall</option>
+                            <option value="Meeting Room">Meeting Room</option>
+                            <option value="Open Lawn">Open Lawn</option>
+                            <option value="Hotel">Hotel</option>
+                            <option value="Resort">Resort</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div><button class="btn btn-default">Plan Calendar</button></div>
+                    <div style="padding-top:5%"><input type="checkbox" id="status" /><label for="status">InActive</label></div>
+                </div>
+            </div>
+
+            <div class="row upload-section">
+                <table>
+                    <tr>
+                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
+                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
+                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
+                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="row" style="padding-top:2%">
+                <div class="col-md-6">
+                    <h6>Food Packages</h6>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" id="anp" class="btn btn-danger" style="float:right"> Add Package</button>
+                </div>
+            </div>
+
+            <div class="row" id="pkgsdiv">
+                <div>
+                    <div class="package-box px-2">
+                        <div class="container-fluid">
+                            <div class="row px-1">
+                                <input type="text" class="form-control" placeholder="text" id="input1">
+                                <input type="text" class="form-control" placeholder="text" id="input2">
+                            </div>
+                            <div class="row">
+
+                                <p id="days">peakdays</p>
+                                <p id="days">normal days</p>
+                                <p id="days">Holidays</p>
+                                <p id="days">Choice days</p>
+                            </div>
+                            <div class="row">
+
+                                <p id="days">000000</p>
+                                <p id="days">000000</p>
+                                <p id="days">000000</p>
+                                <p id="days">000000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="package-list">
+                        <button id="pillbutton">Mocktails(2)</button>
+                        <button id="pillbutton">soup(2)</button>
+                        <button id="pillbutton">salad(2)</button>
+                        <button id="pillbutton">mains(2)</button>
+                        <button id="pillbutton">rice&amp;curd(2)</button>
+
+                        <button id="pillbutton">Rajasthani(2)</button>
+                        <button id="pillbutton">deserts(2)</button>
+                        <button id="pillbutton">Add item</button><br><br>
+                        <a href="#" id="a-text">Duplicate</a>
+                        <a href="#" id="a-text-1">Publish</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="container-fluid">
+            <div class="row policies">
+                <div class="col-md-6"><h6 class="h6-1-1">POLICIES</h6></div>
+                <div class="col-md-6"><button type="button" class="btn btn-danger" style="float:right">Save</button></div>
+                <div id="overflow-scroll">
+                    <table>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Savings</th>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Griffin</td>
+                            <td>$100</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Griffin</td>
+                            <td>$100</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Griffin</td>
+                            <td>$100</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Griffin</td>
+                            <td>$100</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Griffin</td>
+                            <td>$100</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Griffin</td>
+                            <td>$150</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Swanson</td>
+                            <td>$300</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row side-content">
+
+                <div id="overflow-scroll">
+                    <P><i class="fas fa-wifi"><br>WIFI</i></P>
+                    <P><i class="fas fa-shower"><br>SHOWER</i><P>
+                    <P><i class="fas fa-parking"><br>PARKING</i><P>
+                    <P><i class="fas fa-wifi"><br>WIFI</i></P>
+                    <P><i class="fas fa-shower"><br>SHOWER</i><P>
+                    <P><i class="fas fa-parking"><br>PARKING</i><P>
+                </div>
+
+            </div>
+
+            <div class="row side-content-2">
+                <h6 class="h6-1-1">Address</h6>
+
+                <input type="text" class="form-control" placeholder="H.no/flat/plot">
+                <input type="text" class="form-control" placeholder="H.no/flat/plot">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Street Name" style="margin-left:0">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Area Name" style="margin-left:0">
+                </div>
+            </div>
+
+            <div class="row side-content-1">
+                <h6 class="h6-1-1">Add Description</h6>
+                <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+                <h6 class="h6-1-1">Address</h6>
+
+                <input type="text" class="form-control" placeholder="H.no/flat/plot">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Street Name" style="margin-left:0">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Area Name" style="margin-left:0">
+                </div>
+                <input type="text" class="form-control" placeholder="Pincode">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="City" style="margin-left:0">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="State" style="margin-left:0">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.enable == "second")
+{
+    <div class="col-md-10">
+        <div class="container-fluid">
+
+            <div>
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div style="background-color:white">
+                                <select class="search-box2" name="state" style="height:100px;">
+                                    <option value="" disabled selected>Select Event</option>
+                                    <option value="Wedding">Wedding</option>
+                                    <option value="Party">Party</option>
+                                    <option value="Corporate">Corporate</option>
+                                    <option value="Baby Function">Baby Function</option>
+                                    <option value="Birthday">Birthday</option>
+                                    <option value="Engagement">Engagement</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input class="form-control" type="number" id="guests" name="guests" placeholder="Guests">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input class="form-control" style="width:100%" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="button" id="btnsearch" class="btn btn-danger btn_search" style="width:100%" value="Search">
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <p>Hall Details</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Hall Name</h5>
+                            <hr />
+                            <div align="center">
+                                <table>
+                                    <tr> <td> Hall Type </td> </tr>
+                                    <tr> <td> Hall Dimensions </td> </tr>
+                                    <tr> <td> Seating Capacity </td> </tr>
+                                    <tr> <td> Seating Arrangement </td> </tr>
+                                </table>
+                            </div>
+                            <hr />
+                        </div>
+                        <div align="center" class="divheading">Availability Calendar</div>
+                        <div style="border:1px black solid">
+                            <div class='vendorcalendar'></div>
+                        </div>
+                        <div class="card-body">
+                            <div align="center" class="divheading">Available Packages</div>
+                            <div align="center">
+                                <table>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Hall Name</h5>
+                            <hr />
+                            <div align="center">
+                                <table>
+                                    <tr> <td> Hall Type </td> </tr>
+                                    <tr> <td> Hall Dimensions </td> </tr>
+                                    <tr> <td> Seating Capacity </td> </tr>
+                                    <tr> <td> Seating Arrangement </td> </tr>
+                                </table>
+                            </div>
+                            <hr />
+                        </div>
+                        <div align="center" class="divheading">Availability Calendar</div>
+                        <div style="border:1px black solid">
+                            <div class='vendorcalendar'></div>
+                        </div>
+                        <div class="card-body">
+                            <div align="center" class="divheading">Available Packages</div>
+                            <div align="center">
+                                <table>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Hall Name</h5>
+                            <hr />
+                            <div align="center">
+                                <table>
+                                    <tr> <td> Hall Type </td> </tr>
+                                    <tr> <td> Hall Dimensions </td> </tr>
+                                    <tr> <td> Seating Capacity </td> </tr>
+                                    <tr> <td> Seating Arrangement </td> </tr>
+                                </table>
+                            </div>
+                            <hr />
+                        </div>
+                        <div align="center" class="divheading">Availability Calendar</div>
+                        <div style="border:1px black solid">
+                            <div class='vendorcalendar'></div>
+                        </div>
+                        <div class="card-body">
+                            <div align="center" class="divheading">Available Packages</div>
+                            <div align="center">
+                                <table>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%"> Package Name </td>
+                                        <td style="width:40%"> Package Price </td>
+                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:2%">
+                <button class="accordion">Today's Events</button>
+                <div class="panel">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+
+                <button class="accordion">Tomorrow Events</button>
+                <div class="panel">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+
+                <button class="accordion">Upcoming Events</button>
+                <div class="panel">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    @if (ViewBag.enable == "first")
+    {
+        <script type="text/javascript">
+            $("#anp").click(function () {
+                var div = document.getElementById("pkgsdiv");
+                var childdiv = "<div><div class='package-box'></div><div class='package-list'><button id='pillbutton'>Mocktails(2)</button><button id='pillbutton'>soup(2)</button><button id='pillbutton'>salad(2)</button><button id='pillbutton'>mains(2)</button><button id='pillbutton'>rice&amp;curd(2)</button><button id='pillbutton'>Rajasthani(2)</button><button id='pillbutton'>deserts(2)</button><button id='pillbutton'>Add item</button><br><br><a href='#' id='a-text'>Duplicate</a><a href='#' id='a-text-1'>Publish</a></div></div>";
+                $('#pkgsdiv').append(childdiv);
+            });
+
+
+        </script>
+    }
+    @if (ViewBag.enable == "second")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.search-box2').select2({ tags: true });
+            });
+            //$("#datetimepicker1").datepicker();
+            $(".vendorcalendar").datepicker();
+        </script>
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        </script>
+    }
+}
