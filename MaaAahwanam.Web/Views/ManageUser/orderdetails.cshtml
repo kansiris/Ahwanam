@@ -3,100 +3,147 @@
         position: relative;
     }
 
-    #selected  {
-    border:1px solid;
+    #selected {
+        border: 1px solid;
     }
 </style>
 
-@if (ViewBag.loc != null)
+@if (ViewBag.package != null)
 {
-    <div align="center">
-        <table id="selected">
-            <tr>
-                <td>Location</td>
-                <td>: @ViewBag.loc </td>
-                <td>Event Date</td>
-                <td>: @ViewBag.date </td>
-            </tr>
-            <tr>
-                <td>Event Type</td>
-                <td>: @ViewBag.eventtype </td>
-                <td>Price</td>
-                <td>: @ViewBag.price </td>
-            </tr>
-            <tr>
-                <td>Guests Count</td>
-                <td>: @ViewBag.guest </td>
-                <td>Total Amount</td>
-                <td>: @ViewBag.total</td>
-            </tr>
-            <tr>
-                <td>Package Name</td>
-                <td>: <a class="viewpkg" style="color:#dc3545;cursor:pointer">@ViewBag.pname</a></td>
-                <td>Discount</td>
-                <td><input type="text" class="form-control" placeholder="Discount % or ₹" /></td>
-            </tr>
-        </table>
-    </div>
-    @*<div>
-        <div>
-            <label> location :</label>
-            <label class="kscfont">@ViewBag.loc ,</label>
+    <div class="row">
+        @foreach (var item in ViewBag.package)
+        {
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">@item.PackageName</div>
+                <div class="card-body">
+                    <p>
+                        Location: @ViewBag.loc
+                    </p>
+                    <p>
+                        Event Date: @item.UpdatedDate
+                    </p>
 
-            <label>eventdate : </label>
-            <label class="kscfont">@ViewBag.date ,</label>
-
-            <label>eventtype : </label><label class="kscfont">@ViewBag.eventtype ,</label>
-
-            <label> price : </label><label class="kscfont">@ViewBag.price ,</label>
-
-            <label> guest :</label><label class="kscfont">@ViewBag.guest ,</label>
-
-            <label> total :</label><label class="kscfont">@ViewBag.total ,</label>
-            <label> Package name :</label> <a class="viewpkg" style="color:#dc3545;cursor:pointer">@ViewBag.pname</a>
+                    <p>
+                        Guests Count : @ViewBag.guests
+                    </p>
+                    <p>
+                        timeslot : @item.timeslot
+                    </p>
+                  
+                </div>
+                <div class="card-footer">Footer</div>
+            </div>
         </div>
-    </div>*@
-}
+        }
+        </div>
+        <p> total amount = @ViewBag.tprice</p>
+
+        }
 
 
-<div id="viewpkgitems" class="ui long writemsg modal">
-    <div class="header" style="background-color:#573791;color:white">
-        <text class="pkgname"></text> @*- <text class="pkgtype"></text>*@
-        <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewpkgitems').modal('hide')">Close</button>
-    </div>
-    <div class="scrolling content" id="pkgitems">
-    </div>
-</div>
 
-<script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
-<script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
-<script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
-<script>
-    $('.viewpkg').click(function () {
-        var pkgid = '@ViewBag.pid';
-        var maindiv = '';
-        $.ajax({
-            url: '/ManageUser/GetParticularPackage?pid=' + pkgid,
-            type: 'post',
-            datatype: 'json',
-            data: pkgid,
-            success: function (data) {
-                $('#viewpkgitems .pkgname').text(data.PackageName);
-                if (data.menuitems != '' && data.menuitems != null) {
-                    var count = data.menuitems.split(',').length;
-                    for (var i = 0; i < count; i++) {
-                        var totalitem = data.menuitems.split(',')[i];
-                        var heading = totalitem.split('(')[0];
-                        var items = totalitem.split('(')[1].split(')')[0].split('!');
-                        maindiv += '<div class="heading">' + heading + '</div><div class="items">' + items + '</div><br/>';
-                    }
-                }
-                else {
-                    maindiv = "No Menu Items";
-                }
-                $('#viewpkgitems #pkgitems').empty().append(maindiv);
-                $('#viewpkgitems').modal('show');
-            }
-        });
-    });
-</script>
+
+        @*@if (ViewBag.loc != null)
+                    {
+                        <div align="center">
+                            @*<table id="selected">
+
+                                <tr>
+                                    <td>Location</td>
+                                    <td>: @ViewBag.loc </td>
+                                    <td>Event Date</td>
+                                    <td>: @ViewBag.date </td>
+                                </tr>
+                                @*<tr><tb>Venue Name:
+                                    @if (ViewBag.service.name != null && ViewBag.service.name != "")
+                                    {
+                                        <tb>@ViewBag.service.name</tb>
+                                    }
+                                    else
+                                    {
+                                        <tb>@ViewBag.service.VenueType</tb>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Event Type</td>
+                                    <td>: @ViewBag.eventtype </td>
+                                    <td>Price</td>
+                                    <td>: @ViewBag.price </td>
+                                </tr>
+                                <tr>
+                                    <td>Guests Count</td>
+                                    <td>: @ViewBag.guest </td>
+                                    <td>Total Amount</td>
+                                    <td>: @ViewBag.total</td>
+                                </tr>
+                                <tr>
+                                    <td>Package Name</td>
+                                    <td>: <a class="viewpkg" style="color:#dc3545;cursor:pointer">@ViewBag.pname</a></td>
+                                    <td>Discount</td>
+                                    <td><input type="text" class="form-control" placeholder="Discount % or ₹" /></td>
+                                </tr>
+                            </table>
+                </div>
+                @*<div>
+                        <div>
+                            <label> location :</label>
+                            <label class="kscfont">@ViewBag.loc ,</label>
+
+                            <label>eventdate : </label>
+                            <label class="kscfont">@ViewBag.date ,</label>
+
+                            <label>eventtype : </label><label class="kscfont">@ViewBag.eventtype ,</label>
+
+                            <label> price : </label><label class="kscfont">@ViewBag.price ,</label>
+
+                            <label> guest :</label><label class="kscfont">@ViewBag.guest ,</label>
+
+                            <label> total :</label><label class="kscfont">@ViewBag.total ,</label>
+                            <label> Package name :</label> <a class="viewpkg" style="color:#dc3545;cursor:pointer">@ViewBag.pname</a>
+                        </div>
+                    </div>
+            }*@
+
+
+        @*<div id="viewpkgitems" class="ui long writemsg modal">
+                <div class="header" style="background-color:#573791;color:white">
+                    <text class="pkgname"></text> @*- <text class="pkgtype"></text>
+                    <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewpkgitems').modal('hide')">Close</button>
+                </div>
+                <div class="scrolling content" id="pkgitems">
+                </div>
+            </div>
+
+            <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
+            <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
+            <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
+            <script>
+                $('.viewpkg').click(function () {
+                    var pkgid = '@ViewBag.pid';
+                    var maindiv = '';
+                    $.ajax({
+                        url: '/ManageUser/GetParticularPackage?pid=' + pkgid,
+                        type: 'post',
+                        datatype: 'json',
+                        data: pkgid,
+                        success: function (data) {
+                            $('#viewpkgitems .pkgname').text(data.PackageName);
+                            if (data.menuitems != '' && data.menuitems != null) {
+                                var count = data.menuitems.split(',').length;
+                                for (var i = 0; i < count; i++) {
+                                    var totalitem = data.menuitems.split(',')[i];
+                                    var heading = totalitem.split('(')[0];
+                                    var items = totalitem.split('(')[1].split(')')[0].split('!');
+                                    maindiv += '<div class="heading">' + heading + '</div><div class="items">' + items + '</div><br/>';
+                                }
+                            }
+                            else {
+                                maindiv = "No Menu Items";
+                            }
+                            $('#viewpkgitems #pkgitems').empty().append(maindiv);
+                            $('#viewpkgitems').modal('show');
+                        }
+                    });
+                });
+            </script>*@

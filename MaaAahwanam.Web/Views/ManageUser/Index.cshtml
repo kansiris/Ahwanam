@@ -169,6 +169,9 @@
             font-size: 15px;
             font-weight: 900;
         }
+        .addcutomerpopup, .cutomtblpopup {
+        position:relative;
+        }
     </style>
     <style>
         .overlay {
@@ -240,210 +243,385 @@
                                     <div class="center">
                                         @{Html.RenderAction("orderdetails", "ManageUser"); }
                                     </div>
-                                    <div>
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td><h4 style="text-transform:uppercase">Customers/Clients</h4></td>
-                                                <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Customer</button></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div style="overflow-x: auto;">
-                                        <table id="allorders" class="display" style="width:100%;">
-                                            <thead>
+                                    @*<div class="selectcustomer">
+                                        <button id="btnselect" class="btn btn-primary">Select Customer</button>
+                                    </div>*@
+                                    <div class="ui cutomtblpopup coupled modal" id="selectcustmpopupmodel" style="max-width:1200px;width:100%;">
+                                        @*<div><button id="close" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>*@
+                                        <i class="close icon" style="position:unset;color:black"></i>
+                                       
+                                        @*<div class="customtbl">
+                                            <table style="width:100%">
                                                 <tr>
-                                                    <th>Select</th>
-                                                    <th>Name </th>
-                                                    <th>Company Name</th>
-                                                    <th>Email</th>
-                                                    <th>Phone Number</th>
-                                                    <th>Member Number</th>
-                                                    <th>Status</th>
+                                                    <td><h4 style="text-transform:uppercase">Customers/Clients</h4></td>
+                                                    <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Customer</button></td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    //var number = 0;
-                                                    foreach (var users in ViewBag.Userlist)
-                                                    {
-                                                        <tr>
-                                                            <td><input type="checkbox" class="chcktbl" value="@users.id" /></td> 
-                                                            <td>@users.firstname @users.lastname</td>
-                                                            <td>@users.Businessname</td>
-                                                            <td>@users.email</td>
-                                                            <td>@users.phoneno</td>
-                                                            <td>Member12345</td>
-                                                            <td>@users.Status</td>
-                                                            @*<td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>*@
-                                                        </tr>
-
-                                                    }
-
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    
-
-                                    <div class="row" id="saverecord" style="display:none;margin-top:50px">
-                                        <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
-
-                                        <form method="POST">
-                                            <input type="hidden" id="usedid" name="usedid" value="" />
-                                            <input type="hidden" id="vpbookdetails" name="vpbookdetails" value="" />
-                                            <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
-                                            <div class="col-12 col-sm-12 col-md-12">
-                                                <div class="row">
-                                                    <input type="hidden" id="id" name="id" value="" />
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <label class="input input--hoshi" style="font-weight:bold">Customer Type</label>
-                                                        <span class="form-check" style="display:inline">
-                                                            <input class="form-check-input" name="type" type="radio" id="radio1" value="Individual" required>
-                                                            <label class="form-check-label" for="radio1">Individual</label>
-                                                        </span>
-                                                        <span class="form-check" style="display:inline">
-                                                            <input class="form-check-input" name="type" type="radio" id="radio2" value="Corporate" checked required>
-                                                            <label class="form-check-label" for="radio2">Corporate</label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4" id="company" style="display:block;">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value=""  />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
-                                                                <span class="input__label-content input__label-content--hoshi">Company Name</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="firstname" name="firstname" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstname">
-                                                                <span class="input__label-content input__label-content--hoshi">First Name</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row" style="margin-top: -24px;">
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="lastname" name="lastname" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="lastname">
-                                                                <span class="input__label-content input__label-content--hoshi">Last Name</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$+" title="Please enter valid email" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
-                                                                <span class="input__label-content input__label-content--hoshi">Email</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+"  maxlength="10" pattern="[0-9]+" title="Enter Numbers and 10 digits only" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
-                                                                <span class="input__label-content input__label-content--hoshi">Phone Number</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row" style="margin-top: -24px;">
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" pattern="[a-zA-Z0-9\s]+" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress1">
-                                                                <span class="input__label-content input__label-content--hoshi"> Flat No/Street</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" pattern="[a-zA-Z0-9\s]+" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress2">
-                                                                <span class="input__label-content input__label-content--hoshi">Locality</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+(!000000)+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+"  required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
-                                                                <span class="input__label-content input__label-content--hoshi">PinCode</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row" style="margin-top: -24px;">
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="city" name="city" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="city">
-                                                                <span class="input__label-content input__label-content--hoshi">City</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="state" name="state" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="state">
-                                                                <span class="input__label-content input__label-content--hoshi">State</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="country" name="country" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="country">
-                                                                <span class="input__label-content input__label-content--hoshi">Country</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row" style="margin-top:-24px;">
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <label class="input input--hoshi" style="font-weight:bold">Status</label>
-                                                        <span class="form-check" style="display:inline">
-                                                            <input class="form-check-input" name="Status" type="radio" id="Status1" value="Active" checked required>
-                                                            <label class="form-check-label" for="Status1">Active</label>
-                                                        </span>
-                                                        <span class="form-check" style="display:inline">
-                                                            <input class="form-check-input" name="Status" type="radio" id="Status2" value="InActive" required>
-                                                            <label class="form-check-label" for="Status2">InActive</label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="MemberNumber" name="MemberNumber" value="" required />
-                                                            <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="MemberNumber">
-                                                                <span class="input__label-content input__label-content--hoshi">Member Number</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-
-                                                </div>
+                                            </table>
+                                        </div>*@
+                                        <div class="customtbl header" style="text-transform:uppercase">
+                                            Customers/Clients <button id="btnadd"class="btn btn-primary">Add New Customer</button>
                                             </div>
-                                            <div align="center">
-                                                <div style="position:absolute; left: 485px; margin-left: -94px;">
-                                                    @if (@Request.QueryString["select"] != null)
-                                                    {
-                                                        <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
-                                                        <button id="booknowss" type="button" name="command" class="btn btn-success" style="margin-left: -55px;">save and Book Now</button>
+                                        <div style="overflow-x: auto;" class="content">
+                                            <table id="allorders" class="display" style="width:100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Select</th>
+                                                        <th>Name </th>
+
+                                                        <th>Company Name</th>
+                                                        <th>Email</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Member Number</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        //var number = 0;
+                                                        foreach (var users in ViewBag.Userlist)
+                                                        {
+                                                            <tr>
+                                                                <td><input type="checkbox" class="chcktbl" value="@users.id" /></td>
+                                                                <td>@users.firstname @users.lastname</td>
+                                                                <td>@users.Businessname</td>
+                                                                <td>@users.email</td>
+                                                                <td>@users.phoneno</td>
+                                                                <td>Member12345</td>
+                                                                <td>@users.Status</td>
+                                                                @*<td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>*@
+                                                            </tr>
+
+                                                        }
+
                                                     }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                            @*<div class="row content" id="saverecord" style="display:none;margin-top:50px">
+                                                <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
+                                                <form method="POST">
+                                                    <input type="hidden" id="usedid" name="usedid" value="" />
+                                                    <input type="hidden" id="vpbookdetails" name="vpbookdetails" value="" />
+                                                    <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
+                                                    <div class="col-12 col-sm-12 col-md-12">
+                                                        <div class="row">
+                                                            <input type="hidden" id="id" name="id" value="" />
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <label class="input input--hoshi" style="font-weight:bold">Customer Type</label>
+                                                                <span class="form-check" style="display:inline">
+                                                                    <input class="form-check-input" name="type" type="radio" id="radio1" value="Individual" required>
+                                                                    <label class="form-check-label" for="radio1">Individual</label>
+                                                                </span>
+                                                                <span class="form-check" style="display:inline">
+                                                                    <input class="form-check-input" name="type" type="radio" id="radio2" value="Corporate" checked required>
+                                                                    <label class="form-check-label" for="radio2">Corporate</label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4" id="company" style="display:block;">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value="" />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
+                                                                        <span class="input__label-content input__label-content--hoshi">Company Name</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="firstname" name="firstname" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstname">
+                                                                        <span class="input__label-content input__label-content--hoshi">First Name</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -24px;">
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="lastname" name="lastname" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="lastname">
+                                                                        <span class="input__label-content input__label-content--hoshi">Last Name</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$+" title="Please enter valid email" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
+                                                                        <span class="input__label-content input__label-content--hoshi">Email</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+" maxlength="10" pattern="[0-9]+" title="Enter Numbers and 10 digits only" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
+                                                                        <span class="input__label-content input__label-content--hoshi">Phone Number</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -24px;">
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" pattern="[a-zA-Z0-9\s]+" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress1">
+                                                                        <span class="input__label-content input__label-content--hoshi"> Flat No/Street</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" pattern="[a-zA-Z0-9\s]+" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress2">
+                                                                        <span class="input__label-content input__label-content--hoshi">Locality</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+(!000000)+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
+                                                                        <span class="input__label-content input__label-content--hoshi">PinCode</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -24px;">
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="city" name="city" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="city">
+                                                                        <span class="input__label-content input__label-content--hoshi">City</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="state" name="state" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="state">
+                                                                        <span class="input__label-content input__label-content--hoshi">State</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="country" name="country" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="country">
+                                                                        <span class="input__label-content input__label-content--hoshi">Country</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="margin-top:-24px;">
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <label class="input input--hoshi" style="font-weight:bold">Status</label>
+                                                                <span class="form-check" style="display:inline">
+                                                                    <input class="form-check-input" name="Status" type="radio" id="Status1" value="Active" checked required>
+                                                                    <label class="form-check-label" for="Status1">Active</label>
+                                                                </span>
+                                                                <span class="form-check" style="display:inline">
+                                                                    <input class="form-check-input" name="Status" type="radio" id="Status2" value="InActive" required>
+                                                                    <label class="form-check-label" for="Status2">InActive</label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-4 col-md-4">
+                                                                <span class="input input--hoshi">
+                                                                    <input class="input__field input__field--hoshi" type="text" id="MemberNumber" name="MemberNumber" value="" required />
+                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="MemberNumber">
+                                                                        <span class="input__label-content input__label-content--hoshi">Member Number</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+
+                                                    </div>
                                                 </div>
-                                                <div style="position: absolute; display: inline;">
+                                                <div align="center">
+                                                    <div style="position:absolute; left: 485px; margin-left: -94px;">
+                                                            <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
+                                                            <button id="booknowss" type="button" name="command" class="btn btn-success" style="margin-left: -55px;">save and Book Now</button>
+                                                    </div>
+                                                    <div style="position: absolute; display: inline;">
+                                                        <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
+                                                        <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
+                                                    </div>
+                                                    <div style="margin-left: 73px; display: inline;">
+                                                        <button id="CancelUser" type="button" class="btn btn-danger">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <button id="btnselect" class="btn btn-primary">Select Customer</button>
+                                    <div class="ui addcutomerpopup coupled modal" id="addcustomermodel">
+                                        @*<div><button id="close2" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>*@
+                                        <i class="close icon" style="position:unset;color:black"></i>
+                                        @*<div class="row" id="saverecord">*@
+                                            <div align="center" class="header" style="text-transform:uppercase">Add/Edit Customer</div>
+                                            @*<form method="POST" class="content">*@
+                                                <input type="hidden" id="usedid" name="usedid" value="" />
+                                                <input type="hidden" id="vpbookdetails" name="vpbookdetails" value="" />
+                                                <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
+                                                <div class="col-12 col-sm-12 col-md-12">
+                                                    <div class="row">
+                                                        <input type="hidden" id="id" name="id" value="" />
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <label class="input input--hoshi" style="font-weight:bold">Customer Type</label>
+                                                            <span class="form-check" style="display:inline">
+                                                                <input class="form-check-input" name="type" type="radio" id="radio1" value="Individual" required>
+                                                                <label class="form-check-label" for="radio1">Individual</label>
+                                                            </span>
+                                                            <span class="form-check" style="display:inline">
+                                                                <input class="form-check-input" name="type" type="radio" id="radio2" value="Corporate" checked required>
+                                                                <label class="form-check-label" for="radio2">Corporate</label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4" id="company" style="display:block;">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value="" />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
+                                                                    <span class="input__label-content input__label-content--hoshi">Company Name</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="firstname" name="firstname" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstname">
+                                                                    <span class="input__label-content input__label-content--hoshi">First Name</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-top: -24px;">
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="lastname" name="lastname" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="lastname">
+                                                                    <span class="input__label-content input__label-content--hoshi">Last Name</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$+" title="Please enter valid email" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
+                                                                    <span class="input__label-content input__label-content--hoshi">Email</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+" maxlength="10" pattern="[0-9]+" title="Enter Numbers and 10 digits only" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
+                                                                    <span class="input__label-content input__label-content--hoshi">Phone Number</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-top: -24px;">
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" pattern="[a-zA-Z0-9\s]+" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress1">
+                                                                    <span class="input__label-content input__label-content--hoshi"> Flat No/Street</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" pattern="[a-zA-Z0-9\s]+" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress2">
+                                                                    <span class="input__label-content input__label-content--hoshi">Locality</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+(!000000)+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
+                                                                    <span class="input__label-content input__label-content--hoshi">PinCode</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-top: -24px;">
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="city" name="city" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="city">
+                                                                    <span class="input__label-content input__label-content--hoshi">City</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="state" name="state" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="state">
+                                                                    <span class="input__label-content input__label-content--hoshi">State</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="country" name="country" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="country">
+                                                                    <span class="input__label-content input__label-content--hoshi">Country</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-top:-24px;">
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <label class="input input--hoshi" style="font-weight:bold">Status</label>
+                                                            <span class="form-check" style="display:inline">
+                                                                <input class="form-check-input" name="Status" type="radio" id="Status1" value="Active" checked required>
+                                                                <label class="form-check-label" for="Status1">Active</label>
+                                                            </span>
+                                                            <span class="form-check" style="display:inline">
+                                                                <input class="form-check-input" name="Status" type="radio" id="Status2" value="InActive" required>
+                                                                <label class="form-check-label" for="Status2">InActive</label>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-4 col-md-4">
+                                                            <span class="input input--hoshi">
+                                                                <input class="input__field input__field--hoshi" type="text" id="MemberNumber" name="MemberNumber" value="" required />
+                                                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="MemberNumber">
+                                                                    <span class="input__label-content input__label-content--hoshi">Member Number</span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                @*<div align="center" class="footer">
+                                                    <div style="position: absolute; display: inline;">
+                                                        <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
+                                                        <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
+                                                    </div>
+                                                    <div style="margin-left: 60px; display: inline;">
+                                                        <button id="CancelUser2" type="button" class="btn btn-danger">Cancel</button>
+                                                    </div>
+                                                </div>*@
+                                                
+                                            @*</form>*@
+                                        @*</div>*@
+                                        <div class="actions">
+                                            <div class="row" align="center">
+                                                <div class="col-md-4">
+                                                    <button id="SaveUser1"  type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right">Save and Book Now</button>
+                                                </div>
+                                                <div class="col-md-4">
                                                     <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
                                                     <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
-                                                </div>                              
-                                                <div style="margin-left: 73px; display: inline;">
-                                                    <button id="CancelUser" type="button" class="btn btn-danger">Cancel</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="ui negative button" style="float:left;height:35px;">Cancel</div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
-                                </div>
+                                        <button id="btnadd2" class="btn btn-primary ncustomer">Add New Customer</button>
+                                    </div>
                             </div>
                             <!-- /container -->
                         </div>
@@ -455,6 +633,8 @@
             <div id="toTop"></div><!-- Back to top button -->
         </div>
         <!-- COMMON SCRIPTS -->
+        <script type="text/javascript" language="javascript" src="~/newdesign/js/jquery-3.1.1.min.js"></script>
+        <script src="~/newdesign/js/jquery-ui-1.12.1.js"></script>
         <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
         <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
         <script src="~/newdesignstyles/Scripts/main.js"></script>
@@ -480,16 +660,26 @@
 
                 $('#allorders').DataTable();
                 $('#addservices').css("display", "none");
-                var vpbook1 = window.localStorage.getItem("vpbook");
-                var vpbook = '';
+                var vpbook = window.localStorage.getItem("vpbook");
+                var date = window.localStorage.getItem("vpbookdate");
+                var timeslot = window.localStorage.getItem("vpbooktimeslot");
+                var packageid = window.localStorage.getItem("vpbookpid");
+                if (vpbook == "") {
+                    $('#booknow').css('display', 'none');
+                    $('#booknowss').css('display', 'none');
+                }
+                else {
+                    $('#booknow').css('display', 'block');
+                    $('#booknowss').css('display', 'block'); }
+               @* var vpbook = '';
                var vpbook2 = '@Request.QueryString["select"]';
                 $('#vpbookdetails').val(vpbook);
-                if (vpbook1 != "") { vpbook = vpbook2; } else { vpbook = vpbook1; }
+                if (vpbook1 != "") { vpbook = vpbook2; } else { vpbook = vpbook1; }*@
 
                 $.ajax({
                     //alert(defcalender);
 
-                    url: '/ManageUser/orderdetails?select=' + vpbook,
+                    url: '/ManageUser/orderdetails?select=' + vpbook +'&date='+date+'&timeslot='+timeslot+'&packageid='+packageid,
                     type: 'POST',
                     contentType: false,
                     processData: false,
@@ -526,6 +716,11 @@
 
             $('#CancelUser').click(function () {
                 $('#saverecord').css('display', 'none');
+            });
+
+            $('#CancelUser2').click(function () {
+                $('.addcutomerpopup').css('display', 'none');
+                $('#btnadd2').show();
             });
 
 
@@ -658,18 +853,24 @@
             $('#booknow').click(function () {
                 var vid = $("#vendorId").val();
                 var userid = $("#usedid").val();
-                var packid = '@ViewBag.pid';
-                var loc = '@ViewBag.loc';
-                var eventtype = '@ViewBag.eventtype';
-                var guests = '@ViewBag.guest';
-                var date = '@ViewBag.date';
+                var packageid = window.localStorage.getItem("vpbookpid");
+                var vpbook = window.localStorage.getItem("vpbook");
+                var date = window.localStorage.getItem("vpbookdate");
+                var timeslot = window.localStorage.getItem("vpbooktimeslot");
+                var packid = packageid;
+                var vpbook1 = vpbook.split(',');
+                var loc = vpbook1[0];
+                var eventtype = vpbook[2];
+                var guests = vpbook1[1];
+                var date = date;
+                var timeslot = timeslot;
                 if (packid == '') {
                     var selectedp = window.localStorage.getItem("vpbook");
                 }
                 $('.overlay').show();
                 $('#loadermsg').text('Booking in process....');
                 $.ajax({
-                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp,
+                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&timeslot=' + timeslot,
                     type: 'POST',
                     contentType: 'application/json',
 
@@ -677,13 +878,17 @@
                         if (result == "please active the user") {
 
                             alert(result);
+
                         }
                         else if (result != "") {
 
                             alert("Order placed Successfully");
-                            window.location.href = "/vinvoice/Index?oid=" + result;
                             window.localStorage.removeItem("vpbook");
-                        } else {
+                            window.localStorage.removeItem("vpbookdate");
+                            window.localStorage.removeItem("vpbooktimeslot");
+                            window.localStorage.removeItem("vpbookpid");
+                            window.location.href = "/vinvoice/Index?oid=" + result;
+} else {
                             alert("Error Occurred in placing order");
                         }
 
@@ -749,8 +954,26 @@
             }
             });
 
+
+            
+  
+
         </script>
 
+
+        <script>
+            $('#btnadd').on('click', function () {
+                $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
+            });
+            $('#btnselect').on('click', function () {
+                $('.coupled.modal').modal({ allowMultiple: true });
+                $('.addcutomerpopup.modal').modal('attach events', '.cutomtblpopup.modal button#btnadd')
+                $('.cutomtblpopup.modal').modal('show');
+            });
+            $('#btnadd2').on('click', function () {
+                $('#addcustomermodel').modal('show');
+            });
+        </script>
     </body>
                                                     }
                                                     else
