@@ -169,6 +169,9 @@
             font-size: 15px;
             font-weight: 900;
         }
+        .addcutomerpopup, .cutomtblpopup {
+        position:relative;
+        }
     </style>
     <style>
         .overlay {
@@ -243,9 +246,10 @@
                                     @*<div class="selectcustomer">
                                         <button id="btnselect" class="btn btn-primary">Select Customer</button>
                                     </div>*@
-                                    <div class="ui cutomtblpopup modal" id="pkgmodal" style="display:none;width:100%; padding: 24px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                        <div><button id="close" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>
-                                        <br />    
+                                    <div class="ui cutomtblpopup coupled modal" id="selectcustmpopupmodel" style="max-width:1200px;width:100%;">
+                                        @*<div><button id="close" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>*@
+                                        <i class="close icon" style="position:unset;color:black"></i>
+                                       
                                         @*<div class="customtbl">
                                             <table style="width:100%">
                                                 <tr>
@@ -254,13 +258,10 @@
                                                 </tr>
                                             </table>
                                         </div>*@
-                                        <div class="customtbl">
-                                            <button id="btnadd" class="btn btn-primary">Add New Customer</button>
-                                            <h4 style="text-transform:uppercase">Customers/Clients</h4>
-                                            
-                                        </div>
-                                        <br/>
-                                        <div style="overflow-x: auto;">
+                                        <div class="customtbl header" style="text-transform:uppercase">
+                                            Customers/Clients <button id="btnadd"class="btn btn-primary">Add New Customer</button>
+                                            </div>
+                                        <div style="overflow-x: auto;" class="content">
                                             <table id="allorders" class="display" style="width:100%;">
                                                 <thead>
                                                     <tr>
@@ -296,7 +297,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                            <div class="row" id="saverecord" style="display:none;margin-top:50px">
+                                            @*<div class="row content" id="saverecord" style="display:none;margin-top:50px">
                                                 <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
                                                 <form method="POST">
                                                     <input type="hidden" id="usedid" name="usedid" value="" />
@@ -434,31 +435,32 @@
 
                                                         </div>
                                                     </div>
-                                                    <div align="center">
+                                                    <div align="center" class="footer">
                                                         <div style="position:absolute; left: 485px; margin-left: -137px;">
                                                             @*if (@Request.QueryString["select"] != null)
                                                             {*@
-                                                                <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
+                                                                @*<button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
                                                                 <button id="booknowss" type="button" name="command" class="btn btn-success" style="margin-left: -55px;">save and Book Now</button>
                                                             @*}*@
-                                                        </div>
+                                                        @*</div>
                                                         <div style="position: absolute; display: inline;">
                                                             <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
                                                             <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
                                                         </div>
-                                                        <div style="margin-left: 73px; display: inline;">
+                                                        <div style="margin-left: 60px; display: inline;">
                                                             <button id="CancelUser" type="button" class="btn btn-danger">Cancel</button>
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div>
+                                            </div>*@
                                     </div>
                                     <button id="btnselect" class="btn btn-primary">Select Customer</button>
-                                    <div class="ui addcutomerpopup modal" id="pkgmodal" style="display:none;width:100%; padding: 24px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                        <div><button id="close2" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>
-                                        <div class="row" id="saverecord" style="margin-top:50px;margin-left: 100px;">
-                                            <div align="center" style="margin-top: -33px;margin-left: 306px;"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
-                                            <form method="POST">
+                                    <div class="ui addcutomerpopup coupled modal" id="addcustomermodel">
+                                        @*<div><button id="close2" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>*@
+                                        <i class="close icon" style="position:unset;color:black"></i>
+                                        @*<div class="row" id="saverecord">*@
+                                            <div align="center" class="header" style="text-transform:uppercase">Add/Edit Customer</div>
+                                            @*<form method="POST" class="content">*@
                                                 <input type="hidden" id="usedid" name="usedid" value="" />
                                                 <input type="hidden" id="vpbookdetails" name="vpbookdetails" value="" />
                                                 <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
@@ -594,46 +596,35 @@
 
                                                     </div>
                                                 </div>
-                                                <div align="center">
-                                                    <div style="position:absolute; left: 485px; margin-left: -137px;">
-                                                        @*@if (@Request.QueryString["select"] != null)
-                                                        {*@
-                                                            @*<button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>*@
-                                                                <button id="booknowss" type="button" name="command" class="btn btn-success" style="margin-left: -26px">save and Book Now</button>
-                                                            @*}*@
-                                                    </div>
+                                                @*<div align="center" class="footer">
                                                     <div style="position: absolute; display: inline;">
                                                         <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
                                                         <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
                                                     </div>
-                                                    <div style="margin-left: 73px; display: inline;">
+                                                    <div style="margin-left: 60px; display: inline;">
                                                         <button id="CancelUser2" type="button" class="btn btn-danger">Cancel</button>
                                                     </div>
+                                                </div>*@
+                                                
+                                            @*</form>*@
+                                        @*</div>*@
+                                        <div class="actions">
+                                            <div class="row" align="center">
+                                                <div class="col-md-4">
+                                                    <button id="SaveUser1"  type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right">Save and Book Now</button>
                                                 </div>
-                                            </form>
-                                        </div>
-   
-                                    </div>
-                                        <button id="btnadd2" class="btn btn-primary">Add New Customer</button>
-                                    </div>
-                                <div class="ui modal">
-                                    <i class="close icon"></i>
-                                    <div class="header">
-                                        Modal Title
-                                    </div>
-                                    <div class="image content">
-                                        <div class="image">
-                                            An image can appear on left or an icon
-                                        </div>
-                                        <div class="description">
-                                            A description can appear on the right
+                                                <div class="col-md-4">
+                                                    <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
+                                                    <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="ui negative button" style="float:left;height:35px;">Cancel</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="actions">
-                                        <div class="ui button">Cancel</div>
-                                        <div class="ui button">OK</div>
+                                        <button id="btnadd2" class="btn btn-primary ncustomer">Add New Customer</button>
                                     </div>
-                                </div>
                             </div>
                             <!-- /container -->
                         </div>
@@ -946,31 +937,26 @@
             }
             });
 
-            $('#btnselect').on('click', function () {
-                $('.cutomtblpopup').css('display', 'block');
-                $(this).hide();
-                $('#btnadd2').hide();
-            });
-            $('#close').on('click', function () {
-                $('.cutomtblpopup').css('display', 'none');
-                //location.reload();
-                $('#btnselect').show();
-                $('#btnadd2').show();
-            });
-            $('#btnadd2').on('click', function () {
-                $('.addcutomerpopup').css('display', 'block');
-                $(this).hide();
-            });
-            $('#close2').on('click', function () {
-                $('.addcutomerpopup').css('display', 'none');
-                //location.reload();
-                $('#btnadd2').show();
-            });
-            //$('.ui.cutomtblpopup.modal')
-            // .modal('show')
-            //;
+
+            
+  
+
         </script>
 
+
+        <script>
+            $('#btnadd').on('click', function () {
+                $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
+            });
+            $('#btnselect').on('click', function () {
+                $('.coupled.modal').modal({ allowMultiple: true });
+                $('.addcutomerpopup.modal').modal('attach events', '.cutomtblpopup.modal button#btnadd')
+                $('.cutomtblpopup.modal').modal('show');
+            });
+            $('#btnadd2').on('click', function () {
+                $('#addcustomermodel').modal('show');
+            });
+        </script>
     </body>
                                                     }
                                                     else
