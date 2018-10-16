@@ -245,16 +245,15 @@
                                     </div>
                                     <div class="ui cutomtblpopup coupled modal" id="selectcustmpopupmodel" style="max-width:1200px;width:100%;">
                                         <i class="close icon" style="position:unset;color:black"></i>
-                                        <div class="customtbl header" style="text-transform:uppercase">
+                                        @*<div class="customtbl header" style="text-transform:uppercase">
                                             Customers/Clients <button id="btnadd"class="btn btn-primary">Add New Customer</button>
-                                            </div>
-                                        <div style="overflow-x: auto;" class="content">
+                                            </div>*@
+                                        @*<div style="overflow-x: auto;" class="content">
                                             <table id="allorders" class="display" style="width:100%;">
                                                 <thead>
                                                     <tr>
                                                         <th>Select</th>
                                                         <th>Name </th>
-
                                                         <th>Company Name</th>
                                                         <th>Email</th>
                                                         <th>Phone Number</th>
@@ -281,8 +280,12 @@
                                                     }
                                                 </tbody>
                                             </table>
+                                        </div>*@
+                                        <div class="content" id="userslist">
+                                            @{Html.RenderAction("mnguserdetails", "ManageUser"); }
+</div>
+
                                         </div>
-                                    </div>
                                     <button id="btnselect" class="btn btn-primary">Select Customer</button>
                                     <div class="ui addcutomerpopup coupled modal" id="addcustomermodel">
                                             <div align="center" class="header" style="text-transform:uppercase">Add/Edit Customer</div>
@@ -473,8 +476,8 @@
                     $("#company").hide('slow');
                 });
 
-
-                $('#allorders').DataTable();
+                $('#allorders').DataTable().ajax.reload();
+                
                 $('#addservices').css("display", "none");
                 var vpbook = window.localStorage.getItem("vpbook");
                 var date = window.localStorage.getItem("vpbookdate");
@@ -634,6 +637,24 @@
                     contentType: 'application/json',
                     success: function (data) {
                         alert(data);
+                        $('#addcustomermodel').modal('hide');
+                        var url = '/ManageUser/mnguserdetails';
+                        $('#userslist').empty().load(url);
+                        //$("input[name='type']:checked").val(''),
+                        //$('#Businessname').val(''),
+                        //$('#firstname').val(''),
+                        //$('#lastname').val(''),
+                        //$('#email').val(''),
+                        //$('#adress1').val(''),
+                        //$('#adress2').val(''),
+                        //$('#city').val(''),
+                        //$('#state').val(''),
+                        //$('#country').val(''),
+                        //$('#phoneno').val(''),
+                        //$('#pincode').val(''),
+                        //$('#MemberNumber').val(''),
+                        //$("input[name='Status']:checked").val('')
+                        //location.reload();
                     },
                     error: function (data) {
                         alert("save is failed");
@@ -668,6 +689,24 @@
                 contentType: 'application/json',
                 success: function (data) {
                     alert(data);
+                    $('#addcustomermodel').modal('hide');
+                    var url = '/ManageUser/mnguserdetails';
+                    $('#userslist').empty().load(url);
+                    //$("input[name='type']:checked").val(''),
+                    //$('#Businessname').val(''),
+                    //$('#firstname').val(''),
+                    //$('#lastname').val(''),
+                    //$('#email').val(''),
+                    //$('#adress1').val(''),
+                    //$('#adress2').val(''),
+                    //$('#city').val(''),
+                    //$('#state').val(''),
+                    //$('#country').val(''),
+                    //$('#phoneno').val(''),
+                    //$('#pincode').val(''),
+                    //$('#MemberNumber').val(''),
+                    //$("input[name='Status']:checked").val('')
+                    //location.reload();
                 },
                 error: function (data) {
                     alert("update is failed");
@@ -814,7 +853,10 @@
 
 
         <script>
-            $('#btnadd').on('click', function () {
+            //$('#btnadd').on('click', function () {
+            //    $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
+            //});
+            $(document).on('click','#btnadd', function () {
                 $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
             });
             $('#btnselect').on('click', function () {
