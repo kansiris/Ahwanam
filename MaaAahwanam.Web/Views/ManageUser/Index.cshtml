@@ -243,12 +243,12 @@
                                     <div class="center">
                                         @{Html.RenderAction("orderdetails", "ManageUser"); }
                                     </div>
-                                    <div class="ui cutomtblpopup coupled modal" id="selectcustmpopupmodel" style="max-width:1200px;width:100%;">
-                                        <i class="close icon" style="position:unset;color:black"></i>
+                                    @*<div class="ui cutomtblpopup coupled modal" id="selectcustmpopupmodel" style="max-width:1200px;width:100%;">
+                                        <i class="close icon" style="position:unset;color:black"></i>*@
                                         @*<div class="customtbl header" style="text-transform:uppercase">
-                                            Customers/Clients <button id="btnadd"class="btn btn-primary">Add New Customer</button>
-                                            </div>*@
-                                        @*<div style="overflow-x: auto;" class="content">
+                                            Customers/Clients: <button id="btnadd"class="btn btn-primary">Add New Customer</button>
+                                            </div>
+                                        <div style="overflow-x: auto;" class="content">
                                             <table id="allorders" class="display" style="width:100%;">
                                                 <thead>
                                                     <tr>
@@ -283,10 +283,10 @@
                                         </div>*@
                                         <div class="content" id="userslist">
                                             @{Html.RenderAction("mnguserdetails", "ManageUser"); }
-</div>
+                                      </div>
 
-                                        </div>
-                                    <button id="btnselect" class="btn btn-primary">Select Customer</button>
+                                        @*</div>*@
+                                    @*<button id="btnselect" class="btn btn-primary">Select Customer</button>*@
                                     <div class="ui addcutomerpopup coupled modal" id="addcustomermodel">
                                             <div align="center" class="header" style="text-transform:uppercase">Add/Edit Customer</div>
                                                 <input type="hidden" id="usedid" name="usedid" value="" />
@@ -441,7 +441,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                        <button id="btnadd2" class="btn btn-primary ncustomer">Add New Customer</button>
+                                        @*<button id="btnadd2" class="btn btn-primary ncustomer">Add New Customer</button>*@
                                     </div>
                             </div>
                             <!-- /container -->
@@ -478,7 +478,10 @@
                     $("#company").hide('slow');
                 });
 
-                $('#allorders').DataTable().ajax.reload();
+                $('#allorders').DataTable({
+                    responsive: true,
+                    "pageLength": 3
+                });
                 
                 $('#addservices').css("display", "none");
                 var vpbook = window.localStorage.getItem("vpbook");
@@ -641,7 +644,7 @@
                         alert(data);
                         $('#addcustomermodel').modal('hide');
                         var url = '/ManageUser/mnguserdetails';
-                        $('#userslist').empty().load(url);
+                        $('#userslist').load(url);
                         //$("input[name='type']:checked").val(''),
                         //$('#Businessname').val(''),
                         //$('#firstname').val(''),
@@ -873,17 +876,20 @@
             //$('#btnadd').on('click', function () {
             //    $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
             //});
-            $(document).on('click','#btnadd', function () {
-                $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
-            });
-            $('#btnselect').on('click', function () {
-                $('.coupled.modal').modal({ allowMultiple: true });
-                $('.addcutomerpopup.modal').modal('attach events', '.cutomtblpopup.modal button#btnadd')
-                $('.cutomtblpopup.modal').modal('show');
-            });
-            $('#btnadd2').on('click', function () {
+            //$(document).on('click','#btnadd', function () {
+            //    $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
+            //});
+            //$('#btnselect').on('click', function () {
+            //    $('.coupled.modal').modal({ allowMultiple: true });
+            //    $('.addcutomerpopup.modal').modal('attach events', '.cutomtblpopup.modal button#btnadd')
+            //    $('.cutomtblpopup.modal').modal('show');
+            //});
+            $('#btnadd').on('click', function () {
                 $('#addcustomermodel').modal('show');
             });
+            //$('#btnadd2').on('click', function () {
+            //    $('#addcustomermodel').modal('show');
+            //});
         </script>
     </body>
                                                     }
