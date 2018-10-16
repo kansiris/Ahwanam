@@ -243,23 +243,10 @@
                                     <div class="center">
                                         @{Html.RenderAction("orderdetails", "ManageUser"); }
                                     </div>
-                                    @*<div class="selectcustomer">
-                                        <button id="btnselect" class="btn btn-primary">Select Customer</button>
-                                    </div>*@
-                                    <div class="ui cutomtblpopup coupled modal" id="selectcustmpopupmodel" style="max-width:1200px;width:100%;">
-                                        @*<div><button id="close" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>*@
-                                        <i class="close icon" style="position:unset;color:black"></i>
-                                       
-                                        @*<div class="customtbl">
-                                            <table style="width:100%">
-                                                <tr>
-                                                    <td><h4 style="text-transform:uppercase">Customers/Clients</h4></td>
-                                                    <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Customer</button></td>
-                                                </tr>
-                                            </table>
-                                        </div>*@
-                                        <div class="customtbl header" style="text-transform:uppercase">
-                                            Customers/Clients <button id="btnadd"class="btn btn-primary">Add New Customer</button>
+                                    @*<div class="ui cutomtblpopup coupled modal" id="selectcustmpopupmodel" style="max-width:1200px;width:100%;">
+                                        <i class="close icon" style="position:unset;color:black"></i>*@
+                                        @*<div class="customtbl header" style="text-transform:uppercase">
+                                            Customers/Clients: <button id="btnadd"class="btn btn-primary">Add New Customer</button>
                                             </div>
                                         <div style="overflow-x: auto;" class="content">
                                             <table id="allorders" class="display" style="width:100%;">
@@ -267,7 +254,6 @@
                                                     <tr>
                                                         <th>Select</th>
                                                         <th>Name </th>
-
                                                         <th>Company Name</th>
                                                         <th>Email</th>
                                                         <th>Phone Number</th>
@@ -277,7 +263,6 @@
                                                 </thead>
                                                 <tbody>
                                                     @{
-                                                        //var number = 0;
                                                         foreach (var users in ViewBag.Userlist)
                                                         {
                                                             <tr>
@@ -288,7 +273,6 @@
                                                                 <td>@users.phoneno</td>
                                                                 <td>Member12345</td>
                                                                 <td>@users.Status</td>
-                                                                @*<td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>*@
                                                             </tr>
 
                                                         }
@@ -296,168 +280,15 @@
                                                     }
                                                 </tbody>
                                             </table>
-                                        </div>
-                                            @*<div class="row content" id="saverecord" style="display:none;margin-top:50px">
-                                                <div align="center"><h3 style="text-transform:uppercase">Add/Edit Customer</h3></div>
-                                                <form method="POST">
-                                                    <input type="hidden" id="usedid" name="usedid" value="" />
-                                                    <input type="hidden" id="vpbookdetails" name="vpbookdetails" value="" />
-                                                    <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
-                                                    <div class="col-12 col-sm-12 col-md-12">
-                                                        <div class="row">
-                                                            <input type="hidden" id="id" name="id" value="" />
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <label class="input input--hoshi" style="font-weight:bold">Customer Type</label>
-                                                                <span class="form-check" style="display:inline">
-                                                                    <input class="form-check-input" name="type" type="radio" id="radio1" value="Individual" required>
-                                                                    <label class="form-check-label" for="radio1">Individual</label>
-                                                                </span>
-                                                                <span class="form-check" style="display:inline">
-                                                                    <input class="form-check-input" name="type" type="radio" id="radio2" value="Corporate" checked required>
-                                                                    <label class="form-check-label" for="radio2">Corporate</label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4" id="company" style="display:block;">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="Businessname" name="Businessname" value="" />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Businessname">
-                                                                        <span class="input__label-content input__label-content--hoshi">Company Name</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="firstname" name="firstname" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstname">
-                                                                        <span class="input__label-content input__label-content--hoshi">First Name</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-top: -24px;">
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="lastname" name="lastname" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="lastname">
-                                                                        <span class="input__label-content input__label-content--hoshi">Last Name</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$+" title="Please enter valid email" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
-                                                                        <span class="input__label-content input__label-content--hoshi">Email</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+" maxlength="10" pattern="[0-9]+" title="Enter Numbers and 10 digits only" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
-                                                                        <span class="input__label-content input__label-content--hoshi">Phone Number</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-top: -24px;">
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" pattern="[a-zA-Z0-9\s]+" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress1">
-                                                                        <span class="input__label-content input__label-content--hoshi"> Flat No/Street</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" pattern="[a-zA-Z0-9\s]+" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="adress2">
-                                                                        <span class="input__label-content input__label-content--hoshi">Locality</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="pincode" minlength="6+(!000000)+" title="Enter Numbers and 6 digits only" maxlength="6" name="pincode" value="" pattern="[0-9]+" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pincode">
-                                                                        <span class="input__label-content input__label-content--hoshi">PinCode</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-top: -24px;">
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="city" name="city" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="city">
-                                                                        <span class="input__label-content input__label-content--hoshi">City</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="state" name="state" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="state">
-                                                                        <span class="input__label-content input__label-content--hoshi">State</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="country" name="country" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="country">
-                                                                        <span class="input__label-content input__label-content--hoshi">Country</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-top:-24px;">
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <label class="input input--hoshi" style="font-weight:bold">Status</label>
-                                                                <span class="form-check" style="display:inline">
-                                                                    <input class="form-check-input" name="Status" type="radio" id="Status1" value="Active" checked required>
-                                                                    <label class="form-check-label" for="Status1">Active</label>
-                                                                </span>
-                                                                <span class="form-check" style="display:inline">
-                                                                    <input class="form-check-input" name="Status" type="radio" id="Status2" value="InActive" required>
-                                                                    <label class="form-check-label" for="Status2">InActive</label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="col-12 col-sm-4 col-md-4">
-                                                                <span class="input input--hoshi">
-                                                                    <input class="input__field input__field--hoshi" type="text" id="MemberNumber" name="MemberNumber" value="" required />
-                                                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="MemberNumber">
-                                                                        <span class="input__label-content input__label-content--hoshi">Member Number</span>
-                                                                    </label>
-                                                                </span>
-                                                            </div>
+                                        </div>*@
+                                        <div class="content" id="userslist">
+                                            @{Html.RenderAction("mnguserdetails", "ManageUser"); }
+                                      </div>
 
-                                                    </div>
-                                                </div>
-                                                <div align="center">
-                                                    <div style="position:absolute; left: 485px; margin-left: -94px;">
-                                                            <button id="booknow" type="button" name="command" class="btn btn-success">Book Now</button>
-                                                            <button id="booknowss" type="button" name="command" class="btn btn-success" style="margin-left: -55px;">save and Book Now</button>
-                                                    </div>
-                                                    <div style="position: absolute; display: inline;">
-                                                        <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
-                                                        <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
-                                                    </div>
-                                                    <div style="margin-left: 73px; display: inline;">
-                                                        <button id="CancelUser" type="button" class="btn btn-danger">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <button id="btnselect" class="btn btn-primary">Select Customer</button>
+                                        @*</div>*@
+                                    @*<button id="btnselect" class="btn btn-primary">Select Customer</button>*@
                                     <div class="ui addcutomerpopup coupled modal" id="addcustomermodel">
-                                        @*<div><button id="close2" class="btn btn-danger" style="float: right;border-radius:50%; margin-top: -24px; margin-right: -22px;">X</button></div>*@
-                                        <i class="close icon" style="position:unset;color:black"></i>
-                                        @*<div class="row" id="saverecord">*@
                                             <div align="center" class="header" style="text-transform:uppercase">Add/Edit Customer</div>
-                                            @*<form method="POST" class="content">*@
                                                 <input type="hidden" id="usedid" name="usedid" value="" />
                                                 <input type="hidden" id="vpbookdetails" name="vpbookdetails" value="" />
                                                 <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
@@ -593,22 +424,12 @@
 
                                                     </div>
                                                 </div>
-                                                @*<div align="center" class="footer">
-                                                    <div style="position: absolute; display: inline;">
-                                                        <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
-                                                        <button id="EditUser" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
-                                                    </div>
-                                                    <div style="margin-left: 60px; display: inline;">
-                                                        <button id="CancelUser2" type="button" class="btn btn-danger">Cancel</button>
-                                                    </div>
-                                                </div>*@
-                                                
-                                            @*</form>*@
-                                        @*</div>*@
                                         <div class="actions">
                                             <div class="row" align="center">
                                                 <div class="col-md-4">
-                                                    <button id="SaveUser1"  type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right">Save and Book Now</button>
+                                                    <button id="booknow" type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right"> Book Now</button>
+                                                    <button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right">Save and Book Now</button>
+
                                                 </div>
                                                 <div class="col-md-4">
                                                     <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
@@ -620,7 +441,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                        <button id="btnadd2" class="btn btn-primary ncustomer">Add New Customer</button>
+                                        @*<button id="btnadd2" class="btn btn-primary ncustomer">Add New Customer</button>*@
                                     </div>
                             </div>
                             <!-- /container -->
@@ -654,11 +475,15 @@
                     $("#company").show('slow');
                 });
                 $("#radio1").click(function () {
+    
                     $("#company").hide('slow');
                 });
 
-
-                $('#allorders').DataTable();
+                $('#allorders').DataTable({
+                    responsive: true,
+                    "pageLength": 3
+                });
+                
                 $('#addservices').css("display", "none");
                 var vpbook = window.localStorage.getItem("vpbook");
                 var date = window.localStorage.getItem("vpbookdate");
@@ -670,8 +495,9 @@
                 }
                 else {
                     $('#booknow').css('display', 'block');
-                    $('#booknowss').css('display', 'block'); }
-               @* var vpbook = '';
+                    $('#booknowss').css('display', 'block');
+                }
+                @* var vpbook = '';
                var vpbook2 = '@Request.QueryString["select"]';
                 $('#vpbookdetails').val(vpbook);
                 if (vpbook1 != "") { vpbook = vpbook2; } else { vpbook = vpbook1; }*@
@@ -679,7 +505,7 @@
                 $.ajax({
                     //alert(defcalender);
 
-                    url: '/ManageUser/orderdetails?select=' + vpbook +'&date='+date+'&timeslot='+timeslot+'&packageid='+packageid,
+                    url: '/ManageUser/orderdetails?select=' + vpbook + '&date=' + date + '&timeslot=' + timeslot + '&packageid=' + packageid,
                     type: 'POST',
                     contentType: false,
                     processData: false,
@@ -725,8 +551,8 @@
 
 
             $(document).on('change', '.chcktbl', function () {
-              
-               
+
+
                 if ($(this).is(':checked')) {
                     $('input.chcktbl').not(this).prop('checked', false);
                     $(this).attr("checked", "checked");
@@ -737,6 +563,7 @@
 
                     $('#booknow').css('display', 'block');
                     $('#booknowss').css('display', 'none');
+                    $('#addcustomermodel').modal('show');
                     var radataid = $(this).val();
                     $('#id').val(radataid);
                     //alert(radataid);
@@ -765,7 +592,7 @@
                             $("#state").val(result.state);
                             $("#country").val(result.country);
                             $("#pincode").val(result.pincode);
-                           $("#Status").val(result.Status);
+                            $("#Status").val(result.Status);
                             if (result.Status == "Active") {
 
                                 $("input[name=Status][value='Active']").prop('checked', true);
@@ -790,13 +617,63 @@
 
 
             });
+            $('#SaveUser').click(function () {
+                var val = $(this).val();
+                var Id = $('#id').val();
+                var manageuser = {
+                    vendorId:$('#vendorId').val(),
+                    type: $("input[name='type']:checked").val(),
+                    Businessname: $('#Businessname').val(),
+                    firstname: $('#firstname').val(),
+                    lastname: $('#lastname').val(),
+                    email: $('#email').val(),
+                    adress1: $('#adress1').val(),
+                    adress2: $('#adress2').val(),
+                    city: $('#city').val(),
+                    state: $('#state').val(),
+                    country: $('#country').val(),
+                    phoneno: $('#phoneno').val(),
+                    pincode: $('#pincode').val(),
+                    Status: $("input[name='Status']:checked").val()
+                }
+                $.ajax({
+                    url: '/ManageUser/Index?command=' + val + '&&id=' + Id,
+                    type: 'POST',
+                    data: JSON.stringify({ mnguser: manageuser }),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        alert(data);
+                        $('#addcustomermodel').modal('hide');
+                        var url = '/ManageUser/mnguserdetails';
+                        $('#userslist').load(url);
+                        //$("input[name='type']:checked").val(''),
+                        //$('#Businessname').val(''),
+                        //$('#firstname').val(''),
+                        //$('#lastname').val(''),
+                        //$('#email').val(''),
+                        //$('#adress1').val(''),
+                        //$('#adress2').val(''),
+                        //$('#city').val(''),
+                        //$('#state').val(''),
+                        //$('#country').val(''),
+                        //$('#phoneno').val(''),
+                        //$('#pincode').val(''),
+                        //$('#MemberNumber').val(''),
+                        //$("input[name='Status']:checked").val('')
+                        //location.reload();
+                    },
+                    error: function (data) {
+                        alert("save is failed");
+                    }
+                });
+            });
 
-            @*$('#EditUser').click(function () {
-            var status="null"
+            $('#EditUser').click(function () {
+            var val = $(this).val();
             var Id = $('#id').val();
             var manageuser = {
-                type:
-            ,
+                vendorId: $('#vendorId').val(),
+                type: $("input[name='type']:checked").val(),
                 Businessname: $('#Businessname').val(),
                 firstname: $('#firstname').val(),
                 lastname: $('#lastname').val(),
@@ -812,21 +689,41 @@
             }
 
             $.ajax({
-                url: '/ManageUser/UpdateUserDetails?id=' + Id,
+                url: '/ManageUser/Index?id=' + Id + '&&command=' + val,
                 type: 'POST',
                 data: JSON.stringify({ mnguser: manageuser }),
                 contentType: 'application/json',
                 success: function (data) {
                     alert(data);
-                    window.location.href = "@Url.Action("Index", "ManageUser")";
+                    $('#addcustomermodel').modal('hide');
+                    var url = '/ManageUser/mnguserdetails';
+                    $('#userslist').empty().load(url);
+                    //$("input[name='type']:checked").val(''),
+                    //$('#Businessname').val(''),
+                    //$('#firstname').val(''),
+                    //$('#lastname').val(''),
+                    //$('#email').val(''),
+                    //$('#adress1').val(''),
+                    //$('#adress2').val(''),
+                    //$('#city').val(''),
+                    //$('#state').val(''),
+                    //$('#country').val(''),
+                    //$('#phoneno').val(''),
+                    //$('#pincode').val(''),
+                    //$('#MemberNumber').val(''),
+                    //$("input[name='Status']:checked").val('')
+                    //location.reload();
+                },
+                error: function (data) {
+                    alert("update is failed");
                 }
             });
-        });*@
+        });
 
             $("input[type=text]").on('input', function () {
                 var type = $('input[name=type]:checked').val();
                 var Businessname = $('#Businessname').val();
-                if (type == "Corporate" && Businessname == '' || type != "Individual") {
+                if (type == "Corporate" && Businessname == '') { // || type != "Individual") {
                     alert("Please enter business name");
                 }
             })
@@ -839,7 +736,7 @@
                     type: 'Post',
                     contentType: 'application/json',
                     success: function (result) {
-                        if (result == "sucess1" ) {
+                        if (result == "sucess1") {
                             alert("email is already existed select another email");
                         }
                     },
@@ -888,7 +785,7 @@
                             window.localStorage.removeItem("vpbooktimeslot");
                             window.localStorage.removeItem("vpbookpid");
                             window.location.href = "/vinvoice/Index?oid=" + result;
-} else {
+                        } else {
                             alert("Error Occurred in placing order");
                         }
 
@@ -913,66 +810,87 @@
                 var pincode = $('#pincode').val();
                 var Status = $('input[name=Status]:checked').val(); //$('#Status').val();
                 var vid = $("#vendorId").val();
-                var packid = '@ViewBag.pid';
+                @*var packid = '@ViewBag.pid';
                 var loc = '@ViewBag.loc';
                 var eventtype = '@ViewBag.eventtype';
                 var guests = '@ViewBag.guest';
-                var date = '@ViewBag.date';
-                if (packid == '') {
-                    var selectedp = window.localStorage.getItem("vpbook");
-                }
+                var date = '@ViewBag.date';*@
+                var packageid = window.localStorage.getItem("vpbookpid");
+                var vpbook = window.localStorage.getItem("vpbook");
+                var date = window.localStorage.getItem("vpbookdate");
+                var timeslot = window.localStorage.getItem("vpbooktimeslot");
+                var packid = packageid;
+                var vpbook1 = vpbook.split(',');
+                var loc = vpbook1[0];
+                var eventtype = vpbook[2];
+                var guests = vpbook1[1];
+                var date = date;
+               // var timeslot = timeslot;
+                alert(vpbook1 + packageid + date + timeslot);
+                //if (packid == '') {
+                //    var selectedp = window.localStorage.getItem("vpbook");
+                //}
                 if (type == "Corporate" && businessname != '' || type == "Individual") {
 
-                $('.overlay').show();
-                $('#loadermsg').text('Booking in process....');
-                $.ajax({
-                    url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status+ '&&ctype=' + type,
-                    type: 'POST',
-                    contentType: 'application/json',
+                    $('.overlay').show();
+                    $('#loadermsg').text('Booking in process....');
+                    $.ajax({
+                        url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status + '&&ctype=' + type +'&&timeslot='+timeslot, //+ '&&selectedp=' + selectedp,
+                        type: 'POST',
+                        contentType: 'application/json',
 
-                    success: function (result) {
-                        if (result == "please active the user") {
+                        success: function (result) {
+                            if (result == "please active the user") {
 
-                            alert(result);
+                                alert(result);
+                            }
+                            else if (result != "") {
+                                alert("Order placed Successfully");
+                                window.localStorage.removeItem("vpbook");
+                                window.localStorage.removeItem("vpbookdate");
+                                window.localStorage.removeItem("vpbooktimeslot");
+                                window.localStorage.removeItem("vpbookpid");
+                                window.location.href = "/vinvoice/Index?oid=" + result;
+                            } else {
+                                alert("Error Occurred in placing order");
+                            }
+
+
+
                         }
-                        else if (result != "") {
-                            alert("Order placed Successfully");
-                            window.location.href = "/vinvoice/Index?oid=" + result;
-                            window.localStorage.removeItem("vpbook");
-                        } else {
-                            alert("Error Occurred in placing order");
-                        }
+                    });
 
-
-
-                    }
-                });
-               
-            }
-            else {
-                alert('Please enter businessname');
-            }
+                }
+                else {
+                    alert('Please enter businessname');
+                }
             });
 
 
-            
-  
+
+
 
         </script>
 
 
         <script>
+            //$('#btnadd').on('click', function () {
+            //    $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
+            //});
+            //$(document).on('click','#btnadd', function () {
+            //    $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
+            //});
+            //$('#btnselect').on('click', function () {
+            //    $('.coupled.modal').modal({ allowMultiple: true });
+            //    $('.addcutomerpopup.modal').modal('attach events', '.cutomtblpopup.modal button#btnadd')
+            //    $('.cutomtblpopup.modal').modal('show');
+            //});
             $('#btnadd').on('click', function () {
-                $('#addcustomermodel').modal('attach events', '.cutomtblpopup.modal .button')
-            });
-            $('#btnselect').on('click', function () {
-                $('.coupled.modal').modal({ allowMultiple: true });
-                $('.addcutomerpopup.modal').modal('attach events', '.cutomtblpopup.modal button#btnadd')
-                $('.cutomtblpopup.modal').modal('show');
-            });
-            $('#btnadd2').on('click', function () {
                 $('#addcustomermodel').modal('show');
             });
+            //$('#btnadd2').on('click', function () {
+            //    $('#addcustomermodel').modal('show');
+            //});
         </script>
     </body>
                                                     }
