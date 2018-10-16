@@ -427,7 +427,9 @@
                                         <div class="actions">
                                             <div class="row" align="center">
                                                 <div class="col-md-4">
-                                                    <button id="SaveUser1"  type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right">Save and Book Now</button>
+                                                    <button id="booknow" type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right"> Book Now</button>
+                                                    <button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="display:block;float:right">Save and Book Now</button>
+
                                                 </div>
                                                 <div class="col-md-4">
                                                     <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
@@ -717,7 +719,7 @@
             $("input[type=text]").on('input', function () {
                 var type = $('input[name=type]:checked').val();
                 var Businessname = $('#Businessname').val();
-                if (type == "Corporate" && Businessname == '' || type != "Individual") {
+                if (type == "Corporate" && Businessname == '') { // || type != "Individual") {
                     alert("Please enter business name");
                 }
             })
@@ -804,20 +806,32 @@
                 var pincode = $('#pincode').val();
                 var Status = $('input[name=Status]:checked').val(); //$('#Status').val();
                 var vid = $("#vendorId").val();
-                var packid = '@ViewBag.pid';
+                @*var packid = '@ViewBag.pid';
                 var loc = '@ViewBag.loc';
                 var eventtype = '@ViewBag.eventtype';
                 var guests = '@ViewBag.guest';
-                var date = '@ViewBag.date';
-                if (packid == '') {
-                    var selectedp = window.localStorage.getItem("vpbook");
-                }
+                var date = '@ViewBag.date';*@
+                var packageid = window.localStorage.getItem("vpbookpid");
+                var vpbook = window.localStorage.getItem("vpbook");
+                var date = window.localStorage.getItem("vpbookdate");
+                var timeslot = window.localStorage.getItem("vpbooktimeslot");
+                var packid = packageid;
+                var vpbook1 = vpbook.split(',');
+                var loc = vpbook1[0];
+                var eventtype = vpbook[2];
+                var guests = vpbook1[1];
+                var date = date;
+               // var timeslot = timeslot;
+                alert(vpbook1 + packageid + date + timeslot);
+                //if (packid == '') {
+                //    var selectedp = window.localStorage.getItem("vpbook");
+                //}
                 if (type == "Corporate" && businessname != '' || type == "Individual") {
 
                     $('.overlay').show();
                     $('#loadermsg').text('Booking in process....');
                     $.ajax({
-                        url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status + '&&ctype=' + type,
+                        url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status + '&&ctype=' + type +'&&timeslot='+timeslot, //+ '&&selectedp=' + selectedp,
                         type: 'POST',
                         contentType: 'application/json',
 
@@ -828,8 +842,11 @@
                             }
                             else if (result != "") {
                                 alert("Order placed Successfully");
-                                window.location.href = "/vinvoice/Index?oid=" + result;
                                 window.localStorage.removeItem("vpbook");
+                                window.localStorage.removeItem("vpbookdate");
+                                window.localStorage.removeItem("vpbooktimeslot");
+                                window.localStorage.removeItem("vpbookpid");
+                                window.location.href = "/vinvoice/Index?oid=" + result;
                             } else {
                                 alert("Error Occurred in placing order");
                             }

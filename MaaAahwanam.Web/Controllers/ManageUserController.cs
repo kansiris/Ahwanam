@@ -327,11 +327,8 @@ namespace MaaAahwanam.Web.Controllers
         string totalprice = "";
         string type = "";
         string etype1 = "";
-        // string date1 = "";
         HomeController home = new HomeController();
-       
-
-         DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+        DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
         //Saving Record in order Table
         //  OrderService orderService = new OrderService();
         List<string> sdate = new List<string>();
@@ -341,39 +338,34 @@ namespace MaaAahwanam.Web.Controllers
         var pkgs = pid.Split(',');
         var date1 = date.Trim(',').Split(',');
         var timeslot1 = timeslot.Split(',');
-        //for (int i = 0; i < pkgs.Count(); i++)
-        //{
-
-        //    var data = newmanageuse.getpartpkgs(pkgs[i]).FirstOrDefault();
-
-        //    if (data.PackagePrice == null)
-        //    { price = Convert.ToInt16(data.price1); }
-        //    else { price = Convert.ToInt16(data.PackagePrice); }
-        //    tprice = tprice + price;
-        //    data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
-        //    data.timeslot = timeslot1[i].Split('~')[0];
-        //    package.Add(data);
-        //}
-        etype1 = eventtype;
-        if (type == "Photography" || type == "Decorator" || type == "Other")
-        {
-            // totalprice = Convert.ToString(price);
-            guest = "0";
-        }
-        else
-        {
-            totalprice = tprice.ToString();
-        }
-
-    
-
-    Order order = new Order();
         
-    order.TotalPrice = Convert.ToDecimal(tprice);
+        etype1 = eventtype;
+            for (int i = 0; i < pkgs.Count(); i++)
+            {
+
+                var data = newmanageuse.getpartpkgs(pkgs[i]).FirstOrDefault();
+                if (data.PackagePrice == null)
+                {
+                    price = Convert.ToInt16(data.price1);
+                }
+                else { price = Convert.ToInt16(data.PackagePrice); }
+                tprice = tprice + price;
+                if (type == "Photography" || type == "Decorator" || type == "Other")
+                {
+                    totalprice = Convert.ToString(price);
+                    guest = "0";
+                }
+                else
+                {
+                    totalprice = tprice.ToString();
+                }
+            }
+                Order order = new Order();
+            order.TotalPrice = Convert.ToDecimal(totalprice);
             order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
             order.UpdatedBy = long.Parse(vid);
-    order.OrderedBy = long.Parse(vid);
-    order.UpdatedDate = Convert.ToDateTime(updateddate);
+            order.OrderedBy = long.Parse(vid);
+            order.UpdatedDate = Convert.ToDateTime(updateddate);
             order.Status = "Pending";
             order = newmanageuse.SaveOrder(order);
 
@@ -389,15 +381,24 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else { price = Convert.ToInt16(data.PackagePrice); }
                 tprice = tprice + price;
+                if (type == "Photography" || type == "Decorator" || type == "Other")
+                {
+                    totalprice = Convert.ToString(price);
+                    guest = "0";
+                }
+                else
+                {
+                    totalprice = tprice.ToString();
+                }
                 data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
                 data.timeslot = timeslot1[i].Split('~')[0];
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.OrderBy = long.Parse(uid);
                 orderDetail.PaymentId = '1';
-                 orderDetail.ServiceType = type;
-              orderDetail.ServicePrice = Convert.ToDecimal(price);
-                  orderDetail.attribute = data.timeslot;
+                orderDetail.ServiceType = type;
+                orderDetail.ServicePrice = Convert.ToDecimal(price);
+                orderDetail.attribute = data.timeslot;
                 orderDetail.TotalPrice = Convert.ToDecimal(tprice);
                 orderDetail.PerunitPrice = Convert.ToDecimal(price);
                 orderDetail.Quantity = Convert.ToInt32(guest);
@@ -411,8 +412,6 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.orderdate = orderDetail.BookedDate;
                 orderDetail.EventType = etype1;
                 orderDetail.DealId = long.Parse(pkgs[i]);
-
-
                 newmanageuse.SaveOrderDetail(orderDetail);
             }
             var userlogdetails = mnguserservice.getuserbyid(userid);
@@ -468,22 +467,51 @@ namespace MaaAahwanam.Web.Controllers
 }
 
 
-
-[HttpPost]
-        public JsonResult booknowss(string loc, string eventtype, string count, string date, string pid, string vid, string selectedp,
+        [HttpPost]
+        public JsonResult booknowss(string loc, string eventtype, string guest, string date, string pid, string vid, string selectedp,
             string businessname, string firstname, string lastname, string email, string phoneno, string adress1, string adress2, string city, string state,
-            string country, string pincode, string Status, string ctype)
+            string country, string pincode, string Status, string ctype,string timeslot)
         {
-            string msg;
+            string msg; string totalprice = ""; int price;
             if (Status != "InActive")
             {
-                string price = "";
-                string totalprice = "";
-                string guest = "";
+
+             
+               
+             
                 string type = "";
-                string pid1 = "";
                 string etype1 = "";
-                string date1 = "";
+                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                //Saving Record in order Table
+                //  OrderService orderService = new OrderService();
+                List<string> sdate = new List<string>();
+                List<string> stimeslot = new List<string>();
+                List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
+             
+                    var pkgs = pid.Split(',');
+                for (int i = 0; i < pkgs.Count(); i++)
+                {
+
+                    var data = newmanageuse.getpartpkgs(pkgs[i]).FirstOrDefault();
+                    if (data.PackagePrice == null)
+                    {
+                        price = Convert.ToInt16(data.price1);
+                    }
+                    else { price = Convert.ToInt16(data.PackagePrice); }
+                    tprice = tprice + price;
+                    if (type == "Photography" || type == "Decorator" || type == "Other")
+                    {
+                        totalprice = Convert.ToString(price);
+                        guest = "0";
+                    }
+                    else
+                    {
+                        totalprice = tprice.ToString();
+                    }
+                }
+                var date1 = date.Trim(',').Split(',');
+                var timeslot1 = timeslot.Split(',');
+
                 ManageUser mnguser = new ManageUser();
                 mnguser.registereddate = DateTime.Now;
                 mnguser.updateddate = DateTime.Now;
@@ -506,58 +534,7 @@ namespace MaaAahwanam.Web.Controllers
                 int userid = Convert.ToInt32(ksc.id);
                 HomeController home = new HomeController();
 
-                if (loc != "")
-                {
-                    pid1 = pid;
-                    var userdata = newmanageuse.GetUser(userid);
-                    //Payment Section
-                    var pkgs1 = newmanageuse.getpartpkgs(pid).FirstOrDefault();
-                    type = pkgs1.VendorType;
-                    guest = count;
-                    date1 = date;
-                    if (pkgs1.PackagePrice == null)
-                    { price = Convert.ToString(pkgs1.price1); }
-                    else { price = Convert.ToString(pkgs1.PackagePrice); }
-                    string totalprice1 = (Convert.ToInt32(price) * Convert.ToInt32(count)).ToString();
-                    // string id = Convert.ToString(pid);
-                    //string did = Convert.ToString(cartdetails.DealId);
-                    // string timeslot = cartdetails.attribute;
-                    etype1 = eventtype;
-                    if (type == "Photography" || type == "Decorator" || type == "Other")
-                    {
-                        totalprice = price;
-                        guest = "0";
-                    }
-                    else
-                    {
-                        totalprice = totalprice1;
-                    }
 
-                }
-                else
-                {
-                    var select1 = selectedp.Split(',');
-
-                    ViewBag.loc = select1[0];
-                    var guests = select1[1];
-                    DateTime ksdate = Convert.ToDateTime(select1[2]);
-                    date1 = ksdate.ToString("dd-MM-yyyy");
-                    ViewBag.date = date1;
-                    etype1 = ViewBag.eventtype = select1[3];
-                    string pid2 = select1[4];
-                    pid1 = pid2;
-                    var pkgs2 = newmanageuse.getpartpkgs(pid2).FirstOrDefault();
-                    if (pkgs2.PackagePrice == null)
-                    { price = Convert.ToString(pkgs2.price1); }
-                    else { price = Convert.ToString(pkgs2.PackagePrice); }
-
-                    totalprice = (Convert.ToInt64(guests) * Convert.ToInt64(price)).ToString();
-                    guest = guests;
-                }
-                var pkgs = newmanageuse.getpartpkgs(pid1).FirstOrDefault();
-
-
-                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 //Saving Record in order Table
                 OrderService orderService = new OrderService();
                 MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
@@ -569,30 +546,44 @@ namespace MaaAahwanam.Web.Controllers
                 order.Status = "Pending";
                 order = orderService.SaveOrder(order);
 
+
                 //Saving Order Details
                 OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.OrderId = order.OrderId;
-                orderDetail.OrderBy = userid;
-                orderDetail.PaymentId = '1';
-                // orderDetail.ServiceType = type;
-                orderDetail.ServicePrice = decimal.Parse(price);
-                //  orderDetail.attribute = timeslot;
-                orderDetail.TotalPrice = decimal.Parse(totalprice);
-                orderDetail.PerunitPrice = decimal.Parse(price);
-                orderDetail.Quantity = int.Parse(guest);
-                orderDetail.OrderId = order.OrderId;
-                orderDetail.VendorId = long.Parse(vid);
-                orderDetail.Status = "Pending";
-                orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
-                orderDetail.UpdatedBy = userid;
-                orderDetail.subid = pkgs.VendorSubId;
-                orderDetail.BookedDate = Convert.ToDateTime(date1);
-                orderDetail.EventType = etype1;
-                orderDetail.DealId = long.Parse(pid);
+                for (int i = 0; i < pkgs.Count(); i++)
+                {
+
+                    var data = newmanageuse.getpartpkgs(pkgs[i]).FirstOrDefault();
+                    if (data.PackagePrice == null)
+                    {
+                        price = Convert.ToInt16(data.price1);
+                    }
+                    else { price = Convert.ToInt16(data.PackagePrice); }
+                    data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
+                    data.timeslot = timeslot1[i].Split('~')[0];
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderId = order.OrderId;
+                    orderDetail.OrderBy = userid;
+                    orderDetail.PaymentId = '1';
+                    orderDetail.ServiceType = type;
+                    orderDetail.ServicePrice = Convert.ToDecimal(price);
+                    orderDetail.attribute = data.timeslot;
+                    orderDetail.TotalPrice = Convert.ToDecimal(tprice);
+                    orderDetail.PerunitPrice = Convert.ToDecimal(price);
+                    orderDetail.Quantity = Convert.ToInt32(guest);
+                    orderDetail.OrderId = order.OrderId;
+                    orderDetail.VendorId = long.Parse(vid);
+                    orderDetail.Status = "Pending";
+                    orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+                    orderDetail.UpdatedBy = long.Parse(vid);
+                    orderDetail.subid = data.VendorSubId;
+                    orderDetail.BookedDate = Convert.ToDateTime(data.UpdatedDate);
+                    ViewBag.orderdate = orderDetail.BookedDate;
+                    orderDetail.EventType = etype1;
+                    orderDetail.DealId = long.Parse(pkgs[i]);
 
 
-                orderdetailsServices.SaveOrderDetail(orderDetail);
+                    newmanageuse.SaveOrderDetail(orderDetail);
+                }
                 var userlogdetails = mnguserservice.getuserbyid(userid);
 
 
@@ -605,7 +596,7 @@ namespace MaaAahwanam.Web.Controllers
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
 
-                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + updateddate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
 
                 cds.Append("</tbody></table>");
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority;
@@ -631,7 +622,7 @@ namespace MaaAahwanam.Web.Controllers
                 StringBuilder cds2 = new StringBuilder();
                 cds2.Append("<table style='border:1px black solid;'><tbody>");
                 cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
-                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + updateddate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 cds2.Append("</tbody></table>");
                 string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
@@ -652,6 +643,192 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
+
+
+        //[HttpPost]
+        //        public JsonResult booknowss(string loc, string eventtype, string count, string date, string pid, string vid, string selectedp,
+        //            string businessname, string firstname, string lastname, string email, string phoneno, string adress1, string adress2, string city, string state,
+        //            string country, string pincode, string Status, string ctype)
+        //        {
+        //            string msg;
+        //            if (Status != "InActive")
+        //            {
+
+        //                string price = "";
+        //                string totalprice = "";
+        //                string guest = "";
+        //                string type = "";
+        //                string pid1 = "";
+        //                string etype1 = "";
+        //                string date1 = "";
+        //                ManageUser mnguser = new ManageUser();
+        //                mnguser.registereddate = DateTime.Now;
+        //                mnguser.updateddate = DateTime.Now;
+        //                mnguser.Businessname = businessname;
+        //                mnguser.firstname = firstname;
+        //                mnguser.lastname = lastname;
+        //                mnguser.email = email;
+        //                mnguser.phoneno = phoneno;
+        //                mnguser.adress1 = adress1;
+        //                mnguser.adress2 = adress2;
+        //                mnguser.city = city;
+        //                mnguser.state = state;
+        //                mnguser.country = country;
+        //                mnguser.pincode = pincode;
+        //                mnguser.Status = Status;
+        //                mnguser.type = ctype;
+        //                mnguser.vendorId = vid;
+        //                mnguser = mnguserservice.AddUser(mnguser);
+        //                var ksc = mnguserservice.getuserbyemail(email).FirstOrDefault();
+        //                int userid = Convert.ToInt32(ksc.id);
+        //                HomeController home = new HomeController();
+
+        //                if (loc != "")
+        //                {
+        //                    pid1 = pid;
+        //                    var userdata = newmanageuse.GetUser(userid);
+        //                    //Payment Section
+        //                    var pkgs1 = newmanageuse.getpartpkgs(pid).FirstOrDefault();
+        //                    type = pkgs1.VendorType;
+        //                    guest = count;
+        //                    date1 = date;
+        //                    if (pkgs1.PackagePrice == null)
+        //                    { price = Convert.ToString(pkgs1.price1); }
+        //                    else { price = Convert.ToString(pkgs1.PackagePrice); }
+        //                    string totalprice1 = (Convert.ToInt32(price) * Convert.ToInt32(count)).ToString();
+        //                    // string id = Convert.ToString(pid);
+        //                    //string did = Convert.ToString(cartdetails.DealId);
+        //                    // string timeslot = cartdetails.attribute;
+        //                    etype1 = eventtype;
+        //                    if (type == "Photography" || type == "Decorator" || type == "Other")
+        //                    {
+        //                        totalprice = price;
+        //                        guest = "0";
+        //                    }
+        //                    else
+        //                    {
+        //                        totalprice = totalprice1;
+        //                    }
+
+        //                }
+        //                else
+        //                {
+        //                    var select1 = selectedp.Split(',');
+
+        //                    ViewBag.loc = select1[0];
+        //                    var guests = select1[1];
+        //                    DateTime ksdate = Convert.ToDateTime(select1[2]);
+        //                    date1 = ksdate.ToString("dd-MM-yyyy");
+        //                    ViewBag.date = date1;
+        //                    etype1 = ViewBag.eventtype = select1[3];
+        //                    string pid2 = select1[4];
+        //                    pid1 = pid2;
+        //                    var pkgs2 = newmanageuse.getpartpkgs(pid2).FirstOrDefault();
+        //                    if (pkgs2.PackagePrice == null)
+        //                    { price = Convert.ToString(pkgs2.price1); }
+        //                    else { price = Convert.ToString(pkgs2.PackagePrice); }
+
+        //                    totalprice = (Convert.ToInt64(guests) * Convert.ToInt64(price)).ToString();
+        //                    guest = guests;
+        //                }
+        //                var pkgs = newmanageuse.getpartpkgs(pid1).FirstOrDefault();
+
+
+        //                DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+        //                //Saving Record in order Table
+        //                OrderService orderService = new OrderService();
+        //                MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
+        //                order.TotalPrice = Convert.ToDecimal(totalprice);
+        //                order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
+        //                order.UpdatedBy = long.Parse(vid);
+        //                order.OrderedBy = long.Parse(vid);
+        //                order.UpdatedDate = Convert.ToDateTime(updateddate);
+        //                order.Status = "Pending";
+        //                order = orderService.SaveOrder(order);
+
+        //                //Saving Order Details
+        //                OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
+        //                OrderDetail orderDetail = new OrderDetail();
+        //                orderDetail.OrderId = order.OrderId;
+        //                orderDetail.OrderBy = userid;
+        //                orderDetail.PaymentId = '1';
+        //                // orderDetail.ServiceType = type;
+        //                orderDetail.ServicePrice = decimal.Parse(price);
+        //                //  orderDetail.attribute = timeslot;
+        //                orderDetail.TotalPrice = decimal.Parse(totalprice);
+        //                orderDetail.PerunitPrice = decimal.Parse(price);
+        //                orderDetail.Quantity = int.Parse(guest);
+        //                orderDetail.OrderId = order.OrderId;
+        //                orderDetail.VendorId = long.Parse(vid);
+        //                orderDetail.Status = "Pending";
+        //                orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
+        //                orderDetail.UpdatedBy = userid;
+        //                orderDetail.subid = pkgs.VendorSubId;
+        //                orderDetail.BookedDate = Convert.ToDateTime(date1);
+        //                orderDetail.EventType = etype1;
+        //                orderDetail.DealId = long.Parse(pid);
+
+
+        //                orderdetailsServices.SaveOrderDetail(orderDetail);
+        //                var userlogdetails = mnguserservice.getuserbyid(userid);
+
+
+        //                string txtto = userlogdetails.email;
+
+        //                string name = userlogdetails.firstname;
+        //                name = home.Capitalise(name);
+        //                string OrderId = Convert.ToString(order.OrderId);
+        //                StringBuilder cds = new StringBuilder();
+        //                cds.Append("<table style='border:1px black solid;'><tbody>");
+        //                cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
+
+        //                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+
+        //                cds.Append("</tbody></table>");
+        //                string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+        //                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+        //                string readFile = File.OpenText().ReadToEnd();
+        //                readFile = readFile.Replace("[ActivationLink]", url);
+        //                readFile = readFile.Replace("[name]", name);
+        //                readFile = readFile.Replace("[orderid]", OrderId);
+        //                readFile = readFile.Replace("[table]", cds.ToString());
+        //                string txtmessage = readFile;//readFile + body;
+        //                string subj = "Thanks for your order";
+        //                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+        //                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+        //                //emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
+        //                string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
+        //                emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
+
+        //                var vendordetails = newmanageuse.getvendor(Convert.ToInt32(vid));
+
+        //                string txtto1 = vendordetails.EmailId;
+        //                string vname = vendordetails.BusinessName;
+        //                vname = home.Capitalise(vname);
+        //                StringBuilder cds2 = new StringBuilder();
+        //                cds2.Append("<table style='border:1px black solid;'><tbody>");
+        //                cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
+        //                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+        //                cds2.Append("</tbody></table>");
+        //                string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
+        //                FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+        //                string readfile1 = file1.OpenText().ReadToEnd();
+        //                readfile1 = readfile1.Replace("[ActivationLink]", url1);
+        //                readfile1 = readfile1.Replace("[name]", name);
+        //                readfile1 = readfile1.Replace("[vname]", vname);
+        //                readfile1 = readfile1.Replace("[msg]", cds2.ToString());
+        //                readfile1 = readfile1.Replace("[orderid]", OrderId);
+        //                string txtmessage1 = readfile1;
+        //                string subj1 = "order has been placed";
+        //                emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+        //                msg = OrderId;
+        //            }
+        //            else
+        //            {
+        //                msg = "please active the user";
+        //            }
+        //            return Json(msg, JsonRequestBehavior.AllowGet);
+        //        }
 
         public ActionResult orderdetails(string select, string packageid, string date, string timeslot)
         {
