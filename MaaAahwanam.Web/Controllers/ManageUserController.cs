@@ -84,11 +84,32 @@ namespace MaaAahwanam.Web.Controllers
             }
             return View();
         }
+        //[HttpPost]
+        //public ActionResult Index(ManageUser mnguser, string id, string command)
+        //{
+        //    //if (mnguser.type == "Corporate" && mnguser.Businessname != null || mnguser.type == "Individual")
+        //    //{
+        //    string msg = string.Empty;
+        //    mnguser.registereddate = DateTime.Now;
+        //    mnguser.updateddate = DateTime.Now;
+        //    if (command == "Save")
+        //    {
+        //        mnguser = mnguserservice.AddUser(mnguser);
+        //        msg = "Added New User";
+        //    }
+        //    else if (command == "Update")
+        //    {
+        //        mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
+        //        msg = "Updated User";
+        //    }
+        //    return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageUser'</script>");
+        //    //  }
+        //    // else { return Content("<script language='javascript' type='text/javascript'>alert('please enter businessname');location.href='/ManageUser'</script>"); }
+        //}
+
         [HttpPost]
-        public ActionResult Index(ManageUser mnguser, string id, string command)
+        public JsonResult Index(ManageUser mnguser, string id, string command)
         {
-            //if (mnguser.type == "Corporate" && mnguser.Businessname != null || mnguser.type == "Individual")
-            //{
             string msg = string.Empty;
             mnguser.registereddate = DateTime.Now;
             mnguser.updateddate = DateTime.Now;
@@ -102,9 +123,7 @@ namespace MaaAahwanam.Web.Controllers
                 mnguser = mnguserservice.UpdateUser(mnguser, int.Parse(id));
                 msg = "Updated User";
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageUser'</script>");
-            //  }
-            // else { return Content("<script language='javascript' type='text/javascript'>alert('please enter businessname');location.href='/ManageUser'</script>"); }
+            return Json("Sucess", JsonRequestBehavior.AllowGet);
         }
         public JsonResult checkemail(string email, string id)
         {
