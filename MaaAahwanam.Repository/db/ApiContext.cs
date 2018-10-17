@@ -69,5 +69,7 @@ namespace MaaAahwanam.Repository.db
         public DbSet<Policy> Policy { get; set; }
         public DbSet<Payment> Payment { get; set; }
         public DbSet<PackageMenu> PackageMenu { get; set; }
+        public DbSet<Partner> Partner { get; set; }
+        public DbSet<PartnerPackage> PartnerPackage { get; set; }
     }
 }
