@@ -41,12 +41,15 @@
                     @{Html.RenderAction("sidebar", "VDashboard"); }
 
                 </div>
+                <input type="hidden" name="GridHtml" />
+                <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
+                <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
+                <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
+                <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="@ViewBag.orderdetailid" />
                 <div class="col-md-10">
-                    <div  id="print-content">
-                        <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
-                        <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
-                        <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
-                        <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="@ViewBag.orderdetailid" />
+
+                    <div id="print-content">
+
                         <div class="row">
                             <div class="col-12" style="padding-left:30px">
                                 <div class="invoice-title add_top_30">
@@ -75,10 +78,10 @@
                                             @ViewBag.bookeddate<br><br>
                                         </address>
                                         @*<address>
-                                                <strong>Payment Method:</strong><br>
-                                                Visa ending **** 4242<br>
-                                                jsmith@email.com
-                                            </address>*@
+                                    <strong>Payment Method:</strong><br>
+                                    Visa ending **** 4242<br>
+                                    jsmith@email.com
+                                </address>*@
 
                                     </div>
                                     <div class="col-6 text-right">
@@ -151,7 +154,7 @@
                                                     <table class="table table-condensed" style="width:100%;max-width:100%">
                                                         <thead>
                                                             <tr>
-                                                                <td><strong>Select</strong></td>
+                                                         @*//       <td><strong>Select</strong></td>*@
                                                                 <td class="text-center"><strong>Order DetailId</strong></td>
                                                                 <td class="text-center"><strong>Event Type</strong></td>
                                                                 <td class="text-center"><strong>Price</strong></td>
@@ -164,7 +167,7 @@
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
                                                                 <tr>
-                                                                    <td><input type="checkbox" class="chcktbl" value="@item.Due,@item.OrderDetailId" onclick="addamnttotal()" /></td>
+                                                                    @*<td><input type="checkbox" class="chcktbl" value="@item.Due,@item.OrderDetailId" onclick="addamnttotal()" /></td>*@
                                                                     <td class="text-center">@item.OrderDetailId</td>
                                                                     <td class="text-center">@item.EventType</td>
                                                                     <td class="text-center">Rs @item.PerunitPrice</td>
@@ -367,13 +370,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             @*<div class="row">
-                                                    <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
-                                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" value="" style="padding: 5px;" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>*@
+                                        <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
+                                        <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" value="" style="padding: 5px;" readonly>
+                                            </div>
+                                        </div>
+                                    </div>*@
                                             <div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Total Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
@@ -439,107 +442,107 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
 
 <script>
-    (function () {
-        var
-            form = $('#print-content'),
-            cache_width = form.width(),
-            a4 = [595.28, 841.89]; // for a4 size paper width and height
+    //(function () {
+    //    var
+    //        form = $('#print-content'),
+    //        cache_width = form.width(),
+    //        a4 = [595.28, 841.89]; // for a4 size paper width and height
 
-        $('#savepdf').on('click', function () {
-            $('body').scrollTop(0);
-            createPDF();
-        });
-        //create pdf
-        function createPDF() {
-            getCanvas().then(function (canvas) {
-                var
-                    img = canvas.toDataURL("image/png"),
-                    doc = new jsPDF({
-                        unit: 'px',
-                        format: 'a4'
-                    });
-                doc.addImage(img, 'JPEG', 20, 20);
-                doc.save('bhavdip-html-to-pdf.pdf');
-                form.width(cache_width);
-            });
-        }
+    //    $('#savepdf').on('click', function () {
+    //        $('body').scrollTop(0);
+    //        createPDF();
+    //    });
+    //    //create pdf
+    //    function createPDF() {
+    //        getCanvas().then(function (canvas) {
+    //            var
+    //                img = canvas.toDataURL("image/png"),
+    //                doc = new jsPDF({
+    //                    unit: 'px',
+    //                    format: 'a4'
+    //                });
+    //            doc.addImage(img, 'JPEG', 20, 20);
+    //            doc.save('bhavdip-html-to-pdf.pdf');
+    //            form.width(cache_width);
+    //        });
+    //    }
 
-        // create canvas object
-        function getCanvas() {
-            form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
-            return html2canvas(form, {
-                imageTimeout: 2000,
-                removeContainer: true
-            });
-        }
+    //    // create canvas object
+    //    function getCanvas() {
+    //        form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+    //        return html2canvas(form, {
+    //            imageTimeout: 2000,
+    //            removeContainer: true
+    //        });
+    //    }
 
-    }());
+    //}());
 </script>
 <script>
-    /*
- * jQuery helper plugin for examples and tests
- */
-    (function ($) {
-        $.fn.html2canvas = function (options) {
-            var date = new Date(),
-                $message = null,
-                timeoutTimer = false,
-                timer = date.getTime();
-            html2canvas.logging = options && options.logging;
-            html2canvas.Preload(this[0], $.extend({
-                complete: function (images) {
-                    var queue = html2canvas.Parse(this[0], images, options),
-                        $canvas = $(html2canvas.Renderer(queue, options)),
-                        finishTime = new Date();
+        /*
+     * jQuery helper plugin for examples and tests
+     */
+        (function ($) {
+            $.fn.html2canvas = function (options) {
+                var date = new Date(),
+                    $message = null,
+                    timeoutTimer = false,
+                    timer = date.getTime();
+                html2canvas.logging = options && options.logging;
+                html2canvas.Preload(this[0], $.extend({
+                    complete: function (images) {
+                        var queue = html2canvas.Parse(this[0], images, options),
+                            $canvas = $(html2canvas.Renderer(queue, options)),
+                            finishTime = new Date();
 
-                    $canvas.css({ position: 'absolute', left: 0, top: 0 }).appendTo(document.body);
-                    $canvas.siblings().toggle();
+                        $canvas.css({ position: 'absolute', left: 0, top: 0 }).appendTo(document.body);
+                        $canvas.siblings().toggle();
 
-                    $(window).click(function () {
-                        if (!$canvas.is(':visible')) {
-                            $canvas.toggle().siblings().toggle();
-                            throwMessage("Canvas Render visible");
-                        } else {
-                            $canvas.siblings().toggle();
-                            $canvas.toggle();
-                            throwMessage("Canvas Render hidden");
-                        }
-                    });
-                    throwMessage('Screenshot created in ' + ((finishTime.getTime() - timer) / 1000) + " seconds<br />", 4000);
-                }
-            }, options));
+                        $(window).click(function () {
+                            if (!$canvas.is(':visible')) {
+                                $canvas.toggle().siblings().toggle();
+                                throwMessage("Canvas Render visible");
+                            } else {
+                                $canvas.siblings().toggle();
+                                $canvas.toggle();
+                                throwMessage("Canvas Render hidden");
+                            }
+                        });
+                        throwMessage('Screenshot created in ' + ((finishTime.getTime() - timer) / 1000) + " seconds<br />", 4000);
+                    }
+                }, options));
 
-            function throwMessage(msg, duration) {
-                window.clearTimeout(timeoutTimer);
-                timeoutTimer = window.setTimeout(function () {
-                    $message.fadeOut(function () {
+                function throwMessage(msg, duration) {
+                    window.clearTimeout(timeoutTimer);
+                    timeoutTimer = window.setTimeout(function () {
+                        $message.fadeOut(function () {
+                            $message.remove();
+                        });
+                    }, duration || 2000);
+                    if ($message)
                         $message.remove();
-                    });
-                }, duration || 2000);
-                if ($message)
-                    $message.remove();
-                $message = $('<div ></div>').html(msg).css({
-                    margin: 0,
-                    padding: 10,
-                    background: "#000",
-                    opacity: 0.7,
-                    position: "fixed",
-                    top: 10,
-                    right: 10,
-                    fontFamily: 'Tahoma',
-                    color: '#fff',
-                    fontSize: 12,
-                    borderRadius: 12,
-                    width: 'auto',
-                    height: 'auto',
-                    textAlign: 'center',
-                    textDecoration: 'none'
-                }).hide().fadeIn().appendTo('body');
-            }
-        };
-    })(jQuery);
+                    $message = $('<div ></div>').html(msg).css({
+                        margin: 0,
+                        padding: 10,
+                        background: "#000",
+                        opacity: 0.7,
+                        position: "fixed",
+                        top: 10,
+                        right: 10,
+                        fontFamily: 'Tahoma',
+                        color: '#fff',
+                        fontSize: 12,
+                        borderRadius: 12,
+                        width: 'auto',
+                        height: 'auto',
+                        textAlign: 'center',
+                        textDecoration: 'none'
+                    }).hide().fadeIn().appendTo('body');
+                }
+            };
+        })(jQuery);
 
-</script>
+    </script>
 
 
 
@@ -552,7 +555,37 @@
         w.print();
         w.close();
     }
+    $('#savepdf').click(function () {
+       // $("input[name='GridHtml']").val($("#print-content").html());
+        //var pdfhtml = $("input[name='GridHtml']").val();
+        var pdfhtml = document.getElementById("print-content").outerHTML;// $("#print-content").html();
+       // var pdfhtml = $(this).attr("GridHtml");
+        var oid = '@Request.QueryString["oid"]';
+            alert(pdfhtml);
+        $.ajax({
+            url: '/vinvoice/pdfdownload?',//pdfhtml=' + pdfhtml + "&&oid=" + oid,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            data: {},
+            data: JSON.stringify({ pdfhtml: pdfhtml, oid: oid }),
+            success: function (result) {
+                if (result == "success") {
+                    alert("pdf downloaded sucess fully");
+                } else {
+                    alert("Error Occurred in downloading pdf");
+                }
 
+
+
+            }
+        })
+        //doc.fromHTML($('#print-content').html(), 15, 15, {
+        //    'width': 170,
+        //    'elementHandlers': specialElementHandlers
+        //});
+        //doc.save('sample-file.pdf');
+    });
     //var doc = new jsPDF();
     //var specialElementHandlers = {
     //    '#editor': function (element, renderer) {
