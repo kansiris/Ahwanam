@@ -357,7 +357,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    totalprice = tprice.ToString();
+                    totalprice = Convert.ToString(tprice * Convert.ToInt16(guest));
                 }
             }
                 Order order = new Order();
@@ -388,7 +388,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    totalprice = tprice.ToString();
+                    totalprice = Convert.ToString(price* Convert.ToInt16(guest));
                 }
                 data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
                 data.timeslot = timeslot1[i].Split('~')[0];
@@ -399,7 +399,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.ServiceType = type;
                 orderDetail.ServicePrice = Convert.ToDecimal(price);
                 orderDetail.attribute = data.timeslot;
-                orderDetail.TotalPrice = Convert.ToDecimal(tprice);
+                orderDetail.TotalPrice = Convert.ToDecimal(totalprice);
                 orderDetail.PerunitPrice = Convert.ToDecimal(price);
                 orderDetail.Quantity = Convert.ToInt32(guest);
                 orderDetail.OrderId = order.OrderId;
@@ -506,7 +506,7 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     else
                     {
-                        totalprice = tprice.ToString();
+                        totalprice = Convert.ToString(tprice * Convert.ToInt16(guest));
                     }
                 }
                 var date1 = date.Trim(',').Split(',');
@@ -558,6 +558,16 @@ namespace MaaAahwanam.Web.Controllers
                         price = Convert.ToInt16(data.price1);
                     }
                     else { price = Convert.ToInt16(data.PackagePrice); }
+                    tprice = tprice + price;
+                    if (type == "Photography" || type == "Decorator" || type == "Other")
+                    {
+                        totalprice = Convert.ToString(price);
+                        guest = "0";
+                    }
+                    else
+                    {
+                        totalprice = Convert.ToString(price * Convert.ToInt16(guest));
+                    }
                     data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
                     data.timeslot = timeslot1[i].Split('~')[0];
                     OrderDetail orderDetail = new OrderDetail();
@@ -567,7 +577,7 @@ namespace MaaAahwanam.Web.Controllers
                     orderDetail.ServiceType = type;
                     orderDetail.ServicePrice = Convert.ToDecimal(price);
                     orderDetail.attribute = data.timeslot;
-                    orderDetail.TotalPrice = Convert.ToDecimal(tprice);
+                    orderDetail.TotalPrice = Convert.ToDecimal(totalprice);
                     orderDetail.PerunitPrice = Convert.ToDecimal(price);
                     orderDetail.Quantity = Convert.ToInt32(guest);
                     orderDetail.OrderId = order.OrderId;
