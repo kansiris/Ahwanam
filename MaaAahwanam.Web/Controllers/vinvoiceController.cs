@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using IronPdf;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -190,6 +191,15 @@ namespace MaaAahwanam.Web.Controllers
 
         }
 
-      
+        public ActionResult pdfdownload(string pdfhtml)
+        {
+            HtmlToPdf HtmlToPdf = new IronPdf.HtmlToPdf();
+           var PDF = HtmlToPdf.RenderHtmlAsPdf(pdfhtml);
+            var OutputPath = "HtmlToPDF.pdf";
+            PDF.SaveAs(OutputPath);
+            // This neat trick opens our PDF file so we can see the result in our default PDF viewer
+            System.Diagnostics.Process.Start(OutputPath);
+            return Json("success", JsonRequestBehavior.AllowGet);
+        }
     }
 }
