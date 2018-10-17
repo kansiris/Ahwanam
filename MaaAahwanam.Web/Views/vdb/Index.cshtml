@@ -1,6 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    if (ViewBag.enable == "first")
+    {
+        ViewBag.Title = "Manage/Add Services";
+    }
+    else if (ViewBag.enable == "second")
+    {
+        ViewBag.Title = "All Services";
+    }
+    else
+    {
+        ViewBag.Title = "All Orders";
+    }
     Layout = "~/Views/SharedWeb/vmp.cshtml";
 }
 
@@ -30,6 +41,27 @@
                 font-weight: 600;
                 margin-left: 15px;
             }
+            .upload-section table,th,td{
+                padding-left:6%;
+            }
+            .sliderdiv {
+                border: 4px grey solid;
+                border-style: dashed;
+                height: 100px;
+                width: 100px;
+                margin-top: 25px;
+            }
+
+                .sliderdiv img {
+                    padding: 35px;
+                }
+            #pkgsdiv {
+            font-size:14px;
+            }
+
+            #sectiontimeslot  label,#pkgpricesection span {
+                color:white;
+            }
         </style>
     }
 
@@ -37,89 +69,53 @@
     {
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
         <style>
-                .search-box2 {
+            .search-box2 {
                 width: 94%;
             }
-                .select2-container--default .select2-selection--single {
-                height:37px;
-                }
-                p {
-                    color: red;
-                }
 
-                hr {
-                    margin: 0;
-                    border: 1px lightgray solid;
-                }
+            .select2-container--default .select2-selection--single {
+                height: 37px;
+            }
 
-                .card-body {
-                    padding: 10px;
-                }
+            p {
+                color: red;
+            }
 
-                .card-img-top {
-                    height: 140px;
-                    width: 100%;
-                }
+            hr {
+                margin: 0;
+                border: 1px lightgray solid;
+            }
 
-                .card-title, .divheading {
-                    font-family: lato;
-                    font-weight: bold;
-                    font-size: 14px;
-                }
+            .card-body {
+                padding: 10px;
+            }
 
-                .card-body table, tr, td {
-                    border: 0px;
-                    padding: 0;
-                }
-
-                .ui-datepicker {
-                    width: 100%;
-                }
-
-                .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-                    background: white;
-                }
-
-                .ui-widget-header {
-                    background: white;
-                }
-        </style>
-        <style>
-            .accordion {
-                background-color: #eee;
-                color: #444;
-                cursor: pointer;
-                padding: 18px;
+            .card-img-top {
+                height: 140px;
                 width: 100%;
-                border: none;
-                text-align: left;
-                outline: none;
-                font-size: 15px;
-                transition: 0.4s;
             }
 
-                .active, .accordion:hover {
-                    background-color: #ccc;
-                }
-
-                .accordion:after {
-                    content: '\002B';
-                    color: #777;
-                    font-weight: bold;
-                    float: right;
-                    margin-left: 5px;
-                }
-
-            .active:after {
-                content: "\2212";
+            .card-title, .divheading {
+                font-family: lato;
+                font-weight: bold;
+                font-size: 14px;
             }
 
-            .panel {
-                padding: 0 18px;
-                background-color: white;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.2s ease-out;
+            .card-body table, tr, td {
+                border: 0px;
+                padding: 0;
+            }
+
+            .ui-datepicker {
+                width: 100%;
+            }
+
+            .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+                background: white;
+            }
+
+            .ui-widget-header {
+                background: white;
             }
         </style>
     }
@@ -127,19 +123,22 @@
 
 @if (ViewBag.enable == "first")
 {
-    <div class="col-md-6">
+    <div class="col-md-6  col-sm-6 col-xs-6">
         <div class="container-fluid">
             <div class="row main-tab">
-                <img src="http://design.maa-aahwanam.com/panagea/images/banner3.jpg" id="banner3">
+                <img src="@ViewBag.bannerimage" id="banner3">
             </div>
             <div class="row">
                 <div class="col-md-9">
                     <div class="row">
-                        <h6>Hotel Radisson</h6>
+                        <h6 id="hname">@ViewBag.name</h6>
+                        <input type="hidden" id="category" value="@ViewBag.Vendor.ServicType"/>
+                        <input type="hidden" id="vendorid" value="@ViewBag.id" />
+                        <input type="hidden" id="vendorsubid" value="@ViewBag.vid" />
                     </div>
                     <div class="row">
                         <label id="typemsg">Service Type:</label>
-                        <select id="selectedservice" style="width:auto">
+                        <select id="selectedservice" style="width:auto" class="custom-select">
                             <option disabled selected>Select Category</option>
                             <option value="Convention Hall">Convention Hall</option>
                             <option value="Function Hall">Function Hall</option>
@@ -152,18 +151,47 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div><button class="btn btn-default">Plan Calendar</button></div>
-                    <div style="padding-top:5%"><input type="checkbox" id="status" /><label for="status">InActive</label></div>
+                    <div><button class="btn btn-default" onclick="window.location.href='/VendorCalendar/Index?id=@ViewBag.id&&vid=@ViewBag.vid'">Plan Calendar</button></div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">InActive</label>
+                    </div>
                 </div>
+
             </div>
 
             <div class="row upload-section">
                 <table>
                     <tr>
-                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
-                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
-                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
-                        <td><div id="dashed-upload"><img src="http://design.maa-aahwanam.com/panagea/images/add.png"></div></td>
+                        @{
+                            if (ViewBag.sliderimages.Count > 0)
+                            {
+                                int no = 0;
+                                foreach (var item in ViewBag.sliderimages)
+                                {
+                                    <td>
+                                        <div class="sliderdiv" style="border:none" align="center">
+                                            <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
+                                            <text style="color:black">Slider @(++no)</text>
+                                        </div>
+                                    </td>
+                                }
+
+                            }
+                            if (ViewBag.slidercount > 0)
+                            {
+                                for (int i = 1; i < ViewBag.slidercount + 1; i++)
+                                {
+                                    <td>
+                                        <div class="sliderdiv">
+                                            <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
+                                            <input type="file" name="image" id="s@(i)">
+                                        </div>
+                                    </td>
+                                }
+                            }
+
+                        }
                     </tr>
                 </table>
 
@@ -180,26 +208,54 @@
 
             <div class="row" id="pkgsdiv">
                 <div>
-                    <div class="package-box px-2">
+                    <div class="package-box">
                         <div class="container-fluid">
-                            <div class="row px-1">
-                                <input type="text" class="form-control" placeholder="text" id="input1">
-                                <input type="text" class="form-control" placeholder="text" id="input2">
-                            </div>
                             <div class="row">
-
-                                <p id="days">peakdays</p>
-                                <p id="days">normal days</p>
-                                <p id="days">Holidays</p>
-                                <p id="days">Choice days</p>
+                                <div class="col-md-6 col-xs-6">
+                                    <input type="text" class="form-control" placeholder="Package Name">
+                                </div>
+                                <div class="col-md-6 col-xs-6">
+                                    <div class="row" id="sectiontimeslot">
+                                        <div class="col-md-4 col-xs-6">
+                                            <input type="radio" name="checkradio" id="Veg" value="Veg" checked /><label for="Veg">Veg</label>
+                                            <br />
+                                            <input type="radio" name="checkradio" id="NonVeg" value="NonVeg" checked /><label for="NonVeg">Non-Veg</label>
+                                        </div>
+                                        <div class="col-md-4 col-xs-4">
+                                            <input type="checkbox" class="slotcheck" name="slot" id="breakfast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                            <br />
+                                            <input type="checkbox" class="slotcheck" name="slot" id="lunch" value="Lunch" /><label for="lunch">Lunch</label>
+                                        </div>
+                                        <div class="col-md-4 col-xs-4">
+                                            <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Break Fast" /><label for="dinner">Dinner</label>
+                                            <br />
+                                            <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" /><label for="hightea">High Tea</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row">
-
-                                <p id="days">000000</p>
-                                <p id="days">000000</p>
-                                <p id="days">000000</p>
-                                <p id="days">000000</p>
+                            <div class="row" id="pkgpricesection">
+                                <div class="col-md-3 col-xs-3">
+                                    <span>Normal Days ₹</span>
+                                    <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%" /></span>
+                                </div>
+                                <div class="col-md-3 col-xs-3">
+                                    <span>Peak Days ₹</span>
+                                    <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%" /></span>
+                                </div>
+                                <div class="col-md-3 col-xs-3">
+                                    <span>Holidays ₹</span>
+                                    <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%" /></span>
+                                </div>
+                                <div class="col-md-3 col-xs-3">
+                                    <span>Choice Days ₹</span>
+                                    <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%" /></span>
+                                </div>
                             </div>
+                            <div class="row" align="center" style="padding-top:10px">
+                                <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3"></textarea>
+                            </div>
+
                         </div>
                     </div>
                     <div class="package-list">
@@ -220,7 +276,7 @@
         </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-md-4 col-sm-6 col-xs-6">
         <div class="container-fluid">
             <div class="row policies">
                 <div class="col-md-6"><h6 class="h6-1-1">POLICIES</h6></div>
@@ -532,16 +588,17 @@
 }
 
 @section scripts{
+<script src="~/Scripts/vdb.js"></script>
     @if (ViewBag.enable == "first")
     {
         <script type="text/javascript">
+            //Add Package
             $("#anp").click(function () {
                 var div = document.getElementById("pkgsdiv");
                 var childdiv = "<div><div class='package-box'></div><div class='package-list'><button id='pillbutton'>Mocktails(2)</button><button id='pillbutton'>soup(2)</button><button id='pillbutton'>salad(2)</button><button id='pillbutton'>mains(2)</button><button id='pillbutton'>rice&amp;curd(2)</button><button id='pillbutton'>Rajasthani(2)</button><button id='pillbutton'>deserts(2)</button><button id='pillbutton'>Add item</button><br><br><a href='#' id='a-text'>Duplicate</a><a href='#' id='a-text-1'>Publish</a></div></div>";
                 $('#pkgsdiv').append(childdiv);
             });
-
-
+            
         </script>
     }
     @if (ViewBag.enable == "second")
@@ -553,22 +610,6 @@
             });
             //$("#datetimepicker1").datepicker();
             $(".vendorcalendar").datepicker();
-        </script>
-        <script>
-            var acc = document.getElementsByClassName("accordion");
-            var i;
-
-            for (i = 0; i < acc.length; i++) {
-                acc[i].addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    var panel = this.nextElementSibling;
-                    if (panel.style.maxHeight) {
-                        panel.style.maxHeight = null;
-                    } else {
-                        panel.style.maxHeight = panel.scrollHeight + "px";
-                    }
-                });
-            }
         </script>
     }
 }

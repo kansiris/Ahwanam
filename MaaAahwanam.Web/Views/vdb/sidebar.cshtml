@@ -1,0 +1,87 @@
+﻿<style>
+    .services {
+        padding: 15px 15px 15px 20px;
+    }
+
+        .services div {
+            cursor: pointer;
+            font-size: 14px;
+            font-family: lato;
+        }
+</style>
+<div class="services">
+    <div onclick="location.href = '/VDashboard'">Dashboard</div>
+    <div>Quotes</div>
+    <div onclick="location.href = '/VDashboard?c=orders'">Orders</div>
+    <div onclick="location.href = '/ManageUser'">Customers/clients</div>
+    <div onclick="location.href = '/ManageVendor'">Vendors</div>
+    <div>Resellers/Partners</div>
+    <div class="row" style="padding-top:2%">
+        <button class="accordion active" style="background-color:#fff;padding:0">Services</button>
+        <div class="panel" style="max-height:247px;">
+            @foreach (var item in ViewBag.venues)
+            {
+                if (item.VenueType == "" || item.VenueType == null)
+                {
+                    <div><a class="subcatclose" value="@item.Id,Venue" style="color: red;font-size: 12px;">X</a> <a>Venue</a></div>
+                }
+                else
+                {
+                    <div><a class="subcatclose" value="@item.Id,@item.name,@item.VenueType,Venue" style="color: red;font-size: 12px;">X</a><a> @item.name - @item.VenueType</a></div>
+                }
+            }
+            @foreach (var item in ViewBag.catering)
+            {
+                <div><a class="subcatclose" value="@item.Id,,@item.CuisineType,Catering" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" style="color:black;" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.CuisineType</a></div>
+            }
+            @foreach (var item in ViewBag.photography)
+            {
+                <div>  <a class="subcatclose" value="@item.Id,,@item.PhotographyType,Photography" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" style="color:black;" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.PhotographyType</a></div>
+            }
+            @foreach (var item in ViewBag.decorators)
+            {
+                <div><a class="subcatclose" value="@item.Id,,@item.DecorationType,Decorator" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" style="color:black;" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.DecorationType</a></div>
+            }
+            @foreach (var item in ViewBag.others)
+            {
+                <div>   <a class="subcatclose" value="@item.Id,,@item.type,Other" style="padding-left: 20px;color: red;font-size: 12px;">X</a> <a class="h6-in" style="color:black;" onclick="location.href = '/VDashboard/Index?c=first&&vsid=' + @item.Id">@item.type</a></div>
+            }
+        </div>
+    </div>
+</div>
+@*<button type="button" onclick="addservice()" id="service">Add Service</button>*@
+<div id="addservices" style="height:150px">
+    <div id="addcategory" style="height:60px">
+        <select class="form-control" id="serviceselection1" name="serviceselection1" style="height:40px">
+            <option disabled selected>Select Service Type</option>
+            <option value="Venue">Venue</option>
+            <option value="Catering">Catering</option>
+            <option value="Photography">Photography</option>
+            <option value="Decorator">Decorator</option>
+            <option value="Other">Others</option>
+        </select>
+    </div>
+    <div>
+        <button type="button" onclick="addservicenow()" class="btn btn-1 addbutton" style="border-radius:1px;width:100%;color:#fff;background-color:red; font-size:14px;">
+            Submit
+        </button>
+    </div>
+</div>
+<div id="addservicesbutton" style="height:150px">
+    <button type="button" onclick="addservice()" class="btn btn-1 " style="border-radius:1px;width:100%;color:#fff;background-color:red; font-size:14px;">
+        Add Service
+    </button>
+</div>
+
+
+
+@*<h6 class="h6-in-3">
+        <select multiple class="form-control" id="serviceselection1" name="serviceselection1">
+            <option disabled selected>Select Service Type</option>
+            <option value="Venue">Venue</option>
+            <option value="Catering">Catering</option>
+            <option value="Photography">Photography</option>
+            <option value="Decorator">Decorator</option>
+            <option value="Other">Others</option>
+        </select>
+    </h6>*@
