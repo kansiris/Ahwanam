@@ -1,4 +1,5 @@
 ﻿var category = $('#category').val();
+var subcategory = $('#subcategory').val();
 var subid = $('#vendorsubid').val();
 var id = $('#vendorid').val();
 
