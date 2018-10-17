@@ -3,31 +3,32 @@
         padding: 15px 15px 15px 20px;
     }
 
-        .services div {
+        .services div ,.services div >a {
             cursor: pointer;
             font-size: 14px;
             font-family: lato;
+            color:black;
         }
 </style>
 <div class="services">
-    <div onclick="location.href = '/VDashboard'">Dashboard</div>
+    <div onclick="location.href = '/vdb'">Dashboard</div>
     <div>Quotes</div>
-    <div onclick="location.href = '/VDashboard?c=orders'">Orders</div>
+    <div onclick="location.href = '/vdb?c=orders'">Orders</div>
     <div onclick="location.href = '/ManageUser'">Customers/clients</div>
-    <div onclick="location.href = '/ManageVendor'">Vendors</div>
+    <div onclick="location.href = '/ManageVendor'">Suppliers</div>
     <div>Resellers/Partners</div>
     <div class="row" style="padding-top:2%">
         <button class="accordion active" style="background-color:#fff;padding:0">Services</button>
-        <div class="panel" style="max-height:247px;">
+        <div class="panel" style="max-height:300px;">
             @foreach (var item in ViewBag.venues)
             {
                 if (item.VenueType == "" || item.VenueType == null)
                 {
-                    <div><a class="subcatclose" value="@item.Id,Venue" style="color: red;font-size: 12px;">X</a> <a>Venue</a></div>
+                    <div><a class="subcatclose" value="@item.Id,Venue" style="color: red;font-size: 12px;">X</a> <a href = "/vdb/Index?c=first&&vid=@item.Id">Venue</a></div>
                 }
                 else
                 {
-                    <div><a class="subcatclose" value="@item.Id,@item.name,@item.VenueType,Venue" style="color: red;font-size: 12px;">X</a><a> @item.name - @item.VenueType</a></div>
+                    <div><a class="subcatclose" value="@item.Id,@item.name,@item.VenueType,Venue" style="color: red;font-size: 12px;">X</a><a href = "/vdb/Index?c=first&&vid=@item.Id"> @item.name - @item.VenueType</a></div>
                 }
             }
             @foreach (var item in ViewBag.catering)
