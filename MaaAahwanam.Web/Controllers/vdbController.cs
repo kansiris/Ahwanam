@@ -51,7 +51,7 @@ namespace MaaAahwanam.Web.Controllers
                         var allimages = vendorImageService.GetImages(id, long.Parse(vid));
                         if (allimages.Count() > 0)
                         {
-                            ViewBag.bannerimage = "~/vendorimages/" + allimages.FirstOrDefault().ImageName;
+                            ViewBag.bannerimage = "/vendorimages/" + allimages.FirstOrDefault().ImageName;
                             ViewBag.allimages = allimages.ToList();
                             ViewBag.imagescount = (allimages.Count < 4) ? 4 - allimages.Count : 0;
                             ViewBag.sliderimages = allimages.Where(m => m.ImageType == "Slider").Take(4).ToList();
