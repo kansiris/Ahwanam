@@ -20,7 +20,7 @@
     <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
 
     <!-- ALTERNATIVE COLORS CSS -->
-    <link href="#" id="colors" rel="stylesheet">
+    @*<link href="#" id="colors" rel="stylesheet">*@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- YOUR CUSTOM CSS -->
@@ -61,7 +61,7 @@
                     font-size: 16px;
                 }*/
 
-        input[type=text], input[type="email"], input[type="tel"], input[type="number"] {
+        #addcustomermodel input[type=text], #addcustomermodel input[type="email"], #addcustomermodel input[type="tel"], #addcustomermodel input[type="number"] {
             width: 101%;
             padding: 12px 26px 0px 10px;
             margin: 15px 5px 15px 0px;
@@ -536,8 +536,8 @@
                 $('#Status').val('');
                 $('#SaveUser').css('display', 'block');
                 $('#EditUser').css('display', 'none');
-                $('#booknow').css('display', 'none');
-                $('#booknowss').css('display', 'none');
+                //$('#booknow').css('display', 'none');
+                //$('#booknowss').css('display', 'none');
 
             });
 
@@ -888,6 +888,18 @@
             //});
             $('#btnadd').on('click', function () {
                 $('#addcustomermodel').modal('show');
+                var vpbook = window.localStorage.getItem("vpbook");
+                var date = window.localStorage.getItem("vpbookdate");
+                var timeslot = window.localStorage.getItem("vpbooktimeslot");
+                var packageid = window.localStorage.getItem("vpbookpid");
+                if (vpbook == "" || vpbook == null) {
+                    $('#booknow').css('display', 'none');
+                    $('#booknowss').css('display', 'none');
+                }
+                else {
+                    $('#booknow').css('display', 'none');
+                    $('#booknowss').css('display', 'block');
+                }
             });
             //$('#btnadd2').on('click', function () {
             //    $('#addcustomermodel').modal('show');
