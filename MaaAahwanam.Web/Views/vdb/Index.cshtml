@@ -56,7 +56,7 @@
                     padding: 35px;
                 }
             #pkgsdiv {
-            font-size:14px;
+            font-size:13px;
             }
 
             #sectiontimeslot  label,#pkgpricesection span {
@@ -119,6 +119,25 @@
             }
         </style>
     }
+    @if (ViewBag.enable == "orders")
+    {
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
+        <style>
+            .search-box2 {
+                width: 94%;
+            }
+
+            .select2-container--default .select2-selection--single {
+                height: 37px;
+            }
+        </style>
+    }
+    <style>
+        #pkgmodal, #Querymodel, #viewmenuitems {
+            position: relative;
+        }
+    </style>
 }
 
 @if (ViewBag.enable == "first")
@@ -131,15 +150,15 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="row">
-                        <h6 id="hname">@ViewBag.name</h6>
-                        <input type="hidden" id="category" value="@ViewBag.Vendor.ServicType"/>
+                        <h2 id="hname">@ViewBag.name</h2>
+                        <input type="hidden" id="category" value="@ViewBag.Vendor.ServicType" />
                         <input type="hidden" id="subcategory" value="@ViewBag.service.VenueType" />
                         <input type="hidden" id="vendorid" value="@ViewBag.id" />
                         <input type="hidden" id="vendorsubid" value="@ViewBag.vid" />
                     </div>
                     <div class="row">
                         <label id="typemsg">Service Type:</label>
-                        <select id="selectedservice" style="width:auto" class="custom-select">
+                        <select id="selectedservice" style="width:auto;margin-top:-5px;" class="custom-select">
                             <option disabled selected>Select Category</option>
                             <option value="Convention Hall">Convention Hall</option>
                             <option value="Function Hall">Function Hall</option>
@@ -171,7 +190,7 @@
                                 foreach (var item in ViewBag.sliderimages)
                                 {
                                     <td>
-                                        <div class="sliderdiv" style="border:none" align="center">
+                                        <div align="center">
                                             <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
                                             <text style="color:black">Slider @(++no)</text>
                                         </div>
@@ -213,24 +232,25 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6 col-xs-6">
-                                    <input type="text" class="form-control" placeholder="Package Name">
+                                    <input type="text" class="form-control" id="pkgname" placeholder="Package Name" value="@ViewBag.package.PackageName">
                                 </div>
                                 <div class="col-md-6 col-xs-6">
                                     <div class="row" id="sectiontimeslot">
                                         <div class="col-md-4 col-xs-6">
-                                            <input type="radio" name="checkradio" id="Veg" value="Veg" checked /><label for="Veg">Veg</label>
+                                            <input type="radio" name="checkradio" id="Veg" value="Veg" /><label for="Veg">Veg</label>
                                             <br />
-                                            <input type="radio" name="checkradio" id="NonVeg" value="NonVeg" checked /><label for="NonVeg">Non-Veg</label>
+                                            <input type="radio" name="checkradio" id="NonVeg" value="NonVeg" /><label for="NonVeg">Non-Veg</label>
+                                        </div>
+                                        <input type="hidden" id="pkgslots" value="@ViewBag.package.timeslot" />
+                                        <div class="col-md-4 col-xs-4">
+                                            <input type="checkbox" class="slotcheck" name="slot" id="Break_Fast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                            <br />
+                                            <input type="checkbox" class="slotcheck" name="slot" id="Lunch" value="Lunch" /><label for="lunch">Lunch</label>
                                         </div>
                                         <div class="col-md-4 col-xs-4">
-                                            <input type="checkbox" class="slotcheck" name="slot" id="breakfast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                            <input type="checkbox" class="slotcheck" name="slot" id="Dinner" value="Dinner" /><label for="dinner">Dinner</label>
                                             <br />
-                                            <input type="checkbox" class="slotcheck" name="slot" id="lunch" value="Lunch" /><label for="lunch">Lunch</label>
-                                        </div>
-                                        <div class="col-md-4 col-xs-4">
-                                            <input type="checkbox" class="slotcheck" name="slot" id="dinner" value="Break Fast" /><label for="dinner">Dinner</label>
-                                            <br />
-                                            <input type="checkbox" class="slotcheck" name="slot" id="hightea" value="High Tea" /><label for="hightea">High Tea</label>
+                                            <input type="checkbox" class="slotcheck" name="slot" id="High_Tea" value="High Tea" /><label for="hightea">High Tea</label>
                                         </div>
                                     </div>
                                 </div>
@@ -238,40 +258,88 @@
                             <div class="row" id="pkgpricesection">
                                 <div class="col-md-3 col-xs-3">
                                     <span>Normal Days ₹</span>
-                                    <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%" /></span>
+                                    <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%" value="@ViewBag.package.normaldays" /></span>
                                 </div>
                                 <div class="col-md-3 col-xs-3">
                                     <span>Peak Days ₹</span>
-                                    <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%" /></span>
+                                    <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%" value="@ViewBag.package.peakdays" /></span>
                                 </div>
                                 <div class="col-md-3 col-xs-3">
                                     <span>Holidays ₹</span>
-                                    <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%" /></span>
+                                    <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%" value="@ViewBag.package.holidays" /></span>
                                 </div>
                                 <div class="col-md-3 col-xs-3">
                                     <span>Choice Days ₹</span>
-                                    <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%" /></span>
+                                    <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%" value="@ViewBag.package.choicedays" /></span>
                                 </div>
                             </div>
                             <div class="row" align="center" style="padding-top:10px">
-                                <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3"></textarea>
+                                <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3">@ViewBag.package.PackageDescription</textarea>
                             </div>
 
                         </div>
                     </div>
                     <div class="package-list">
-                        <button id="pillbutton">Mocktails(2)</button>
-                        <button id="pillbutton">soup(2)</button>
-                        <button id="pillbutton">salad(2)</button>
-                        <button id="pillbutton">mains(2)</button>
-                        <button id="pillbutton">rice&amp;curd(2)</button>
+                        @if (ViewBag.pkgitems != null)
+                        {
+                            for (int i = 0; i < ViewBag.pkgitems.Length; i++)
+                            {
+                                <button id="pillbutton" class="button pkgitem" value="@ViewBag.selecteditems.Split(',')[i]">@ViewBag.pkgitems[i].Split('(')[0] (@ViewBag.pkgitems[i].Split('(')[1].Split(')')[0])</button>
+                            }
+                            <div id="extracourse"></div>
+                        }
+                        else
+                        {
+                            <button class="button pkgitem" value="Welcome_Drinks">Welcome Drinks(0)</button>
+                            <button class="button pkgitem" value="Starters">Starters(0)</button>
+                            <button id="pillbutton" class="button pkgitem" value="Rice">Rice(0)</button>
+                            <button id="pillbutton" class="button pkgitem" value="Bread">Bread(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Curries">Curries(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Fry_Dry">Fry/Dry(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Salads">Salads(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Soups">Soups(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Deserts">Deserts(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Beverages">Beverages(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Fruits">Fruits(0)</button>
+                                        <div id="extracourse">
+                                            @foreach (var item in ViewBag.extramenuitems.Split(','))
+                                            {
+                                                if (item != null && item != "")
+                                                {
+                                                    <button class="button extraitem" value="@item">@item (0)</button>
+                                                }
+                                            }
+                                        </div>
+                        }
 
-                        <button id="pillbutton">Rajasthani(2)</button>
-                        <button id="pillbutton">deserts(2)</button>
-                        <button id="pillbutton">Add item</button><br><br>
-                        <a href="#" id="a-text">Duplicate</a>
-                        <a href="#" id="a-text-1">Publish</a>
+
                     </div>
+                    <div align="right" class="pkgsave">
+                        @if (ViewBag.package.menuitems == null)
+                        {
+                            <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />
+                        }
+                        else
+                        {
+                            <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems.Trim()" />
+                        }
+                        <input type="hidden" class="selpkgitems" />
+                        <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems" />
+                        <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
+                        <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
+                        <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
+                        @if (ViewBag.package.PackageID != 0)
+                        {
+                            <input type="hidden" class="packageid" value="@ViewBag.package.PackageID" />
+                            <a class="updatepkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Update</a>
+                        }
+                        else
+                        {
+                            <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;">Publish</a>
+                        }
+                        <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -282,103 +350,566 @@
             <div class="row policies">
                 <div class="col-md-6"><h6 class="h6-1-1">POLICIES</h6></div>
                 <div class="col-md-6"><button type="button" class="btn btn-danger" style="float:right">Save</button></div>
-                <div id="overflow-scroll">
-                    <table>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Savings</th>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>Griffin</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>Griffin</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>Griffin</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>Griffin</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>Griffin</td>
-                            <td>$100</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>Griffin</td>
-                            <td>$150</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>Swanson</td>
-                            <td>$300</td>
-                        </tr>
+                <div class="row" style="width:100%" id="overflow-scroll">
+                    <table style="width:100%">
+                        @if (ViewBag.policy != null)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Outside_decorators_allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy">
+                                        }
+
+                                    </td>
+                                    <td>Outside Decorators Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Decor_provided == "Yes")
+                                        {
+                                        <input type="checkbox" value="Decor_provided" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Decor_provided" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Decorations provided</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Decorators_allowed_with_royalty == "Yes")
+                                        {
+                                        <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Decorators allowed with royalty</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Food_provided == "Yes")
+                                        {
+                                        <input type="checkbox" value="Food_provided" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Food_provided" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Food provided</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Outside_food_or_caterer_allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy">                                   }
+                                    </td>
+                                    <td>Outside  food or caterer allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.NonVeg_allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="NonVeg_allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="NonVeg_allowed" class="kscpolicy">             }
+                                    </td>
+                                    <td>NonVeg allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Alcohol_allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Alcohol_allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Alcohol_allowed" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Alcohol allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+
+                                        @if (ViewBag.policy.Outside_Alcohol_allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Outside Alcohol allowed</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Valet_Parking == "Yes")
+                                        {
+                                        <input type="checkbox" value="Valet_Parking" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Valet_Parking" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Valet Parking</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Valet_Parking == "Yes")
+                                        {
+                                        <input type="checkbox" value="Parking_Space" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Parking_Space" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Parking Space</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Cancellation == "Yes")
+                                        {
+                                        <input type="checkbox" value="Cancellation" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Cancellation" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Booking Cancellation  accepted</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Available_Rooms == "Yes")
+                                        {
+                                        <input type="checkbox" value="Available_Rooms" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Available_Rooms" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Available Rooms</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Changing_Rooms_AC == "Yes")
+                                        {
+                                        <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Changing Rooms with AC</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Complimentary_Changing_Room == "Yes")
+                                        {
+                                        <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Complimentary Changing Room</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Music_Allowed_Late == "Yes")
+                                        {
+                                        <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Music Allowed Late</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Halls_AC == "Yes")
+                                        {
+                                        <input type="checkbox" value="Halls_AC" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Halls_AC" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Halls AC</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Ample_Parking == "Yes")
+                                        {
+                                        <input type="checkbox" value="Ample_Parking" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Ample_Parking" class="kscpolicy">
+                                        }
+
+                                    </td>
+                                    <td>Ample_Parking</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Baarat_Allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Baarat_Allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Baarat_Allowed" class="kscpolicy">
+                                        }
+
+                                    </td>
+                                    <td>Baarat Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Fire Crackers Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Hawan_Allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Hawan_Allowed" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Hawan Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @if (ViewBag.policy.Overnight_wedding_Allowed == "Yes")
+                                        {
+                                        <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy" checked />
+                                        }
+                                        else
+                                        { <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy">
+                                        }
+                                    </td>
+                                    <td>Overnight wedding Allowed</td>
+                                </tr>
+                            </tbody>
+                        }
+                        else
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Outside_decorators_allowed" class="kscpolicy">
+                                    </td>
+                                    <td>Outside Decorators Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Decor_provided" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Decorations provided</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Decorators_allowed_with_royalty" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Decorators allowed with royalty</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Food_provided" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Food provided</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy" />
+                                    </td>
+                                    <td>Outside  food or caterer allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="NonVeg_allowed" class="kscpolicy" />
+
+                                    </td>
+                                    <td>NonVeg allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Alcohol_allowed" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Alcohol allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Outside_Alcohol_allowed" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Outside Alcohol allowed</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Valet_Parking" class="kscpolicy" />
+
+
+                                    </td>
+                                    <td>Valet Parking</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Parking_Space" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Parking Space</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Cancellation" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Booking Cancellation  accepted</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Available_Rooms" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Available Rooms</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Changing_Rooms_AC" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Changing Rooms with AC</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Complimentary_Changing_Room" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Complimentary Changing Room</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Music_Allowed_Late" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Music Allowed Late</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Halls_AC" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Halls AC</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Ample_Parking" class="kscpolicy" />
+
+
+                                    </td>
+                                    <td>Ample_Parking</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Baarat_Allowed" class="kscpolicy" />
+
+
+                                    </td>
+                                    <td>Baarat Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Fire_Crackers_Allowed" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Fire Crackers Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Hawan_Allowed" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Hawan Allowed</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" value="Overnight_wedding_Allowed" class="kscpolicy" />
+
+                                    </td>
+                                    <td>Overnight wedding Allowed</td>
+                                </tr>
+                            </tbody>
+                        }
                     </table>
                 </div>
             </div>
 
             <div class="row side-content">
+                <div class="col-md-6"><h6 class="h6-1-1">AMENITIES</h6></div>
+                <div class="col-md-6"><button type="button" class="btn btn-danger saveamenities" style="float:right">Save</button></div>
+                <div class="row" style="width:100%" id="overflow-scroll">
+                    <form name="TestForm" method="post" onsubmit="return validateForm()">
+                        <input type="hidden" id="selectedamenities" />
+                        <table>
+                            @if (ViewBag.vid != "" && ViewBag.vid != null)
+                            {
+                                var first = 0; var next = 0;
+                                for (int i = 0; i < ViewBag.amenities.Length; i++)
+                                {
+                                    var count = ViewBag.amenities.Length;
+                                    first = i;
+                                    if (next < count)
+                                    {
+                                        next = ++i;
+                                    }
+                                    <tr>
+                                        <td style="padding-left:0px">
 
-                <div id="overflow-scroll">
-                    <P><i class="fas fa-wifi"><br>WIFI</i></P>
-                    <P><i class="fas fa-shower"><br>SHOWER</i><P>
-                    <P><i class="fas fa-parking"><br>PARKING</i><P>
-                    <P><i class="fas fa-wifi"><br>WIFI</i></P>
-                    <P><i class="fas fa-shower"><br>SHOWER</i><P>
-                    <P><i class="fas fa-parking"><br>PARKING</i><P>
+                                            @if (ViewBag.amenities[first].Split('=')[1].Trim() == "Yes")
+                                            {<input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" checked />}
+                                            else
+                                            { <input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" />}
+                                        </td>
+                                        <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
+                                        <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                        @if (next < count)
+                                        {
+                                            <td style="padding-left:0px">
+                                                @if (ViewBag.amenities[next].Split('=')[1].Trim() == "Yes")
+                                                {<input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" checked />}
+                                                else
+                                                { <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" />}
+                                            </td>
+                                                                <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
+                                                                <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </table>
+
+                    </form>
                 </div>
 
             </div>
 
             <div class="row side-content-2">
-                <h6 class="h6-1-1">Address</h6>
-
-                <input type="text" class="form-control" placeholder="H.no/flat/plot">
-                <input type="text" class="form-control" placeholder="H.no/flat/plot">
+                <div class="col-md-6"><h6 class="h6-1-1">ADDRESS</h6></div>
+                <div class="col-md-6"><button type="button" class="btn btn-danger saveamenities" onclick="updatedetails('three')" style="float:right">Save</button></div>
+                <input type="text" class="form-control" id="hdname" name="hdname" placeholder="Enter Hall Name" value="@ViewBag.service.name">
+                <input type="text" class="form-control" id="Dimentions" name="Dimentions" placeholder="Enter Hall Dimentions(in sft)" value="@ViewBag.service.Dimentions">
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="Street Name" style="margin-left:0">
+                    <input type="text" class="form-control" id="Minimumseatingcapacity" name="Minimumseatingcapacity" placeholder="Min Capacity" value="@ViewBag.service.Minimumseatingcapacity" style="margin-left:0">
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="Area Name" style="margin-left:0">
+                    <input type="text" class="form-control" id="Maximumcapacity" name="Maximumcapacity" placeholder="Max Capacity" value="@ViewBag.service.Maximumcapacity" style="margin-left:0">
                 </div>
             </div>
 
             <div class="row side-content-1">
-                <h6 class="h6-1-1">Add Description</h6>
-                <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+                <div class="col-md-6"><h6 class="h6-1-1">Description</h6></div>
+                <div class="col-md-6"><button type="button" class="btn btn-danger saveamenities" onclick="updatedetails('four')" style="float:right">SAVE</button></div>
+                <textarea class="form-control" rows="3" id="mainDescription" name="mainDescription" placeholder="Start typing your service info...">@ViewBag.service.Description</textarea>
                 <h6 class="h6-1-1">Address</h6>
 
-                <input type="text" class="form-control" placeholder="H.no/flat/plot">
+                <input type="text" class="form-control" id="Address" name="Address" placeholder="Give your Address" value="@ViewBag.service.Address">
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="Street Name" style="margin-left:0">
+                    <input type="text" class="form-control" style="margin-left:0" id="Landmark" name="Landmark" placeholder="What's the Landmark" value="@ViewBag.service.Landmark">
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="Area Name" style="margin-left:0">
+                    <input type="text" class="form-control" style="margin-left:0"  id="City" name="City" placeholder="What's your City" value="@ViewBag.service.City"/>
                 </div>
-                <input type="text" class="form-control" placeholder="Pincode">
+                <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="Type ZipCode" value="@ViewBag.service.ZipCode">
+                @*<div class="col-md-6">
+                    <input type="text" class="form-control" style="margin-left:0" />
+                </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="City" style="margin-left:0">
-                </div>
-                <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="State" style="margin-left:0">
-                </div>
+                    <input type="text" class="form-control" style="margin-left:0" />
+                </div>*@
             </div>
         </div>
     </div>
-}
+    <div id="pkgmodal" class="ui mini test modal" style="max-width:300px;width:100%">
+        <i class="close icon"></i>
+        <div class="header">
+            <input type="text" class="selectedpkg" style="max-width:300px;width:70%;padding:0;margin:0" />Items
+            <text style="font-size:15px">Customer can choose</text> <input class="maxcount" type="number" value="0" style="width:15%;" min="0" />
+        </div>
+        <div class="scrolling content pkgitemsection">
+            <p style="display:none" id="ctype" />
+            <table class="menuitems"></table>
+        </div>
+        <div class="actions">
+            <div class="ui negative button" style="height:40px;">
+                CANCEL
+            </div>
+            <div class="ui positive button add" style="height:40px;">
+                ADD
+            </div>
+        </div>
+    </div>
+    <div id="viewmenuitems" class="ui long writemsg modal">
+        <div class="header" style="background-color:#573791;color:white">
+            <text class="pkgname"></text> - <text class="pkgtype"></text>
+            <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewmenuitems').modal('hide')">Close</button>
+            <br />
+            <div class="row" align="center" id="pkgpricesection">
+                <div class="col-md-3">
+                    <span>Normal Days Price</span>
+                    <span>₹<label id="normaldays"></label></span>
+                </div>
+                <div class="col-md-3">
+                    <span>Peak Days Price&emsp;</span>
+                    <span>₹<label id="peakdays"></label></span>
+                </div>
+                <div class="col-md-3">
+                    <span>Holidays Price&emsp;&emsp;</span>
+                    <span>₹<label id="holidays"></label></span>
+                </div>
+                <div class="col-md-3">
+                    <span>Choice Days Price</span>
+                    <span>₹<label id="choicedays"></label></span>
+                </div>
+            </div>
+        </div>
+        <div class="scrolling content" id="pkgitems">
+        </div>
+    </div>
+                            }
 
-@if (ViewBag.enable == "second")
+@if (ViewBag.enable == "second" || ViewBag.enable == "orders")
 {
     <div class="col-md-10">
         <div class="container-fluid">
@@ -417,176 +948,316 @@
                 </form>
             </div>
 
-            <p>Hall Details</p>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Hall Name</h5>
-                            <hr />
-                            <div align="center">
-                                <table>
-                                    <tr> <td> Hall Type </td> </tr>
-                                    <tr> <td> Hall Dimensions </td> </tr>
-                                    <tr> <td> Seating Capacity </td> </tr>
-                                    <tr> <td> Seating Arrangement </td> </tr>
-                                </table>
+            @if (ViewBag.enable == "second")
+            {
+                <p>HALL DETAILS</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Hall Name</h5>
+                                <hr />
+                                <div align="center">
+                                    <table>
+                                        <tr> <td> Hall Type </td> </tr>
+                                        <tr> <td> Hall Dimensions </td> </tr>
+                                        <tr> <td> Seating Capacity </td> </tr>
+                                        <tr> <td> Seating Arrangement </td> </tr>
+                                    </table>
+                                </div>
+                                <hr />
                             </div>
-                            <hr />
+                            <div align="center" class="divheading">Availability Calendar</div>
+                            <div style="border:1px black solid">
+                                <div class='vendorcalendar'></div>
+                            </div>
+                            <div class="card-body">
+                                <div align="center" class="divheading">Available Packages</div>
+                                <div align="center">
+                                    <table>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div align="center" class="divheading">Availability Calendar</div>
-                        <div style="border:1px black solid">
-                            <div class='vendorcalendar'></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Hall Name</h5>
+                                <hr />
+                                <div align="center">
+                                    <table>
+                                        <tr> <td> Hall Type </td> </tr>
+                                        <tr> <td> Hall Dimensions </td> </tr>
+                                        <tr> <td> Seating Capacity </td> </tr>
+                                        <tr> <td> Seating Arrangement </td> </tr>
+                                    </table>
+                                </div>
+                                <hr />
+                            </div>
+                            <div align="center" class="divheading">Availability Calendar</div>
+                            <div style="border:1px black solid">
+                                <div class='vendorcalendar'></div>
+                            </div>
+                            <div class="card-body">
+                                <div align="center" class="divheading">Available Packages</div>
+                                <div align="center">
+                                    <table>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div align="center" class="divheading">Available Packages</div>
-                            <div align="center">
-                                <table>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                </table>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Hall Name</h5>
+                                <hr />
+                                <div align="center">
+                                    <table>
+                                        <tr> <td> Hall Type </td> </tr>
+                                        <tr> <td> Hall Dimensions </td> </tr>
+                                        <tr> <td> Seating Capacity </td> </tr>
+                                        <tr> <td> Seating Arrangement </td> </tr>
+                                    </table>
+                                </div>
+                                <hr />
+                            </div>
+                            <div align="center" class="divheading">Availability Calendar</div>
+                            <div style="border:1px black solid">
+                                <div class='vendorcalendar'></div>
+                            </div>
+                            <div class="card-body">
+                                <div align="center" class="divheading">Available Packages</div>
+                                <div align="center">
+                                    <table>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:30%"> Package Name </td>
+                                            <td style="width:40%"> Package Price </td>
+                                            <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Hall Name</h5>
-                            <hr />
-                            <div align="center">
-                                <table>
-                                    <tr> <td> Hall Type </td> </tr>
-                                    <tr> <td> Hall Dimensions </td> </tr>
-                                    <tr> <td> Seating Capacity </td> </tr>
-                                    <tr> <td> Seating Arrangement </td> </tr>
-                                </table>
-                            </div>
-                            <hr />
-                        </div>
-                        <div align="center" class="divheading">Availability Calendar</div>
-                        <div style="border:1px black solid">
-                            <div class='vendorcalendar'></div>
-                        </div>
-                        <div class="card-body">
-                            <div align="center" class="divheading">Available Packages</div>
-                            <div align="center">
-                                <table>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+
+                <div class="row" style="padding-top:2%">
+                    <button class="accordion">Today's Events</button>
+                    <div class="panel">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+
+                    <button class="accordion">Tomorrow Events</button>
+                    <div class="panel">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+
+                    <button class="accordion">Upcoming Events</button>
+                    <div class="panel">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Hall Name</h5>
-                            <hr />
-                            <div align="center">
-                                <table>
-                                    <tr> <td> Hall Type </td> </tr>
-                                    <tr> <td> Hall Dimensions </td> </tr>
-                                    <tr> <td> Seating Capacity </td> </tr>
-                                    <tr> <td> Seating Arrangement </td> </tr>
-                                </table>
-                            </div>
-                            <hr />
-                        </div>
-                        <div align="center" class="divheading">Availability Calendar</div>
-                        <div style="border:1px black solid">
-                            <div class='vendorcalendar'></div>
-                        </div>
-                        <div class="card-body">
-                            <div align="center" class="divheading">Available Packages</div>
-                            <div align="center">
-                                <table>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:30%"> Package Name </td>
-                                        <td style="width:40%"> Package Price </td>
-                                        <td style="width:30%"> <button class="btn btn-success">Book Now</button> </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            }
+
+            @if (ViewBag.enable == "orders")
+            {
+                <div class="row">
+                    <div class="col-md-4"><p>ORDERS</p></div>
+                    <div class="col-md-4"><button type="button" class="btn btn-primary" style="float:right">New Order</button></div>
+                    <div class="col-md-4"><input type="text" id="datetimepicker2" class="form-control" placeholder="Select Date Range"></div>
                 </div>
+                <br />
+                <table id="allorders" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Order ID</th>
+                            <th>Event Type</th>
+                            <th>Event Date</th>
+                            <th>Package Name</th>
+                            <th>Total Amount</th>
+                            <th>Balance Due</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var number = 0;
+                            foreach (var orders in ViewBag.order1)
+                            {
+                                <tr class="show_hide_row">
+                                    <td>@(++number)</td>
+                                    <td>@orders.OrderId</td>
+                                    <td>@orders.EventType</td>
+                                    <td>@orders.BookedDate</td>
+                                    <td>@orders.PackageName</td>
+                                    <td>@orders.TotalPrice</td>
+                                    <td>@orders.Due</td>
+                                    <td>@orders.Status</td>
+                                    <td>
+                                        <div class="menu">
+                                            <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                            <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                <div class="four column relaxed divided grid">
+                                                    <div class="column">
+                                                        <div class="link list">
+                                                            <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="hidden_row1" class="hidden_row">
+                                    <td colspan=4>
+                                        <ul>
+                                            <li>Event Type:@orders.EventType</li>
+                                            <li>contact number:@orders.phoneno</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                            }
+                            foreach (var orders in ViewBag.order)
+                            {
+
+                                <tr class="show_hide_row">
+                                    <td>@(++number)</td>
+                                    <td>@orders.OrderId</td>
+                                    <td>@orders.EventType</td>
+                                    <td>@orders.BookedDate</td>
+                                    <td>@orders.PackageName</td>
+                                    <td>@orders.TotalPrice</td>
+                                    <td>@orders.Due</td>
+                                    <td>@orders.Status</td>
+                                    <td>
+                                        <div class="menu">
+                                            <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                            <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                <div class="four column relaxed divided grid">
+                                                    <div class="column">
+                                                        <div class="link list">
+                                                            <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr id="hidden_row1" class="hidden_row">
+                                    <td colspan=4>
+                                        <ul>
+                                            <li>Event Type:@orders.EventType</li>
+                                            <li>contact number:@orders.UserPhone</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                            }
+
+        </div>
+    </div>
+
+    <div id="Querymodel" class="ui standard writemsg modal" style="max-width:500px;width:100%">
+        <div class="header">
+            Write Message To: <text class="custemail"></text>
+        </div>
+        <div class="scrolling content">
+            <textarea placeholder="Start typing your message here....." class="form-control" id="txtmsg" rows="5"></textarea>
+        </div>
+        <div class="actions">
+            <div class="ui negative button" style="height:40px;">
+                CANCEL
             </div>
-
-            <div class="row" style="padding-top:2%">
-                <button class="accordion">Today's Events</button>
-                <div class="panel">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
-
-                <button class="accordion">Tomorrow Events</button>
-                <div class="panel">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
-
-                <button class="accordion">Upcoming Events</button>
-                <div class="panel">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
+            <div class="ui positive button" id="sendmsg" style="height:40px;">
+                SEND
             </div>
         </div>
     </div>
-}
+
+                            }
+
 
 @section scripts{
     @if (ViewBag.enable == "first")
@@ -599,7 +1270,12 @@
                 var childdiv = "<div><div class='package-box'></div><div class='package-list'><button id='pillbutton'>Mocktails(2)</button><button id='pillbutton'>soup(2)</button><button id='pillbutton'>salad(2)</button><button id='pillbutton'>mains(2)</button><button id='pillbutton'>rice&amp;curd(2)</button><button id='pillbutton'>Rajasthani(2)</button><button id='pillbutton'>deserts(2)</button><button id='pillbutton'>Add item</button><br><br><a href='#' id='a-text'>Duplicate</a><a href='#' id='a-text-1'>Publish</a></div></div>";
                 $('#pkgsdiv').append(childdiv);
             });
-            
+
+            $('#@ViewBag.package.Category').prop('checked', true);
+            var list = $('#pkgslots').val();
+            for (var i = 0; i < list.split(',').length; i++) {
+                $('#' + list.split(',')[i].replace(' ', '_') + '').prop('checked', true);
+            }
         </script>
     }
     @if (ViewBag.enable == "second")
@@ -611,6 +1287,37 @@
             });
             //$("#datetimepicker1").datepicker();
             $(".vendorcalendar").datepicker();
+            $('#today,#tomorrow,#upcoming').DataTable();
+        </script>
+    }
+    @if (ViewBag.enable == "orders")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.search-box2').select2({ tags: true });
+                $('#allorders').DataTable();
+            });
+
+            $('.show_hide_row').click(function () {
+                $(this).next('tr#hidden_row1').toggle();
+            });
+
+            $('.menu .browse').popup({
+                inline: true,
+                hoverable: true,
+                position: 'bottom left',
+                delay: {
+                    show: 300,
+                    hide: 800
+                }
+            });
+
+            function orderemail(val) {
+                $('#Querymodel .custemail').text(val);
+                $('#Querymodel #txtmsg').val('');
+                $('#Querymodel').modal('show');
+            }
         </script>
     }
 }
