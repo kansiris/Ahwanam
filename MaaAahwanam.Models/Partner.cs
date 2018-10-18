@@ -18,6 +18,9 @@ namespace MaaAahwanam.Models
         public string emailid { get; set; }
         public string address1 { get; set; }
         public string address2 { get; set; }
+        //public string city { get; set; }
+        //public string state { get; set; }
+        //public string country { get; set; }
         public string cpfname { get; set; }
         public string cplname { get; set; }
         public string cpdesig { get; set; }
