@@ -255,6 +255,67 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.amenities = availableamenities;
         }
 
+        public JsonResult AddSubService(string type, string subcategory, string subid,string id)
+        {
+            var msg = "";
+            long count = updateservice(type, subcategory, long.Parse(id), long.Parse(subid));//addnewservice1(type, subcategory, long.Parse(vid));
+            if (count > 0)
+                msg = "Service Updated Successfully";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+        public long updateservice(string category, string subcategory, long id, long vid)
+        {
+            Vendormaster vendormaster = new Vendormaster();
+            long count = 0;
+            if (category == "Venue")
+            {
+                VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(id, vid);
+                vendorVenue.VendorMasterId = id;
+                vendorVenue.VenueType = subcategory;
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, id, vid);
+                if (vendorVenue.Id != 0) count = vendorVenue.Id;
+            }
+            else if (category == "Catering")
+            {
+                VendorsCatering vendorsCatering = vendorVenueSignUpService.GetParticularVendorCatering(id, vid);
+                vendorsCatering.VendorMasterId = id;
+                vendorsCatering.CuisineType = subcategory;
+                vendorsCatering = vendorVenueSignUpService.UpdateCatering(vendorsCatering, vendormaster, id, vid);
+                if (vendorsCatering.Id != 0) count = vendorsCatering.Id;
+            }
+            else if (category == "Photography")
+            {
+                VendorsPhotography vendorsPhotography = vendorVenueSignUpService.GetParticularVendorPhotography(id, vid);
+                vendorsPhotography.VendorMasterId = id;
+                vendorsPhotography.PhotographyType = subcategory;
+                vendorsPhotography = vendorVenueSignUpService.UpdatePhotography(vendorsPhotography, vendormaster, id, vid);
+                if (vendorsPhotography.Id != 0) count = vendorsPhotography.Id;
+            }
+            else if (category == "Decorator")
+            {
+                VendorsDecorator vendorsDecorator = vendorVenueSignUpService.GetParticularVendorDecorator(id, vid);
+                vendorsDecorator.VendorMasterId = id;
+                vendorsDecorator.DecorationType = subcategory;
+                vendorsDecorator = vendorVenueSignUpService.UpdateDecorator(vendorsDecorator, vendormaster, id, vid);
+                if (vendorsDecorator.Id != 0) count = vendorsDecorator.Id;
+            }
+            else if (category == "Other")
+            {
+                VendorsOther vendorsOther = vendorVenueSignUpService.GetParticularVendorOther(id, vid);
+                vendorsOther.VendorMasterId = id;
+                vendorsOther.MinOrder = "0";
+                vendorsOther.MaxOrder = "0";
+                vendorsOther.Status = "InActive";
+                vendorsOther.UpdatedBy = 2;
+                vendorsOther.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);//Convert.ToDateTime(DateTime.UtcNow.ToShortDateString());
+                vendorsOther.type = subcategory;
+                vendorsOther = vendorVenueSignUpService.UpdateOther(vendorsOther, vendormaster, id, vid);
+                if (vendorsOther.Id != 0) count = vendorsOther.Id;
+            }
+            return count;
+        }
+
         public int AddMenuList(string VendorID, string VendorMasterID)
         {
             PackageMenu packageMenu = new PackageMenu();
