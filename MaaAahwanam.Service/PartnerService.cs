@@ -16,5 +16,12 @@ namespace MaaAahwanam.Service
             partner = partnerrepo.AddPartner(partner);
             return partner;
         }
+        public Partner getPartner(string email)
+        {
+            Partner partner = new Partner();
+
+            partner = partnerrepo.getPartner(email);
+            return partner;
+        }
     }
 }

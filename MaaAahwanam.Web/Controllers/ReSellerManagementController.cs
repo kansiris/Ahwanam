@@ -26,12 +26,15 @@ namespace MaaAahwanam.Web.Controllers
                 string uid = user.UserId.ToString();
                 string vemail = newmanageuse.Getusername(long.Parse(uid));
                 vendorMaster = newmanageuse.GetVendorByEmail(vemail);
-               string VendorId = vendorMaster.Id.ToString();
+                string VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
 
-               ViewBag.package = viewservicesss.getvendorpkgs(VendorId).ToList();
-            }
+                ViewBag.package = viewservicesss.getvendorpkgs(VendorId).ToList();
                 return View();
+            }
+            else {
+                return RedirectToAction("Index", "Home");
+            }
         }
         [HttpPost]
         public JsonResult Index(Partner partner)
@@ -39,7 +42,9 @@ namespace MaaAahwanam.Web.Controllers
             partner.RegisteredDate = DateTime.Now;
             partner.UpdatedDate = DateTime.Now;
             partner = partnerservice.AddPartner(partner);
-            return Json("Sucess", JsonRequestBehavior.AllowGet);
+            var emailid = partner.emailid;
+            var getpartner = partnerservice.getPartner(emailid);
+            return Json(getpartner, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -17,5 +17,13 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return partner;
         }
+        public Partner getPartner(string email)
+        {
+            Partner partner = new Partner();
+            if (email != null)
+                partner = _dbContext.Partner.SingleOrDefault(p => p.emailid == email);
+            return partner;
+           
+        }
     }
 }
