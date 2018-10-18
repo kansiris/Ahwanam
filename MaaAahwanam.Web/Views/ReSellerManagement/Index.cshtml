@@ -22,14 +22,14 @@
         <div class="col-sm-4">
             <div id="card">
                 <div class="card-body">
-                    <div class="row"> 
+                    <div class="row">
                         <div class="col-md-8">
                             <h5 class="card-title">Business Details</h5>
-                            </div>
+                        </div>
                         <div class="col-md-4">
                             <button class="btn btn-primary btn-sm" id="btnbusiness">Save</button>
-                            </div>
                         </div>
+                    </div>
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="md-form form-sm mt-0">
@@ -103,7 +103,7 @@
 
                             </div>
                         </div>
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -209,7 +209,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-6">
-                            <div class="md-form form-sm mt-0"> 
+                            <div class="md-form form-sm mt-0">
                                 <input type="text" id="accholdername" class="form-control mr-sm-3">
                                 <label for="accholdername">A/C Holder Name</label>
                             </div>
@@ -218,7 +218,7 @@
                             <div class="md-form form-sm mt-0">
                                 <input type="text" id="ifsccode" class="form-control mr-sm-3">
                                 <label for="ifsccode">IFSC CODE</label>
-                                
+
 
                             </div>
                         </div>
@@ -237,8 +237,8 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="white-wrapper">
-            <div class="row mx-0">
+        @*<div class="">*@
+            <div class=" white-wrapper row mx-0">
                 <div class="col-md-12 col-sm-6">
                     <table class="table table" id="table-text">
                         <thead>
@@ -265,145 +265,158 @@
                     </table>
                 </div>
             </div>
-        </div>
+        @*</div>*@
         @foreach (var item in ViewBag.package)
         {
             <div class="accordion mt-2">
-                Package Prices <span id="span-package-1">@item.PackageName</span>
+                <div class="row">
+                    <div class="col-xs-6 col-md-2 col-sm-3">
+                        <span>Packages Price</span>
+                    </div>
+                    <div class="col-xs-3 col-md-3 col-sm-3">
+                        <span id="span-package-1">@item.PackageName</span>
+                    </div>
+                    <div class="col-xs-6  col-md-5 col-sm-3">
+                        <table id="prices-accordion">
+                            <tbody>
+                                <tr>
+                                    <td>₹@item.normaldays</td>
+                                    <td>₹@item.peakdays</td>
+                                    <td>₹@item.holidays </td>
+                                    <td>₹@item.choicedays </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
+                                        <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
+                                        <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
+                                        <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
+                                        <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="price" value="10%"></td>
+                                    <td><input type="text" class="price" value="10%"></td>
+                                    <td><input type="text" class="price" value="10%"></td>
+                                    <td><input type="text" class="price" value="10%"></td>
+                                </tr>
 
-                <table id="prices-accordion">
-                    <tbody>
-                        <tr>
-                            <td>₹@item.normaldays</td>
-                            <td>₹@item.peakdays</td>
-                            <td>₹@item.holidays </td>
-                            <td>₹@item.choicedays </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
-                                <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
-                            </td>
-                            <td>
-                                <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
-                                <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
-                            </td>
-                            <td>
-                                <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
-                                <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
-                            </td>
-                            <td>
-                                <input type="radio" name="type" id="radio1" value="commission" checked> commission <br>
-                                <input type="radio" name="type" id="radio2" value="slab/Flat rate"> slab/Flat rate
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="price" value="10%"></td>
-                            <td><input type="text" class="price" value="10%"></td>
-                            <td><input type="text" class="price" value="10%"></td>
-                            <td><input type="text" class="price" value="10%"></td>
-                        </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary btn-sm" style="float:right">Save</button>
 
-                    </tbody>
-                </table>
-            </div>
-        }
-        
-    </div>
+                    </div>
+                        <div class="col-xs-6  col-md-2 col-sm-3">
+                            <input type="text" style="width:80%" />
+</div>
+                    </div>
+                </div>
+    }
+
+</div>
 </div>
 
 
-        <!-- JQuery -->
-        @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
-        <script src="~/newdesignstyles/MDB-Free_4.5.12/js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap tooltips -->
-        <script src="~/newdesignstyles/MDB-Free_4.5.12/js/popper.min.js"></script>
-        @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>*@
-        <!-- Bootstrap core JavaScript -->
-        <script src="~/newdesignstyles/MDB-Free_4.5.12/js/bootstrap.min.js"></script>
-        @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>*@
-        <!-- MDB core JavaScript -->
-        <script src="~/newdesignstyles/MDB-Free_4.5.12/js/mdb.min.js"></script>
-        @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.11/js/mdb.min.js"></script>*@
+<!-- JQuery -->
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+<script src="~/newdesignstyles/MDB-Free_4.5.12/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script src="~/newdesignstyles/MDB-Free_4.5.12/js/popper.min.js"></script>
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>*@
+<!-- Bootstrap core JavaScript -->
+<script src="~/newdesignstyles/MDB-Free_4.5.12/js/bootstrap.min.js"></script>
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>*@
+<!-- MDB core JavaScript -->
+<script src="~/newdesignstyles/MDB-Free_4.5.12/js/mdb.min.js"></script>
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.11/js/mdb.min.js"></script>*@
 
-<script>
-var acc = document.getElementsByClassName("accordion");
-var i;
+@*<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
 
-for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var panel = this.nextElementSibling;
-        if (panel.style.display === "block") {
-            panel.style.display = "none";
-        } else {
-            panel.style.display = "block";
-        }
-    });
-}
-</script>
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+    </script>*@
 
 <script type="text/javascript">
-    	$("#addpackage").click(function(){
-    		 var div = document.getElementById("pkgsdiv");     //$(this).parent("div").next("div#pkgsdiv");
-    		var childdiv = "<div><div class='package-box'></div><div class='package-list'><button id='pillbutton'>Mocktails(2)</button><button id='pillbutton'>soup(2)</button><button id='pillbutton'>salad(2)</button><button id='pillbutton'>mains(2)</button><button id='pillbutton'>rice&amp;curd(2)</button><button id='pillbutton'>Rajasthani(2)</button><button id='pillbutton'>deserts(2)</button><button id='pillbutton'>Add item</button><br><br><a href='#' id='a-text'>Duplicate</a><a href='#' id='a-text-1'>Publish</a></div></div>";
-    		//alert(childdiv);
-    		//div.appendChild(childdiv);
+    $("#addpackage").click(function () {
+        var div = document.getElementById("pkgsdiv");     //$(this).parent("div").next("div#pkgsdiv");
+        var childdiv = "<div><div class='package-box'></div><div class='package-list'><button id='pillbutton'>Mocktails(2)</button><button id='pillbutton'>soup(2)</button><button id='pillbutton'>salad(2)</button><button id='pillbutton'>mains(2)</button><button id='pillbutton'>rice&amp;curd(2)</button><button id='pillbutton'>Rajasthani(2)</button><button id='pillbutton'>deserts(2)</button><button id='pillbutton'>Add item</button><br><br><a href='#' id='a-text'>Duplicate</a><a href='#' id='a-text-1'>Publish</a></div></div>";
+        //alert(childdiv);
+        //div.appendChild(childdiv);
 
-    		//div.children().last().append(childdiv);
-    		//alert(div.last().attr("class"));
-    		$('#pkgsdiv').append(childdiv);
-    		//childdiv.appendTo("#pkgsdiv");
-    		//return
-    	});
-      $(document).ready(function () {
-
-    var navListItems = $('div.setup-panel div a'),
-        allWells = $('.setup-content'),
-        allNextBtn = $('.nextBtn');
-
-    allWells.hide();
-
-    navListItems.click(function (e) {
-        e.preventDefault();
-        var $target = $($(this).attr('href')),
-            $item = $(this);
-
-        if (!$item.hasClass('disabled')) {
-            navListItems.removeClass('btn-success').addClass('btn-default');
-            $item.addClass('btn-success');
-            allWells.hide();
-            $target.show();
-            $target.find('input:eq(0)').focus();
-        }
+        //div.children().last().append(childdiv);
+        //alert(div.last().attr("class"));
+        $('#pkgsdiv').append(childdiv);
+        //childdiv.appendTo("#pkgsdiv");
+        //return
     });
+    $(document).ready(function () {
 
-    allNextBtn.click(function () {
-        var curStep = $(this).closest(".setup-content"),
-            curStepBtn = curStep.attr("id"),
-            nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-            curInputs = curStep.find("input[type='text'],input[type='url']"),
-            isValid = true;
+        var navListItems = $('div.setup-panel div a'),
+            allWells = $('.setup-content'),
+            allNextBtn = $('.nextBtn');
 
-        $(".form-group").removeClass("has-error");
-        for (var i = 0; i < curInputs.length; i++) {
-            if (!curInputs[i].validity.valid) {
-                isValid = false;
-                $(curInputs[i]).closest(".form-group").addClass("has-error");
+        allWells.hide();
+
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this);
+
+            if (!$item.hasClass('disabled')) {
+                navListItems.removeClass('btn-success').addClass('btn-default');
+                $item.addClass('btn-success');
+                allWells.hide();
+                $target.show();
+                $target.find('input:eq(0)').focus();
             }
-        }
+        });
 
-        if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
+        allNextBtn.click(function () {
+            var curStep = $(this).closest(".setup-content"),
+                curStepBtn = curStep.attr("id"),
+                nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+                curInputs = curStep.find("input[type='text'],input[type='url']"),
+                isValid = true;
+
+            $(".form-group").removeClass("has-error");
+            for (var i = 0; i < curInputs.length; i++) {
+                if (!curInputs[i].validity.valid) {
+                    isValid = false;
+                    $(curInputs[i]).closest(".form-group").addClass("has-error");
+                }
+            }
+
+            if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
+        });
+
+        $('div.setup-panel div a.btn-success').trigger('click');
     });
-
-    $('div.setup-panel div a.btn-success').trigger('click');
-});
 </script>
 <script>
     $('#btnbusiness').click(function () {
         var vendorid = $('#VendorId').val();
         var partner = {
-            VendorId:$('#VendorId').val(),
+            VendorId: $('#VendorId').val(),
             VendorType: $('#BusinessName').val(),
             url: $('#url').val(),
             phoneno: $('#PhoneNumber').val(),
@@ -421,8 +434,8 @@ for (i = 0; i < acc.length; i++) {
                 alert(data);
             },
             error: function (data) {
-            alert("save is failed");
-        }
+                alert("save is failed");
+            }
         })
     })
 </script>

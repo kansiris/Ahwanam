@@ -851,7 +851,7 @@ namespace MaaAahwanam.Web.Controllers
                 var select1 = select.Split(',');
 
                 ViewBag.loc = select1[0];
-                ViewBag.guests = select1[1];
+              var guest =  ViewBag.guests = select1[1];
                 ViewBag.eventtype = select1[2];
                 var pkgs = packageid.Split(',');
                 var date1 = date.Trim(',').Split(',');
@@ -869,8 +869,9 @@ namespace MaaAahwanam.Web.Controllers
                     data.timeslot = timeslot1[i].Split('~')[0];
                     package.Add(data);
                 }
+                var tot = tprice * Convert.ToInt32(guest);
                 ViewBag.package = package;
-                ViewBag.tprice = tprice;
+                ViewBag.tprice = tot;
 
                 //DateTime date = Convert.ToDateTime(select1[2]);
                 //string date1 = date.ToString("dd-MM-yyyy");
