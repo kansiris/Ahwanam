@@ -339,79 +339,9 @@
 <script src="~/newdesignstyles/MDB-Free_4.5.12/js/mdb.min.js"></script>
 @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.11/js/mdb.min.js"></script>*@
 
-@*<script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        });
-    }
-    </script>*@
 
-<script type="text/javascript">
-    $("#addpackage").click(function () {
-        var div = document.getElementById("pkgsdiv");     //$(this).parent("div").next("div#pkgsdiv");
-        var childdiv = "<div><div class='package-box'></div><div class='package-list'><button id='pillbutton'>Mocktails(2)</button><button id='pillbutton'>soup(2)</button><button id='pillbutton'>salad(2)</button><button id='pillbutton'>mains(2)</button><button id='pillbutton'>rice&amp;curd(2)</button><button id='pillbutton'>Rajasthani(2)</button><button id='pillbutton'>deserts(2)</button><button id='pillbutton'>Add item</button><br><br><a href='#' id='a-text'>Duplicate</a><a href='#' id='a-text-1'>Publish</a></div></div>";
-        //alert(childdiv);
-        //div.appendChild(childdiv);
 
-        //div.children().last().append(childdiv);
-        //alert(div.last().attr("class"));
-        $('#pkgsdiv').append(childdiv);
-        //childdiv.appendTo("#pkgsdiv");
-        //return
-    });
-    $(document).ready(function () {
-
-        var navListItems = $('div.setup-panel div a'),
-            allWells = $('.setup-content'),
-            allNextBtn = $('.nextBtn');
-
-        allWells.hide();
-
-        navListItems.click(function (e) {
-            e.preventDefault();
-            var $target = $($(this).attr('href')),
-                $item = $(this);
-
-            if (!$item.hasClass('disabled')) {
-                navListItems.removeClass('btn-success').addClass('btn-default');
-                $item.addClass('btn-success');
-                allWells.hide();
-                $target.show();
-                $target.find('input:eq(0)').focus();
-            }
-        });
-
-        allNextBtn.click(function () {
-            var curStep = $(this).closest(".setup-content"),
-                curStepBtn = curStep.attr("id"),
-                nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-                curInputs = curStep.find("input[type='text'],input[type='url']"),
-                isValid = true;
-
-            $(".form-group").removeClass("has-error");
-            for (var i = 0; i < curInputs.length; i++) {
-                if (!curInputs[i].validity.valid) {
-                    isValid = false;
-                    $(curInputs[i]).closest(".form-group").addClass("has-error");
-                }
-            }
-
-            if (isValid) nextStepWizard.removeAttr('disabled').trigger('click');
-        });
-
-        $('div.setup-panel div a.btn-success').trigger('click');
-    });
-</script>
 <script>
     $('#btnbusiness').click(function () {
         var vendorid = $('#VendorId').val();
@@ -431,7 +361,10 @@
             data: JSON.stringify({ partner: partner }),
             contentType: 'application/json',
             success: function (data) {
-                alert(data);
+                if (data != null) {
+                    alert("save is successfully");
+                }
+                else { alert("save is failed"); }
             },
             error: function (data) {
                 alert("save is failed");
