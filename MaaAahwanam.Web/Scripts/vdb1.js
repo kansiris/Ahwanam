@@ -13,7 +13,7 @@ $(document).ready(function () {
 $('#selectedservice').on('change', function () {
     var subcategory1 = $(this).val();
     $.ajax({
-        url: '/VDashboard/AddSubService?type=' + category + '&&subcategory=' + subcategory1 + '&&subid=' + subid,
+        url: '/vdb/AddSubService?type=' + category + '&&subcategory=' + subcategory1 + '&&subid=' + subid + '&&id=' + id,
         type: 'post',
         contentType: 'application-json',
         success: function (data) {
