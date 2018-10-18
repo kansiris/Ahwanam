@@ -25,5 +25,17 @@ namespace MaaAahwanam.Repository.db
             return partner;
            
         }
+        public Partner UpdatePartner(Partner partner,long partid)
+        {
+            var partner1 = _dbContext.Partner.Where(m => m.PartnerID == partid).FirstOrDefault();
+
+            //var partner1 = _dbContext.Partner.SingleOrDefault(v => v.PartnerID == long.Parse(partid));
+            //partner.PartnerID = partner1.PartnerID;
+            //partner.VendorId = partner1.VendorId;
+            //partner.RegisteredDate = partner1.RegisteredDate;
+            _dbContext.Entry(partner1).CurrentValues.SetValues(partner);
+            _dbContext.SaveChanges();
+            return partner1;
+        }
     }
 }

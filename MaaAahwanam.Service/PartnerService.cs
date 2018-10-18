@@ -23,5 +23,9 @@ namespace MaaAahwanam.Service
             partner = partnerrepo.getPartner(email);
             return partner;
         }
+        public Partner UpdatePartner(Partner partner,string partid)
+        {
+            return partnerrepo.UpdatePartner(partner, long.Parse(partid));
+        }
     }
 }
