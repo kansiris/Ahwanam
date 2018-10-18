@@ -3,6 +3,61 @@ var subcategory = $('#subcategory').val();
 var subid = $('#vendorsubid').val();
 var id = $('#vendorid').val();
 
+//Profile Pic Section
+$('#spc').on('click', function () {
+    $('#profileimage').click();
+});
+
+$('#profileimage').change(function () {
+    var ext = $('#profileimage').val().split('.').pop().toLowerCase();
+    if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+        alert('Invalid File Type');
+    }
+    else {
+        var data = new FormData();
+        var files = $("#profileimage").get(0).files;
+        if (files.length > 0) {
+            data.append("helpSectionImages", files[0]);
+        }
+        $.ajax({
+            url: '/vdb/UploadProfilePic',
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $('#profilepic1').removeAttr('src');
+                $('#profilepic1').attr('src', '/ProfilePictures/' + response + '');
+                //var url = '/vdashboard/profilepic';
+                //$('#profilepipccontent').empty().load(url);
+            }
+        });
+    }
+});
+
+// Add/Update Services Section
+$(document).on('click', '.subcatclose', function () {
+    var val1 = $(this).attr('value').split(',');
+    var text = val1[1];
+    var vsid = val1[0];
+    var type = val1[3];
+    var r = confirm("Do you want to delete" + text);
+    if (r == true) {
+        $.ajax({
+            url: '/vdb/deleteservice?vsid=' + vsid + '&&type=' + type,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (result) {
+                if (result = 'success') {
+                    alert("service removed");
+                } else { alert("error occured"); }
+                var url1 = document.referrer;
+                window.location.href = url1;
+            },
+        })
+    }
+});
+
 // Dropdown Change
 $(document).ready(function () {
     if (subcategory != null && subcategory != "") {
@@ -80,6 +135,41 @@ function SaveImages(thisimage,subid,id,type) {
         }
     });
 }
+
+//Policy Section
+$("#savepolicy").click(function () {
+    var policycheck;
+    var chkArray = [];
+    $(".kscpolicy:checked").each(function () {
+        chkArray.push($(this).val());
+        var selected;
+        selected = chkArray.join(',');
+        /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+        if (selected.length > 0) {
+            //  alert("You have selected " + selected);
+            policycheck = selected;
+        } else {
+            alert("Please at least check one of the checkbox");
+        }
+    });
+    var Tax = $("#Tax").val();
+    var Decoration_starting_costs = $("#Decoration_starting_costs").val();
+    var Rooms_Count = $("#Rooms_Count").val();
+    var Advance_Amount = $("#Advance_Amount").val();
+    var Room_Average_Price = $("#Room_Average_Price").val();
+    $.ajax({
+        url: '/vdb/updatepolicy?policycheck=' + policycheck + '&&id=' + id + '&&vid=' + subid + '&&Tax=' + Tax + '&&Decoration_starting_costs=' + Decoration_starting_costs + '&&Rooms_Count=' + Rooms_Count + '&&Advance_Amount=' + Advance_Amount + '&&Room_Average_Price=' + Room_Average_Price,
+        type: 'post',
+        contentType: 'application-json',
+        success: function (data) {
+            alert(data);
+        },
+        error: function (er) {
+            alert("System Encountered Internal Error!!! Try Again After Some Time");
+        }
+    });
+
+})
 
 //Amenities Section
 var validateForm = function () {
