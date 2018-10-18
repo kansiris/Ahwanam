@@ -157,6 +157,7 @@ namespace MaaAahwanam.Web.Controllers
             return Content("<script>alert('Session Timeout!!! Please Login'); location.href='/home'</script>");
         }
 
+        #region Partial Views
         public ActionResult profilepic()
         {
             long id = GetVendorID();
@@ -184,6 +185,9 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Content("<script>alert('Session Timeout!!! Please Login'); location.href='/home'</script>");
         }
+        #endregion
+
+        #region References
 
         public void Amenities(List<VendorVenue> venues)
         {
@@ -255,15 +259,6 @@ namespace MaaAahwanam.Web.Controllers
             ViewBag.amenities = availableamenities;
         }
 
-        public JsonResult AddSubService(string type, string subcategory, string subid,string id)
-        {
-            var msg = "";
-            long count = updateservice(type, subcategory, long.Parse(id), long.Parse(subid));//addnewservice1(type, subcategory, long.Parse(vid));
-            if (count > 0)
-                msg = "Service Updated Successfully";
-            return Json(msg, JsonRequestBehavior.AllowGet);
-        }
-
         public long updateservice(string category, string subcategory, long id, long vid)
         {
             Vendormaster vendormaster = new Vendormaster();
@@ -316,8 +311,68 @@ namespace MaaAahwanam.Web.Controllers
             return count;
         }
 
+        public int AddMenuList(string VendorID, string VendorMasterID)
+        {
+            PackageMenu packageMenu = new PackageMenu();
+            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
+            //Adding Veg Menu
+            packageMenu.VendorID = VendorID;
+            packageMenu.VendorMasterID = VendorMasterID;
+            packageMenu.Category = "Veg";
+            packageMenu.Welcome_Drinks = "Hot Badam Milk!Cold Badam Milk!Mosambi Juice!Pineapple Juice!Water Melon!Black Grape!Orange Juice!Apple Juice!Fruit Juice!Lychee Punch!Mango Blossom!Orange Blossom!Sweet Lassi!Salted Lassi!Pink Lady!Strawberry Surprise!Kiwi Kiss!Passion Punch!Blue Passion!Misty Mint!Virgin Mojito!200 ML Water Bottle (Branded)!Tea or Coffee!Any Soft Drinks (Branded)";
+            packageMenu.Starters = "Gold Coin!Alu 65!Gobi 65!Babycorn 65!Veg. Manchurian!Paneer Manchurian!Gobi Manchurian!Pepper Gobi!Corn Kernel!Boiled Corn!Babycorn Pakoda!Babycorn Manchurian!Capsicum Rings!Onion Rings!Cheese Ball!Boiled Pally!Masala Pally!Chana Roast!Mirchi Bajji!Cut Mirchi!Moongdal Pakoda!Alu Bonda!Minapa Garelu!Paneer Tikka!Paneer Stick!Veg. Stick!Harabara Tikka!Masala Tikka!Dragon Roll!Paneer Roll!Cheese Roll!Veg. Bullet!Alu Samosa!Irani Samosa!Veg. Spring Roll!Cocktail Samosa!Moongdal Pakoda!Corn Pakoda!Finger Paneer!Crispy Babycorn!Crispy Veg.!Smilies!French Fries!Babycorn Golden Fry!Veg. Seekh Kabab!Palak Makkai Kabab";
+            packageMenu.Rice = "Veg Fried Rice!Mongolian Rice!Shezwan Rice!Singapore Noodles!Hot Garlic Sauce!American Chopsuey!Veg Dumpling!Veg Chow Chow!Veg Manchurian (Wt)!Thai Veg (Wet.)!Chilli Veg (Wet)!Chilli Paneer!Chilli Baby corn!Gobi Manchurian!Veg Biryani!Tomato Rice!emon Rice!White Rice!Bagara Rice!Curd Rice!Veg Biryani!Veg Pulav!Peas Pulav!Malai Koftha!Diwani Handi!Mushroom Kaju!unakkaya Kaju!Mirch Ka Saalan!Bagara Baingan!Capsicum Masala!Tomato Masala!Mirchi Tomato Masala!Dondakaya Masala!Sorakaya Masala!Beerakaya Masala!Mealmaker Masala!Rajma Masala!Chole Masala!hendi Masala!Palak Koftha Curry!kaddu Koftha Curry!Chama Gadda Pulusu!Gumadikaya Pulusu!Bendakaya Pulusu!Kakarkaya Pulusu!Beerakaya Alsandalu!eera Kaya Methi!beera kaya Boondi!Alu Palak!Capsicum Tomata Masala!na Palak!Chikkudukaya Alu!Vankaya Alu!Vankaya Alu Tomato!Dosakaya Tomato!lu Gobi Kurma!Alu Mutter!Mixed Veg Kurma!Gangavali Tomato";
+            packageMenu.Bread = "Naan!Butter Naan!Garlic Naan!Tandoor Roti!Jawar Roti!Paratha!Sheermal!Pulkha!Aloo Paratha!Methi Paratha!Mooli Paratha!Makki ki roti!Kulcha";
+            packageMenu.Curries = "Paneer Butter Masala!Paneer Tikka Masala!Paneer Babycorn Masala!Paneer Capsicum!Paneer Chatpata!Paneer Do Pyasa!Bhendi Do Pyasa!Hariyali Paneer!Khaju Paneer!Methi Chaman!Achari Veg.!Palak Paneer!Kadai Paneer!Navratan Kurma!Paneer Shahi Kurma!Veg Chatpata!Veg Kolhapur!Corn Palak!Chum Alu!Tawa Vegetable!Babycorn Do Pyaza!Koftha Palak!Veg. Jaipuri";
+            packageMenu.Fry_Dry = "Alu Methi Fry!Alu Gobi Fry!Alu Capsicum Fry!Chikkudukaya Alu Fry!Jeera Aloo Fry!Bendi Pakoda Fry!Bendi Kaju Fry!Jaipur Bendi!Chat Pat bendi!Kanda kaju Fry!Donda kaju Fry!Aratikaya Fry!Chamagadda Fry!Beans Coconut Fry!Kakarakaya Fry!Chikkudukaya Fry!Cabbage Coconut Fry!Nutrilla Kaju Fry!Guthivankaya Fry!Mixed Vegetable Fry!Vankaya Pakoda!Dondakaya Pakoda!Veg. Dalcha!Munakkaya Charu!Tomato Charu!Ulawa Charu!Bendakaya Charu!omato Rasam!Miryala Rasam!Pachi Pulusu!Majjiga Pulusu!Kadi Pakoda!Dosa Avakaya!Gobi Avakaya!onda Avakaya!Mango Avakaya!Lime Pickle!Mixed Veg.Pickle!Gongoora Pickle!ongoora Chutney!Tomata Chutney!Cabbage Chutney!Carrot Chutney!Beerakaya Chutney!Kandi Podi!coconut Chutney!Nallakaram Podi!Putnaala Podi!Kariyepak Podi!Nuvvula Karram!Ellipaya Kaaram!Allam Chutney!Pudina Chutney!Chukka Kura Chutney!Kothimeera Chuyney!Kobbari Kaaram Podi!Pudina Coconut Chutney!Mango Coconut Chutney!Vankaya Dosakaya Chutney";
+            packageMenu.Salads = "Carrot Salad!Green Salad!Ceaser Salad!Barley Salad!Sprouts Salad!Onion Salad!Green Bean Salad!Leafy Salad with nuts!Lintel SaladTomato Soup!Tomato Shorba!Veg. Corn Soup!Coriander Soup!Hot & Sour Soup!Sweetcorn Soup";
+            packageMenu.Soups = "Tomato Soup!Tomato Shorba!Veg. Corn Soup!Coriander Soup!Hot & Sour Soup!Sweetcorn Soup";
+            packageMenu.Deserts = "Vanilla!Strawberry!Chocolate!Mango!Butter Scotch!Seethapal!Choco chips!Pista!Cassata!Kulfi Sticks!Cake Ice Cream!Trifle Pudding!Asmar Cream!Zouceshani!cold Stone!chocobar Stick!King Cone Chocolate!King Cone Butter Scotch!Matka Kulfi!Roller Ice Cream!Jhangri!Khova Burf!Malai Roll!Green Guava!Sweet Tamarind!Black Grapes!Australian Grapes";
+            packageMenu.Beverages = "Mini Orange!Rambutan!Dragon Fruit!Mango Steam!Cherry!Water bottle!Choclate coffee!Coffee!Tea!Soft drinks!Cuppuccino!Lata";
+            packageMenu.Fruits = "Apple!Lichi!Dates!Pears!Sapota!Grapes!Peaches!Thailand!Orange!Anjeer!Guava!Plums!Kiwi!Pineapple!Papaya!Water Melon!Musk Melon!pomegranate!Mango!Fuji Apple!Strawberry!Red Guava";
+            // Saving Veg Menu
+            int count = vendorDashBoardService.AddVegMenu(packageMenu);
+            // Non-Veg Menu
+            packageMenu.Category = "NonVeg";
+            packageMenu.Starters = "Chicken 65!Spicy Wings!Chicken Manchurian!Chicken Lollypop!Chicken Tikka!Chicken Satay!Murg Malai Kabab!Chicken Garlic Kabab!Chicken Pahadi Kabab!Chicken Reshmi Kabab!Chicken Hariyali Kabab!Chicken Majestic!Chicken Nuggets!Shezwan Chicken!Chicken Pakoda!Pepper Chicken!Popcorn Chicken!Chilli Chicken!Loose Chilli Prawns!Golden Fried Prawns!Pepper Prawns!Chilli Prawns!Prawn Pakoda!Royyala Vepudu!Garlic Prawns!Prawns Iguru!Finger Fish!Apollo Fish!Fried Fish!Chilly Fish!Fish Tikka!Fish Fry (Murrel With Bone)!Fish Amrithsari!Tawa Fish Bone (Murrel)!Tawa Fish Boneless (Murrel)!Crab Wray Bheemavaram!Crab lguru";
+            packageMenu.Rice = "Hyderabad Mutton Biryani!Mutton Sofiyani Biryani!Hyderabad Chicken Biryani!Chicken Sofiyani Biryani!Chicken Pulav!Prawns Pulav!Egg Biryani!Mixed Fried Rice!Egg Fried Rice!Egg Fried Rice!Chicken Fried Rice!Mixed Fried Rice!American Chopsoy (Non-Veg)!Chilly Chicken Wet!Chicken Manchurian Wet!Shezwan Chicken Wet!Garlic Chicken (Dry & Wet)";
+            packageMenu.Curries = "Dhumka Chicken!Methi Chicken!Chilli Chicken!Ginger Chicken!Gongoora Chicken!Moghalai Chicken!Hariyali Chicken!Ankapur Country Chicken!Butter Chicken!Chicken Masala!Chilly Chicken Wet(Chinese)!Chicken Manchurian Wet!Chicken Diwani Handi!Mutton Curry!Moghalai Mutton!utton Pasinda!Mutton Kali Mirchi!Mutton Roganjosh!Dhum-ka- Bakra!utton Raan!ongoora Maamsam!Chukkakura Maamsam!Palak Mutton!iver Fry!Kidney Fry!okkala Charu!Mutton Dalcha!Boti Dhalcha!Thalakaya Kura!Keema Methi!Keema Palak!Keema Batana!eema Koftha Curry!Paya!Haleem!Butter Chicken!Anda Bhurji!Sarson KA Saag!Makki Ki Roti!Amritsari Kulcha!Punjabi Chole!Dal Makhni!akoda Khadi!Dal Fry!Labadar Paneer!Dal Tadka";
+            packageMenu.Fry_Dry = "Boti Fry!Kidney Fry!Keema Shikhampuri!Mutton Boti Kabab!Mutton Seekh Kabab!Mutton Shami Kabab!Mutton Chops!Kheema Lukmi!Keema Balls!Liver Fry!Pathar ka Ghosh!Liver Kidney Fry!Mutton Fry (Telangana Style)";
+            packageMenu.Soups = "Chicken Hot & Sour Soup!Paya Shorba!Badami Murg Shorba!Morag Soup!Wanton soup!Chicken clear soup!Canton soup!Chicken noodle soup!Chicken cream soup!Egg drop soup";
+            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
+            //Saving Non-Veg Menu
+            count = vendorDashBoardService.AddNonVegMenu(packageMenu);
+            return count;
+        }
+
+        public long GetVendorID()
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string id = user.UserId.ToString();
+                string email = userLoginDetailsService.Getusername(long.Parse(id));
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                return vendorMaster.Id;
+            }
+            return 0;
+        }
+
+        #endregion
+
+        #region Saving/Adding
+
+        public JsonResult AddSubService(string type, string subcategory, string subid, string id)
+        {
+            var msg = "";
+            long count = updateservice(type, subcategory, long.Parse(id), long.Parse(subid));//addnewservice1(type, subcategory, long.Parse(vid));
+            if (count > 0)
+                msg = "Service Updated Successfully";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
-        public JsonResult UploadImages(HttpPostedFileBase helpSectionImages, string vid,string id,string type)
+        public JsonResult UploadImages(HttpPostedFileBase helpSectionImages, string vid, string id, string type)
         {
             string fileName = string.Empty;
             string filename = string.Empty;
@@ -361,7 +416,32 @@ namespace MaaAahwanam.Web.Controllers
             return Json(filename, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateAmenities(string selectedamenities,string id, string vid, string command, string hdname, string Dimentions, string Minimumseatingcapacity, string Maximumcapacity, string Description, string Address, string Landmark, string City, string ZipCode)
+        public JsonResult UploadProfilePic(HttpPostedFileBase helpSectionImages)
+        {
+            string fileName = string.Empty;
+            string filename = string.Empty;
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+                var userdet = userLoginDetailsService.GetUserId(Convert.ToInt32(user.UserId));
+                string email = userdet.UserName;
+                string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+                filename = email + path;
+                fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"/ProfilePictures/" + filename));
+                if (System.IO.File.Exists(fileName) == true)
+                    System.IO.File.Delete(fileName);
+
+                helpSectionImages.SaveAs(fileName);
+                userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
+            }
+            return Json(filename, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Updating
+
+        public JsonResult UpdateAmenities(string selectedamenities, string id, string vid, string command, string hdname, string Dimentions, string Minimumseatingcapacity, string Maximumcapacity, string Description, string Address, string Landmark, string City, string ZipCode)
         {
             Vendormaster vendormaster = new Vendormaster();
             VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid)); // Retrieving Particular Vendor Record
@@ -454,51 +534,77 @@ namespace MaaAahwanam.Web.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public int AddMenuList(string VendorID, string VendorMasterID)
+        public JsonResult updatepolicy(string policycheck, string id, string vid, string Tax, string Decoration_starting_costs, string Rooms_Count, string Advance_Amount, string Room_Average_Price)
         {
-            PackageMenu packageMenu = new PackageMenu();
-            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
-            //Adding Veg Menu
-            packageMenu.VendorID = VendorID;
-            packageMenu.VendorMasterID = VendorMasterID;
-            packageMenu.Category = "Veg";
-            packageMenu.Welcome_Drinks = "Hot Badam Milk!Cold Badam Milk!Mosambi Juice!Pineapple Juice!Water Melon!Black Grape!Orange Juice!Apple Juice!Fruit Juice!Lychee Punch!Mango Blossom!Orange Blossom!Sweet Lassi!Salted Lassi!Pink Lady!Strawberry Surprise!Kiwi Kiss!Passion Punch!Blue Passion!Misty Mint!Virgin Mojito!200 ML Water Bottle (Branded)!Tea or Coffee!Any Soft Drinks (Branded)";
-            packageMenu.Starters = "Gold Coin!Alu 65!Gobi 65!Babycorn 65!Veg. Manchurian!Paneer Manchurian!Gobi Manchurian!Pepper Gobi!Corn Kernel!Boiled Corn!Babycorn Pakoda!Babycorn Manchurian!Capsicum Rings!Onion Rings!Cheese Ball!Boiled Pally!Masala Pally!Chana Roast!Mirchi Bajji!Cut Mirchi!Moongdal Pakoda!Alu Bonda!Minapa Garelu!Paneer Tikka!Paneer Stick!Veg. Stick!Harabara Tikka!Masala Tikka!Dragon Roll!Paneer Roll!Cheese Roll!Veg. Bullet!Alu Samosa!Irani Samosa!Veg. Spring Roll!Cocktail Samosa!Moongdal Pakoda!Corn Pakoda!Finger Paneer!Crispy Babycorn!Crispy Veg.!Smilies!French Fries!Babycorn Golden Fry!Veg. Seekh Kabab!Palak Makkai Kabab";
-            packageMenu.Rice = "Veg Fried Rice!Mongolian Rice!Shezwan Rice!Singapore Noodles!Hot Garlic Sauce!American Chopsuey!Veg Dumpling!Veg Chow Chow!Veg Manchurian (Wt)!Thai Veg (Wet.)!Chilli Veg (Wet)!Chilli Paneer!Chilli Baby corn!Gobi Manchurian!Veg Biryani!Tomato Rice!emon Rice!White Rice!Bagara Rice!Curd Rice!Veg Biryani!Veg Pulav!Peas Pulav!Malai Koftha!Diwani Handi!Mushroom Kaju!unakkaya Kaju!Mirch Ka Saalan!Bagara Baingan!Capsicum Masala!Tomato Masala!Mirchi Tomato Masala!Dondakaya Masala!Sorakaya Masala!Beerakaya Masala!Mealmaker Masala!Rajma Masala!Chole Masala!hendi Masala!Palak Koftha Curry!kaddu Koftha Curry!Chama Gadda Pulusu!Gumadikaya Pulusu!Bendakaya Pulusu!Kakarkaya Pulusu!Beerakaya Alsandalu!eera Kaya Methi!beera kaya Boondi!Alu Palak!Capsicum Tomata Masala!na Palak!Chikkudukaya Alu!Vankaya Alu!Vankaya Alu Tomato!Dosakaya Tomato!lu Gobi Kurma!Alu Mutter!Mixed Veg Kurma!Gangavali Tomato";
-            packageMenu.Bread = "Naan!Butter Naan!Garlic Naan!Tandoor Roti!Jawar Roti!Paratha!Sheermal!Pulkha!Aloo Paratha!Methi Paratha!Mooli Paratha!Makki ki roti!Kulcha";
-            packageMenu.Curries = "Paneer Butter Masala!Paneer Tikka Masala!Paneer Babycorn Masala!Paneer Capsicum!Paneer Chatpata!Paneer Do Pyasa!Bhendi Do Pyasa!Hariyali Paneer!Khaju Paneer!Methi Chaman!Achari Veg.!Palak Paneer!Kadai Paneer!Navratan Kurma!Paneer Shahi Kurma!Veg Chatpata!Veg Kolhapur!Corn Palak!Chum Alu!Tawa Vegetable!Babycorn Do Pyaza!Koftha Palak!Veg. Jaipuri";
-            packageMenu.Fry_Dry = "Alu Methi Fry!Alu Gobi Fry!Alu Capsicum Fry!Chikkudukaya Alu Fry!Jeera Aloo Fry!Bendi Pakoda Fry!Bendi Kaju Fry!Jaipur Bendi!Chat Pat bendi!Kanda kaju Fry!Donda kaju Fry!Aratikaya Fry!Chamagadda Fry!Beans Coconut Fry!Kakarakaya Fry!Chikkudukaya Fry!Cabbage Coconut Fry!Nutrilla Kaju Fry!Guthivankaya Fry!Mixed Vegetable Fry!Vankaya Pakoda!Dondakaya Pakoda!Veg. Dalcha!Munakkaya Charu!Tomato Charu!Ulawa Charu!Bendakaya Charu!omato Rasam!Miryala Rasam!Pachi Pulusu!Majjiga Pulusu!Kadi Pakoda!Dosa Avakaya!Gobi Avakaya!onda Avakaya!Mango Avakaya!Lime Pickle!Mixed Veg.Pickle!Gongoora Pickle!ongoora Chutney!Tomata Chutney!Cabbage Chutney!Carrot Chutney!Beerakaya Chutney!Kandi Podi!coconut Chutney!Nallakaram Podi!Putnaala Podi!Kariyepak Podi!Nuvvula Karram!Ellipaya Kaaram!Allam Chutney!Pudina Chutney!Chukka Kura Chutney!Kothimeera Chuyney!Kobbari Kaaram Podi!Pudina Coconut Chutney!Mango Coconut Chutney!Vankaya Dosakaya Chutney";
-            packageMenu.Salads = "Carrot Salad!Green Salad!Ceaser Salad!Barley Salad!Sprouts Salad!Onion Salad!Green Bean Salad!Leafy Salad with nuts!Lintel SaladTomato Soup!Tomato Shorba!Veg. Corn Soup!Coriander Soup!Hot & Sour Soup!Sweetcorn Soup";
-            packageMenu.Soups = "Tomato Soup!Tomato Shorba!Veg. Corn Soup!Coriander Soup!Hot & Sour Soup!Sweetcorn Soup";
-            packageMenu.Deserts = "Vanilla!Strawberry!Chocolate!Mango!Butter Scotch!Seethapal!Choco chips!Pista!Cassata!Kulfi Sticks!Cake Ice Cream!Trifle Pudding!Asmar Cream!Zouceshani!cold Stone!chocobar Stick!King Cone Chocolate!King Cone Butter Scotch!Matka Kulfi!Roller Ice Cream!Jhangri!Khova Burf!Malai Roll!Green Guava!Sweet Tamarind!Black Grapes!Australian Grapes";
-            packageMenu.Beverages = "Mini Orange!Rambutan!Dragon Fruit!Mango Steam!Cherry!Water bottle!Choclate coffee!Coffee!Tea!Soft drinks!Cuppuccino!Lata";
-            packageMenu.Fruits = "Apple!Lichi!Dates!Pears!Sapota!Grapes!Peaches!Thailand!Orange!Anjeer!Guava!Plums!Kiwi!Pineapple!Papaya!Water Melon!Musk Melon!pomegranate!Mango!Fuji Apple!Strawberry!Red Guava";
-            // Saving Veg Menu
-            int count = vendorDashBoardService.AddVegMenu(packageMenu);
-            // Non-Veg Menu
-            packageMenu.Category = "NonVeg";
-            packageMenu.Starters = "Chicken 65!Spicy Wings!Chicken Manchurian!Chicken Lollypop!Chicken Tikka!Chicken Satay!Murg Malai Kabab!Chicken Garlic Kabab!Chicken Pahadi Kabab!Chicken Reshmi Kabab!Chicken Hariyali Kabab!Chicken Majestic!Chicken Nuggets!Shezwan Chicken!Chicken Pakoda!Pepper Chicken!Popcorn Chicken!Chilli Chicken!Loose Chilli Prawns!Golden Fried Prawns!Pepper Prawns!Chilli Prawns!Prawn Pakoda!Royyala Vepudu!Garlic Prawns!Prawns Iguru!Finger Fish!Apollo Fish!Fried Fish!Chilly Fish!Fish Tikka!Fish Fry (Murrel With Bone)!Fish Amrithsari!Tawa Fish Bone (Murrel)!Tawa Fish Boneless (Murrel)!Crab Wray Bheemavaram!Crab lguru";
-            packageMenu.Rice = "Hyderabad Mutton Biryani!Mutton Sofiyani Biryani!Hyderabad Chicken Biryani!Chicken Sofiyani Biryani!Chicken Pulav!Prawns Pulav!Egg Biryani!Mixed Fried Rice!Egg Fried Rice!Egg Fried Rice!Chicken Fried Rice!Mixed Fried Rice!American Chopsoy (Non-Veg)!Chilly Chicken Wet!Chicken Manchurian Wet!Shezwan Chicken Wet!Garlic Chicken (Dry & Wet)";
-            packageMenu.Curries = "Dhumka Chicken!Methi Chicken!Chilli Chicken!Ginger Chicken!Gongoora Chicken!Moghalai Chicken!Hariyali Chicken!Ankapur Country Chicken!Butter Chicken!Chicken Masala!Chilly Chicken Wet(Chinese)!Chicken Manchurian Wet!Chicken Diwani Handi!Mutton Curry!Moghalai Mutton!utton Pasinda!Mutton Kali Mirchi!Mutton Roganjosh!Dhum-ka- Bakra!utton Raan!ongoora Maamsam!Chukkakura Maamsam!Palak Mutton!iver Fry!Kidney Fry!okkala Charu!Mutton Dalcha!Boti Dhalcha!Thalakaya Kura!Keema Methi!Keema Palak!Keema Batana!eema Koftha Curry!Paya!Haleem!Butter Chicken!Anda Bhurji!Sarson KA Saag!Makki Ki Roti!Amritsari Kulcha!Punjabi Chole!Dal Makhni!akoda Khadi!Dal Fry!Labadar Paneer!Dal Tadka";
-            packageMenu.Fry_Dry = "Boti Fry!Kidney Fry!Keema Shikhampuri!Mutton Boti Kabab!Mutton Seekh Kabab!Mutton Shami Kabab!Mutton Chops!Kheema Lukmi!Keema Balls!Liver Fry!Pathar ka Ghosh!Liver Kidney Fry!Mutton Fry (Telangana Style)";
-            packageMenu.Soups = "Chicken Hot & Sour Soup!Paya Shorba!Badami Murg Shorba!Morag Soup!Wanton soup!Chicken clear soup!Canton soup!Chicken noodle soup!Chicken cream soup!Egg drop soup";
-            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
-            //Saving Non-Veg Menu
-            count = vendorDashBoardService.AddNonVegMenu(packageMenu);
-            return count;
+            Policy policy = new Policy();
+            policy.ServiceType = vendorMaster.ServicType;
+            policy.VendorId = id;
+            policy.VendorSubId = vid;
+            string[] selectedamenitieslist = policycheck.Split(',');
+            if (selectedamenitieslist.Contains("Outside_decorators_allowed")) policy.Outside_decorators_allowed = "Yes"; else policy.Outside_decorators_allowed = "No";
+            if (selectedamenitieslist.Contains("Decor_provided")) policy.Decor_provided = "Yes"; else policy.Decor_provided = "No";
+            if (selectedamenitieslist.Contains("Decorators_allowed_with_royalty")) policy.Decorators_allowed_with_royalty = "Yes"; else policy.Decorators_allowed_with_royalty = "No";
+            if (selectedamenitieslist.Contains("Food_provided")) policy.Food_provided = "Yes"; else policy.Food_provided = "No";
+            if (selectedamenitieslist.Contains("Outside_food_or_caterer_allowed")) policy.Outside_food_or_caterer_allowed = "Yes"; else policy.Outside_food_or_caterer_allowed = "No";
+            if (selectedamenitieslist.Contains("NonVeg_allowed")) policy.NonVeg_allowed = "Yes"; else policy.NonVeg_allowed = "No";
+            if (selectedamenitieslist.Contains("Alcohol_allowed")) policy.Alcohol_allowed = "Yes"; else policy.Alcohol_allowed = "No";
+            if (selectedamenitieslist.Contains("Outside_Alcohol_allowed")) policy.Outside_Alcohol_allowed = "Yes"; else policy.Outside_Alcohol_allowed = "No";
+            if (selectedamenitieslist.Contains("Valet_Parking")) policy.Valet_Parking = "Yes"; else policy.Valet_Parking = "No";
+            if (selectedamenitieslist.Contains("Parking_Space")) policy.Parking_Space = "Yes"; else policy.Parking_Space = "No";
+            if (selectedamenitieslist.Contains("Cancellation")) policy.Cancellation = "Yes"; else policy.Cancellation = "No";
+            if (selectedamenitieslist.Contains("Available_Rooms")) policy.Available_Rooms = "Yes"; else policy.Available_Rooms = "No";
+            if (selectedamenitieslist.Contains("Changing_Rooms_AC")) policy.Changing_Rooms_AC = "Yes"; else policy.Changing_Rooms_AC = "No";
+            if (selectedamenitieslist.Contains("Complimentary_Changing_Room")) policy.Complimentary_Changing_Room = "Yes"; else policy.Complimentary_Changing_Room = "No";
+            if (selectedamenitieslist.Contains("Music_Allowed_Late")) policy.Music_Allowed_Late = "Yes"; else policy.Music_Allowed_Late = "No";
+            if (selectedamenitieslist.Contains("Halls_AC")) policy.Halls_AC = "Yes"; else policy.Halls_AC = "No";
+            if (selectedamenitieslist.Contains("Ample_Parking")) policy.Ample_Parking = "Yes"; else policy.Ample_Parking = "No";
+            if (selectedamenitieslist.Contains("Baarat_Allowed")) policy.Baarat_Allowed = "Yes"; else policy.Baarat_Allowed = "No";
+            if (selectedamenitieslist.Contains("Fire_Crackers_Allowed")) policy.Fire_Crackers_Allowed = "Yes"; else policy.Fire_Crackers_Allowed = "No";
+            if (selectedamenitieslist.Contains("Hawan_Allowed")) policy.Hawan_Allowed = "Yes"; else policy.Hawan_Allowed = "No";
+            if (selectedamenitieslist.Contains("Overnight_wedding_Allowed")) policy.Overnight_wedding_Allowed = "Yes"; else policy.Overnight_wedding_Allowed = "No";
+
+            string msg;
+            policy.Decoration_starting_costs = Decoration_starting_costs;
+            policy.Tax = Tax;
+            policy.Advance_Amount = Advance_Amount;
+            policy.Room_Average_Price = Room_Average_Price;
+            policy.Rooms_Count = Rooms_Count;
+            var policy1 = vendorMasterService.Getpolicy(id, vid);
+            if (policy1 == null)
+            {
+                var data = vendorMasterService.insertpolicy(policy, id, vid);
+                msg = "Policies Saved";
+            }
+            else
+            {
+                var data = vendorMasterService.updatepolicy(policy, id, vid);
+                msg = "Policies Updated";
+            }
+            return Json(msg);
         }
 
-        public long GetVendorID()
+        #endregion
+
+        #region Removing
+        public JsonResult deleteservice(string ks, string vsid, string type)
         {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            try
             {
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string id = user.UserId.ToString();
-                string email = userLoginDetailsService.Getusername(long.Parse(id));
+                string uid = user.UserId.ToString();
+                string email = userLoginDetailsService.Getusername(long.Parse(uid));
                 vendorMaster = vendorMasterService.GetVendorByEmail(email);
-                return vendorMaster.Id;
+                string vid = vendorMaster.Id.ToString();
+                string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
+                string message = vendorImageService.DeleteAllImages(long.Parse(vid), long.Parse(vsid));
+                return Json(message, JsonRequestBehavior.AllowGet);
+
             }
-            return 0;
+            catch (Exception)
+            {
+                return Json("something went wrong", JsonRequestBehavior.AllowGet);
+            }
         }
+        #endregion
     }
 }
