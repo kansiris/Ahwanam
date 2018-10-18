@@ -13,6 +13,7 @@ namespace MaaAahwanam.Models
         public long PartnerID { get; set; }
         public long VendorId { get; set; }
         public string VendorType { get; set; }
+        public string PartnerName { get; set; }
         public string url { get; set; }
         public string phoneno { get; set; }
         public string emailid { get; set; }

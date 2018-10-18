@@ -316,6 +316,144 @@ namespace MaaAahwanam.Web.Controllers
             return count;
         }
 
+        [HttpPost]
+        public JsonResult UploadImages(HttpPostedFileBase helpSectionImages, string vid,string id,string type)
+        {
+            string fileName = string.Empty;
+            string filename = string.Empty;
+            VendorImage vendorImage = new VendorImage();
+            Vendormaster vendorMaster = new Vendormaster();
+
+            if (helpSectionImages != null)
+            {
+                string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+                int imageno = 0;
+                int imagecount = 8;
+                var list = vendorImageService.GetImages(long.Parse(id), long.Parse(vid));
+
+                if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
+                {
+                    //getting max imageno
+                    if (list.Count != 0)
+                    {
+                        string lastimage = list.OrderByDescending(m => m.ImageId).FirstOrDefault().ImageName;
+                        var splitimage = lastimage.Split('_', '.');
+                        imageno = int.Parse(splitimage[3]);
+                    }
+                    //Uploading images in db & folder
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        int j = imageno + i + 1;
+                        var file1 = Request.Files[i];
+                        if (file1 != null && file1.ContentLength > 0)
+                        {
+                            filename = vendorMaster.ServicType + "_" + vid + "_" + id + "_" + j + path;
+                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                            file1.SaveAs(fileName);
+                            vendorImage.ImageName = filename;
+                            vendorImage.ImageType = type;//"Slider";
+                            vendorImage.VendorId = long.Parse(vid);
+                            vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                        }
+                    }
+                }
+            }
+            return Json(filename, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateAmenities(string selectedamenities,string id, string vid, string command, string hdname, string Dimentions, string Minimumseatingcapacity, string Maximumcapacity, string Description, string Address, string Landmark, string City, string ZipCode)
+        {
+            Vendormaster vendormaster = new Vendormaster();
+            VendorVenue vendorVenue = vendorVenueSignUpService.GetParticularVendorVenue(long.Parse(id), long.Parse(vid)); // Retrieving Particular Vendor Record
+            if (command == "two")
+            {
+                vendormaster.ServicType = vendorMaster.ServicType;
+                vendormaster.ContactNumber = vendorMaster.ContactNumber;
+                vendormaster.EmailId = vendorMaster.EmailId;
+                vendormaster.LandlineNumber = vendorMaster.LandlineNumber;
+                vendormaster.Description = vendorMaster.Description;
+                vendormaster.Url = vendorMaster.Url;
+                vendormaster.Address = vendorMaster.Address;
+                vendormaster.Landmark = vendorMaster.Landmark;
+                vendormaster.City = vendorMaster.City; vendormaster.State = vendorMaster.State; vendormaster.ZipCode = vendorMaster.ZipCode;
+                string[] selectedamenitieslist = selectedamenities.Split(',');
+                //if (vendormaster.ServicType == "Venue")
+                //{
+                if (selectedamenitieslist.Contains("CockTails")) vendorVenue.CockTails = "Yes"; else vendorVenue.CockTails = "No";
+                if (selectedamenitieslist.Contains("Rooms")) vendorVenue.Rooms = "Yes"; else vendorVenue.Rooms = "No";
+                if (selectedamenitieslist.Contains("Wifi")) vendorVenue.Wifi = "Yes"; else vendorVenue.Wifi = "No";
+                if (selectedamenitieslist.Contains("Sufficient_Washroom")) vendorVenue.Sufficient_Washroom = "Yes"; else vendorVenue.Sufficient_Washroom = "No";
+                if (selectedamenitieslist.Contains("Sufficient_Room_Size")) vendorVenue.Sufficient_Room_Size = "Yes"; else vendorVenue.Sufficient_Room_Size = "No";
+                if (selectedamenitieslist.Contains("Intercom")) vendorVenue.Intercom = "Yes"; else vendorVenue.Intercom = "No";
+                if (selectedamenitieslist.Contains("Single_Bed")) vendorVenue.Single_Bed = "Yes"; else vendorVenue.Single_Bed = "No";
+                if (selectedamenitieslist.Contains("Queen_Bed")) vendorVenue.Queen_Bed = "Yes"; else vendorVenue.Queen_Bed = "No";
+                if (selectedamenitieslist.Contains("King_Bed")) vendorVenue.King_Bed = "Yes"; else vendorVenue.King_Bed = "No";
+                if (selectedamenitieslist.Contains("Balcony")) vendorVenue.Balcony = "Yes"; else vendorVenue.Balcony = "No";
+                if (selectedamenitieslist.Contains("Full_Length_Mirrror")) vendorVenue.Full_Length_Mirrror = "Yes"; else vendorVenue.Full_Length_Mirrror = "No";
+                if (selectedamenitieslist.Contains("Jacuzzi")) vendorVenue.Jacuzzi = "Yes"; else vendorVenue.Jacuzzi = "No";
+                if (selectedamenitieslist.Contains("Sofa_Set")) vendorVenue.Sofa_Set = "Yes"; else vendorVenue.Sofa_Set = "No";
+                if (selectedamenitieslist.Contains("Coffee_Tea_Maker")) vendorVenue.Coffee_Tea_Maker = "Yes"; else vendorVenue.Coffee_Tea_Maker = "No";
+                if (selectedamenitieslist.Contains("Kindle")) vendorVenue.Kindle = "Yes"; else vendorVenue.Kindle = "No";
+                if (selectedamenitieslist.Contains("Netflix")) vendorVenue.Netflix = "Yes"; else vendorVenue.Netflix = "No";
+                if (selectedamenitieslist.Contains("Kitchen")) vendorVenue.Kitchen = "Yes"; else vendorVenue.Kitchen = "No";
+                if (selectedamenitieslist.Contains("Bath_Tub")) vendorVenue.Bath_Tub = "Yes"; else vendorVenue.Bath_Tub = "No";
+                if (selectedamenitieslist.Contains("Electricity")) vendorVenue.Electricity = "Yes"; else vendorVenue.AC = "No";
+                if (selectedamenitieslist.Contains("Wellness_Center")) vendorVenue.Wellness_Center = "Yes"; else vendorVenue.Wellness_Center = "No";
+                if (selectedamenitieslist.Contains("Spa")) vendorVenue.Spa = "Yes"; else vendorVenue.Spa = "No";
+                if (selectedamenitieslist.Contains("HDTV")) vendorVenue.HDTV = "Yes"; else vendorVenue.HDTV = "No";
+                if (selectedamenitieslist.Contains("Pet_Friendly")) vendorVenue.Pet_Friendly = "Yes"; else vendorVenue.Pet_Friendly = "No";
+                if (selectedamenitieslist.Contains("Gym")) vendorVenue.Gym = "Yes"; else vendorVenue.Gym = "No";
+                if (selectedamenitieslist.Contains("In_house_Restaurant")) vendorVenue.In_house_Restaurant = "Yes"; else vendorVenue.In_house_Restaurant = "No";
+                if (selectedamenitieslist.Contains("Hair_Dryer")) vendorVenue.Hair_Dryer = "Yes"; else vendorVenue.Hair_Dryer = "No";
+                if (selectedamenitieslist.Contains("Mini_Fridge")) vendorVenue.Mini_Fridge = "Yes"; else vendorVenue.Mini_Fridge = "No";
+                if (selectedamenitieslist.Contains("In_Room_Safe")) vendorVenue.In_Room_Safe = "Yes"; else vendorVenue.In_Room_Safe = "No";
+                if (selectedamenitieslist.Contains("Room_Heater")) vendorVenue.Room_Heater = "Yes"; else vendorVenue.Room_Heater = "No";
+                if (selectedamenitieslist.Contains("Wheelchair_Accessible")) vendorVenue.Wheelchair_Accessible = "Yes"; else vendorVenue.Wheelchair_Accessible = "No";
+                if (selectedamenitieslist.Contains("Power_Backup")) vendorVenue.Power_Backup = "Yes"; else vendorVenue.Power_Backup = "No";
+                if (selectedamenitieslist.Contains("Dining_Area")) vendorVenue.Dining_Area = "Yes"; else vendorVenue.Dining_Area = "No";
+                if (selectedamenitieslist.Contains("Bar")) vendorVenue.Bar = "Yes"; else vendorVenue.Bar = "No";
+                if (selectedamenitieslist.Contains("Conference_Room")) vendorVenue.Conference_Room = "Yes"; else vendorVenue.Conference_Room = "No";
+                if (selectedamenitieslist.Contains("Swimming_Pool")) vendorVenue.Swimming_Pool = "Yes"; else vendorVenue.AC = "No";
+                if (selectedamenitieslist.Contains("CCTV_Cameras")) vendorVenue.CCTV_Cameras = "Yes"; else vendorVenue.CCTV_Cameras = "No";
+                if (selectedamenitieslist.Contains("Laundry")) vendorVenue.Laundry = "Yes"; else vendorVenue.Laundry = "No";
+                if (selectedamenitieslist.Contains("Banquet_Hall")) vendorVenue.Banquet_Hall = "Yes"; else vendorVenue.Banquet_Hall = "No";
+                if (selectedamenitieslist.Contains("Lift_or_Elevator")) vendorVenue.Lift_or_Elevator = "Yes"; else vendorVenue.Lift_or_Elevator = "No";
+                if (selectedamenitieslist.Contains("Card_Payment")) vendorVenue.Card_Payment = "Yes"; else vendorVenue.Card_Payment = "No";
+                if (selectedamenitieslist.Contains("Parking_Facility")) vendorVenue.Parking_Facility = "Yes"; else vendorVenue.Parking_Facility = "No";
+                if (selectedamenitieslist.Contains("Geyser")) vendorVenue.Geyser = "Yes"; else vendorVenue.AC = "No";
+                if (selectedamenitieslist.Contains("Complimentary_Breakfast")) vendorVenue.Complimentary_Breakfast = "Yes"; else vendorVenue.Complimentary_Breakfast = "No";
+                if (selectedamenitieslist.Contains("TV")) vendorVenue.TV = "Yes"; else vendorVenue.TV = "No";
+                if (selectedamenitieslist.Contains("AC")) vendorVenue.AC = "Yes"; else vendorVenue.AC = "No";
+
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                //if (vendorVenue.Id != 0) count = vendorVenue.Id;
+                //}
+                return Json("Amenities Updated");
+            }
+            else if (command == "three")
+            {
+                vendorVenue.Dimentions = Dimentions;
+                vendorVenue.Minimumseatingcapacity = Convert.ToInt16(Minimumseatingcapacity);
+                vendorVenue.Maximumcapacity = Convert.ToInt16(Maximumcapacity);
+                vendorVenue.name = hdname;
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                return Json("Hall details Updated");
+            }
+            else if (command == "four")
+            {
+                vendorVenue.Description = Description;
+                vendorVenue.Address = Address;
+                vendorVenue.City = City;
+                //   vendorVenue.State = venuedata.State;
+                vendorVenue.Landmark = Landmark;
+                vendorVenue.ZipCode = ZipCode;
+                // vendorVenue.GeoLocation = venuedata.GeoLocation;
+                vendorVenue = vendorVenueSignUpService.UpdateVenue(vendorVenue, vendormaster, long.Parse(id), long.Parse(vid));
+                return Json("Address Updated");
+            }
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+
         public int AddMenuList(string VendorID, string VendorMasterID)
         {
             PackageMenu packageMenu = new PackageMenu();

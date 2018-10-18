@@ -46,7 +46,7 @@
                 padding-left: 6%;
             }
 
-            .sliderdiv {
+            .sliderdiv,.sliderdiv1 {
                 border: 4px grey solid;
                 border-style: dashed;
                 height: 100px;
@@ -54,8 +54,12 @@
                 margin-top: 25px;
             }
 
-                .sliderdiv img {
+                .sliderdiv img,.sliderdiv1 img {
                     padding: 35px;
+                }
+
+                .sliderdiv input[type=file],.sliderdiv1 input[type=file] {
+                    display: none;
                 }
 
             #pkgsdiv {
@@ -382,6 +386,42 @@
 
                 </div>
             </div>
+
+            <div class="row upload-section">
+                <h6>GALLERY/VIDEOS</h6>
+                <table>
+                    <tr>
+                        @{
+                            if (ViewBag.allimages.Count > 0)
+                            {
+                                foreach (var item in ViewBag.sliderimages)
+                                {
+                                    <td>
+                                        <div align="center">
+                                            <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
+                                        </div>
+                                    </td>
+                                }
+
+                            }
+                            if (ViewBag.imagescount > 0)
+                            {
+                                for (int i = 1; i < ViewBag.slidercount + 1; i++)
+                                {
+                                    <td>
+                                        <div class="sliderdiv1">
+                                            <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
+                                            <input type="file" name="image" id="s@(i)">
+                                        </div>
+                                    </td>
+                                }
+                            }
+
+                        }
+                    </tr>
+                </table>
+
+            </div>
         </div>
     </div>
 
@@ -389,7 +429,7 @@
         <div class="container-fluid">
             <div class="row policies">
                 <div class="col-md-6"><h6 class="h6-1-1">POLICIES</h6></div>
-                <div class="col-md-6"><button type="button" class="btn btn-danger" style="float:right">Save</button></div>
+                <div class="col-md-6"><button type="button" class="btn btn-danger" style="float:right" id="savepolicy">Save</button></div>
                 <div class="row" style="width:100%" id="overflow-scroll">
                     <table style="width:100%">
                         @if (ViewBag.policy != null)

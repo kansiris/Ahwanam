@@ -29,6 +29,87 @@ $('#selectedservice').on('change', function () {
     });
 });
 
+//Slider images Section
+var image;
+$('.sliderdiv').on('click', function () {
+    var thisimage = $(this);
+    var image = $(this).children('img').attr('href');
+    var file1 = $(this).find('input').attr('id');
+    image = document.getElementById("" + file1 + "");
+    image.click();
+    image.onchange = function () {
+        var file = $('#' + file1 + '').get(0).files;
+        var data = new FormData;
+        if (file.length > 0) {
+            data.append("helpSectionImages", file[0]);
+        }
+        SaveImages(thisimage, subid, id, 'Slider');
+    }
+});
+
+$('.sliderdiv1').on('click', function () {
+    var thisimage = $(this);
+    var image = $(this).children('img').attr('href');
+    var file1 = $(this).find('input').attr('id');
+    image = document.getElementById("" + file1 + "");
+    image.click();
+    image.onchange = function () {
+        var file = $('#' + file1 + '').get(0).files;
+        var data = new FormData;
+        if (file.length > 0) {
+            data.append("helpSectionImages", file[0]);
+        }
+        SaveImages(thisimage, subid, id, 'image');
+    }
+});
+
+function SaveImages(thisimage,subid,id,type) {
+    $.ajax({
+        url: '/vdb/UploadImages?vid=' + subid + '&&id=' + id + '&&type='+type,
+        type: "POST",
+        contentType: false, // Not to set any content header
+        processData: false, // Not to process data
+        data: data,
+        success: function (result) {
+            thisimage.children('img').remove();
+            thisimage.append('<img src="/vendorimages/' + result + '" href="s2" style="width:100px;height:100px;padding:0px">')
+            //thisimage.attr('border', 'none');
+        },
+        error: function (err) {
+            alert("System Encountered Internal Error!!! Try Again After Some Time");
+        }
+    });
+}
+
+//Amenities Section
+var validateForm = function () {
+    var checks = $('input[type="checkbox"]:checked').map(function () {
+        return $(this).val();
+    }).get()
+    var hdname = $('#hdname').val();
+    var Dimentions = $('#Dimentions').val();
+    var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
+    var Maximumcapacity = $('#Maximumcapacity').val();
+    var selectedamenuities = checks;
+    var Address = $('#Address').val();
+    var Landmark = $('#Landmark').val();
+    var City = $('#City').val();
+    var ZipCode = $('#ZipCode').val();
+    var Description = $('#mainDescription').val();
+    $.ajax({
+        url: '/vdb/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&id=' + id + '&&vid=' + subid + '&&hdname=' + hdname + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + 'two',
+        type: 'post',
+        contentType: 'application-json',
+        success: function (data) {
+            alert(data);
+        },
+        error: function (er) {
+            alert("System Encountered Internal Error!!! Try Again After Some Time");
+        }
+    });
+    return false;
+}
+
 //Packages Section
 
 //Package Checkbox Selection
