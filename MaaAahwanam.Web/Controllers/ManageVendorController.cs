@@ -34,7 +34,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(ManageVendor mngvendor, string id, string command)
+        public JsonResult Index(ManageVendor mngvendor, string id, string command)
         {
             string msg = string.Empty;
             mngvendor.registereddate = DateTime.Now;
@@ -49,7 +49,8 @@ namespace MaaAahwanam.Web.Controllers
                 mngvendor = mngvendorservice.UpdateVendor(mngvendor, int.Parse(id));
                 msg = "Updated vendor";
             }
-            return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>");
+            //return Content("<script language='javascript' type='text/javascript'>alert('" + msg + "');location.href='/ManageVendor'</script>");
+            return Json(msg, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult GetVendorDetails(string id)
