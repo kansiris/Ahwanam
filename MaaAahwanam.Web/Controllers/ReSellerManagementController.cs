@@ -37,14 +37,17 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
         [HttpPost]
-        public JsonResult Index(Partner partner)
+        public JsonResult Index(Partner partner,string command,string partid)
         {
             partner.RegisteredDate = DateTime.Now;
             partner.UpdatedDate = DateTime.Now;
-            partner = partnerservice.AddPartner(partner);
+            if (command == "save") { partner = partnerservice.AddPartner(partner); }
+            else if(command == "Update") { partner = partnerservice.UpdatePartner(partner,partid); }
+
             var emailid = partner.emailid;
             var getpartner = partnerservice.getPartner(emailid);
             return Json(getpartner, JsonRequestBehavior.AllowGet);
         }
+       
     }
 }
