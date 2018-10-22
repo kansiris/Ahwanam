@@ -72,22 +72,38 @@ namespace MaaAahwanam.Web.Controllers
                     }
 
                     // Packages Section
-                    var pkgsks = vendorVenueSignUpService.Getpackages(id, long.Parse(vid)).FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
-                    if (pkgsks != null)
+                    var pkgsks = vendorVenueSignUpService.Getpackages(id, long.Parse(vid));//.FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
+                    List<Package> pkgs = new List<Package>();
+                    List<string> selecteditems = new List<string>();
+                    List<string[]> pkgitem = new List<string[]>();
+                    if (pkgsks.Count != 0)
                     {
-                        ViewBag.package = pkgsks;
-                        if (pkgsks.menu != "" && pkgsks.menu != null)
+                        for (int i = 0; i < pkgsks.Count; i++)
                         {
-                            var pkgitems = pkgsks.menu.Trim(',').Split(',');
-                            var pkgmitems = pkgsks.menuitems.Trim(',');
-                            List<string> selecteditems = new List<string>();
-                            for (int i = 0; i < pkgitems.Count(); i++)
+                            if (pkgsks[i].menu != "" && pkgsks[i].menu != null)
                             {
-                                selecteditems.Add(pkgmitems.Split(',')[i].Split('(')[0].Replace('/', '_').Trim());
+                                var pkgitems = pkgsks[i].menu.Trim(',').Split(','); //TrimEnd(')').TrimEnd(' ').TrimEnd('X').Trim(',').Trim(' ').Trim(',')
+                                var pkgmitems = pkgsks[i].menuitems.Trim(',');
+                                List<string> presentmenuitems = new List<string>();
+                                for (int j = 0; j < pkgitems.Count(); j++)
+                                {
+                                    presentmenuitems.Add(pkgmitems.Split(',')[j].Split('(')[0].Replace('/', '_').Trim());
+                                }
+                                //ViewBag.selecteditems = string.Join(",", selecteditems);
+                                //ViewBag.pkgitems = pkgitems;
+                                selecteditems.Add(string.Join(",", presentmenuitems));
+                                presentmenuitems.Clear();
+                                pkgitem.Add(pkgitems);
                             }
-                            ViewBag.selecteditems = string.Join(",", selecteditems);
-                            ViewBag.pkgitems = pkgitems;
+                            else
+                            {
+                                selecteditems.Add(null);
+                                pkgitem.Add(null);
+                            }
                         }
+                        ViewBag.package = pkgsks;
+                        ViewBag.pkgitems = pkgitem;
+                        ViewBag.selecteditems = selecteditems;
                     }
                     else ViewBag.package = new Package();
 
@@ -441,6 +457,36 @@ namespace MaaAahwanam.Web.Controllers
                 userLoginDetailsService.ChangeDP(int.Parse(user.UserId.ToString()), filename);
             }
             return Json(filename, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AddPackage(Package package)
+        {
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.price1 = package.PackagePrice = package.normaldays;
+            //Add Package Code
+            package.Status = "Active";
+            package.UpdatedDate = updateddate;
+            package.timeslot = package.timeslot.Trim(',');
+            package = vendorVenueSignUpService.addpack(package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = "Package Added SuccessFully!!!";
+            else msg = "Failed TO Add Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DuplicatePackage(Package package)
+        {
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.price1 = package.PackagePrice = package.normaldays;
+            //Add Package Code
+            package.Status = "Active";
+            package.UpdatedDate = updateddate;
+            package.timeslot = (package.timeslot != null) ? package.timeslot.Trim(',') : package.timeslot;
+            package = vendorVenueSignUpService.addpack(package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = package.PackageID.ToString();
+            else msg = "Failed TO Add Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

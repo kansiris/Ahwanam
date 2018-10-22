@@ -10,6 +10,25 @@ namespace MaaAahwanam.Web.App_Start
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //vmp masterpage scripts
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                "https://code.jquery.com/ui/1.12.1/jquery-ui.js",
+                "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/semantic").Include(
+                "~/newdesignstyles/Scripts/semantic.js",
+                "~/newdesignstyles/Scripts/semantic.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
+                "https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"));
+
+            //vdb scripts
+            bundles.Add(new ScriptBundle("~/bundles/vdb").Include(
+                "~/Scripts/vdb1.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"
+                ));
+
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                       "~/CSSWeb/js/jquery-1.9.1.js",
                       "~/CSSWeb/Alert/bootstrap-dialog.min.js"));
@@ -45,15 +64,15 @@ namespace MaaAahwanam.Web.App_Start
                       "~/CSSWeb/css/ms_style.css",
                       "~/CSSWeb/css/timeline.css",
                       "~/CSSWeb/css/ms-layers-style.css",
-                //"~/CSSWeb/css/owl.carousel.css",
-                //"~/CSSWeb/css/hover.css",
-                //"~/CSSWeb/css/select2.css",
-                //"~/CSSWeb/css/menu.css",
+                      //"~/CSSWeb/css/owl.carousel.css",
+                      //"~/CSSWeb/css/hover.css",
+                      //"~/CSSWeb/css/select2.css",
+                      //"~/CSSWeb/css/menu.css",
                       "~/CSSWeb/css/tabs.css",
-                //"~/CSSWeb/css/magnific-popup.css",
-                //"~/CSSWeb/css/aileron.css",
+                      //"~/CSSWeb/css/magnific-popup.css",
+                      //"~/CSSWeb/css/aileron.css",
                       "~/CSSWeb/css/themify-icons.css",
-                //"~/CSSWeb/css/animate.min.css",
+                      //"~/CSSWeb/css/animate.min.css",
                       "~/CSSWeb/Alert/alert.css",
                       "~/CSSWeb/css/smoothproducts.css",
                       "~/CSSWeb/css/maa-aahwanam.css",
@@ -68,8 +87,8 @@ namespace MaaAahwanam.Web.App_Start
                       "~/CSSWeb/bootstrap/css/Datatable_css.css"));
 
             bundles.Add(new ScriptBundle("~/assets/plugins").Include(
-                //"~/assets/plugins/jquery-2.0.3.min.js",
-                //"~/assets/plugins/bootstrap/js/bootstrap.min.js",
+                     //"~/assets/plugins/jquery-2.0.3.min.js",
+                     //"~/assets/plugins/bootstrap/js/bootstrap.min.js",
                      "~/assets/plugins/dataTables/jquery.dataTables.js",
                      "~/assets/plugins/dataTables/dataTables.bootstrap.js"
                      ));
