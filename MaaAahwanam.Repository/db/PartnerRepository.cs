@@ -37,5 +37,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return partner1;
         }
+        public List<Partner> GetPartners(long vid)
+        {
+            return _dbContext.Partner.Where(p => p.VendorId == vid).ToList();
+           
+        }
     }
 }

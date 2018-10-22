@@ -16,6 +16,7 @@ namespace MaaAahwanam.Models
         public long VendorSubId { get; set; }
         public string VendorType { get; set; }
         public string VendorSubType { get; set; }
+        public string packageid { get; set; }
         public string packagename { get; set; }
         public string normaldayssaletype { get; set; }
         public string salenormaldays { get; set; }

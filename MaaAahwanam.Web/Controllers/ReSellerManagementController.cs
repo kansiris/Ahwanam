@@ -18,7 +18,7 @@ namespace MaaAahwanam.Web.Controllers
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         PartnerService partnerservice = new PartnerService();
         // GET: ReSellerManagement
-        public ActionResult Index()
+        public ActionResult Index(string partid)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -28,7 +28,11 @@ namespace MaaAahwanam.Web.Controllers
                 vendorMaster = newmanageuse.GetVendorByEmail(vemail);
                 string VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
-
+                var resellers = partnerservice.GetPartners(VendorId);
+                if(partid != "" && partid != null)
+                {
+                    ViewBag.resellers = resellers.Where(m => m.PartnerID == long.Parse(partid)).FirstOrDefault();
+                }
                 ViewBag.package = viewservicesss.getvendorpkgs(VendorId).ToList();
                 return View();
             }

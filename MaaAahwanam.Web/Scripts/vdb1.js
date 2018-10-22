@@ -202,6 +202,13 @@ var validateForm = function () {
 
 //Packages Section
 
+//Add Package
+$("#anp").click(function () {
+    var div = document.getElementById("pkgsdiv");
+    var childdiv = "<div class='row' id='pkgsdiv'><div class='allpkgs'><div class='container-fluid'><div class='row'><div class='col-md-6 col-xs-6'><input type='text' class='form-control' id='pkgname' placeholder='Package Name' value=''></div><div class='col-md-6 col-xs-6'><div class='row' id='sectiontimeslot'><div class='col-md-4 col-xs-6'><input type='radio' name='checkradio' id='Veg' value='Veg' /><label for='Veg'>Veg</label><br /><input type='radio' name='checkradio' id='NonVeg' value='NonVeg' /><label for='NonVeg'>Non-Veg</label></div><input type='hidden' id='pkgslots' value='' /><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Break_Fast' value='Break Fast' /><label for='breakfast'>Break Fast</label><br /><input type='checkbox' class='slotcheck' name='slot' id='Lunch' value='Lunch' /><label for='lunch'>Lunch</label></div><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Dinner' value='Dinner' /><label for='dinner'>Dinner</label><br /><input type='checkbox' class='slotcheck' name='slot' id='High_Tea' value='High Tea' /><label for='hightea'>High Tea</label></div></div></div></div><div class='row' id='pkgpricesection'><div class='col-md-3 col-xs-3'><span>Normal Days ₹</span><span><input type='number' id='ndays' name='ndays' placeholder='₹100' style='width:75%' value='' /></span></div><div class='col-md-3 col-xs-3'><span>Peak Days ₹</span><span><input type='number' id='pdays' name='pdays' placeholder='₹100' style='width:75%' value='' /></span></div><div class='col-md-3 col-xs-3'><span>Holidays ₹</span><span><input type='number' id='holidays' name='holidays' placeholder='₹100' style='width:75%' value='' /></span></div><div class='col-md-3 col-xs-3'><span>Choice Days ₹</span><span><input type='number' id='cdays' name='cdays' placeholder='₹100' style='width:75%' value='' /></span></div></div><div class='row' align='center' style='padding-top:10px'><textarea id='pkgdesc' class='form-control' name='pkgdesc' placeholder='Enter Package Description' cols='3'></textarea></div></div></div><div class='package-list' ><button id='pillbutton' class='button pkgitem' value='Welcome_Drinks'>Welcome Drinks(0) </button><button id='pillbutton' class='button pkgitem' value='Starters'>Starters(0)</button><button id='pillbutton' class='button pkgitem' value='Rice'>Rice(0)</button><button id='pillbutton' class='button pkgitem' value='Bread'>Bread(0)</button><button id='pillbutton' class='button pkgitem' value='Curries'>Curries(0)</button><button id='pillbutton' class='button pkgitem' value='Fry_Dry'>Fry/Dry(0)</button><button id='pillbutton' class='button pkgitem' value='Salads'>Salads(0)</button><button id='pillbutton' class='button pkgitem' value='Soups'>Soups(0)</button><button id='pillbutton' class='button pkgitem' value='Deserts'>Deserts(0)</button><button id='pillbutton' class='button pkgitem' value='Beverages'>Beverages(0)</button><button id='pillbutton' class='button pkgitem' value='Fruits'>Fruits(0)</button></div><div align='right' class='pkgsave'><input type='hidden' class='pkgmenuitems' value='' /><input type='hidden' class='selpkgitems' /><input type='hidden' class='availablepkgitems' value='' /><a class='addcourse' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Add Course</a><a class='viewmenu' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>View Menu</a><a class='pkgclone' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Duplicate</a><a class='addpkg' style='padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;'>Publish</a><a href='#' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Remove</a></div></div></div>";
+    $('#pkgsdiv').append(childdiv);
+});
+
 //Package Checkbox Selection
 $('.slotcheck').on('change', function () {
     var thisdiv = $(this).parents("div.row");
@@ -221,8 +228,9 @@ var totallist = '';//$('.pkgmenuitems').val();
 
 //Add Course Button
 $('.addcourse').click(function(){
+    var parentdiv = $(this).parent('div.pkgsave').prev('div.package-list').find('div#extracourse');
     var btn = '<button id="pillbutton" class="button extraitem" value="">New Course(0)</button>';
-    $("#extracourse").append(btn);
+    parentdiv.append(btn);
 });
 
 //Adding Selected Lists to Course
@@ -275,11 +283,11 @@ function Addpkgitems(mtype) {
     $('.selpkgitems').val(totallist);
     if(mtype == 'old')
     {
-        if ($(".col-md-2-10 button[value = " + ctype.replace('/','_') + "]").replaceWith('<button class="button pkgitem" value='+ ctype +'>' + type + '(' + maxcount + ')</button>'));
+        if ($(".package-list button[value = " + ctype.replace('/', '_') + "]").replaceWith('<button id="pillbutton" class="button pkgitem" value=' + ctype + '>' + type + '(' + maxcount + ')</button>'));
     }
     else
     {
-        if ($(".col-md-2-10 #extracourse button:contains(" + mtype + ")").replaceWith('<button class="button extraitem" value='+ type +'>' + type + '(' + maxcount + ')</button>'));
+        if ($(".package-list #extracourse button:contains(" + mtype + ")").replaceWith('<button id="pillbutton" class="button extraitem" value=' + type + '>' + type + '(' + maxcount + ')</button>'));
     }
 }
 
@@ -288,7 +296,7 @@ $(document).on('click', '.pkgitem', function () {
     $('.overlay').show();
     $('#loadermsg').text("Fetching Menu Items");
     var checkbox = $("input[name='checkradio']:checked").val();
-    var pkgid = $(this).parent("div.col-md-2-10").find("div.pkgsave").find("input.packageid").val();
+    var pkgid = $(this).parent("div#pkgsdiv").find("div.pkgsave").find("input.packageid").val();
     if (checkbox == undefined) {
         alert("Select Menu Type")
     }
@@ -310,7 +318,7 @@ $(document).on('click', '.extraitem', function () {
     $('.overlay').show();
     $('#loadermsg').text("Fetching Menu Items");
     var checkbox = $("input[name='checkradio']:checked").val();
-    var pkgid = $(this).parent("div.col-md-2-10").find("div.pkgsave").find("input.packageid").val();
+    var pkgid = $(this).parent("div#pkgsdiv").find("div.pkgsave").find("input.packageid").val();
     if (checkbox == undefined) {
         alert("Select Menu Type")
     }
@@ -511,7 +519,7 @@ $('.addpkg').click(function () {
     //validation('AddPackage');
     $('.overlay').show();
     $('#loadermsg').text("Saving Package...");
-    var allbuttons = $(".col-md-2-10 button").text();
+    var allbuttons = $(".package-list button").text();
     var list=[];
     for (var i = 0; i < allbuttons.split(')').length; i++) {
         if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
@@ -590,14 +598,14 @@ $('.updatepkg').click(function () {
     //validation('UpdatePackage');
     $('.overlay').show();
     $('#loadermsg').text("Updating Package...");
-    var allbuttons = $(".col-md-2-10 button").text();
+    var allbuttons = $(".package-list button").text();
     var list=[];
     for (var i = 0; i < allbuttons.split(')').length; i++) {
         if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
             list.push(allbuttons.split(')')[i]+')');
     }
     var allVal = '';
-    $(".col-md-2-10 button").each(function() {
+    $(".package-list button").each(function () {
         if($(this).text().split('(')[1].split(')')[0] != 0)
             allVal += ',' + $(this).val();
     });
@@ -694,6 +702,70 @@ $('.updatepkg').click(function () {
         });
     }
 });
+
+// Cloning Package
+$(document).on('click', '.pkgclone', function () {
+    $('.overlay').show();
+    $('#loadermsg').text("Duplicating Package...");
+    var totaldiv = $(this).parents('div.allpkgs');
+    var allbuttons = totaldiv.find(".package-list button").text();
+    var list = [];
+    for (var i = 0; i < allbuttons.split(')').length; i++) {
+        if (allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1] != 0)
+            list.push(allbuttons.split(')')[i] + ')');
+    }
+    var packagename = totaldiv.find('input#pkgname').val(); //$('#pkgname').val();
+    var pkgcategory = totaldiv.find("input[name='checkradio']:checked").val();
+    var peakdays = totaldiv.find('#pdays').val();
+    var normaldays = totaldiv.find('#ndays').val();
+    var holidays = totaldiv.find('#holidays').val();
+    var choicedays = totaldiv.find('#cdays').val();
+    var timeslot = totaldiv.find('#pkgslots').val();
+    var pkgdescription = totaldiv.find('#pkgdesc').val();
+    var menuitems = totaldiv.find('input.selpkgitems').val();//pkgdesc;
+    if (menuitems == '') {
+        menuitems = totaldiv.find('input.pkgmenuitems').val();
+    }
+    var menu = list.join(',');
+    var thisdiv = $(this);
+    var pkgid = '';
+    var package = {
+        PackageName: packagename,
+        Category: pkgcategory,
+        PackageDescription: pkgdescription,
+        peakdays: peakdays,
+        normaldays: normaldays,
+        holidays: holidays,
+        choicedays: choicedays,
+        VendorId: id,
+        VendorSubId: subid,
+        VendorType: category,
+        VendorSubType: subcategory,
+        timeslot: timeslot,
+        menuitems: menuitems,
+        menu: menu
+    }
+    $.ajax({
+        url: '/vdb/DuplicatePackage',
+        type: 'post',
+        datatype: 'json',
+        data: package,
+        success: function (data) {
+            if (data != '0') {
+                pkgid = data;
+                alert("Package Duplicated SuccessFully!!!");
+                duplicatepkg(thisdiv, pkgid);
+            }
+            else { alert(data); }
+            $('.overlay').hide();
+        }
+    });
+});
+
+function duplicatepkg(thisdiv, pkgid) {
+    var parentdiv = document.getElementById("pkgsdiv");
+    thisdiv.parents('div#pkgsdiv').clone().find("input.packageid").attr('value', pkgid).end().insertAfter(parentdiv);
+}
 
 // Removing Item from list
 $(document).on('click','.removemitem',function(){
