@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link href="~/CSSWeb/css/dashboard.css" rel="stylesheet" />
     @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <style type="text/css">
         .button {
             background-color: #fff;
@@ -241,8 +242,8 @@
                                     <div>
                                         <table style="width:100%">
                                             <tr>
-                                                <td><h4 style="text-transform:uppercase">Vendors</h4></td>
-                                                <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Vendor</button></td>
+                                                <td><h4 style="text-transform:uppercase">Suppliers</h4></td>
+                                                <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Suppliers</button></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -303,8 +304,8 @@
 
                                     </div>
                                     <div class="row" id="saverecord" style="display:none;margin-top:50px">
-                                        <div align="center"><h3 style="text-transform:uppercase">Add/Edit Vendor</h3></div>
-                                        <form method="POST">
+                                        <div align="center"><h3 style="text-transform:uppercase">Add/Edit Supplier</h3></div>
+                                        @*<form method="POST">*@
                                             <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
                                             <div class="col-12 col-sm-12 col-md-12">
                                                 <div class="row">
@@ -318,23 +319,19 @@
                                                         </span>
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
-                                                        <span class="input input--hoshi">
+                                                        @*<span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text"pattern="^[a-zA-Z]+$+" title="Please enter on alphabets only" id="services" name="services" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="services">
                                                                 <span class="input__label-content input__label-content--hoshi">Services</span>
                                                             </label>
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                        </span>*@
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="firstname" name="firstname"  value="" required />
+                                                            <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="firstname" name="firstname" value="" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstname">
                                                                 <span class="input__label-content input__label-content--hoshi">First Name</span>
                                                             </label>
                                                         </span>
                                                     </div>
-                                                </div>
-                                                <div class="row" style="margin-top: -24px;">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text" pattern="[a-zA-Z]+" title="Please enter on alphabets only" id="lastname" name="lastname" value="" required />
@@ -343,6 +340,8 @@
                                                             </label>
                                                         </span>
                                                     </div>
+                                                </div>
+                                                <div class="row" style="margin-top: -24px;">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="email" id="email" name="email" value="" onchange="checkEmail(this.value)" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$+" title="Please enter valid email" required />
@@ -359,8 +358,6 @@
                                                             </label>
                                                         </span>
                                                     </div>
-                                                </div>
-                                                <div class="row" style="margin-top: -24px;">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text" id="adress1" name="adress1" value="" required />
@@ -369,6 +366,8 @@
                                                             </label>
                                                         </span>
                                                     </div>
+                                                </div>
+                                                <div class="row" style="margin-top: -24px;">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text" id="adress2" name="adress2" value="" required />
@@ -379,14 +378,12 @@
                                                     </div>
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
-                                                            <input class="input__field input__field--hoshi" type="text" id="pin_code"  minlength="6+" title="Enter Numbers and 6 digits only" maxlength="6" name="pin_code" value=""  pattern="[0-9]+" Title="Enter number only and enter 6 digits only" required />
+                                                            <input class="input__field input__field--hoshi" type="text" id="pin_code" minlength="6+" title="Enter Numbers and 6 digits only" maxlength="6" name="pin_code" value="" pattern="[0-9]+" Title="Enter number only and enter 6 digits only" required />
                                                             <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="pin_code">
                                                                 <span class="input__label-content input__label-content--hoshi">PinCode</span>
                                                             </label>
                                                         </span>
                                                     </div>
-                                                </div>
-                                                <div class="row" style="margin-top: -24px;">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text" id="city" name="city" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
@@ -395,6 +392,8 @@
                                                             </label>
                                                         </span>
                                                     </div>
+                                                </div>
+                                                <div class="row" style="margin-top: -24px;">
                                                     <div class="col-12 col-sm-4 col-md-4">
                                                         <span class="input input--hoshi">
                                                             <input class="input__field input__field--hoshi" type="text" id="state" name="state" pattern="[a-zA-Z]+" title="Please enter on alphabets only" value="" required />
@@ -411,9 +410,7 @@
                                                             </label>
                                                         </span>
                                                     </div>
-                                                </div>
-                                                <div class="row" style="margin-top: -17px;">
-                                                    <div class="col-12 col-sm-4 col-md-4">
+                                                    <div class="col-12 col-sm-4 col-md-4" style="margin-top:20px;">
                                                         <label class="d-block mb-0" style="font-weight:bold">Status</label>
                                                         <fieldset class="form-check" style="display:inline">
                                                             <input type="radio" class="chckactive" id="Status1" name="Status" value="Active" checked required />
@@ -424,9 +421,51 @@
                                                             <label class="form-check-label" for="Status2">InActive</label>
                                                         </fieldset>
                                                     </div>
-                                                </div>                                          
+                                                </div>
+                                                <div class="row" id="services">
+                                                       @*<div class="col-12 col-sm-12 col-md-12">
+                                                           <div><h3 style="text-transform:uppercase">Add Services</h3></div>
+                                                           <div class="row" style="margin-top:10px;">
+                                                               @*<table style="width:100%">
+                                                                   <tr>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label class="form-check-label" for="chck4">Photo Graphy</label></td>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label>Video Graphy</label></td>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label>Car Rental</label></td>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label>Flowers</label></td>
+                                                                   </tr>
+                                                                   <tr>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label>Audio Equipment</label></td>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label>Video Equipment</label></td>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label>Tent House</label></td>
+                                                                       <td><input type="checkbox" id="chck4" name="photography" /><label>Lights</label></td>
+                                                                   </tr>
+                                                               </table>
+                                                           </div>
+                                                       </div>*@
+                                                    <div class="container">
+                                                        <h4 style="text-transform:uppercase">Add Services</h4>
+                                                        <div class="card">
+                                                            <div>
+                                                                <table style="width:100%">
+                                                                    <tr>
+                                                                        <td><input type="checkbox" id="PhotoGraphy" name="services" value="Photo Graphy" /><label>Photo Graphy</label></td>
+                                                                        <td><input type="checkbox" id="VideoGraphy" name="services" value="Video Graphy"/><label>Video Graphy</label></td>
+                                                                        <td><input type="checkbox" id="CarRental" name="services" value="Car Rental" /><label>Car Rental</label></td>
+                                                                        <td><input type="checkbox" id="Flowers" name="services" value="Flowers" /><label>Flowers</label></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><input type="checkbox" id="AudioEquipment" name="services" value="Audio Equipment" /><label>Audio Equipment</label></td>
+                                                                        <td><input type="checkbox" id="VideoEquipment" name="services" value="Video Equipment"/><label>Video Equipment</label></td>
+                                                                        <td><input type="checkbox" id="TentHouse" name="services" value="Tent House" /><label>Tent House</label></td>
+                                                                        <td><input type="checkbox" id="Lights" name="services" value="Lights" /><label>Lights</label></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                             
                                             </div>
-                                            <div align="center" style="margin-top: -17px;">
+                                            <div align="center" style="margin-top:30px;">
                                                 <div style="position: absolute; left: 485px;">
                                                     <button id="SaveVendor" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
                                                     <button id="EditVendor" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
@@ -435,7 +474,7 @@
                                                     <button id="CancelVendor" type="button" class="btn btn-danger">Cancel</button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        @*</form>*@
                                     </div>
                                 </div>
                             </div>
@@ -462,6 +501,8 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         @*<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>*@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script>
             $("input").each(function () {
                 var $this = $(this);
@@ -559,17 +600,61 @@
                         $(this).closest('tr').find('#btnBook').attr('disabled', 'disabled');
                         $('#saverecord').css('display', 'none');
                     }
-                });
-   
+                 });
+                 $('#SaveVendor').click(function () {
+                     var val = $(this).val();
+                     var Id = $('#id').val();
+                     var servicelst = []
+                     $("input:checkbox[name=services]:checked").each(function () {
+                       servicelst.push($(this).val())
+                     })
+                     servicelst = servicelst.join('$');
 
-                @*$('#EditVendor').click(function () {
-                    var status="null"
-                var Id = $('#id').val();
+                     var managevendor = {
+                         vendorId:$('#vendorId').val(),
+                         Businessname: $('#Businessname').val(),
+                         firstname: $('#firstname').val(),
+                         lastname: $('#lastname').val(),
+                         email: $('#email').val(),
+                         adress1: $('#adress1').val(),
+                         adress2: $('#adress2').val(),
+                         city: $('#city').val(),
+                         state: $('#state').val(),
+                         country: $('#country').val(),
+                         phoneno: $('#phoneno').val(),
+                         pin_code: $('#pin_code').val(),
+                         Status: $("input[name='Status']:checked").val(),
+                         services:servicelst
+                     }
+                     $.ajax({
+                         url: '/ManageVendor/Index?command=' + val + '&&id=' + Id,
+                         type: 'POST',
+                         data: JSON.stringify({ mngvendor: managevendor }),
+                         contentType: 'application/json',
+                         success: function (data) {
+                             alert(data);
+                             window.location.href = "@Url.Action("Index", "ManageVendor")";
+                         },
+                         error: function (data) {
+                             alert("save is failed");
+                         }
+                     });
+                 });
+
+
+                $('#EditVendor').click(function () {
+                    //var status="null"
+                    var val = $(this).val();
+                    var Id = $('#id').val();
+                    var servicelst = []
+                    $("input:checkbox[name=services]:checked").each(function () {
+                        servicelst.push($(this).val())
+                    })
+                    servicelst = servicelst.join('$');
                 var managevendor = {
                     Businessname: $('#Businessname').val(),
                     firstname: $('#firstname').val(),
                     lastname: $('#lastname').val(),
-                    services: $('#services').val(),
                     email: $('#email').val(),
                     adress1: $('#adress1').val(),
                     adress2: $('#adress2').val(),
@@ -578,21 +663,22 @@
                     country: $('#country').val(),
                     phoneno: $('#phoneno').val(),
                     pin_code: $('#pin_code').val(),
-                    Status: $("input[name='Status']:checked").val()            
+                    Status: $("input[name='Status']:checked").val(),
+                    services:servicelst
 
                 }
-                
+
                 $.ajax({
-                    url: '/ManageVendor/UpdateVendorDetails?id=' + Id,
+                    url: '/ManageVendor/Index?command=' + val + '&&id=' + Id,
                     type: 'POST',
-                    data:JSON.stringify({mngvendor: managevendor}),
+                    data: JSON.stringify({ mngvendor: managevendor }),
                     contentType: 'application/json',
                     success: function (data) {
                         alert(data);
                         window.location.href = "@Url.Action("Index", "ManageVendor")";
                     }
                 });
-            });*@
+            });
             function checkEmail(val) {
                 //alert(val);
                 vendorId = $('#vendorId').val();
