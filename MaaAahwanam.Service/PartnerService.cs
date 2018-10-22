@@ -27,5 +27,9 @@ namespace MaaAahwanam.Service
         {
             return partnerrepo.UpdatePartner(partner, long.Parse(partid));
         }
+        public List<Partner> GetPartners(string vid)
+        {
+            return partnerrepo.GetPartners(long.Parse(vid));
+        }
     }
 }

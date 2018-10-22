@@ -22,6 +22,8 @@ namespace MaaAahwanam.Web.Controllers
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
         VendorImageService vendorImageService = new VendorImageService();
         VendorDashBoardService vendorDashBoardService = new VendorDashBoardService();
+        PartnerService partnerservice = new PartnerService();
+
         OrderService orderService = new OrderService();
         const string imagepath = @"/vendorimages/";
 
@@ -181,6 +183,9 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.photography = vendorVenueSignUpService.GetVendorPhotography(id);
                 ViewBag.decorators = vendorVenueSignUpService.GetVendorDecorator(id);
                 ViewBag.others = vendorVenueSignUpService.GetVendorOther(id);
+                ViewBag.others = vendorVenueSignUpService.GetVendorOther(id);
+                ViewBag.resellername = partnerservice.GetPartners(Convert.ToString(id));
+
                 return PartialView("sidebar");
             }
             return Content("<script>alert('Session Timeout!!! Please Login'); location.href='/home'</script>");
