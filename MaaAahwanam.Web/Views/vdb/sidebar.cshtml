@@ -1,4 +1,5 @@
-﻿<style>
+﻿<link href="~/newdesignstyles/MDB-Free_4.5.12/css/mdb.min.css" rel="stylesheet" />
+<style>
     .services {
         padding: 15px 15px 15px 20px;
     }
@@ -9,6 +10,56 @@
             font-family: lato;
             color:black;
         }
+
+    #accordionEx {
+    padding:0;
+    width:115%;
+    }
+        #accordionEx .card{
+            width: 100%;
+            text-align: left;
+        }
+
+        #accordionEx .card .card-header {
+            background:white;
+        }
+    
+    /*.accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .panel {
+        padding: 0 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }*/
 </style>
 <div class="services">
     <div onclick="location.href = '/vdb'">Dashboard</div>
@@ -16,40 +67,134 @@
     <div onclick="location.href = '/vdb?c=orders'">Orders</div>
     <div onclick="location.href = '/ManageUser'">Customers/clients</div>
     <div onclick="location.href = '/ManageVendor'">Suppliers</div>
-    <div onclick="location.href = '/ReSellerManagement'">Resellers/Partners</div>
-    <div class="row" style="padding-top:2%">
-        <button class="accordion active" style="background-color:#fff;padding:0">Services</button>
-        <div class="panel" style="max-height:300px;">
-            @foreach (var item in ViewBag.venues)
-            {
-                if (item.VenueType == "" || item.VenueType == null)
-                {
-                    <div><a class="subcatclose" value="@item.Id,Venue" style="color: red;font-size: 12px;">X</a> <a href = "/vdb/Index?c=first&&vid=@item.Id">Venue</a></div>
-                }
-                else
-                {
-                    <div><a class="subcatclose" value="@item.Id,@item.name,@item.VenueType,Venue" style="color: red;font-size: 12px;">X</a><a href = "/vdb/Index?c=first&&vid=@item.Id"> @item.name - @item.VenueType</a></div>
-                }
-            }
-            @foreach (var item in ViewBag.catering)
-            {
-                <div><a class="subcatclose" value="@item.Id,,@item.CuisineType,Catering" style="color: red;font-size: 12px;">X</a> <a href = "/VDashboard/Index?c=first&&vsid=@item.Id">@item.CuisineType</a></div>
-            }
-            @foreach (var item in ViewBag.photography)
-            {
-                <div>  <a class="subcatclose" value="@item.Id,,@item.PhotographyType,Photography" style="color: red;font-size: 12px;">X</a> <a href = "/VDashboard/Index?c=first&&vsid=@item.Id">@item.PhotographyType</a></div>
-            }
-            @foreach (var item in ViewBag.decorators)
-            {
-                <div><a class="subcatclose" value="@item.Id,,@item.DecorationType,Decorator" style="color: red;font-size: 12px;">X</a> <a href = "/VDashboard/Index?c=first&&vsid=@item.Id">@item.DecorationType</a></div>
-            }
-            @foreach (var item in ViewBag.others)
-            {
-                <div>   <a class="subcatclose" value="@item.Id,,@item.type,Other" style="color: red;font-size: 12px;">X</a> <a href = "/VDashboard/Index?c=first&&vsid=@item.Id">@item.type</a></div>
-            }
+    <div onclick="location.href = '/ReSellerManagement'"> add New Resellers/Partners</div>
+
+
+    @*<div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Resellers/Partners</a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    @if (ViewBag.resellername != null)
+                    {
+                        foreach (var item in ViewBag.resellername)
+                        {
+
+                            <div><a class="subcatclose" value="@item.PartnerID,@item.PartnerName,@item.VendorType,Venue" style="color: red;font-size: 12px;">X</a><a href="/ReSellerManagement/Index?partid=@item.PartnerID&&vid=@item.VendorId"> @item.PartnerName</a></div>
+                        }
+                    }
+                </div>
+            </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Services</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+              
+            </div>
+        </div>
+
+    </div>*@
+    <!--Accordion wrapper-->
+    <div class="row accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true" style="padding:0;width:115%">
+
+        <!-- Accordion card -->
+        <div class="card">
+
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="headingOne1">
+                <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                    @*<h5 class="mb-0">
+                        Services <i class="fa fa-angle-down rotate-icon"></i>
+                    </h5>*@
+                    <div>Services <i class="fa fa-angle-down rotate-icon" style="float:right"></i></div>
+                </a>
+            </div>
+
+            <!-- Card body -->
+            <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1" data-parent="#accordionEx">
+                <div class="card-body">
+                    <div class="panel-body smooth-scroll list-unstyled">
+                        @foreach (var item in ViewBag.venues)
+                        {
+                            if (item.VenueType == "" || item.VenueType == null)
+                            {
+                                <div><a class="subcatclose" value="@item.Id,Venue" style="color: red;font-size: 12px;">X</a> <a href="/vdb/Index?c=first&&vid=@item.Id">Venue</a></div>
+                            }
+                            else
+                            {
+                                <div><a class="subcatclose" value="@item.Id,@item.name,@item.VenueType,Venue" style="color: red;font-size: 12px;">X</a><a href="/vdb/Index?c=first&&vid=@item.Id"> @item.name - @item.VenueType</a></div>
+                            }
+                        }
+                        @foreach (var item in ViewBag.catering)
+                        {
+                            <div><a class="subcatclose" value="@item.Id,,@item.CuisineType,Catering" style="color: red;font-size: 12px;">X</a> <a href="/VDashboard/Index?c=first&&vsid=@item.Id">@item.CuisineType</a></div>
+                        }
+                        @foreach (var item in ViewBag.photography)
+                        {
+                            <div>  <a class="subcatclose" value="@item.Id,,@item.PhotographyType,Photography" style="color: red;font-size: 12px;">X</a> <a href="/VDashboard/Index?c=first&&vsid=@item.Id">@item.PhotographyType</a></div>
+                        }
+                        @foreach (var item in ViewBag.decorators)
+                        {
+                            <div><a class="subcatclose" value="@item.Id,,@item.DecorationType,Decorator" style="color: red;font-size: 12px;">X</a> <a href="/VDashboard/Index?c=first&&vsid=@item.Id">@item.DecorationType</a></div>
+                        }
+                        @foreach (var item in ViewBag.others)
+                        {
+                            <div>   <a class="subcatclose" value="@item.Id,,@item.type,Other" style="color: red;font-size: 12px;">X</a> <a href="/VDashboard/Index?c=first&&vsid=@item.Id">@item.type</a></div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Accordion card -->
+        <!-- Accordion card -->
+        <div class="card">
+
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="headingTwo2">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
+                    @*<h5 class="mb-0">
+                        Resellers/Partners <i class="fa fa-angle-down rotate-icon"></i>
+                    </h5>*@
+                    <div>Resellers/Partners <i class="fa fa-angle-down rotate-icon" style="float:right"></i></div>
+                </a>
+            </div>
+
+            <!-- Card body -->
+            <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2" data-parent="#accordionEx">
+                <div class="card-body">
+                    <div class="panel-body ">
+                        <div class="scrollbar scrollbar-primary">
+                            <div class="force-overflow">
+                                @if (ViewBag.resellername != null)
+                                {
+                                    foreach (var item in ViewBag.resellername)
+                                    {
+
+                                        <div><a class="subcatclose" value="@item.PartnerID,@item.PartnerName,@item.VendorType,Venue" style="color: red;font-size: 12px;">X</a><a href="/ReSellerManagement/Index?partid=@item.PartnerID&&vid=@item.VendorId"> @item.PartnerName</a></div>
+                                    }
+                                }
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Accordion card -->
     </div>
+    <!-- Accordion wrapper -->
+
 </div>
+
 @*<button type="button" onclick="addservice()" id="service">Add Service</button>*@
 <div id="addservices" style="height:150px">
     <div id="addcategory" style="height:60px">
@@ -74,7 +219,7 @@
     </button>
 </div>
 
-
+<script src="~/newdesignstyles/MDB-Free_4.5.12/js/mdb.min.js"></script>
 
 @*<h6 class="h6-in-3">
         <select multiple class="form-control" id="serviceselection1" name="serviceselection1">
