@@ -21,6 +21,7 @@
         <style>
             .upload-section table, tr, td {
                 border: 0px;
+                padding-left: 6%;
             }
 
             .side-content-2 input[type=text], .side-content-1 input[type=text] {
@@ -42,11 +43,7 @@
                 margin-left: 15px;
             }
 
-            .upload-section table, th, td {
-                padding-left: 6%;
-            }
-
-            .sliderdiv,.sliderdiv1 {
+            .sliderdiv, .sliderdiv1 {
                 border: 4px grey solid;
                 border-style: dashed;
                 height: 100px;
@@ -54,11 +51,11 @@
                 margin-top: 25px;
             }
 
-                .sliderdiv img,.sliderdiv1 img {
+                .sliderdiv img, .sliderdiv1 img {
                     padding: 35px;
                 }
 
-                .sliderdiv input[type=file],.sliderdiv1 input[type=file] {
+                .sliderdiv input[type=file], .sliderdiv1 input[type=file] {
                     display: none;
                 }
 
@@ -68,6 +65,13 @@
 
             #sectiontimeslot label, #pkgpricesection span {
                 color: white;
+            }
+
+            .package-list, #gallerysection {
+                overflow-y: scroll;
+                min-height: 140px;
+                height: 20%;
+                overflow-x: hidden;
             }
         </style>
     }
@@ -271,71 +275,256 @@
             </div>
 
             <div class="row" id="pkgsdiv">
-                <div>
-                    <div class="package-box">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-6 col-xs-6">
-                                    <input type="text" class="form-control" id="pkgname" placeholder="Package Name" value="@ViewBag.package.PackageName">
+
+                @if (ViewBag.package.Count > 0)
+                {
+                    for (int i = 0; i < ViewBag.package.Count; i++)
+                    {
+                        <div class="allpkgs">
+                            <div class="package-box">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6">
+                                            <input type="text" class="form-control" id="pkgname" placeholder="Package Name" value="@ViewBag.package[i].PackageName">
+                                        </div>
+                                        <div class="col-md-6 col-xs-6">
+                                            <div class="row" id="sectiontimeslot">
+                                                <div class="col-md-4 col-xs-6">
+                                                    @if (ViewBag.package[i].Category == "Veg")
+                                                    {
+                                                        <input type="radio" name="checkradio @i" id="Veg" value="Veg" checked /><label for="Veg">Veg</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="checkradio @i" id="Veg" value="Veg" /><label for="Veg">Veg</label>
+                                                    }
+                                                    <br />
+                                                    @if (ViewBag.package[i].Category == "NonVeg")
+                                                    {
+                                                        <input type="radio" name="checkradio @i" id="NonVeg" value="NonVeg" checked /><label for="NonVeg">Non-Veg</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" name="checkradio @i" id="NonVeg" value="NonVeg" /><label for="NonVeg">Non-Veg</label>
+                                                    }
+                                                    @*<input type="radio" name="checkradio @i" id="Veg" value="Veg" /><label for="Veg">Veg</label>
+                                                        <br />
+                                                        <input type="radio" name="checkradio @i" id="NonVeg" value="NonVeg" /><label for="NonVeg">Non-Veg</label>*@
+                                                </div>
+                                                <input type="hidden" id="pkgslots" value="@ViewBag.package[i].timeslot" />
+                                                @if (ViewBag.package[i].timeslot == null)
+                                                {
+                                                    <div class="col-md-4 col-xs-4">
+                                                        <input type="checkbox" class="slotcheck" name="slot" id="Break_Fast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                                        <br />
+                                                        <input type="checkbox" class="slotcheck" name="slot" id="Lunch" value="Lunch" /><label for="lunch">Lunch</label>
+                                                    </div>
+                                                    <div class="col-md-4 col-xs-4">
+                                                        <input type="checkbox" class="slotcheck" name="slot" id="Dinner" value="Dinner" /><label for="dinner">Dinner</label>
+                                                        <br />
+                                                        <input type="checkbox" class="slotcheck" name="slot" id="High_Tea" value="High Tea" /><label for="hightea">High Tea</label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-4 col-xs-4">
+
+                                                        @if (ViewBag.package[i].timeslot.Contains("Break Fast"))
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="Break_Fast" value="Break Fast" checked /><label for="breakfast">Break Fast</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="Break_Fast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                                        }
+                                                        <br />
+                                                        @if (ViewBag.package[i].timeslot.Contains("Lunch"))
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="Lunch" value="Lunch" checked /><label for="lunch">Lunch</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="Lunch" value="Lunch" /><label for="lunch">Lunch</label>
+                                                        }
+                                                    </div>
+                                                    <div class="col-md-4 col-xs-4">
+                                                        @if (ViewBag.package[i].timeslot.Contains("Dinner"))
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="Dinner" value="Dinner" checked /><label for="dinner">Dinner</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="Dinner" value="Dinner" /><label for="dinner">Dinner</label>
+                                                        }
+                                                        <br />
+                                                        @if (ViewBag.package[i].timeslot.Contains("High Tea"))
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="High_Tea" value="High Tea" checked /><label for="hightea">High Tea</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="slotcheck" name="slot" id="High_Tea" value="High Tea" /><label for="hightea">High Tea</label>
+                                                        }
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="pkgpricesection">
+                                        <div class="col-md-3 col-xs-3">
+                                            <span>Normal Days ₹</span>
+                                            <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%" value="@ViewBag.package[i].normaldays" /></span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3">
+                                            <span>Peak Days ₹</span>
+                                            <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%" value="@ViewBag.package[i].peakdays" /></span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3">
+                                            <span>Holidays ₹</span>
+                                            <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%" value="@ViewBag.package[i].holidays" /></span>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3">
+                                            <span>Choice Days ₹</span>
+                                            <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%" value="@ViewBag.package[i].choicedays" /></span>
+                                        </div>
+                                    </div>
+                                    <div class="row" align="center" style="padding-top:10px">
+                                        <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3">@ViewBag.package[i].PackageDescription</textarea>
+                                    </div>
+
                                 </div>
-                                <div class="col-md-6 col-xs-6">
-                                    <div class="row" id="sectiontimeslot">
-                                        <div class="col-md-4 col-xs-6">
-                                            <input type="radio" name="checkradio" id="Veg" value="Veg" /><label for="Veg">Veg</label>
-                                            <br />
-                                            <input type="radio" name="checkradio" id="NonVeg" value="NonVeg" /><label for="NonVeg">Non-Veg</label>
-                                        </div>
-                                        <input type="hidden" id="pkgslots" value="@ViewBag.package.timeslot" />
-                                        <div class="col-md-4 col-xs-4">
-                                            <input type="checkbox" class="slotcheck" name="slot" id="Break_Fast" value="Break Fast" /><label for="breakfast">Break Fast</label>
-                                            <br />
-                                            <input type="checkbox" class="slotcheck" name="slot" id="Lunch" value="Lunch" /><label for="lunch">Lunch</label>
-                                        </div>
-                                        <div class="col-md-4 col-xs-4">
-                                            <input type="checkbox" class="slotcheck" name="slot" id="Dinner" value="Dinner" /><label for="dinner">Dinner</label>
-                                            <br />
-                                            <input type="checkbox" class="slotcheck" name="slot" id="High_Tea" value="High Tea" /><label for="hightea">High Tea</label>
+                            </div>
+                            <div class="package-list">
+                                @if (ViewBag.pkgitems.Count != 0)
+                                {
+                                    if (ViewBag.pkgitems[i] != null && ViewBag.selecteditems[i] != null)
+                                    {
+                                        for (int k = 0; k < ViewBag.pkgitems[i].Length; k++)
+                                        {
+                                            <button id="pillbutton" value="@ViewBag.selecteditems[i].Split(',')[k].Replace(' ','_')">@ViewBag.pkgitems[i][k]</button>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <button id="pillbutton" class="button pkgitem" value="Welcome_Drinks">Welcome Drinks(0) <i class="fa fa-close"></i> </button>
+                                        <button id="pillbutton" class="button pkgitem" value="Starters">Starters(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Rice">Rice(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Bread">Bread(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Curries">Curries(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Fry_Dry">Fry/Dry(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Salads">Salads(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Soups">Soups(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Deserts">Deserts(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Beverages">Beverages(0)</button>
+                                        <button id="pillbutton" class="button pkgitem" value="Fruits">Fruits(0)</button>
+                                    }
+                                    <div id="extracourse"></div>
+                                }
+                                else
+                                {
+                                    <button id="pillbutton" class="button pkgitem" value="Welcome_Drinks">Welcome Drinks(0) <i class="fa fa-close"></i> </button>
+                                    <button id="pillbutton" class="button pkgitem" value="Starters">Starters(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Rice">Rice(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Bread">Bread(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Curries">Curries(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Fry_Dry">Fry/Dry(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Salads">Salads(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Soups">Soups(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Deserts">Deserts(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Beverages">Beverages(0)</button>
+                                    <button id="pillbutton" class="button pkgitem" value="Fruits">Fruits(0)</button>
+                                    <div id="extracourse">
+                                        @foreach (var item in ViewBag.extramenuitems.Split(','))
+                                        {
+                                            if (item != null && item != "")
+                                            {
+                                                <button id="pillbutton" class="button extraitem" value="@item">@item (0)</button>
+                                            }
+                                        }
+                                    </div>
+                                }
+
+
+                            </div>
+                            <div align="right" class="pkgsave">
+                                @if (ViewBag.package[i].menuitems == null)
+                                {
+                                    <input type="hidden" class="pkgmenuitems" value="@ViewBag.package[i].menuitems" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" class="pkgmenuitems" value="@ViewBag.package[i].menuitems.Trim()" />
+                                }
+                                <input type="hidden" class="selpkgitems" />
+                                <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems[i]" />
+                                <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
+                                <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
+                                <a class="pkgclone" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
+                                <input type="hidden" class="packageid" value="@ViewBag.package[i].PackageID" />
+                                <a class="updatepkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Update</a>
+                                <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="allpkgs">
+                        <div class="package-box">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <input type="text" class="form-control" id="pkgname" placeholder="Package Name" value="">
+                                    </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="row" id="sectiontimeslot">
+                                            <div class="col-md-4 col-xs-6">
+                                                <input type="radio" name="checkradio" id="Veg" value="Veg" /><label for="Veg">Veg</label>
+                                                <br />
+                                                <input type="radio" name="checkradio" id="NonVeg" value="NonVeg" /><label for="NonVeg">Non-Veg</label>
+                                            </div>
+                                            <input type="hidden" id="pkgslots" value="" />
+                                            <div class="col-md-4 col-xs-4">
+                                                <input type="checkbox" class="slotcheck" name="slot" id="Break_Fast" value="Break Fast" /><label for="breakfast">Break Fast</label>
+                                                <br />
+                                                <input type="checkbox" class="slotcheck" name="slot" id="Lunch" value="Lunch" /><label for="lunch">Lunch</label>
+                                            </div>
+                                            <div class="col-md-4 col-xs-4">
+                                                <input type="checkbox" class="slotcheck" name="slot" id="Dinner" value="Dinner" /><label for="dinner">Dinner</label>
+                                                <br />
+                                                <input type="checkbox" class="slotcheck" name="slot" id="High_Tea" value="High Tea" /><label for="hightea">High Tea</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row" id="pkgpricesection">
-                                <div class="col-md-3 col-xs-3">
-                                    <span>Normal Days ₹</span>
-                                    <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%" value="@ViewBag.package.normaldays" /></span>
+                                <div class="row" id="pkgpricesection">
+                                    <div class="col-md-3 col-xs-3">
+                                        <span>Normal Days ₹</span>
+                                        <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%" value="" /></span>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <span>Peak Days ₹</span>
+                                        <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%" value="" /></span>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <span>Holidays ₹</span>
+                                        <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%" value="" /></span>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <span>Choice Days ₹</span>
+                                        <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%" value="" /></span>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 col-xs-3">
-                                    <span>Peak Days ₹</span>
-                                    <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%" value="@ViewBag.package.peakdays" /></span>
+                                <div class="row" align="center" style="padding-top:10px">
+                                    <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3"></textarea>
                                 </div>
-                                <div class="col-md-3 col-xs-3">
-                                    <span>Holidays ₹</span>
-                                    <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%" value="@ViewBag.package.holidays" /></span>
-                                </div>
-                                <div class="col-md-3 col-xs-3">
-                                    <span>Choice Days ₹</span>
-                                    <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%" value="@ViewBag.package.choicedays" /></span>
-                                </div>
-                            </div>
-                            <div class="row" align="center" style="padding-top:10px">
-                                <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3">@ViewBag.package.PackageDescription</textarea>
-                            </div>
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="package-list">
-                        @if (ViewBag.pkgitems != null)
-                        {
-                            for (int i = 0; i < ViewBag.pkgitems.Length; i++)
-                            {
-                                <button id="pillbutton" class="button pkgitem" value="@ViewBag.selecteditems.Split(',')[i]">@ViewBag.pkgitems[i].Split('(')[0] (@ViewBag.pkgitems[i].Split('(')[1].Split(')')[0])</button>
-                            }
-                            <div id="extracourse"></div>
-                        }
-                        else
-                        {
-                            <button class="button pkgitem" value="Welcome_Drinks">Welcome Drinks(0)</button>
-                            <button class="button pkgitem" value="Starters">Starters(0)</button>
+                        <div class="package-list">
+                            <button id="pillbutton" class="button pkgitem" value="Welcome_Drinks">Welcome Drinks(0) <i class="fa fa-close"></i> </button>
+                            <button id="pillbutton" class="button pkgitem" value="Starters">Starters(0)</button>
                             <button id="pillbutton" class="button pkgitem" value="Rice">Rice(0)</button>
                             <button id="pillbutton" class="button pkgitem" value="Bread">Bread(0)</button>
                             <button id="pillbutton" class="button pkgitem" value="Curries">Curries(0)</button>
@@ -350,44 +539,27 @@
                                 {
                                     if (item != null && item != "")
                                     {
-                                        <button class="button extraitem" value="@item">@item (0)</button>
+                                        <button id="pillbutton" class="button extraitem" value="@item">@item (0)</button>
                                     }
                                 }
                             </div>
-                        }
+                        </div>
+                        <div align="right" class="pkgsave">
 
-
-                    </div>
-                    <div align="right" class="pkgsave">
-                        @if (ViewBag.package.menuitems == null)
-                        {
-                            <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems" />
-                        }
-                        else
-                        {
-                            <input type="hidden" class="pkgmenuitems" value="@ViewBag.package.menuitems.Trim()" />
-                        }
-                        <input type="hidden" class="selpkgitems" />
-                        <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems" />
-                        <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
-                        <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
-                        <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
-                        @if (ViewBag.package.PackageID != 0)
-                        {
-                            <input type="hidden" class="packageid" value="@ViewBag.package.PackageID" />
-                            <a class="updatepkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Update</a>
-                        }
-                        else
-                        {
+                            <input type="hidden" class="pkgmenuitems" value="" />
+                            <input type="hidden" class="selpkgitems" />
+                            <input type="hidden" class="availablepkgitems" value="" />
+                            <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
+                            <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
+                            <a class="pkgclone" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
                             <a class="addpkg" style="padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;">Publish</a>
-                        }
-                        <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
+                            <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
+                        </div>
                     </div>
-
-                </div>
+                }
             </div>
 
-            <div class="row upload-section">
+            <div class="row upload-section" id="gallerysection" style="overflow-x:scroll">
                 <h6>GALLERY/VIDEOS</h6>
                 <table>
                     <tr>
@@ -399,6 +571,7 @@
                                     <td>
                                         <div align="center">
                                             <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
+                                            <text style="color:black">@item.ImageName</text>
                                         </div>
                                     </td>
                                 }
@@ -932,12 +1105,6 @@
                     <input type="text" class="form-control" style="margin-left:0" id="City" name="City" placeholder="What's your City" value="@ViewBag.service.City" />
                 </div>
                 <input type="text" class="form-control" id="ZipCode" name="ZipCode" placeholder="Type ZipCode" value="@ViewBag.service.ZipCode">
-                @*<div class="col-md-6">
-                        <input type="text" class="form-control" style="margin-left:0" />
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" style="margin-left:0" />
-                    </div>*@
             </div>
         </div>
     </div>
@@ -1322,18 +1489,26 @@
     {
         <script src="~/Scripts/vdb1.js"></script>
         <script type="text/javascript">
-            //Add Package
-            $("#anp").click(function () {
-                var div = document.getElementById("pkgsdiv");
-                var childdiv = "<div><div class='package-box'></div><div class='package-list'><button id='pillbutton'>Mocktails(2)</button><button id='pillbutton'>soup(2)</button><button id='pillbutton'>salad(2)</button><button id='pillbutton'>mains(2)</button><button id='pillbutton'>rice&amp;curd(2)</button><button id='pillbutton'>Rajasthani(2)</button><button id='pillbutton'>deserts(2)</button><button id='pillbutton'>Add item</button><br><br><a href='#' id='a-text'>Duplicate</a><a href='#' id='a-text-1'>Publish</a></div></div>";
-                $('#pkgsdiv').append(childdiv);
-            });
+            @*var pkgcount = '@ViewBag.package.Count';
+            var pkgcat = [];
+            var pkgtslot = [];
+            for (var i = 0; i < pkgcount; i++) {
 
-            $('#@ViewBag.package.Category').prop('checked', true);
-            var list = $('#pkgslots').val();
-            for (var i = 0; i < list.split(',').length; i++) {
-                $('#' + list.split(',')[i].replace(' ', '_') + '').prop('checked', true);
-            }
+            }*@
+            @*if (pkgcount > 0)
+            {
+                for (var i = 0; i < pkgcount; i++) {
+                    int k = parseInt(i);
+                    var category = '@ViewBag.package[k].Category';
+                    $('#@ViewBag.package[i].Category').prop('checked', true);
+                    var list = $('#pkgslots').val();
+                    for (var i = 0; i < list.split(',').length; i++) {
+                        $('#' + list.split(',')[i].replace(' ', '_') + '').prop('checked', true);
+                    }
+                }
+            }*@
+
+
         </script>
     }
     @if (ViewBag.enable == "second")
