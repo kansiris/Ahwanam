@@ -31,5 +31,21 @@ namespace MaaAahwanam.Service
         {
             return partnerrepo.GetPartners(long.Parse(vid));
         }
+
+        public List<PartnerPackage> getPartnerPackage(string vid)
+        {
+            return partnerrepo.getPartnerPackage(long.Parse(vid));
+        }
+
+        public PartnerPackage addPartnerPackage(PartnerPackage partnerPackage)
+        {
+            partnerPackage = partnerrepo.addPartnerPackage(partnerPackage);
+            return partnerPackage;
+        }
+        public PartnerPackage updatepartnerpackage(PartnerPackage partnerPackage ,long partid, string date, long packageid)
+        {
+            partnerPackage = partnerrepo.updatepartnerpackage(partnerPackage, partid, date, packageid);
+            return partnerPackage;
+        }
     }
 }
