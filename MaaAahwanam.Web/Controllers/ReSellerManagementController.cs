@@ -1,4 +1,5 @@
 ﻿using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 using MaaAahwanam.Service;
 using MaaAahwanam.Web.Custom;
 using System;
@@ -29,29 +30,68 @@ namespace MaaAahwanam.Web.Controllers
                 string VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 var resellers = partnerservice.GetPartners(VendorId);
-                if(partid != "" && partid != null)
+                var resellerspack = partnerservice.getPartnerPackage(VendorId);
+                var pkgs = viewservicesss.getvendorpkgs(VendorId).ToList();
+                List<string> pppl = new List<string>();
+                List<PartnerPackage> p = new List<PartnerPackage>();
+                List<SPGETNpkg_Result> p1 = new List<SPGETNpkg_Result>();
+                if (partid != "" && partid != null)
                 {
+                    var resellerspacklist = resellerspack.Where(m => m.PartnerID == long.Parse(partid)).ToList();
+                    var pkglist = resellerspacklist.Select(m => m.packageid).ToList();
+                    foreach (var item in pkgs)
+                    {
+                        if (pkglist.Contains(item.PackageID.ToString()))
+                            p.AddRange(resellerspack.Where(m => m.packageid == item.PackageID.ToString()).ToList());
+                        else
+                            p1.AddRange(pkgs.Where(m=>m.PackageID == item.PackageID));
+                    }
+                    ViewBag.resellerpkg = p;
+                    ViewBag.pkg = p1;
                     ViewBag.resellers = resellers.Where(m => m.PartnerID == long.Parse(partid)).FirstOrDefault();
                 }
-                ViewBag.package = viewservicesss.getvendorpkgs(VendorId).ToList();
+                ViewBag.package = pkgs;
                 return View();
             }
-            else {
+            else
+            {
                 return RedirectToAction("Index", "Home");
             }
         }
         [HttpPost]
-        public JsonResult Index(Partner partner,string command,string partid)
+        public JsonResult Index(Partner partner, string command, string partid)
         {
             partner.RegisteredDate = DateTime.Now;
             partner.UpdatedDate = DateTime.Now;
             if (command == "save") { partner = partnerservice.AddPartner(partner); }
-            else if(command == "Update") { partner = partnerservice.UpdatePartner(partner,partid); }
-
+            else if (command == "Update") { partner = partnerservice.UpdatePartner(partner, partid); }
+            else if (command == "Update1") { partner = partnerservice.UpdatePartner(partner, partid); }
             var emailid = partner.emailid;
             var getpartner = partnerservice.getPartner(emailid);
             return Json(getpartner, JsonRequestBehavior.AllowGet);
         }
-       
+
+        [HttpPost]
+        public JsonResult PartnerPackage(PartnerPackage partnerPackage, string command, string partid)
+        {
+            partnerPackage.RegisteredDate = DateTime.Now;
+            partnerPackage.UpdatedDate = DateTime.Now;
+            if (command == "save") { partnerPackage = partnerservice.addPartnerPackage(partnerPackage); }
+            //else if (command == "Update") { partnerPackage = partnerservice.UpdatepartnerPackage(partnerPackage, partid); }
+
+            //var emailid = partner.emailid;
+            //var getpartner = partnerservice.getPartner(emailid);
+            return Json(partnerPackage, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult PartnerPackcalender(PartnerPackage partnerPackage, string command, string partid, string date, string packageid)
+        {
+            partnerPackage.RegisteredDate = DateTime.Now;
+            partnerPackage.UpdatedDate = DateTime.Now;
+            partnerPackage = partnerservice.updatepartnerpackage(partnerPackage, long.Parse(partid), date, long.Parse(packageid));
+
+            return Json(partnerPackage, JsonRequestBehavior.AllowGet);
+        }
     }
 }

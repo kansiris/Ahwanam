@@ -28,11 +28,6 @@ namespace MaaAahwanam.Repository.db
         public Partner UpdatePartner(Partner partner,long partid)
         {
             var partner1 = _dbContext.Partner.Where(m => m.PartnerID == partid).FirstOrDefault();
-
-            //var partner1 = _dbContext.Partner.SingleOrDefault(v => v.PartnerID == long.Parse(partid));
-            //partner.PartnerID = partner1.PartnerID;
-            //partner.VendorId = partner1.VendorId;
-            //partner.RegisteredDate = partner1.RegisteredDate;
             _dbContext.Entry(partner1).CurrentValues.SetValues(partner);
             _dbContext.SaveChanges();
             return partner1;
@@ -41,6 +36,25 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Partner.Where(p => p.VendorId == vid).ToList();
            
+        }
+        public List<PartnerPackage> getPartnerPackage(long vid)
+        {
+            return _dbContext.PartnerPackage.Where(p => p.VendorId == vid).ToList();
+
+        }
+        public PartnerPackage addPartnerPackage(PartnerPackage partnerPackage)
+        {
+            _dbContext.PartnerPackage.Add(partnerPackage);
+            _dbContext.SaveChanges();
+            return partnerPackage;
+        }
+        public PartnerPackage updatepartnerpackage(PartnerPackage partnerPackage, long partid, string date, long packageid)
+        {
+            var partnerPackage1 = _dbContext.PartnerPackage.Where(m => m.PartnerID == partid && m.packageid == packageid.ToString()).FirstOrDefault();
+            partnerPackage.expiry = date;
+            _dbContext.Entry(partnerPackage1).CurrentValues.SetValues(partnerPackage);
+            _dbContext.SaveChanges();
+            return partnerPackage;
         }
     }
 }

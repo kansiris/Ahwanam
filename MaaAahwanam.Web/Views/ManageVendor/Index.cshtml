@@ -562,6 +562,7 @@
                         var radataid = $(this).val();
                         $('#id').val(radataid);
                         //alert(radataid);
+                        
                         $.ajax({
                             url: '/ManageVendor/GetVendorDetails?id=' + radataid,
                             type: 'POST',
@@ -580,7 +581,20 @@
                                 $("#city").val(result.city);
                                 $("#state").val(result.state);
                                 $("#country").val(result.country);
-                                $("#services").val(result.services);
+                                //$("#services").val(result.services);
+                                var ks = result.services.split('&');
+                                var array = ks;                              
+                                var arrayValues = array;//.contents.split('&');                            
+                                
+                                if (arrayValues) {
+                                    $.each(arrayValues, function (i, val) {
+
+                                        $("input[value='" + val + "']").prop('checked', 'checked');
+
+                                    });
+
+                                }
+                               
                                 $("#pin_code").val(result.pin_code);
                                 //$("#Status").val(result.Status);
                                 if (result.Status == "Active") {
@@ -604,12 +618,43 @@
                  $('#SaveVendor').click(function () {
                      var val = $(this).val();
                      var Id = $('#id').val();
+                     var Businessname = $('#Businessname').val();
+                     var firstname = $('#firstname').val();
+                     var lastname = $('#lastname').val();
+                     var email = $('#email').val();
+                     var emailidpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+                     var adress1 = $('#adress1').val();
+                     var adress2 = $('#adress2').val();
+                     var city = $('#city').val();
+                     var state = $('#state').val();
+                     var country = $('#country').val();
+                     var phoneno = $('#phoneno').val();
+                     var phonenopattern = /^[0-9]{10}$/;
+                     var pin_code = $('#pin_code').val();
+                     var pincodepattern = /^[0-9]{6}$/;
                      var servicelst = []
                      $("input:checkbox[name=services]:checked").each(function () {
                        servicelst.push($(this).val())
                      })
-                     servicelst = servicelst.join('$');
-
+                     servicelst = servicelst.join('&');
+                     //--validation messages--//
+                     if (Businessname == '') { alert('Enter Supplier Business Name'); $('#Businessname').focus(); }
+                     else if (firstname == '') { alert('Enter Supplier First Nmae'); $('#firstname').focus(); }
+                     else if (lastname == '') { alert('Enter Supplier First Nmae'); $('#lastname').focus(); }
+                     else if (email == '') { alert('Enter Email'); $('#email').focus(); }
+                     else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
+                     else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
+                     else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
+                     else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
+                     else if (adress1 == '') { alert('Enter Supplier Flat Number'); $('#adress1').focus(); }
+                     else if (adress2 == '') { alert('Enter Supplier Locality'); $('#adress2').focus(); }
+                     else if (pin_code == '') { alert('Enter Pin Code'); $('#pin_code').focus(); }
+                     else if (pin_code.length < 6) { alert('Enter 6 digits only'); $('#pin_code').focus(); }
+                     else if (!pincodepattern.test(pin_code)) { alert("Please Enter 6 digit Pincode "); $("#pin_code").focus(); }
+                     else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+                     else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+                     else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+                     else{
                      var managevendor = {
                          vendorId:$('#vendorId').val(),
                          Businessname: $('#Businessname').val(),
@@ -633,12 +678,26 @@
                          contentType: 'application/json',
                          success: function (data) {
                              alert(data);
+                             //$('#Businessname').val(''),
+                             //$('#firstname').val(''),
+                             //$('#lastname').val(''),
+                             //$('#email').val(''),
+                             //$('#adress1').val(''),
+                             //$('#adress2').val(''),
+                             //$('#city').val(''),
+                             //$('#state').val(''),
+                             //$('#country').val(''),
+                             //$('#phoneno').val(''),
+                             //$('#pincode').val(''),
+                             //$('#MemberNumber').val('')
+                             //location.reload();
                              window.location.href = "@Url.Action("Index", "ManageVendor")";
                          },
                          error: function (data) {
                              alert("save is failed");
                          }
                      });
+                   }
                  });
 
 
@@ -646,11 +705,43 @@
                     //var status="null"
                     var val = $(this).val();
                     var Id = $('#id').val();
+                    var Businessname = $('#Businessname').val();
+                    var firstname = $('#firstname').val();
+                    var lastname = $('#lastname').val();
+                    var email = $('#email').val();
+                    var emailidpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+                    var adress1 = $('#adress1').val();
+                    var adress2 = $('#adress2').val();
+                    var city = $('#city').val();
+                    var state = $('#state').val();
+                    var country = $('#country').val();
+                    var phoneno = $('#phoneno').val();
+                    var phonenopattern = /^[0-9]{10}$/;
+                    var pin_code = $('#pin_code').val();
+                    var pincodepattern = /^[0-9]{6}$/;
                     var servicelst = []
                     $("input:checkbox[name=services]:checked").each(function () {
                         servicelst.push($(this).val())
                     })
-                    servicelst = servicelst.join('$');
+                    servicelst = servicelst.join('&');
+                    //--validation messages--//
+                    if (Businessname == '') { alert('Enter Supplier Business Name'); $('#Businessname').focus(); }
+                    else if (firstname == '') { alert('Enter Supplier First Nmae'); $('#firstname').focus(); }
+                    else if (lastname == '') { alert('Enter Supplier First Nmae'); $('#lastname').focus(); }
+                    else if (email == '') { alert('Enter Email'); $('#email').focus(); }
+                    else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
+                    else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
+                    else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
+                    else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
+                    else if (adress1 == '') { alert('Enter Supplier Flat Number'); $('#adress1').focus(); }
+                    else if (adress2 == '') { alert('Enter Supplier Locality'); $('#adress2').focus(); }
+                    else if (pin_code == '') { alert('Enter Pin Code'); $('#pin_code').focus(); }
+                    else if (pin_code.length < 6) { alert('Enter 6 digits only'); $('#pin_code').focus(); }
+                    else if (!pincodepattern.test(pin_code)) { alert("Please Enter 6 digit Pincode "); $("#pin_code").focus(); }
+                    else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+                    else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+                    else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+                    else {
                 var managevendor = {
                     Businessname: $('#Businessname').val(),
                     firstname: $('#firstname').val(),
@@ -675,9 +766,23 @@
                     contentType: 'application/json',
                     success: function (data) {
                         alert(data);
+                       // $('#Businessname').val(''),
+                        //$('#firstname').val(''),
+                        //$('#lastname').val(''),
+                        //$('#email').val(''),
+                        //$('#adress1').val(''),
+                        //$('#adress2').val(''),
+                        //$('#city').val(''),
+                        //$('#state').val(''),
+                        //$('#country').val(''),
+                        //$('#phoneno').val(''),
+                        //$('#pincode').val(''),
+                        //$('#MemberNumber').val('')
+                        //location.reload();
                         window.location.href = "@Url.Action("Index", "ManageVendor")";
                     }
                 });
+             }
             });
             function checkEmail(val) {
                 //alert(val);
@@ -687,7 +792,9 @@
                     type: 'Post',
                     contentType: 'application/json',
                     success: function (result) {
-                        alert(result);
+                        if (result == "sucess1") {
+                            alert("email is already existed select another email");
+                        }
                     },
                     error: function (result) {
                         alert("failed");
