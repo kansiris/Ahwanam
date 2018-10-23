@@ -69,9 +69,9 @@ namespace MaaAahwanam.Web.Controllers
         {
             int query = mngvendorservice.checkvendoremail(email, id);
             if (query == 0)
-                return Json("valid email");
+                return Json("success");
             else
-                return Json("already email is added");
+                return Json("sucess1");
         }
     }
 }
