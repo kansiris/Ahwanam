@@ -4,6 +4,8 @@
 }
 @section css{
     <link href="~/newdesignstyles/css/reseller.css" rel="stylesheet" />
+    <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
@@ -17,499 +19,500 @@
 
 
 
-    <div class="col-md-10">
-        <input type="hidden" id="partid" name="partid" class="partid" value="" />
-        <input type="hidden" id="VendorId" name="VendorId" value="@ViewBag.masterid" />
-        @if (ViewBag.resellers != null)
-        {
-            <div class="row">
-                <div class="col-sm-4">
-                    <div id="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5 class="card-title">Business Details</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    @*<button class="btn btn-primary btn-sm" value="Update" id="btncontact">Save</button>*@
+<div class="col-md-10">
+    <input type="hidden" id="VendorId" name="VendorId" value="@ViewBag.masterid" />
+    @if (ViewBag.resellers != null)
+    {<input type="hidden" id="partid" name="partid" class="partid" value="@ViewBag.resellers.PartnerID" />
 
-                                    <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
+        <div class="row">
+            <div class="col-sm-4">
+                <div id="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Business Details</h5>
+                            </div>
+                            <div class="col-md-4">
+                                @*<button class="btn btn-primary btn-sm" value="Update" id="btncontact">Save</button>*@
+
+                                <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+
+                                    <input type="text" id="BusinessName" class="form-control input-sm" value="@ViewBag.resellers.PartnerName">
+                                    <label for="BusinessName">Business Name</label>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="email" id="Email" class="form-control input-group-sm" value="@ViewBag.resellers.emailid">
+                                    <label for="Email">Email</label>
 
-                                        <input type="text" id="BusinessName" class="form-control input-sm" value="@ViewBag.resellers.PartnerName">
-                                        <label for="BusinessName">Business Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="email" id="Email" class="form-control input-group-sm" value="@ViewBag.resellers.emailid">
-                                        <label for="Email">Email</label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="number" id="PhoneNumber" class="form-control mr-sm-3" value="@ViewBag.resellers.phoneno">
-                                        <label for="PhoneNumber">Phone Number</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="Address" class="form-control mr-sm-3" value="@ViewBag.resellers.address1">
-                                        <label for="Address">Address</label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="City" class="form-control mr-sm-3" value="@ViewBag.resellers.city">
-                                        <label for="City">City</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="State" class="form-control mr-sm-3" value="@ViewBag.resellers.state">
-                                        <label for="State">State</label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="Country" class="form-control mr-sm-3" value="@ViewBag.resellers.country">
-                                        <label for="Country">Country</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="number" id="faxnumber" class="form-control mr-sm-3" value="@ViewBag.resellers.country">
-                                        <label for="faxnumber">Fax Number</label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-12">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="url" class="form-control mr-sm-3" value="@ViewBag.resellers.url">
-                                        <label for="url">Website Url</label>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div id="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5 class="card-title">Contact Details</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="number" id="PhoneNumber" class="form-control mr-sm-3" value="@ViewBag.resellers.phoneno">
+                                    <label for="PhoneNumber">Phone Number</label>
+
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Address" class="form-control mr-sm-3" value="@ViewBag.resellers.address1">
+                                    <label for="Address">Address</label>
 
-
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="firstName" class="form-control mr-sm-3" value="@ViewBag.resellers.cpfname">
-                                        <label for="firstName">First Name</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="lastname" class="form-control mr-sm-3" value="@ViewBag.resellers.cplname">
-                                        <label for="lastname">Last Name</label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="Designation" class="form-control mr-sm-3" value="@ViewBag.resellers.cpdesig">
-                                        <label for="Designation">Designation</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="number" id="mobileno" class="form-control mr-sm-3" value="@ViewBag.resellers.cpphoneno">
-                                        <label for="mobileno">Phone Number</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-12">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="email" id="email" class="form-control mr-sm-3" value="@ViewBag.resellers.cpemailid">
-                                        <label for="email">Email</label>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div id="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5 class="card-title">Bank Details</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="City" class="form-control mr-sm-3" value="@ViewBag.resellers.city">
+                                    <label for="City">City</label>
+
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="State" class="form-control mr-sm-3" value="@ViewBag.resellers.state">
+                                    <label for="State">State</label>
 
-
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="panno" class="form-control mr-sm-3" value="@ViewBag.resellers.PAN">
-                                        <label for="panno">PAN Number</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="Gst" class="form-control mr-sm-3" value="@ViewBag.resellers.GST">
-                                        <label for="Gst">GSTIN</label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="bankname" class="form-control mr-sm-3" value="@ViewBag.resellers.bankname">
-                                        <label for="bankname">Bank Name</label>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="bankbranchname" class="form-control mr-sm-3" value="@ViewBag.resellers.bankbranch">
-                                        <label for="bankbranchname">Bank Branch Name</label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="accholdername" class="form-control mr-sm-3" value="@ViewBag.resellers.AccountHolderName">
-                                        <label for="accholdername">A/C Holder Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="ifsccode" class="form-control mr-sm-3" value="@ViewBag.resellers.IFSC">
-                                        <label for="ifsccode">IFSC CODE</label>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="md-form form-sm mt-0">
-                                        <input type="text" id="accountno" class="form-control mr-sm-3" value="@ViewBag.resellers.AccountNumber">
-                                        <label for="accountno">Account Number</label>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>}
-        else
-        {
-    <div class="row">
-        <div class="col-sm-4">
-            <div id="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h5 class="card-title">Business Details</h5>
-                        </div>
-                        <div class="col-md-4">
-                            @*<button class="btn btn-primary btn-sm" value="Update" id="btncontact">Save</button>*@
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Country" class="form-control mr-sm-3" value="@ViewBag.resellers.country">
+                                    <label for="Country">Country</label>
 
-                            <button class="btn btn-primary btn-sm btnbusiness" value="save" id="btnbusiness">Save</button>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="number" id="faxnumber" class="form-control mr-sm-3" value="@ViewBag.resellers.country">
+                                    <label for="faxnumber">Fax Number</label>
 
-                                <input type="text" id="BusinessName" class="form-control input-sm" >
-                                <label for="BusinessName">Business Name</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="email" id="Email" class="form-control input-group-sm" >
-                                <label for="Email">Email</label>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="url" class="form-control mr-sm-3" value="@ViewBag.resellers.url">
+                                    <label for="url">Website Url</label>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="number" id="PhoneNumber" class="form-control mr-sm-3" >
-                                <label for="PhoneNumber">Phone Number</label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="Address" class="form-control mr-sm-3">
-                                <label for="Address">Address</label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="City" class="form-control mr-sm-3">
-                                <label for="City">City</label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="State" class="form-control mr-sm-3">
-                                <label for="State">State</label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="Country" class="form-control mr-sm-3" >
-                                <label for="Country">Country</label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="number" id="faxnumber" class="form-control mr-sm-3" >
-                                <label for="faxnumber">Fax Number</label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-12">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="url" class="form-control mr-sm-3" >
-                                <label for="url">Website Url</label>
-
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div id="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h5 class="card-title">Contact Details</h5>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
-                        </div>
-                    </div>
-
-
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="firstName" class="form-control mr-sm-3" >
-                                <label for="firstName">First Name</label>
-
+            <div class="col-sm-4">
+                <div id="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Contact Details</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="lastname" class="form-control mr-sm-3" >
-                                <label for="lastname">Last Name</label>
 
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="firstName" class="form-control mr-sm-3" value="@ViewBag.resellers.cpfname">
+                                    <label for="firstName">First Name</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="lastname" class="form-control mr-sm-3" value="@ViewBag.resellers.cplname">
+                                    <label for="lastname">Last Name</label>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="Designation" class="form-control mr-sm-3" >
-                                <label for="Designation">Designation</label>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Designation" class="form-control mr-sm-3" value="@ViewBag.resellers.cpdesig">
+                                    <label for="Designation">Designation</label>
 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="number" id="mobileno" class="form-control mr-sm-3" value="@ViewBag.resellers.cpphoneno">
+                                    <label for="mobileno">Phone Number</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="number" id="mobileno" class="form-control mr-sm-3" >
-                                <label for="mobileno">Phone Number</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-12">
-                            <div class="md-form form-sm mt-0">
-                                <input type="email" id="email" class="form-control mr-sm-3" >
-                                <label for="email">Email</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div id="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h5 class="card-title">Bank Details</h5>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
-                        </div>
-                    </div>
-
-
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="panno" class="form-control mr-sm-3" >
-                                <label for="panno">PAN Number</label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="Gst" class="form-control mr-sm-3" >
-                                <label for="Gst">GSTIN</label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="bankname" class="form-control mr-sm-3" >
-                                <label for="bankname">Bank Name</label>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="bankbranchname" class="form-control mr-sm-3" >
-                                <label for="bankbranchname">Bank Branch Name</label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="accholdername" class="form-control mr-sm-3" >
-                                <label for="accholdername">A/C Holder Name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="ifsccode" class="form-control mr-sm-3" >
-                                <label for="ifsccode">IFSC CODE</label>
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="md-form form-sm mt-0">
-                                <input type="text" id="accountno" class="form-control mr-sm-3" >
-                                <label for="accountno">Account Number</label>
-
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="email" id="email" class="form-control mr-sm-3" value="@ViewBag.resellers.cpemailid">
+                                    <label for="email">Email</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>}
+            <div class="col-sm-4">
+                <div id="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Bank Details</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="panno" class="form-control mr-sm-3" value="@ViewBag.resellers.PAN">
+                                    <label for="panno">PAN Number</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Gst" class="form-control mr-sm-3" value="@ViewBag.resellers.GST">
+                                    <label for="Gst">GSTIN</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="bankname" class="form-control mr-sm-3" value="@ViewBag.resellers.bankname">
+                                    <label for="bankname">Bank Name</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="bankbranchname" class="form-control mr-sm-3" value="@ViewBag.resellers.bankbranch">
+                                    <label for="bankbranchname">Bank Branch Name</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="accholdername" class="form-control mr-sm-3" value="@ViewBag.resellers.AccountHolderName">
+                                    <label for="accholdername">A/C Holder Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="ifsccode" class="form-control mr-sm-3" value="@ViewBag.resellers.IFSC">
+                                    <label for="ifsccode">IFSC CODE</label>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="accountno" class="form-control mr-sm-3" value="@ViewBag.resellers.AccountNumber">
+                                    <label for="accountno">Account Number</label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>}
+    else
+    { <input type="hidden" id="partid" name="partid" class="partid" value="" />
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div id="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Business Details</h5>
+                            </div>
+                            <div class="col-md-4">
+                                @*<button class="btn btn-primary btn-sm" value="Update" id="btncontact">Save</button>*@
+
+                                <button class="btn btn-primary btn-sm btnbusiness" value="save" id="btnbusiness">Save</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+
+                                    <input type="text" id="BusinessName" class="form-control input-sm">
+                                    <label for="BusinessName">Business Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="email" id="Email" class="form-control input-group-sm">
+                                    <label for="Email">Email</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="number" id="PhoneNumber" class="form-control mr-sm-3">
+                                    <label for="PhoneNumber">Phone Number</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Address" class="form-control mr-sm-3">
+                                    <label for="Address">Address</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="City" class="form-control mr-sm-3">
+                                    <label for="City">City</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="State" class="form-control mr-sm-3">
+                                    <label for="State">State</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Country" class="form-control mr-sm-3">
+                                    <label for="Country">Country</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="number" id="faxnumber" class="form-control mr-sm-3">
+                                    <label for="faxnumber">Fax Number</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="url" class="form-control mr-sm-3">
+                                    <label for="url">Website Url</label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div id="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Contact Details</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="firstName" class="form-control mr-sm-3">
+                                    <label for="firstName">First Name</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="lastname" class="form-control mr-sm-3">
+                                    <label for="lastname">Last Name</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Designation" class="form-control mr-sm-3">
+                                    <label for="Designation">Designation</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="number" id="mobileno" class="form-control mr-sm-3">
+                                    <label for="mobileno">Phone Number</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="email" id="email" class="form-control mr-sm-3">
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div id="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Bank Details</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-sm btnbusiness" value="Update" id="btnbusiness">Save</button>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="panno" class="form-control mr-sm-3">
+                                    <label for="panno">PAN Number</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="Gst" class="form-control mr-sm-3">
+                                    <label for="Gst">GSTIN</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="bankname" class="form-control mr-sm-3">
+                                    <label for="bankname">Bank Name</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="bankbranchname" class="form-control mr-sm-3">
+                                    <label for="bankbranchname">Bank Branch Name</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="accholdername" class="form-control mr-sm-3">
+                                    <label for="accholdername">A/C Holder Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="ifsccode" class="form-control mr-sm-3">
+                                    <label for="ifsccode">IFSC CODE</label>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mt-0">
+                                    <input type="text" id="accountno" class="form-control mr-sm-3">
+                                    <label for="accountno">Account Number</label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>}
         <div class="container-fluid">
             @*<div class="">*@
             <div class=" white-wrapper row mx-0">
                 @*<div class="accordion mt-2" style="backgrou: #1515a782">
-                    <div class="row">
-                        <div class="col-xs-6 col-md-2 col-sm-3" id="package">
-                            @*<input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                            <span>Service Name</span>
-                        </div>
-                        <div class="col-xs-3 col-md-3 col-sm-3">
-                            <span id="span-package-1">Package Name</span>
-                        </div>
-                        <div class="col-xs-6  col-md-5 col-sm-3">
-                            Sale Price
-                            <table id="prices-accordion">
-                                <tbody>
-
-                                    <tr>
-                                        @*<td>₹@item.normaldays</td>
-                                <td>₹@item.peakdays</td>
-                                <td>₹@item.holidays </td>
-                                <td>₹@item.choicedays </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Normal
-                                        </td>
-                                        <td>
-                                            peaks day
-                                        </td>
-                                        <td>
-                                            holiday
-                                        </td>
-                                        <td>
-                                            choise day
-                                        </td>
-                                    </tr>
-
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <div class="col-xs-6  col-md-2 col-sm-3">
-                            expiry
-                        </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-2 col-sm-3" id="package">
+                        @*<input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                        <span>Service Name</span>
                     </div>
-                </div>*@
+                    <div class="col-xs-3 col-md-3 col-sm-3">
+                        <span id="span-package-1">Package Name</span>
+                    </div>
+                    <div class="col-xs-6  col-md-5 col-sm-3">
+                        Sale Price
+                        <table id="prices-accordion">
+                            <tbody>
+
+                                <tr>
+                                    @*<td>₹@item.normaldays</td>
+                            <td>₹@item.peakdays</td>
+                            <td>₹@item.holidays </td>
+                            <td>₹@item.choicedays </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Normal
+                                    </td>
+                                    <td>
+                                        peaks day
+                                    </td>
+                                    <td>
+                                        holiday
+                                    </td>
+                                    <td>
+                                        choise day
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-xs-6  col-md-2 col-sm-3">
+                        expiry
+                    </div>
+                </div>
+            </div>*@
 
                 <div class="col-md-12 col-sm-6">
                     <table class="table table" id="table-text">
@@ -540,64 +543,343 @@
             @*</div>*@
             @foreach (var item in ViewBag.package)
             {
-                <div class="accordion1 mt-2" id="package">
-                    <div class="row">
-                        <div class="col-xs-6 col-md-2 col-sm-3">
-                            <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                            <span>Packages Price</span>
-                        </div>
-                        <div class="col-xs-3 col-md-3 col-sm-3">
-                            <span id="span-package-1">@item.PackageName</span>
-                        </div>
-                        <div class="col-xs-6  col-md-5 col-sm-3">
-                            <table id="prices-accordion">
-                                <tbody>
-                                    <tr>
-                                        <td>₹@item.normaldays</td>
-                                        <td>₹@item.peakdays</td>
-                                        <td>₹@item.holidays </td>
-                                        <td>₹@item.choicedays </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="radio" name="normal" id="normal1" value="commission" checked><label> commission </label>
-                                            <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="peakday" id="peakday1" value="commission" checked><label> commission </label>
-                                            <input type="radio" name="peakday" id="peakday2" value="slab/Flat rate"> <label>slab/Flat rate</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="holidays" id="holidays1" value="commission" checked><label> commission </label>
-                                            <input type="radio" name="holidays" id="holidays2" value="slab/Flat rate"> <label>slab/Flat rate</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="choicedays" id="choicedays1" value="commission" checked><label> commission </label>
-                                            <input type="radio" name="choicedays" id="choicedays2" value="slab/Flat rate"> <label>slab/Flat rate</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="normal1" class="price" value="10%"></td>
-                                        <td><input type="text" name="peakday1" class="price" value="10%"></td>
-                                        <td><input type="text" name="holidays1" class="price" value="10%"></td>
-                                        <td><input type="text" name="choicedays1" class="price" value="10%"></td>
-                                    </tr>
+                if (ViewBag.resellerpkg != null)
+                {
+                    foreach (var itemks in ViewBag.resellerpkg)
+                    {
+                        //if (Convert.ToInt64(itemks.packageid) == item.PackageID)
+                        //{
+                        <div class="accordion1 mt-2" id="package">
 
-                                </tbody>
-                            </table>
-                            <center>
-                                <button class="btn btn-primary btn-sm savepackage">Save</button>
-                            </center>
+                            <div class="row">
+                                <div class="col-xs-6 col-md-2 col-sm-3">
+                                    <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                    <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+
+                                    <span>Packages Price</span>
+                                </div>
+                                <div class="col-xs-3 col-md-3 col-sm-3">
+                                    <span id="span-package-1">@item.PackageName</span>
+                                </div>
+
+                                <div class="col-xs-6  col-md-5 col-sm-3">
+                                    <table id="prices-accordion">
+                                        <tbody>
+                                            <tr>
+                                                <td>₹@item.normaldays</td>
+                                                <td>₹@item.peakdays</td>
+                                                <td>₹@item.holidays </td>
+                                                <td>₹@item.choicedays </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    @if (itemks.normaldayssaletype == "commission")
+                                                    {
+                                                        <input type="radio" name="normal" id="normal1" value="commission" checked><label> commission </label>
+                                                        <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+
+                                                    }
+                                                    else if (itemks.normaldayssaletype == "slab/Flat rate")
+                                                    {
+                                                        <input type="radio" name="normal" id="normal1" value="commission"><label> commission </label>
+                                                        <input type="radio" name="normal" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (itemks.peakdaysaletype == "commission")
+                                                    {
+                                                        <input type="radio" name="peakday" id="normal1" value="commission" checked><label> commission </label>
+                                                        <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+
+                                                    }
+                                                    else if (itemks.peakdaysaletype == "slab/Flat rate")
+                                                    {
+                                                        <input type="radio" name="peakday" id="normal1" value="commission"><label> commission </label>
+                                                        <input type="radio" name="peakday" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (itemks.holidaysssaletype == "commission")
+                                                    {
+                                                        <input type="radio" name="holidays" id="normal1" value="commission" checked><label> commission </label>
+                                                        <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+
+                                                    }
+                                                    else if (itemks.holidaysssaletype == "slab/Flat rate")
+                                                    {
+                                                        <input type="radio" name="holidays" id="normal1" value="commission"><label> commission </label>
+                                                        <input type="radio" name="holidays" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (itemks.choicedayssaletype == "commission")
+                                                    {
+                                                        <input type="radio" name="choicedays" id="normal1" value="commission" checked><label> commission </label>
+                                                        <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+
+                                                    }
+                                                    else if (itemks.choicedayssaletype == "slab/Flat rate")
+                                                    {
+                                                        <input type="radio" name="choicedays" id="normal1" value="commission"><label> commission </label>
+                                                        <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                    }
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" name="normal1" class="price" value="@itemks.salenormaldays"></td>
+                                                <td><input type="text" name="peakday1" class="price" value="@itemks.salepeakdays"></td>
+                                                <td><input type="text" name="holidays1" class="price" value="@itemks.saleholidays"></td>
+                                                <td><input type="text" name="choicedays1" class="price" value="@itemks.salechoicedays"></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <center>
+                                        <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
+                                    </center>
+                                </div>
+                                <div class="col-xs-6  col-md-2 col-sm-3">
+                                    <input type="text" value="" id="datetimepicker" name="date" class="form-control" style="width:80%;margin-left: 16%;" placeholder="Date Here" />
+                                </div>
+
+                            </div>
                         </div>
-                        <div class="col-xs-6  col-md-2 col-sm-3">
-                            <input type="text" style="width:80%;margin-left: 16%;" />
+
+                        //}
+                    }
+                }
+                else if (ViewBag.pkg != null)
+                {
+                    foreach (var itemks1 in ViewBag.pkg)
+                    {
+                        if (Convert.ToInt64(itemks1.packageid) == item.PackageID)
+                        {
+
+                            <div class="accordion1 mt-2" id="package">
+
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2 col-sm-3">
+                                        <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                        <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+
+                                        <span>Packages Price</span>
+                                    </div>
+                                    <div class="col-xs-3 col-md-3 col-sm-3">
+                                        <span id="span-package-1">@item.PackageName</span>
+                                    </div>
+
+                                    <div class="col-xs-6  col-md-5 col-sm-3">
+                                        <table id="prices-accordion">
+                                            <tbody>
+                                                <tr>
+                                                    <td>₹@item.normaldays</td>
+                                                    <td>₹@item.peakdays</td>
+                                                    <td>₹@item.holidays </td>
+                                                    <td>₹@item.choicedays </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        
+                                                            <input type="radio" name="normal" id="normal1" value="commission" checked><label> commission </label>
+                                                            <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        
+                                                            <input type="radio" name="peakday" id="normal1" value="commission" checked><label> commission </label>
+                                                            <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        
+                                                            <input type="radio" name="holidays" id="normal1" value="commission" checked><label> commission </label>
+                                                            <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        
+                                                            <input type="radio" name="choicedays" id="normal1" value="commission"><label> commission </label>
+                                                            <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                       
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" name="normal1" class="price" ></td>
+                                                    <td><input type="text" name="peakday1" class="price" ></td>
+                                                    <td><input type="text" name="holidays1" class="price" ></td>
+                                                    <td><input type="text" name="choicedays1" class="price" ></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                        <center>
+                                            <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
+                                        </center>
+                                    </div>
+                                    <div class="col-xs-6  col-md-2 col-sm-3">
+                                        <input type="text" value="" id="datetimepicker" name="date" class="form-control" style="width:80%;margin-left: 16%;" placeholder="Date Here" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+
+
+                    <div class="accordion1 mt-2" id="package">
+
+                        <div class="row">
+                            <div class="col-xs-6 col-md-2 col-sm-3">
+                                <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+
+                                <span>Packages Price</span>
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-sm-3">
+                                <span id="span-package-1">@item.PackageName</span>
+                            </div>
+
+                            <div class="col-xs-6  col-md-5 col-sm-3">
+                                <table id="prices-accordion">
+                                    <tbody>
+                                        <tr>
+                                            <td>₹@item.normaldays</td>
+                                            <td>₹@item.peakdays</td>
+                                            <td>₹@item.holidays </td>
+                                            <td>₹@item.choicedays </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                
+                                                    <input type="radio" name="normal" id="normal1" value="commission"><label> commission </label>
+                                                    <input type="radio" name="normal" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                
+                                            </td>
+                                            <td>
+                                                
+                                                    <input type="radio" name="peakday" id="normal1" value="commission"><label> commission </label>
+                                                    <input type="radio" name="peakday" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                
+                                            </td>
+                                            <td>
+                                               
+                                                    <input type="radio" name="holidays" id="normal1" value="commission"><label> commission </label>
+                                                    <input type="radio" name="holidays" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                                
+                                            </td>
+                                            <td>
+                                               
+                                                    <input type="radio" name="choicedays" id="normal1" value="commission"><label> commission </label>
+                                                    <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> <label>slab/Flat rate</label>
+                                               
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" name="normal1" class="price" ></td>
+                                            <td><input type="text" name="peakday1" class="price" ></td>
+                                            <td><input type="text" name="holidays1" class="price" ></td>
+                                            <td><input type="text" name="choicedays1" class="price" ></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <center>
+                                    <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
+                                </center>
+                            </div>
+                            <div class="col-xs-6  col-md-2 col-sm-3">
+                                <input type="text" value="" id="datetimepicker" name="date" class="form-control" style="width:80%;margin-left: 16%;" placeholder="Date Here" />
+                            </div>
+
                         </div>
                     </div>
-                </div>
-            }
 
+
+
+                }
+
+
+
+
+
+            }
+            @*@if(ViewBag.pkg != null){
+        foreach (var item in ViewBag.pkg)
+        {
+            <div class="accordion1 mt-2" id="package">
+
+                <div class="row">
+                    <div class="col-xs-6 col-md-2 col-sm-3">
+                        <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                        <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+
+                        <span>Packages Price</span>
+                    </div>
+                    <div class="col-xs-3 col-md-3 col-sm-3">
+                        <span id="span-package-1"> @item.PackageName </span>
+                    </div>
+                    <div class="col-xs-6  col-md-5 col-sm-3">
+                        <table id="prices-accordion">
+                            <tbody>
+                                <tr>
+                                    <td>₹@item.normaldays</td>
+                                    <td>₹@item.peakdays</td>
+                                    <td>₹@item.holidays</td>
+                                    <td>₹@item.choicedays</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="normal" id="normal1" value="commission" checked><label> commission</label>
+                                        <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="peakday" id="peakday1" value="commission" checked><label> commission</label>
+                                        <input type="radio" name="peakday" id="peakday2" value="slab/Flat rate"> <label> slab / Flat rate</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="holidays" id="holidays1" value="commission" checked><label> commission</label>
+                                        <input type="radio" name="holidays" id="holidays2" value="slab/Flat rate"> <label> slab / Flat rate</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="choicedays" id="choicedays1" value="commission" checked><label> commission</label>
+                                        <input type="radio" name="choicedays" id="choicedays2" value="slab/Flat rate"> <label> slab / Flat rate</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="normal1" class="price" value="10%"></td>
+                                    <td><input type="text" name="peakday1" class="price" value="10%"></td>
+                                    <td><input type="text" name="holidays1" class="price" value="10%"></td>
+                                    <td><input type="text" name="choicedays1" class="price" value="10%"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <center>
+                            <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
+                        </center>
+                    </div>
+                    <div class="col-xs-6  col-md-2 col-sm-3">
+                        @*<input type="text" style="width:80%;margin-left: 16%;" />
+                        <input type="text" value="" id="datetimepicker" name="date" class="form-control" style="width:80%;margin-left: 16%;" placeholder="Date Here" />
+                    </div>
+                </div>
+            </div>
+
+        }}*@
         </div>
-    </div>
+</div>
 
 
 <!-- JQuery -->
@@ -612,11 +894,24 @@
 <!-- MDB core JavaScript -->
 <script src="~/newdesignstyles/MDB-Free_4.5.12/js/mdb.min.js"></script>
 @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.11/js/mdb.min.js"></script>*@
+<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
 
 
 
 
-<script>
+<script type="text/javascript">
+    /*--- Date and Time ----*/
+    $('#datetimepicker').datetimepicker({
+        dayOfWeekStart: 1,
+        lang: 'en',
+        timepicker: false,
+        format: 'd/m/Y',
+        minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+        maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+       
+    });
+    /*------------ Date and Time --------------*/
+
     $('.btnbusiness').click(function () {
         var val = $(this).val();
         var vendorid = $('#VendorId').val();
@@ -654,77 +949,7 @@
             success: function (data) {
                 if (data != null) {
                     alert("save is successfully");
-                    alert(data.PartnerID);
-                 //   $('#PartnerID').val(data.PartnerID);
-                    $('#partid').val(data.PartnerID);
-                   // $("#Businessname").val(data.partnername);
-                   //// $("#firstname").val(result.firstname);
-                   // //$("#lastname").val(result.lastname);
-                   // $("#Email").val(data.emailid);
-                   // $("#PhoneNumber").val(data.phoneno);
-                   // $("#Address").val(data.address1);
-                   //// $("#adress2").val(result.adress2);
-                   // $("#City").val(data.city);
-                   // $("#State").val(data.state);
-                   // $("#Country").val(data.country);
-                   // //$("#pincode").val(result.pincode);
-                   // //$("#Status").val(result.Status);
-                }
-                else { alert("save is failed"); }
-            },
-            error: function (data) {
-                alert("save is failed");
-            }
-        })
-    })
-
-    $('.savepackage').click(function () {
-        var vendorid = $('#VendorId').val();
-        var partid = $('#partid').val();
-        var packageid = $(this).parents("div#package").find('input#packageid').val();
-        var normal = $(this).parents("div#package").find($('input[name=normal]:checked')).val();
-        var peakday = $(this).parents("div#package").find($('input[name=peakday]:checked')).val();
-        var holidays = $(this).parents("div#package").find($('input[name=holidays]:checked')).val();
-        var choicedays = $(this).parents("div#package").find($('input[name=choicedays]:checked')).val();
-        var normal1 = $(this).parents("div#package").find($('input[name=normal1]')).val();
-        var peakday1 = $(this).parents("div#package").find($('input[name=peakday1]')).val();
-        var holidays1 = $(this).parents("div#package").find($('input[name=holidays1]')).val();
-        var choicedays1 = $(this).parents("div#package").find($('input[name=choicedays1]')).val();
-        alert(packageid + ',' + normal + ',' + peakday + ',' + holidays + ',' + choicedays + ',' + normal1 + ',' + peakday1 + ',' + holidays1 + ',' + choicedays1);
-        var partner = {
-            PartnerID: $('#partid').val(),
-            VendorId: $('#VendorId').val(),
-            partnername: $('#BusinessName').val(),
-            url: $('#url').val(),
-            phoneno: $('#PhoneNumber').val(),
-            emailid: $('#Email').val(),
-            address1: $('#Address').val(),
-            city: $('#City').val(),
-            state: $('#State').val(),
-            country: $('#Country').val(),
-            cpfname: $('#firstName').val(),
-            cplname: $('#lastname').val(),
-            cpdesig: $('#Designation').val(),
-            cpphoneno: $('#mobileno').val(),
-            cpemailid: $('#email').val(),
-            PAN: $('#panno').val(),
-            GST: $('#Gst').val(),
-            bankname: $('#bankname').val(),
-            bankbranch: $('#bankbranchname').val(),
-            AccountHolderName: $('#accholdername').val(),
-            IFSC: $('#ifsccode').val(),
-            AccountNumber: $('#accountno').val(),
-            //state: $('State').val(),
-        }
-        $.ajax({
-            url: '/ReSellerManagement/Index?command=' + val + '&&partid=' + partid,
-            type: 'POST',
-            data: JSON.stringify({ partner: partner }),
-            contentType: 'application/json',
-            success: function (data) {
-                if (data != null) {
-                    alert("save is successfully");
-                    alert(data.PartnerID);
+                    //   alert(data.PartnerID);
                     //   $('#PartnerID').val(data.PartnerID);
                     $('#partid').val(data.PartnerID);
                     // $("#Businessname").val(data.partnername);
@@ -746,6 +971,66 @@
                 alert("save is failed");
             }
         })
+    })
+
+    $('.savepackage').click(function () {
+        var val = $(this).val();
+        var vendorid = $('#VendorId').val();
+        var partid = $('#partid').val();
+        var packageid = $(this).parents("div#package").find('input#packageid').val();
+        var normal = $(this).parents("div#package").find($('input[name=normal]:checked')).val();
+        var peakday = $(this).parents("div#package").find($('input[name=peakday]:checked')).val();
+        var holidays = $(this).parents("div#package").find($('input[name=holidays]:checked')).val();
+        var choicedays = $(this).parents("div#package").find($('input[name=choicedays]:checked')).val();
+        var normal1 = $(this).parents("div#package").find($('input[name=normal1]')).val();
+        var peakday1 = $(this).parents("div#package").find($('input[name=peakday1]')).val();
+        var holidays1 = $(this).parents("div#package").find($('input[name=holidays1]')).val();
+        var choicedays1 = $(this).parents("div#package").find($('input[name=choicedays1]')).val();
+        var vsid = $(this).parents("div#package").find($('input[name=vendorsubid]')).val();
+        var date = $(this).parents("div#package").find($('input[name=date]')).val();
+        if (normal = "") {
+            alert("Select normaltype")
+        }
+        else if (peakday == "") { alert("Select peak type") } else if (holidays == "") { alert("Select holidays type") } else if (choicedays == "") { alert("Select choiceday type") } else if (peakday1 == "") { alert("enter peakdate value") }
+        else if (normal1 == "") { alert("enter normal type") } else if (holidays1 == "") { alert("enter holiday type") } else if (date == "") { alert("Select expirydate") }
+        else {
+            //alert(date);
+            //alert(packageid + ',' + normal + ',' + peakday + ',' + holidays + ',' + choicedays + ',' + normal1 + ',' + peakday1 + ',' + holidays1 + ',' + choicedays1);
+            var PartnerPackage = {
+                PartnerID: $('#partid').val(),
+                VendorId: $('#VendorId').val(),
+                packageid: packageid,
+                normaldayssaletype: normal,
+                salenormaldays: normal1,
+                peakdaysaletype: peakday,
+                holidaysssaletype: holidays,
+                salepeakdays: peakday1,
+                saleholidays: holidays1,
+                choicedayssaletype: choicedays,
+                salechoicedays: choicedays1,
+                VendorSubId: vsid,
+                expiry: date,
+            }
+            $.ajax({
+                url: '/ReSellerManagement/PartnerPackage?command=' + val + '&&partid=' + partid,
+                type: 'POST',
+                data: JSON.stringify({ PartnerPackage: PartnerPackage }),
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != null) {
+                        alert("save is successfully");
+                        //  alert(data.PartnerID);
+                        //   $('#PartnerID').val(data.PartnerID);
+                        // $('#partid').val(data.PartnerID);
+
+                    }
+                    else { alert("save is failed"); }
+                },
+                error: function (data) {
+                    alert("save is failed");
+                }
+            })
+        }
     });
-   
+
 </script>
