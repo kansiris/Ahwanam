@@ -295,8 +295,10 @@ function Addpkgitems(mtype) {
 $(document).on('click', '.pkgitem', function () {
     $('.overlay').show();
     $('#loadermsg').text("Fetching Menu Items");
-    var checkbox = $("input[name='checkradio']:checked").val();
+    var parentdiv = $(this).parent('div.package-list').prev('div.package-box');
+    var checkbox = parentdiv.find('input[type=radio]:checked').val();//$("input[name='checkradio']:checked").val();
     var pkgid = $(this).parent("div#pkgsdiv").find("div.pkgsave").find("input.packageid").val();
+    var pkgsavediv = $(this).parent('div.package-list').next("div.pkgsave");
     if (checkbox == undefined) {
         alert("Select Menu Type")
     }
@@ -309,7 +311,7 @@ $(document).on('click', '.pkgitem', function () {
         $('#pkgmodal .selectedpkg').val(pkgid);
         $('#pkgmodal .add').attr('onclick','Addpkgitems("old")');
         var exists = $(this).text().split('(')[1].split(')')[0];
-        filteritems(checkbox, val.replace('_',' '),pkgid);
+        filteritems(checkbox, val.replace('_',' '),pkgid,pkgsavediv);
     }
 });
 
@@ -317,8 +319,10 @@ $(document).on('click', '.pkgitem', function () {
 $(document).on('click', '.extraitem', function () {
     $('.overlay').show();
     $('#loadermsg').text("Fetching Menu Items");
-    var checkbox = $("input[name='checkradio']:checked").val();
+    var parentdiv = $(this).parent('div.package-list').prev('div.package-box');
+    var checkbox = parentdiv.find('input[type=radio]:checked').val();//$("input[name='checkradio']:checked").val();
     var pkgid = $(this).parent("div#pkgsdiv").find("div.pkgsave").find("input.packageid").val();
+    var pkgsavediv = $(this).parent("div#pkgsdiv").find("div.pkgsave");
     if (checkbox == undefined) {
         alert("Select Menu Type")
     }
@@ -330,13 +334,13 @@ $(document).on('click', '.extraitem', function () {
         $('#pkgmodal .selectedpkg').val(val);
         $('#pkgmodal .add').attr('onclick','Addpkgitems("'+val+'")');
         var exists = $(this).text().split('(')[1].split(')')[0];
-        filteritems(checkbox, val,'New');
+        filteritems(checkbox, val, 'New', pkgsavediv);
     }
 });
 //$('.writemsg.modal').modal('attach events', '.writemsg.button', 'show');
 
 //Filtering Menu and loading menu items
-function filteritems(type, selectedpkg,pkgid) {
+function filteritems(type, selectedpkg, pkgid, pkgsavediv) {
     var selpkg = selectedpkg.replace(' ', '_').replace('/', '_').toLowerCase();
     var welcome_drinks = ""; var starters = ""; var rice = ""; var bread = ""; var curries = "";
     var fry_dry = ""; var salads = ""; var soups = ""; var tandoori_kababs = ""; var deserts = ""; var beverages = ""; var fruits = "";
@@ -347,12 +351,13 @@ function filteritems(type, selectedpkg,pkgid) {
     $.get("/VDashboard/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +subid+"",
         function (data) {
             commondiv = data;
-            var getlist =  $('.selpkgitems').val() + ',' + $('.pkgmenuitems').val();
+            var getlist = pkgsavediv.find('input.selpkgitems').val() + ',' + pkgsavediv.find('input.pkgmenuitems').val();//$('.selpkgitems').val() + ',' + $('.pkgmenuitems').val();
+            alert(getlist);
             //if(getlist == '' || getlist == undefined) getlist =$('.pkgmenuitems').val();
-            for (var i = 0; i < totallist.split(',').length; i++) {
-                if(totallist.split(',')[i] == type)
-                    getlist = totallist.split(',')[i].split('(')[1].split(')')[0];
-            }
+            //for (var i = 0; i < totallist.split(',').length; i++) {
+            //    if(totallist.split(',')[i] == type)
+            //        getlist = totallist.split(',')[i].split('(')[1].split(')')[0];
+            //}
             var newitem = '';
             if(pkgid == 'New')
                 newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall1">Save All</button></div></td></tr>';
