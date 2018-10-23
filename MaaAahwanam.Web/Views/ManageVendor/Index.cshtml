@@ -562,6 +562,7 @@
                         var radataid = $(this).val();
                         $('#id').val(radataid);
                         //alert(radataid);
+                        
                         $.ajax({
                             url: '/ManageVendor/GetVendorDetails?id=' + radataid,
                             type: 'POST',
@@ -580,7 +581,20 @@
                                 $("#city").val(result.city);
                                 $("#state").val(result.state);
                                 $("#country").val(result.country);
-                                $("#services").val(result.services);
+                                //$("#services").val(result.services);
+                                var ks = result.services.split('&');
+                                var array = ks;                              
+                                var arrayValues = array;//.contents.split('&');                            
+                                
+                                if (arrayValues) {
+                                    $.each(arrayValues, function (i, val) {
+
+                                        $("input[value='" + val + "']").prop('checked', 'checked');
+
+                                    });
+
+                                }
+                               
                                 $("#pin_code").val(result.pin_code);
                                 //$("#Status").val(result.Status);
                                 if (result.Status == "Active") {
@@ -608,7 +622,7 @@
                      $("input:checkbox[name=services]:checked").each(function () {
                        servicelst.push($(this).val())
                      })
-                     servicelst = servicelst.join('$');
+                     servicelst = servicelst.join('&');
 
                      var managevendor = {
                          vendorId:$('#vendorId').val(),
@@ -650,7 +664,7 @@
                     $("input:checkbox[name=services]:checked").each(function () {
                         servicelst.push($(this).val())
                     })
-                    servicelst = servicelst.join('$');
+                    servicelst = servicelst.join('&');
                 var managevendor = {
                     Businessname: $('#Businessname').val(),
                     firstname: $('#firstname').val(),
@@ -687,7 +701,9 @@
                     type: 'Post',
                     contentType: 'application/json',
                     success: function (result) {
-                        alert(result);
+                        if (result == "sucess1") {
+                            alert("email is already existed select another email");
+                        }
                     },
                     error: function (result) {
                         alert("failed");

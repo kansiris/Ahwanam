@@ -28,7 +28,7 @@ namespace MaaAahwanam.Web.Controllers
         const string imagepath = @"/vendorimages/";
 
         // GET: vdb
-        public ActionResult Index(string c, string vid)
+        public ActionResult Index(string c, string vid, string loc, string eventtype, string count, string date)
         {
             long id = GetVendorID(); // Here Vendor Master ID will be Retrieved
             if (id != 0)
@@ -136,8 +136,11 @@ namespace MaaAahwanam.Web.Controllers
                 if (c=="second")
                 {
                     // Assigning Available Services to viewbag
-                    ViewBag.venues = venues;
-
+                    //ViewBag.venues = venues;
+                    if (eventtype != null && count != null && date != null)
+                        ViewBag.venues = venues.Where(m => m.Minimumseatingcapacity >= int.Parse(count)).ToList();
+                    else
+                        ViewBag.venues = venues;
                     //Packages Section 
                     viewservicesservice viewservicesss = new viewservicesservice();
                     ViewBag.availablepackages = viewservicesss.getvendorpkgs(id.ToString()).ToList();
