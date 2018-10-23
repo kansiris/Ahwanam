@@ -28,8 +28,6 @@ $('#profileimage').change(function () {
             success: function (response) {
                 $('#profilepic1').removeAttr('src');
                 $('#profilepic1').attr('src', '/ProfilePictures/' + response + '');
-                //var url = '/vdashboard/profilepic';
-                //$('#profilepipccontent').empty().load(url);
             }
         });
     }
@@ -205,20 +203,20 @@ var validateForm = function () {
 //Add Package
 $("#anp").click(function () {
     var div = document.getElementById("pkgsdiv");
-    var childdiv = "<div class='row' id='pkgsdiv'><div class='allpkgs'><div class='container-fluid'><div class='row'><div class='col-md-6 col-xs-6'><input type='text' class='form-control' id='pkgname' placeholder='Package Name' value=''></div><div class='col-md-6 col-xs-6'><div class='row' id='sectiontimeslot'><div class='col-md-4 col-xs-6'><input type='radio' name='checkradio' id='Veg' value='Veg' /><label for='Veg'>Veg</label><br /><input type='radio' name='checkradio' id='NonVeg' value='NonVeg' /><label for='NonVeg'>Non-Veg</label></div><input type='hidden' id='pkgslots' value='' /><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Break_Fast' value='Break Fast' /><label for='breakfast'>Break Fast</label><br /><input type='checkbox' class='slotcheck' name='slot' id='Lunch' value='Lunch' /><label for='lunch'>Lunch</label></div><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Dinner' value='Dinner' /><label for='dinner'>Dinner</label><br /><input type='checkbox' class='slotcheck' name='slot' id='High_Tea' value='High Tea' /><label for='hightea'>High Tea</label></div></div></div></div><div class='row' id='pkgpricesection'><div class='col-md-3 col-xs-3'><span>Normal Days ₹</span><span><input type='number' id='ndays' name='ndays' placeholder='₹100' style='width:75%' value='' /></span></div><div class='col-md-3 col-xs-3'><span>Peak Days ₹</span><span><input type='number' id='pdays' name='pdays' placeholder='₹100' style='width:75%' value='' /></span></div><div class='col-md-3 col-xs-3'><span>Holidays ₹</span><span><input type='number' id='holidays' name='holidays' placeholder='₹100' style='width:75%' value='' /></span></div><div class='col-md-3 col-xs-3'><span>Choice Days ₹</span><span><input type='number' id='cdays' name='cdays' placeholder='₹100' style='width:75%' value='' /></span></div></div><div class='row' align='center' style='padding-top:10px'><textarea id='pkgdesc' class='form-control' name='pkgdesc' placeholder='Enter Package Description' cols='3'></textarea></div></div></div><div class='package-list' ><button id='pillbutton' class='button pkgitem' value='Welcome_Drinks'>Welcome Drinks(0) </button><button id='pillbutton' class='button pkgitem' value='Starters'>Starters(0)</button><button id='pillbutton' class='button pkgitem' value='Rice'>Rice(0)</button><button id='pillbutton' class='button pkgitem' value='Bread'>Bread(0)</button><button id='pillbutton' class='button pkgitem' value='Curries'>Curries(0)</button><button id='pillbutton' class='button pkgitem' value='Fry_Dry'>Fry/Dry(0)</button><button id='pillbutton' class='button pkgitem' value='Salads'>Salads(0)</button><button id='pillbutton' class='button pkgitem' value='Soups'>Soups(0)</button><button id='pillbutton' class='button pkgitem' value='Deserts'>Deserts(0)</button><button id='pillbutton' class='button pkgitem' value='Beverages'>Beverages(0)</button><button id='pillbutton' class='button pkgitem' value='Fruits'>Fruits(0)</button></div><div align='right' class='pkgsave'><input type='hidden' class='pkgmenuitems' value='' /><input type='hidden' class='selpkgitems' /><input type='hidden' class='availablepkgitems' value='' /><a class='addcourse' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Add Course</a><a class='viewmenu' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>View Menu</a><a class='pkgclone' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Duplicate</a><a class='addpkg' style='padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;'>Publish</a><a href='#' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Remove</a></div></div></div>";
-    $('#pkgsdiv').append(childdiv);
+    var childdiv = "<div class='allpkgs'><div class='package-box'><div class='container-fluid'><div class='row'><div class='col-md-6 col-xs-6'><input type='text' class='form-control' id='pkgname' placeholder='Package Name' value=''></div><div class='col-md-6 col-xs-6'><div class='row' id='sectiontimeslot'><div class='col-md-4 col-xs-6'><input type='radio' name='checkradio' id='Veg' value='Veg'><label for='Veg'>Veg</label><br><input type='radio' name='checkradio' id='NonVeg' value='NonVeg'><label for='NonVeg'>Non-Veg</label></div><input type='hidden' id='pkgslots' value=''><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Break_Fast' value='Break Fast'><label for='Break_Fast'>Break Fast</label><br><input type='checkbox' class='slotcheck' name='slot' id='Lunch' value='Lunch'><label for='Lunch'>Lunch</label></div><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Dinner' value='Dinner'><label for='Dinner'>Dinner</label><br><input type='checkbox' class='slotcheck' name='slot' id='High_Tea' value='High Tea'><label for='High_Tea'>High Tea</label></div></div></div></div><div class='row' id='pkgpricesection'><div class='col-md-3 col-xs-3'><span>Normal Days ₹</span><span><input type='number' id='ndays' name='ndays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Peak Days ₹</span><span><input type='number' id='pdays' name='pdays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Holidays ₹</span><span><input type='number' id='holidays' name='holidays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Choice Days ₹</span><span><input type='number' id='cdays' name='cdays' placeholder='₹100' style='width:75%;color:black' value=''></span></div></div><div class='row' align='center' style='padding-top:10px'><textarea id='pkgdesc' class='form-control' name='pkgdesc' placeholder='Enter Package Description' cols='3'></textarea></div></div></div><div class='package-list'><button id='pillbutton' class='button pkgitem' value='Welcome_Drinks'>Welcome Drinks(0) <i class='fa fa-close'></i> </button><button id='pillbutton' class='button pkgitem' value='Starters'>Starters(0)</button><button id='pillbutton' class='button pkgitem' value='Rice'>Rice(0)</button><button id='pillbutton' class='button pkgitem' value='Bread'>Bread(0)</button><button id='pillbutton' class='button pkgitem' value='Curries'>Curries(0)</button><button id='pillbutton' class='button pkgitem' value='Fry_Dry'>Fry/Dry(0)</button><button id='pillbutton' class='button pkgitem' value='Salads'>Salads(0)</button><button id='pillbutton' class='button pkgitem' value='Soups'>Soups(0)</button><button id='pillbutton' class='button pkgitem' value='Deserts'>Deserts(0)</button><button id='pillbutton' class='button pkgitem' value='Beverages'>Beverages(0)</button><button id='pillbutton' class='button pkgitem' value='Fruits'>Fruits(0)</button></div><div align='right' class='pkgsave'><input type='hidden' class='pkgmenuitems' value=''><input type='hidden' class='selpkgitems'><input type='hidden' class='availablepkgitems' value=''><a class='addcourse' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Add Course</a><a class='viewmenu' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>View Menu</a><a class='pkgclone' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Duplicate</a><a class='addpkg' style='padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;'>Publish</a><a href='#' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Remove</a></div></div>";
+    $('#pkgsdiv').append(childdiv).focus();
 });
 
 //Package Checkbox Selection
-$('.slotcheck').on('change', function () {
-    var thisdiv = $(this).parents("div.row");
+$(document).on('change', '.slotcheck', function () {
+    var thisdiv = $(this).parents("div.package-box");
     if (thisdiv.find("input[type='checkbox']").is(':checked')) {
         var favorite = [];
-        $.each($("input[type='checkbox']:checked"), function () {
+        $.each(thisdiv.find("input[type='checkbox']:checked"), function () {
             favorite.push($(this).val());
             timeslot = favorite.join(", ");
         })
-        $('#pkgslots').val(favorite);
+        thisdiv.find('#pkgslots').val(favorite);
     }
 });
 
@@ -227,12 +225,14 @@ var pkgheadings = 'Welcome Drinks,Starters,Rice,Bread,Curries,Fry/Dry,Salads,Sou
 var totallist = '';//$('.pkgmenuitems').val();
 
 //Add Course Button
-$('.addcourse').click(function(){
+$(document).on('click', '.addcourse', function () {
+//$('.addcourse').click(function(){
     var parentdiv = $(this).parent('div.pkgsave').prev('div.package-list').find('div#extracourse');
     var btn = '<button id="pillbutton" class="button extraitem" value="">New Course(0)</button>';
     parentdiv.append(btn);
 });
 
+var pdiv = '';
 //Adding Selected Lists to Course
 function Addpkgitems(mtype) {
     var type = $('#pkgmodal .selectedpkg').val();
@@ -243,16 +243,18 @@ function Addpkgitems(mtype) {
     $(itemstable).find('tr').each(function () {
         if ($(this).find("input[type='checkbox']").is(':checked')) {
             var checkText = $(this).find('label').text();
+            //selecteditems+= selecteditems + '!' + checkText;
             if (selecteditems != '')
                 selecteditems = selecteditems + '!' + checkText;
             else
                 selecteditems = checkText;
         }
     });
-    var availableitems = $('.availablepkgitems').val();
-    if(availableitems == '' || availableitems == undefined) availableitems = $('.selpkgitems').val();
-    var finallist=totallist.split(',');
-    if ($('.pkgmenuitems').val() != '') {
+    selecteditems = selecteditems.trim(' ');
+    var availableitems = pdiv.find('.availablepkgitems').val();
+    if (availableitems == '' || availableitems == "" || availableitems == undefined) availableitems = pdiv.find('.selpkgitems').val();
+    var finallist= (totallist != '') ? totallist.split(','):[];
+    if (pdiv.find('.pkgmenuitems').val() != '') {
         if (availableitems.indexOf(ctype) != -1) {
             for (var i = 0; i < availableitems.split(',').length; i++) {
                 if (availableitems.split(',')[i] == ctype) {
@@ -263,31 +265,31 @@ function Addpkgitems(mtype) {
         }
         else {
             finallist.push(ctype+'('+selecteditems+')');
-            totallist= totallist = finallist.join(',');
+            totallist = finallist.join(',');
         }
     }
     else {
         if (availableitems.indexOf(ctype) != -1) {
             for (var i = 0; i < availableitems.split(',').length; i++) {
-                if (availableitems.split(',')[i] == ctype) {
+                if (availableitems.split(',')[i].split('(')[0] == ctype) {
                     finallist.push(ctype+'('+selecteditems+')');
                 }
             }
             totallist = finallist.join(',');
         }
         else {
-            finallist.push(ctype+'('+selecteditems+')');
-            totallist= totallist +','+ finallist.join(',');
+            finallist.push(ctype + '(' + selecteditems + ')');
+            totallist = finallist.join(',');
         }
     }
-    $('.selpkgitems').val(totallist);
+    pdiv.find('.selpkgitems').val(totallist);
     if(mtype == 'old')
     {
-        if ($(".package-list button[value = " + ctype.replace('/', '_') + "]").replaceWith('<button id="pillbutton" class="button pkgitem" value=' + ctype + '>' + type + '(' + maxcount + ')</button>'));
+        if (pdiv.find(".package-list button[value = " + ctype.replace('/', '_') + "]").replaceWith('<button id="pillbutton" class="button pkgitem" value=' + ctype + '>' + type + '(' + maxcount + ')</button>'));
     }
     else
     {
-        if ($(".package-list #extracourse button:contains(" + mtype + ")").replaceWith('<button id="pillbutton" class="button extraitem" value=' + type + '>' + type + '(' + maxcount + ')</button>'));
+        if (pdiv.find(".package-list #extracourse button:contains(" + mtype + ")").replaceWith('<button id="pillbutton" class="button extraitem" value=' + type + '>' + type + '(' + maxcount + ')</button>'));
     }
 }
 
@@ -309,7 +311,9 @@ $(document).on('click', '.pkgitem', function () {
         $('#pkgmodal .pkgitemsection #ctype').text(val);
         $('#pkgmodal .maxcount').val($(this).text().split('(')[1].split(')')[0]);
         $('#pkgmodal .selectedpkg').val(pkgid);
-        $('#pkgmodal .add').attr('onclick','Addpkgitems("old")');
+        $('#pkgmodal .add').attr('onclick', 'Addpkgitems("old")');
+        pdiv = '';
+        pdiv = $(this).parent('div.package-list').parent('div.allpkgs');
         var exists = $(this).text().split('(')[1].split(')')[0];
         filteritems(checkbox, val.replace('_',' '),pkgid,pkgsavediv);
     }
@@ -319,7 +323,7 @@ $(document).on('click', '.pkgitem', function () {
 $(document).on('click', '.extraitem', function () {
     $('.overlay').show();
     $('#loadermsg').text("Fetching Menu Items");
-    var parentdiv = $(this).parent('div.package-list').prev('div.package-box');
+    var parentdiv = $(this).parents('div.package-list').prev('div.package-box');
     var checkbox = parentdiv.find('input[type=radio]:checked').val();//$("input[name='checkradio']:checked").val();
     var pkgid = $(this).parent("div#pkgsdiv").find("div.pkgsave").find("input.packageid").val();
     var pkgsavediv = $(this).parent("div#pkgsdiv").find("div.pkgsave");
@@ -332,7 +336,9 @@ $(document).on('click', '.extraitem', function () {
         $('#pkgmodal .pkgitemsection #ctype').text(val);
         $('#pkgmodal .maxcount').val($(this).text().split('(')[1].split(')')[0]);
         $('#pkgmodal .selectedpkg').val(val);
-        $('#pkgmodal .add').attr('onclick','Addpkgitems("'+val+'")');
+        $('#pkgmodal .add').attr('onclick', 'Addpkgitems("' + val + '")');
+        pdiv = '';
+        pdiv = $(this).parent('div.package-list').parent('div.allpkgs');
         var exists = $(this).text().split('(')[1].split(')')[0];
         filteritems(checkbox, val, 'New', pkgsavediv);
     }
@@ -348,34 +354,28 @@ function filteritems(type, selectedpkg, pkgid, pkgsavediv) {
     var itemsdiv = $('#pkgmodal .pkgitemsection table.menuitems tr#pkgitemstr');
     tabletr.empty();
 
-    $.get("/VDashboard/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +subid+"",
+    $.get("/vdb/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +subid+"",
         function (data) {
             commondiv = data;
             var getlist = pkgsavediv.find('input.selpkgitems').val() + ',' + pkgsavediv.find('input.pkgmenuitems').val();//$('.selpkgitems').val() + ',' + $('.pkgmenuitems').val();
-            alert(getlist);
-            //if(getlist == '' || getlist == undefined) getlist =$('.pkgmenuitems').val();
-            //for (var i = 0; i < totallist.split(',').length; i++) {
-            //    if(totallist.split(',')[i] == type)
-            //        getlist = totallist.split(',')[i].split('(')[1].split(')')[0];
-            //}
             var newitem = '';
             if(pkgid == 'New')
-                newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall1">Save All</button></div></td></tr>';
+                newitem='<tr class="newtr"><td style="padding:0"><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall1">Save All</button></div></td></tr>';
             else
-                newitem='<tr class="newtr"><td><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall">Save All</button></div></td></tr>';
+                newitem = '<tr class="newtr"><td style="padding:0"><input type="textbox" class="form-control newitem" /><div align="center"><button class="btn btn-success sni">+ New Item</button>  <button class="btn btn-success saveall">Save All</button></div></td></tr>';
 
             for (var i = 0; i < commondiv.split('!').length; i++) {
                 var row = $("<tr/>");
                 if (getlist != null && getlist!= ',') {
                     if (getlist.includes(commondiv.split('!')[i])) {
-                        row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" checked id="'+commondiv.split('!')[i]+'"/>  <label for="'+commondiv.split('!')[i]+'">' + commondiv.split('!')[i] + '</label></td>');
+                        row.append('<td class="menuitems" style="padding-top:0;padding:0"> <a title="Remove ' + commondiv.split('!')[i] + '?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" checked id="' + commondiv.split('!')[i] + '"/>  <label for="' + commondiv.split('!')[i] + '">' + commondiv.split('!')[i] + '</label></td>');
                     }
                     else {
-                        row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" id="'+commondiv.split('!')[i]+'"/>  <label for="'+commondiv.split('!')[i]+'">' + commondiv.split('!')[i] + '</label></td>');
+                        row.append('<td class="menuitems" style="padding-top:0;padding:0"> <a title="Remove ' + commondiv.split('!')[i] + '?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" id="' + commondiv.split('!')[i] + '"/>  <label for="' + commondiv.split('!')[i] + '">' + commondiv.split('!')[i] + '</label></td>');
                     }
                 }
                 else if(commondiv != ''){
-                    row.append('<td class="menuitems" style="padding-top:0"> <a title="Remove '+commondiv.split('!')[i]+'?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" style="margin-left:5px;" id="'+commondiv.split('!')[i]+'"/>  <label for="'+commondiv.split('!')[i]+'">' + commondiv.split('!')[i] + '</label></td>');
+                    row.append('<td class="menuitems" style="padding-top:0;padding:0"> <a title="Remove ' + commondiv.split('!')[i] + '?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" style="margin-left:5px;" id="' + commondiv.split('!')[i] + '"/>  <label for="' + commondiv.split('!')[i] + '">' + commondiv.split('!')[i] + '</label></td>');
                 }
                 tabletr.append(row);
             }
@@ -413,7 +413,8 @@ $(document).on('click','.saveall',function(){
     $('.overlay').show();
     $('#loadermsg').text("Updating items list...");
     var type = $('#pkgmodal .selectedpkg').val();
-    var pkgcategory = $("input[name='checkradio']:checked").val();
+    var ctype = $('#pkgmodal #ctype').text();
+    var pkgcategory = $("input[type='radio']:checked").val();
     var totalitems = '';var favorite = [];
     $.each($('#pkgmodal .pkgitemsection table.menuitems input[type=checkbox]'), function () {
         favorite.push($(this).next("label").text());
@@ -437,16 +438,16 @@ $(document).on('click','.saveall',function(){
         Beverages:totalitems,
         Fruits:totalitems,
     }
-
+    //alert(ctype);
     $.ajax({
-        url:'/VDashboard/UpdateMenuItems',
+        url:'/vdb/UpdateMenuItems',
         type: 'POST',
-        data: JSON.stringify({ PackageMenu: PackageMenu, type: type }),
+        data: JSON.stringify({ PackageMenu: PackageMenu, type: ctype }),
         dataType: 'json',
         contentType: 'application/json',
         success:function(data){
             $('.overlay').hide();
-            alert(data + '!!!Select items and click Add');
+            alert(type + '!!!Select items and click Add');
             //$('#pkgmodal').modal('hide');
         }
     });
@@ -457,7 +458,7 @@ $(document).on('click','.saveall1',function(){
     $('.overlay').show();
     $('#loadermsg').text("Updating items list...");
     var type = $('#pkgmodal .selectedpkg').val();
-    var pkgcategory = $("input[name='checkradio']:checked").val();
+    var pkgcategory = $("input[type='radio']:checked").val();
     var totalitems = '';var favorite = [];
     $.each($('#pkgmodal .pkgitemsection table.menuitems input[type=checkbox]'), function () {
         favorite.push($(this).next("label").text());
@@ -473,7 +474,7 @@ $(document).on('click','.saveall1',function(){
     }
 
     $.ajax({
-        url:'/VDashboard/NewCourse',
+        url:'/vdb/NewCourse',
         type: 'POST',
         data: JSON.stringify({ PackageMenu: PackageMenu, type: type }),
         dataType: 'json',
@@ -487,9 +488,10 @@ $(document).on('click','.saveall1',function(){
 });
 
 //View Menu
-$('.viewmenu').click(function () {
+$(document).on('click', '.viewmenu', function () {
+//$('.viewmenu').click(function () {
     var packagename = $('#pkgname').val();
-    var pkgcategory = $("input[name='checkradio']:checked").val();
+    var pkgcategory = $("input[type='radio']:checked").val();
     var peakdays = $('#pdays').val();
     var normaldays = $('#ndays').val();
     var holidays = $('#holidays').val();
@@ -520,29 +522,31 @@ $('.viewmenu').click(function () {
 });
 
 //Saving Package
-$('.addpkg').click(function () {
+$(document).on('click', '.addpkg', function () {
+//$('.addpkg').click(function () {
     //validation('AddPackage');
     $('.overlay').show();
     $('#loadermsg').text("Saving Package...");
-    var allbuttons = $(".package-list button").text();
+    var parentdiv = $(this).parent('div.pkgsave').parent('div.allpkgs');
+    var allbuttons = parentdiv.find(".package-list button").text();
     var list=[];
     for (var i = 0; i < allbuttons.split(')').length; i++) {
         if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
             list.push(allbuttons.split(')')[i]+')');
     }
-    var packagename = $('#pkgname').val();
-    var pkgcategory = $("input[name='checkradio']:checked").val();
-    var peakdays = $('#pdays').val();
-    var normaldays = $('#ndays').val();
-    var holidays = $('#holidays').val();
-    var choicedays = $('#cdays').val();
-    var timeslot = $('#pkgslots').val();
-    var pkgdescription = $('#pkgdesc').val();
+    var packagename = parentdiv.find('#pkgname').val();
+    var pkgcategory = parentdiv.find("input[type='radio']:checked").val();
+    var peakdays = parentdiv.find('#pdays').val();
+    var normaldays = parentdiv.find('#ndays').val();
+    var holidays = parentdiv.find('#holidays').val();
+    var choicedays = parentdiv.find('#cdays').val();
+    var timeslot = parentdiv.find('#pkgslots').val();
+    var pkgdescription = parentdiv.find('#pkgdesc').val();
     var menuitems = $(this).parent('div').find('input.selpkgitems').val();//pkgdesc;
     var menu = list.join(','); //$(this).parent('div').find('input.selpkgitems').val();
     //alert(pkgdesc);
     if (packagename == '') {
-        $(packagename).focus();
+        parentdiv.find('#pkgname').focus();
         alert("Enter Package Name");
     }
     else if (pkgcategory == undefined) {
@@ -552,19 +556,19 @@ $('.addpkg').click(function () {
         alert("Select TimeSlots");
     }
     else if (normaldays == '') {
-        $('#ndays').focus();
+        parentdiv.find('#ndays').focus();
         alert("Enter Normal Days Price");
     }
     else if (peakdays == '') {
-        $('#pdays').focus();
+        parentdiv.find('#pdays').focus();
         alert("Enter Peak Days Price");
     }
     else if (holidays == '') {
-        $('#holidays').focus();
+        parentdiv.find('#holidays').focus();
         alert("Enter Holidays Price");
     }
     else if (choicedays == '') {
-        $('#cdays').focus();
+        parentdiv.find('#cdays').focus();
         alert("Enter Choice Days Price");
     }
     else {
@@ -585,7 +589,7 @@ $('.addpkg').click(function () {
             menu : menu
         }
         $.ajax({
-            url: '/VDashboard/AddPackage',
+            url: '/vdb/AddPackage',
             type: 'post',
             datatype: 'json',
             data: package,
@@ -598,26 +602,28 @@ $('.addpkg').click(function () {
 });
 
 //Updating Package
-$('.updatepkg').click(function () {
+$(document).on('click', '.updatepkg', function () {
+//$('.updatepkg').click(function () {
     var menuitems='';
     //validation('UpdatePackage');
     $('.overlay').show();
     $('#loadermsg').text("Updating Package...");
-    var allbuttons = $(".package-list button").text();
+    var parentdiv = $(this).parent('div.pkgsave').parent('div.allpkgs');
+    var allbuttons = parentdiv.find(".package-list button").text();
     var list=[];
     for (var i = 0; i < allbuttons.split(')').length; i++) {
         if(allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1]!=0)
             list.push(allbuttons.split(')')[i]+')');
     }
     var allVal = '';
-    $(".package-list button").each(function () {
+    parentdiv.find(".package-list button").each(function () {
         if($(this).text().split('(')[1].split(')')[0] != 0)
             allVal += ',' + $(this).val();
     });
     var allbuttonsvals = allVal.substring(1, allVal.length);
-    var newlists = $('.selpkgitems').val().substring(1,$('.selpkgitems').val().length) +',' + $('.pkgmenuitems').val();
-    var dblist = $('.pkgmenuitems').val();
-    var selectedlist = $('.availablepkgitems').val();
+    var newlists = parentdiv.find('.selpkgitems').val().substring(1, parentdiv.find('.selpkgitems').val().length) + ',' + parentdiv.find('.pkgmenuitems').val();
+    var dblist = parentdiv.find('.pkgmenuitems').val();
+    var selectedlist = parentdiv.find('.availablepkgitems').val();
     var splitteddblist = dblist.split(',');
     var a =[];var b=[];
     for (var i = 0; i < newlists.split(',').length; i++) {
@@ -640,14 +646,14 @@ $('.updatepkg').click(function () {
     }
     menuitems =splitteddblist.join(',');
     var pkgid = $(this).prev('input.packageid').val();
-    var packagename = $('#pkgname').val();
-    var pkgcategory = $("input[name='checkradio']:checked").val();
-    var peakdays = $('#pdays').val();
-    var normaldays = $('#ndays').val();
-    var holidays = $('#holidays').val();
-    var choicedays = $('#cdays').val();
-    var timeslot = $('#pkgslots').val();
-    var pkgdescription = $('#pkgdesc').val();
+    var packagename = parentdiv.find('#pkgname').val();
+    var pkgcategory = parentdiv.find("input[type=radio]:checked").val();
+    var peakdays = parentdiv.find('#pdays').val();
+    var normaldays = parentdiv.find('#ndays').val();
+    var holidays = parentdiv.find('#holidays').val();
+    var choicedays = parentdiv.find('#cdays').val();
+    var timeslot = parentdiv.find('#pkgslots').val();
+    var pkgdescription = parentdiv.find('#pkgdesc').val();
     //var menuitems = $(this).parent('div').find('input.selpkgitems').val();
     var menu = list.join(',');//$(this).parent('div').find('input.selpkgitems').val();
     if (packagename == '') {
@@ -696,7 +702,7 @@ $('.updatepkg').click(function () {
         }
         //alert(menuitems);
         $.ajax({
-            url: '/VDashboard/UpdatePackage',
+            url: '/vdb/UpdatePackage',
             type: 'post',
             datatype: 'json',
             data: package,
@@ -710,6 +716,7 @@ $('.updatepkg').click(function () {
 
 // Cloning Package
 $(document).on('click', '.pkgclone', function () {
+    var menuitems = '';
     $('.overlay').show();
     $('#loadermsg').text("Duplicating Package...");
     var totaldiv = $(this).parents('div.allpkgs');
@@ -719,18 +726,42 @@ $(document).on('click', '.pkgclone', function () {
         if (allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1] != 0)
             list.push(allbuttons.split(')')[i] + ')');
     }
+    var newlists = totaldiv.find('.selpkgitems').val().substring(1, totaldiv.find('.selpkgitems').val().length) + ',' + totaldiv.find('.pkgmenuitems').val();
+    var dblist = totaldiv.find('.pkgmenuitems').val();
+    var selectedlist = totaldiv.find('.availablepkgitems').val();
+    var splitteddblist = dblist.split(',');
+    var a = []; var b = [];
+    for (var i = 0; i < newlists.split(',').length; i++) {
+        var thisval = newlists.split(',')[i].split('(')[0]
+        if (thisval != '')
+            a.push(thisval);
+    }
+    var availableitems = a;
+    for (var i = 0; i < availableitems.length; i++) {
+        var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));
+        if (b.indexOf(value) == -1) {
+            if (value != -1) {
+                b.push(value);
+                splitteddblist[value] = newlists.split(',')[i];
+            }
+            else {
+                splitteddblist.push(newlists.split(',')[i]);
+            }
+        }
+    }
+    menuitems = splitteddblist.join(',');
     var packagename = totaldiv.find('input#pkgname').val(); //$('#pkgname').val();
-    var pkgcategory = totaldiv.find("input[name='checkradio']:checked").val();
+    var pkgcategory = totaldiv.find("input[type='radio']:checked").val();
     var peakdays = totaldiv.find('#pdays').val();
     var normaldays = totaldiv.find('#ndays').val();
     var holidays = totaldiv.find('#holidays').val();
     var choicedays = totaldiv.find('#cdays').val();
     var timeslot = totaldiv.find('#pkgslots').val();
     var pkgdescription = totaldiv.find('#pkgdesc').val();
-    var menuitems = totaldiv.find('input.selpkgitems').val();//pkgdesc;
-    if (menuitems == '') {
-        menuitems = totaldiv.find('input.pkgmenuitems').val();
-    }
+    //var menuitems = totaldiv.find('input.selpkgitems').val();//pkgdesc;
+    //if (menuitems == '') {
+    //    menuitems = totaldiv.find('input.pkgmenuitems').val();
+    //}
     var menu = list.join(',');
     var thisdiv = $(this);
     var pkgid = '';
@@ -759,7 +790,8 @@ $(document).on('click', '.pkgclone', function () {
             if (data != '0') {
                 pkgid = data;
                 alert("Package Duplicated SuccessFully!!!");
-                duplicatepkg(thisdiv, pkgid);
+                //duplicatepkg(thisdiv, pkgid);
+                location.reload();
             }
             else { alert(data); }
             $('.overlay').hide();
@@ -769,7 +801,7 @@ $(document).on('click', '.pkgclone', function () {
 
 function duplicatepkg(thisdiv, pkgid) {
     var parentdiv = document.getElementById("pkgsdiv");
-    thisdiv.parents('div#pkgsdiv').clone().find("input.packageid").attr('value', pkgid).end().insertAfter(parentdiv);
+    thisdiv.parents('div.allpkgs').clone().find("input.packageid").attr('value', pkgid).end().insertAfter(parentdiv);
 }
 
 // Removing Item from list
@@ -780,7 +812,7 @@ $(document).on('click','.removemitem',function(){
     var selpkg = $('#pkgmodal .selectedpkg').val();
     var totalitems = '';
     var favorite = [];
-    var pkgcategory = $("input[name='checkradio']:checked").val();
+    var pkgcategory = $("input[type='radio']:checked").val();
     $.each($('#pkgmodal .pkgitemsection table.menuitems input[type=checkbox]'), function () {
         favorite.push($(this).next("label").text());
         totalitems = favorite.join('!');
@@ -804,7 +836,7 @@ $(document).on('click','.removemitem',function(){
         Fruits:totalitems
     }
     $.ajax({
-        url:'/VDashboard/UpdateMenuItems',
+        url:'/vdb/UpdateMenuItems',
         type: 'POST',
         data: JSON.stringify({ PackageMenu: PackageMenu, type: selpkg }),
         dataType: 'json',
@@ -815,4 +847,145 @@ $(document).on('click','.removemitem',function(){
             tr.remove();
         }
     });
+});
+
+
+
+//Filtering Services
+$('#btnsearch').click(function () {
+    window.localStorage.removeItem("guests1");
+    window.localStorage.removeItem("location1");
+    window.localStorage.removeItem("eventtype1");
+    window.localStorage.removeItem("eventdate1");
+
+    var location = 'Hyderabad';//$('#loc').val();
+    var eventtype = $('.select2-selection__rendered').text();//$('span.current').text();
+    var guests = $('#guests').val();
+    var date = $('#datetimepicker1').val();
+    if (location == '') {
+        alert('Enter Location');
+        $('#loc').focus();
+    }
+    else if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+        alert('Select Event Type');
+    }
+    else if (guests == '') {
+        alert('Enter Guests');
+        $('#guests').focus();
+    }
+    else if (date == '') {
+        alert('Select Event date');
+        $('#datetimepicker1').focus();
+    }
+    else {
+        window.localStorage.setItem("guests1", guests);
+        window.localStorage.setItem("location1", location);
+        window.localStorage.setItem("eventtype1", eventtype);
+        window.localStorage.setItem("eventdate1", date);
+        window.location.href = '/vdb/Index?eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
+    }
+});
+
+//Calendar Onchange
+$(".vendorcalendar").on("change", function () {
+    $(".kscbook").css('display', 'none');
+    var date = new Date($(this).val());
+    var yr = date.getFullYear();
+    var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    var month = date.getMonth() + 1;
+    var selected = yr + '-' + month + '-' + day;
+    var vsid = $(this).parents("div#vcal").children('#venusid').val();
+    // alert(selected + '~' + vsid);
+    vcal = $("#vcalender").val();
+    selected1 = selected + '~' + vsid;
+    var vcal1 = vcal + "," + selected1;
+    //   alert(vcal1);
+    $("#vcalender").val(vcal1);
+    // $(this).parents("div#vcal").next("div.kscbook").css('display', 'block');
+});
+
+//initialising Datepickers
+$('#datetimepicker1,datetimepicker2').datepicker({
+    dateFormat: 'dd/mm/yy',
+    minDate: new Date()
+});
+
+//Booking part
+$('.btnbook').on('click', function () {
+    window.localStorage.removeItem("vpbook", select);
+    window.localStorage.removeItem("vpbookdate", date);
+    window.localStorage.removeItem("vpbooktimeslot", timeslotlist);
+    window.localStorage.removeItem("vpbookpid", packageid);
+    //   getValueUsingClass();
+    /* declare an checkbox array */
+    var chkArray = [];
+
+    /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+    $(".kspackage:checked").each(function () {
+        chkArray.push($(this).val());
+    });
+
+    /* we join the array separated by the comma */
+    var selected;
+    selected = chkArray.join(',');
+
+    /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+    if (selected.length > 0) {
+        //  alert("You have selected " + selected);
+    } else {
+        alert("Please at least check one of the checkbox");
+    }
+    var chkArray1 = [];
+
+    /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+    $(".kstimeslot:checked").each(function () {
+        chkArray1.push($(this).val());
+    });
+
+    /* we join the array separated by the comma */
+    var timeslot;
+    timeslot = chkArray1.join(',');
+
+    /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+    if (timeslot.length > 0) {
+        //  alert("You have selected " + selected);
+    } else {
+        alert("Please at least check timeslot of the checkbox");
+    }
+    // var calendar = $("#vcalender").val();
+    //var calendar = $("input[id='vcalender']")
+    //    .map(function () { return $(this).val(); }).get();
+    var packageid = selected;
+    window.localStorage.removeItem("vpbook");
+    var timeslotlist = timeslot;
+    var location = 'Hyderabad';//$('#loc').val();
+    //var eventtype = $('.current').text().replace('1', '');
+    //var guests = $('#guests').val();
+    var eventtype = $('.select2-selection__rendered').text();//$('.search-box2').find(':selected');//'wedding';
+    //alert(eventtype);
+    var guests = $('#guests').val();//'35';
+    var date = $('#vcalender').val();
+    // if (date == '') date = $('#datetimepicker1').val();
+
+    if (eventtype == '' || eventtype == null || eventtype == 'Select Event') {
+        alert('Select Event Type');
+    }
+    else if (guests == '') {
+        alert('Enter Guests');
+        $('#guests').focus();
+    }
+    else if (date == '') {
+        alert('Select date');
+        $('#datetimepicker1').focus();
+    }
+    else {
+        var select = location + ',' + guests + "," + eventtype;
+        window.localStorage.setItem("vpbook", select);
+        window.localStorage.setItem("vpbookdate", date);
+        window.localStorage.setItem("vpbooktimeslot", timeslotlist);
+        window.localStorage.setItem("vpbookpid", packageid);
+        //  alert(select +","+ packageid +","+timeslotlist);
+        window.location.href = '/ManageUser/Index';
+        //alert('Location = '+location+',Event Type = '+eventtype+',Guests = '+guests+',Event Date = '+date+'');
+    }
 });
