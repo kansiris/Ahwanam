@@ -621,6 +621,12 @@
             $('#SaveUser').click(function () {
                 var val = $(this).val();
                 var Id = $('#id').val();
+                var type = $("input[name='type']:checked").val();
+                if (type == 'Corporate')
+                {
+                    var Businessname = $('#Businessname').val();
+                    if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+                }
                 //var Businessname = $('#Businessname').val();
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
@@ -633,11 +639,11 @@
                 var country = $('#country').val();
                 var phoneno = $('#phoneno').val();
                 var phonenopattern = /^[0-9]{10}$/;
-                var pin_code = $('#pin_code').val();
+                var pincode = $('#pincode').val();
                 var pincodepattern = /^(?! )(?!0000)[0-9]{6}$/;
                 //--validation messages--//
-                if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
-                else if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
+                //if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+               if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
                 else if (lastname == '') { alert('Enter Customer First Nmae'); $('#lastname').focus(); }
                 else if (email == '') { alert('Enter Email'); $('#email').focus(); }
                 else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
@@ -678,8 +684,7 @@
                         alert(data);
                         $('#addcustomermodel').modal('hide');
                         var url = '/ManageUser/mnguserdetails';
-                        $('#userslist').load(url);
-                        //$("input[name='type']:checked").val(''),
+                        $('#userslist').load(url);                       
                         //$('#Businessname').val(''),
                         //$('#firstname').val(''),
                         //$('#lastname').val(''),
@@ -691,8 +696,7 @@
                         //$('#country').val(''),
                         //$('#phoneno').val(''),
                         //$('#pincode').val(''),
-                        //$('#MemberNumber').val(''),
-                        //$("input[name='Status']:checked").val('')
+                        //$('#MemberNumber').val('')
                         //location.reload();
                     },
                     error: function (data) {
@@ -705,6 +709,11 @@
             $('#EditUser').click(function () {
             var val = $(this).val();
             var Id = $('#id').val();
+            var type = $("input[name='type']:checked").val();
+            if (type == 'Corporate') {
+                var Businessname = $('#Businessname').val();
+                if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+            }
             var firstname = $('#firstname').val();
             var lastname = $('#lastname').val();
             var email = $('#email').val();
@@ -716,11 +725,11 @@
             var country = $('#country').val();
             var phoneno = $('#phoneno').val();
             var phonenopattern = /^[0-9]{10}$/;
-            var pin_code = $('#pin_code').val();
-            var pincodepattern = /^(?! )(?!0000)[0-9]{6}$/;
+            var pincode = $('#pincode').val();
+            var pincodepattern = /^[0-9]{6}$/;
                 //--validation messages--//
-            if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
-            else if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
+            //if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+           if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
             else if (lastname == '') { alert('Enter Customer First Nmae'); $('#lastname').focus(); }
             else if (email == '') { alert('Enter Email'); $('#email').focus(); }
             else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
@@ -763,7 +772,6 @@
                     $('#addcustomermodel').modal('hide');
                     var url = '/ManageUser/mnguserdetails';
                     $('#userslist').empty().load(url);
-                    //$("input[name='type']:checked").val(''),
                     //$('#Businessname').val(''),
                     //$('#firstname').val(''),
                     //$('#lastname').val(''),
@@ -775,8 +783,7 @@
                     //$('#country').val(''),
                     //$('#phoneno').val(''),
                     //$('#pincode').val(''),
-                    //$('#MemberNumber').val(''),
-                    //$("input[name='Status']:checked").val('')
+                    //$('#MemberNumber').val('')
                     //location.reload();
                 },
                 error: function (data) {
@@ -786,13 +793,13 @@
             }
         });
 
-            $("input[type=text]").on('input', function () {
-                var type = $('input[name=type]:checked').val();
-                var Businessname = $('#Businessname').val();
-                if (type == "Corporate" && Businessname == '') { // || type != "Individual") {
-                    alert("Please enter business name");
-                }
-            })
+            //$("input[type=text]").on('input', function () {
+            //    var type = $('input[name=type]:checked').val();
+            //    var Businessname = $('#Businessname').val();
+            //    if (type == "Corporate" && Businessname == '') { // || type != "Individual") {
+            //        alert("Please enter business name");
+            //    }
+            //})
 
             function checkEmail(val) {
                 //alert(val);
@@ -832,6 +839,43 @@
                 }
                 $('.overlay').show();
                 $('#loadermsg').text('Booking in process....');
+                var type = $("input[name='type']:checked").val();
+                if (type == 'Corporate') {
+                    var Businessname = $('#Businessname').val();
+                    if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+                }
+                //var Businessname = $('#Businessname').val();
+                var firstname = $('#firstname').val();
+                var lastname = $('#lastname').val();
+                var email = $('#email').val();
+                var emailidpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+                var adress1 = $('#adress1').val();
+                var adress2 = $('#adress2').val();
+                var city = $('#city').val();
+                var state = $('#state').val();
+                var country = $('#country').val();
+                var phoneno = $('#phoneno').val();
+                var phonenopattern = /^[0-9]{10}$/;
+                var pincode = $('#pincode').val();
+                var pincodepattern = /^(?! )(?!0000)[0-9]{6}$/;
+                //--validation messages--//
+                //if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+                if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
+                else if (lastname == '') { alert('Enter Customer First Nmae'); $('#lastname').focus(); }
+                else if (email == '') { alert('Enter Email'); $('#email').focus(); }
+                else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
+                else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
+                else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
+                else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
+                else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
+                else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
+                else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
+                else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
+                else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
+                else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+                else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+                else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+                else{
                 $.ajax({
                     url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&timeslot=' + timeslot,
                     type: 'POST',
@@ -859,6 +903,7 @@
 
                     }
                 });
+              }
             });
 
             $('#booknowss').click(function () {
@@ -891,7 +936,7 @@
                 var eventtype = vpbook[2];
                 var guests = vpbook1[1];
                 var date = date;
-               // var timeslot = timeslot;
+                // var timeslot = timeslot;
                 alert(vpbook1 + packageid + date + timeslot);
                 //if (packid == '') {
                 //    var selectedp = window.localStorage.getItem("vpbook");
@@ -900,36 +945,74 @@
 
                     $('.overlay').show();
                     $('#loadermsg').text('Booking in process....');
-                    $.ajax({
-                        url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status + '&&ctype=' + type +'&&timeslot='+timeslot, //+ '&&selectedp=' + selectedp,
-                        type: 'POST',
-                        contentType: 'application/json',
+                    var type = $("input[name='type']:checked").val();
+                    if (type == 'Corporate') {
+                        var Businessname = $('#Businessname').val();
+                        if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+                    }
+                    //var Businessname = $('#Businessname').val();
+                    var firstname = $('#firstname').val();
+                    var lastname = $('#lastname').val();
+                    var email = $('#email').val();
+                    var emailidpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+                    var adress1 = $('#adress1').val();
+                    var adress2 = $('#adress2').val();
+                    var city = $('#city').val();
+                    var state = $('#state').val();
+                    var country = $('#country').val();
+                    var phoneno = $('#phoneno').val();
+                    var phonenopattern = /^[0-9]{10}$/;
+                    var pin_code = $('#pin_code').val();
+                    var pincodepattern = /^(?! )(?!0000)[0-9]{6}$/;
+                    //--validation messages--//
+                    //if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+                    if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
+                    else if (lastname == '') { alert('Enter Customer First Nmae'); $('#lastname').focus(); }
+                    else if (email == '') { alert('Enter Email'); $('#email').focus(); }
+                    else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
+                    else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
+                    else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
+                    else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
+                    else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
+                    else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
+                    else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
+                    else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
+                    else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
+                    else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+                    else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+                    else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+                    else{
+                        $.ajax({
+                            url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status + '&&ctype=' + type +'&&timeslot='+timeslot, //+ '&&selectedp=' + selectedp,
+                            type: 'POST',
+                            contentType: 'application/json',
 
-                        success: function (result) {
-                            if (result == "please active the user") {
+                            success: function (result) {
+                                if (result == "please active the user") {
 
-                                alert(result);
+                                    alert(result);
+                                }
+                                else if (result != "") {
+                                    alert("Order placed Successfully");
+                                    window.localStorage.removeItem("vpbook");
+                                    window.localStorage.removeItem("vpbookdate");
+                                    window.localStorage.removeItem("vpbooktimeslot");
+                                    window.localStorage.removeItem("vpbookpid");
+                                    window.location.href = "/vinvoice/Index?oid=" + result;
+                                } else {
+                                    alert("Error Occurred in placing order");
+                                }
+
+
+
                             }
-                            else if (result != "") {
-                                alert("Order placed Successfully");
-                                window.localStorage.removeItem("vpbook");
-                                window.localStorage.removeItem("vpbookdate");
-                                window.localStorage.removeItem("vpbooktimeslot");
-                                window.localStorage.removeItem("vpbookpid");
-                                window.location.href = "/vinvoice/Index?oid=" + result;
-                            } else {
-                                alert("Error Occurred in placing order");
-                            }
+                        });
 
-
-
-                        }
-                    });
-
-                }
-                else {
-                    alert('Please enter businessname');
-                }
+                    }
+                //else {
+                //    alert('Please enter businessname');
+                //}
+              }
             });
 
 

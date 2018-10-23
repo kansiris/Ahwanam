@@ -65,7 +65,7 @@ namespace MaaAahwanam.Web.Controllers
             partner.UpdatedDate = DateTime.Now;
             if (command == "save") { partner = partnerservice.AddPartner(partner); }
             else if (command == "Update") { partner = partnerservice.UpdatePartner(partner, partid); }
-
+            else if (command == "Update1") { partner = partnerservice.UpdatePartner(partner, partid); }
             var emailid = partner.emailid;
             var getpartner = partnerservice.getPartner(emailid);
             return Json(getpartner, JsonRequestBehavior.AllowGet);
