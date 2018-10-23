@@ -342,7 +342,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-4 col-md-4">
                                                             <span class="input input--hoshi">
-                                                                <input class="input__field input__field--hoshi" type="text" id="phoneno" name="phoneno" minlength="10+" maxlength="10" pattern="[0-9]+" title="Enter Numbers and 10 digits only" value="" required />
+                                                                <input class="input__field input__field--hoshi" type="number" id="phoneno" name="phoneno" minlength="10+" maxlength="10" pattern="[0-9]+" title="Enter Numbers and 10 digits only" value="" required />
                                                                 <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="phoneno">
                                                                     <span class="input__label-content input__label-content--hoshi">Phone Number</span>
                                                                 </label>
@@ -621,6 +621,38 @@
             $('#SaveUser').click(function () {
                 var val = $(this).val();
                 var Id = $('#id').val();
+                //var Businessname = $('#Businessname').val();
+                var firstname = $('#firstname').val();
+                var lastname = $('#lastname').val();
+                var email = $('#email').val();
+                var emailidpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+                var adress1 = $('#adress1').val();
+                var adress2 = $('#adress2').val();
+                var city = $('#city').val();
+                var state = $('#state').val();
+                var country = $('#country').val();
+                var phoneno = $('#phoneno').val();
+                var phonenopattern = /^[0-9]{10}$/;
+                var pin_code = $('#pin_code').val();
+                var pincodepattern = /^(?! )(?!0000)[0-9]{6}$/;
+                //--validation messages--//
+                if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+                else if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
+                else if (lastname == '') { alert('Enter Customer First Nmae'); $('#lastname').focus(); }
+                else if (email == '') { alert('Enter Email'); $('#email').focus(); }
+                else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
+                else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
+                else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
+                else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
+                else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
+                else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
+                else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
+                else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
+                else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
+                else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+                else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+                else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+                else{
                 var manageuser = {
                     vendorId:$('#vendorId').val(),
                     type: $("input[name='type']:checked").val(),
@@ -667,11 +699,43 @@
                         alert("save is failed");
                     }
                 });
+              }
             });
 
             $('#EditUser').click(function () {
             var val = $(this).val();
             var Id = $('#id').val();
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+            var email = $('#email').val();
+            var emailidpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+            var adress1 = $('#adress1').val();
+            var adress2 = $('#adress2').val();
+            var city = $('#city').val();
+            var state = $('#state').val();
+            var country = $('#country').val();
+            var phoneno = $('#phoneno').val();
+            var phonenopattern = /^[0-9]{10}$/;
+            var pin_code = $('#pin_code').val();
+            var pincodepattern = /^(?! )(?!0000)[0-9]{6}$/;
+                //--validation messages--//
+            if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+            else if (firstname == '') { alert('Enter Customer First Nmae'); $('#firstname').focus(); }
+            else if (lastname == '') { alert('Enter Customer First Nmae'); $('#lastname').focus(); }
+            else if (email == '') { alert('Enter Email'); $('#email').focus(); }
+            else if (!emailidpattren.test(email)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
+            else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
+            else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
+            else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
+            else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
+            else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
+            else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
+            else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
+            else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
+            else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+            else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+            else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+             else{
             var manageuser = {
                 vendorId: $('#vendorId').val(),
                 type: $("input[name='type']:checked").val(),
@@ -719,6 +783,7 @@
                     alert("update is failed");
                 }
             });
+            }
         });
 
             $("input[type=text]").on('input', function () {
