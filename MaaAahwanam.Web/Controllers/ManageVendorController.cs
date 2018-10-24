@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
                 VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
+                
             }
             return View();
         }

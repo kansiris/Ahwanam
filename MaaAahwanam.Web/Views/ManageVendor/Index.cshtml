@@ -275,12 +275,14 @@
                                                     var number = 0;
                                                     foreach (var vendors in ViewBag.vendorlist)
                                                     {
+                                                        
                                                         <tr>
                                                             <td><input type="checkbox" class="chcktbl" value="@vendors.id" /></td>
                                                             <td>@(++number)</td>
                                                             <td>@vendors.id </td>
                                                             <td>@vendors.Businessname</td>
-                                                            <td>@vendors.services</td>
+                                                            @if (@vendors.services == null) {<td></td> }
+                                                            else { <td>@String.Format(@vendors.services).Replace("&", ", ") </td>}
                                                             <td>@vendors.firstname </td>
                                                             <td>@vendors.lastname</td>
                                                             <td>@vendors.email</td>
@@ -523,7 +525,10 @@
 
         <script>
             $(document).ready(function () {
-                $('#allorders').DataTable();
+                $('#allorders').DataTable({
+                    responsive: true,
+                    "pageLength": 1
+                });
                 $('#addservices').css("display", "none");
             });
             function addservice() {
@@ -788,7 +793,7 @@
                 //alert(val);
                 vendorId = $('#vendorId').val();
                 $.ajax({
-                    url: '/ManageUser/checkVendoremail?email=' + val + "&&id=" + vendorId,
+                    url: '/ManageVendor/checkVendoremail?email=' + val + "&&id=" + vendorId,
                     type: 'Post',
                     contentType: 'application/json',
                     success: function (result) {
