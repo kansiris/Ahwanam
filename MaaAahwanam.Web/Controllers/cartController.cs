@@ -20,6 +20,8 @@ namespace MaaAahwanam.Web.Controllers
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         decimal totalp, discount, servcharge, gst, nettotal, totalp2;
         CartService cartService = new CartService();
+        QuotationListsService quotationListsService = new QuotationListsService();
+
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
 
@@ -142,6 +144,11 @@ namespace MaaAahwanam.Web.Controllers
                     username = home.Capitalise(username) + " "+ home.Capitalise(userdetails.LastName);
                     List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartid1 = selcartid.Split(',');
+                    QuotationsList quotationsList = new QuotationsList();
+
+                   
+
+
                     //for (int i = 0; i < cartid1.Count(); i++)
                     //{
                     //    var cartdetails = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid1[i])).FirstOrDefault();
@@ -151,7 +158,25 @@ namespace MaaAahwanam.Web.Controllers
                     List<GetCartItems_Result> cartdetails = new List<GetCartItems_Result>();
                     for (int i = 0; i < cartid1.Count(); i++)
                     {
+                        var qcart = cartlist.Where(m => m.CartId == Convert.ToInt64(cartid1[i])).FirstOrDefault();
                         cartdetails.AddRange(cartlist.Where(m => m.CartId == Convert.ToInt64(cartid1[i])).ToList());
+                        quotationsList.Name = userdetails.FirstName;
+                        quotationsList.EmailId = userlogin.UserName;
+                        quotationsList.ServiceType = qcart.ServiceType;
+            quotationsList.PhoneNo = userdetails.UserPhone;
+                        quotationsList.EventStartDate= DateTime.UtcNow;
+                        quotationsList.EventStartTime = DateTime.UtcNow;
+                        quotationsList.EventEnddate = DateTime.UtcNow;
+                        quotationsList.EventEndtime = DateTime.UtcNow;
+                        quotationsList.VendorId = qcart.subid.ToString();
+            quotationsList.VendorMasterId = qcart.Id.ToString();
+                        quotationsList.Persons = qcart.Quantity.ToString();
+                        string ip = HttpContext.Request.UserHostAddress;
+                        //string hostName = Dns.GetHostName();
+                        quotationsList.IPaddress = ip;//Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
+                        quotationsList.UpdatedTime = DateTime.UtcNow;
+                        quotationsList.Status = "Active";
+                        quotationListsService.AddQuotationList(quotationsList);
                     }
                     ViewBag.cartdetails = cartdetails;
                     StringBuilder cds = new StringBuilder();

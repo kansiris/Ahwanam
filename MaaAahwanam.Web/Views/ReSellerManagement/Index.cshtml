@@ -546,112 +546,54 @@
                 </div>
             </div>
         </div>}
-    <div class="container-fluid">
-        @*<div class="">*@
-        <div class="white-wrapper row mx-0" style="padding:0">
-            @*<div class="accordion mt-2" style="backgrou: #1515a782">
-                    <div class="row">
-                        <div class="col-xs-6 col-md-2 col-sm-3" id="package">
-                            @*<input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                            <span>Service Name</span>
-                        </div>
-                        <div class="col-xs-3 col-md-3 col-sm-3">
-                            <span id="span-package-1">Package Name</span>
-                        </div>
-                        <div class="col-xs-6  col-md-5 col-sm-3">
-                            Sale Price
-                            <table id="prices-accordion">
-                                <tbody>
+        <div class="container-fluid">
 
+            <div class="accordionks mt-2">
+                <div class="row">
+                    <div class="col-xs-6 col-md-2 col-sm-3" id="package">
 
-                                        <tr>
-                                            <td>
-                                                Normal Day
-                                            </td>
-                                            <td>
-                                                Peaks Day
-                                            </td>
-                                            <td>
-                                                Holiday
-                                            </td>
-                                            <td>
-                                                Choice Day
-                                            </td>
-                                        </tr>
-
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <div class="col-xs-6  col-md-2 col-sm-3">
-                              <center>  Expiry</center>
-                            </div>
-                        </div>
+                        <span id="span-package-1">Service Name</span>
                     </div>
+                    <div class="col-xs-3 col-md-3 col-sm-3">
+                        <span id="span-package-1">Package Name</span>
+                    </div>
+                    <div class="col-xs-6  col-md-5 col-sm-3">
+                        <center> Sale Price</center>
+                        <table id="prices">
+                            <tbody>
 
-                @*<div class="col-md-12 col-sm-6">
-                    <table class="table table" id="table-text">
-                        <thead>
-                            <tr>
-                                <th id="head-section">Service Name</th>
-                                <th id="head-section">Package Name</th>
-                                <th id="head-section">
-                                    Sale Price
-                                    <table id="prices">
-                                        <tbody>
-                                            <tr>
-                                                <th>Normal</th>
-                                                <th>Peak</th>
-                                                <th>Holiday</th>
-                                                <th>Choice</th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </th>
-                                <th id="head-section">Expiry</th>
-                            </tr>
-                        </thead>
 
-                    </table>
-                </div>*@
-        @*</div>*@
-        @*</div>*@
-            <div class="row mx-0">
-                <div class="col-md-12 col-sm-6">
-                    <table class="table table" id="table-text">
-                        <thead>
-                            <tr>
-                                <th id="head-section">Service Name</th>
-                                <th id="head-section">Package Name</th>
-                                <th id="head-section" style="text-align:center">
-                                    Sale Price
-                                    <table id="prices">
-                                        <tbody>
-                                            <tr>
-                                                <th>Normal</th>
-                                                <th>Peak</th>
-                                                <th>Holiday</th>
-                                                <th>Choice</th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </th>
-                                <th id="head-section">Expiry</th>
-                            </tr>
-                        </thead>
+                                <tr>
+                                    <td>
+                                        Normal Day
+                                    </td>
+                                    <td>
+                                        Peaks Day
+                                    </td>
+                                    <td>
+                                        Holiday
+                                    </td>
+                                    <td>
+                                        Choice Day
+                                    </td>
+                                </tr>
 
-                    </table>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-xs-6  col-md-2 col-sm-3">
+                        <center><span id="span-package-1">  Expiry  </span></center>
+                    </div>
                 </div>
             </div>
-        @foreach (var item in ViewBag.package)
-        {
-            if (ViewBag.resellerpkg != null)
+
+
+            @foreach (var item in ViewBag.package)
             {
-                foreach (var itemks in ViewBag.resellerpkg)
+                if (ViewBag.resellerpkg == null && ViewBag.pkg == null)
                 {
-                    //if (Convert.ToInt64(itemks.packageid) == item.PackageID)
-                    //{
                     <div class="accordion1 mt-2" id="package">
 
                         <div class="row">
@@ -677,96 +619,47 @@
 
                                         <tr>
                                             <td>
-                                                @if (itemks.normaldayssaletype == "commission")
-                                                {
-                                                    <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal1" value="commission" checked> commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                    </p>
-                                                }
-                                                else if (itemks.normaldayssaletype == "slab/Flat rate")
-                                                {
-                                                    <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal1" value="commission"> commission
-                                                    </p> <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                    </p>
-                                                }
+
+                                                <p class="ksp">
+                                                    <input type="radio" name="normal" id="normal1" value="commission" checked> commission
+                                                </p>   <p class="ksp">
+                                                    <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
+
+                                                </p>
                                             </td>
                                             <td>
-                                                @if (itemks.peakdaysaletype == "commission")
-                                                {
-                                                    <p class="ksp">
-                                                        <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                    </p>
 
-                                                }
-                                                else if (itemks.peakdaysaletype == "slab/Flat rate")
-                                                {
-                                                    <p class="ksp">
-                                                        <input type="radio" name="peakday" id="normal1" value="commission"> commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="peakday" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                    </p>
-                                                }
+                                                <p class="ksp">
+                                                    <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
+                                                </p> <p class="ksp">
+                                                    <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                </p>
+
                                             </td>
                                             <td>
-                                                @if (itemks.holidaysssaletype == "commission")
-                                                {
-                                                    <p class="ksp">
 
-                                                        <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                    </p>
+                                                <p class="ksp">
+                                                    <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
+                                                </p> <p class="ksp">
+                                                    <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                </p>
 
-                                                }
-                                                else if (itemks.holidaysssaletype == "slab/Flat rate")
-                                                {
-                                                    <p class="ksp">
-                                                        <input type="radio" name="holidays" id="normal1" value="commission"> commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="holidays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                    </p>
-                                                }
                                             </td>
                                             <td>
-                                                @if (itemks.choicedayssaletype == "commission")
-                                                {
-                                                    <p class="ksp">
-                                                        <input type="radio" name="choicedays" id="normal1" value="commission" checked> commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                    </p>
 
-                                                }
-                                                else if (itemks.choicedayssaletype == "slab/Flat rate")
-                                                {
-                                                    <p class="ksp">
-
-                                                        <input type="radio" name="choicedays" id="normal1" value="commission"> commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                    </p>
-                                                }
+                                                <p class="ksp">
+                                                    <input type="radio" name="choicedays" id="normal1" value="commission"> commission
+                                                </p> <p class="ksp">
+                                                    <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
+                                                </p>
                                             </td>
 
                                         </tr>
                                         <tr>
-                                            <td><input type="number" name="normal1" class="price" value="@itemks.salenormaldays"></td>
-                                            <td><input type="number" name="peakday1" class="price" value="@itemks.salepeakdays"></td>
-                                            <td><input type="number" name="holidays1" class="price" value="@itemks.saleholidays"></td>
-                                            <td><input type="number" name="choicedays1" class="price" value="@itemks.salechoicedays"></td>
+                                            <td><input type="number" name="normal1" class="price"></td>
+                                            <td><input type="number" name="peakday1" class="price"></td>
+                                            <td><input type="number" name="holidays1" class="price"></td>
+                                            <td><input type="number" name="choicedays1" class="price"></td>
                                         </tr>
 
                                     </tbody>
@@ -774,277 +667,273 @@
 
                             </div>
                             <div class="col-xs-6  col-md-2 col-sm-3">
-                                <p> <input type="text" value="" name="date" class=" datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                <p>  <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
                                 <p>
                                     <center style="padding-top:7%">
                                         <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
                                     </center>
-                                </p>
+                                <p>
                             </div>
-
                         </div>
                     </div>
 
-                    //}
                 }
-            }
-            else if (ViewBag.pkg != null)
-            {
-                foreach (var itemks1 in ViewBag.pkg)
+
+
+                else if (ViewBag.resellerpkg != null)
                 {
-                    if (Convert.ToInt64(itemks1.packageid) == item.PackageID)
+                    foreach (var itemks in ViewBag.resellerpkg)
                     {
+                        if (Convert.ToInt64(itemks.packageid) == item.PackageID)
+                        {<div class="accordion1 mt-2" id="package">
 
-                        <div class="accordion1 mt-2" id="package">
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2 col-sm-3">
+                                        <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                        <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
-                            <div class="row">
-                                <div class="col-xs-6 col-md-2 col-sm-3">
-                                    <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                                    <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+                                        <span>Packages Price</span>
+                                    </div>
+                                    <div class="col-xs-3 col-md-3 col-sm-3">
+                                        <span id="span-package-1">@item.PackageName</span>
+                                    </div>
+                                    <div class="col-xs-6  col-md-5 col-sm-3">
+                                        <table id="prices-accordion">
+                                            <tbody>
+                                                <tr>
+                                                    <td><center>₹@item.normaldays</center></td>
+                                                    <td><center>₹@item.peakdays</center></td>
+                                                    <td><center>₹@item.holidays</center> </td>
+                                                    <td><center>₹@item.choicedays</center> </td>
+                                                </tr>
 
-                                    <span>Packages Price</span>
+                                                <tr>
+                                                    <td>
+                                                        @if (itemks.normaldayssaletype == "commission")
+                                                        {
+                                                            <p class="ksp">
+                                                                <input type="radio" name="normal" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+                                                        }
+                                                        else if (itemks.normaldayssaletype == "slab/Flat rate")
+                                                        {
+                                                            <p class="ksp">
+                                                                <input type="radio" name="normal" id="normal1" value="commission"> commission
+                                                            </p> <p class="ksp">
+                                                                <input type="radio" name="normal" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
+                                                            </p>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (itemks.peakdaysaletype == "commission")
+                                                        {
+                                                            <p class="ksp">
+                                                                <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+
+                                                        }
+                                                        else if (itemks.peakdaysaletype == "slab/Flat rate")
+                                                        {
+                                                            <p class="ksp">
+                                                                <input type="radio" name="peakday" id="normal1" value="commission"> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="peakday" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
+                                                            </p>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (itemks.holidaysssaletype == "commission")
+                                                        {
+                                                            <p class="ksp">
+
+                                                                <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+
+                                                        }
+                                                        else if (itemks.holidaysssaletype == "slab/Flat rate")
+                                                        {
+                                                            <p class="ksp">
+                                                                <input type="radio" name="holidays" id="normal1" value="commission"> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="holidays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
+                                                            </p>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (itemks.choicedayssaletype == "commission")
+                                                        {
+                                                            <p class="ksp">
+                                                                <input type="radio" name="choicedays" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+
+                                                        }
+                                                        else if (itemks.choicedayssaletype == "slab/Flat rate")
+                                                        {
+                                                            <p class="ksp">
+
+                                                                <input type="radio" name="choicedays" id="normal1" value="commission"> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
+                                                            </p>
+                                                        }
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" name="normal1" class="price" value="@itemks.salenormaldays"></td>
+                                                    <td><input type="number" name="peakday1" class="price" value="@itemks.salepeakdays"></td>
+                                                    <td><input type="number" name="holidays1" class="price" value="@itemks.saleholidays"></td>
+                                                    <td><input type="number" name="choicedays1" class="price" value="@itemks.salechoicedays"></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="col-xs-6  col-md-2 col-sm-3">
+                                        <p> <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                        <p>
+                                            <center style="padding-top:7%">
+                                                <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
+                                            </center>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="col-xs-3 col-md-3 col-sm-3">
-                                    <span id="span-package-1">@item.PackageName</span>
-                                </div>
-
-                                <div class="col-xs-6  col-md-5 col-sm-3">
-                                    <table id="prices-accordion">
-                                        <tbody>
-                                            <tr>
-                                                <td><center>₹@item.normaldays</center></td>
-                                                <td><center>₹@item.peakdays</center></td>
-                                                <td><center>₹@item.holidays</center> </td>
-                                                <td><center>₹@item.choicedays</center> </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-
-                                                    <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal1" value="commission" checked> commission
-                                                    </p>   <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
-
-                                                    </p>
-                                                </td>
-                                                <td>
-
-                                                    <p class="ksp">
-                                                        <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
-                                                    </p> <p class="ksp">
-                                                        <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                    </p>
-
-                                                </td>
-                                                <td>
-
-                                                    <p class="ksp">
-                                                        <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
-                                                    </p> <p class="ksp">
-                                                        <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                    </p>
-
-                                                </td>
-                                                <td>
-
-                                                    <p class="ksp">
-                                                        <input type="radio" name="choicedays" id="normal1" value="commission"> commission
-                                                    </p> <p class="ksp">
-                                                        <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td><input type="number" name="normal1" class="price"></td>
-                                                <td><input type="number" name="peakday1" class="price"></td>
-                                                <td><input type="number" name="holidays1" class="price"></td>
-                                                <td><input type="number" name="choicedays1" class="price"></td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                                <div class="col-xs-6  col-md-2 col-sm-3">
-                                    <p>  <input type="text" value="" name="date" class="form-control datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
-                                    <p>
-                                        <center style="padding-top:7%">
-                                            <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
-                                        </center>
-                                    <p>
-                                </div>
-
                             </div>
-                        </div>
+                        }
+                    }
+                    //}
+                    //else if (ViewBag.pkg != null)
+                    //{
+                    foreach (var itemks1 in ViewBag.pkg)
+                    {
+                        if (Convert.ToInt64(itemks1.PackageID) == item.PackageID)
+                        {
+                            <div class="accordion1 mt-2" id="package">
+
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-2 col-sm-3">
+                                        <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                        <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+
+                                        <span>Packages Price</span>
+                                    </div>
+                                    <div class="col-xs-3 col-md-3 col-sm-3">
+                                        <span id="span-package-1">@item.PackageName</span>
+                                    </div>
+                                    <div class="col-xs-6  col-md-5 col-sm-3">
+                                        <table id="prices-accordion">
+                                            <tbody>
+                                                <tr>
+                                                    <td><center>₹@item.normaldays</center></td>
+                                                    <td><center>₹@item.peakdays</center></td>
+                                                    <td><center>₹@item.holidays</center> </td>
+                                                    <td><center>₹@item.choicedays</center> </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                       
+                                                            <p class="ksp">
+                                                                <input type="radio" name="normal" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+                                                        
+                                                    </td>
+                                                    <td>
+                                                       
+                                                            <p class="ksp">
+                                                                <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+
+                                                        
+                                                    </td>
+                                                    <td>
+                                                       
+                                                            <p class="ksp">
+
+                                                                <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+
+                                                       
+                                                    </td>
+                                                    <td>
+                                                      
+                                                            <p class="ksp">
+                                                                <input type="radio" name="choicedays" id="normal1" value="commission" checked> commission
+                                                            </p>
+                                                            <p class="ksp">
+                                                                <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                            </p>
+
+                                                       
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" name="normal1" class="price" ></td>
+                                                    <td><input type="number" name="peakday1" class="price" ></td>
+                                                    <td><input type="number" name="holidays1" class="price" ></td>
+                                                    <td><input type="number" name="choicedays1" class="price" ></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="col-xs-6  col-md-2 col-sm-3">
+                                        <p> <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                        <p>
+                                            <center style="padding-top:7%">
+                                                <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
+                                            </center>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     }
                 }
             }
-            else
-            {
+            
 
 
-                <div class="accordion1 mt-2" id="package">
-
-                    <div class="row">
-                        <div class="col-xs-6 col-md-2 col-sm-3">
-                            <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                            <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
-
-                            <span>Packages Price</span>
-                        </div>
-                        <div class="col-xs-3 col-md-3 col-sm-3">
-                            <span id="span-package-1">@item.PackageName</span>
-                        </div>
-
-                        <div class="col-xs-6  col-md-5 col-sm-3">
-                            <table id="prices-accordion">
-                                <tbody>
-                                    <tr>
-                                        <td><center>₹@item.normaldays</center></td>
-                                        <td><center>₹@item.peakdays</center></td>
-                                        <td><center>₹@item.holidays</center> </td>
-                                        <td><center>₹@item.choicedays</center> </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-
-                                            <p class="ksp">  <input type="radio" name="normal" id="normal1" value="commission"> commission </p>
-                                            <p class="ksp">  <input type="radio" name="normal" id="normal2" value="slab/Flat rate" checked> slab/Flat rate</p>
-
-                                        </td>
-                                        <td>
-
-                                            <p class="ksp">
-                                                <input type="radio" name="peakday" id="normal1" value="commission"> commission
-                                            </p>
-                                            <p class="ksp">  <input type="radio" name="peakday" id="normal2" value="slab/Flat rate" checked> slab/Flat rate</p>
-
-                                        </td>
-                                        <td>
-
-                                            <p class="ksp">
-                                                <input type="radio" name="holidays" id="normal1" value="commission"> commission
-                                            </p>
-                                            <p class="ksp"> <input type="radio" name="holidays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate</p>
-
-                                        </td>
-                                        <td>
-
-                                            <p class="ksp">
-                                                <input type="radio" name="choicedays" id="normal1" value="commission"> commission
-                                            </p>
-                                            <p class="ksp">   <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate</p>
-
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><input type="number" name="normal1" placeholder="10%" class="price"></td>
-                                        <td><input type="number" name="peakday1" placeholder="10%" class="price"></td>
-                                        <td><input type="number" name="holidays1" placeholder="10%" class="price"></td>
-                                        <td><input type="number" name="choicedays1" placeholder="10%" class="price"></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <div class="col-xs-6  col-md-2 col-sm-3">
-                            <p> <input type="text" value="" name="date" class="datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
-                            <p>
-                                <center style="padding-top:7%">
-                                    <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
-                                </center>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-
-            }
-
-
-
-
-
-        }
-        @*@if(ViewBag.pkg != null){
-            foreach (var item in ViewBag.pkg)
-            {
-                <div class="accordion1 mt-2" id="package">
-
-                    <div class="row">
-                        <div class="col-xs-6 col-md-2 col-sm-3">
-                            <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                            <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
-
-                            <span>Packages Price</span>
-                        </div>
-                        <div class="col-xs-3 col-md-3 col-sm-3">
-                            <span id="span-package-1"> @item.PackageName </span>
-                        </div>
-                        <div class="col-xs-6  col-md-5 col-sm-3">
-                            <table id="prices-accordion">
-                                <tbody>
-                                    <tr>
-                                        <td>₹@item.normaldays</td>
-                                        <td>₹@item.peakdays</td>
-                                        <td>₹@item.holidays</td>
-                                        <td>₹@item.choicedays</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="radio" name="normal" id="normal1" value="commission" checked><label> commission</label>
-                                            <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> <label>slab/Flat rate</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="peakday" id="peakday1" value="commission" checked><label> commission</label>
-                                            <input type="radio" name="peakday" id="peakday2" value="slab/Flat rate"> <label> slab / Flat rate</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="holidays" id="holidays1" value="commission" checked><label> commission</label>
-                                            <input type="radio" name="holidays" id="holidays2" value="slab/Flat rate"> <label> slab / Flat rate</label>
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="choicedays" id="choicedays1" value="commission" checked><label> commission</label>
-                                            <input type="radio" name="choicedays" id="choicedays2" value="slab/Flat rate"> <label> slab / Flat rate</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" name="normal1" class="price" value="10%"></td>
-                                        <td><input type="text" name="peakday1" class="price" value="10%"></td>
-                                        <td><input type="text" name="holidays1" class="price" value="10%"></td>
-                                        <td><input type="text" name="choicedays1" class="price" value="10%"></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                            <center>
-                                <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
-                            </center>
-                        </div>
-                        <div class="col-xs-6  col-md-2 col-sm-3">
-                            @*<input type="text" style="width:80%;margin-left: 16%;" />
-                            <input type="text" value="" id="datetimepicker" name="date" class="form-control" style="width:80%;margin-left: 16%;" placeholder="Date Here" />
-                        </div>
-                    </div>
-                </div>
-
-            }}*@
-    </div>
         </div>
-   
 </div>
+
+
+
+
+           
+
 
 
 @section scripts{
 
-<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
+    <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
 
     <script type="text/javascript">
         /*--- Date and Time ----*/
