@@ -592,7 +592,7 @@
 
             @foreach (var item in ViewBag.package)
             {
-                if (ViewBag.resellerpkg == null)
+                if (ViewBag.resellerpkg == null && ViewBag.pkg == null)
                 {
                     <div class="accordion1 mt-2" id="package">
 
@@ -667,7 +667,7 @@
 
                             </div>
                             <div class="col-xs-6  col-md-2 col-sm-3">
-                                <p>  <input type="text" value="" name="date" class="form-control datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                <p>  <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
                                 <p>
                                     <center style="padding-top:7%">
                                         <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
@@ -806,7 +806,7 @@
 
                                     </div>
                                     <div class="col-xs-6  col-md-2 col-sm-3">
-                                        <p> <input type="text" value="" name="date" class=" datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                        <p> <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
                                         <p>
                                             <center style="padding-top:7%">
                                                 <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
@@ -817,9 +817,9 @@
                             </div>
                         }
                     }
-                }
-                else if (ViewBag.pkg != null)
-                {
+                    //}
+                    //else if (ViewBag.pkg != null)
+                    //{
                     foreach (var itemks1 in ViewBag.pkg)
                     {
                         if (Convert.ToInt64(itemks1.PackageID) == item.PackageID)
@@ -848,27 +848,17 @@
 
                                                 <tr>
                                                     <td>
-                                                        @if (itemks1.normaldayssaletype == "commission")
-                                                        {
+                                                       
                                                             <p class="ksp">
                                                                 <input type="radio" name="normal" id="normal1" value="commission" checked> commission
                                                             </p>
                                                             <p class="ksp">
                                                                 <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
                                                             </p>
-                                                        }
-                                                        else if (itemks1.normaldayssaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal1" value="commission"> commission
-                                                            </p> <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
+                                                        
                                                     </td>
                                                     <td>
-                                                        @if (itemks1.peakdaysaletype == "commission")
-                                                        {
+                                                       
                                                             <p class="ksp">
                                                                 <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
                                                             </p>
@@ -876,20 +866,10 @@
                                                                 <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
                                                             </p>
 
-                                                        }
-                                                        else if (itemks1.peakdaysaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal1" value="commission"> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
+                                                        
                                                     </td>
                                                     <td>
-                                                        @if (itemks1.holidaysssaletype == "commission")
-                                                        {
+                                                       
                                                             <p class="ksp">
 
                                                                 <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
@@ -898,20 +878,10 @@
                                                                 <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
                                                             </p>
 
-                                                        }
-                                                        else if (itemks1.holidaysssaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="holidays" id="normal1" value="commission"> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="holidays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
+                                                       
                                                     </td>
                                                     <td>
-                                                        @if (itemks1.choicedayssaletype == "commission")
-                                                        {
+                                                      
                                                             <p class="ksp">
                                                                 <input type="radio" name="choicedays" id="normal1" value="commission" checked> commission
                                                             </p>
@@ -919,25 +889,15 @@
                                                                 <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> slab/Flat rate
                                                             </p>
 
-                                                        }
-                                                        else if (itemks1.choicedayssaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
-
-                                                                <input type="radio" name="choicedays" id="normal1" value="commission"> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
+                                                       
                                                     </td>
 
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="number" name="normal1" class="price" value="@itemks1.salenormaldays"></td>
-                                                    <td><input type="number" name="peakday1" class="price" value="@itemks1.salepeakdays"></td>
-                                                    <td><input type="number" name="holidays1" class="price" value="@itemks1.saleholidays"></td>
-                                                    <td><input type="number" name="choicedays1" class="price" value="@itemks1.salechoicedays"></td>
+                                                    <td><input type="number" name="normal1" class="price" ></td>
+                                                    <td><input type="number" name="peakday1" class="price" ></td>
+                                                    <td><input type="number" name="holidays1" class="price" ></td>
+                                                    <td><input type="number" name="choicedays1" class="price" ></td>
                                                 </tr>
 
                                             </tbody>
@@ -945,7 +905,7 @@
 
                                     </div>
                                     <div class="col-xs-6  col-md-2 col-sm-3">
-                                        <p> <input type="text" value="" name="date" class=" datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                        <p> <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
                                         <p>
                                             <center style="padding-top:7%">
                                                 <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
