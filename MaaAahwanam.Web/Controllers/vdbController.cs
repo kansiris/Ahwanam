@@ -66,13 +66,14 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     else
                     {
-                        ViewBag.bannerimage = "~/newdesignstyles/images/banner3.jpg"; //Default Banner Image
-                        ViewBag.imagescount = ViewBag.sliderimages = 0;
-                        ViewBag.slidercount = 4;
+                        ViewBag.bannerimage = "/newdesignstyles/images/banner3.jpg"; //Default Banner Image
+                        ViewBag.sliderimages = 0;
+                        ViewBag.imagescount = ViewBag.slidercount = 4;
+                        ViewBag.sliderimages = ViewBag.allimages = allimages;
                     }
 
                     // Packages Section
-                    var pkgsks = vendorVenueSignUpService.Getpackages(id, long.Parse(vid));//.FirstOrDefault(); //Remove FirstOrDefault() after finalising packages design
+                    var pkgsks = vendorVenueSignUpService.Getpackages(id, long.Parse(vid));
                     List<Package> pkgs = new List<Package>();
                     List<string> selecteditems = new List<string>();
                     List<string[]> pkgitem = new List<string[]>();
@@ -82,15 +83,13 @@ namespace MaaAahwanam.Web.Controllers
                         {
                             if (pkgsks[i].menu != "" && pkgsks[i].menu != null)
                             {
-                                var pkgitems = pkgsks[i].menu.Trim(',').Split(','); //TrimEnd(')').TrimEnd(' ').TrimEnd('X').Trim(',').Trim(' ').Trim(',')
+                                var pkgitems = pkgsks[i].menu.Trim(',').Split(',');
                                 var pkgmitems = pkgsks[i].menuitems.Trim(',');
                                 List<string> presentmenuitems = new List<string>();
                                 for (int j = 0; j < pkgitems.Count(); j++)
                                 {
                                     presentmenuitems.Add(pkgmitems.Split(',')[j].Split('(')[0].Replace('/', '_').Trim());
                                 }
-                                //ViewBag.selecteditems = string.Join(",", selecteditems);
-                                //ViewBag.pkgitems = pkgitems;
                                 selecteditems.Add(string.Join(",", presentmenuitems));
                                 presentmenuitems.Clear();
                                 pkgitem.Add(pkgitems);
@@ -105,7 +104,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.pkgitems = pkgitem;
                         ViewBag.selecteditems = selecteditems;
                     }
-                    else ViewBag.package = new Package();
+                    else ViewBag.package = pkgsks;
 
                     //Package Menu Section
                     var pkgmenuitems = vendorDashBoardService.GetParticularMenu("Veg", id.ToString(), vid).FirstOrDefault();
@@ -491,6 +490,19 @@ namespace MaaAahwanam.Web.Controllers
             else msg = "Failed TO Add Package";
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult NewCourse(PackageMenu packageMenu, string type)
+        {
+            var getmenu = vendorDashBoardService.GetParticularMenu(packageMenu.Category, packageMenu.VendorMasterID, packageMenu.VendorID).FirstOrDefault();
+            if (getmenu.Extra_Menu_Items != null)
+                packageMenu.Extra_Menu_Items = packageMenu.Extra_Menu_Items + "," + getmenu.Extra_Menu_Items;
+            else
+                packageMenu.Extra_Menu_Items = packageMenu.Extra_Menu_Items;
+            packageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
+            string status = vendorDashBoardService.UpdateMenuItems(packageMenu, type);
+            if (status == "Updated") status = "New Course & Course Items Added";
+            return Json(status, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Updating
@@ -637,6 +649,32 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg);
         }
 
+        public JsonResult UpdateMenuItems(PackageMenu PackageMenu, string type)
+        {
+            var getmenu = vendorDashBoardService.GetParticularMenu(PackageMenu.Category, PackageMenu.VendorMasterID, PackageMenu.VendorID).FirstOrDefault();
+            PackageMenu.Extra_Menu_Items = getmenu.Extra_Menu_Items.Trim(',');
+            PackageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
+            if (type == "Fry_Dry") type = "Fry/Dry";
+            string status = vendorDashBoardService.UpdateMenuItems(PackageMenu, type.Replace("_"," "));
+            if (status == "Updated") status = "" + type + " Items Updated";
+            return Json(status, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdatePackage(Package package)
+        {
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.price1 = package.PackagePrice = package.normaldays;
+            package.menuitems = package.menuitems.Trim(',');
+            //Add Package Code
+            package.Status = "Active";
+            package.UpdatedDate = updateddate;
+            package.timeslot = package.timeslot.Trim(',');
+            package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = "Package Updated SuccessFully!!!";
+            else msg = "Failed TO Update Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Removing
@@ -659,6 +697,61 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("something went wrong", JsonRequestBehavior.AllowGet);
             }
         }
+        #endregion
+
+        #region Retrieving
+
+        public JsonResult GetPackagemenuItem(string menuitem, string category, string vsid)
+        {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                List<VendorImage> allimages = new List<VendorImage>();
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string email = userLoginDetailsService.Getusername(long.Parse(user.UserId.ToString()));
+                vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                var particularitem = "";
+                var package = vendorDashBoardService.GetParticularMenu(category, vendorMaster.Id.ToString(), vsid).Select(m => new
+                {
+                    m.Welcome_Drinks,
+                    m.Starters,
+                    m.Rice,
+                    m.Bread,
+                    m.Curries,
+                    m.Fry_Dry,
+                    m.Salads,
+                    m.Soups,
+                    m.Deserts,
+                    m.Beverages,
+                    m.Fruits,
+                    m.Extra_Menu_Items
+                }).ToList();
+                var serialised = String.Join("#", package).Replace("{", "").Replace("}", "");
+                var convertedlist = serialised.Split('#', ',');
+                if (new[] { "Welcome Drinks", "Starters", "Rice", "Bread", "Curries", "Fry/Dry", "Salads", "Soups", "Deserts", "Beverages", "Fruits" }.Contains(menuitem))
+                {
+                    var mitem = menuitem.Replace(" ", "_").Replace("/", "_");
+                    for (int i = 0; i < convertedlist.Count(); i++)
+                    {
+                        if (convertedlist[i].Split('=')[0].Trim() == mitem) particularitem = convertedlist[i].Split('=')[1];
+                    }
+                    return Json(particularitem, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (package.FirstOrDefault().Extra_Menu_Items != "" && package.FirstOrDefault().Extra_Menu_Items != null)
+                    {
+                        var extramenus = package.FirstOrDefault().Extra_Menu_Items.Trim(',').Split(',');
+                        for (int i = 0; i < extramenus.Count(); i++)
+                        {
+                            if (extramenus[i].Split('(')[0].Trim() == menuitem.Trim()) particularitem = extramenus[i].Split('(')[1].Split(')')[0];
+                        }
+                    }
+                    return Json(particularitem, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Failed");
+        }
+
         #endregion
     }
 }
