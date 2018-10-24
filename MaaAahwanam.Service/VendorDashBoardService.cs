@@ -19,7 +19,10 @@ namespace MaaAahwanam.Service
         public List<ManageVendor> getvendor(string Vid)
         {
             List<ManageVendor> mngvendorlist = new List<ManageVendor>();
+            
             mngvendorlist = mngvendorrepository.GetVendorList(Vid);
+           
+           
             return mngvendorlist;
         }
         public int checkvendoremail(string email, string id)
