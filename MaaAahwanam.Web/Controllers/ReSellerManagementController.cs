@@ -12,6 +12,8 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class ReSellerManagementController : Controller
     {
+        VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+
         VendorVenueService vendorVenueService = new VendorVenueService();
         viewservicesservice viewservicesss = new viewservicesservice();
         newmanageuser newmanageuse = new newmanageuser();
@@ -28,6 +30,8 @@ namespace MaaAahwanam.Web.Controllers
                 string vemail = newmanageuse.Getusername(long.Parse(uid));
                 vendorMaster = newmanageuse.GetVendorByEmail(vemail);
                 string VendorId = vendorMaster.Id.ToString();
+                string vid = vendorMaster.Id.ToString();
+
                 ViewBag.masterid = VendorId;
                 var resellers = partnerservice.GetPartners(VendorId);
                 var resellerspack = partnerservice.getPartnerPackage(VendorId);
@@ -51,6 +55,16 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.resellers = resellers.Where(m => m.PartnerID == long.Parse(partid)).FirstOrDefault();
                 }
                 ViewBag.package = pkgs;
+                var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
+                var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(vid)).ToList();
+                var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(vid));
+                var decorators = vendorVenueSignUpService.GetVendorDecorator(long.Parse(vid));
+                var others = vendorVenueSignUpService.GetVendorOther(long.Parse(vid));
+                ViewBag.venues = venues;
+                ViewBag.catering = catering;
+                ViewBag.photography = photography;
+                ViewBag.decorators = decorators;
+                ViewBag.others = others;
                 return View();
             }
             else

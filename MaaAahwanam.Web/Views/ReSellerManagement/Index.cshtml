@@ -611,12 +611,14 @@
 
             <div class="accordionks mt-2">
                 <div class="row">
-                    <div class="col-xs-6 col-md-2 col-sm-3" id="package">
+                    <div class="col-xs-6 col-md-1 col-sm-1" id="package">
 
                         <span id="span-package-1">Service Name</span>
                     </div>
-                    <div class="col-xs-3 col-md-3 col-sm-3">
+                    <div class="col-xs-3 col-md-1 col-sm-1">
                         <span id="span-package-1">Package Name</span>
+                    </div>
+                    <div class="col-xs-3 col-md-2 col-sm-2">
                     </div>
                     <div class="col-xs-6  col-md-5 col-sm-3">
                         <center> Sale Price</center>
@@ -658,7 +660,7 @@
                     <div class="accordion1 mt-2" id="package">
 
                         <div class="row">
-                            <div class="col-xs-6 col-md-2 col-sm-3">
+                            <div class="col-xs-6 col-md-1 col-sm-1">
                                 <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
                                 <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
@@ -667,14 +669,14 @@
                                     {
                                         if (itemk1.Id == item.VendorSubId)
                                         {
-                                            if (item.VenueType == "" || item.VenueType == null)
+                                            if (itemk1.VenueType == "" || itemk1.VenueType == null)
                                             {
                                                 <label>  Venue</label>
                                             }
                                             else
                                             {
                                                 <label>
-                                                    @item.name -@item.VenueType
+                                                    @itemk1.name -@itemk1.VenueType
                                                 </label>
                                             }
                                         }
@@ -712,13 +714,39 @@
 
                                 </span>
                             </div>
-                            <div class="col-xs-3 col-md-3 col-sm-3">
+                            <div class="col-xs-6 col-md-1 col-sm-1">
                                 <span id="span-package-1">@item.PackageName</span>
                             </div>
+                            <div class="col-xs-3 col-md-2 col-sm-2">
+                                <table id="prices-accordion">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="ksp">    packageprice</p>
 
+                                                <p class="ksp">   Ahwanam price</p>
+
+                                                <p class="ksp">
+
+                                                    reseller type
+                                                </p>
+
+                                                <p class="ksp">
+                                                    reseller price</p>
+                                            </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="col-xs-6  col-md-5 col-sm-3">
                                 <table id="prices-accordion">
                                     <tbody>
+                                        <tr>
+                                            <td><center>₹@item.normaldays</center></td>
+                                            <td><center>₹@item.peakdays</center></td>
+                                            <td><center>₹@item.holidays</center> </td>
+                                            <td><center>₹@item.choicedays</center> </td>
+                                        </tr>
                                         <tr>
                                             <td><center>₹@item.normaldays</center></td>
                                             <td><center>₹@item.peakdays</center></td>
@@ -796,181 +824,158 @@
                         if (Convert.ToInt64(itemks.packageid) == item.PackageID)
                         {<div class="accordion1 mt-2" id="package">
 
-                                <div class="row">
-                                    <div class="col-xs-6 col-md-2 col-sm-3">
-                                        <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                                        <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+                             <div class="row">
+                                 <div class="col-xs-6 col-md-1 col-sm-1">
+                                     <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                     <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
-                                        <span>
-                                            @foreach (var itemk1 in ViewBag.venues)
-                                            {
-                                                if (itemk1.Id == item.VendorSubId)
-                                                {
-                                                    if (item.VenueType == "" || item.VenueType == null)
-                                                    {
-                                                        <label>  Venue</label>
-                                                    }
-                                                    else
-                                                    {
-                                                        <label>
-                                                            @item.name -@item.VenueType
-                                                        </label>
-                                                    }
-                                                }
-                                            }
-                                            @foreach (var itemk2 in ViewBag.catering)
-                                            {
-                                                if (itemk2.Id == item.VendorSubId)
-                                                {
-                                                    <label>@itemk2.CuisineType</label>
-                                                }
-                                            }
-                                            @foreach (var itemk3 in ViewBag.photography)
-                                            {
-                                                if (itemk3.Id == item.VendorSubId)
-                                                {
-                                                    <label>@itemk3.PhotographyType</label>
-                                                }
-                                            }
-                                            @foreach (var itemk4 in ViewBag.decorators)
-                                            {
-                                                if (itemk4.Id == item.VendorSubId)
-                                                {
-                                                    <label>@itemk4.DecorationType</label>
-                                                }
+                                     <span>
+                                         @foreach (var itemk1 in ViewBag.venues)
+                                         {
+                                             if (itemk1.Id == item.VendorSubId)
+                                             {
+                                                 if (item.VenueType == "" || item.VenueType == null)
+                                                 {
+                                                     <label>  Venue</label>
+                                                 }
+                                                 else
+                                                 {
+                                                     <label>
+                                                         @item.name -@item.VenueType
+                                                     </label>
+                                                 }
+                                             }
+                                         }
+                                         @foreach (var itemk2 in ViewBag.catering)
+                                         {
+                                             if (itemk2.Id == item.VendorSubId)
+                                             {
+                                                 <label>@itemk2.CuisineType</label>
+                                             }
+                                         }
+                                         @foreach (var itemk3 in ViewBag.photography)
+                                         {
+                                             if (itemk3.Id == item.VendorSubId)
+                                             {
+                                                 <label>@itemk3.PhotographyType</label>
+                                             }
+                                         }
+                                         @foreach (var itemk4 in ViewBag.decorators)
+                                         {
+                                             if (itemk4.Id == item.VendorSubId)
+                                             {
+                                                 <label>@itemk4.DecorationType</label>
+                                             }
 
-                                            }
-                                            @foreach (var itemk5 in ViewBag.others)
-                                            {
-                                                if (itemk5.Id == item.VendorSubId)
-                                                {
-                                                    <label>@itemk5.type</label>
-                                                }
-                                            }
+                                         }
+                                         @foreach (var itemk5 in ViewBag.others)
+                                         {
+                                             if (itemk5.Id == item.VendorSubId)
+                                             {
+                                                 <label>@itemk5.type</label>
+                                             }
+                                         }
 
 
-                                        </span>
-                                    </div>
-                                    <div class="col-xs-3 col-md-3 col-sm-3">
-                                        <span id="span-package-1">@item.PackageName</span>
-                                    </div>
-                                    <div class="col-xs-6  col-md-5 col-sm-3">
-                                        <table id="prices-accordion">
-                                            <tbody>
-                                                <tr>
-                                                    <td><center>₹@item.normaldays</center></td>
-                                                    <td><center>₹@item.peakdays</center></td>
-                                                    <td><center>₹@item.holidays</center> </td>
-                                                    <td><center>₹@item.choicedays</center> </td>
-                                                </tr>
+                                     </span>
+                                 </div>
+                                 <div class="col-xs-3 col-md-1 col-sm-1">
+                                     <span id="span-package-1">@item.PackageName</span>
+                                 </div>
+                                 <div class="col-xs-3 col-md-2 col-sm-2">
+                                     <table id="prices-accordion">
+                                         <tbody>
+                                             <tr>
+                                                 <td>
+                                                     <p class="ksp">    packageprice</p>
 
-                                                <tr>
-                                                    <td>
-                                                        @if (itemks.normaldayssaletype == "commission")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
-                                                        }
-                                                        else if (itemks.normaldayssaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal1" value="commission"> commission
-                                                            </p> <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        @if (itemks.peakdaysaletype == "commission")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
+                                                     <p class="ksp">   Ahwanam price</p>
 
-                                                        }
-                                                        else if (itemks.peakdaysaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal1" value="commission"> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        @if (itemks.holidaysssaletype == "commission")
-                                                        {
-                                                            <p class="ksp">
+                                                     <p class="ksp">
 
-                                                                <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
+                                                         reseller type
+                                                     </p>
 
-                                                        }
-                                                        else if (itemks.holidaysssaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="holidays" id="normal1" value="commission"> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="holidays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        @if (itemks.choicedayssaletype == "commission")
-                                                        {
-                                                            <p class="ksp">
-                                                                <input type="radio" name="choicedays" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
+                                                     <p class="ksp">
+                                                         reseller price
+                                                     </p>
+                                                 </td>
+                                             </tr>
+                                         </tbody>
+                                     </table>
+                                 </div>
+                                 <div class="col-xs-3 col-md-5 col-sm-3">
+                                     <table id="prices-accordion">
+                                         <tbody>
+                                             <tr>
+                                                 <td><center>₹@item.normaldays</center></td>
+                                                 <td><center>₹@item.peakdays</center></td>
+                                                 <td><center>₹@item.holidays</center> </td>
+                                                 <td><center>₹@item.choicedays</center> </td>
+                                             </tr>
+                                             <tr>
+                                                 <td><center>₹@item.normaldays</center></td>
+                                                 <td><center>₹@item.peakdays</center></td>
+                                                 <td><center>₹@item.holidays</center> </td>
+                                                 <td><center>₹@item.choicedays</center> </td>
+                                             </tr>
+                                             <tr>
+                                                 <td>
 
-                                                        }
-                                                        else if (itemks.choicedayssaletype == "slab/Flat rate")
-                                                        {
-                                                            <p class="ksp">
+                                                     <p class="ksp">
+                                                         <input type="radio" name="normal" id="normal1" value="commission" checked> commission
+                                                     </p>   <p class="ksp">
+                                                         <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
 
-                                                                <input type="radio" name="choicedays" id="normal1" value="commission"> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
-                                                            </p>
-                                                        }
-                                                    </td>
+                                                     </p>
+                                                 </td>
+                                                 <td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" name="normal1" class="price" value="@itemks.salenormaldays"></td>
-                                                    <td><input type="number" name="peakday1" class="price" value="@itemks.salepeakdays"></td>
-                                                    <td><input type="number" name="holidays1" class="price" value="@itemks.saleholidays"></td>
-                                                    <td><input type="number" name="choicedays1" class="price" value="@itemks.salechoicedays"></td>
-                                                </tr>
+                                                     <p class="ksp">
+                                                         <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
+                                                     </p> <p class="ksp">
+                                                         <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                     </p>
 
-                                            </tbody>
-                                        </table>
+                                                 </td>
+                                                 <td>
 
-                                    </div>
-                                    <div class="col-xs-6  col-md-2 col-sm-3">
-                                        <p> <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
-                                        <p>
-                                            <center style="padding-top:7%">
-                                                <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
-                                            </center>
-                                        </p>
-                                    </div>
-                                </div>
+                                                     <p class="ksp">
+                                                         <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
+                                                     </p> <p class="ksp">
+                                                         <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                     </p>
+
+                                                 </td>
+                                                 <td>
+
+                                                     <p class="ksp">
+                                                         <input type="radio" name="choicedays" id="normal1" value="commission"> commission
+                                                     </p> <p class="ksp">
+                                                         <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate" checked> slab/Flat rate
+                                                     </p>
+                                                 </td>
+
+                                             </tr>
+                                             <tr>
+                                                 <td><input type="number" name="normal1" class="price"></td>
+                                                 <td><input type="number" name="peakday1" class="price"></td>
+                                                 <td><input type="number" name="holidays1" class="price"></td>
+                                                 <td><input type="number" name="choicedays1" class="price"></td>
+                                             </tr>
+
+                                         </tbody>
+                                     </table>
+                                 </div>
+                                 <div class="col-xs-6  col-md-2 col-sm-3">
+                                     <p> <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                     <p>
+                                         <center style="padding-top:7%">
+                                             <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
+                                         </center>
+                                     </p>
+                                 </div>
+                             </div>
                             </div>
                         }
                     }
@@ -984,7 +989,7 @@
                             <div class="accordion1 mt-2" id="package">
 
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2 col-sm-3">
+                                    <div class="col-xs-6 col-md-1 col-sm-1">
                                         <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
                                         <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
@@ -1038,8 +1043,30 @@
 
                                         </span>
                                     </div>
-                                    <div class="col-xs-3 col-md-3 col-sm-3">
+                                    <div class="col-xs-3 col-md-1 col-sm-1">
                                         <span id="span-package-1">@item.PackageName</span>
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-sm-2">
+                                        <table id="prices-accordion">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <p class="ksp">    packageprice</p>
+
+                                                        <p class="ksp">   Ahwanam price</p>
+
+                                                        <p class="ksp">
+
+                                                            reseller type
+                                                        </p>
+
+                                                        <p class="ksp">
+                                                            reseller price
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="col-xs-6  col-md-5 col-sm-3">
                                         <table id="prices-accordion">
@@ -1050,7 +1077,12 @@
                                                     <td><center>₹@item.holidays</center> </td>
                                                     <td><center>₹@item.choicedays</center> </td>
                                                 </tr>
-
+                                                <tr>
+                                                    <td><center>₹@item.normaldays</center></td>
+                                                    <td><center>₹@item.peakdays</center></td>
+                                                    <td><center>₹@item.holidays</center> </td>
+                                                    <td><center>₹@item.choicedays</center> </td>
+                                                </tr>
                                                 <tr>
                                                     <td>
 
