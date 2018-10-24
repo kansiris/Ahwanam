@@ -1155,84 +1155,84 @@
 
                 }
 
-            }
-            else if (val == 'Update') {
-                var cpfname = $('#firstName').val();
-                var cplname = $('#lastname').val();
-                var cpdesig = $('#Designation').val();
-                var cpphoneno = $('#mobileno').val();
-                var cpphonepattern = /^[0-9]{10}$/;
-                var cpemailid = $('#email').val();
-                var cpemailpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
-                if (cpfname == '') { alert('Enter Contact Person FirstName'); $('#firstName').focus(); }
-                else if (cplname == '') { alert('Enter Contact Person LastName'); $('#lastname').focus(); }
-                else if (cpdesig == '') { alert('Enter Contact Person Designation'); $('#Designation').focus(); }
-                else if (cpphoneno == '') { alert('Enter Contact Person Phone Number'); $('#mobileno').focus(); }
-                else if (cpphoneno.length < 10) { alert('Enter 10 digits only'); $('#mobileno').focus(); }
-                else if (!cpphonepattern.test(cpphoneno)) { alert("Please Enter 10 digit Phone Number "); $("#mobileno").focus(); }
-                else if (cpemailid == '') { alert('Enter Contact Person Phone Email '); $('#email').focus(); }
-                else if (!cpemailpattren.test(cpemailid)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
-                else {
-                    var partner = {
-                        PartnerID: $('#partid').val(),
-                        VendorId: $('#VendorId').val(),
-                        partnername: $('#BusinessName').val(),
-                        url: $('#url').val(),
-                        phoneno: $('#PhoneNumber').val(),
-                        emailid: $('#Email').val(),
-                        address1: $('#Address').val(),
-                        city: $('#City').val(),
-                        state: $('#State').val(),
-                        country: $('#Country').val(),
-                        cpfname: $('#firstName').val(),
-                        cplname: $('#lastname').val(),
-                        cpdesig: $('#Designation').val(),
-                        cpphoneno: $('#mobileno').val(),
-                        cpemailid: $('#email').val(),
-                        PAN: $('#panno').val(),
-                        GST: $('#Gst').val(),
-                        bankname: $('#bankname').val(),
-                        bankbranch: $('#bankbranchname').val(),
-                        AccountHolderName: $('#accholdername').val(),
-                        IFSC: $('#ifsccode').val(),
-                        AccountNumber: $('#accountno').val(),
-                        //state: $('State').val(),
-                    }
-                    $.ajax({
-                        url: '/ReSellerManagement/Index?command=' + val + '&&partid=' + partid,
-                        type: 'POST',
-                        data: JSON.stringify({ partner: partner }),
-                        contentType: 'application/json',
-                        success: function (data) {
-                            if (data != null) {
-                                alert("save is successfully");
-                                //   alert(data.PartnerID);
-                                //   $('#PartnerID').val(data.PartnerID);
-                                $('#firstName').val('');
-                                $('#lastname').val('');
-                                $('#Designation').val('');
-                                $('#mobileno').val('');
-                                $('#email').val('');
-                                $('#partid').val(data.PartnerID);
-                                // $("#Businessname").val(data.partnername);
-                                //// $("#firstname").val(result.firstname);
-                                // //$("#lastname").val(result.lastname);
-                                // $("#Email").val(data.emailid);
-                                // $("#PhoneNumber").val(data.phoneno);
-                                // $("#Address").val(data.address1);
-                                //// $("#adress2").val(result.adress2);
-                                // $("#City").val(data.city);
-                                // $("#State").val(data.state);
-                                // $("#Country").val(data.country);
-                                // //$("#pincode").val(result.pincode);
-                                // //$("#Status").val(result.Status);
-                            }
-                            else { alert("save is failed"); }
-                        },
-                        error: function (data) {
-                            alert("save is failed");
-                        }
-                    })
+       }
+       else if (val == 'Update'){
+       var cpfname = $('#firstName').val();
+       var cplname = $('#lastname').val();
+       var cpdesig = $('#Designation').val();
+       var cpphoneno = $('#mobileno').val();
+       var cpphonepattern = /^[0-9]{10}$/;
+       var cpemailid = $('#email').val();
+       var cpemailpattren = /^([\w-\.]+\u0040([\w-]+\.)+[\w-]{2,4})?$/;
+           if (cpfname == '') { alert('Enter Contact Person FirstName'); $('#firstName').focus(); }
+           else if (cplname == '') { alert('Enter Contact Person LastName'); $('#lastname').focus(); }
+           else if (cpdesig == '') { alert('Enter Contact Person Designation'); $('#Designation').focus(); }
+           else if (cpphoneno == '') { alert('Enter Contact Person Phone Number'); $('#mobileno').focus(); }
+           else if (cpphoneno.length < 10) { alert('Enter 10 digits only'); $('#mobileno').focus(); }
+           else if (!cpphonepattern.test(cpphoneno)) { alert("Please Enter 10 digit Phone Number "); $("#mobileno").focus(); }
+           else if (cpemailid == '') { alert('Enter Contact Person Phone Email '); $('#email').focus(); }
+           else if (!cpemailpattren.test(cpemailid)) { alert("Please Enter a valid Email Address"); $("#email").focus(); }
+           else {
+               var partner = {
+                   PartnerID: $('#partid').val(),
+                   VendorId: $('#VendorId').val(),
+                   partnername: $('#BusinessName').val(),
+                   url: $('#url').val(),
+                   phoneno: $('#PhoneNumber').val(),
+                   emailid: $('#Email').val(),
+                   address1: $('#Address').val(),
+                   city: $('#City').val(),
+                   state: $('#State').val(),
+                   country: $('#Country').val(),
+                   cpfname: $('#firstName').val(),
+                   cplname: $('#lastname').val(),
+                   cpdesig: $('#Designation').val(),
+                   cpphoneno: $('#mobileno').val(),
+                   cpemailid: $('#email').val(),
+                   PAN: $('#panno').val(),
+                   GST: $('#Gst').val(),
+                   bankname: $('#bankname').val(),
+                   bankbranch: $('#bankbranchname').val(),
+                   AccountHolderName: $('#accholdername').val(),
+                   IFSC: $('#ifsccode').val(),
+                   AccountNumber: $('#accountno').val(),
+                   //state: $('State').val(),
+               }
+               $.ajax({
+                   url: '/ReSellerManagement/Index?command=' + val + '&&partid=' + partid,
+                   type: 'POST',
+                   data: JSON.stringify({ partner: partner }),
+                   contentType: 'application/json',
+                   success: function (data) {
+                       if (data != null) {
+                           alert("save is successfully");
+                           //   alert(data.PartnerID);
+                           //   $('#PartnerID').val(data.PartnerID);
+                            $('#firstName').val('');
+                            $('#lastname').val('');
+                            $('#Designation').val('');
+                            $('#mobileno').val('');
+                            $('#email').val('');
+                            $('#partid').val(data.PartnerID);
+                           // $("#Businessname").val(data.partnername);
+                           //// $("#firstname").val(result.firstname);
+                           // //$("#lastname").val(result.lastname);
+                           // $("#Email").val(data.emailid);
+                           // $("#PhoneNumber").val(data.phoneno);
+                           // $("#Address").val(data.address1);
+                           //// $("#adress2").val(result.adress2);
+                           // $("#City").val(data.city);
+                           // $("#State").val(data.state);
+                           // $("#Country").val(data.country);
+                           // //$("#pincode").val(result.pincode);
+                           // //$("#Status").val(result.Status);
+                       }
+                       else { alert("save is failed"); }
+                   },
+                   error: function (data) {
+                       alert("save is failed");
+                   }
+               })
 
                 }
             }
