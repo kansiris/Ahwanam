@@ -26,6 +26,10 @@ namespace MaaAahwanam.Models
         public string saleholidays { get; set; }
         public string choicedayssaletype { get; set; }
         public string salechoicedays { get; set; }
+        public string spchoicedays { get; set; }
+        public string spnormaldays { get; set; }
+        public string spholidays { get; set; }
+        public string sppeakdays { get; set; }
         public string expiry { get; set; }
         public string Status { get; set; }
         public DateTime? UpdatedDate { get; set; }

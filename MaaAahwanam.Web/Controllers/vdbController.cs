@@ -652,6 +652,7 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult UpdateMenuItems(PackageMenu PackageMenu, string type)
         {
             var getmenu = vendorDashBoardService.GetParticularMenu(PackageMenu.Category, PackageMenu.VendorMasterID, PackageMenu.VendorID).FirstOrDefault();
+            if(PackageMenu.Extra_Menu_Items != null)
             PackageMenu.Extra_Menu_Items = getmenu.Extra_Menu_Items.Trim(',');
             PackageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             if (type == "Fry_Dry") type = "Fry/Dry";
