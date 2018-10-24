@@ -96,7 +96,21 @@ $('.sliderdiv').on('click', function () {
         if (file.length > 0) {
             data.append("helpSectionImages", file[0]);
         }
-        SaveImages(thisimage, subid, id, 'Slider');
+        $.ajax({
+            url: '/vdb/UploadImages?vid=' + subid + '&&id=' + id + '&&type=Slider',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: data,
+            success: function (result) {
+                thisimage.children('img').remove();
+                thisimage.append('<img src="/vendorimages/' + result + '" href="s2" style="width:100px;height:100px;padding:0px">')
+                //thisimage.attr('border', 'none');
+            },
+            error: function (err) {
+                alert("System Encountered Internal Error!!! Try Again After Some Time");
+            }
+        });
     }
 });
 
@@ -112,7 +126,21 @@ $('.sliderdiv1').on('click', function () {
         if (file.length > 0) {
             data.append("helpSectionImages", file[0]);
         }
-        SaveImages(thisimage, subid, id, 'image');
+        $.ajax({
+            url: '/vdb/UploadImages?vid=' + subid + '&&id=' + id + '&&type=image',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: data,
+            success: function (result) {
+                thisimage.children('img').remove();
+                thisimage.append('<img src="/vendorimages/' + result + '" href="s2" style="width:100px;height:100px;padding:0px">')
+                //thisimage.attr('border', 'none');
+            },
+            error: function (err) {
+                alert("System Encountered Internal Error!!! Try Again After Some Time");
+            }
+        });
     }
 });
 
@@ -270,12 +298,21 @@ function Addpkgitems(mtype) {
     }
     else {
         if (availableitems.indexOf(ctype) != -1) {
-            for (var i = 0; i < availableitems.split(',').length; i++) {
-                if (availableitems.split(',')[i].split('(')[0] == ctype) {
-                    finallist.findIndex(availableitems.split(',')[i].split('(')[0]).push(ctype + '(' + selecteditems + ')');
-                }
-            }
-            totallist = finallist.join(',');
+            //for (var i = 0; i < totallist.split(',').length; i++) {
+            //    if (availableitems.split(',')[i] == ctype) {
+            //        if (totallist.indexOf(availableitems.split(',')[i]) == -1) {
+            //            finallist.push(ctype + '(' + selecteditems + ')');
+            //        }
+            //        else {
+            //            var ind = totallist.indexOf(ctype);
+            //            totallist.split(',')[ind] = ctype + '(' + selecteditems + ')';
+            //        }
+            //    }
+            //}
+            var ind = totallist;//.indexOf(ctype);
+            totallist[ind] = ctype + '(' + selecteditems + ')';
+            //totallist.split(',')[ind] = ctype + '(' + selecteditems + ')';
+            //totallist = finallist.join(',');
         }
         else {
             finallist.push(ctype + '(' + selecteditems + ')');
@@ -621,7 +658,7 @@ $(document).on('click', '.updatepkg', function () {
             allVal += ',' + $(this).val();
     });
     var allbuttonsvals = allVal.substring(1, allVal.length);
-    var newlists = parentdiv.find('.selpkgitems').val().substring(1, parentdiv.find('.selpkgitems').val().length) + ',' + parentdiv.find('.pkgmenuitems').val();
+    var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
     var dblist = parentdiv.find('.pkgmenuitems').val();
     var selectedlist = parentdiv.find('.availablepkgitems').val();
     var splitteddblist = dblist.split(',');
@@ -849,6 +886,31 @@ $(document).on('click','.removemitem',function(){
     });
 });
 
+// Updating Address,Amenities details
+function updatedetails(val) {
+    var hdname = $('#hdname').val();
+    var Dimentions = $('#Dimentions').val();
+    var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
+    var Maximumcapacity = $('#Maximumcapacity').val();
+    var selectedamenuities = $('#amenities').val();
+    var vsid = $('#vsid').val();
+    var Address = $('#Address').val();
+    var Landmark = $('#Landmark').val();
+    var City = $('#City').val();
+    var ZipCode = $('#ZipCode').val();
+    var Description = $('#mainDescription').val();
+    $.ajax({
+        url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&vsid=' + vsid + '&&hdname=' + hdname + '&&vsid=' + vsid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&vsid=' + vsid + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + val,
+        type: 'post',
+        contentType: 'application-json',
+        success: function (data) {
+            alert(data);
+        },
+        error: function (er) {
+            alert("System Encountered Internal Error!!! Try Again After Some Time");
+        }
+    });
+}
 
 
 //Filtering Services
