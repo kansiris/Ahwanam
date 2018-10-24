@@ -395,7 +395,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-12">
+                            <div class="col-12 col-sm-6 col-md-6">
                                 <span class="input input--hoshi ksc1">
                                     <input class="input__field input__field--hoshi" type="text" id="url" name="url" />
                                     <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="url">
@@ -403,7 +403,20 @@
                                     </label>
                                 </span>
                             </div>
+
+
+                            <div class="col-12 col-sm-6 col-md-6" id="uma">
+                                @*<form>*@
+                                    @*<div class="form-group">*@
+                                    Upload Master Agreement <span class="glyphicon glyphicon-upload"></span>
+                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" style="display:none">
+                                    @*</div>*@
+                                @*</form>*@
+                            </div>
+
+
                         </div>
+                   
                     </div>
                 </div>
             </div>
@@ -455,17 +468,64 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-12">
-                                <span class="input input--hoshi ksc1">
-                                    <input class="input__field input__field--hoshi" type="email" id="email" name="email" />
-                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
-                                        <span class="input__label-content input__label-content--hoshi">Email</span>
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <span class="input input--hoshi ksc">
+                                    <input class="input__field input__field--hoshi" type="text" id="firstName1" name="firstName1" />
+                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="firstName1">
+                                        <span class="input__label-content input__label-content--hoshi">First Name</span>
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <span class="input input--hoshi ksc">
+                                    <input class="input__field input__field--hoshi" type="text" id="lastname1" name="lastname1" />
+                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="lastname1">
+                                        <span class="input__label-content input__label-content--hoshi">Last Name</span>
                                     </label>
                                 </span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <span class="input input--hoshi ksc">
+                                    <input class="input__field input__field--hoshi" type="text" id="Designation1" name="Designation1" />
+                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="Designation1">
+                                        <span class="input__label-content input__label-content--hoshi">Designation</span>
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <span class="input input--hoshi ksc">
+                                    <input class="input__field input__field--hoshi" type="number" id="mobileno1" name="mobileno1" />
+                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="mobileno1">
+                                        <span class="input__label-content input__label-content--hoshi">Phone Number</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <span class="input input--hoshi ksc1">
+                                    <input class="input__field input__field--hoshi" type="email" id="email1" name="email1" />
+                                    <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email1">
+                                        <span class="input__label-content input__label-content--hoshi">Email1</span>
+                                    </label>
+                                </span>
+                            </div>
+                    
+
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <span class="input input--hoshi ksc1">
+                                <input class="input__field input__field--hoshi" type="email" id="email" name="email" />
+                                <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="email">
+                                    <span class="input__label-content input__label-content--hoshi">Email</span>
+                                </label>
+                            </span>
+                        </div>
+                   
                     </div>
                 </div>
+            </div>
             </div>
             <div class="col-sm-4">
                 <div id="card">
@@ -542,6 +602,7 @@
                                 </span>
                             </div>
                         </div>
+                     
                     </div>
                 </div>
             </div>
@@ -601,7 +662,55 @@
                                 <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
                                 <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
-                                <span>Packages Price</span>
+                                <span>
+                                    @foreach (var itemk1 in ViewBag.venues)
+                                    {
+                                        if (itemk1.Id == item.VendorSubId)
+                                        {
+                                            if (item.VenueType == "" || item.VenueType == null)
+                                            {
+                                                <label>  Venue</label>
+                                            }
+                                            else
+                                            {
+                                                <label>
+                                                    @item.name -@item.VenueType
+                                                </label>
+                                            }
+                                        }
+                                    }
+                                    @foreach (var itemk2 in ViewBag.catering)
+                                    {
+                                        if (itemk2.Id == item.VendorSubId)
+                                        {
+                                            <label>@itemk2.CuisineType</label>
+                                        }
+                                    }
+                                    @foreach (var itemk3 in ViewBag.photography)
+                                    {
+                                        if (itemk3.Id == item.VendorSubId)
+                                        {
+                                            <label>@itemk3.PhotographyType</label>
+                                        }
+                                    }
+                                    @foreach (var itemk4 in ViewBag.decorators)
+                                    {
+                                        if (itemk4.Id == item.VendorSubId)
+                                        {
+                                            <label>@itemk4.DecorationType</label>
+                                        }
+
+                                    }
+                                    @foreach (var itemk5 in ViewBag.others)
+                                    {
+                                        if (itemk5.Id == item.VendorSubId)
+                                        {
+                                            <label>@itemk5.type</label>
+                                        }
+                                    }
+
+
+                                </span>
                             </div>
                             <div class="col-xs-3 col-md-3 col-sm-3">
                                 <span id="span-package-1">@item.PackageName</span>
@@ -692,7 +801,55 @@
                                         <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
                                         <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
-                                        <span>Packages Price</span>
+                                        <span>
+                                            @foreach (var itemk1 in ViewBag.venues)
+                                            {
+                                                if (itemk1.Id == item.VendorSubId)
+                                                {
+                                                    if (item.VenueType == "" || item.VenueType == null)
+                                                    {
+                                                        <label>  Venue</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>
+                                                            @item.name -@item.VenueType
+                                                        </label>
+                                                    }
+                                                }
+                                            }
+                                            @foreach (var itemk2 in ViewBag.catering)
+                                            {
+                                                if (itemk2.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk2.CuisineType</label>
+                                                }
+                                            }
+                                            @foreach (var itemk3 in ViewBag.photography)
+                                            {
+                                                if (itemk3.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk3.PhotographyType</label>
+                                                }
+                                            }
+                                            @foreach (var itemk4 in ViewBag.decorators)
+                                            {
+                                                if (itemk4.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk4.DecorationType</label>
+                                                }
+
+                                            }
+                                            @foreach (var itemk5 in ViewBag.others)
+                                            {
+                                                if (itemk5.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk5.type</label>
+                                                }
+                                            }
+
+
+                                        </span>
                                     </div>
                                     <div class="col-xs-3 col-md-3 col-sm-3">
                                         <span id="span-package-1">@item.PackageName</span>
@@ -831,7 +988,55 @@
                                         <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
                                         <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
-                                        <span>Packages Price</span>
+                                        <span>
+                                            @foreach (var itemk1 in ViewBag.venues)
+                                            {
+                                                if (itemk1.Id == item.VendorSubId)
+                                                {
+                                                    if (item.VenueType == "" || item.VenueType == null)
+                                                    {
+                                                        <label>  Venue</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>
+                                                            @item.name -@item.VenueType
+                                                        </label>
+                                                    }
+                                                }
+                                            }
+                                            @foreach (var itemk2 in ViewBag.catering)
+                                            {
+                                                if (itemk2.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk2.CuisineType</label>
+                                                }
+                                            }
+                                            @foreach (var itemk3 in ViewBag.photography)
+                                            {
+                                                if (itemk3.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk3.PhotographyType</label>
+                                                }
+                                            }
+                                            @foreach (var itemk4 in ViewBag.decorators)
+                                            {
+                                                if (itemk4.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk4.DecorationType</label>
+                                                }
+
+                                            }
+                                            @foreach (var itemk5 in ViewBag.others)
+                                            {
+                                                if (itemk5.Id == item.VendorSubId)
+                                                {
+                                                    <label>@itemk5.type</label>
+                                                }
+                                            }
+
+
+                                        </span>
                                     </div>
                                     <div class="col-xs-3 col-md-3 col-sm-3">
                                         <span id="span-package-1">@item.PackageName</span>
@@ -848,56 +1053,56 @@
 
                                                 <tr>
                                                     <td>
-                                                       
-                                                            <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
-                                                        
+
+                                                        <p class="ksp">
+                                                            <input type="radio" name="normal" id="normal1" value="commission" checked> commission
+                                                        </p>
+                                                        <p class="ksp">
+                                                            <input type="radio" name="normal" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                        </p>
+
                                                     </td>
                                                     <td>
-                                                       
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
 
-                                                        
+                                                        <p class="ksp">
+                                                            <input type="radio" name="peakday" id="normal1" value="commission" checked> commission
+                                                        </p>
+                                                        <p class="ksp">
+                                                            <input type="radio" name="peakday" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                        </p>
+
+
                                                     </td>
                                                     <td>
-                                                       
-                                                            <p class="ksp">
 
-                                                                <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
+                                                        <p class="ksp">
 
-                                                       
+                                                            <input type="radio" name="holidays" id="normal1" value="commission" checked> commission
+                                                        </p>
+                                                        <p class="ksp">
+                                                            <input type="radio" name="holidays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                        </p>
+
+
                                                     </td>
                                                     <td>
-                                                      
-                                                            <p class="ksp">
-                                                                <input type="radio" name="choicedays" id="normal1" value="commission" checked> commission
-                                                            </p>
-                                                            <p class="ksp">
-                                                                <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> slab/Flat rate
-                                                            </p>
 
-                                                       
+                                                        <p class="ksp">
+                                                            <input type="radio" name="choicedays" id="normal1" value="commission" checked> commission
+                                                        </p>
+                                                        <p class="ksp">
+                                                            <input type="radio" name="choicedays" id="normal2" value="slab/Flat rate"> slab/Flat rate
+                                                        </p>
+
+
                                                     </td>
 
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="number" name="normal1" class="price" ></td>
-                                                    <td><input type="number" name="peakday1" class="price" ></td>
-                                                    <td><input type="number" name="holidays1" class="price" ></td>
-                                                    <td><input type="number" name="choicedays1" class="price" ></td>
+                                                    <td><input type="number" name="normal1" class="price"></td>
+                                                    <td><input type="number" name="peakday1" class="price"></td>
+                                                    <td><input type="number" name="holidays1" class="price"></td>
+                                                    <td><input type="number" name="choicedays1" class="price"></td>
                                                 </tr>
 
                                             </tbody>
@@ -935,7 +1140,15 @@
 
     <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
 
+    
     <script type="text/javascript">
+
+        $('#uma').click(function () {
+            document.getElementById(exampleFormControlFile1);
+        });
+
+
+
         /*--- Date and Time ----*/
         $('.datetimepicker').datetimepicker({
             dayOfWeekStart: 1,
