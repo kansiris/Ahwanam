@@ -272,7 +272,7 @@ function Addpkgitems(mtype) {
         if (availableitems.indexOf(ctype) != -1) {
             for (var i = 0; i < availableitems.split(',').length; i++) {
                 if (availableitems.split(',')[i].split('(')[0] == ctype) {
-                    finallist.push(ctype+'('+selecteditems+')');
+                    finallist.findIndex(availableitems.split(',')[i].split('(')[0]).push(ctype + '(' + selecteditems + ')');
                 }
             }
             totallist = finallist.join(',');

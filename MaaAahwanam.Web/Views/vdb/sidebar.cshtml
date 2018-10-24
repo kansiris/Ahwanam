@@ -19,7 +19,7 @@
     <div onclick="location.href = '/ManageVendor'">Suppliers</div>
     
     <div class="row" style="padding-top:2%">
-        <button class="accordion" style="background-color: #fff;padding: 0;"> Resellers/Partners</button>
+        <button class="accordion" id="sidebaracc1" style="background-color: #fff;padding: 0;"> Resellers/Partners</button>
         <div class="panel">
             <div onclick="location.href = '/ReSellerManagement'"> Add Resellers/Partners</div>
             @if (ViewBag.resellername != null)
@@ -32,7 +32,7 @@
             }
         </div>
 
-        <button class="accordion" style="background-color: #fff;padding: 0;">Services</button>
+        <button class="accordion" id="sidebaracc2" style="background-color: #fff;padding: 0;">Services</button>
         <div class="panel" style="overflow-y:scroll">
             @foreach (var item in ViewBag.venues)
             {
@@ -63,10 +63,6 @@
             }
         </div>
     </div>
-
-
-
-
 
     @*<div onclick="location.href = '/ReSellerManagement'"> Resellers/Partners</div>
 
@@ -252,3 +248,27 @@
             <option value="Other">Others</option>
         </select>
     </h6>*@
+
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+@*<script>
+    $(function() {
+function toggleIcon(e) {
+$(e.target)
+.prev('.panel-heading')
+.find(".plus-minus")
+.toggleClass('glyphicon-plus glyphicon-minus');
+}
+$('.panel-group').on('hidden.bs.collapse', toggleIcon);
+$('.panel-group').on('shown.bs.collapse', toggleIcon);
+});
+</script>*@
+
+<script>
+    $(document).on('click',  '#sidebaracc1', function () {
+        $(this).next('.panel').css('display', 'block').css('max-height', '200px');
+    });
+    $(document).on('click', '#sidebaracc2', function () {
+        $(this).next('.panel').css('display', 'block').css('max-height', '200px');
+    });
+</script>
