@@ -460,14 +460,13 @@
         <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
         <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
         <script src="~/newdesignstyles/Scripts/main.js"></script>
-        @*<script src="http://design.maa-aahwanam.com/panagea/assets/validate.js"></script>*@
+     
         <!-- DATEPICKER  -->
         <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
         <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
         <!-- semantic -->
         <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
         <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
         <script>
@@ -476,9 +475,14 @@
                     $("#company").show('slow');
                 });
                 $("#radio1").click(function () {
-    
+
                     $("#company").hide('slow');
                 });
+               
+                    $(document).ready(function () {
+                        $('#allorders').DataTable();
+                    });
+
 
                 $('#allorders').DataTable({
                     responsive: true,
@@ -693,8 +697,9 @@
                     success: function (data) {
                         alert(data);
                         $('#addcustomermodel').modal('hide');
-                        var url = '/ManageUser/mnguserdetails';
-                        $('#userslist').load(url);                       
+                        window.location.reload();
+                       // var url = '/ManageUser/mnguserdetails';
+                       // $('#userslist').load(url);                       
                         //$('#Businessname').val(''),
                         //$('#firstname').val(''),
                         //$('#lastname').val(''),
@@ -707,7 +712,7 @@
                         //$('#phoneno').val(''),
                         //$('#pincode').val(''),
                         //$('#MemberNumber').val('')
-                        //location.reload();
+                      //  location.reload();
                     },
                     error: function (data) {
                         alert("save is failed");
