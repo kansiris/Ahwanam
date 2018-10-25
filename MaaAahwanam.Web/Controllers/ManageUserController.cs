@@ -417,6 +417,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.DealId = long.Parse(pkgs[i]);
                 newmanageuse.SaveOrderDetail(orderDetail);
             }
+            OrderDetail orderDetail1 = new OrderDetail();
             var userlogdetails = mnguserservice.getuserbyid(userid);
     string txtto = userlogdetails.email;
     string name = userlogdetails.firstname;
@@ -425,7 +426,7 @@ namespace MaaAahwanam.Web.Controllers
     StringBuilder cds = new StringBuilder();
     cds.Append("<table style='border:1px black solid;'><tbody>");
             cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
-            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + updateddate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail1.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail1.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.PerunitPrice+ " </td><td style = 'width: 50px;border: 1px black solid;'> " +orderDetail1.TotalPrice+ " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
             cds.Append("</tbody></table>");
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
     FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
@@ -450,7 +451,7 @@ namespace MaaAahwanam.Web.Controllers
             StringBuilder cds2 = new StringBuilder();
     cds2.Append("<table style='border:1px black solid;'><tbody>");
             cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
-            cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + updateddate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
             cds2.Append("</tbody></table>");
             string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
     FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
@@ -597,6 +598,7 @@ namespace MaaAahwanam.Web.Controllers
 
                     newmanageuse.SaveOrderDetail(orderDetail);
                 }
+                OrderDetail orderDetail1 = new OrderDetail();
                 var userlogdetails = mnguserservice.getuserbyid(userid);
 
 
@@ -609,7 +611,7 @@ namespace MaaAahwanam.Web.Controllers
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
 
-                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + updateddate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail1.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail1.EventType+ " </td><td style = 'width: 50px;border: 1px black solid;'> " +orderDetail1.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
 
                 cds.Append("</tbody></table>");
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority;
@@ -635,7 +637,7 @@ namespace MaaAahwanam.Web.Controllers
                 StringBuilder cds2 = new StringBuilder();
                 cds2.Append("<table style='border:1px black solid;'><tbody>");
                 cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
-                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + updateddate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 cds2.Append("</tbody></table>");
                 string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
