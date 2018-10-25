@@ -50,36 +50,39 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.date = date1;
                     ViewBag.eventtype = select1[3];
                     // var pid = select1[4];
-                    var pakageid = packageid.Split(',');
-                    int price; StringBuilder pakg = new StringBuilder();
-                    for (int i = 0; i < pakageid.Count(); i++)
+                    if (packageid != "" || packageid != null)
                     {
-                        if (pakageid[i] == "" || pakageid[i] == null)
+                        var pakageid = packageid.Split(',');
+                        int price; StringBuilder pakg = new StringBuilder();
+                        for (int i = 0; i < pakageid.Count(); i++)
                         {
-                            price1 = 0;
-                        }
-                        else
-                        {
-                            var pkgs = newmanageuse.getpartpkgs(pakageid[i]).FirstOrDefault();
-                            if (pkgs.PackagePrice == null)
+                            if (pakageid[i] == "" || pakageid[i] == null)
                             {
-                                price = Convert.ToInt32(pkgs.price1);
+                                price1 = 0;
                             }
-                            else { price = Convert.ToInt32(pkgs.PackagePrice); }
-                            price1 = price1 + price;
+                            else
+                            {
+                                var pkgs = newmanageuse.getpartpkgs(pakageid[i]).FirstOrDefault();
+                                if (pkgs.PackagePrice == null)
+                                {
+                                    price = Convert.ToInt32(pkgs.price1);
+                                }
+                                else { price = Convert.ToInt32(pkgs.PackagePrice); }
+                                price1 = price1 + price;
 
-                            pakg.Append("pkgs.PackageName + ',' +");
+                                pakg.Append("pkgs.PackageName + ',' +");
+                            }
+
                         }
 
+
+                        var total = Convert.ToInt64(guests) * Convert.ToInt64(price1);
+                        ViewBag.guest = guests;
+                        ViewBag.total = total;
+                        ViewBag.price = price1;
+                        ViewBag.pid = packageid;
+                        ViewBag.pname = pakg;
                     }
-
-
-                    var total = Convert.ToInt64(guests) * Convert.ToInt64(price1);
-                    ViewBag.guest = guests;
-                    ViewBag.total = total;
-                    ViewBag.price = price1;
-                    ViewBag.pid = packageid;
-                    ViewBag.pname = pakg;
                 }
             }
             return View();
