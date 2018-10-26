@@ -13,7 +13,6 @@ namespace MaaAahwanam.Web.Controllers
     public class ReSellerManagementController : Controller
     {
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
-
         VendorVenueService vendorVenueService = new VendorVenueService();
         viewservicesservice viewservicesss = new viewservicesservice();
         newmanageuser newmanageuse = new newmanageuser();
@@ -65,6 +64,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.photography = photography;
                 ViewBag.decorators = decorators;
                 ViewBag.others = others;
+                ViewBag.partid = partid;
                 return View();
             }
             else
@@ -98,14 +98,14 @@ namespace MaaAahwanam.Web.Controllers
             return Json(partnerPackage, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult PartnerPackcalender(PartnerPackage partnerPackage, string command, string partid, string date, string packageid)
-        {
-            partnerPackage.RegisteredDate = DateTime.Now;
-            partnerPackage.UpdatedDate = DateTime.Now;
-            partnerPackage = partnerservice.updatepartnerpackage(partnerPackage, long.Parse(partid), date, long.Parse(packageid));
+        //[HttpPost]
+        //public JsonResult PartnerPackcalender(PartnerPackage partnerPackage, string command, string partid, string date, string packageid)
+        //{
+        //    partnerPackage.RegisteredDate = DateTime.Now;
+        //    partnerPackage.UpdatedDate = DateTime.Now;
+        //    partnerPackage = partnerservice.updatepartnerpackage(partnerPackage, long.Parse(partid), date, long.Parse(packageid));
 
-            return Json(partnerPackage, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(partnerPackage, JsonRequestBehavior.AllowGet);
+        //}
     }
 }
