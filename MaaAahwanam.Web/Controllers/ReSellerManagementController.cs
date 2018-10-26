@@ -13,7 +13,6 @@ namespace MaaAahwanam.Web.Controllers
     public class ReSellerManagementController : Controller
     {
         VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
-
         VendorVenueService vendorVenueService = new VendorVenueService();
         viewservicesservice viewservicesss = new viewservicesservice();
         newmanageuser newmanageuse = new newmanageuser();

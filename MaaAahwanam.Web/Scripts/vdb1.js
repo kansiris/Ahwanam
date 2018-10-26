@@ -2,6 +2,7 @@
 var subcategory = $('#subcategory').val();
 var subid = $('#vendorsubid').val();
 var id = $('#vendorid').val();
+var PackageID = '';
 
 //Profile Pic Section
 $('#spc').on('click', function () {
@@ -268,10 +269,11 @@ function Addpkgitems(mtype) {
     var selecteditems = '';
     var itemstable = $('#pkgmodal').find('table.menuitems');
     var ctype = $('#pkgmodal .pkgitemsection p#ctype').text();
+    if (mtype != 'old')
+        ctype = type.replace(' ','_');
     $(itemstable).find('tr').each(function () {
         if ($(this).find("input[type='checkbox']").is(':checked')) {
             var checkText = $(this).find('label').text();
-            //selecteditems+= selecteditems + '!' + checkText;
             if (selecteditems != '')
                 selecteditems = selecteditems + '!' + checkText;
             else
@@ -281,7 +283,13 @@ function Addpkgitems(mtype) {
     selecteditems = selecteditems.trim(' ');
     var availableitems = pdiv.find('.availablepkgitems').val();
     if (availableitems == '' || availableitems == "" || availableitems == undefined) availableitems = pdiv.find('.selpkgitems').val();
-    var finallist= (totallist != '') ? totallist.split(','):[];
+    var finallist = (totallist != '') ? totallist.split(',') : [];
+    
+    //var value = pdiv.find('.selpkgitems').val();
+    //finallist.push(ctype + '(' + selecteditems + ')');
+    //totallist = finallist.join(',');
+    //var arr = $.unique(totallist.split(','));
+    
     if (pdiv.find('.pkgmenuitems').val() != '') {
         if (availableitems.indexOf(ctype) != -1) {
             for (var i = 0; i < availableitems.split(',').length; i++) {
@@ -298,21 +306,12 @@ function Addpkgitems(mtype) {
     }
     else {
         if (availableitems.indexOf(ctype) != -1) {
-            //for (var i = 0; i < totallist.split(',').length; i++) {
-            //    if (availableitems.split(',')[i] == ctype) {
-            //        if (totallist.indexOf(availableitems.split(',')[i]) == -1) {
-            //            finallist.push(ctype + '(' + selecteditems + ')');
-            //        }
-            //        else {
-            //            var ind = totallist.indexOf(ctype);
-            //            totallist.split(',')[ind] = ctype + '(' + selecteditems + ')';
-            //        }
-            //    }
-            //}
-            var ind = totallist;//.indexOf(ctype);
-            totallist[ind] = ctype + '(' + selecteditems + ')';
-            //totallist.split(',')[ind] = ctype + '(' + selecteditems + ')';
-            //totallist = finallist.join(',');
+            for (var i = 0; i < availableitems.split(',').length; i++) {
+                if (availableitems.split(',')[i] == ctype) {
+                    finallist.push(ctype + '(' + selecteditems + ')');
+                }
+            }
+            totallist = finallist.join(',');
         }
         else {
             finallist.push(ctype + '(' + selecteditems + ')');
@@ -336,7 +335,8 @@ $(document).on('click', '.pkgitem', function () {
     $('#loadermsg').text("Fetching Menu Items");
     var parentdiv = $(this).parent('div.package-list').prev('div.package-box');
     var checkbox = parentdiv.find('input[type=radio]:checked').val();//$("input[name='checkradio']:checked").val();
-    var pkgid = $(this).parent("div#pkgsdiv").find("div.pkgsave").find("input.packageid").val();
+    var pkgid = $(this).parent("div.allpkgs").find("div.pkgsave").find("input.packageid").val();
+    PackageID = pkgid;
     var pkgsavediv = $(this).parent('div.package-list').next("div.pkgsave");
     if (checkbox == undefined) {
         alert("Select Menu Type")
@@ -362,8 +362,9 @@ $(document).on('click', '.extraitem', function () {
     $('#loadermsg').text("Fetching Menu Items");
     var parentdiv = $(this).parents('div.package-list').prev('div.package-box');
     var checkbox = parentdiv.find('input[type=radio]:checked').val();//$("input[name='checkradio']:checked").val();
-    var pkgid = $(this).parent("div#pkgsdiv").find("div.pkgsave").find("input.packageid").val();
-    var pkgsavediv = $(this).parent("div#pkgsdiv").find("div.pkgsave");
+    var pkgid = $(this).parents("div.allpkgs").find("div.pkgsave").find("input.packageid").val();
+    PackageID = pkgid;
+    var pkgsavediv = $(this).parents("div.allpkgs").find("div.pkgsave");
     if (checkbox == undefined) {
         alert("Select Menu Type")
     }
@@ -375,7 +376,7 @@ $(document).on('click', '.extraitem', function () {
         $('#pkgmodal .selectedpkg').val(val);
         $('#pkgmodal .add').attr('onclick', 'Addpkgitems("' + val + '")');
         pdiv = '';
-        pdiv = $(this).parent('div.package-list').parent('div.allpkgs');
+        pdiv = $(this).parents('div.package-list').parent('div.allpkgs');
         var exists = $(this).text().split('(')[1].split(')')[0];
         filteritems(checkbox, val, 'New', pkgsavediv);
     }
@@ -390,8 +391,13 @@ function filteritems(type, selectedpkg, pkgid, pkgsavediv) {
     var tabletr = $('#pkgmodal .pkgitemsection table.menuitems'); var commondiv = "";
     var itemsdiv = $('#pkgmodal .pkgitemsection table.menuitems tr#pkgitemstr');
     tabletr.empty();
+    var url = ''
+    if (pkgid == 'New')
+        url = "/vdb/GetPackageExtraItem?menuitem=" + selectedpkg + "&&id=" + id + "&&subid=" + subid + "&&pkgid="+PackageID;
+    else
+        url = "/vdb/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" + subid + "";
 
-    $.get("/vdb/GetPackagemenuItem?menuitem=" + selectedpkg + "&&category=" + type + "&&vsid=" +subid+"",
+    $.get(url,
         function (data) {
             commondiv = data;
             var getlist = pkgsavediv.find('input.selpkgitems').val() + ',' + pkgsavediv.find('input.pkgmenuitems').val();//$('.selpkgitems').val() + ',' + $('.pkgmenuitems').val();
@@ -403,7 +409,7 @@ function filteritems(type, selectedpkg, pkgid, pkgsavediv) {
 
             for (var i = 0; i < commondiv.split('!').length; i++) {
                 var row = $("<tr/>");
-                if (getlist != null && getlist!= ',') {
+                if (getlist != null && getlist != ',' && commondiv != '') {
                     if (getlist.includes(commondiv.split('!')[i])) {
                         row.append('<td class="menuitems" style="padding-top:0;padding:0"> <a title="Remove ' + commondiv.split('!')[i] + '?" class="removemitem" style="color:red;cursor:pointer">X</a> <input type="checkbox" class="icheck" style="margin-left:5px;" checked id="' + commondiv.split('!')[i] + '"/>  <label for="' + commondiv.split('!')[i] + '">' + commondiv.split('!')[i] + '</label></td>');
                     }
@@ -502,18 +508,18 @@ $(document).on('click','.saveall1',function(){
         totalitems = favorite.join('!');
     });
     totalitems = type + '(' + totalitems + ')';
-    //alert(totalitems);
-    var PackageMenu = {
-        VendorID: subid,
-        VendorMasterID: id,
+    alert(totalitems);
+    var Package = {
+        PackageID:PackageID,
+        VendorSubId: subid,
+        VendorId: id,
         Category: pkgcategory,
-        Extra_Menu_Items:totalitems,
+        extramenuitems: totalitems,
     }
-
     $.ajax({
         url:'/vdb/NewCourse',
         type: 'POST',
-        data: JSON.stringify({ PackageMenu: PackageMenu, type: type }),
+        data: JSON.stringify({ Package: Package, type: type }),
         dataType: 'json',
         contentType: 'application/json',
         success:function(data){
@@ -738,16 +744,16 @@ $(document).on('click', '.updatepkg', function () {
             menu:menu
         }
         //alert(menuitems);
-        $.ajax({
-            url: '/vdb/UpdatePackage',
-            type: 'post',
-            datatype: 'json',
-            data: package,
-            success: function (data) {
-                alert(data);
-                $('.overlay').hide();
-            }
-        });
+        //$.ajax({
+        //    url: '/vdb/UpdatePackage',
+        //    type: 'post',
+        //    datatype: 'json',
+        //    data: package,
+        //    success: function (data) {
+        //        alert(data);
+        //        $('.overlay').hide();
+        //    }
+        //});
     }
 });
 
