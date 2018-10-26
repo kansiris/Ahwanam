@@ -38,5 +38,6 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedDate { get; set; }
         public DateTime? RegisteredDate { get; set; }
         public string fax { get; set; }
+        public DateTime ExpiryDate { get; set; }
     }
 }
