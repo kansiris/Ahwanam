@@ -281,43 +281,29 @@ function Addpkgitems(mtype) {
         }
     });
     selecteditems = selecteditems.trim(' ');
-    var availableitems = pdiv.find('.availablepkgitems').val();
-    if (availableitems == '' || availableitems == "" || availableitems == undefined) availableitems = pdiv.find('.selpkgitems').val();
     var finallist = (totallist != '') ? totallist.split(',') : [];
-    
-    //var value = pdiv.find('.selpkgitems').val();
-    //finallist.push(ctype + '(' + selecteditems + ')');
-    //totallist = finallist.join(',');
-    //var arr = $.unique(totallist.split(','));
-    
-    if (pdiv.find('.pkgmenuitems').val() != '') {
-        if (availableitems.indexOf(ctype) != -1) {
-            for (var i = 0; i < availableitems.split(',').length; i++) {
-                if (availableitems.split(',')[i] == ctype) {
-                    finallist.push(ctype+'('+selecteditems+')');
+
+    var value = pdiv.find('.selpkgitems').val();
+    if (value != '') {
+        if (value.indexOf(ctype) != -1) {
+                var tlist = totallist.split(',');
+                for (var j = 0; j < tlist.length; j++) {
+                    if (tlist[j].startsWith(ctype)) {
+                        tlist[j] = ctype + '(' + selecteditems + ')';
+                    }
                 }
+                totallist = tlist.join(',');
             }
-            totallist = finallist.join(',');
-        }
-        else {
-            finallist.push(ctype+'('+selecteditems+')');
-            totallist = finallist.join(',');
-        }
+            else {
+                finallist.push(ctype + '(' + selecteditems + ')');
+                totallist = finallist.join(',');
+            }
     }
     else {
-        if (availableitems.indexOf(ctype) != -1) {
-            for (var i = 0; i < availableitems.split(',').length; i++) {
-                if (availableitems.split(',')[i] == ctype) {
-                    finallist.push(ctype + '(' + selecteditems + ')');
-                }
-            }
-            totallist = finallist.join(',');
-        }
-        else {
-            finallist.push(ctype + '(' + selecteditems + ')');
-            totallist = finallist.join(',');
-        }
+        finallist.push(ctype + '(' + selecteditems + ')');
+        totallist = finallist.join(',');
     }
+
     pdiv.find('.selpkgitems').val(totallist);
     if(mtype == 'old')
     {
@@ -325,7 +311,7 @@ function Addpkgitems(mtype) {
     }
     else
     {
-        if (pdiv.find(".package-list #extracourse button:contains(" + mtype + ")").replaceWith('<button id="pillbutton" class="button extraitem" value=' + type + '>' + type + '(' + maxcount + ')</button>'));
+        if (pdiv.find(".package-list #extracourse button:contains(" + mtype + ")").replaceWith('<button id="pillbutton" class="button extraitem" value=' + ctype + '>' + type + '(' + maxcount + ')</button>'));
     }
 }
 
@@ -508,7 +494,7 @@ $(document).on('click','.saveall1',function(){
         totalitems = favorite.join('!');
     });
     totalitems = type + '(' + totalitems + ')';
-    alert(totalitems);
+    //alert(totalitems);
     var Package = {
         PackageID:PackageID,
         VendorSubId: subid,
@@ -646,9 +632,7 @@ $(document).on('click', '.addpkg', function () {
 
 //Updating Package
 $(document).on('click', '.updatepkg', function () {
-//$('.updatepkg').click(function () {
     var menuitems='';
-    //validation('UpdatePackage');
     $('.overlay').show();
     $('#loadermsg').text("Updating Package...");
     var parentdiv = $(this).parent('div.pkgsave').parent('div.allpkgs');
@@ -744,16 +728,16 @@ $(document).on('click', '.updatepkg', function () {
             menu:menu
         }
         //alert(menuitems);
-        //$.ajax({
-        //    url: '/vdb/UpdatePackage',
-        //    type: 'post',
-        //    datatype: 'json',
-        //    data: package,
-        //    success: function (data) {
-        //        alert(data);
-        //        $('.overlay').hide();
-        //    }
-        //});
+        $.ajax({
+            url: '/vdb/UpdatePackage',
+            type: 'post',
+            datatype: 'json',
+            data: package,
+            success: function (data) {
+                alert(data);
+                $('.overlay').hide();
+            }
+        });
     }
 });
 
