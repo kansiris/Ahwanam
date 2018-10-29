@@ -47,6 +47,7 @@
     }
 })
 $('#btnadd').click(function () {
+    $('input.chcktbl').prop('checked', false);
     $('#saverecord').css('display', 'block');
     $('#Businessname').val('');
     $('#firstname').val('');
