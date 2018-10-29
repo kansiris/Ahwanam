@@ -39,7 +39,7 @@ $(document).on('click', '.subcatclose', function () {
     var val1 = $(this).attr('value').split(',');
     var text = val1[1];
     var vsid = val1[0];
-    var type = val1[3];
+    var type = val1[2];
     var r = confirm("Do you want to delete" + text);
     if (r == true) {
         $.ajax({
@@ -49,7 +49,8 @@ $(document).on('click', '.subcatclose', function () {
             success: function (result) {
                 if (result = 'success') {
                     alert("service removed");
-                } else { alert("error occured"); }
+                }
+                else { alert(result); return location.href = '/home';}
                 var url1 = document.referrer;
                 window.location.href = url1;
             },
