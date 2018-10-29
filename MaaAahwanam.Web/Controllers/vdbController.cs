@@ -696,9 +696,10 @@ namespace MaaAahwanam.Web.Controllers
         #endregion
 
         #region Removing
-        public JsonResult deleteservice(string ks, string vsid, string type)
+        public JsonResult deleteservice(string vsid, string type)
         {
             long id = GetVendorID();
+
             if (id != 0)
             {
                 string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
