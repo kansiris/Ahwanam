@@ -696,24 +696,17 @@ namespace MaaAahwanam.Web.Controllers
         #endregion
 
         #region Removing
-        public JsonResult deleteservice(string ks, string vsid, string type)
+        public JsonResult deleteservice(string vsid, string type)
         {
-            try
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-                string uid = user.UserId.ToString();
-                string email = userLoginDetailsService.Getusername(long.Parse(uid));
-                vendorMaster = vendorMasterService.GetVendorByEmail(email);
-                string vid = vendorMaster.Id.ToString();
-                string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
-                string message = vendorImageService.DeleteAllImages(long.Parse(vid), long.Parse(vsid));
-                return Json(message, JsonRequestBehavior.AllowGet);
+            long id = GetVendorID();
 
-            }
-            catch (Exception)
+            if (id != 0)
             {
-                return Json("something went wrong", JsonRequestBehavior.AllowGet);
+                string msg = vendorVenueSignUpService.RemoveVendorService(vsid, type);
+                string message = vendorImageService.DeleteAllImages(id, long.Parse(vsid));
+                return Json(message, JsonRequestBehavior.AllowGet);
             }
+            return Json("Session Expired!!! Please Login", JsonRequestBehavior.AllowGet);
         }
         #endregion
 

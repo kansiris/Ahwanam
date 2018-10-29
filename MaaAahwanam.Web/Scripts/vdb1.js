@@ -39,7 +39,7 @@ $(document).on('click', '.subcatclose', function () {
     var val1 = $(this).attr('value').split(',');
     var text = val1[1];
     var vsid = val1[0];
-    var type = val1[3];
+    var type = val1[2];
     var r = confirm("Do you want to delete" + text);
     if (r == true) {
         $.ajax({
@@ -49,7 +49,8 @@ $(document).on('click', '.subcatclose', function () {
             success: function (result) {
                 if (result = 'success') {
                     alert("service removed");
-                } else { alert("error occured"); }
+                }
+                else { alert(result); return location.href = '/home';}
                 var url1 = document.referrer;
                 window.location.href = url1;
             },
@@ -198,34 +199,15 @@ $("#savepolicy").click(function () {
 
 })
 
-//Amenities Section
-var validateForm = function () {
-    var checks = $('input[type="checkbox"]:checked').map(function () {
-        return $(this).val();
-    }).get()
-    var hdname = $('#hdname').val();
-    var Dimentions = $('#Dimentions').val();
-    var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
-    var Maximumcapacity = $('#Maximumcapacity').val();
-    var selectedamenuities = checks;
-    var Address = $('#Address').val();
-    var Landmark = $('#Landmark').val();
-    var City = $('#City').val();
-    var ZipCode = $('#ZipCode').val();
-    var Description = $('#mainDescription').val();
-    $.ajax({
-        url: '/vdb/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&id=' + id + '&&vid=' + subid + '&&hdname=' + hdname + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + 'two',
-        type: 'post',
-        contentType: 'application-json',
-        success: function (data) {
-            alert(data);
-        },
-        error: function (er) {
-            alert("System Encountered Internal Error!!! Try Again After Some Time");
-        }
-    });
-    return false;
-}
+//Amenity Section
+$(document).on('change', '.amenityselection', function () {
+    var timeslot='';  var favorite = [];
+    $.each($("#amenitytable input[type='checkbox']:checked"), function () {
+        favorite.push($(this).val());
+        timeslot = favorite.join(',');
+    })
+    $('#selectedamenities').val(timeslot);
+});
 
 //Packages Section
 
@@ -882,7 +864,7 @@ function updatedetails(val) {
     var Dimentions = $('#Dimentions').val();
     var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
     var Maximumcapacity = $('#Maximumcapacity').val();
-    var selectedamenuities = $('#amenities').val();
+    var selectedamenuities = $('#selectedamenities').val();
     var vsid = $('#vsid').val();
     var Address = $('#Address').val();
     var Landmark = $('#Landmark').val();
