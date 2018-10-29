@@ -17,6 +17,12 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return partner;
         }
+        public PartnerFile addPartnerfile(PartnerFile partnerFile)
+        {
+            _dbContext.PartnerFile.Add(partnerFile);
+            _dbContext.SaveChanges();
+            return partnerFile;
+        }
         public Partner getPartner(string email)
         {
             Partner partner = new Partner();
@@ -32,6 +38,19 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return partner1;
         }
+        public PartnerContact UpdatePartnercontact(PartnerContact Partnercontact)
+        {
+            _dbContext.PartnerContact.Add(Partnercontact);
+            _dbContext.SaveChanges();
+            return Partnercontact;
+        }
+
+        public List<PartnerFile> GetFiles(string vid,string partid)
+        {
+            return _dbContext.PartnerFile.Where(p => p.VendorID == vid && p.PartnerID==partid).ToList();
+
+        }
+
         public List<Partner> GetPartners(long vid)
         {
             return _dbContext.Partner.Where(p => p.VendorId == vid).ToList();
