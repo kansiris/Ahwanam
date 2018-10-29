@@ -73,5 +73,6 @@ namespace MaaAahwanam.Repository.db
         public DbSet<PartnerPackage> PartnerPackage { get; set; }
         public DbSet<PartnerContact> PartnerContact { get; set; }
         public DbSet<PartnerFile> PartnerFile { get; set; }
+        public DbSet<SupplierServices> SupplierServices { get; set; }
     }
 }
