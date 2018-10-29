@@ -451,8 +451,9 @@
                                     <button id="pillbutton" class="button pkgitem" value="Deserts">Deserts(0)</button>
                                     <button id="pillbutton" class="button pkgitem" value="Beverages">Beverages(0)</button>
                                     <button id="pillbutton" class="button pkgitem" value="Fruits">Fruits(0)</button>
-                                }
-                            </div>
+                                    <div id="extracourse"></div>
+                                        }
+                                    </div>
                             <div align="right" class="pkgsave">
                                 @if (ViewBag.package[i].menuitems == null)
                                 {
@@ -463,7 +464,10 @@
                                     <input type="hidden" class="pkgmenuitems" value="@ViewBag.package[i].menuitems.Trim()" />
                                 }
                                 <input type="hidden" class="selpkgitems" />
+                                @if (ViewBag.selecteditems.Count > 0)
+                                {
                                 <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems[i]" />
+                                }
                                 <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
                                 <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
                                 <a class="pkgclone" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
@@ -947,11 +951,10 @@
 
             <div class="row side-content">
                 <div class="col-md-6"><h6 class="h6-1-1">AMENITIES</h6></div>
-                <div class="col-md-6"><button type="button" class="btn btn-danger saveamenities" style="float:right">Save</button></div>
+                <div class="col-md-6"><button type="button" class="btn btn-danger saveamenities" style="float:right" onclick="updatedetails('two')">Save</button></div>
                 <div class="row amenitiesdiv" style="width:100%" id="overflow-scroll">
-                    <form name="TestForm" method="post" onsubmit="return validateForm()">
                         <input type="hidden" id="selectedamenities" />
-                        <table>
+                        <table id="amenitytable">
                             @if (ViewBag.vid != "" && ViewBag.vid != null)
                             {
                                 var first = 0; var next = 0;
@@ -967,9 +970,9 @@
                                         <td style="padding-left:0px">
 
                                             @if (ViewBag.amenities[first].Split('=')[1].Trim() == "Yes")
-                                            {<input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" checked />}
+                                            {<input type="checkbox" class="amenityselection" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" checked />}
                                             else
-                                            { <input type="checkbox" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" />}
+                                            { <input type="checkbox" class="amenityselection"  value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" />}
                                         </td>
                                         <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
                                         <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
@@ -977,9 +980,9 @@
                                         {
                                             <td style="padding-left:0px">
                                                 @if (ViewBag.amenities[next].Split('=')[1].Trim() == "Yes")
-                                                {<input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" checked />}
+                                                {<input type="checkbox" class="amenityselection"  value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" checked />}
                                                 else
-                                                { <input type="checkbox" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" />}
+                                                { <input type="checkbox" class="amenityselection"  value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" />}
                                             </td>
                                             <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
                                             <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
@@ -988,10 +991,7 @@
                                 }
                             }
                         </table>
-
-                    </form>
                 </div>
-
             </div>
 
             <div class="row side-content-2">
