@@ -96,6 +96,20 @@
                 width: 94%;
             }
 
+         
+   .flex-row.row {
+	 display: flex;
+	 flex-wrap: wrap;
+   }
+   .flex-row.row > [class*='col-'] {
+	 display: flex;
+	 flex-direction: column;
+   }
+  .flex-row.row:after,
+  .flex-row.row:before {
+	 display: flex;
+  }
+
             .select2-container--default .select2-selection--single {
                 height: 37px;
             }
@@ -240,42 +254,73 @@
 
             </div>
 
-            <div class="row upload-section">
-                <table>
-                    <tr>
-                        @{
-                            if (ViewBag.sliderimages.Count > 0)
-                            {
-                                int no = 0;
-                                foreach (var item in ViewBag.sliderimages)
-                                {
-                                    <td>
-                                        <div align="center">
-                                            <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
-                                            <text style="color:black">Slider @(++no)</text>
-                                        </div>
-                                    </td>
-                                }
-
-                            }
-                            if (ViewBag.slidercount > 0)
-                            {
-                                for (int i = 1; i < ViewBag.slidercount + 1; i++)
-                                {
-                                    <td>
-                                        <div class="sliderdiv">
-                                            <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
-                                            <input type="file" name="image" id="s@(i)">
-                                        </div>
-                                    </td>
-                                }
-                            }
-
+            <div class="row ui four stackable cards upload-section" style="margin:0">
+                @{
+                    if (ViewBag.sliderimages.Count > 0)
+                    {
+                        int no = 0;
+                        foreach (var item in ViewBag.sliderimages)
+                        {
+                            <div class="card" align="center">
+                                <div class="image">
+                                    <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName">
+                                    <text style="color:black">Slider@(++no)</text>
+                                </div>
+                            </div>
                         }
-                    </tr>
-                </table>
-
+                    }
+                    if (ViewBag.slidercount > 0)
+                    {
+                        for (int i = 1; i < ViewBag.slidercount + 1; i++)
+                        {
+                            <div class="card">
+                                <div class="image">
+                                    <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
+                                    <input type="file" name="image" id="s@(i)">
+                                </div>
+                            </div>
+                        }
+                    }
+                }
             </div>
+
+
+            @*<div class="row upload-section">
+                    <table>
+                        <tr>
+                            @{
+                                if (ViewBag.sliderimages.Count > 0)
+                                {
+                                    int no = 0;
+                                    foreach (var item in ViewBag.sliderimages)
+                                    {
+                                        <td>
+                                            <div align="center">
+                                                <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
+                                                <text style="color:black">Slider @(++no)</text>
+                                            </div>
+                                        </td>
+                                    }
+
+                                }
+                                if (ViewBag.slidercount > 0)
+                                {
+                                    for (int i = 1; i < ViewBag.slidercount + 1; i++)
+                                    {
+                                        <td>
+                                            <div class="sliderdiv">
+                                                <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
+                                                <input type="file" name="image" id="s@(i)">
+                                            </div>
+                                        </td>
+                                    }
+                                }
+
+                            }
+                        </tr>
+                    </table>
+
+                </div>*@
 
             <div class="row" style="padding-top:2%">
                 <div class="col-md-6">
@@ -452,8 +497,8 @@
                                     <button id="pillbutton" class="button pkgitem" value="Beverages">Beverages(0)</button>
                                     <button id="pillbutton" class="button pkgitem" value="Fruits">Fruits(0)</button>
                                     <div id="extracourse"></div>
-                                        }
-                                    </div>
+                                }
+                            </div>
                             <div align="right" class="pkgsave">
                                 @if (ViewBag.package[i].menuitems == null)
                                 {
@@ -466,7 +511,7 @@
                                 <input type="hidden" class="selpkgitems" />
                                 @if (ViewBag.selecteditems.Count > 0)
                                 {
-                                <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems[i]" />
+                                    <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems[i]" />
                                 }
                                 <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
                                 <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
@@ -953,44 +998,44 @@
                 <div class="col-md-6"><h6 class="h6-1-1">AMENITIES</h6></div>
                 <div class="col-md-6"><button type="button" class="btn btn-danger saveamenities" style="float:right" onclick="updatedetails('two')">Save</button></div>
                 <div class="row amenitiesdiv" style="width:100%" id="overflow-scroll">
-                        <input type="hidden" id="selectedamenities" />
-                        <table id="amenitytable">
-                            @if (ViewBag.vid != "" && ViewBag.vid != null)
+                    <input type="hidden" id="selectedamenities" />
+                    <table id="amenitytable">
+                        @if (ViewBag.vid != "" && ViewBag.vid != null)
+                        {
+                            var first = 0; var next = 0;
+                            for (int i = 0; i < ViewBag.amenities.Length; i++)
                             {
-                                var first = 0; var next = 0;
-                                for (int i = 0; i < ViewBag.amenities.Length; i++)
+                                var count = ViewBag.amenities.Length;
+                                first = i;
+                                if (next < count)
                                 {
-                                    var count = ViewBag.amenities.Length;
-                                    first = i;
-                                    if (next < count)
-                                    {
-                                        next = ++i;
-                                    }
-                                    <tr>
-                                        <td style="padding-left:0px">
-
-                                            @if (ViewBag.amenities[first].Split('=')[1].Trim() == "Yes")
-                                            {<input type="checkbox" class="amenityselection" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" checked />}
-                                            else
-                                            { <input type="checkbox" class="amenityselection"  value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" />}
-                                        </td>
-                                        <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
-                                        <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
-                                        @if (next < count)
-                                        {
-                                            <td style="padding-left:0px">
-                                                @if (ViewBag.amenities[next].Split('=')[1].Trim() == "Yes")
-                                                {<input type="checkbox" class="amenityselection"  value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" checked />}
-                                                else
-                                                { <input type="checkbox" class="amenityselection"  value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" />}
-                                            </td>
-                                            <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
-                                            <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
-                                        }
-                                    </tr>
+                                    next = ++i;
                                 }
+                                <tr>
+                                    <td style="padding-left:0px">
+
+                                        @if (ViewBag.amenities[first].Split('=')[1].Trim() == "Yes")
+                                        {<input type="checkbox" class="amenityselection" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" checked />}
+                                        else
+                                        { <input type="checkbox" class="amenityselection" value="@(ViewBag.amenities[first].Split('=')[0].Replace(" ", ""))" />}
+                                    </td>
+                                    <td style="padding-left:5px"><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[first].Split('=')[0].Trim()).png" /></td>
+                                    <td style="color:black;padding-left:5px">@(ViewBag.amenities[first].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                    @if (next < count)
+                                    {
+                                        <td style="padding-left:0px">
+                                            @if (ViewBag.amenities[next].Split('=')[1].Trim() == "Yes")
+                                            {<input type="checkbox" class="amenityselection" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" checked />}
+                                            else
+                                            { <input type="checkbox" class="amenityselection" value="@(ViewBag.amenities[next].Split('=')[0].Trim().Replace(" ", ""))" />}
+                                        </td>
+                                        <td style="padding-left:5px"> <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[next].Split('=')[0].Trim()).png" /></td>
+                                        <td style="color:black;padding-left:5px">@(ViewBag.amenities[next].Split('=')[0].Trim().Replace('_', ' '))</td>
+                                    }
+                                </tr>
                             }
-                        </table>
+                        }
+                    </table>
                 </div>
             </div>
 
@@ -1118,14 +1163,15 @@
                 <input type="hidden" id="vcalender" name="vcalender" value="">
                 var vcalcount = 0;
                 <p>HALL DETAILS</p>
-                <div class="row">
+                <div class="row flex-row">
                     @foreach (var item in ViewBag.venues)
                     {
-                        <div class="col-md-4">
+
+                        <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                             <div class="card">
-                                <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">
+                                <img class="card-img-top" src="http://www.ansonika.com/panagea/img/tour_1.jpg">
+                                <div class="card-block">
+                                    <h4 class="card-title">
                                         @if (item.name != null && item.name != "")
                                         {
                                             @item.name
@@ -1154,13 +1200,11 @@
                                             else
                                             {
                                                 <p class="p_0">  </p>
-
                                             }
                                         }
-                                    </h5>
-                                    <hr />
-                                    <div align="center">
-                                        <table>
+                                    </h4>
+                                    <div class="meta" align="center">
+                                        <table style="border:none">
                                             <tr>
                                                 @if (item.name != null && item.name != "")
                                                 {
@@ -1208,224 +1252,223 @@
                                             <tr> <td> Seating Arrangement </td> </tr>
                                         </table>
                                     </div>
-                                    <hr />
-                                </div>
-                                <div align="center" class="divheading">Availability Calendar</div>
-                                <div style="border:1px black solid" id="vcal">
-                                    <input type="hidden" value="@item.Id" id="venusid" name="venusid" />
-                                    <input type="hidden" value="@item.VendorMasterId" id="venusmasterid" name="venusmasterid" />
-                                    <div class='vendorcalendar' id="vcal@(++vcalcount)"></div>
-                                </div>
-                                <div class="card-body">
-                                    <div align="center" class="divheading">Available Packages</div>
-                                    <div>
-                                        <input type="checkbox" value="Morning~@item.Id" name="kstimeslot" class="kstimeslot" /><label style="color:black">Morning</label>
-                                        <input type="checkbox" value="Evening~@item.Id" name="kstimeslot" class="kstimeslot" />     <label style="color:black">Evening</label>
-                                    </div>
-                                    <div>
-                                        <table class="priceslist" style="width:100%">
-                                            @foreach (var item1 in @ViewBag.availablepackages)
-                                            {
-                                                if (item1.VendorSubId == item.Id)
+                                    <div class="card-text">
+                                        <div align="center" class="divheading">Availability Calendar</div>
+                                        <div style="border:1px black solid" id="vcal">
+                                            <input type="hidden" value="@item.Id" id="venusid" name="venusid" />
+                                            <input type="hidden" value="@item.VendorMasterId" id="venusmasterid" name="venusmasterid" />
+                                            <div class='vendorcalendar' id="vcal@(++vcalcount)"></div>
+                                        </div>
+                                        <div align="center" class="divheading">Available Packages</div>
+                                        <div>
+                                            <input type="checkbox" value="Morning~@item.Id" name="kstimeslot" class="kstimeslot" /><label style="color:black">Morning</label>
+                                            <input type="checkbox" value="Evening~@item.Id" name="kstimeslot" class="kstimeslot" />     <label style="color:black">Evening</label>
+                                        </div>
+                                        <div>
+                                            <table class="priceslist" style="width:100%;border:none">
+                                                @foreach (var item1 in @ViewBag.availablepackages)
                                                 {
-                                                    <tr class="priceslist">
-                                                        <td class="priceslist" style="width:30%">@item1.PackageName</td>
-                                                        <td class="priceslist" style="width:40%">
-                                                            <span>
-                                                                ₹
-                                                                @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                                {<b style="font-size:17px">@item1.PackagePrice</b>}
-                                                                else
-                                                                {
-                                                                    <b style="font-size:17px">@item1.price1</b>
-                                                                }
-                                                                / Person
-                                                            </span>
-                                                        </td>
-                                                        <td class="priceslist" style="width:30%"><input type="hidden" class="pkgid" value="@item1.PackageID" /> <input type="checkbox" value="@item1.PackageID" name="kspackage" class="kspackage"></td> @*onclick="booknow(@item1.PackageID)"*@
-                                                    </tr>
+                                                    if (item1.VendorSubId == item.Id)
+                                                    {
+                                                        <tr class="priceslist">
+                                                            <td class="priceslist" style="width:30%">@item1.PackageName</td>
+                                                            <td class="priceslist" style="width:40%">
+                                                                <span>
+                                                                    ₹
+                                                                    @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                                    {<b style="font-size:17px">@item1.PackagePrice</b>}
+                                                                    else
+                                                                    {
+                                                                        <b style="font-size:17px">@item1.price1</b>
+                                                                    }
+                                                                    / Person
+                                                                </span>
+                                                            </td>
+                                                            <td class="priceslist" style="width:30%"><input type="hidden" class="pkgid" value="@item1.PackageID" /> <input type="checkbox" value="@item1.PackageID" name="kspackage" class="kspackage"></td> @*onclick="booknow(@item1.PackageID)"*@
+                                                        </tr>
+
+                                                    }
 
                                                 }
-
-                                            }
-                                        </table>
-                                        <input type="hidden" id="selectedcart" name="selectedcart" class="selectedcart" value="">
+                                            </table>
+                                            <input type="hidden" id="selectedcart" name="selectedcart" class="selectedcart" value="">
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                                                     }
-
-
                 </div>
-                <input type="button" class="btnbook" value="Choose packages" />
-                <div class="row" style="padding-top:2%">
-                    <button class="accordion">Today's Events</button>
-                    <div class="panel">
-                        <table id="today" class="display" style="width:100%;padding-left:0">
-                            <thead>
-                                <tr>
-                                    @*<th>S.No</th>*@
-                                    <th>Order ID</th>
-                                    <th>Event Type</th>
-                                    <th>Event Date</th>
-                                    <th>Package Name</th>
-                                    <th>Total Amount</th>
-                                    <th>Balance Due</th>
-                                    <th>Status</th>
-                                    @*<th>Actions</th>*@
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    //var number1= 0;
-                                    foreach (var orders in ViewBag.todaysorder)
 
-                                    {
+                    <br />
+                    <input type="button" class="positive ui button btnbook" value="Choose packages" />
+                    <div class="row" style="padding-top:2%">
+                        <button class="accordion">Today's Events</button>
+                        <div class="panel">
+                            <table id="today" class="display" style="width:100%;padding-left:0">
+                                <thead>
+                                    <tr>
+                                        @*<th>S.No</th>*@
+                                        <th>Order ID</th>
+                                        <th>Event Type</th>
+                                        <th>Event Date</th>
+                                        <th>Package Name</th>
+                                        <th>Total Amount</th>
+                                        <th>Balance Due</th>
+                                        <th>Status</th>
+                                        @*<th>Actions</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        //var number1= 0;
+                                        foreach (var orders in ViewBag.todaysorder)
 
-                                        <tr>
-                                            @*<td>@(++number1)</td>*@
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
-                                        </tr>
+                                        {
 
-                                    } }
-                                @{
-                                    foreach (var orders in ViewBag.todaysorder1)
-                                    {
+                                            <tr>
+                                                @*<td>@(++number1)</td>*@
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>@orders.PackageName</td>
+                                                <td>@orders.TotalPrice</td>
+                                                <td>@orders.Due</td>
+                                                <td>@orders.Status</td>
+                                            </tr>
 
-                                        <tr>
-                                            @*<td>@(++number1)</td>*@
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
-                                        </tr>
+                                        } }
+                                    @{
+                                        foreach (var orders in ViewBag.todaysorder1)
+                                        {
 
-                                    } }
-                            </tbody>
-                        </table>
+                                            <tr>
+                                                @*<td>@(++number1)</td>*@
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>@orders.PackageName</td>
+                                                <td>@orders.TotalPrice</td>
+                                                <td>@orders.Due</td>
+                                                <td>@orders.Status</td>
+                                            </tr>
 
-                    </div>
+                                        } }
+                                </tbody>
+                            </table>
 
-                    <button class="accordion">Tomorrow Events</button>
-                    <div class="panel">
-                        <table id="tomorrow" class="display" style="width:100%;padding-left:0">
-                            <thead>
-                                <tr>
-                                    @*<th>S.No</th>*@
-                                    <th>Order ID</th>
-                                    <th>Event Type</th>
-                                    <th>Event Date</th>
-                                    <th>Package Name</th>
-                                    <th>Total Amount</th>
-                                    <th>Balance Due</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
+                        </div>
 
-                            <tbody>
-                                @{
-                                    //var number2 = 0;
-                                    foreach (var orders in ViewBag.tommaroworder)
-                                    {
+                        <button class="accordion">Tomorrow Events</button>
+                        <div class="panel">
+                            <table id="tomorrow" class="display" style="width:100%;padding-left:0">
+                                <thead>
+                                    <tr>
+                                        @*<th>S.No</th>*@
+                                        <th>Order ID</th>
+                                        <th>Event Type</th>
+                                        <th>Event Date</th>
+                                        <th>Package Name</th>
+                                        <th>Total Amount</th>
+                                        <th>Balance Due</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
 
-                                        <tr>
-                                            @*<td>@(++number2)</td>*@
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
+                                <tbody>
+                                    @{
+                                        //var number2 = 0;
+                                        foreach (var orders in ViewBag.tommaroworder)
+                                        {
 
-                                        </tr>
-                                    } }
-                                @{
-                                    //var number2 = 0;
-                                    foreach (var orders in ViewBag.tommaroworder1)
-                                    {
+                                            <tr>
+                                                @*<td>@(++number2)</td>*@
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>@orders.PackageName</td>
+                                                <td>@orders.TotalPrice</td>
+                                                <td>@orders.Due</td>
+                                                <td>@orders.Status</td>
 
-                                        <tr>
-                                            @*<td>@(++number2)</td>*@
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
+                                            </tr>
+                                        } }
+                                    @{
+                                        //var number2 = 0;
+                                        foreach (var orders in ViewBag.tommaroworder1)
+                                        {
 
-                                        </tr>
-                                    } }
-                            </tbody>
-                        </table>
+                                            <tr>
+                                                @*<td>@(++number2)</td>*@
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>@orders.PackageName</td>
+                                                <td>@orders.TotalPrice</td>
+                                                <td>@orders.Due</td>
+                                                <td>@orders.Status</td>
 
-                    </div>
+                                            </tr>
+                                        } }
+                                </tbody>
+                            </table>
 
-                    <button class="accordion">Upcoming Events</button>
-                    <div class="panel">
-                        <table id="upcoming" class="display" style="width:100%;padding-left:0">
-                            <thead>
-                                <tr>
-                                    @*<th>S.No</th>*@
-                                    <th>Order ID</th>
-                                    <th>Event Type</th>
-                                    <th>Event Date</th>
-                                    <th>Package Name</th>
-                                    <th>Total Amount</th>
-                                    <th>Balance Due</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
+                        </div>
+
+                        <button class="accordion">Upcoming Events</button>
+                        <div class="panel">
+                            <table id="upcoming" class="display" style="width:100%;padding-left:0">
+                                <thead>
+                                    <tr>
+                                        @*<th>S.No</th>*@
+                                        <th>Order ID</th>
+                                        <th>Event Type</th>
+                                        <th>Event Date</th>
+                                        <th>Package Name</th>
+                                        <th>Total Amount</th>
+                                        <th>Balance Due</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
                                                 /*   var number3 = 0*/;
-                                    foreach (var orders in ViewBag.upcominforder)
-                                    {
-                                        <tr>
-                                            @*<td>@(++number3)</td>*@
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
-                                        </tr>
+                                        foreach (var orders in ViewBag.upcominforder)
+                                        {
+                                            <tr>
+                                                @*<td>@(++number3)</td>*@
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>@orders.PackageName</td>
+                                                <td>@orders.TotalPrice</td>
+                                                <td>@orders.Due</td>
+                                                <td>@orders.Status</td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                                @{
-                                    //var number3 = 0;
-                                    foreach (var orders in ViewBag.upcominforder1)
-                                    {
-                                        <tr>
-                                            @*<td>@(++number3)</td>*@
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
-                                        </tr>
+                                    @{
+                                        //var number3 = 0;
+                                        foreach (var orders in ViewBag.upcominforder1)
+                                        {
+                                            <tr>
+                                                @*<td>@(++number3)</td>*@
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.EventType</td>
+                                                <td>@orders.BookedDate</td>
+                                                <td>@orders.PackageName</td>
+                                                <td>@orders.TotalPrice</td>
+                                                <td>@orders.Due</td>
+                                                <td>@orders.Status</td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                                    }
+                    <div id="scripttags"></div>
+                                        }
 
             @if (ViewBag.enable == "orders")
             {
@@ -1434,115 +1477,115 @@
                     <div class="col-md-4"><button type="button" class="btn btn-primary" style="float:right">New Order</button></div>
                     <div class="col-md-4"><input type="text" id="datetimepicker2" class="form-control" placeholder="Select Date Range"></div>
                 </div>
-                <br />
-                <table id="allorders" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Order ID</th>
-                            <th>Event Type</th>
-                            <th>Event Date</th>
-                            <th>Package Name</th>
-                            <th>Total Amount</th>
-                            <th>Balance Due</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            var number = 0;
-                            foreach (var orders in ViewBag.order1)
-                            {
-                                <tr class="show_hide_row">
-                                    <td>@(++number)</td>
-                                    <td>@orders.OrderId</td>
-                                    <td>@orders.EventType</td>
-                                    <td>@orders.BookedDate</td>
-                                    <td>@orders.PackageName</td>
-                                    <td>@orders.TotalPrice</td>
-                                    <td>@orders.Due</td>
-                                    <td>@orders.Status</td>
-                                    <td>
-                                        <div class="menu">
-                                            <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                            <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                <div class="four column relaxed divided grid">
-                                                    <div class="column">
-                                                        <div class="link list">
-                                                            <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                            <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                            <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                            <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                        <br />
+                        <table id="allorders" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Order ID</th>
+                                    <th>Event Type</th>
+                                    <th>Event Date</th>
+                                    <th>Package Name</th>
+                                    <th>Total Amount</th>
+                                    <th>Balance Due</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var number = 0;
+                                    foreach (var orders in ViewBag.order1)
+                                    {
+                                        <tr class="show_hide_row">
+                                            <td>@(++number)</td>
+                                            <td>@orders.OrderId</td>
+                                            <td>@orders.EventType</td>
+                                            <td>@orders.BookedDate</td>
+                                            <td>@orders.PackageName</td>
+                                            <td>@orders.TotalPrice</td>
+                                            <td>@orders.Due</td>
+                                            <td>@orders.Status</td>
+                                            <td>
+                                                <div class="menu">
+                                                    <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                    <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                        <div class="four column relaxed divided grid">
+                                                            <div class="column">
+                                                                <div class="link list">
+                                                                    <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                    <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                    <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                    <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr id="hidden_row1" class="hidden_row">
-                                    <td colspan=4>
-                                        <ul>
-                                            <li>Event Type:@orders.EventType</li>
-                                            <li>contact number:@orders.phoneno</li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                            </td>
+                                        </tr>
+                                        <tr id="hidden_row1" class="hidden_row">
+                                            <td colspan=4>
+                                                <ul>
+                                                    <li>Event Type:@orders.EventType</li>
+                                                    <li>contact number:@orders.phoneno</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
 
-                            }
-                            foreach (var orders in ViewBag.order)
-                            {
+                                    }
+                                    foreach (var orders in ViewBag.order)
+                                    {
 
-                                <tr class="show_hide_row">
-                                    <td>@(++number)</td>
-                                    <td>@orders.OrderId</td>
-                                    <td>@orders.EventType</td>
-                                    <td>@orders.BookedDate</td>
-                                    <td>@orders.PackageName</td>
-                                    <td>@orders.TotalPrice</td>
-                                    <td>@orders.Due</td>
-                                    <td>@orders.Status</td>
-                                    <td>
-                                        <div class="menu">
-                                            <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                            <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                <div class="four column relaxed divided grid">
-                                                    <div class="column">
-                                                        <div class="link list">
-                                                            <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                            <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                            <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                            <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                                        <tr class="show_hide_row">
+                                            <td>@(++number)</td>
+                                            <td>@orders.OrderId</td>
+                                            <td>@orders.EventType</td>
+                                            <td>@orders.BookedDate</td>
+                                            <td>@orders.PackageName</td>
+                                            <td>@orders.TotalPrice</td>
+                                            <td>@orders.Due</td>
+                                            <td>@orders.Status</td>
+                                            <td>
+                                                <div class="menu">
+                                                    <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                                    <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                        <div class="four column relaxed divided grid">
+                                                            <div class="column">
+                                                                <div class="link list">
+                                                                    <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                    <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                    <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                                    <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                            </td>
+                                        </tr>
 
-                                <tr id="hidden_row1" class="hidden_row">
-                                    <td colspan=4>
-                                        <ul>
-                                            <li>Event Type:@orders.EventType</li>
-                                            <li>contact number:@orders.UserPhone</li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                        <tr id="hidden_row1" class="hidden_row">
+                                            <td colspan=4>
+                                                <ul>
+                                                    <li>Event Type:@orders.EventType</li>
+                                                    <li>contact number:@orders.UserPhone</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
 
-                            }
-                        }
+                                    }
+                                }
 
-                    </tbody>
-                </table>
-                            }
+                            </tbody>
+                        </table>
+                                    }
 
         </div>
     </div>
@@ -1563,7 +1606,7 @@
             </div>
         </div>
     </div>
-                            }
+                                    }
 
 
 @section scripts{
@@ -1575,7 +1618,7 @@
                 $('.search-box2').select2({ tags: true });
             });
             //$("#datetimepicker1").datepicker();
-            $(".vendorcalendar").datepicker();
+            //$(".vendorcalendar").datepicker();
             $('#today,#tomorrow,#upcoming').DataTable();
 
             $(function () {
@@ -1585,6 +1628,32 @@
                 if (e1 == null) e1 = 'Select Event';
                 //$('span.current').empty().html(e1);
                 $('.select2-selection__rendered').empty().text(e1);
+            });
+
+            var thisdates="";
+            var array = [];
+            $(function () {
+                var listcount = parseInt('@ViewBag.availability.Count') +1;
+                var listarray = @Html.Raw(Json.Encode(@ViewBag.availability));
+                var scripttag = $('#scripttags');
+                for (var k = 0; k < listcount; k++) {
+                    array.push(listarray[k]);
+                }
+                for (var i = 1; i < listcount; i++) {
+                    thisdates = array[i-1];
+                    $('<script>').attr('type', 'text/javascript')
+                        .text("$('#vcal"+i+"').datepicker({dayOfWeekStart: 1,lang: 'en',timepicker: false, format: 'dd/MM/yyyy',minDate: new Date(),beforeShowDay:function (date){ var string = jQuery.datepicker.formatDate('dd-mm-yy', date);  return [thisdates.indexOf(string) == -1] }});")
+                        .appendTo(scripttag);
+                }
+
+                function blockdates() {
+                    setTimeout(function() {
+                        $(".ui-datepicker-calendar td").filter(function() {
+                            var date = $(this).text();
+                            return /\d/.test(date);
+                        }).find("a").attr('data-custom', 110);
+                    }, 0);
+                }
             });
         </script>
     }

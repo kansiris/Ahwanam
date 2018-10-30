@@ -5,11 +5,11 @@
 }
 
 @section css{
-<link rel="stylesheet" type="text/css" href="https://tympanus.net/Development/TextInputEffects/css/set1.css" />
+    <link rel="stylesheet" type="text/css" href="https://tympanus.net/Development/TextInputEffects/css/set1.css" />
     <style>
         #addcustomermodel input[type=text], #addcustomermodel input[type="email"], #addcustomermodel input[type="tel"], #addcustomermodel input[type="number"] {
             width: 101%;
-            padding:  13px 0px 2px 10px;
+            padding: 13px 0px 2px 10px;
             margin: 15px 5px 15px 0px;
             box-sizing: border-box;
             background-color: #fff;
@@ -19,57 +19,63 @@
         table.dataTable thead th, table.dataTable tfoot th {
             white-space: nowrap;
         }
+
         table.dataTable, table.dataTable th, table.dataTable td {
             white-space: nowrap;
-             border:none;
-        }
-        table  td{
-            border:none;
+            border: none;
         }
 
-    .input__field {
-        position: relative;
-        display: block;
-        float: right;
-        padding: 0.8em;
-        width: 60%;
-        border: none;
-        border-radius: 0;
-        background: #f0f0f0;
-        color: #aaa;
-        font-weight: normal;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        -webkit-appearance: none;
-    }
+        table td {
+            border: none;
+        }
 
-    .input__label--hoshi {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        padding: 5.7em 0.25em;
-        width: 100%;
-        height: calc(100% - 1em);
-        text-align: left;
-        pointer-events: none;
-    }
+        .input__field {
+            position: relative;
+            display: block;
+            float: right;
+            padding: 0.8em;
+            width: 60%;
+            border: none;
+            border-radius: 0;
+            background: #f0f0f0;
+            color: #aaa;
+            font-weight: normal;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-appearance: none;
+        }
 
-    .kscfont {
-        font-size: 15px;
-        font-weight: 900;
-    }
+        .input__label--hoshi {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 5.7em 0.25em;
+            width: 100%;
+            height: calc(100% - 1em);
+            text-align: left;
+            pointer-events: none;
+        }
 
-    .addcutomerpopup, .cutomtblpopup {
-        position: relative;
-    }
-       .txtd {
-        margin-top: -5%;
-    }
-</style>
-    }
+        .kscfont {
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .addcutomerpopup, .cutomtblpopup {
+            position: relative;
+        }
+
+        .txtd {
+            margin-top: -5%;
+        }
+    </style>
+}
 
 <div class="col-md-10">
     <div class="container-fluid">
-        @{Html.RenderAction("orderdetails", "ManageUser"); }
+        <div class="ksc">
+
+            @{Html.RenderAction("orderdetails", "ManageUser"); }
+        </div>
         <div class="content" id="userslist" style="padding:10px;">
             @{Html.RenderAction("mnguserdetails", "ManageUser"); }
         </div>
@@ -234,4 +240,35 @@
 
 @section scripts{
     <script src="~/Scripts/mnguser.js"></script>
+    @*<script>
+
+            window.onload = function () {
+            $('#addservices').css("display", "none");
+            var vpbook = window.localStorage.getItem("vpbook");
+            var date = window.localStorage.getItem("vpbookdate");
+            var timeslot = window.localStorage.getItem("vpbooktimeslot");
+            var packageid = window.localStorage.getItem("vpbookpid");
+            if (vpbook == "" || vpbook == null) {
+                $('#booknow').css('display', 'none');
+                $('#booknowss').css('display', 'none');
+            }
+            else {
+                $('#booknow').css('display', 'block');
+                $('#booknowss').css('display', 'block');
+            }
+
+            $.ajax({
+                url: '/ManageUser/orderdetails?select=' + vpbook + '&date=' + date + '&timeslot=' + timeslot + '&packageid=' + packageid,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $('.center').html(result);
+                }
+            });
+
+
+        }
+
+        </script>*@
 }
