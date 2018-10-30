@@ -37,7 +37,7 @@
         contentType: false,
         processData: false,
         success: function (result) {
-            $('.center').html(result);
+            $('.ksc').html(result);
         }
     });
 

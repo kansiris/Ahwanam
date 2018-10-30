@@ -1,6 +1,6 @@
-﻿@using system;
+﻿
 
-<style>
+@*<style>
     #pkgmodal, #Querymodel, #viewmenuitems {
         position: relative;
     }
@@ -8,47 +8,49 @@
     #selected {
         border: 1px solid;
     }
-</style>
+</style>*@
 
 @if (ViewBag.package != null)
 {
-    <div class="row">
-        @foreach (var item in ViewBag.package)
-        {
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header" style="background: #5829bb!important;font-weight: 700; color: white;text-transform: uppercase;border: 1px purple solid;">@item.PackageName</div>
-                    <div class="card-body" style="background-color:whitesmoke">
-                        <p style="font-size:13px">
-                            Location: @ViewBag.loc
-                        </p>
-                        <p style="font-size:13px">
+   
 
-                            Event Date :  @item.UpdatedDate.ToString("dd/MM/yyyy") <input type="date" value="" />
-                        </p>
+<div class="row">
+    @foreach (var item in ViewBag.package)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header" style="background: #5829bb!important;font-weight: 700; color: white;text-transform: uppercase;border: 1px purple solid;">@item.PackageName</div>
+                <div class="card-body" style="background-color:whitesmoke">
+                    <p style="font-size:13px">
+                        Location: @ViewBag.loc
+                    </p>
+                    <p style="font-size:13px">
 
-                        <p style="font-size:13px">
-                            Guest Count :
-                            <input type="number" value="@ViewBag.guests" style="width:30%" />
-                        </p>
-                        <p style="font-size:13px">
-                            Timeslot : @item.timeslot
-                        </p>
-                        <p class="price" style="font-size:13px">
-                            Price :
-                            @if (item.PackagePrice == null|| item.PackagePrice== "")
-                            {@item.price1}
-                        else
-                        { @item.PackagePrice}
-                        </p>
-                       
-                    </div>
+                        Event Date :  @item.UpdatedDate <input type="date" value="" />
+                    </p>
+
+                    <p style="font-size:13px">
+                        Guest Count :
+                        <input type="number" value="@ViewBag.guests" style="width:30%" />
+                    </p>
+                    <p style="font-size:13px">
+                        Timeslot : @item.timeslot
+                    </p>
+                    <p class="price" style="font-size:13px">
+                        Price :
+                        @if (item.PackagePrice == null || item.PackagePrice == "")
+                        {@item.price1}
+                    else
+                    { @item.PackagePrice}
+                    </p>
 
                 </div>
+
             </div>
-        }
-    </div>
-    <p> Total Amount : <label class="total"> @ViewBag.tprice</label></p>
+        </div>
+    }
+</div>
+<p> Total Amount : <label class="total"> @ViewBag.tprice</label></p>
 
 }
 
