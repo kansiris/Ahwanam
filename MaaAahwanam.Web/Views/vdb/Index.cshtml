@@ -100,10 +100,6 @@
                 height: 37px;
             }
 
-            p {
-                color: red;
-            }
-
             hr {
                 margin: 0;
                 border: 1px lightgray solid;
@@ -122,6 +118,7 @@
                 font-family: lato;
                 font-weight: bold;
                 font-size: 14px;
+                margin:0;
             }
 
             .card-body table, tr, td {
@@ -202,7 +199,7 @@
 
 @if (ViewBag.enable == "first")
 {
-    <div class="col-md-6  col-sm-6 col-xs-6">
+    <div class="col-md-6">  @*col-md-6  col-sm-6 col-xs-6*@
         <div class="container-fluid">
             <div class="row main-tab">
                 <img src="@ViewBag.bannerimage" id="banner3">
@@ -240,16 +237,16 @@
 
             </div>
 
-            <div class="row ui four stackable cards upload-section" style="margin:0">
+            <div class="row">
                 @{
                     if (ViewBag.sliderimages.Count > 0)
                     {
                         int no = 0;
                         foreach (var item in ViewBag.sliderimages)
                         {
-                            <div class="card" align="center">
-                                <div class="image">
-                                    <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="card">
+                                    <img class="card-img-top" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:50%;width:50%">
                                     <text style="color:black">Slider@(++no)</text>
                                 </div>
                             </div>
@@ -259,54 +256,16 @@
                     {
                         for (int i = 1; i < ViewBag.slidercount + 1; i++)
                         {
-                            <div class="card">
-                                <div class="image">
-                                    <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
-                                    <input type="file" name="image" id="s@(i)">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="card sliderdiv">
+                                    <img class="card-img-top" src="~/newdesignstyles/img/plus.png" href="s@(i)" />
+                                    <input type="file" name="image" id="s@(i)" style="display:none">
                                 </div>
                             </div>
                         }
                     }
                 }
             </div>
-
-
-            @*<div class="row upload-section">
-                    <table>
-                        <tr>
-                            @{
-                                if (ViewBag.sliderimages.Count > 0)
-                                {
-                                    int no = 0;
-                                    foreach (var item in ViewBag.sliderimages)
-                                    {
-                                        <td>
-                                            <div align="center">
-                                                <img src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height:100px;width:100px;padding:0px" />
-                                                <text style="color:black">Slider @(++no)</text>
-                                            </div>
-                                        </td>
-                                    }
-
-                                }
-                                if (ViewBag.slidercount > 0)
-                                {
-                                    for (int i = 1; i < ViewBag.slidercount + 1; i++)
-                                    {
-                                        <td>
-                                            <div class="sliderdiv">
-                                                <img src="~/newdesignstyles/img/plus.png" href="s@(i)" />
-                                                <input type="file" name="image" id="s@(i)">
-                                            </div>
-                                        </td>
-                                    }
-                                }
-
-                            }
-                        </tr>
-                    </table>
-
-                </div>*@
 
             <div class="row" style="padding-top:2%">
                 <div class="col-md-6">
@@ -549,7 +508,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 col-sm-6 col-xs-6">
+    <div class="col-md-4">  @*col-sm-6 col-xs-6*@
         <div class="container-fluid">
             <div class="row policies">
                 <div class="col-md-6"><h6 class="h6-1-1">POLICIES</h6></div>
@@ -1148,7 +1107,7 @@
             {
                 <input type="hidden" id="vcalender" name="vcalender" value="">
                 var vcalcount = 0;
-                <p>HALL DETAILS</p>
+                <p style="font-weight:700;font-size:16px">HALL DETAILS</p>
                 <div class="row">
                     @foreach (var item in ViewBag.venues)
                     {
@@ -1189,6 +1148,7 @@
                                             }
                                         }
                                     </h4>
+                                    <hr />
                                     <div class="meta" align="center">
                                         <table style="border:none">
                                             <tr>
@@ -1238,6 +1198,7 @@
                                             <tr> <td> Seating Arrangement </td> </tr>
                                         </table>
                                     </div>
+                                    <hr />
                                     <div class="card-text">
                                         <div align="center" class="divheading">Availability Calendar</div>
                                         <div style="border:1px black solid" id="vcal">
@@ -1282,7 +1243,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                              
                                                     }
                 </div>
 

@@ -615,8 +615,6 @@ $(document).on('click', '.addpkg', function () {
 //Updating Package
 $(document).on('click', '.updatepkg', function () {
     var menuitems='';
-    $('.overlay').show();
-    $('#loadermsg').text("Updating Package...");
     var parentdiv = $(this).parent('div.pkgsave').parent('div.allpkgs');
     var allbuttons = parentdiv.find(".package-list button").text();
     var list=[];
@@ -691,7 +689,12 @@ $(document).on('click', '.updatepkg', function () {
         $('#cdays').focus();
         alert("Enter Choice Days Price");
     }
+    else if (menuitems == '') {
+        alert("Select Menu Items");
+    }
     else {
+        $('.overlay').show();
+        $('#loadermsg').text("Updating Package...");
         var package = {
             PackageID:pkgid,
             PackageName: packagename,
