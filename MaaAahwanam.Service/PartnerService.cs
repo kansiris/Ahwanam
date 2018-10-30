@@ -16,6 +16,11 @@ namespace MaaAahwanam.Service
             partner = partnerrepo.AddPartner(partner);
             return partner;
         }
+        public PartnerFile addPartnerfile(PartnerFile partnerFile)
+        {
+            partnerFile = partnerrepo.addPartnerfile(partnerFile);
+            return partnerFile;
+        }
         public Partner getPartner(string email)
         {
             Partner partner = new Partner();
@@ -26,6 +31,14 @@ namespace MaaAahwanam.Service
         public Partner UpdatePartner(Partner partner,string partid)
         {
             return partnerrepo.UpdatePartner(partner, long.Parse(partid));
+        }
+        public PartnerContact UpdatePartnercontact(PartnerContact Partnercontact)
+        {
+            return partnerrepo.UpdatePartnercontact(Partnercontact);
+        }
+        public List<PartnerFile> GetFiles(string vid,string partid)
+        {
+            return partnerrepo.GetFiles(vid,partid);
         }
         public List<Partner> GetPartners(string vid)
         {
