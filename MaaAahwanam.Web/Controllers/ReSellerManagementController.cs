@@ -131,7 +131,7 @@ namespace MaaAahwanam.Web.Controllers
             {
                 string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
                 int imageno = 0;
-                int imagecount = 8;
+                int imagecount = 2;
                 var list = partnerservice.GetFiles(vid, partid);
                 var resellers = partnerservice.GetPartners(vid);
                 var reellers1 = resellers.Where(m => m.PartnerID == long.Parse(partid)).FirstOrDefault();
