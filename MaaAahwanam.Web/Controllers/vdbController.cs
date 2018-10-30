@@ -153,12 +153,45 @@ namespace MaaAahwanam.Web.Controllers
                 #region c=="second"
                 if (c=="second")
                 {
+                    ProductInfoService productInfoService = new ProductInfoService();
+                    VendorDatesService vendorDatesService = new VendorDatesService();
                     // Assigning Available Services to viewbag
                     //ViewBag.venues = venues;
                     if (eventtype != null && count != null && date != null)
                         ViewBag.venues = venues.Where(m => m.Minimumseatingcapacity >= int.Parse(count)).ToList();
                     else
                         ViewBag.venues = venues;
+
+                    //Dates Availability Section
+                    List<string> availability = new List<string>();
+                    foreach (var item1 in venues)
+                    {
+                        var Gettotaldates = vendorDatesService.GetDates(item1.VendorMasterId, item1.Id);
+                        string orderdates = productInfoService.disabledate(item1.VendorMasterId, item1.Id, "Venue").Replace('/', '-');
+                        var betweendates = new List<string>();
+                        int recordcount = Gettotaldates.Count();
+                        foreach (var item in Gettotaldates)
+                        {
+                            var startdate = Convert.ToDateTime(item.StartDate);
+                            var enddate = Convert.ToDateTime(item.EndDate);
+                            if (startdate != enddate)
+                            {
+                                for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
+                                {
+                                    betweendates.Add(dt.ToString("dd-MM-yyyy"));
+                                }
+                            }
+                            else
+                            {
+                                betweendates.Add(startdate.ToString("dd-MM-yyyy"));
+                            }
+                        }
+                        var vendoravailabledates = String.Join(",", betweendates);
+                        if (orderdates != "")
+                            vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
+                        availability.Add(vendoravailabledates);
+                    }
+                    ViewBag.availability = availability.ToList();
                     //Packages Section 
                     viewservicesservice viewservicesss = new viewservicesservice();
                     ViewBag.availablepackages = viewservicesss.getvendorpkgs(id.ToString()).ToList();
