@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace MaaAahwanam.Web.Controllers
 {
     public class ReSellerManagementController : Controller
@@ -19,6 +20,9 @@ namespace MaaAahwanam.Web.Controllers
         Vendormaster vendorMaster = new Vendormaster();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         PartnerService partnerservice = new PartnerService();
+        const string imagepath = @"/partnerdocs/";
+
+
         // GET: ReSellerManagement
         public ActionResult Index(string partid)
         {
@@ -52,6 +56,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.resellerpkg = p;
                     ViewBag.pkg = p1;
                     ViewBag.resellers = resellers.Where(m => m.PartnerID == long.Parse(partid)).FirstOrDefault();
+                    ViewBag.resellersfiles = partnerservice.GetFiles(vid, partid);
                 }
                 ViewBag.package = pkgs;
                 var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).ToList();
@@ -98,14 +103,82 @@ namespace MaaAahwanam.Web.Controllers
             return Json(partnerPackage, JsonRequestBehavior.AllowGet);
         }
 
-        //[HttpPost]
-        //public JsonResult PartnerPackcalender(PartnerPackage partnerPackage, string command, string partid, string date, string packageid)
-        //{
-        //    partnerPackage.RegisteredDate = DateTime.Now;
-        //    partnerPackage.UpdatedDate = DateTime.Now;
-        //    partnerPackage = partnerservice.updatepartnerpackage(partnerPackage, long.Parse(partid), date, long.Parse(packageid));
+        [HttpPost]
+        public JsonResult Contacts(PartnerContact Partnercontact, string command, string partid)
+        {
+            Partnercontact.RegisteredDate = DateTime.Now;
+            Partnercontact.UpdatedDate = DateTime.Now;
+            if (command == "Update") { Partnercontact = partnerservice.UpdatePartnercontact(Partnercontact); }
+            //else if (command == "Update") { partnerPackage = partnerservice.UpdatepartnerPackage(partnerPackage, partid); }
 
-        //    return Json(partnerPackage, JsonRequestBehavior.AllowGet);
-        //}
+            //var emailid = partner.emailid;
+            //var getpartner = partnerservice.getPartner(emailid);
+            return Json(Partnercontact, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [HttpPost]
+        public JsonResult UploadContractdoc(HttpPostedFileBase helpSectionImages, string command, string partid,string vid)
+        {
+
+            string fileName = string.Empty;
+            string filename = string.Empty;
+            //VendorImage vendorImage = new VendorImage();
+            //Vendormaster vendorMaster = new Vendormaster();
+            PartnerFile partnerFile = new PartnerFile();
+            if (helpSectionImages != null)
+            {
+                string path = System.IO.Path.GetExtension(helpSectionImages.FileName);
+                int imageno = 0;
+                int imagecount = 2;
+                var list = partnerservice.GetFiles(vid, partid);
+                var resellers = partnerservice.GetPartners(vid);
+                var reellers1 = resellers.Where(m => m.PartnerID == long.Parse(partid)).FirstOrDefault();
+
+                if (list.Count <= imagecount && Request.Files.Count <= imagecount - list.Count)
+                {
+                    //getting max imageno
+                    if (list.Count != 0)
+                    {
+                        string lastimage = list.OrderByDescending(m => m.FileName).FirstOrDefault().FileName;
+                        var splitimage = lastimage.Split('_', '.');
+                        imageno = int.Parse(splitimage[3]);
+                    }
+                    //Uploading images in db & folder
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        int j = imageno + i + 1;
+                        var file1 = Request.Files[i];
+                        if (file1 != null && file1.ContentLength > 0)
+                        {
+                            filename = reellers1.PartnerName + "_" + vid + "_" + partid + "_" + j + path;
+                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                            file1.SaveAs(fileName);
+                            partnerFile.FileName = filename;
+                            //vendorImage.ImageType = type;//"Slider";
+                            partnerFile.VendorID = vid;
+                            partnerFile.PartnerID = partid;
+                            partnerFile.UpdatedDate = DateTime.Now;
+                            partnerFile.RegisteredDate = DateTime.Now;
+
+                            // vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
+                            partnerFile = partnerservice.addPartnerfile(partnerFile);
+                        }
+                    }
+                }
+            }
+            return Json(filename, JsonRequestBehavior.AllowGet);
+
+            //Partnercontact.RegisteredDate = DateTime.Now;
+            //Partnercontact.UpdatedDate = DateTime.Now;
+            //if (command == "Update") { Partnercontact = partnerservice.UpdatePartnercontact(Partnercontact); }
+            ////else if (command == "Update") { partnerPackage = partnerservice.UpdatepartnerPackage(partnerPackage, partid); }
+
+            ////var emailid = partner.emailid;
+            ////var getpartner = partnerservice.getPartner(emailid);
+            //return Json(Partnercontact, JsonRequestBehavior.AllowGet);
+        }
+        
     }
 }

@@ -179,13 +179,24 @@
 
                             <div class="col-12 col-sm-6 col-md-6" id="uma1">
                                 <label class="custom-file-upload">
-                                    <input type="file" />
+                                    <input type="file" id="contractdoc" name="file" />
                                     <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
                                 </label>
                             </div>
+                            <label>
+                                @if (ViewBag.resellersfiles != null)
+                                {
+                                    foreach (var ifile in ViewBag.resellersfiles)
+                                    {
+                                        <div><a class="subcatclose" value="@ifile.PartnerID,@ifile.ID,@ifile.VendorID" style="color: red;font-size: 12px;">X</a><a href="/vdb/Index?pfid=@ifile.ID&&vid=@ifile.VendorID&&pid=@ifile.PartnerID"> @ifile.PartnerID - @ifile.FileName</a>,</div>
 
+                                    }
+                                }
+
+                            </label>
 
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -480,9 +491,10 @@
 
                             <div class="col-12 col-sm-6 col-md-6" id="uma2">
                                 <label class="custom-file-upload">
-                                    <input type="file" />
+                                    <input type="file" id="contractdoc" name="file" />
                                     <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
                                 </label>
+                            
                             </div>
 
 
@@ -813,78 +825,60 @@
                                     <tr>
                                         <td style="width: 4%;margin-left: -33%;"> <span class="span-package2"> Sale price type</span></td>
                                         <td style="width: 1%;margin: 0;">
-                                            <select style="border: unset;font-size: 10px;">
-                                                <option>commission %</option>
-                                                <option>Flat Rate ₹</option>
-                                                <option>commission ₹</option>
+                                            <select class="selecteddd" style="border: unset;font-size: 10px;" >
+                                               <option value="com">commission %</option>
+                                                <option value="sfr">Flat Rate ₹</option>
+                                                <option value="comsfr">commission ₹</option>
                                             </select>
 
-                                            @*<p class="ksp">
-                                                    <input type="radio" name="normal" id="normal1" value="com" checked> Commission
-                                                </p>
-                                                <p class="ksp">
-                                                    <input type="radio" name="normal" id="normal2" value="sfr"> Slab/Flat rate
-
-                                                </p>*@
+                                       
                                         </td>
                                         <td style="width: 1%;margin: 0;">
 
-                                            <select style="border: unset;font-size: 10px;">
-                                                <option>Commission %</option>
-                                                <option>Flat Rate ₹</option>
-                                                <option>Commission ₹</option>
-                                            </select>
-                                            @*<p class="ksp">
-                                                    <input type="radio" name="peakday" id="peakday1" value="com" checked> Commission
-                                                </p> <p class="ksp">
-                                                    <input type="radio" name="peakday" id="peakday2" value="sfr"> Slab/Flat rate
-                                                </p>*@
+                                            <select class="selecteddd" style="border: unset;font-size: 10px;">
+    <option value="com">commission %</option>
+    <option value="sfr">Flat Rate ₹</option>
+    <option value="comsfr">commission ₹</option>
+</select>
+                                          
 
                                         </td>
                                         <td style="width: 1%;margin: 0;">
-                                            <select style="border: unset;font-size: 10px;">
-                                                <option>commission %</option>
-                                                <option>Flat Rate ₹</option>
-                                                <option>commission ₹</option>
+                                            <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                <option value="com">commission %</option>
+                                                <option value="sfr">Flat Rate ₹</option>
+                                                <option value="comsfr">commission ₹</option>
                                             </select>
-                                            @*<p class="ksp">
-                                                    <input type="radio" name="holidays" id="holidays1" value="com" checked> Commission
-                                                </p> <p class="ksp">
-                                                    <input type="radio" name="holidays" id="holidays2" value="sfr"> Slab/Flat rate
-                                                </p>*@
+                                        
 
                                         </td>
                                         <td style="width: 1%;margin: 0;">
-                                            <select style="border: unset;font-size: 10px;">
-                                                <option>commission %</option>
-                                                <option>Flat Rate ₹</option>
-                                                <option>commission ₹</option>
+                                            <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                <option value="com">commission %</option>
+                                                <option value="sfr">Flat Rate ₹</option>
+                                                <option value="comsfr">commission ₹</option>
                                             </select>
 
-                                            @*<p class="ksp">
-                                                    <input type="radio" name="choicedays" id="choicedays1" value="com"> Commission
-                                                </p> <p class="ksp">
-                                                    <input type="radio" name="choicedays" id="choicedays2" value="sfr" checked> Slab/Flat rate
-                                                </p>*@
+                                        
                                         </td>
 
                                     </tr>
                                     <tr>
                                         <td style="width: 4%;"> <span class="span-package2">Margin</span></td>
 
-                                        <td><input type="number" name="fsanormal1" class="price"></td>
-                                        <td><input type="number" name="fsapeakday1" class="price"></td>
-                                        <td><input type="number" name="fsaholidays1" class="price"></td>
-                                        <td><input type="number" name="fsachoicedays1" class="price"></td>
+                                        <td><input type="number" name="mnormal1" class="price"></td>
+                                        <td><input type="number" name="mpeakday1" class="price"></td>
+                                        <td><input type="number" name="mholidays1" class="price"></td>
+                                        <td><input type="number" name="mchoicedays1" class="price"></td>
 
                                     </tr>
                                     <tr>
                                         <td style="width: 4%;margin-left: -33%;"> <span class="span-package2">Final Sale price</span></td>
 
-                                        <td><input type="number" name="fsanormal1" class="price"></td>
-                                        <td><input type="number" name="fsapeakday1" class="price"></td>
-                                        <td><input type="number" name="fsaholidays1" class="price"></td>
-                                        <td><input type="number" name="fsachoicedays1" class="price"></td>
+                                        <td><input type="number" name="fsnormal1" class="price"></td>
+                                        <td><input type="number" name="fspeakday1" class="price"></td>
+                                        <td><input type="number" name="fsholidays1" class="price"></td>
+                                        <td><input type="number" name="fschoicedays1" class="price"></td>
 
                                     </tr>
 
@@ -912,7 +906,7 @@
                             </table>
 
                         </div>
-                        <div class="col-xs-6  col-md-2 col-sm-3">
+                        <div class="col-xs-6  col-md-2 col-sm-3 btnsave">
                             <p>  <input type="text" value="" name="date" class="price1 datetimepicker" placeholder="Date Here" /></p>
                             <p>
                                 <center >
@@ -993,139 +987,156 @@
                                 </div>
 
                                 <div class="col-xs-6  col-md-6 col-sm-6">
+                                  
+
+
+
                                     <table id="prices-accordion">
                                         <tbody>
+
+
                                             <tr>
-                                                <td> <span class="span-package2"> Sale price to vendor</span></td>
-                                                <td><center>₹@item.normaldays</center></td>
-                                                <td><center>₹@item.peakdays</center></td>
-                                                <td><center>₹@item.holidays</center> </td>
-                                                <td><center>₹@item.choicedays</center> </td>
+                                                <td style="width: 28%;"> <span class="span-package2"> Sale price to partner</span></td>
+                                              <td><input type="number" name="normal1"  class="price" value="@itemks.salenormaldays"></td>
+                                                <td><input type="number" name="peakday1"  class="price" value="@itemks.salepeakdays"></td>
+                                                <td><input type="number" name="holidays1"  class="price" value="@itemks.saleholidays"></td>
+                                                <td><input type="number" name="choicedays1" class="price" value="@itemks.salechoicedays"></td>
                                             </tr>
                                             <tr>
-                                                <td> <span class="span-package2"> Sale price type</span></td>
+                                                <td style="width: 4%;margin-left: -33%;"> <span class="span-package2"> Sale price type</span></td>
+                                                <td style="width: 1%;margin: 0;">
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                        @if (itemks.normaldayssaletype == "com")
+                                                        {
+                                                            <option value="com" selected>commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        @if (itemks.normaldayssaletype == "sfr")
+                                                        {
+                                                            <option value="com" >commission %</option>
+                                                            <option value="sfr" selected>Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        @if (itemks.normaldayssaletype == "comsfr")
+                                                        {
+                                                            <option value="com" >commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr" selected>commission ₹</option>}
+                                                    </select>
+
+                                                </td>
+                                                <td style="width: 1%;margin: 0;">
+
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                        @if (itemks.peakdaysaletype == "com")
+                                                        {
+                                                            <option value="com" selected>commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        else if (itemks.peakdaysaletype == "sfr")
+                                                        {
+                                                            <option value="com">commission %</option>
+                                                            <option value="sfr" selected>Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        else if (itemks.peakdaysaletype == "comsfr")
+                                                        {
+                                                            <option value="com">commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr" selected>commission ₹</option>}
+                                                    </select>
+                                  
+
+                                                </td>
+                                                <td style="width: 1%;margin: 0;">
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                        @if (itemks.holidaysssaletype == "com")
+                                                        {
+                                                            <option value="com" selected>commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        else if (itemks.holidaysssaletype == "sfr")
+                                                        {
+                                                            <option value="com">commission %</option>
+                                                            <option value="sfr" selected>Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        else if (itemks.holidaysssaletype == "comsfr")
+                                                        {
+                                                            <option value="com">commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr" selected>commission ₹</option>}
+                                                    </select>
+                            
+
+                                                </td>
+                                                <td style="width: 1%;margin: 0;">
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                        @if (itemks.choicedayssaletype == "com")
+                                                        {
+                                                            <option value="com" selected>commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        else if (itemks.choicedayssaletype == "sfr")
+                                                        {
+                                                            <option value="com">commission %</option>
+                                                            <option value="sfr" selected>Flat Rate ₹</option>
+                                                            <option value="comsfr">commission ₹</option>}
+                                                        else if (itemks.choicedayssaletype == "comsfr")
+                                                        {
+                                                            <option value="com">commission %</option>
+                                                            <option value="sfr">Flat Rate ₹</option>
+                                                            <option value="comsfr" selected>commission ₹</option>}
+                                                    </select>
+
+                            
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 4%;"> <span class="span-package2">Margin</span></td>
+
+                                                <td><input type="number" name="mnormal1" class="price mprice" value="@itemks.Mnormaldays"></td>
+                                                <td><input type="number" name="mpeakday1" class="price mprice" value="@itemks.Mpeakdays"></td>
+                                                <td><input type="number" name="mholidays1" class="price mprice" value="@itemks.Mholidays"></td>
+                                                <td><input type="number" name="mchoicedays1" class="price mprice" value="@itemks.Mchoicedays"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 4%;margin-left: -33%;"> <span class="span-package2">Final Sale price</span></td>
+
+                                                <td><input type="number" name="fsnormal1" class="price" value="@itemks.fsnormaldays"></td>
+                                                <td><input type="number" name="fspeakday1" class="price" value="@itemks.fspeakdays"></td>
+                                                <td><input type="number" name="fsholidays1" class="price" value="@itemks.fsholidays"></td>
+                                                <td><input type="number" name="fschoicedays1" class="price" value="@itemks.fschoicedays"></td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 4%;">
+                                                    <span class="span-package2" style=" margin: 0;">Company Sale price as per Contract</span>
+                                                </td>
                                                 <td><input type="number" name="ahanormal1" class="price" value="@itemks.spnormaldays"></td>
                                                 <td><input type="number" name="ahapeakday1" class="price" value="@itemks.sppeakdays"></td>
                                                 <td><input type="number" name="ahaholidays1" class="price" value="@itemks.spholidays"></td>
                                                 <td><input type="number" name="ahachoicedays1" class="price" value="@itemks.spchoicedays"></td>
-
                                             </tr>
                                             <tr>
-
-                                                <td> <span class="span-package2">Final Sale price</span></td>
-
-
-                                                <td>
-                                                    @if (itemks.normaldayssaletype == "com")
-                                                    {<p class="ksp">
-                                                            <input type="radio" name="normal" id="normal1" value="com" checked="checked"> Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="normal" id="normal2" value="sfr"> Slab/Flat rate
-
-                                                        </p>}
-                                                    else if (itemks.normaldayssaletype == "sfr")
-                                                    {
-
-                                                        <p class="ksp">
-                                                            <input type="radio" name="normal" id="normal1" value="com"> Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="normal" id="normal2" value="sfr" checked="checked"> Slab/Flat rate
-
-                                                        </p>
-                                                    }
+                                                <td style="/* margin-left: -33%; */">
+                                                    <span class="span-package2" style=" /* margin: 0; */">Current Selling price</span>
                                                 </td>
-                                                <td>
 
-                                                    @if (itemks.peakdaysaletype == "com")
-                                                    {<p class="ksp">
-                                                            <input type="radio" name="peakday" id="peakday1" value="com" checked="checked"> Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="peakday" id="peakday2" value="sfr"> Slab/Flat rate
+                                                <td><center>₹@item.normaldays</center></td>
+                                                <td><center>₹@item.peakdays</center></td>
+                                                <td><center>₹@item.holidays</center> </td>
+                                                <td><center>₹@item.choicedays</center> </td>
 
-                                                        </p>}
-                                                    else if (itemks.peakdaysaletype == "sfr")
-                                                    {
-
-                                                        <p class="ksp">
-                                                            <input type="radio" name="peakday" id="peakday1" value="com"> Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="peakday" id="peakday2" value="sfr" checked="checked"> Slab/Flat rate
-
-                                                        </p>
-                                                    }
-                                                </td>
-                                                <td>
-
-                                                    @if (itemks.holidaysssaletype == "com")
-                                                    {<p class="ksp">
-                                                            <input type="radio" name="holidays" id="holidays1" value="com" checked="checked"> Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="holidays" id="holidays2" value="sfr"> Slab/Flat rate
-
-                                                        </p>}
-                                                    else if (itemks.holidaysssaletype == "sfr")
-                                                    {
-
-                                                        <p class="ksp">
-                                                            <input type="radio" name="holidays" id="holidays1" value="com">Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="holidays" id="holidays2" value="sfr" checked="checked"> Slab/Flat rate
-
-                                                        </p>
-                                                    }
-
-                                                </td>
-                                                <td>
-
-                                                    @if (itemks.choicedayssaletype == "com")
-                                                    {<p class="ksp">
-                                                            <input type="radio" name="choicedays" id="choicedays1" value="com" checked="checked"> Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="choicedays" id="choicedays2" value="sfr"> Slab/Flat rate
-
-                                                        </p>}
-                                                    else if (itemks.choicedayssaletype == "sfr")
-                                                    {
-
-                                                        <p class="ksp">
-                                                            <input type="radio" name="choicedays" id="choicedays1" value="com"> Commission
-                                                        </p>
-                                                        <p class="ksp">
-                                                            <input type="radio" name="choicedays" id="choicedays2" value="slab/Flat rate" checked="checked"> Slab/Flat rate
-
-                                                        </p>
-                                                    }
-                                                </td>
 
                                             </tr>
-                                            <tr>
-                                                <td> <span class="span-package2">Selling price per contact</span></td>
-
-                                                <td><input type="number" name="normal1" placeholder="10%" class="price" value="@itemks.salenormaldays"></td>
-                                                <td><input type="number" name="peakday1" placeholder="10%" class="price" value="@itemks.salepeakdays"></td>
-                                                <td><input type="number" name="holidays1" placeholder="10%" class="price" value="@itemks.saleholidays"></td>
-                                                <td><input type="number" name="choicedays1" placeholder="10%" class="price" value="@itemks.salechoicedays"></td>
-                                            </tr>
-                                            <tr>
-                                                <td> <span class="span-package2">Current Selling price</span></td>
-
-                                                <td><input type="number" name="normal1" placeholder="10%" class="price" value="@itemks.salenormaldays"></td>
-                                                <td><input type="number" name="peakday1" placeholder="10%" class="price" value="@itemks.salepeakdays"></td>
-                                                <td><input type="number" name="holidays1" placeholder="10%" class="price" value="@itemks.saleholidays"></td>
-                                                <td><input type="number" name="choicedays1" placeholder="10%" class="price" value="@itemks.salechoicedays"></td>
-                                            </tr>
-
                                         </tbody>
                                     </table>
+
+
+
                                 </div>
-                                <div class="col-xs-6  col-md-2 col-sm-3">
+                                <div class="col-xs-6  col-md-2 col-sm-3 btnsave">
                                     <p> <input type="text" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" value="@itemks.expiry" /></p>                                    <p>
                                         @*<center style="padding-top:7%">
                                                 <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
@@ -1204,95 +1215,105 @@
                                     <span id="span-package-1">@item.PackageName</span>
                                 </div>
 
-                                <div class="col-xs-6  col-md-6 col-sm-6">
+                                <div class="col-xs-6  col-md-6 col-sm-6 tableprices">
                                     <table id="prices-accordion">
                                         <tbody>
                                             <tr>
-                                                <td> <span id="span-package-1">  PackagePrice</span></td>
+                                                <td style="width: 28%;"> <span class="span-package2"> Sale price to partner</span></td>
+                                                <td><input type="number" name="normal1" placeholder="Enter ₹" class="price spprice"></td>
+                                                <td><input type="number" name="peakday1" placeholder="Enter ₹" class="price spprice"></td>
+                                                <td><input type="number" name="holidays1" placeholder="Enter ₹" class="price spprice"></td>
+                                                <td><input type="number" name="choicedays1" placeholder="Enter ₹" class="price spprice"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 4%;margin-left: -33%;"> <span class="span-package2"> Sale price type</span></td>
+                                                <td style="width: 1%;margin: 0;">
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;" >
+                                                        <option value="com">commission %</option>
+                                                        <option value="sfr">Flat Rate ₹</option>
+                                                        <option value="comsfr">commission ₹</option>
+                                                    </select>
+
+                     
+                                                </td>
+                                                <td style="width: 1%;margin: 0;">
+
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                        <option value="com">commission %</option>
+                                                        <option value="sfr">Flat Rate ₹</option>
+                                                        <option value="comsfr">commission ₹</option>
+                                                    </select>
+                                
+
+                                                </td>
+                                                <td style="width: 1%;margin: 0;">
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                        <option value="com">commission %</option>
+                                                        <option value="sfr">Flat Rate ₹</option>
+                                                        <option value="comsfr">commission ₹</option>
+                                                    </select>
+                                            
+
+                                                </td>
+                                                <td style="width: 1%;margin: 0;">
+                                                    <select class="selecteddd" style="border: unset;font-size: 10px;">
+                                                        <option value="com">commission %</option>
+                                                        <option value="sfr">Flat Rate ₹</option>
+                                                        <option value="comsfr">commission ₹</option>
+                                                    </select>
+
+                                                  
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 4%;"> <span class="span-package2">Margin</span></td>
+
+                                                <td><input type="number" name="mnormal1" class="price mprice"></td>
+                                                <td><input type="number" name="mpeakday1" class="price mprice"></td>
+                                                <td><input type="number" name="mholidays1" class="price mprice"></td>
+                                                <td><input type="number" name="mchoicedays1" class="price mprice"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 4%;margin-left: -33%;"> <span class="span-package2">Final Sale price</span></td>
+
+                                                <td><input type="number" name="fsnormal1" class="price"></td>
+                                                <td><input type="number" name="fspeakday1" class="price"></td>
+                                                <td><input type="number" name="fsholidays1" class="price"></td>
+                                                <td><input type="number" name="fschoicedays1" class="price"></td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 4%;">
+                                                    <span class="span-package2" style=" margin: 0;">Company Sale price as per Contract</span>
+                                                </td>
+                                                <td><input type="number" name="ahanormal1" class="price" placeholder="1000"></td>
+                                                <td><input type="number" name="ahapeakday1" class="price" placeholder="1000"></td>
+                                                <td><input type="number" name="ahaholidays1" class="price" placeholder="1000"></td>
+                                                <td><input type="number" name="ahachoicedays1" class="price" placeholder="1000"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="/* margin-left: -33%; */">
+                                                    <span class="span-package2" style=" /* margin: 0; */">Current Selling price</span>
+                                                </td>
                                                 <td><center>₹@item.normaldays</center></td>
                                                 <td><center>₹@item.peakdays</center></td>
                                                 <td><center>₹@item.holidays</center> </td>
                                                 <td><center>₹@item.choicedays</center> </td>
-                                            </tr>
-                                            <tr>
-                                                <td> <span id="span-package-1"> AhwanamPrice</span></td>
-                                                <td><input type="number" name="ahanormal1" class="price"></td>
-                                                <td><input type="number" name="ahapeakday1" class="price"></td>
-                                                <td><input type="number" name="ahaholidays1" class="price"></td>
-                                                <td><input type="number" name="ahachoicedays1" class="price"></td>
+
 
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <span id="span-package-1">
-
-                                                        ResellerType
-                                                    </span>
-                                                </td>
-                                                <td>
-
-                                                    <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal1" value="com" checked> Commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="normal" id="normal2" value="sfr"> Slab/Flat rate
-                                                    </p>
-
-                                                </td>
-                                                <td>
-
-                                                    <p class="ksp">
-                                                        <input type="radio" name="peakday" id="peakday1" value="com" checked> Commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="peakday" id="peakday2" value="sfr"> Slab/Flat rate
-                                                    </p>
-
-
-                                                </td>
-                                                <td>
-
-                                                    <p class="ksp">
-
-                                                        <input type="radio" name="holidays" id="holidays1" value="com" checked> Commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="holidays" id="holidays2" value="sfr"> Slab/Flat rate
-                                                    </p>
-
-
-                                                </td>
-                                                <td>
-
-                                                    <p class="ksp">
-                                                        <input type="radio" name="choicedays" id="choicedays1" value="com" checked> Commission
-                                                    </p>
-                                                    <p class="ksp">
-                                                        <input type="radio" name="choicedays" id="choicedays2" value="sfr"> Slab/Flat rate
-                                                    </p>
-
-
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p class="ksp">
-                                                        ResellerPrice
-                                                    </p>
-                                                </td>
-                                                <td><input type="number" name="normal1" placeholder="10%" class="price"></td>
-                                                <td><input type="number" name="peakday1" placeholder="10%" class="price"></td>
-                                                <td><input type="number" name="holidays1" placeholder="10%" class="price"></td>
-                                                <td><input type="number" name="choicedays1" placeholder="10%" class="price"></td>
-                                            </tr>
+                                          
 
                                         </tbody>
                                     </table>
 
                                 </div>
-                                <div class="col-xs-6  col-md-2 col-sm-3">
-                                    <p> <input type="text" value="" name="date" class="price datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
+                                <div class="col-xs-6  col-md-2 col-sm-3 btnsave">
+                                    <p> <input type="text" value="" name="date" class="price1 datetimepicker" style="width:80%;margin-left: 16%;" placeholder="Date Here" /></p>
                                     <p>
                                         <center style="padding-top:7%">
                                             <button class="btn btn-primary btn-sm savepackage" value="save" id="savepackage">Save</button>
@@ -1478,36 +1499,41 @@
                 else if (cpemailid == '') { alert('Enter Contact Person Phone Email '); $('#p1email').focus(); }
                 else if (!cpemailpattren.test(cpemailid)) { alert("Please Enter a valid Email Address"); $("#p1email").focus(); }
                 else {
-                    var partner = {
+                    var PartnerContact = {
                         PartnerID: $('#partid').val(),
                         VendorId: $('#VendorId').val(),
-                        partnername: $('#BusinessName').val(),
-                        url: $('#url').val(),
-                        phoneno: $('#PhoneNumber').val(),
-                        emailid: $('#Email').val(),
-                        address1: $('#Address').val(),
-                        city: $('#City').val(),
-                        state: $('#State').val(),
-                        country: $('#Country').val(),
-                        fAXNO: $('#faxnumber').val(),
-                        cpfname: $('#p1firstName').val(),
-                        cplname: $('#p1lastname').val(),
-                        cpdesig: $('#p1Designation').val(),
-                        cpphoneno: $('#p1mobileno').val(),
-                        cpemailid: $('#p1email').val(),
-                        PAN: $('#panno').val(),
-                        GST: $('#Gst').val(),
-                        bankname: $('#bankname').val(),
-                        bankbranch: $('#bankbranchname').val(),
-                        AccountHolderName: $('#accholdername').val(),
-                        IFSC: $('#ifsccode').val(),
-                        AccountNumber: $('#accountno').val(),
+                        FirstName: $('#p1firstName').val(),
+                        LastName: $('#p1lastname').val(),
+                        Designation: $('#p1Designation').val(),
+                        PhoneNo: $('#p1mobileno').val(),
+                        EmailID: $('#p1email').val(),
+                        //partnername: $('#BusinessName').val(),
+                        //url: $('#url').val(),
+                        //phoneno: $('#PhoneNumber').val(),
+                        //emailid: $('#Email').val(),
+                        //address1: $('#Address').val(),
+                        //city: $('#City').val(),
+                        //state: $('#State').val(),
+                        //country: $('#Country').val(),
+                        //fAXNO: $('#faxnumber').val(),
+                        //cpfname: $('#p1firstName').val(),
+                        //cplname: $('#p1lastname').val(),
+                        //cpdesig: $('#p1Designation').val(),
+                        //cpphoneno: $('#p1mobileno').val(),
+                        //cpemailid: $('#p1email').val(),
+                        //PAN: $('#panno').val(),
+                        //GST: $('#Gst').val(),
+                        //bankname: $('#bankname').val(),
+                        //bankbranch: $('#bankbranchname').val(),
+                        //AccountHolderName: $('#accholdername').val(),
+                        //IFSC: $('#ifsccode').val(),
+                        //AccountNumber: $('#accountno').val(),
                         //state: $('State').val(),
                     }
                     $.ajax({
-                        url: '/ReSellerManagement/Index?command=' + val + '&&partid=' + partid,
+                        url: '/ReSellerManagement/Contacts?command=' + val + '&&partid=' + partid,
                         type: 'POST',
-                        data: JSON.stringify({ partner: partner }),
+                        data: JSON.stringify({ PartnerContact: PartnerContact }),
                         contentType: 'application/json',
                         success: function (data) {
                             if (data != null) {
@@ -1710,27 +1736,40 @@
                 partid = partidks1;
             } else { partid = partidks; }
             if (partid == '' || partid == 'undefined') { alert('Save partner details first to save partner packages'); }
-
+            
             var packageid = $(this).parents("div#package").find('input#packageid').val();
-            var normal = $(this).parents("div#package").find($('input[name=normal]:checked')).val();
-            var peakday = $(this).parents("div#package").find($('input[name=peakday]:checked')).val();
-            var holidays = $(this).parents("div#package").find($('input[name=holidays]:checked')).val();
-            var choicedays = $(this).parents("div#package").find($('input[name=choicedays]:checked')).val();
             var normal1 = $(this).parents("div#package").find($('input[name=normal1]')).val();
             var peakday1 = $(this).parents("div#package").find($('input[name=peakday1]')).val();
             var holidays1 = $(this).parents("div#package").find($('input[name=holidays1]')).val();
             var choicedays1 = $(this).parents("div#package").find($('input[name=choicedays1]')).val();
+            var mnormal1 = $(this).parents("div#package").find($('input[name=mnormal1]')).val();
+            var mpeakday1 = $(this).parents("div#package").find($('input[name=mpeakday1]')).val();
+            var mholidays1 = $(this).parents("div#package").find($('input[name=mholidays1]')).val();
+            var mchoicedays1 = $(this).parents("div#package").find($('input[name=mchoicedays1]')).val();
+            var fsnormal1 = $(this).parents("div#package").find($('input[name=fsnormal1]')).val();
+            var fspeakday1 = $(this).parents("div#package").find($('input[name=fspeakday1]')).val();
+            var fsholidays1 = $(this).parents("div#package").find($('input[name=fsholidays1]')).val();
+            var fschoicedays1 = $(this).parents("div#package").find($('input[name=fschoicedays1]')).val();
             var spnormal1 = $(this).parents("div#package").find($('input[name=ahanormal1]')).val();
             var sppeakday1 = $(this).parents("div#package").find($('input[name=ahapeakday1]')).val();
             var spholidays1 = $(this).parents("div#package").find($('input[name=ahaholidays1]')).val();
             var spchoicedays1 = $(this).parents("div#package").find($('input[name=ahachoicedays1]')).val();
+            var table = $(this).parents('.btnsave').prev('.tableprices');
+            var rowindex = $(this).parent().index();
+            var ntype = table.find("tr:eq(1)").find("td").eq(1).find("select").val();
+            var ptype = table.find("tr:eq(1)").find("td").eq(2).find("select").val();
+            var htype = table.find("tr:eq(1)").find("td").eq(3).find("select").val();
+            var ctype = table.find("tr:eq(1)").find("td").eq(4).find("select").val();
+          //  alert(ntype + ',' + ptype + ',' + htype + ',' + ctype);
             var vsid = $(this).parents("div#package").find($('input[name=vendorsubid]')).val();
             var date = $(this).parents("div#package").find($('input[name=date]')).val();
-            if (normal = "") {
+
+            if (normal1 = "") {
                 alert("Select normaltype")
             }
-            else if (peakday == "") { alert("Select peak type") } else if (holidays == "") { alert("Select holidays type") } else if (choicedays == "") { alert("Select choiceday type") } else if (peakday1 == "") { alert("enter peakdate value") }
-            else if (normal1 == "") { alert("enter normal type") } else if (holidays1 == "") { alert("enter holiday type") } else if (date == "") { alert("Select expirydate") }
+            else   if (peakday1 == "") { alert("Select peak type") } else if (holidays1 == "") { alert("Select holidays type") } else if (choicedays1 == "") { alert("Select choiceday type") } else if (mpeakday1 == "") { alert("enter peakdate value") }
+            else
+            if (mnormal1 == "") { alert("enter normal type") } else if (mholidays1 == "") { alert("enter holiday type") } else if (date == "") { alert("Select expirydate") }
             else {
                 //alert(date);
                 //alert(packageid + ',' + normal + ',' + peakday + ',' + holidays + ',' + choicedays + ',' + normal1 + ',' + peakday1 + ',' + holidays1 + ',' + choicedays1);
@@ -1738,13 +1777,13 @@
                     PartnerID: partid,
                     VendorId: vendorid,
                     packageid: packageid,
-                    normaldayssaletype: normal,
+                    normaldayssaletype: ntype,
                     salenormaldays: normal1,
-                    peakdaysaletype: peakday,
-                    holidaysssaletype: holidays,
+                    peakdaysaletype: ptype,
+                    holidaysssaletype: htype,
                     salepeakdays: peakday1,
                     saleholidays: holidays1,
-                    choicedayssaletype: choicedays,
+                    choicedayssaletype: ctype,
                     salechoicedays: choicedays1,
                     VendorSubId: vsid,
                     expiry: date,
@@ -1752,6 +1791,15 @@
                     spnormaldays: spnormal1,
                     spholidays: spholidays1,
                     sppeakdays: sppeakday1,
+                    Mchoicedays: mchoicedays1,
+                   
+                    Mnormaldays: mnormal1,
+                    Mholidays: mholidays1,
+                    Mpeakdays: mpeakday1,
+                    fschoicedays: fschoicedays1,
+                        fsnormaldays: fsnormal1,
+                    fsholidays: fsholidays1,
+                        fspeakdays: fspeakday1,
                 }
                 $.ajax({
                     url: '/ReSellerManagement/PartnerPackage?command=' + val + '&&partid=' + partid,
@@ -1775,5 +1823,69 @@
             }
         });
 
+
+        $('#contractdoc').change(function () {
+            var val = 'ks';
+            var partid;
+            var vid = $('#VendorId').val();
+            var partidks = $('#partid').val();
+            var partidks1 = $('#partid1').val();
+            if (partidks == '' || partidks == 'undefined') {
+                partid = partidks1;
+            } else { partid = partidks; }
+            if (partid == '' || partid == 'undefined') { alert('Save partner details first to save partner packages'); }
+
+            var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
+            if ($.inArray(ext, ['PDF', 'pdf', 'doc', 'DOC']) == -1) {
+                alert('Invalid File Type');
+            }
+            else {
+                var data = new FormData();
+                var files = $("#contractdoc").get(0).files;
+                if (files.length > 0) {
+                    data.append("helpSectionImages", files[0]);
+                }
+                $.ajax({
+                    url: '/ReSellerManagement/UploadContractdoc?command=' + val + '&&partid=' + partid + '&&vid=' + vid,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function (response) {
+                        alert(response);
+                        if (response != '') { alert('Document saved successfully'); } else { alert('Document saving failed');}
+                        //$('#profilepic1').removeAttr('src');
+                        //$('#profilepic1').attr('src', '/ProfilePictures/' + response + '');
+                    }
+                });
+            }
+        });
+
+    </script>
+
+    <script>
+        $('.mprice').on('input', function () {
+            var table = $(this).parents('.tableprices');
+            var rowindex = $(this).parent().index();
+            var colindex = $(this).index();
+            var saleprice = table.find("tr:eq(0)").find("td").eq(rowindex).find("input").val();
+            var saleprice1 = table.find("tr:eq(3)").find("td").eq(rowindex).find("input").val();
+            var type = table.find("tr:eq(1)").find("td").eq(rowindex).find("select").val();
+            var fprice = '';
+            if (type == "com") {
+                var ksp = $(this).val();
+                if (ksp > 100) { alert('Percentage should not be greater than 100'); } else {
+
+                    fprice = saleprice - (saleprice * $(this).val() / 100);
+                }
+            } else if (type == "sfr") {
+                var ksp = $(this).val();
+                if (ksp > saleprice) { alert('Margin Amount should not be greater than Sale Price'); } else {
+
+                    fprice = saleprice - $(this).val();
+                }
+            } else if (type == "comsfr") { fprice = (saleprice - (saleprice * $(this).val() / 100)) - saleprice1; }
+            table.find("tr:eq(3)").find("td").eq(rowindex).find("input[type='number']").val(fprice);
+        });
     </script>
 }
