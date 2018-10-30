@@ -47,12 +47,16 @@ $('#btnadd').click(function () {
 $('#CancelVendor').click(function () {
     $('#saverecord').css('display', 'none');
 });
+$('#CancelsupServices').click(function () {
+    $('#servicemodel').modal('hide');
+})
 $(document).on('change', '.chcktbl', function () {
     if ($(this).is(':checked')) {
         $('input.chcktbl').not(this).prop('checked', false);
         $(this).closest('tr').find('#btnBook').removeAttr('disabled');
         $('#saverecord').css('display', 'block');
         $('#SaveVendor').css('display', 'none');
+
         $('#EditVendor').css('display', 'block');
         var radataid = $(this).val();
         $('#id').val(radataid);
@@ -275,4 +279,13 @@ function checkEmail(val) {
             alert("failed");
         }
     });
+}
+function addsupservice()
+{
+    $('#servicemodel').modal('show');
+}
+function updatesupplierservices() {
+    $('#servicemodel').modal('show');
+    $('#UpdatesupServices').css('display', 'block');
+    $('#SavesupServices').css('display', 'none');
 }
