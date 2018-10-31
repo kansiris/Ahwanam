@@ -83,6 +83,10 @@ namespace MaaAahwanam.Web.Controllers
                         //Add Package Code
                         package.Status = "Active";
                         package.UpdatedDate = updateddate;
+                        package.VendorId = id;
+                        package.VendorSubId = long.Parse(vid);
+                        package.VendorType = vendordata.ServicType;
+                        package.VendorSubType = servicedata.FirstOrDefault().VenueType;
                         package = vendorVenueSignUpService.addpack(package);
                         List<Package> pkg = new List<Package>(); // converting it to list
                         pkg.Add(package);
@@ -713,6 +717,7 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult UpdatePackage(Package package)
         {
+            var getpackages = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m=>m.PackageID == package.PackageID);
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.price1 = package.PackagePrice = package.normaldays;
             package.menuitems = package.menuitems.Trim(',');
@@ -720,6 +725,7 @@ namespace MaaAahwanam.Web.Controllers
             package.Status = "Active";
             package.UpdatedDate = updateddate;
             package.timeslot = package.timeslot.Trim(',');
+            package.extramenuitems = getpackages.FirstOrDefault().extramenuitems;
             package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
             string msg = string.Empty;
             if (package.PackageID > 0) msg = "Package Updated SuccessFully!!!";
