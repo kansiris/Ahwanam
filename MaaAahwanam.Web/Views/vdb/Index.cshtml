@@ -286,10 +286,20 @@
                     <h6>FOOD PACKAGES</h6>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" id="anp" class="btn btn-danger" style="float:right"> Add Package</button>
+                    @*<button type="button" id="anp" class="btn btn-danger" style="float:right"> Add Package</button>*@
+                    <div class="btn-group" style="float:right">
+                        <button type="button" class="btn btn-danger">Add Package</button>
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" id="anp">Package</a></li>
+                            <li><a href="#">Rental Package</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
             <div class="row" id="pkgsdiv">
                 @if (ViewBag.package.Count > 0)
                 {
@@ -299,12 +309,12 @@
                             <div class="package-box">
                                 <div class="container-fluid">
                                     <div class="row">
-                                        <div class="col-md-6 col-xs-6">
+                                        <div class="col-md-6">
                                             <input type="text" class="form-control" id="pkgname" placeholder="Package Name" value="@ViewBag.package[i].PackageName">
                                         </div>
-                                        <div class="col-md-6 col-xs-6">
+                                        <div class="col-md-6">
                                             <div class="row" id="sectiontimeslot">
-                                                <div class="col-md-4 col-xs-6">
+                                                <div class="col-md-4">
                                                     @if (ViewBag.package[i].Category == "Veg")
                                                     {
                                                         <input type="radio" name="checkradio @i" id="Veg @i" value="Veg" checked /><label for="Veg @i">Veg</label>
@@ -327,12 +337,12 @@
                                                 <input type="hidden" id="pkgslots" value="@ViewBag.package[i].timeslot" />
                                                 @if (ViewBag.package[i].timeslot == null)
                                                 {
-                                                    <div class="col-md-4 col-xs-4">
+                                                    <div class="col-md-4">
                                                         <input type="checkbox" class="slotcheck" name="slot" id="Break_Fast @i" value="Break Fast" /><label for="Break_Fast @i">Break Fast</label>
                                                         <br />
                                                         <input type="checkbox" class="slotcheck" name="slot" id="Lunch @i" value="Lunch" /><label for="Lunch @i">Lunch</label>
                                                     </div>
-                                                    <div class="col-md-4 col-xs-4">
+                                                    <div class="col-md-4">
                                                         <input type="checkbox" class="slotcheck" name="slot" id="Dinner @i" value="Dinner" /><label for="Dinner @i">Dinner</label>
                                                         <br />
                                                         <input type="checkbox" class="slotcheck" name="slot" id="High_Tea @i" value="High Tea" /><label for="High_Tea @i">High Tea</label>
@@ -340,7 +350,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <div class="col-md-4 col-xs-4">
+                                                    <div class="col-md-4">
 
                                                         @if (ViewBag.package[i].timeslot.Contains("Break Fast"))
                                                         {
@@ -360,7 +370,7 @@
                                                             <input type="checkbox" class="slotcheck" name="slot" id="Lunch @i" value="Lunch" /><label for="Lunch @i">Lunch</label>
                                                         }
                                                     </div>
-                                                    <div class="col-md-4 col-xs-4">
+                                                    <div class="col-md-4">
                                                         @if (ViewBag.package[i].timeslot.Contains("Dinner"))
                                                         {
                                                             <input type="checkbox" class="slotcheck" name="slot" id="Dinner @i" value="Dinner" checked /><label for="Dinner @i">Dinner</label>
@@ -385,19 +395,19 @@
                                         </div>
                                     </div>
                                     <div class="row" id="pkgpricesection">
-                                        <div class="col-md-3 col-xs-3">
+                                        <div class="col-md-3">
                                             <span>Normal Days ₹</span>
                                             <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%;color:black" value="@ViewBag.package[i].normaldays" /></span>
                                         </div>
-                                        <div class="col-md-3 col-xs-3">
+                                        <div class="col-md-3">
                                             <span>Peak Days ₹</span>
                                             <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%;color:black" value="@ViewBag.package[i].peakdays" /></span>
                                         </div>
-                                        <div class="col-md-3 col-xs-3">
+                                        <div class="col-md-3">
                                             <span>Holidays ₹</span>
                                             <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%;color:black" value="@ViewBag.package[i].holidays" /></span>
                                         </div>
-                                        <div class="col-md-3 col-xs-3">
+                                        <div class="col-md-3">
                                             <span>Choice Days ₹</span>
                                             <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%;color:black" value="@ViewBag.package[i].choicedays" /></span>
                                         </div>
@@ -472,12 +482,26 @@
                                 {
                                     <input type="hidden" class="availablepkgitems" value="@ViewBag.selecteditems[i]" />
                                 }
+                                <select class="copypkg" style="width:auto">
+                                    <option disabled selected>Copy Package To</option>
+                                    @foreach (var item in ViewBag.availablevenues)
+                                    {
+                                        if (item.VenueType == "" || item.VenueType == null)
+                                        {
+                                            <option value="@item.Id">Venue</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.name - @item.VenueType</option>
+                                        }
+                                    }
+                                </select>
                                 <a class="addcourse" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Add Course</a>
                                 <a class="viewmenu" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">View Menu</a>
                                 <a class="pkgclone" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
                                 <input type="hidden" class="packageid" value="@ViewBag.package[i].PackageID" />
                                 <a class="updatepkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Update</a>
-                                <a href="#" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
+                                <a class="pkgremove" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
                             </div>
                         </div>
                     }

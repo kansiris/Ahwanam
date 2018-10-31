@@ -213,9 +213,32 @@ $(document).on('change', '.amenityselection', function () {
 
 //Add Package
 $("#anp").click(function () {
+    $('.overlay').show();
+    $('#loadermsg').text("Adding Package...");
     var div = document.getElementById("pkgsdiv");
-    var childdiv = "<div class='allpkgs'><div class='package-box'><div class='container-fluid'><div class='row'><div class='col-md-6 col-xs-6'><input type='text' class='form-control' id='pkgname' placeholder='Package Name' value=''></div><div class='col-md-6 col-xs-6'><div class='row' id='sectiontimeslot'><div class='col-md-4 col-xs-6'><input type='radio' name='checkradio' id='Veg' value='Veg'><label for='Veg'>Veg</label><br><input type='radio' name='checkradio' id='NonVeg' value='NonVeg'><label for='NonVeg'>Non-Veg</label></div><input type='hidden' id='pkgslots' value=''><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Break_Fast' value='Break Fast'><label for='Break_Fast'>Break Fast</label><br><input type='checkbox' class='slotcheck' name='slot' id='Lunch' value='Lunch'><label for='Lunch'>Lunch</label></div><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Dinner' value='Dinner'><label for='Dinner'>Dinner</label><br><input type='checkbox' class='slotcheck' name='slot' id='High_Tea' value='High Tea'><label for='High_Tea'>High Tea</label></div></div></div></div><div class='row' id='pkgpricesection'><div class='col-md-3 col-xs-3'><span>Normal Days ₹</span><span><input type='number' id='ndays' name='ndays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Peak Days ₹</span><span><input type='number' id='pdays' name='pdays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Holidays ₹</span><span><input type='number' id='holidays' name='holidays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Choice Days ₹</span><span><input type='number' id='cdays' name='cdays' placeholder='₹100' style='width:75%;color:black' value=''></span></div></div><div class='row' align='center' style='padding-top:10px'><textarea id='pkgdesc' class='form-control' name='pkgdesc' placeholder='Enter Package Description' cols='3'></textarea></div></div></div><div class='package-list'><button id='pillbutton' class='button pkgitem' value='Welcome_Drinks'>Welcome Drinks(0) <i class='fa fa-close'></i> </button><button id='pillbutton' class='button pkgitem' value='Starters'>Starters(0)</button><button id='pillbutton' class='button pkgitem' value='Rice'>Rice(0)</button><button id='pillbutton' class='button pkgitem' value='Bread'>Bread(0)</button><button id='pillbutton' class='button pkgitem' value='Curries'>Curries(0)</button><button id='pillbutton' class='button pkgitem' value='Fry_Dry'>Fry/Dry(0)</button><button id='pillbutton' class='button pkgitem' value='Salads'>Salads(0)</button><button id='pillbutton' class='button pkgitem' value='Soups'>Soups(0)</button><button id='pillbutton' class='button pkgitem' value='Deserts'>Deserts(0)</button><button id='pillbutton' class='button pkgitem' value='Beverages'>Beverages(0)</button><button id='pillbutton' class='button pkgitem' value='Fruits'>Fruits(0)</button></div><div align='right' class='pkgsave'><input type='hidden' class='pkgmenuitems' value=''><input type='hidden' class='selpkgitems'><input type='hidden' class='availablepkgitems' value=''><a class='addcourse' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Add Course</a><a class='viewmenu' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>View Menu</a><a class='pkgclone' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Duplicate</a><a class='addpkg' style='padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;'>Publish</a><a href='#' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Remove</a></div></div>";
-    $('#pkgsdiv').append(childdiv).focus();
+    var package = {
+        VendorId: id,
+        VendorSubId: subid,
+        VendorType: category,
+        VendorSubType: subcategory
+    }
+    $.ajax({
+        url: '/vdb/AddPackage',
+        type: 'post',
+        datatype: 'json',
+        data: package,
+        success: function (data) {
+            //alert(data); 
+            if (data > 0) {
+                var childdiv = "<div class='allpkgs'><div class='package-box'><div class='container-fluid'><div class='row'><div class='col-md-6 col-xs-6'><input type='text' class='form-control' id='pkgname' placeholder='Package Name' value=''></div><div class='col-md-6 col-xs-6'><div class='row' id='sectiontimeslot'><div class='col-md-4 col-xs-6'><input type='radio' name='checkradio' id='Veg' value='Veg'><label for='Veg'>Veg</label><br><input type='radio' name='checkradio' id='NonVeg' value='NonVeg'><label for='NonVeg'>Non-Veg</label></div><input type='hidden' id='pkgslots' value=''><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Break_Fast' value='Break Fast'><label for='Break_Fast'>Break Fast</label><br><input type='checkbox' class='slotcheck' name='slot' id='Lunch' value='Lunch'><label for='Lunch'>Lunch</label></div><div class='col-md-4 col-xs-4'><input type='checkbox' class='slotcheck' name='slot' id='Dinner' value='Dinner'><label for='Dinner'>Dinner</label><br><input type='checkbox' class='slotcheck' name='slot' id='High_Tea' value='High Tea'><label for='High_Tea'>High Tea</label></div></div></div></div><div class='row' id='pkgpricesection'><div class='col-md-3 col-xs-3'><span>Normal Days ₹</span><span><input type='number' id='ndays' name='ndays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Peak Days ₹</span><span><input type='number' id='pdays' name='pdays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Holidays ₹</span><span><input type='number' id='holidays' name='holidays' placeholder='₹100' style='width:75%;color:black' value=''></span></div><div class='col-md-3 col-xs-3'><span>Choice Days ₹</span><span><input type='number' id='cdays' name='cdays' placeholder='₹100' style='width:75%;color:black' value=''></span></div></div><div class='row' align='center' style='padding-top:10px'><textarea id='pkgdesc' class='form-control' name='pkgdesc' placeholder='Enter Package Description' cols='3'></textarea></div></div></div><div class='package-list'><button id='pillbutton' class='button pkgitem' value='Welcome_Drinks'>Welcome Drinks(0) <i class='fa fa-close'></i> </button><button id='pillbutton' class='button pkgitem' value='Starters'>Starters(0)</button><button id='pillbutton' class='button pkgitem' value='Rice'>Rice(0)</button><button id='pillbutton' class='button pkgitem' value='Bread'>Bread(0)</button><button id='pillbutton' class='button pkgitem' value='Curries'>Curries(0)</button><button id='pillbutton' class='button pkgitem' value='Fry_Dry'>Fry/Dry(0)</button><button id='pillbutton' class='button pkgitem' value='Salads'>Salads(0)</button><button id='pillbutton' class='button pkgitem' value='Soups'>Soups(0)</button><button id='pillbutton' class='button pkgitem' value='Deserts'>Deserts(0)</button><button id='pillbutton' class='button pkgitem' value='Beverages'>Beverages(0)</button><button id='pillbutton' class='button pkgitem' value='Fruits'>Fruits(0)</button></div><div align='right' class='pkgsave'><input type='hidden' class='pkgmenuitems' value=''><input type='hidden' class='selpkgitems'><input type='hidden' class='availablepkgitems' value=''><a class='addcourse' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Add Course</a><a class='viewmenu' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>View Menu</a><a class='pkgclone' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Duplicate</a><input type='hidden' class='packageid' value='" + data + "' /><a class='updatepkg' style='padding: 17px;margin-top: 3px; color:#dc3545; cursor: pointer;'>Update</a><a class='pkgremove' style='padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer'>Remove</a></div></div>";
+                $('#pkgsdiv').append(childdiv).focus();
+                $('.overlay').hide();
+            }
+            else {
+                alert('Failed To Add Package');
+            }
+        }
+    });
 });
 
 //Package Checkbox Selection
@@ -726,6 +749,23 @@ $(document).on('click', '.updatepkg', function () {
     }
 });
 
+//Copy Package
+$(document).on('change', '.copypkg', function () {
+    $('.overlay').show();
+    $('#loadermsg').text("Copying Package...");
+    var selectedid = $(this).val();
+    var pkgid = $(this).parent('div.pkgsave').find('input.packageid').val();
+    $.ajax({
+        url: '/vdb/CopyPackage?pkgid=' + pkgid + '&&id=' + id + '&&selectedid=' + selectedid + '&&subid=' + subid,
+        type: 'post',
+        datatype: 'json',
+        success: function (data) {
+            alert(data);
+            $('.overlay').hide();
+        }
+    });
+});
+
 // Cloning Package
 $(document).on('click', '.pkgclone', function () {
     var menuitems = '';
@@ -807,6 +847,24 @@ $(document).on('click', '.pkgclone', function () {
             }
             else { alert(data); }
             $('.overlay').hide();
+        }
+    });
+});
+
+//Remove Package
+$(document).on('click', '.pkgremove', function () {
+    var pkgid = $(this).parent('div.pkgsave').find('input.packageid').val();
+    var totaldiv = $(this).parent('div.pkgsave').parent('div.allpkgs');
+    $.ajax({
+        url: '/vdb/DeletePackage?pkgid=' + pkgid,
+        type: 'post',
+        datatype: 'json',
+        success: function (data) {
+            if (data == 'success') {
+                totaldiv.css('display', 'none');
+                alert('Package Removed Successfully!!!');
+                $('.overlay').hide();
+            }
         }
     });
 });

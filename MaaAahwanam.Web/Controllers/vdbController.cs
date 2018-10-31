@@ -146,6 +146,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.selecteditems = selecteditems;
                     ViewBag.extramenu = extramenu;
                     ViewBag.finalextramenu = finalextramenu;
+                    ViewBag.availablevenues = venues;
                     //Policy Section
                     ViewBag.policy = vendorMasterService.Getpolicy(id.ToString(), vid);
 
@@ -520,16 +521,16 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult AddPackage(Package package)
         {
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            package.price1 = package.PackagePrice = package.normaldays;
+            //package.price1 = package.PackagePrice = package.normaldays;
             //Add Package Code
             package.Status = "Active";
             package.UpdatedDate = updateddate;
-            package.timeslot = package.timeslot.Trim(',');
+            //package.timeslot = package.timeslot.Trim(',');
             package = vendorVenueSignUpService.addpack(package);
-            string msg = string.Empty;
-            if (package.PackageID > 0) msg = "Package Added SuccessFully!!!";
-            else msg = "Failed TO Add Package";
-            return Json(msg, JsonRequestBehavior.AllowGet);
+            //string msg = string.Empty;
+            //if (package.PackageID > 0) msg = "Package Added SuccessFully!!!";
+            //else msg = "Failed To Add Package";
+            return Json(package.PackageID, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DuplicatePackage(Package package)
@@ -544,6 +545,20 @@ namespace MaaAahwanam.Web.Controllers
             string msg = string.Empty;
             if (package.PackageID > 0) msg = package.PackageID.ToString();
             else msg = "Failed TO Add Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CopyPackage(string pkgid, string id,string selectedid, string subid)
+        {
+            Package package = vendorVenueSignUpService.Getpackages(long.Parse(id),long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.UpdatedDate = updateddate;
+            //package.PackageID = 0;
+            package.VendorSubId = long.Parse(selectedid);
+            package = vendorVenueSignUpService.addpack(package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = "Package Copied SuccessFully!!!";
+            else msg = "Failed TO Copy Package";
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
@@ -746,6 +761,12 @@ namespace MaaAahwanam.Web.Controllers
                 return Json(message, JsonRequestBehavior.AllowGet);
             }
             return Json("Session Expired!!! Please Login", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeletePackage(string pkgid)
+        {
+            string status = vendorVenueSignUpService.deletepack(pkgid);
+            return Json(status ,JsonRequestBehavior.AllowGet);
         }
         #endregion
 
