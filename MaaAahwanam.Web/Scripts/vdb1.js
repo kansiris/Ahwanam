@@ -36,6 +36,7 @@ $('#profileimage').change(function () {
 
 // Add/Update Services Section
 $(document).on('click', '.subcatclose', function () {
+    var pdiv = $(this).parent('div');
     var val1 = $(this).attr('value').split(',');
     var text = val1[1];
     var vsid = val1[0];
@@ -49,10 +50,9 @@ $(document).on('click', '.subcatclose', function () {
             success: function (result) {
                 if (result = 'success') {
                     alert("service removed");
+                    pdiv.remove();
                 }
                 else { alert(result); return location.href = '/home';}
-                var url1 = document.referrer;
-                window.location.href = url1;
             },
         })
     }
@@ -647,8 +647,11 @@ $(document).on('click', '.updatepkg', function () {
     }
     var allVal = '';
     parentdiv.find(".package-list button").each(function () {
-        if($(this).text().split('(')[1].split(')')[0] != 0)
-            allVal += ',' + $(this).val();
+        var textvalue = $(this).text();
+        if (textvalue != '') {
+            if ($(this).text().split('(')[1].split(')')[0] != 0)
+                allVal += ',' + $(this).val();
+        }
     });
     var allbuttonsvals = allVal.substring(1, allVal.length);
     var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();

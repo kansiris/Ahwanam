@@ -17,8 +17,8 @@
     <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
     <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
-    @*<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-        <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />*@
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 }
 <style>
@@ -416,16 +416,16 @@
                                             <span>What You Get</span>
                                             <br />
 
-                                            @if (item1.PackageDescription != null && item1.PackageDescription != "")
+                                            @if (item1.menu != null && item1.menu != "")
                                             {
-                                                for (int i = 0; i < @item1.PackageDescription.Split(',').Length; i++)
+                                                for (int i = 0; i < @item1.menu.Split(',').Length; i++)
                                                 {
-                                                    <a class="btn-pill">@item1.PackageDescription.Split(',')[i]</a>
+                                                    <a class="btn-pill">@item1.menu.Split(',')[i]</a>
                                                 }
                                             }
                                             else
                                             {
-                                                <a class="btn-pill">No Packages Available</a>
+                                                <a class="btn-pill">Menu Items Not Available</a>
                                             }
 
                                         </div>
@@ -912,33 +912,21 @@
             </div>
             <!-- /col -->
             <aside class="col-lg-4" id="sidebar">
-                <div class="box_detail" style="display:none">
-                    <h6 class="uk-h6-2">AMENITIES</h6>
-                    <div class="row-button">
-                        <a class="btn-pill">WIFI</a>
-                        <a class="btn-pill">CATERING</a>
-                        <a class="btn-pill">PARKING</a>
-                    </div>
-                    <div class="row-button">
-                    </div>
-                </div>
                 <div class="uk-section uk-section-large uk-section-muted" style="border: 1px lightgray solid;">
                     <div class="uk-container" style="margin-top:-25px;">
                         <input type="hidden" id="vendoravailabledates" value="" />
-
                         <div>
-                            @*<div class="row packesss" id="allrecords" style="margin-left:35px;overflow-x: auto;">
-
-
-
-                                </div>*@
-
-                            <input type="button" id="datepickerks" value="Calendar" />
+                            @*<input type="button" id="datepickerks" value="Calendar" />*@
                                 @*<img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" style="height:17px ;width:20px;margin-left:10px" />*@
+                            
+                            
+                            @*<div id="datepickerks"></div>*@
+
+                            <div id="calendar"></div>
 
 
-                            <div class="row packesss" id="allrecords">
 
+                            @*<div class="row packesss" id="allrecords">
                                 <div class="left">
                                     <button class="buttonks buttonks1" id="left-button">
                                         <<
@@ -946,20 +934,15 @@
                                 </div>
                                 <div class="center" id="content">
                                     <input type="hidden" class="calenderselected" value="" name="calenderselected" id="calenderselected">
-
                                     @{Html.RenderAction("calender", "viewservice"); }
                                 </div>
                                 <div class="right">
                                     <button class="buttonks buttonks1" id="right-button">
                                         >>
                                     </button>
-                                    @*<img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:44px;margin-left:10px" />*@
-                                    @*<button src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepickerks" style="height:17px ;width:20px;margin-top:44px;margin-left:10px" />*@
-
-
                                 </div>
+                            </div>*@
 
-                            </div>
                             <div>
                                 <form class="uk-form-stacked" style="margin-top:-10px">
                                     <br>
@@ -1034,10 +1017,48 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+    <script>
+        //full calendar
+        $('#calendar').fullCalendar({
+            defaultDate: '2018-10-12',
+            events: [
+              {
+                  title: 'All Day Event',
+                  start: '2018-10-01'
+              },
+              {
+                  title: 'Long Event',
+                  start: '2018-02-07'
+              },
+              {
+                  id: 999,
+                  title: 'Repeating Event',
+                  start: '2018-10-09'
+              },
+              {
+                  id: 999,
+                  title: 'Repeating Event',
+                  start: '2018-10-16'
+              },
+              {
+                  title: 'Conference',
+                  start: '2018-10-11'
+              },
+              {
+                  title: 'Meeting',
+                  start: '2018-10-12'
+              }
+            ]
+        });
+
+    </script>
+    
+    
+    
     <script>
         //$(function () {
         //    $("#datepickerks").datepicker(

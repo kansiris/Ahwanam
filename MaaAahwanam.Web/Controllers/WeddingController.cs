@@ -33,7 +33,7 @@ namespace MaaAahwanam.Web.Controllers
             enquiry.EnquiryStatus = enquiry.Status = "Active";
             enquiry.Country = ip;
             enquiry.CompanyName = enquiry.PersonName;
-            enquiry.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).Date;
+            enquiry.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             string status = enquiryService.SaveEnquiries(enquiry);
 
             //Email Sending part
