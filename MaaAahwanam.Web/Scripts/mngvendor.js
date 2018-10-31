@@ -282,10 +282,9 @@ function checkEmail(val) {
 }
 function addsupservice()
 {
+    $('#ServiceName').val('');
+    $('#description').val('');
     $('#servicemodel').modal('show');
-}
-function updatesupplierservices() {
-    $('#servicemodel').modal('show');
-    $('#UpdatesupServices').css('display', 'block');
-    $('#SavesupServices').css('display', 'none');
+    $('#Updatesupservices').css('display', 'none');
+    $('#ADDsupServices').css('display', 'block');
 }

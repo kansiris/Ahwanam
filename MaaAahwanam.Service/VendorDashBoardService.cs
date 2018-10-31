@@ -40,6 +40,25 @@ namespace MaaAahwanam.Service
         {
             return mngvendorrepository.UpdateVendor(mngvendor, id);
         }
+        public AllSupplierServices AddSupplierServices(AllSupplierServices supplierservices)
+        {
+            supplierservices = mngvendorrepository.AddSupplierServices(supplierservices);
+            return supplierservices;
+        }
+        public List<AllSupplierServices> getsupplierservices(string vmid)
+        {
+            List<AllSupplierServices> supplierserviceslst = new List<AllSupplierServices>();
+            supplierserviceslst = mngvendorrepository.GetSupplierServiceslst(vmid);
+            return supplierserviceslst;
+        }
+        public AllSupplierServices getsuplierservicesbyid(long id)
+        {
+            return mngvendorrepository.GetSupplierService(id);
+        }
+        public AllSupplierServices updatesupplierservices(AllSupplierServices supplierservices,long id)
+        {
+            return mngvendorrepository.UpdateSupplierServices(supplierservices, id);
+        }
         public ManageUser AddUser(ManageUser mnguser)
         {
             mnguser = mngvendorrepository.AddUser(mnguser);

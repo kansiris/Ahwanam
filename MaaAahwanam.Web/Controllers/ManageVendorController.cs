@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
                 VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
+                ViewBag.SupplierServicesLst = mngvendorservice.getsupplierservices(VendorId);
                 
             }
             return View();
@@ -73,6 +74,28 @@ namespace MaaAahwanam.Web.Controllers
                 return Json("success");
             else
                 return Json("sucess1");
+        }
+        [HttpPost]
+        public JsonResult SupplierServices(AllSupplierServices supplierservices,string id, string command)
+        {
+            string msg = string.Empty;
+            supplierservices.UpdatedDate = DateTime.Now;
+            if (command == "Save") {
+                supplierservices = mngvendorservice.AddSupplierServices(supplierservices);
+                msg = "Added New Services";
+            }
+            else if (command == "Update")
+            {
+                supplierservices = mngvendorservice.updatesupplierservices(supplierservices, Convert.ToInt32(id));
+                msg = "Updated Services";
+            }
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Getsupplierservice(string id)
+        {
+            var data = mngvendorservice.getsuplierservicesbyid(Convert.ToInt32(id));
+            return Json(data);
         }
     }
 }

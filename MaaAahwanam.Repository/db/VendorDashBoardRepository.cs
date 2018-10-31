@@ -48,6 +48,30 @@ namespace MaaAahwanam.Repository.db
             //int count = _dbContext.ManageVendor.Where(e => e.email == email && e.id == int.Parse(id)).Count();
             return c;
         }
+        public AllSupplierServices AddSupplierServices(AllSupplierServices supplierservices)
+        {
+            _dbContext.AllSupplierServices.Add(supplierservices);
+            _dbContext.SaveChanges();
+            return supplierservices;
+        }
+        public AllSupplierServices UpdateSupplierServices(AllSupplierServices supplierservices,long ID)
+        {
+            var getsupplierservices = _dbContext.AllSupplierServices.SingleOrDefault(s => s.ID == ID);
+            supplierservices.ID = getsupplierservices.ID;
+            supplierservices.VendorMasterID = getsupplierservices.VendorMasterID;
+            supplierservices.Status = getsupplierservices.Status;
+            _dbContext.Entry(getsupplierservices).CurrentValues.SetValues(supplierservices);
+            _dbContext.SaveChanges();
+            return getsupplierservices;
+        }
+        public AllSupplierServices GetSupplierService(long id)
+        {
+            return _dbContext.AllSupplierServices.Where(s => s.ID == id).FirstOrDefault();
+        }
+        public List<AllSupplierServices> GetSupplierServiceslst(string VmId)
+        {
+            return _dbContext.AllSupplierServices.Where(S => S.VendorMasterID == VmId).ToList();
+        }
         public ManageUser AddUser(ManageUser mnguser)
         {
             _dbContext.ManageUser.Add(mnguser);
