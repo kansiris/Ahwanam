@@ -17,6 +17,7 @@
         "pageLength": 1
     });
 
+   
     $('#addservices').css("display", "none");
     var vpbook = window.localStorage.getItem("vpbook");
     var date = window.localStorage.getItem("vpbookdate");

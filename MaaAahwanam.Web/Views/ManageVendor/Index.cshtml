@@ -56,6 +56,9 @@
          .txtd {
         margin-top: -5%;
     }
+         .dtx{
+             margin-top:-2%;
+         }
 
     </style>
 }
@@ -250,34 +253,19 @@
                         <h4 style="text-transform:uppercase">Add Services</h4>
                         <div class="card">
                             <div class="card-body">
-                                @*<table style="width:95%;border:1px solid grey">
-                                    <tr>
-                                        <td><a href="#" id="updatesupservices" onclick="updatesupplierservices()"><span class="glyphicon glyphicon-pencil"></span></a>  <input type="checkbox" id="PhotoGraphy" name="services" value="Photography" /> <label>Photography</label></td>
-                                        <td><a href="#" id="updatesupservices"  onclick="updatesupplierservices()"><span class="glyphicon glyphicon-pencil"></span></a>  <input type="checkbox" id="VideoGraphy" name="services" value="Videography" /> <label>Videography</label></td>
-                                        <td><a href="#" id="updatesupservices"  onclick="updatesupplierservices()"><span class="glyphicon glyphicon-pencil"></span></a>  <input type="checkbox" id="CarRental" name="services" value="Car Rental" /> <label>Car Rental</label></td>
-                                        <td><a href="#" id="updatesupservices"  onclick="updatesupplierservices()"><span class="glyphicon glyphicon-pencil"></span></a>  <input type="checkbox" id="Flowers" name="services" value="Flowers" /> <label>Flowers</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" id="AudioEquipment" name="services" value="Audio Equipment" /> <label>Audio Equipment</label></td>
-                                        <td> <input type="checkbox" id="VideoEquipment" name="services" value="Video Equipment" /> <label>Video Equipment</label></td>
-                                        <td><input type="checkbox" id="VideoEquipment" name="services" value="Video Equipment" /> <label>Video Equipment</label></td>
-                                        <td><input type="checkbox" id="VideoEquipment" name="services" value="Video Equipment" /> <label>Video Equipment</label></td>
-                                        <td><input type="checkbox" id="TentHouse" name="services" value="Tent House" /> <label>Tent House</label></td>
-                                        <td><input type="checkbox" id="Lights" name="services" value="Lights" /> <label>Lights</label></td>
-                                      
-                                    </tr>
-                                    <tr>
-                                        <td class="tst"></td>
-                                        <td class="tst"></td>
-                                        <td class="tst"></td>
-                                        <td class="tst"><a herf="#" id="supplierservice" style="padding-left: 31px;color:darkred" onclick="addsupservice()"><span class="glyphicon glyphicon-plus-sign" style="font-size: 30px;"></span></a></td>
-                                    </tr>
-                                </table>*@
                                 <div class="row">
-                                    <div class="col-12 col-sm-3 col-md-3">
-                                        <a href="#" id="updatesupservices" onclick="updatesupplierservices()"><span class="glyphicon glyphicon-pencil"></span></a>  <input type="checkbox" id="PhotoGraphy" name="services" value="Photography" /> <label>Photography</label>
-                                    </div>
+                                    @{
+                                        foreach (var itemServices in ViewBag.SupplierServicesLst)
+                                        {
+
+                                            <div class="col-12 col-sm-2 col-md-2">
+                                                <input type="checkbox" id="services1" name="services" value="@itemServices.ServiceName" /> <label>@itemServices.ServiceName</label>  <a href="#" id="updatesupservices" class="updateservices" onclick="updatesupplierservices('@itemServices.ID')" value="@itemServices.ID"><span class="glyphicon glyphicon-pencil"></span></a>
+                                            </div>
+
+                                        }
+                                    }
                                 </div>
+
                                 <div class="row" id="extraservices">
 
                                 </div>
@@ -294,13 +282,13 @@
                     <div class="adservice">
                         <div align="center" class="header" style="text-transform:uppercase;font-weight:bold;margin-top:30px;">Add/Edit Services</div>
                         <div class="col-12 col-sm-12 col-md-12" align="center">
-                            <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
-                            <input type="hidden" id="id" name="id" value="" />
+                            <input type="hidden" id="VendorMasterID" name="VendorMasterID" value="@ViewBag.masterid" />
+                            <input type="hidden" id="ID" name="ID" value="" />
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12">
                                     <span class="input input--hoshi">
-                                        <input class="input__field input__field--hoshi" type="text" id="serviceName" name="serviceName" />
-                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="serviceName">
+                                        <input class="input__field input__field--hoshi" type="text" id="ServiceName" name="ServiceName" />
+                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="ServiceName">
                                             <span class="input__label-content input__label-content--hoshi">Service Name</span>
                                         </label>
                                     </span>
@@ -308,7 +296,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12">
-                                    <span class="input input--hoshi" style="margin-top:-2%;">
+                                    <span class="input input--hoshi dtx">
                                         <input class="input__field input__field--hoshi" type="text" id="description" name="description" />
                                         <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="description">
                                             <span class="input__label-content input__label-content--hoshi">Description</span>
@@ -316,20 +304,20 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top:20px;" align="center">
-                                <div class="col-12 col-sm-4 col-md-4">
-                                    <button id="SavesupServices" type="button" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
-                                    <button id="UpdatesupServices" type="button" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
+                        </div>
+                        <div class="actions">
+                            <div class="row">
+                                <div class="col-md-4" style="padding-left:190px;">
+                                    <button id="ADDsupServices" type="button" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
+                                    <button id="Updatesupservices" type="button" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
                                 </div>
-                                @*<div class="col-12 col-sm-4 col-md-4">
-                                    <button id="UpdatesupServices" type="submit" name="command" value="Update" class="btn btn-success" style="display:block">Update</button>
-                                </div>*@
-                                <div class="col-12 col-sm-4 col-md-4">
+                                <div class="col-md-4" style="padding-left:50px;">
                                     <button id="CancelsupServices" type="button" class="btn btn-danger">Cancel</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                
                 </div>
                 <div class="b txtd" align="center" style="margin-top:30px;">
                     <div style="position: absolute; left: 471px;">
@@ -349,9 +337,75 @@
 @section scripts{
     <script src="~/Scripts/mngvendor.js"></script>
     <script>
-        $('#SavesupServices').click(function () {
-            var sname = $('#serviceName').val();
-            $('#extraservices').append(' <div class="col-12 col-sm-3 col-md-3"> <a href="#" id="updatesupservices" onclick="updatesupplierservices()"><span class="glyphicon glyphicon-pencil"></span></a>  <input type="checkbox" id="PhotoGraphy" name="services" value="' + sname + '" /> <label>' + sname + '</label></div>')
+        $('#ADDsupServices').click(function () {
+            var val = $(this).val();
+            var Id = $('#id').val();
+            var supplierservices = {
+                VendorMasterID:$('#VendorMasterID').val(),
+                ServiceName: $('#ServiceName').val(),
+                Description: $('#description').val()
+            }
+            $.ajax({
+                url: '/ManageVendor/SupplierServices?command=' + val + '&&id=' + Id,
+                type: 'POST',
+                data: JSON.stringify({ supplierservices: supplierservices }),
+                contentType: 'application/json',
+                success: function (data) {
+                    alert(data);                
+                    var sname = $('#ServiceName').val();
+                    $('#extraservices').append(' <div class="col-12 col-sm-2 col-md-2"><input type="checkbox" id="PhotoGraphy" name="services" value="' + sname + '" /> <label>' + sname + '</label>  <a href="#" id="updatesupservices" onclick="updatesupplierservices()"><span class="glyphicon glyphicon-pencil"></span></a></div>');
+                    $('#ServiceName').val('');
+                    $('#description').val('');
+                    $('#servicemodel').modal('hide');
+                },
+                error: function (data) {
+                    alert("save is failed");
+                }
+            })
+           
         });
+
+        function updatesupplierservices(val) {
+           $('#servicemodel').modal('show');
+           $('#Updatesupservices').css('display', 'block');
+           $('#ADDsupServices').css('display', 'none');
+           $.ajax({
+               url: '/ManageVendor/Getsupplierservice?id=' + val,
+               type: 'POST',
+               contentType: 'application/json',
+               success: function (result) {
+                   $('#ServiceName').val(result.ServiceName);
+                   $('#description').val(result.Description);
+                   $('#Updatesupservices').click(function () {
+                       var val2 = $(this).val();
+                       var Id = $('#id').val();
+                       var supplierservices = {
+                           VendorMasterID: $('#VendorMasterID').val(),
+                           ServiceName: $('#ServiceName').val(),
+                           Description: $('#description').val()
+                       }
+                       $.ajax({
+                           url: '/ManageVendor/SupplierServices?command=' + val2 + '&&id=' + val,
+                           type: 'POST',
+                           data: JSON.stringify({ supplierservices: supplierservices }),
+                           contentType: 'application/json',
+                           success: function (data) {
+                               alert(data);
+                               $('#servicemodel').modal('hide');
+
+                           },
+                           error: function (data) {
+                               alert("update is failed");
+                           }
+                       })
+
+                   });
+               },
+               error: function (result) {
+               alert("failed");
+           }
+        })
+        }
+       
     </script>
 }
