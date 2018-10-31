@@ -87,7 +87,7 @@ $(document).on('change', '.chcktbl', function () {
         $('#saverecord').css('display', 'block');
         $('#SaveUser').css('display', 'none');
         $('#EditUser').css('display', 'block');
-        $('#booknow').css('display', 'block');
+        var vpbook = window.localStorage.getItem("vpbook");
         $('#booknowss').css('display', 'none');
         $('#addcustomermodel').modal('show');
         var radataid = $(this).val();
@@ -119,7 +119,10 @@ $(document).on('change', '.chcktbl', function () {
                 $("#Status").val(result.Status);
                 if (result.Status == "Active") {
                     $("input[name=Status][value='Active']").prop('checked', true);
-                    $('#booknow').css("display", "block");
+                    if (vpbook == '' || vpbook == null)
+                        $('#booknow').css('display', 'none');
+                    else
+                        $('#booknow').css('display', 'block');
                 }
                 else {
                     $("input[name=Status][value='InActive']").prop('checked', true);
