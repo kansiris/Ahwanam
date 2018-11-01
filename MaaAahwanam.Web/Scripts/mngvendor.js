@@ -17,7 +17,8 @@ $("input").each(function () {
 
 $(document).ready(function () {
     $('#allorders').DataTable({
-        responsive: true
+        responsive: true,
+        "pageLength": 3
     });
     $('#addservices').css("display", "none");
 });
