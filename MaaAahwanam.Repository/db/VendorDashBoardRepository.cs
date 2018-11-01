@@ -70,7 +70,10 @@ namespace MaaAahwanam.Repository.db
         }
         public List<AllSupplierServices> GetSupplierServiceslst(string VmId)
         {
-            return _dbContext.AllSupplierServices.Where(S => S.VendorMasterID == VmId).ToList();
+            //var servicesquery = (from S in _dbContext.AllSupplierServices where S.VendorMasterID == VmId select S.ServiceName).Distinct().ToList();
+            var servicesquery= _dbContext.AllSupplierServices.Where(S => S.VendorMasterID == VmId).ToList();
+            var S1 = servicesquery.GroupBy(s => s.ServiceName).Select(i => i.First()).ToList();
+            return S1;
         }
         public ManageUser AddUser(ManageUser mnguser)
         {
