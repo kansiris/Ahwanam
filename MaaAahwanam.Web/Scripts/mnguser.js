@@ -339,7 +339,7 @@ $('#booknow').click(function () {
     var date = window.localStorage.getItem("vpbookdate");
     var timeslot = window.localStorage.getItem("vpbooktimeslot");
     var packid = packageid;
-    alert(vpbook);
+  //  alert(vpbook);
     var vpbook1 = vpbook.split(',');
     var loc = vpbook1[0];
     var eventtype = vpbook1[2];
@@ -349,7 +349,7 @@ $('#booknow').click(function () {
     if (packid == '') {
         var selectedp = window.localStorage.getItem("vpbook");
     }
-    alert(eventtype);
+   // alert(eventtype);
     $('.overlay').show();
     $('#loadermsg').text('Booking in process....');
     var type = $("input[name='type']:checked").val();

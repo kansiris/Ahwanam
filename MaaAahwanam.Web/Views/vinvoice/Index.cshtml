@@ -552,19 +552,20 @@
         w.close();
     }
     $('#savepdf').click(function () {
+        debugger;
        // $("input[name='GridHtml']").val($("#print-content").html());
         //var pdfhtml = $("input[name='GridHtml']").val();
         var pdfhtml = document.getElementById("print-content").outerHTML;// $("#print-content").html();
        // var pdfhtml = $(this).attr("GridHtml");
         var oid = '@Request.QueryString["oid"]';
-            alert(pdfhtml);
+            //alert(pdfhtml);
         $.ajax({
-            url: '/vinvoice/pdfdownload?pdfhtml=' + pdfhtml + "&&oid=" + oid,
+            url: '/vinvoice/pdfdownload',//?pdfhtml=' + pdfhtml + "&&oid=" + oid,
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: "json",
-            //data: {},
-            //data: JSON.stringify({ pdfhtml: pdfhtml, oid: oid }),
+            data: {},
+            data: JSON.stringify({ pdfhtml: pdfhtml, oid: oid }),
             success: function (result) {
                 if (result == "success") {
                     alert("pdf downloaded sucess fully");

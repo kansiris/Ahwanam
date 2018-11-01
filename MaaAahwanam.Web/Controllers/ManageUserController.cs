@@ -393,8 +393,19 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     totalprice = Convert.ToString(price* Convert.ToInt16(guest));
                 }
-                data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
-                data.timeslot = timeslot1[i].Split('~')[0];
+
+                for (int j = 0; j < date1.Count(); j++)
+                {
+                    if (date1[j].Split('~')[1] == data.VendorSubId.ToString())
+                    {
+                        data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
+                        data.timeslot = timeslot1[j].Split('~')[0];
+                    }
+                    else { data.UpdatedDate = null; data.timeslot = null; }
+                }
+
+               // data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
+                //data.timeslot = timeslot1[i].Split('~')[0];
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.OrderBy = long.Parse(uid);
@@ -572,8 +583,17 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         totalprice = Convert.ToString(price * Convert.ToInt16(guest));
                     }
-                    data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
-                    data.timeslot = timeslot1[i].Split('~')[0];
+                    for (int j = 0; j < date1.Count(); j++)
+                    {
+                        if (date1[j].Split('~')[1] == data.VendorSubId.ToString())
+                        {
+                            data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
+                            data.timeslot = timeslot1[j].Split('~')[0];
+                        }
+                        else { data.UpdatedDate = null; data.timeslot = null; }
+                    }
+                    //data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
+                    //data.timeslot = timeslot1[i].Split('~')[0];
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.OrderId = order.OrderId;
                     orderDetail.OrderBy = userid;
