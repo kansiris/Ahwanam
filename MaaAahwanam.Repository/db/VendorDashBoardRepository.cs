@@ -75,6 +75,11 @@ namespace MaaAahwanam.Repository.db
             var S1 = servicesquery;//.GroupBy(s => s.ServiceName).Select(i => i.First()).ToList();
             return S1;
         }
+        public int checksupplierservices(string servicename, string Vid)
+        {
+            int SupplierServiceCount = _dbContext.AllSupplierServices.Where(S => S.ServiceName == servicename && S.VendorMasterID == Vid).Count();
+            return SupplierServiceCount;
+        }
         public ManageUser AddUser(ManageUser mnguser)
         {
             _dbContext.ManageUser.Add(mnguser);

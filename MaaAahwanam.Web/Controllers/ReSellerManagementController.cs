@@ -80,8 +80,10 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public JsonResult Index(Partner partner, string command, string partid)
         {
-            partner.RegisteredDate = DateTime.Now;
-            partner.UpdatedDate = DateTime.Now;
+
+            partner.RegisteredDate = DateTime.Now.Date;
+            partner.UpdatedDate = DateTime.Now.Date;
+            partner.ExpiryDate = DateTime.Now.Date;
             if (command == "save") { partner = partnerservice.AddPartner(partner); }
             else if (command == "Update") { partner = partnerservice.UpdatePartner(partner, partid); }
             else if (command == "Update1") { partner = partnerservice.UpdatePartner(partner, partid); }
@@ -93,8 +95,9 @@ namespace MaaAahwanam.Web.Controllers
         [HttpPost]
         public JsonResult PartnerPackage(PartnerPackage partnerPackage, string command, string partid)
         {
-            partnerPackage.RegisteredDate = DateTime.Now;
-            partnerPackage.UpdatedDate = DateTime.Now;
+            partnerPackage.RegisteredDate = DateTime.Now.Date;
+            partnerPackage.UpdatedDate = DateTime.Now.Date;
+            
             if (command == "save") { partnerPackage = partnerservice.addPartnerPackage(partnerPackage); }
             //else if (command == "Update") { partnerPackage = partnerservice.UpdatepartnerPackage(partnerPackage, partid); }
 

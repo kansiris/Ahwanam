@@ -288,7 +288,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12">
                                     <span class="input input--hoshi">
-                                        <input class="input__field input__field--hoshi" type="text" id="ServiceName" name="ServiceName" />
+                                        <input class="input__field input__field--hoshi" type="text" id="ServiceName" name="ServiceName" value="" onchange="checksupplierservices(this.value)"/>
                                         <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="ServiceName">
                                             <span class="input__label-content input__label-content--hoshi">Service Name</span>
                                         </label>
@@ -411,6 +411,22 @@
                 }
             })
         });
-       
+        function checksupplierservices(val) {
+            var VendorMasterID = $('#VendorMasterID').val();
+            $.ajax({
+                url: '/ManageVendor/checksupplierservices?servicename=' + val + "&&vid=" + VendorMasterID,
+                type: 'Post',
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result == "sucess1") {
+                        alert("Services is already existed select another Services");
+                        $('#ServiceName').val('').focus();
+                    }
+                },
+                error: function (result) {
+                    alert("failed");
+                }
+            });
+        }
     </script>
 }
