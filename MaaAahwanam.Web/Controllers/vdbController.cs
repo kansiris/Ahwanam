@@ -48,6 +48,10 @@ namespace MaaAahwanam.Web.Controllers
                     var servicedata = venues.Where(m => m.Id == long.Parse(vid)).ToList();
                     ViewBag.service = servicedata.FirstOrDefault();
 
+                    if (servicedata == null)
+                        return Content("<script type='text/javascript'>alert('Something Went Wrong!!!');location.href='/home';</script>");
+
+
                     // Retrieving Hall name or VenueType
                     if (servicedata.FirstOrDefault().name != null && servicedata.FirstOrDefault().name != "")
                         ViewBag.name = servicedata.FirstOrDefault().name;
