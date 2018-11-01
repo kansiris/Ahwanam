@@ -97,6 +97,16 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult checksupplierservices(string servicename,string vid)
+        {
+           int services = mngvendorservice.checksupplierservices(servicename, vid);
+            if(services == 0)
+            {
+                return Json("success");
+            }
+            else { return Json("sucess1"); }
+        }
+
         public JsonResult Getsupplierservice(string id)
         {
             var data = mngvendorservice.getsuplierservicesbyid(Convert.ToInt32(id));

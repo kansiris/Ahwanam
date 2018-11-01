@@ -40,6 +40,10 @@ namespace MaaAahwanam.Service
         {
             return mngvendorrepository.UpdateVendor(mngvendor, id);
         }
+        public int checksupplierservices(string servicename, string Vid)
+        {
+            return mngvendorrepository.checksupplierservices(servicename, Vid);
+        }
         public AllSupplierServices AddSupplierServices(AllSupplierServices supplierservices)
         {
             supplierservices = mngvendorrepository.AddSupplierServices(supplierservices);
