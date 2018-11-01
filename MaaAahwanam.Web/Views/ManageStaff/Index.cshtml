@@ -4,9 +4,571 @@
     Layout = "~/Views/SharedWeb/vmp.cshtml";
 }
 
+@section css{
+    @*<link rel="stylesheet" type="text/css" href="https://tympanus.net/Development/TextInputEffects/css/set1.css" />*@
+    <style>
+                #addcustomermodel input[type=text], #addcustomermodel input[type="email"], #addcustomermodel input[type="tel"], #addcustomermodel input[type="number"] {
+                    width: 101%;
+                    padding: 13px 0px 2px 10px;
+                    margin: 15px 5px 15px 0px;
+                    box-sizing: border-box;
+                    background-color: #fff;
+                    color: black;
+                }
+
+                /*table.dataTable thead th, table.dataTable tfoot th {
+                            white-space: nowrap;
+                        }
+
+                        table.dataTable, table.dataTable th, table.dataTable td {
+                            white-space: nowrap;
+                            border: none;
+                        }
+
+                        table td {
+                            border: none;
+                        }*/
+
+                .input__field {
+                    position: relative;
+                    display: block;
+                    float: right;
+                    padding: 0.8em;
+                    width: 100%;
+                    border: none;
+                    border-radius: 0;
+                    background: #f0f0f0;
+                    color: #aaa;
+                    font-weight: normal;
+                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                    -webkit-appearance: none;
+                }
+
+                .input__label--hoshi {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    padding: 5.7em 0.25em;
+                    width: 100%;
+                    height: calc(100% - 1em);
+                    text-align: left;
+                    pointer-events: none;
+                }
+
+                .kscfont {
+                    font-size: 15px;
+                    font-weight: 900;
+                }
+
+                .addcutomerpopup, .cutomtblpopup {
+                    position: relative;
+                }
+
+                .txtd {
+                    margin-top: -5%;
+                }
+
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                /* basic stylings ------------------------------------------ */
+
+                .group {
+                    position: relative;
+                    margin-bottom: 45px;
+                }
+
+                input {
+                    font-size: 18px;
+                    padding: 10px 10px 10px 5px;
+                    display: block;
+                    width: 300px;
+                    border: none;
+                    border-bottom: 1px solid #757575;
+                }
+
+                    input:focus {
+                        outline: none;
+                    }
+
+                /* LABEL ======================================= */
+                label {
+                    color: #999;
+                    font-size: 18px;
+                    font-weight: normal;
+                    position: absolute;
+                    pointer-events: none;
+                    left: 5px;
+                    top: 10px;
+                    transition: 0.2s ease all;
+                    -moz-transition: 0.2s ease all;
+                    -webkit-transition: 0.2s ease all;
+                }
+
+                /* active state */
+                input:focus ~ label, input:valid ~ label {
+                    top: -20px;
+                    font-size: 14px;
+                    color: #5264AE;
+                }
+
+                /* BOTTOM BARS ================================= */
+                .bar {
+                    position: relative;
+                    display: block;
+                    width: 300px;
+                }
+
+                    .bar:before, .bar:after {
+                        content: '';
+                        height: 2px;
+                        width: 0;
+                        bottom: 1px;
+                        position: absolute;
+                        background: #5264AE;
+                        transition: 0.2s ease all;
+                        -moz-transition: 0.2s ease all;
+                        -webkit-transition: 0.2s ease all;
+                    }
+
+                    .bar:before {
+                        left: 50%;
+                    }
+
+                    .bar:after {
+                        right: 50%;
+                    }
+
+                /* active state */
+                input:focus ~ .bar:before, input:focus ~ .bar:after {
+                    width: 50%;
+                }
+
+                /* HIGHLIGHTER ================================== */
+                .highlight {
+                    position: absolute;
+                    height: 60%;
+                    width: 100px;
+                    top: 25%;
+                    left: 0;
+                    pointer-events: none;
+                    opacity: 0.5;
+                }
+
+                /* active state */
+                input:focus ~ .highlight {
+                    -webkit-animation: inputHighlighter 0.3s ease;
+                    -moz-animation: inputHighlighter 0.3s ease;
+                    animation: inputHighlighter 0.3s ease;
+                }
+
+                /*tonggle*/
+
+                .switch {
+                    position: relative;
+                    display: block;
+                    vertical-align: top;
+                    width: 100px;
+                    height: 30px;
+                    padding: 3px;
+                    margin: 0 10px 10px 0;
+                    background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+                    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+                    border-radius: 18px;
+                    box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+                    cursor: pointer;
+                }
+
+        .switch-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+                .switch-label {
+                    position: relative;
+                    display: block;
+                    height: inherit;
+                    font-size: 10px;
+                    text-transform: uppercase;
+                    background: #eceeef;
+                    border-radius: inherit;
+                    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+                }
+
+                    .switch-label:before, .switch-label:after {
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -.5em;
+                        line-height: 1;
+                        -webkit-transition: inherit;
+                        -moz-transition: inherit;
+                        -o-transition: inherit;
+                        transition: inherit;
+                    }
+
+                    .switch-label:before {
+                        content: attr(data-off);
+                        right: 11px;
+                        color: #aaaaaa;
+                        text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+                    }
+
+                    .switch-label:after {
+                        content: attr(data-on);
+                        left: 11px;
+                        color: #FFFFFF;
+                        text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+                        opacity: 0;
+                    }
+
+        .switch-input:checked ~ .switch-label {
+            background: #E1B42B;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+
+                    .switch-input:checked ~ .switch-label:before {
+                        opacity: 0;
+                    }
+
+                    .switch-input:checked ~ .switch-label:after {
+                        opacity: 1;
+                    }
+
+                .switch-handle {
+                    position: absolute;
+                    top: 4px;
+                    left: 4px;
+                    width: 28px;
+                    height: 28px;
+                    background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+                    background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+                    border-radius: 100%;
+                    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+                }
+
+                    .switch-handle:before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        margin: -6px 0 0 -6px;
+                        width: 12px;
+                        height: 12px;
+                        background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+                        background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+                        border-radius: 6px;
+                        box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+                    }
+
+        .switch-input:checked ~ .switch-handle {
+            left: 74px;
+            box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+                /* Transition
+        ========================== */
+                .switch-label, .switch-handle {
+                    transition: All 0.3s ease;
+                    -webkit-transition: All 0.3s ease;
+                    -moz-transition: All 0.3s ease;
+                    -o-transition: All 0.3s ease;
+                }
+    </style>
+}
+
 <div class="col-md-10">
-    <div class="container-fluid">
-        <h2>Index</h2>
+    <div class="container-fluid" style="padding:10px;">
+        <div class="suppliertxt">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>Staff</h1>
+                </div>
+                <div class="col-sm-6">
+                    <button id="btnadd" class="btn btn-primary" style="float:right">Add New Suppliers</button>
+                </div>
+            </div>
+            @*<table style="width:100%">
+                    <tr>
+                        <td><h4 style="text-transform:uppercase">Suppliers</h4></td>
+                        <td style="float:right"><button id="btnadd" class="btn btn-primary">Add New Suppliers</button></td>
+                    </tr>
+                </table>*@
+        </div>
+        <div style="overflow-x: auto;padding:10px;">
+            <table id="allorders" class="display" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>S.No</th>
+                        <th>Vendor ID</th>
+                        <th>Business Name</th>
+                        <th>Services</th>
+                        <th>First Name </th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Flat No/Street</th>
+                        <th>Locality</th>
+                        <th>PinCode</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*@{
+                            var number = 0;
+                            foreach (var vendors in ViewBag.vendorlist)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" class="chcktbl" value="@vendors.id" /></td>
+                                    <td>@(++number)</td>
+                                    <td>@vendors.id </td>
+                                    <td>@vendors.Businessname</td>
+                                    @if (@vendors.services == null)
+                                    {
+                                        <td></td> }
+                                    else
+                                    {
+                                        <td>@String.Format(@vendors.services).Replace("&", ", ") </td>}
+                                    <td>@vendors.firstname </td>
+                                    <td>@vendors.lastname</td>
+                                    <td>@vendors.email</td>
+                                    <td>@vendors.phoneno</td>
+                                    <td>@vendors.adress1</td>
+                                    <td>@vendors.adress2</td>
+                                    <td>@vendors.pin_code</td>
+                                    <td>@vendors.city</td>
+                                    <td>@vendors.state</td>
+                                    <td>@vendors.country</td>
+                                    <td>@vendors.Status</td>
+                                    <td class="tdbtn" id="btndata"><button type="button" id="btnBook" class="btn book btn-danger" disabled>Book Now</button></td>
+                                </tr>
+                            }
+                        }*@
+                </tbody>
+            </table>
+        </div>
+        <div class="row" id="saverecord" style="display:none;margin-top:50px">
+            <div align="center"><h3 style="text-transform:uppercase">Add/Edit Staff</h3></div>
+            <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
+            <div class="col-12 col-sm-12 col-md-12">
+                <div class="row">
+                    <input type="hidden" id="id" name="id" value="" />
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <div>
+                            <div class="group">
+                                <input type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4">
+
+                        <p>Label</p>
+                        <label class="switch">
+                            <input class="switch-input" type="checkbox" />
+                            <span class="switch-label" data-on="Yes" data-off="No"></span>
+                            <span class="switch-handle"></span>
+                        </label>
+
+                    </div>
+                </div>
+
+
+                <div class="b txtd" align="center" style="margin-top:30px;">
+                    <div style="position: absolute; left: 471px;">
+                        <button id="SaveVendor" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
+                        <button id="EditVendor" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
+                    </div>
+                    <div style="position:absolute; display: inline;">
+                        <button id="CancelVendor" type="button" class="btn btn-danger">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <script>
+
+        //$(document).ready(function () {
+        //    $('#allorders').DataTable({
+        //        responsive: true
+        //    });
+        //    //$('#addservices').css("display", "none");
+
+        //});
+        $('#btnadd').click(function () {
+            $('input.chcktbl').prop('checked', false);
+            $('#saverecord').css('display', 'block');
+            $('#Businessname').val('');
+            $('#firstname').val('');
+            $('#lastname').val('');
+            $('#email').val('');
+            $('#phoneno').val('');
+            $('#adress1').val('');
+            $('#adress2').val('');
+            $('#city').val('');
+            $('#state').val('');
+            $('#country').val('');
+            $('#services').val('');
+            $('#pin_code').val('');
+            $('#Status').val('');
+            $('#SaveVendor').css('display', 'block');
+            $('#EditVendor').css('display', 'none');
+        });
+        $('#CancelVendor').click(function () {
+            $('#saverecord').css('display', 'none');
+        });
+
+        (function () {
+            $(document).ready(function () {
+                $('.switch-input').on('change', function () {
+                    var isChecked = $(this).is(':checked');
+                    var selectedData;
+                    var $switchLabel = $('.switch-label');
+                    console.log('isChecked: ' + isChecked);
+
+                    if (isChecked) {
+                        selectedData = $switchLabel.attr('data-on');
+                    } else {
+                        selectedData = $switchLabel.attr('data-off');
+                    }
+
+                    console.log('Selected data: ' + selectedData);
+
+                });
+
+                // Params ($selector, boolean)
+                function setSwitchState(el, flag) {
+                    el.attr('checked', flag);
+                }
+
+                // Usage
+                setSwitchState($('.switch-input'), true);
+            });
+
+        })();
+
+
+
+    </script>
+}
