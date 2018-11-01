@@ -259,7 +259,8 @@
                                         {
 
                                             <div class="col-12 col-sm-2 col-md-2">
-                                                <input type="checkbox" id="services1" name="services" value="@itemServices.ServiceName" /> <label>@itemServices.ServiceName</label>  <a href="/ManageVendor#" id="updatesupservices" class="updateservices" onclick="updatesupplierservices('@itemServices.ID')" value="@itemServices.ID"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                @*<input type="checkbox" id="services1" name="services" value="@itemServices.ServiceName" /> <label>@itemServices.ServiceName</label>  <a href="#" id="updatesupservices" class="updateservices" onclick="updatesupplierservices('@itemServices.ID')" value="@itemServices.ID"><span class="glyphicon glyphicon-pencil"></span></a>*@
+                                                <input type="checkbox" id="services1" name="services" value="@itemServices.ServiceName" /> <label>@itemServices.ServiceName</label> <span class="glyphicon glyphicon-pencil editservice" value="@itemServices.ID" style="color:cornflowerblue"></span>
                                             </div>
 
                                         }
@@ -357,8 +358,7 @@
                     $('#ServiceName').val('');
                     $('#description').val('');
                     $('#servicemodel').modal('hide');
-                    window.location.reload();
-                    location.href = '/ManageVendor#';
+                   
                 },
                 error: function (data) {
                     alert("save is failed");
@@ -367,50 +367,50 @@
            
         });
 
-        function updatesupplierservices(val) {
-           $('#servicemodel').modal('show');
-           $('#Updatesupservices').css('display', 'block');
-           $('#ADDsupServices').css('display', 'none');
-           $.ajax({
-               url: '/ManageVendor/Getsupplierservice?id=' + val,
-               type: 'POST',
-               contentType: 'application/json',
-               success: function (result) {
-                   $('#ServiceName').val(result.ServiceName);
-                   $('#description').val(result.Description);
-                   $('#Updatesupservices').click(function () {
-                       var val2 = $(this).val();
-                       var Id = $('#id').val();
-                       var supplierservices = {
-                           VendorMasterID: $('#VendorMasterID').val(),
-                           ServiceName: $('#ServiceName').val(),
-                           Description: $('#description').val()
-                       }
-                       $.ajax({
-                           url: '/ManageVendor/SupplierServices?command=' + val2 + '&&id=' + val,
-                           type: 'POST',
-                           data: JSON.stringify({ supplierservices: supplierservices }),
-                           contentType: 'application/json',
-                           success: function (data) {
-                               alert(data);
-                               $('#servicemodel').modal('hide');
-                               window.location.reload();
-                               location.href = '/ManageVendor#';
-                             
+        var pdiv = '';
+        $('.editservice').click(function () {
+            var serviceid = $(this).attr('value');
+            pdiv = '';
+            pdiv = $(this).parent('div');
+            //alert(serviceid);
+            $.ajax({
+                url: '/ManageVendor/Getsupplierservice?id=' + serviceid,
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    $('#servicemodel #ServiceName').val(result.ServiceName);
+                    $('#servicemodel #description').val(result.Description);
+                    $('#servicemodel #ID').val(serviceid);
+                    $('#Updatesupservices').css('display', 'block');
+                    $('#ADDsupServices').css('display', 'none');
+                    $('#servicemodel').modal('show');
+                }
+            });
+        });
 
-                           },
-                           error: function (data) {
-                               alert("update is failed");
-                           }
-                       })
-
-                   });
-               },
-               error: function (result) {
-               alert("failed");
-           }
-        })
-        }
+        $('#Updatesupservices').click(function () {
+            var parentdiv = pdiv;
+            var serviceid = $('#servicemodel #ID').val();
+            var supplierservices = {
+                VendorMasterID: $('#servicemodel #VendorMasterID').val(),
+                ServiceName: $('#servicemodel #ServiceName').val(),
+                Description: $('#servicemodel #description').val()
+            }
+            $.ajax({
+                url: '/ManageVendor/SupplierServices?command=Update&&id=' + serviceid,
+                type: 'POST',
+                data: JSON.stringify({ supplierservices: supplierservices }),
+                contentType: 'application/json',
+                success: function (data) {
+                    alert(data);
+                    parentdiv.find('label').text($('#servicemodel #ServiceName').val());
+                    $('#servicemodel').modal('hide');
+                },
+                error: function (data) {
+                    alert("update is failed");
+                }
+            })
+        });
        
     </script>
 }

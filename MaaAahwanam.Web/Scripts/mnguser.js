@@ -339,15 +339,17 @@ $('#booknow').click(function () {
     var date = window.localStorage.getItem("vpbookdate");
     var timeslot = window.localStorage.getItem("vpbooktimeslot");
     var packid = packageid;
+    alert(vpbook);
     var vpbook1 = vpbook.split(',');
     var loc = vpbook1[0];
-    var eventtype = vpbook[2];
+    var eventtype = vpbook1[2];
     var guests = vpbook1[1];
     var date = date;
     var timeslot = timeslot;
     if (packid == '') {
         var selectedp = window.localStorage.getItem("vpbook");
     }
+    alert(eventtype);
     $('.overlay').show();
     $('#loadermsg').text('Booking in process....');
     var type = $("input[name='type']:checked").val();
@@ -398,7 +400,7 @@ $('#booknow').click(function () {
     else if (!lnamepattren.test(lastname)) { alert("Enter only alphabates"); $("#lastname").focus(); }
     else {
         $.ajax({
-            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&timeslot=' + timeslot,
+            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&timeslot=' + timeslot,
             type: 'POST',
             contentType: 'application/json',
             success: function (result) {
@@ -440,12 +442,14 @@ $('#booknowss').click(function () {
     var date = window.localStorage.getItem("vpbookdate");
     var timeslot = window.localStorage.getItem("vpbooktimeslot");
     var packid = packageid;
+   
+
     var vpbook1 = vpbook.split(',');
     var loc = vpbook1[0];
-    var eventtype = vpbook[2];
+    var eventtype = vpbook1[2];
     var guests = vpbook1[1];
     var date = date;
-
+  
     if (type == "Corporate" && businessname != '' || type == "Individual") {
 
         $('.overlay').show();
@@ -498,7 +502,7 @@ $('#booknowss').click(function () {
         else if (!lnamepattren.test(lastname)) { alert("Enter only alphabates"); $("#lastname").focus(); }
         else {
             $.ajax({
-                url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status + '&&ctype=' + type + '&&timeslot=' + timeslot, //+ '&&selectedp=' + selectedp,
+                url: '/ManageUser/booknowss?loc=' + loc + '&&eventtype=' + eventtype +  '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&businessname=' + businessname + '&&firstname=' + firstname + '&&lastname=' + lastname + '&&email=' + email + '&&phoneno=' + phoneno + '&&adress1=' + adress1 + '&&adress2=' + adress2 + '&&city=' + city + '&&state=' + state + '&&country=' + country + '&&pincode=' + pincode + '&&Status=' + Status + '&&ctype=' + type + '&&timeslot=' + timeslot, //+ '&&selectedp=' + selectedp,
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
