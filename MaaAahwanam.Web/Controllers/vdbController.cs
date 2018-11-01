@@ -537,18 +537,15 @@ namespace MaaAahwanam.Web.Controllers
             return Json(package.PackageID, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DuplicatePackage(Package package)
+        public JsonResult DuplicatePackage(string pkgid, string id, string subid)
         {
+            Package package = vendorVenueSignUpService.Getpackages(long.Parse(id), long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            package.price1 = package.PackagePrice = package.normaldays;
-            //Add Package Code
-            package.Status = "Active";
             package.UpdatedDate = updateddate;
-            package.timeslot = (package.timeslot != null) ? package.timeslot.Trim(',') : package.timeslot;
             package = vendorVenueSignUpService.addpack(package);
             string msg = string.Empty;
             if (package.PackageID > 0) msg = package.PackageID.ToString();
-            else msg = "Failed TO Add Package";
+            else msg = "Failed TO Duplicate Package";
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
@@ -557,7 +554,6 @@ namespace MaaAahwanam.Web.Controllers
             Package package = vendorVenueSignUpService.Getpackages(long.Parse(id),long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.UpdatedDate = updateddate;
-            //package.PackageID = 0;
             package.VendorSubId = long.Parse(selectedid);
             package = vendorVenueSignUpService.addpack(package);
             string msg = string.Empty;

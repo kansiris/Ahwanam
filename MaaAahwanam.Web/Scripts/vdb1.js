@@ -771,85 +771,16 @@ $(document).on('change', '.copypkg', function () {
 
 // Cloning Package
 $(document).on('click', '.pkgclone', function () {
-    var menuitems = '';
     $('.overlay').show();
     $('#loadermsg').text("Duplicating Package...");
-    var totaldiv = $(this).parents('div.allpkgs');
-    var allbuttons = totaldiv.find(".package-list button").text();
-    var list = [];
-    for (var i = 0; i < allbuttons.split(')').length; i++) {
-        if (allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1] != 0)
-            list.push(allbuttons.split(')')[i] + ')');
-    }
-    var newlists = totaldiv.find('.selpkgitems').val().substring(1, totaldiv.find('.selpkgitems').val().length) + ',' + totaldiv.find('.pkgmenuitems').val();
-    var dblist = totaldiv.find('.pkgmenuitems').val();
-    var selectedlist = totaldiv.find('.availablepkgitems').val();
-    var splitteddblist = dblist.split(',');
-    var a = []; var b = [];
-    for (var i = 0; i < newlists.split(',').length; i++) {
-        var thisval = newlists.split(',')[i].split('(')[0]
-        if (thisval != '')
-            a.push(thisval);
-    }
-    var availableitems = a;
-    for (var i = 0; i < availableitems.length; i++) {
-        var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));
-        if (b.indexOf(value) == -1) {
-            if (value != -1) {
-                b.push(value);
-                splitteddblist[value] = newlists.split(',')[i];
-            }
-            else {
-                splitteddblist.push(newlists.split(',')[i]);
-            }
-        }
-    }
-    menuitems = splitteddblist.join(',');
-    var packagename = totaldiv.find('input#pkgname').val(); //$('#pkgname').val();
-    var pkgcategory = totaldiv.find("input[type='radio']:checked").val();
-    var peakdays = totaldiv.find('#pdays').val();
-    var normaldays = totaldiv.find('#ndays').val();
-    var holidays = totaldiv.find('#holidays').val();
-    var choicedays = totaldiv.find('#cdays').val();
-    var timeslot = totaldiv.find('#pkgslots').val();
-    var pkgdescription = totaldiv.find('#pkgdesc').val();
-    //var menuitems = totaldiv.find('input.selpkgitems').val();//pkgdesc;
-    //if (menuitems == '') {
-    //    menuitems = totaldiv.find('input.pkgmenuitems').val();
-    //}
-    var menu = list.join(',');
-    var thisdiv = $(this);
-    var pkgid = '';
-    var package = {
-        PackageName: packagename,
-        Category: pkgcategory,
-        PackageDescription: pkgdescription,
-        peakdays: peakdays,
-        normaldays: normaldays,
-        holidays: holidays,
-        choicedays: choicedays,
-        VendorId: id,
-        VendorSubId: subid,
-        VendorType: category,
-        VendorSubType: subcategory,
-        timeslot: timeslot,
-        menuitems: menuitems,
-        menu: menu
-    }
+    var pkgid = $(this).parent('div.pkgsave').find('input.packageid').val();
     $.ajax({
-        url: '/vdb/DuplicatePackage',
+        url: '/vdb/DuplicatePackage?pkgid=' + pkgid + '&&id=' + id + '&&subid=' + subid,
         type: 'post',
         datatype: 'json',
-        data: package,
         success: function (data) {
-            if (data != '0') {
-                pkgid = data;
-                alert("Package Duplicated SuccessFully!!!");
-                //duplicatepkg(thisdiv, pkgid);
-                location.reload();
-            }
-            else { alert(data); }
-            $('.overlay').hide();
+            alert(data);
+            location.reload();
         }
     });
 });
