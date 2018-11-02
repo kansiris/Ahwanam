@@ -407,7 +407,6 @@ namespace MaaAahwanam.Web.Controllers
 
                // data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
                 //data.timeslot = timeslot1[i].Split('~')[0];
-                OrderDetail orderDetail = new OrderDetail();
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.OrderBy = long.Parse(uid);
                 orderDetail.PaymentId = '1';
@@ -462,7 +461,7 @@ namespace MaaAahwanam.Web.Controllers
             StringBuilder cds2 = new StringBuilder();
     cds2.Append("<table style='border:1px black solid;'><tbody>");
             cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
-            cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderDate + "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
             cds2.Append("</tbody></table>");
             string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
     FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
@@ -657,7 +656,7 @@ namespace MaaAahwanam.Web.Controllers
                 StringBuilder cds2 = new StringBuilder();
                 cds2.Append("<table style='border:1px black solid;'><tbody>");
                 cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
-                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderDate+ "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 cds2.Append("</tbody></table>");
                 string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
