@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Globalization
+@{
     ViewBag.Title = ":: Received Payments::";
     Layout = "~/Views/SharedWeb/vendorloginmaster.cshtml";
 }
@@ -103,7 +104,7 @@
                                     <div class="col-6 total_amount text-right" id="totalprice" name="totalprice">
                                         <address>
                                             <strong>Total Price:</strong><br />
-                                            ₹<span>@ViewBag.totalprice</span><br /><br />
+                                            ₹<span>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.totalprice)).Replace(".00", "")</span><br /><br />
                                         </address>
                                     </div>
 
@@ -121,7 +122,7 @@
                                                 <tr>
                                                     <td><strong>Select</strong></td>
                                                     <td class="text-center"><strong>Order DetailId</strong></td>
-                                                    <td  class="text-center"><strong>Event Type</strong></td>
+                                                    <td class="text-center"><strong>Event Type</strong></td>
                                                     <td class="text-center"><strong>Price</strong></td>
                                                     <td class="text-center"><strong>Quantity</strong></td>
                                                     <td class="text-right"><strong>Total Amount</strong></td>
@@ -135,10 +136,10 @@
                                                         <td><input type="checkbox" class="chcktbl" value="@item.Due,@item.OrderDetailId" onclick="amnttotal()" /></td>
                                                         <td class="text-center">@item.OrderDetailId</td>
                                                         <td class="text-center">@item.EventType</td>
-                                                        <td class="text-center">₹ @item.PerunitPrice</td>
+                                                        <td class="text-center">₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PerunitPrice)).Replace(".00", "")</td>
                                                         <td class="text-center">@item.Quantity</td>
-                                                        <td class="text-right">₹ @item.TotalPrice</td>
-                                                        <td class="text-right">₹ @ViewBag.paidamount</td>
+                                                        <td class="text-right">₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
+                                                        <td class="text-right">₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.paidamount)).Replace(".00", "")</td>
                                                     </tr>
                                                 }
                                             </tbody>
@@ -149,216 +150,216 @@
                             </div>
                         </div>
                         @if (ViewBag.payment.Count != 0)
-                        { <div class="row">
-                            <div class="col-lg-12" style="padding-left:30px">
-                                <div class="add_top_15">
-                                    <h3><strong>Payment summary</strong></h3>
-                                    <div class="table-responsive">
-                                        <table class="table table-condensed" style="width:100%;max-width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <td ><strong>Payment Date</strong></td>
-                                                    <td class="text-center"><strong>Payment Id</strong></td>
-                                                    <td class="text-center"><strong>Payment Type</strong></td>
-                                                    <td class="text-right"><strong>Received Amount</strong></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in ViewBag.payment)
-                                                {
+                        {<div class="row">
+                                <div class="col-lg-12" style="padding-left:30px">
+                                    <div class="add_top_15">
+                                        <h3><strong>Payment summary</strong></h3>
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed" style="width:100%;max-width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td >@item.Payment_Date.ToString("dd-MMM-yyyy")</td>
-                                                        <td class="text-center">@item.Payment_Id</td>
-                                                        <td class="text-center">@item.Payment_Type</td>
-                                                        <td class="text-right">₹ @item.Received_Amount</td>
+                                                        <td><strong>Payment Date</strong></td>
+                                                        <td class="text-center"><strong>Payment Id</strong></td>
+                                                        <td class="text-center"><strong>Payment Type</strong></td>
+                                                        <td class="text-right"><strong>Received Amount</strong></td>
                                                     </tr>
-                                                }                 
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in ViewBag.payment)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Payment_Date.ToString("dd-MMM-yyyy")</td>
+                                                            <td class="text-center">@item.Payment_Id</td>
+                                                            <td class="text-center">@item.Payment_Type</td>
+                                                            <td class="text-right">₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Received_Amount)).Replace(".00", "")</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <hr />
                                     </div>
-                                    <hr />
                                 </div>
                             </div>
-                        </div>
                         }
-                        </div>
-                        <div class="row PaymentType" style="padding-left:30px">
-                            <h3 class="col-md-12"><strong> Payment Mode</strong></h3>
-                            <div class="col-md-8">
-                                <div class="row payment-options">
-                                    <fieldset class="form-check" style="display:inline">
-                                        <label class="form-check-label" for="Status1">Cash</label>
-                                        <input type="radio" class="chckcash" id="Type1" name="Payment_Type" value="Cash" checked required />
-                                    </fieldset>
-                                    <fieldset class="form-check" style="display:inline">
-                                        <label class="form-check-label" for="Status2">Cheque</label>
-                                        <input type="radio" class="chckcheque" id="Type2" name="Payment_Type" value="Cheque" required />
-                                    </fieldset>
-                                    <fieldset class="form-check" style="display:inline">
-                                        <label class="form-check-label" for="Status2"> Credit / Debit Card</label>
-                                        <input type="radio" class="chckcard" id="Type3" name="Payment_Type" value="Credit/DebitCard" required />
-                                    </fieldset>
-                                    <fieldset class="form-check" style="display:inline">
-                                        <label class="form-check-label" for="Status2">Bank Transfer</label>
-                                        <input type="radio" class="chckbt" id="Type4" name="Payment_Type" value="Bank Transfer" required />
-                                    </fieldset>
-                                    <fieldset class="form-check" style="display:inline">
-                                        <label class="form-check-label" for="Status2">Wallet</label>
-                                        <input type="radio" class="chckwallet" id="Type5" name="Payment_Type" value="Wallet" required />
-                                    </fieldset>
-                                </div>
-                                <br />
-                                <div class="row Cashdetails" id="cashdetails">
-                                    <div class="col-md-4">
-                                        <div class="form-group" style="margin-bottom:0;">
-                                            <label>Date:</label>
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"></div>
-                                            <input class="form-control datepicker" id="Cash_Date" name="Cash_Date" type="text" style="padding: 5px;">
-                                        </div>
+                    </div>
+                    <div class="row PaymentType" style="padding-left:30px">
+                        <h3 class="col-md-12"><strong> Payment Mode</strong></h3>
+                        <div class="col-md-8">
+                            <div class="row payment-options">
+                                <fieldset class="form-check" style="display:inline">
+                                    <label class="form-check-label" for="Status1">Cash</label>
+                                    <input type="radio" class="chckcash" id="Type1" name="Payment_Type" value="Cash" checked required />
+                                </fieldset>
+                                <fieldset class="form-check" style="display:inline">
+                                    <label class="form-check-label" for="Status2">Cheque</label>
+                                    <input type="radio" class="chckcheque" id="Type2" name="Payment_Type" value="Cheque" required />
+                                </fieldset>
+                                <fieldset class="form-check" style="display:inline">
+                                    <label class="form-check-label" for="Status2"> Credit / Debit Card</label>
+                                    <input type="radio" class="chckcard" id="Type3" name="Payment_Type" value="Credit/DebitCard" required />
+                                </fieldset>
+                                <fieldset class="form-check" style="display:inline">
+                                    <label class="form-check-label" for="Status2">Bank Transfer</label>
+                                    <input type="radio" class="chckbt" id="Type4" name="Payment_Type" value="Bank Transfer" required />
+                                </fieldset>
+                                <fieldset class="form-check" style="display:inline">
+                                    <label class="form-check-label" for="Status2">Wallet</label>
+                                    <input type="radio" class="chckwallet" id="Type5" name="Payment_Type" value="Wallet" required />
+                                </fieldset>
+                            </div>
+                            <br />
+                            <div class="row Cashdetails" id="cashdetails">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Cashier Name:</label>
-                                            <input type="text" class="form-control" id="Cash_Card_Holdername" name="Cash_Card_Holdername" style="padding: 5px;">
-                                        </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="Cash_Date" name="Cash_Date" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
-                                <div class="row Chequedetails" id="chequedetails" style="display:none;">
-                                    <div class="col-md-4">
-                                        <div class="form-group" style="margin-bottom:0;">
-                                            <label>Date:</label>
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"></div>
-                                            <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Cashier Name:</label>
+                                        <input type="text" class="form-control" id="Cash_Card_Holdername" name="Cash_Card_Holdername" style="padding: 5px;">
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Bank name</label>
-                                            <input type="text" class="form-control" id="Cheque_Bankname" name="Cheque_Bankname" style="padding: 5px;">
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="row Chequedetails" id="chequedetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Cheque No</label>
-                                            <input type="text" class="form-control" id="Cheque_Number" name="Cheque_Number" style="padding: 5px;">
-                                        </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
                                     </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank name</label>
+                                        <input type="text" class="form-control" id="Cheque_Bankname" name="Cheque_Bankname" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Cheque No</label>
+                                        <input type="text" class="form-control" id="Cheque_Number" name="Cheque_Number" style="padding: 5px;">
+                                    </div>
+                                </div>
 
-                                </div>
-                                <div class="row credit/debitcarddetails" id="carddetails" style="display:none;">
-                                    <div class="col-md-4">
-                                        <div class="form-group" style="margin-bottom:0;">
-                                            <label>Date:</label>
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"></div>
-                                            <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                        </div>
+                            </div>
+                            <div class="row credit/debitcarddetails" id="carddetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Card Holder Name</label>
-                                            <input type="text" class="form-control" id="Card_Holder_Name" name="Card_Holder_Name" style="padding: 5px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Last 4 digits</label>
-                                            <input type="text" class="form-control" id="Card_Last4digits" name="Card_Last4digits" style="padding: 5px;">
-                                        </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
-                                <div class="row Bankdetails" id="bankdetails" style="display:none;">
-                                    <div class="col-md-4">
-                                        <div class="form-group" style="margin-bottom:0;">
-                                            <label>Date:</label>
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"></div>
-                                            <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Account Holder Name</label>
-                                            <input type="text" class="form-control" id="Bank_Transfer_Name" name="Bank_Transfer_Name" style="padding: 5px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Transaction Id</label>
-                                            <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_Transaction_ID" style="padding: 5px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Bank Name</label>
-                                            <input type="text" class="form-control" id="Bank_Transfer_IFSCcode" name="Bank_Transfer_IFSCcode" style="padding: 5px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Branch Name</label>
-                                            <input type="text" class="form-control" id="Bank_Transfer_Branchname" name="Bank_Transfer_Branchname" style="padding: 5px;">
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Card Holder Name</label>
+                                        <input type="text" class="form-control" id="Card_Holder_Name" name="Card_Holder_Name" style="padding: 5px;">
                                     </div>
                                 </div>
-                                <div class="row Walletdetails" id="walletdetails" style="display:none;">
-                                    <div class="col-md-4">
-                                        <div class="form-group" style="margin-bottom:0;">
-                                            <label>Date:</label>
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"></div>
-                                            <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Mobile Number</label>
-                                            <input type="text" class="form-control" id="Wallet_Number" name="Wallet_Number" style="padding: 5px;">
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Last 4 digits</label>
+                                        <input type="text" class="form-control" id="Card_Last4digits" name="Card_Last4digits" style="padding: 5px;">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">    
-                                <div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Total Amount</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" value="@ViewBag.totalprice" readonly>
-                                        </div>
+                            <div class="row Bankdetails" id="bankdetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Balance Due</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Account Holder Name</label>
+                                        <input type="text" class="form-control" id="Bank_Transfer_Name" name="Bank_Transfer_Name" style="padding: 5px;">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Received Amount</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Transaction Id</label>
+                                        <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_Transaction_ID" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank Name</label>
+                                        <input type="text" class="form-control" id="Bank_Transfer_IFSCcode" name="Bank_Transfer_IFSCcode" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Branch Name</label>
+                                        <input type="text" class="form-control" id="Bank_Transfer_Branchname" name="Bank_Transfer_Branchname" style="padding: 5px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row Walletdetails" id="walletdetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input type="text" class="form-control" id="Wallet_Number" name="Wallet_Number" style="padding: 5px;">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-left:30px">
-                            <div class="col-md-6  remarks margin-top" style="padding:5px">
-                                <label>Remarks</label>
-                                <textarea class="form-control" rows="3" id="Remarks" name="Remarks"></textarea>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Total Amount</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" value="@ViewBag.totalprice" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Balance Due</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Received Amount</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                 
+                    </div>
+                    <div class="row" style="padding-left:30px">
+                        <div class="col-md-6  remarks margin-top" style="padding:5px">
+                            <label>Remarks</label>
+                            <textarea class="form-control" rows="3" id="Remarks" name="Remarks"></textarea>
+                        </div>
+                    </div>
+
                     <br />
                     <div id="editor"></div>
 
@@ -538,7 +539,7 @@
 
     });
     $("#btnemail").click(function () {
-       
+
             OrderId= $("#OrderId").val(),
             User_Id= $("#User_Id").val(),
             Payment_Type= $("input[name='Payment_Type']:checked").val(),
@@ -561,7 +562,7 @@
             Current_Balance= $('#Current_Balance').val(),
             Opening_Balance= $('#Opening_Balance').val(),
             Remarks= $("#Remarks").val()
-       
+
         $.ajax({
             url: '/Payments/Email?oid=' + OrderId,
             type: 'Post',
@@ -572,7 +573,7 @@
             error: function (result) {
                 alert("failed");
             }
-            
+
         })
     });
     //function amnttotal() {

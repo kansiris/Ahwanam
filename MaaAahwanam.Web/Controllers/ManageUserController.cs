@@ -407,7 +407,7 @@ namespace MaaAahwanam.Web.Controllers
 
                // data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
                 //data.timeslot = timeslot1[i].Split('~')[0];
-                OrderDetail orderDetail = new OrderDetail();
+               
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.OrderBy = long.Parse(uid);
                 orderDetail.PaymentId = '1';
