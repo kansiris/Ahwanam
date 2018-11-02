@@ -17,8 +17,8 @@
     <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
     <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+    @*<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />*@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 }
 <style>
@@ -927,16 +927,16 @@
                         <input type="hidden" id="vendoravailabledates" value="" />
                         <div>
                             @*<input type="button" id="datepickerks" value="Calendar" />*@
-                            @*<img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" style="height:17px ;width:20px;margin-left:10px" />*@
+                            <img align="right" src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:100px" />
 
 
                             @*<div id="datepickerks"></div>*@
 
-                            <div id="calendar"></div>
+                            @*<div id="calendar"></div>*@
 
 
 
-                            @*<div class="row packesss" id="allrecords">
+                            <div class="row packesss" id="allrecords">
                                     <div class="left">
                                         <button class="buttonks buttonks1" id="left-button">
                                             <<
@@ -951,7 +951,7 @@
                                             >>
                                         </button>
                                     </div>
-                                </div>*@
+                                </div>
 
                             <div>
                                 <form class="uk-form-stacked" style="margin-top:-10px">
@@ -1027,11 +1027,11 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>*@
     @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
-    <script>
+    @*<script>
         //full calendar
         $('#calendar').fullCalendar({
             defaultDate: '2018-10-12',
@@ -1065,7 +1065,7 @@
             ]
         });
 
-    </script>
+    </script>*@
 
 
 
@@ -1104,47 +1104,47 @@
         //    }, 0)
         //}
 
-        var date = new Date();
-        var array = ["2018-10-01", "2018-10-02", "2018-10-06"]; //$('#vendoravailabledates').val();
-        //   alert(array);
-        $(function () {
-            $("#datepickerks").datepicker(
-                {
-                    beforeShow: addCustomInformation,
-                    beforeShowDay: function (date) {
-                        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                        [array.indexOf(string) == -1]
-                        return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-                    },
-                    //    function (date) {
-                    //    return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-                    //},
-                    onChangeMonthYear: addCustomInformation
-                    //onSelect: addCustomInformation
-                }
-            );
-            addCustomInformation();
-        });
+        //var date = new Date();
+        //var array = ["2018-10-01", "2018-10-02", "2018-10-06"]; //$('#vendoravailabledates').val();
+        ////   alert(array);
+        //$(function () {
+        //    $("#datepickerks").datepicker(
+        //        {
+        //            beforeShow: addCustomInformation,
+        //            beforeShowDay: function (date) {
+        //                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+        //                [array.indexOf(string) == -1]
+        //                return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+        //            },
+        //            //    function (date) {
+        //            //    return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+        //            //},
+        //            onChangeMonthYear: addCustomInformation
+        //            //onSelect: addCustomInformation
+        //        }
+        //    );
+        //    addCustomInformation();
+        //});
         //calender
-        var unavailableDates1 = "";
-        function addCustomInformation() {
-            var price = '';
-            var price1 = $('#PackagePrice').val();
-            var  price2 = $('#PackagePrice1').val();
-            if (price1 == '' || price1 == 'undefined') { price = price2; }
-            if (price == 'undefined' || price == '') { price = 'N/A';}
-            var PackagePrice = price;
-            setTimeout(function () {
-                //     alert('ks');
-                $(".ui-datepicker-calendar td").filter(function () {
-                    var date = $(this).text();
-                    return /\d/.test(date);
-                }).find("a, span").html(function (i, html) {
-                    return html + "<br><small>₹"+PackagePrice+"</small>";
-                });
-            }, 0)
+        //var unavailableDates1 = "";
+        //function addCustomInformation() {
+        //    var price = '';
+        //    var price1 = $('#PackagePrice').val();
+        //    var  price2 = $('#PackagePrice1').val();
+        //    if (price1 == '' || price1 == 'undefined') { price = price2; }
+        //    if (price == 'undefined' || price == '') { price = 'N/A';}
+        //    var PackagePrice = price;
+        //    setTimeout(function () {
+        //        //     alert('ks');
+        //        $(".ui-datepicker-calendar td").filter(function () {
+        //            var date = $(this).text();
+        //            return /\d/.test(date);
+        //        }).find("a, span").html(function (i, html) {
+        //            return html + "<br><small>₹"+PackagePrice+"</small>";
+        //        });
+        //    }, 0)
 
-        }
+        //}
 
     </script>
     <script>
@@ -1152,38 +1152,38 @@
 
 
             //$("#datepicker").daterangepicker().trigger("click");
-            //$('#datepicker').datetimepicker({
-            //    dayOfWeekStart: 1,
-            //    lang: 'en',
-            //    timepicker: false,
-            //    format: 'd/m/Y',
-            //    minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-            //    maxDate: '+1970/03/02'//tomorrow is maximum date calendar
-            //});
-            //$("#datepicker").on("change", function () {
-            //    var selected = $(this).val();
-            //    var datesdiv = $('#content');
-            //    var data = "";
-            //    var package = $('#Packageselected').val().split(',')[0];
-            //    //alert(package);
-            //    $.ajax({
-            //        url: '/viewservice/calender?calender=' + selected + '&&packageid=' + package,
-            //        type: 'POST',
-            //        contentType: false,
-            //        processData: false,
-            //        data: data,
-            //        success: function (result) {
-            //            // alert(result);
-            //            // datesdiv.clear();
-            //            // datesdiv.remove();
-            //            //datesdiv.replaceWith(result);
+            $('#datepicker').datetimepicker({
+                dayOfWeekStart: 1,
+                lang: 'en',
+                timepicker: false,
+                format: 'd/m/Y',
+                minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+                maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+            });
+            $("#datepicker").on("change", function () {
+                var selected = $(this).val();
+                var datesdiv = $('#content');
+                var data = "";
+                var package = $('#Packageselected').val().split(',')[0];
+                //alert(package);
+                $.ajax({
+                    url: '/viewservice/calender?calender=' + selected + '&&packageid=' + package,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        // alert(result);
+                        // datesdiv.clear();
+                        // datesdiv.remove();
+                        //datesdiv.replaceWith(result);
 
-            //            $('.center').html(result);
-            //            //$('#content').load(result);
-            //            //$('.center').append(result);
-            //        }
-            //    });
-            //});
+                        $('.center').html(result);
+                        //$('#content').load(result);
+                        //$('.center').append(result);
+                    }
+                });
+            });
         });
 
 

@@ -860,14 +860,14 @@ function updatedetails(val) {
     var Minimumseatingcapacity = $('#Minimumseatingcapacity').val();
     var Maximumcapacity = $('#Maximumcapacity').val();
     var selectedamenuities = $('#selectedamenities').val();
-    var vsid = $('#vsid').val();
+    //var vsid = subid;
     var Address = $('#Address').val();
     var Landmark = $('#Landmark').val();
     var City = $('#City').val();
     var ZipCode = $('#ZipCode').val();
     var Description = $('#mainDescription').val();
     $.ajax({
-        url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&vsid=' + vsid + '&&hdname=' + hdname + '&&vsid=' + vsid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&vsid=' + vsid + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + val,
+        url: '/VDashboard/UpdateAmenities?selectedamenities=' + selectedamenuities + '&&hdname=' + hdname + '&&vsid=' + subid + '&&Dimentions=' + Dimentions + '&&Minimumseatingcapacity=' + Minimumseatingcapacity + '&&Maximumcapacity=' + Maximumcapacity + '&&Description=' + Description + '&&Address=' + Address + '&&Landmark=' + Landmark + '&&City=' + City + '&&ZipCode=' + ZipCode + '&&command=' + val,
         type: 'post',
         contentType: 'application-json',
         success: function (data) {

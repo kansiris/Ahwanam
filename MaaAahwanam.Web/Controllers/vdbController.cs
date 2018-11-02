@@ -116,7 +116,7 @@ namespace MaaAahwanam.Web.Controllers
                             {
                                 var courseval = pkgmitems.Split(',')[j].Split('(')[0].Replace('/', '_').Trim();
                                 if (courseval == "Fry_Dry") courseval = "Fry/Dry";
-                                if (new[] { "Welcome Drinks", "Starters", "Rice", "Bread", "Curries", "Fry/Dry", "Salads", "Soups", "Deserts", "Beverages", "Fruits" }.Contains(courseval.Replace("_"," ")))
+                                if (new[] { "Welcome Drinks", "Starters", "Rice", "Bread", "Curries", "Fry/Dry", "Salads", "Soups", "Deserts", "Beverages", "Fruits" }.Contains(courseval.Replace("_", " ")))
                                 {
                                     presentmenuitems.Add(courseval);
                                     presentmenu.Add(pkgitems[j]);
@@ -160,7 +160,7 @@ namespace MaaAahwanam.Web.Controllers
                 #endregion
 
                 #region c=="second"
-                if (c=="second")
+                if (c == "second")
                 {
                     ProductInfoService productInfoService = new ProductInfoService();
                     VendorDatesService vendorDatesService = new VendorDatesService();
@@ -480,21 +480,23 @@ namespace MaaAahwanam.Web.Controllers
                         imageno = int.Parse(splitimage[3]);
                     }
                     //Uploading images in db & folder
-                    for (int i = 0; i < Request.Files.Count; i++)
+                    //for (int i = 0; i < Request.Files.Count; i++)
+                    //{
+                    //int imagescount = vendorImageService.GetImages(long.Parse(id), long.Parse(vid)).Count();
+                    int j = imageno + list.Count() + 1;
+                    var file1 = Request.Files[0];
+                    if (file1 != null && file1.ContentLength > 0)
                     {
-                        int j = imageno + i + 1;
-                        var file1 = Request.Files[i];
-                        if (file1 != null && file1.ContentLength > 0)
-                        {
-                            filename = vendorMaster.ServicType + "_" + vid + "_" + id + "_" + j + path;
-                            fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
-                            file1.SaveAs(fileName);
-                            vendorImage.ImageName = filename;
-                            vendorImage.ImageType = type;//"Slider";
-                            vendorImage.VendorId = long.Parse(vid);
-                            vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
-                        }
+                        filename = vendorMaster.ServicType + "_" + vid + "_" + id + "_" + j + path;
+                        fileName = System.IO.Path.Combine(System.Web.HttpContext.Current.Server.MapPath(imagepath + filename));
+                        file1.SaveAs(fileName);
+                        vendorImage.ImageName = filename;
+                        vendorImage.ImageType = type;//"Slider";
+                        vendorImage.VendorId = long.Parse(vid);
+                        vendorMaster.Id = long.Parse(id);
+                        vendorImage = vendorImageService.AddVendorImage(vendorImage, vendorMaster);
                     }
+                    //}
                 }
             }
             return Json(filename, JsonRequestBehavior.AllowGet);
@@ -549,9 +551,9 @@ namespace MaaAahwanam.Web.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CopyPackage(string pkgid, string id,string selectedid, string subid)
+        public JsonResult CopyPackage(string pkgid, string id, string selectedid, string subid)
         {
-            Package package = vendorVenueSignUpService.Getpackages(long.Parse(id),long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
+            Package package = vendorVenueSignUpService.Getpackages(long.Parse(id), long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.UpdatedDate = updateddate;
             package.VendorSubId = long.Parse(selectedid);
@@ -565,7 +567,7 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult NewCourse(Package package, string type)
         {
             string extramenuitems = package.extramenuitems;
-            package = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m=>m.PackageID == package.PackageID).FirstOrDefault();//vendorDashBoardService.(packageMenu.Category, packageMenu.VendorMasterID, packageMenu.VendorID).FirstOrDefault();
+            package = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m => m.PackageID == package.PackageID).FirstOrDefault();//vendorDashBoardService.(packageMenu.Category, packageMenu.VendorMasterID, packageMenu.VendorID).FirstOrDefault();
             if (package.extramenuitems != null)
                 package.extramenuitems = package.extramenuitems + "," + extramenuitems;
             package.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
@@ -721,18 +723,18 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult UpdateMenuItems(PackageMenu PackageMenu, string type)
         {
             var getmenu = vendorDashBoardService.GetParticularMenu(PackageMenu.Category, PackageMenu.VendorMasterID, PackageMenu.VendorID).FirstOrDefault();
-            if(PackageMenu.Extra_Menu_Items != null)
-            PackageMenu.Extra_Menu_Items = getmenu.Extra_Menu_Items.Trim(',');
+            if (PackageMenu.Extra_Menu_Items != null)
+                PackageMenu.Extra_Menu_Items = getmenu.Extra_Menu_Items.Trim(',');
             PackageMenu.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             if (type == "Fry_Dry") type = "Fry/Dry";
-            string status = vendorDashBoardService.UpdateMenuItems(PackageMenu, type.Replace("_"," "));
+            string status = vendorDashBoardService.UpdateMenuItems(PackageMenu, type.Replace("_", " "));
             if (status == "Updated") status = "" + type + " Items Updated";
             return Json(status, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdatePackage(Package package)
         {
-            var getpackages = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m=>m.PackageID == package.PackageID);
+            var getpackages = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m => m.PackageID == package.PackageID);
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.price1 = package.PackagePrice = package.normaldays;
             package.menuitems = package.menuitems.Trim(',');
@@ -766,15 +768,15 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult DeletePackage(string pkgid)
         {
             string status = vendorVenueSignUpService.deletepack(pkgid);
-            return Json(status ,JsonRequestBehavior.AllowGet);
+            return Json(status, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
         #region Retrieving
 
-        public JsonResult GetPackageExtraItem(string menuitem, string id, string subid,string pkgid)
+        public JsonResult GetPackageExtraItem(string menuitem, string id, string subid, string pkgid)
         {
-            var getmenu = vendorVenueSignUpService.Getpackages(long.Parse(id),  long.Parse(subid)).FirstOrDefault(m => m.PackageID == long.Parse(pkgid));
+            var getmenu = vendorVenueSignUpService.Getpackages(long.Parse(id), long.Parse(subid)).FirstOrDefault(m => m.PackageID == long.Parse(pkgid));
             var menuitems = "";
             if (getmenu.extramenuitems != null)
             {
@@ -784,7 +786,7 @@ namespace MaaAahwanam.Web.Controllers
                     if (extramenus[i].Split('(')[0].Trim() == menuitem.Trim()) menuitems = extramenus[i].Split('(')[1].Split(')')[0];
                 }
             }
-            return Json(menuitems,JsonRequestBehavior.AllowGet);
+            return Json(menuitems, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPackagemenuItem(string menuitem, string category, string vsid)
