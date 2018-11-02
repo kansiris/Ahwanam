@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Globalization
 @{
     if (ViewBag.enable == "first")
     {
@@ -74,16 +74,17 @@
                 overflow-x: hidden;
             }
 
-            .policies th, .policies td , .amenitiesdiv th,.amenitiesdiv td {
-            padding:0;
+            .policies th, .policies td, .amenitiesdiv th, .amenitiesdiv td {
+                padding: 0;
             }
 
-            .policies,.side-content {
-            height:215px;
+            .policies, .side-content {
+                height: 215px;
             }
+
             h6 {
-            font-size:20px;
-            font-weight:700;
+                font-size: 20px;
+                font-weight: 700;
             }
         </style>
     }
@@ -96,19 +97,21 @@
                 width: 94%;
             }
 
-         
-   .flex-row.row {
-	 display: flex;
-	 flex-wrap: wrap;
-   }
-   .flex-row.row > [class*='col-'] {
-	 display: flex;
-	 flex-direction: column;
-   }
-  .flex-row.row:after,
-  .flex-row.row:before {
-	 display: flex;
-  }
+
+            .flex-row.row {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+                .flex-row.row > [class*='col-'] {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .flex-row.row:after,
+                .flex-row.row:before {
+                    display: flex;
+                }
 
             .select2-container--default .select2-selection--single {
                 height: 37px;
@@ -132,7 +135,7 @@
                 font-family: lato;
                 font-weight: bold;
                 font-size: 14px;
-                margin:0;
+                margin: 0;
             }
 
             .card-body table, tr, td {
@@ -213,7 +216,8 @@
 
 @if (ViewBag.enable == "first")
 {
-    <div class="col-md-6">  @*col-md-6  col-sm-6 col-xs-6*@
+    <div class="col-md-6">
+        @*col-md-6  col-sm-6 col-xs-6*@
         <div class="container-fluid">
             <div class="row main-tab">
                 <img src="@ViewBag.bannerimage" id="banner3">
@@ -546,7 +550,8 @@
         </div>
     </div>
 
-    <div class="col-md-4">  @*col-sm-6 col-xs-6*@
+    <div class="col-md-4">
+        @*col-sm-6 col-xs-6*@
         <div class="container-fluid">
             <div class="row policies">
                 <div class="col-md-6"><h6 class="h6-1-1">POLICIES</h6></div>
@@ -613,7 +618,7 @@
                                             <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy" checked />
                                         }
                                         else
-                                        { <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy">                                   }
+                                        { <input type="checkbox" value="Outside_food_or_caterer_allowed" class="kscpolicy">}
                                     </td>
                                     <td>Outside  food or caterer allowed</td>
                                 </tr>
@@ -624,7 +629,7 @@
                                             <input type="checkbox" value="NonVeg_allowed" class="kscpolicy" checked />
                                         }
                                         else
-                                        { <input type="checkbox" value="NonVeg_allowed" class="kscpolicy">             }
+                                        { <input type="checkbox" value="NonVeg_allowed" class="kscpolicy">}
                                     </td>
                                     <td>NonVeg allowed</td>
                                 </tr>
@@ -1100,7 +1105,7 @@
         <div class="scrolling content" id="pkgitems">
         </div>
     </div>
-                            }
+}
 
 @if (ViewBag.enable == "second" || ViewBag.enable == "orders")
 {
@@ -1262,10 +1267,10 @@
                                                                     ₹
                                                                     @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
                                                                     {<b style="font-size:17px">@item1.PackagePrice</b>}
-                                                                    else
-                                                                    {
-                                                                        <b style="font-size:17px">@item1.price1</b>
-                                                                    }
+                                                                else
+                                                                {
+                                                                    <b style="font-size:17px">@item1.price1</b>
+                                                                }
                                                                     / Person
                                                                 </span>
                                                             </td>
@@ -1281,179 +1286,189 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                              
-                                                    }
+                        </div>
+                    }
                 </div>
 
-                    <br />
-                    <input type="button" class="positive ui button btnbook" value="Choose packages" />
-                    <div class="row" style="padding-top:2%">
-                        <button class="accordion">Today's Events</button>
-                        <div class="panel">
-                            <table id="today" class="display" style="width:100%;padding-left:0">
-                                <thead>
-                                    <tr>
+                <br />
+                <input type="button" class="positive ui button btnbook" value="Choose packages" />
+                <div class="row" style="padding-top:2%">
+                    <button class="accordion">Today's Events</button>
+                    <div class="panel">
+                        <table id="today" class="display" style="width:100%;padding-left:0">
+                            <thead>
+                                <tr>
+                                    @*<th>S.No</th>*@
+                                    <th>Order ID</th>
+                                    <th>Event Type</th>
+                                    <th>Event Date</th>
+                                    <th>Package Name</th>
+                                    <th>Total Amount</th>
+                                    <th>Balance Due</th>
+                                    <th>Status</th>
+                                    @*<th>Actions</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    //var number1= 0;
+                                    foreach (var orders in ViewBag.todaysorder)
+
+                                    {
+
+                                        <tr>
+                                            @*<td>@(++number1)</td>*@
+                                            <td>@orders.OrderId</td>
+                                            <td>@orders.EventType</td>
+                                            <td>@orders.BookedDate</td>
+                                            <td>@orders.PackageName</td>
+                                            <td>
+                                                @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.TotalPrice)).Replace(".00", "")
+                                            </td>
+                                            <td>
+                                                @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "")</td>
+                                          <td>@orders.Status</td>
+                                      </tr>
+
+                                  } }
+                              @{
+                                  foreach (var orders in ViewBag.todaysorder1)
+                                  {
+
+                                        <tr>
+                                            @*<td>@(++number1)</td>*@
+                                            <td > @orders.OrderId </td >
+                                            <td > @orders.EventType </td >
+                                            <td > @orders.BookedDate </td >
+                                            <td > @orders.PackageName </td >
+                                            <td >  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.TotalPrice)).Replace(".00", "") </td >
+                                            <td > @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "") </td >
+                                     <td > @orders.Status </td >
+                                     </tr >
+
+                                 }
+         }
+                         </tbody >
+                         </table >
+
+                         </div >
+
+                         <button class="accordion">Tomorrow Events</button>
+                         <div class="panel">
+                             <table id = "tomorrow" class="display" style="width:100%;padding-left:0">
+                                 <thead>
+                                     <tr>
                                         @*<th>S.No</th>*@
-                                        <th>Order ID</th>
-                                        <th>Event Type</th>
-                                        <th>Event Date</th>
-                                        <th>Package Name</th>
-                                        <th>Total Amount</th>
-                                        <th>Balance Due</th>
-                                        <th>Status</th>
-                                        @*<th>Actions</th>*@
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        //var number1= 0;
-                                        foreach (var orders in ViewBag.todaysorder)
+                                                                                                                                                                            <th>Order ID</th>
+                                                                                                                                                                            <th>Event Type</th>
+                                                                                                                                                                            <th>Event Date</th>
+                                                                                                                                                                            <th>Package Name</th>
+                                                                                                                                                                            <th>Total Amount</th>
+                                                                                                                                                                            <th>Balance Due</th>
+                                                                                                                                                                            <th>Status</th>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                    </thead>
 
-                                        {
-
-                                            <tr>
-                                                @*<td>@(++number1)</td>*@
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>@orders.PackageName</td>
-                                                <td>@orders.TotalPrice</td>
-                                                <td>@orders.Due</td>
-                                                <td>@orders.Status</td>
-                                            </tr>
-
-                                        } }
-                                    @{
-                                        foreach (var orders in ViewBag.todaysorder1)
-                                        {
-
-                                            <tr>
-                                                @*<td>@(++number1)</td>*@
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>@orders.PackageName</td>
-                                                <td>@orders.TotalPrice</td>
-                                                <td>@orders.Due</td>
-                                                <td>@orders.Status</td>
-                                            </tr>
-
-                                        } }
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                        <button class="accordion">Tomorrow Events</button>
-                        <div class="panel">
-                            <table id="tomorrow" class="display" style="width:100%;padding-left:0">
-                                <thead>
-                                    <tr>
-                                        @*<th>S.No</th>*@
-                                        <th>Order ID</th>
-                                        <th>Event Type</th>
-                                        <th>Event Date</th>
-                                        <th>Package Name</th>
-                                        <th>Total Amount</th>
-                                        <th>Balance Due</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @{
-                                        //var number2 = 0;
-                                        foreach (var orders in ViewBag.tommaroworder)
-                                        {
-
-                                            <tr>
-                                                @*<td>@(++number2)</td>*@
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>@orders.PackageName</td>
-                                                <td>@orders.TotalPrice</td>
-                                                <td>@orders.Due</td>
-                                                <td>@orders.Status</td>
-
-                                            </tr>
-                                        } }
-                                    @{
-                                        //var number2 = 0;
-                                        foreach (var orders in ViewBag.tommaroworder1)
-                                        {
-
-                                            <tr>
-                                                @*<td>@(++number2)</td>*@
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>@orders.PackageName</td>
-                                                <td>@orders.TotalPrice</td>
-                                                <td>@orders.Due</td>
-                                                <td>@orders.Status</td>
-
-                                            </tr>
-                                        } }
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                        <button class="accordion">Upcoming Events</button>
-                        <div class="panel">
-                            <table id="upcoming" class="display" style="width:100%;padding-left:0">
-                                <thead>
-                                    <tr>
-                                        @*<th>S.No</th>*@
-                                        <th>Order ID</th>
-                                        <th>Event Type</th>
-                                        <th>Event Date</th>
-                                        <th>Package Name</th>
-                                        <th>Total Amount</th>
-                                        <th>Balance Due</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                                /*   var number3 = 0*/;
-                                        foreach (var orders in ViewBag.upcominforder)
-                                        {
-                                            <tr>
-                                                @*<td>@(++number3)</td>*@
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>@orders.PackageName</td>
-                                                <td>@orders.TotalPrice</td>
-                                                <td>@orders.Due</td>
-                                                <td>@orders.Status</td>
-                                            </tr>
-                                        }
-                                                }
-                                    @{
-                                                    //var number3 = 0;
-                                                    foreach (var orders in ViewBag.upcominforder1)
+                                                                                                                                                                    <tbody>
+                                                                                                                                                                        @{
+                                                    //var number2 = 0;
+                                                    foreach (var orders in ViewBag.tommaroworder)
                                                     {
-                                            <tr>
-                                                @*<td>@(++number3)</td>*@
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.EventType</td>
-                                                <td>@orders.BookedDate</td>
-                                                <td>@orders.PackageName</td>
-                                                <td>@orders.TotalPrice</td>
-                                                <td>@orders.Due</td>
-                                                <td>@orders.Status</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="scripttags"></div>
-                                        }
+
+                                                                                                                                                                                <tr >
+                                        @*<td>@(++number2)</td>*@
+                                        <td > @orders.OrderId </td >
+                                        <td > @orders.EventType </td >
+                                        <td > @orders.BookedDate </td >
+                                        <td > @orders.PackageName </td >
+                                        <td>
+                                            @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.TotalPrice)).Replace(".00", "") </td >
+                                        <td>
+                                            @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "") </td >
+                                      <td > @orders.Status </td >
+
+                                      </tr >
+                                  }
+      }
+                              @{
+                                  //var number2 = 0;
+                                  foreach (var orders in ViewBag.tommaroworder1)
+                                  {
+
+                                                                                                                                                                                <tr>
+                                                                                                                                                                                    @*<td>@(++number2)</td>*@
+                                                                                                                                                                                    <td > @orders.OrderId </td >
+                                                                                                                                                                                    <td > @orders.EventType </td >
+                                                                                                                                                                                    <td > @orders.BookedDate </td >
+                                                                                                                                                                                    <td > @orders.PackageName </td >
+                                                                                                                                                                                    <td >  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.TotalPrice)).Replace(".00", "") </td >
+                                                                                                                                                                                    <td > @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "") </td >
+                                                                                                                                                                             <td > @orders.Status </td >
+
+                                                                                                                                                                         </tr >
+                                                                                                                                                                     }
+                                                                                                                                                     }
+                                                                                                                                                             </tbody >
+                                                                                                                                                         </table >
+
+                                                                                                                                                     </div >
+
+                                                                                                                                                     <button class="accordion">Upcoming Events</button>
+                                                                                                                                                     <div class="panel">
+                                                                                                                                                         <table id = "upcoming" class="display" style="width:100%;padding-left:0">
+                                                                                                                                                             <thead>
+                                                                                                                                                                 <tr>
+                                                                                                                                                                                @*<th>S.No</th>*@
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Order ID</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Event Type</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Event Date</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Package Name</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Total Amount</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Balance Due</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <th>Status</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </tr>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </thead>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <tbody>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @{
+                                                                                                                                                                                            /*   var number3 = 0
+                                                                                                                                                                                            ;*/
+                                                                                                                                                                                            foreach (var orders in ViewBag.upcominforder)
+                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <tr >
+                                                                                                                                                                                @*<td>@(++number3)</td>*@
+                                                                                                                                                                                <td> @orders.OrderId </td >
+                                                                                                                                                                                <td> @orders.EventType </td >
+                                                                                                                                                                                <td> @orders.BookedDate </td >
+                                                                                                                                                                                <td> @orders.PackageName </td >
+                                                                                                                                                                                <td>
+                                                                                                                                                                                    @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.TotalPrice)).Replace(".00", "") </td >
+                                                                                                                                                                             <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "") </td >
+                                                                                                                                                                             <td > @orders.Status </td >
+                                                                                                                                                                             </tr >
+                                                                                                                                                                         }
+                                                                                                                                                                                    }
+                                                                                                                                                                                                     @{
+                                                                                                                                                                                        //var number3 = 0;
+                                                                                                                                                                                        foreach (var orders in ViewBag.upcominforder1)
+                                                                                                                                                                                        {
+                                                                                                                                                                                                             <tr>
+                                                                                                                                                                                @*<td>@(++number3)</td>*@
+<td>@orders.OrderId</td>
+                                                                                                                                                                                    <td>@orders.EventType</td>
+                                                                                                                                                                                    <td>@orders.BookedDate</td>
+                                                                                                                                                                                    <td>@orders.PackageName</td>
+                                                                                                                                                                                    <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.TotalPrice)).Replace(".00", "")</td>
+                                                                                                                                                                                    <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "")</td>
+                                                                                                                                                                                    <td>@orders.Status</td>
+                                                                                                                                                                                </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                </div>
+                <div id="scripttags"></div>
+            }
 
             @if (ViewBag.enable == "orders")
             {
@@ -1462,115 +1477,115 @@
                     <div class="col-md-4"><button type="button" class="btn btn-primary" style="float:right">New Order</button></div>
                     <div class="col-md-4"><input type="text" id="datetimepicker2" class="form-control" placeholder="Select Date Range"></div>
                 </div>
-                        <br />
-                        <table id="allorders" class="display" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Order ID</th>
-                                    <th>Event Type</th>
-                                    <th>Event Date</th>
-                                    <th>Package Name</th>
-                                    <th>Total Amount</th>
-                                    <th>Balance Due</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                <br />
+                <table id="allorders" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Order ID</th>
+                            <th>Event Type</th>
+                            <th>Event Date</th>
+                            <th>Package Name</th>
+                            <th>Total Amount</th>
+                            <th>Balance Due</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var number = 0;
+                            foreach (var orders in ViewBag.order1)
+                            {
+                                <tr class="show_hide_row">
+                                    <td>@(++number)</td>
+                                    <td>@orders.OrderId</td>
+                                    <td>@orders.EventType</td>
+                                    <td>@orders.BookedDate</td>
+                                    <td>@orders.PackageName</td>
+                                    <td>@orders.TotalPrice</td>
+                                    <td>@orders.Due</td>
+                                    <td>@orders.Status</td>
+                                    <td>
+                                        <div class="menu">
+                                            <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                            <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                <div class="four column relaxed divided grid">
+                                                    <div class="column">
+                                                        <div class="link list">
+                                                            <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    var number = 0;
-                                    foreach (var orders in ViewBag.order1)
-                                    {
-                                        <tr class="show_hide_row">
-                                            <td>@(++number)</td>
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
-                                            <td>
-                                                <div class="menu">
-                                                    <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                    <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                        <div class="four column relaxed divided grid">
-                                                            <div class="column">
-                                                                <div class="link list">
-                                                                    <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                    <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                    <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                    <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
-                                                                </div>
-                                                            </div>
+                                <tr id="hidden_row1" class="hidden_row">
+                                    <td colspan=4>
+                                        <ul>
+                                            <li>Event Type:@orders.EventType</li>
+                                            <li>contact number:@orders.phoneno</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                            }
+                            foreach (var orders in ViewBag.order)
+                            {
+
+                                <tr class="show_hide_row">
+                                    <td>@(++number)</td>
+                                    <td>@orders.OrderId</td>
+                                    <td>@orders.EventType</td>
+                                    <td>@orders.BookedDate</td>
+                                    <td>@orders.PackageName</td>
+                                    <td>@orders.TotalPrice</td>
+                                    <td>@orders.Due</td>
+                                    <td>@orders.Status</td>
+                                    <td>
+                                        <div class="menu">
+                                            <button class="btn btn-default browse item" style="font-weight:700">:</button>
+                                            <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
+                                                <div class="four column relaxed divided grid">
+                                                    <div class="column">
+                                                        <div class="link list">
+                                                            <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
+                                                            <hr style="margin:0;color:black;border:1px grey ridge" />
+                                                            <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="hidden_row1" class="hidden_row">
-                                            <td colspan=4>
-                                                <ul>
-                                                    <li>Event Type:@orders.EventType</li>
-                                                    <li>contact number:@orders.phoneno</li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
 
-                                    }
-                                    foreach (var orders in ViewBag.order)
-                                    {
+                                <tr id="hidden_row1" class="hidden_row">
+                                    <td colspan=4>
+                                        <ul>
+                                            <li>Event Type:@orders.EventType</li>
+                                            <li>contact number:@orders.UserPhone</li>
+                                        </ul>
+                                    </td>
+                                </tr>
 
-                                        <tr class="show_hide_row">
-                                            <td>@(++number)</td>
-                                            <td>@orders.OrderId</td>
-                                            <td>@orders.EventType</td>
-                                            <td>@orders.BookedDate</td>
-                                            <td>@orders.PackageName</td>
-                                            <td>@orders.TotalPrice</td>
-                                            <td>@orders.Due</td>
-                                            <td>@orders.Status</td>
-                                            <td>
-                                                <div class="menu">
-                                                    <button class="btn btn-default browse item" style="font-weight:700">:</button>
-                                                    <div class="ui fluid popup top left transition hidden" style="top: auto; left: 1px; bottom: 69px; right: auto; width: 670px;">
-                                                        <div class="four column relaxed divided grid">
-                                                            <div class="column">
-                                                                <div class="link list">
-                                                                    <a class="show_hide_row12 item" id="acc1" style="cursor:pointer">View Detail</a>
-                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                    <a class="item" style="cursor:pointer" onclick="orderemail('@orders.username')">Send Message</a>
-                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                    <a href="/vinvoice?oid=@orders.OrderId" class="item" style="cursor:pointer">View Invoice</a>
-                                                                    <hr style="margin:0;color:black;border:1px grey ridge" />
-                                                                    <a href="/Payments?Oid=@orders.OrderId" class="item" style="cursor:pointer">Receive Payments</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                            }
+                        }
 
-                                        <tr id="hidden_row1" class="hidden_row">
-                                            <td colspan=4>
-                                                <ul>
-                                                    <li>Event Type:@orders.EventType</li>
-                                                    <li>contact number:@orders.UserPhone</li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-
-                                    }
-                                }
-
-                            </tbody>
-                        </table>
-                                    }
+                    </tbody>
+                </table>
+            }
 
         </div>
     </div>
@@ -1591,7 +1606,7 @@
             </div>
         </div>
     </div>
-                                    }
+}
 
 
 @section scripts{
