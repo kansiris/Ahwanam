@@ -278,48 +278,48 @@ namespace MaaAahwanam.Web.Controllers
         //    return Json(divs);
         //}
 
-        public PartialViewResult calender(string calender,string packageid)
-        {
-            DateTime cdate; string packprice;
-            if (calender == null)
-            {
-                cdate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            }
-            else {
-                DateTime  ctestdate = Convert.ToDateTime(calender);
-                string cd1 = ctestdate.ToString("dd-mm-yyyy");
-                cdate = Convert.ToDateTime(ctestdate);            }
-            if (packageid == null || packageid == "undefined")
-            {
-                 packprice = "N/A";
-            }
-            else
-            {
-                var pkgs = vendorProductsService.getpartpkgs(packageid).FirstOrDefault();
-                if (pkgs.PackagePrice != null) //|| pkgs.PackagePrice != "")
-                {
-                    packprice = pkgs.PackagePrice;
-                }
-                else { packprice = pkgs.price1; }
-            }
-            ViewBag.ppakprice = packprice;
-            DateTime cdate1 = cdate.AddDays(-1);
-            DateTime cdate2 = cdate;
-            DateTime cdate3 = cdate.AddDays(1);
-            DateTime cdate4 = cdate.AddDays(2);
-            DateTime cdate5 = cdate.AddDays(3);
-            DateTime cdate6 = cdate.AddDays(4);
-            DateTime cdate7 = cdate.AddDays(5);
-            DateTime cdate8 = cdate.AddDays(6);
-            ViewBag.cdate1 = cdate1.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate2 = cdate2.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate3 = cdate3.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate4 = cdate4.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate5 = cdate5.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate6 = cdate6.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate7 = cdate7.ToString("dd/MMM/yyyy").Replace('-', '/');
-            ViewBag.cdate8 = cdate8.ToString("dd/MMM/yyyy").Replace('-', '/');
-            return PartialView("calender");
-        }
+        //public PartialViewResult calender(string calender,string packageid)
+        //{
+        //    DateTime cdate; string packprice;
+        //    if (calender == null)
+        //    {
+        //        cdate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+        //    }
+        //    else {
+        //        DateTime  ctestdate = Convert.ToDateTime(calender);
+        //        string cd1 = ctestdate.ToString("dd-mm-yyyy");
+        //        cdate = Convert.ToDateTime(ctestdate);            }
+        //    if (packageid == null || packageid == "undefined")
+        //    {
+        //         packprice = "N/A";
+        //    }
+        //    else
+        //    {
+        //        var pkgs = vendorProductsService.getpartpkgs(packageid).FirstOrDefault();
+        //        if (pkgs.PackagePrice != null) //|| pkgs.PackagePrice != "")
+        //        {
+        //            packprice = pkgs.PackagePrice;
+        //        }
+        //        else { packprice = pkgs.price1; }
+        //    }
+        //    ViewBag.ppakprice = packprice;
+        //    DateTime cdate1 = cdate.AddDays(-1);
+        //    DateTime cdate2 = cdate;
+        //    DateTime cdate3 = cdate.AddDays(1);
+        //    DateTime cdate4 = cdate.AddDays(2);
+        //    DateTime cdate5 = cdate.AddDays(3);
+        //    DateTime cdate6 = cdate.AddDays(4);
+        //    DateTime cdate7 = cdate.AddDays(5);
+        //    DateTime cdate8 = cdate.AddDays(6);
+        //    ViewBag.cdate1 = cdate1.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    ViewBag.cdate2 = cdate2.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    ViewBag.cdate3 = cdate3.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    ViewBag.cdate4 = cdate4.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    ViewBag.cdate5 = cdate5.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    ViewBag.cdate6 = cdate6.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    ViewBag.cdate7 = cdate7.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    ViewBag.cdate8 = cdate8.ToString("dd/MMM/yyyy").Replace('-', '/');
+        //    return PartialView("calender");
+        //}
     }
 }

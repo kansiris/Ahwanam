@@ -17,8 +17,8 @@
     <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
     <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
-    @*<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />*@
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 }
 <style>
@@ -323,7 +323,14 @@
         background: white;
     }*/
 </style>
-
+<style>
+    .fc-state-highlight {
+        background:blueviolet;
+    }
+    .fc-view-container {
+        background:white;
+    }
+</style>
 
 @*<main>*@
 <div class="bg_color_1">
@@ -927,16 +934,16 @@
                         <input type="hidden" id="vendoravailabledates" value="" />
                         <div>
                             @*<input type="button" id="datepickerks" value="Calendar" />*@
-                            <img align="right" src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:100px" />
+                            @*<img align="right" src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:100px" />*@
 
 
                             @*<div id="datepickerks"></div>*@
 
-                            @*<div id="calendar"></div>*@
+                            <div id="calendar"></div>
+                            <input type="hidden" id="selecteddate" />
 
 
-
-                            <div class="row packesss" id="allrecords">
+                            @*<div class="row packesss" id="allrecords">
                                     <div class="left">
                                         <button class="buttonks buttonks1" id="left-button">
                                             <<
@@ -951,7 +958,7 @@
                                             >>
                                         </button>
                                     </div>
-                                </div>
+                                </div>*@
 
                             <div>
                                 <form class="uk-form-stacked" style="margin-top:-10px">
@@ -1027,45 +1034,55 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
-    @*<script>
+    <script>
         //full calendar
         $('#calendar').fullCalendar({
             defaultDate: '2018-10-12',
             events: [
               {
-                  title: 'All Day Event',
+                  title: '1000',
                   start: '2018-10-01'
               },
               {
-                  title: 'Long Event',
+                  title: '500',
                   start: '2018-02-07'
               },
               {
                   id: 999,
-                  title: 'Repeating Event',
+                  title: '400',
                   start: '2018-10-09'
               },
               {
                   id: 999,
-                  title: 'Repeating Event',
+                  title: '700',
                   start: '2018-10-16'
               },
               {
-                  title: 'Conference',
+                  title: '800',
                   start: '2018-10-11'
               },
               {
-                  title: 'Meeting',
+                  title: '900',
                   start: '2018-10-12'
               }
-            ]
+            ],
+            dayClick: function (date, jsEvent, view) {
+                $(".fc-state-highlight").removeClass("fc-state-highlight");
+                $(this).addClass("fc-state-highlight");
+                $('#selecteddate').val(moment(date).format('DD/MM/YYYY'));
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                $(".fc-state-highlight").removeClass("fc-state-highlight");
+                $(this).addClass("fc-state-highlight");
+                $('#selecteddate').val(moment(calEvent.start).format('DD/MM/YYYY'));
+            }
         });
 
-    </script>*@
+    </script>
 
 
 
@@ -1314,7 +1331,7 @@
             if (cpid == null || cpid == pid) { window.localStorage.setItem("cartid", pid) }
             var gu1 = window.localStorage.getItem("guests");
             var eventtype = window.localStorage.getItem("eventtype");
-            var seldate = $('input[name=radioname]:checked').val();
+            var seldate =  $('#selecteddate').val();//$('input[name=radioname]:checked').val();
 
             var guest = '';
             //alert(gu1);
