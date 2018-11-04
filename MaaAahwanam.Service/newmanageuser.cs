@@ -48,6 +48,11 @@ namespace MaaAahwanam.Service
             orderDetail = newusermanager.SaveOrderDetail(orderDetail);
             return orderDetail;
         }
+        public StaffAccess Savestaff(StaffAccess Staffsccess)
+        {
+            Staffsccess = newusermanager.Savestaff(Staffsccess);
+            return Staffsccess;
+        }
         public List<sp_userorddisplay_Result> userOrderList()
         {
             return newusermanager.userOrderList();
@@ -59,6 +64,11 @@ namespace MaaAahwanam.Service
         public Order updateOrderstatus(Order order, OrderDetail orderdetail, long orderid)
         {
             var changes = newusermanager.updateOrderstatus(order, orderdetail, orderid);
+            return changes;
+        }
+        public StaffAccess updatestaff(StaffAccess Staffsccess, long id)
+        {
+            var changes = newusermanager.updatestaff(Staffsccess, id);
             return changes;
         }
     }

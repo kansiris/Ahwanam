@@ -52,7 +52,13 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return orderDetail;
         }
-        
+        public StaffAccess Savestaff(StaffAccess Staffsccess)
+        {
+            _dbContext.StaffAccess.Add(Staffsccess);
+            _dbContext.SaveChanges();
+            return Staffsccess;
+        }
+
         public List<sp_userorddisplay_Result> userOrderList()
         {
             return maaAahwanamEntities.sp_userorddisplay().ToList();
@@ -102,6 +108,35 @@ namespace MaaAahwanam.Repository.db
 
             }
             return order;
+        }
+        public StaffAccess updatestaff(StaffAccess Staffsccess, long id)
+        {
+
+            // Query the database for the row to be updated.
+            var query =
+                from ord in _dbContext.StaffAccess
+                where ord.ID == id
+                select ord;
+            // Query the database for the row to be updated.
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (StaffAccess ord in query)
+            {
+                ord.Status = Staffsccess.Status;
+                // Insert any additional changes to column values.
+            }
+            // Query the database for the row to be updated.
+         
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Staffsccess;
         }
     }
 }
