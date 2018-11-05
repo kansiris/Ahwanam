@@ -18,13 +18,14 @@ namespace MaaAahwanam.Web.Controllers
         newmanageuser newmanageuse = new newmanageuser();
 
         VendorMasterService vendorMasterService = new VendorMasterService();
+        OrderdetailsServices orderdetailservices = new OrderdetailsServices();
 
-        
-     
+
         ReceivePaymentService rcvpaymentservice = new ReceivePaymentService();
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         decimal amount;
+        decimal tsprice;
         // GET: vinvoice
         public ActionResult Index(string oid)
         {
@@ -48,7 +49,15 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.vendorcontact = orderdetails1.FirstOrDefault().ContactNumber;
                         ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
+                        ViewBag.Servicetype = orderdetails1.FirstOrDefault().ServiceType;
+                        ViewBag.serviceprice = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
                         ViewBag.orderdetails = orderdetails1;
+                        foreach(var i in orderdetails1)
+                        {
+                            var price = i.TotalPrice;
+                            tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
+                            ViewBag.total = tsprice;
+                        }
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
@@ -64,8 +73,10 @@ namespace MaaAahwanam.Web.Controllers
                         if (amount == '0')
                         {
                             paidamount = orderdetails1.FirstOrDefault().TotalPrice;
+                            //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
+
                         }
-                        else { paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount; }
+                        else { paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount;/*paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity)-amount;*/ }
                         ViewBag.paidamount = paidamount;
                     }
                     else
@@ -76,6 +87,8 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.vendorcontact = orderdetails.FirstOrDefault().ContactNumber;
                         ViewBag.bookeddate = Convert.ToDateTime(orderdetails.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
+                        ViewBag.Servicetype = orderdetails.FirstOrDefault().ServiceType;
+                        ViewBag.serviceprice = orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity;
                         ViewBag.orderdetails = orderdetails;
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
@@ -92,8 +105,9 @@ namespace MaaAahwanam.Web.Controllers
                         if (amount == '0')
                         {
                             paidamount = orderdetails.FirstOrDefault().TotalPrice;
+                            //paidamount = orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity;
                         }
-                        else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; }
+                        else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; /*paidamount = (orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity) - amount;*/ }
                         ViewBag.paidamount = paidamount;
                     }
                     //ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
@@ -206,6 +220,12 @@ namespace MaaAahwanam.Web.Controllers
             // This neat trick opens our PDF file so we can see the result in our default PDF viewer
             System.Diagnostics.Process.Start(OutputPath);
             return Json("success", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult GetoderdetailsbyOrderdetailId(string odid)
+        {
+            var data = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(odid));
+            return Json(data);
         }
     }
 }

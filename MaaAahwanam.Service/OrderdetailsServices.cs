@@ -31,5 +31,10 @@ namespace MaaAahwanam.Service
             var orderdetails = orderdetailsRepository.GetOrderDetails(Convert.ToInt64(oid));
             return orderdetails;
         }
+
+        public OrderDetail GetOrderDetailsByOrderdetailid(long odid)
+        {
+            return orderdetailsRepository.GetOrderDetailsbyOrderDetailId(odid);
+        }
     }
 }
