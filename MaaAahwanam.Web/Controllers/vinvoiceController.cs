@@ -56,7 +56,7 @@ namespace MaaAahwanam.Web.Controllers
                         {
                             var price = i.TotalPrice;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
-                            ViewBag.total = amount;
+                            ViewBag.total = tsprice;
                         }
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
