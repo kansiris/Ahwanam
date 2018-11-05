@@ -32,5 +32,24 @@ namespace MaaAahwanam.Web.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public JsonResult Index(StaffAccess Staffsccess, string id, string command,string kscadd)
+        {
+            string msg = string.Empty;
+            Staffsccess.UpdatedDate = DateTime.Now;
+            Staffsccess.RegisteredDate = DateTime.Now;
+            if (command == "Save")
+            {
+                Staffsccess = newmanageuse.Savestaff(Staffsccess);
+                msg = "Added New staff";
+            }
+            else if (command == "Update")
+            {
+                Staffsccess = newmanageuse.updatestaff(Staffsccess, int.Parse(id));
+                msg = "Updated staff";
+            }
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
     }
 }

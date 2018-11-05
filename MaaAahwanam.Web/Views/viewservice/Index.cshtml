@@ -323,7 +323,14 @@
         background: white;
     }*/
 </style>
-
+<style>
+    .fc-state-highlight {
+        background:blueviolet;
+    }
+    .fc-view-container {
+        background:white;
+    }
+</style>
 
 @*<main>*@
 <div class="bg_color_1">
@@ -927,13 +934,13 @@
                         <input type="hidden" id="vendoravailabledates" value="" />
                         <div>
                             @*<input type="button" id="datepickerks" value="Calendar" />*@
-                            @*<img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" style="height:17px ;width:20px;margin-left:10px" />*@
+                            @*<img align="right" src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:100px" />*@
 
 
                             @*<div id="datepickerks"></div>*@
 
                             <div id="calendar"></div>
-
+                            <input type="hidden" id="selecteddate" />
 
 
                             @*<div class="row packesss" id="allrecords">
@@ -1037,32 +1044,42 @@
             defaultDate: '2018-10-12',
             events: [
               {
-                  title: 'All Day Event',
+                  title: '1000',
                   start: '2018-10-01'
               },
               {
-                  title: 'Long Event',
+                  title: '500',
                   start: '2018-02-07'
               },
               {
                   id: 999,
-                  title: 'Repeating Event',
+                  title: '400',
                   start: '2018-10-09'
               },
               {
                   id: 999,
-                  title: 'Repeating Event',
+                  title: '700',
                   start: '2018-10-16'
               },
               {
-                  title: 'Conference',
+                  title: '800',
                   start: '2018-10-11'
               },
               {
-                  title: 'Meeting',
+                  title: '900',
                   start: '2018-10-12'
               }
-            ]
+            ],
+            dayClick: function (date, jsEvent, view) {
+                $(".fc-state-highlight").removeClass("fc-state-highlight");
+                $(this).addClass("fc-state-highlight");
+                $('#selecteddate').val(moment(date).format('DD/MM/YYYY'));
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                $(".fc-state-highlight").removeClass("fc-state-highlight");
+                $(this).addClass("fc-state-highlight");
+                $('#selecteddate').val(moment(calEvent.start).format('DD/MM/YYYY'));
+            }
         });
 
     </script>
@@ -1104,47 +1121,47 @@
         //    }, 0)
         //}
 
-        var date = new Date();
-        var array = ["2018-10-01", "2018-10-02", "2018-10-06"]; //$('#vendoravailabledates').val();
-        //   alert(array);
-        $(function () {
-            $("#datepickerks").datepicker(
-                {
-                    beforeShow: addCustomInformation,
-                    beforeShowDay: function (date) {
-                        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                        [array.indexOf(string) == -1]
-                        return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-                    },
-                    //    function (date) {
-                    //    return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-                    //},
-                    onChangeMonthYear: addCustomInformation
-                    //onSelect: addCustomInformation
-                }
-            );
-            addCustomInformation();
-        });
+        //var date = new Date();
+        //var array = ["2018-10-01", "2018-10-02", "2018-10-06"]; //$('#vendoravailabledates').val();
+        ////   alert(array);
+        //$(function () {
+        //    $("#datepickerks").datepicker(
+        //        {
+        //            beforeShow: addCustomInformation,
+        //            beforeShowDay: function (date) {
+        //                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+        //                [array.indexOf(string) == -1]
+        //                return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+        //            },
+        //            //    function (date) {
+        //            //    return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+        //            //},
+        //            onChangeMonthYear: addCustomInformation
+        //            //onSelect: addCustomInformation
+        //        }
+        //    );
+        //    addCustomInformation();
+        //});
         //calender
-        var unavailableDates1 = "";
-        function addCustomInformation() {
-            var price = '';
-            var price1 = $('#PackagePrice').val();
-            var  price2 = $('#PackagePrice1').val();
-            if (price1 == '' || price1 == 'undefined') { price = price2; }
-            if (price == 'undefined' || price == '') { price = 'N/A';}
-            var PackagePrice = price;
-            setTimeout(function () {
-                //     alert('ks');
-                $(".ui-datepicker-calendar td").filter(function () {
-                    var date = $(this).text();
-                    return /\d/.test(date);
-                }).find("a, span").html(function (i, html) {
-                    return html + "<br><small>₹"+PackagePrice+"</small>";
-                });
-            }, 0)
+        //var unavailableDates1 = "";
+        //function addCustomInformation() {
+        //    var price = '';
+        //    var price1 = $('#PackagePrice').val();
+        //    var  price2 = $('#PackagePrice1').val();
+        //    if (price1 == '' || price1 == 'undefined') { price = price2; }
+        //    if (price == 'undefined' || price == '') { price = 'N/A';}
+        //    var PackagePrice = price;
+        //    setTimeout(function () {
+        //        //     alert('ks');
+        //        $(".ui-datepicker-calendar td").filter(function () {
+        //            var date = $(this).text();
+        //            return /\d/.test(date);
+        //        }).find("a, span").html(function (i, html) {
+        //            return html + "<br><small>₹"+PackagePrice+"</small>";
+        //        });
+        //    }, 0)
 
-        }
+        //}
 
     </script>
     <script>
@@ -1152,38 +1169,38 @@
 
 
             //$("#datepicker").daterangepicker().trigger("click");
-            //$('#datepicker').datetimepicker({
-            //    dayOfWeekStart: 1,
-            //    lang: 'en',
-            //    timepicker: false,
-            //    format: 'd/m/Y',
-            //    minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-            //    maxDate: '+1970/03/02'//tomorrow is maximum date calendar
-            //});
-            //$("#datepicker").on("change", function () {
-            //    var selected = $(this).val();
-            //    var datesdiv = $('#content');
-            //    var data = "";
-            //    var package = $('#Packageselected').val().split(',')[0];
-            //    //alert(package);
-            //    $.ajax({
-            //        url: '/viewservice/calender?calender=' + selected + '&&packageid=' + package,
-            //        type: 'POST',
-            //        contentType: false,
-            //        processData: false,
-            //        data: data,
-            //        success: function (result) {
-            //            // alert(result);
-            //            // datesdiv.clear();
-            //            // datesdiv.remove();
-            //            //datesdiv.replaceWith(result);
+            $('#datepicker').datetimepicker({
+                dayOfWeekStart: 1,
+                lang: 'en',
+                timepicker: false,
+                format: 'd/m/Y',
+                minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+                maxDate: '+1970/03/02'//tomorrow is maximum date calendar
+            });
+            $("#datepicker").on("change", function () {
+                var selected = $(this).val();
+                var datesdiv = $('#content');
+                var data = "";
+                var package = $('#Packageselected').val().split(',')[0];
+                //alert(package);
+                $.ajax({
+                    url: '/viewservice/calender?calender=' + selected + '&&packageid=' + package,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        // alert(result);
+                        // datesdiv.clear();
+                        // datesdiv.remove();
+                        //datesdiv.replaceWith(result);
 
-            //            $('.center').html(result);
-            //            //$('#content').load(result);
-            //            //$('.center').append(result);
-            //        }
-            //    });
-            //});
+                        $('.center').html(result);
+                        //$('#content').load(result);
+                        //$('.center').append(result);
+                    }
+                });
+            });
         });
 
 
@@ -1314,7 +1331,7 @@
             if (cpid == null || cpid == pid) { window.localStorage.setItem("cartid", pid) }
             var gu1 = window.localStorage.getItem("guests");
             var eventtype = window.localStorage.getItem("eventtype");
-            var seldate = $('input[name=radioname]:checked').val();
+            var seldate =  $('#selecteddate').val();//$('input[name=radioname]:checked').val();
 
             var guest = '';
             //alert(gu1);
