@@ -74,6 +74,12 @@ namespace MaaAahwanam.Service
             mnguserlist = mngvendorrepository.GetUserList(Vid);
             return mnguserlist;
         }
+        public List<StaffAccess> getstaff(string Vid)
+        {
+            List<StaffAccess> stafflist = new List<StaffAccess>();
+            stafflist = mngvendorrepository.GetstaffList(long.Parse(Vid));
+            return stafflist;
+        }
         public int checkuseremail(string email, string id)
         {
 
@@ -82,6 +88,10 @@ namespace MaaAahwanam.Service
         public ManageUser getuserbyid(int id)
         {
             return mngvendorrepository.GetUserdetails(id);
+        }
+        public List<StaffAccess> getstaffbyid(int id)
+        {
+            return mngvendorrepository.getstaffbyid(id);
         }
         public List<ManageUser> getuserbyemail(string email)
         {
