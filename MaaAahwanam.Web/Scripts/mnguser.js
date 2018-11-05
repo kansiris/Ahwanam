@@ -400,7 +400,7 @@ $('#booknow').click(function () {
     else if (!lnamepattren.test(lastname)) { alert("Enter only alphabates"); $("#lastname").focus(); }
     else {
         $.ajax({
-            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&selectedp=' + selectedp + '&&timeslot=' + timeslot,
+            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot,
             type: 'POST',
             contentType: 'application/json',
             success: function (result) {

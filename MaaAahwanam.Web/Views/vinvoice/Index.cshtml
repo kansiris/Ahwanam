@@ -112,7 +112,7 @@
                                                             Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")
                                                         </td>
                                                         <td class="text-right">
-                                                            Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.paidamount)).Replace(".00", "")
+                                                            Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")
                                                         </td>
                                                     </tr>
                                                 }
@@ -122,7 +122,7 @@
                                                     <td class="thick-line"></td>
                                                     <td class="thick-line text-center"><strong>Subtotal</strong></td>
                                                     <td class="thick-line text-right">
-                                                        Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.totalprice)).Replace(".00", "")
+                                                        Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.total)).Replace(".00", "")
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -138,7 +138,7 @@
                                                     <td class="no-line"></td>
                                                     <td class="no-line text-center"><strong>Total</strong></td>
                                                     <td class="no-line text-right">
-                                                        Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.totalprice)).Replace(".00", "")
+                                                        Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.total)).Replace(".00", "")
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -153,9 +153,9 @@
                                                     <table class="table table-condensed" style="width:100%;max-width:100%">
                                                         <thead>
                                                             <tr>
-                                                                @*//       <td><strong>Select</strong></td>*@
+                                                                 <td><strong>Select</strong></td>
                                                                 <td><strong>Order DetailId</strong></td>
-                                                                <td class="text-center"><strong>Event Type</strong></td>
+                                                                <td class="text-center"><strong>Service Name</strong></td>
                                                                 <td class="text-center"><strong>Price</strong></td>
                                                                 <td class="text-center"><strong>Quantity</strong></td>
                                                                 <td class="text-right"><strong>Total Amount</strong></td>
@@ -166,16 +166,16 @@
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
                                                                 <tr>
-                                                                    @*<td><input type="checkbox" class="chcktbl" value="@item.Due,@item.OrderDetailId" onclick="addamnttotal()" /></td>*@
+                                                                 <td><input type="checkbox" class="chcktblservice" value="@item.OrderDetailId" /></td>
                                                                     <td> @item.OrderDetailId </td>
-                                                                    <td class="text-center">@item.EventType</td>
+                                                                    <td class="text-center">@item.ServiceType</td>
                                                                     <td class="text-center">Rs @item.PerunitPrice</td>
                                                                     <td class="text-center">@item.Quantity</td>
                                                                     <td class="text-right">
                                                                         Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")
                                                                     </td>
 
-                                                                    <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.paidamount)).Replace(".00", "")</td>
+                                                                    <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                 </tr>
                                                                 
                                                             }
@@ -265,10 +265,17 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
+                                                        <label>Payment By</label>
+                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
                                                         <label>Cashier Name:</label>
                                                         <input type="text" class="form-control" id="Cash_Card_Holdername" name="Cash_Card_Holdername" style="padding: 5px;">
                                                     </div>
                                                 </div>
+                                               
                                             </div>
                                             <div class="row Chequedetails" id="chequedetails" style="display:none;">
                                                 <div class="col-md-4">
@@ -278,6 +285,12 @@
                                                     <div class="input-group">
                                                         <div class="input-group-addon"></div>
                                                         <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Payment By</label>
+                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -306,6 +319,12 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
+                                                        <label>Payment By</label>
+                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
                                                         <label>Card Holder Name</label>
                                                         <input type="text" class="form-control" id="Card_Holder_Name" name="Card_Holder_Name" style="padding: 5px;">
                                                     </div>
@@ -325,6 +344,12 @@
                                                     <div class="input-group">
                                                         <div class="input-group-addon"></div>
                                                         <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Payment By</label>
+                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -364,6 +389,12 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
+                                                        <label>Payment By</label>
+                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
                                                         <label>Mobile Number</label>
                                                         <input type="text" class="form-control" id="Wallet_Number" name="Wallet_Number" style="padding: 5px;">
                                                     </div>
@@ -383,7 +414,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Total Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" value="@ViewBag.totalprice" style="padding: 5px;" readonly>
+                                                        <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" value="@ViewBag.total" style="padding: 5px;" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -785,4 +816,28 @@
     //        alert(sum);
     //    }
     //}
+
+
+    $(document).on('change', '.chcktblservice', function () {
+        if($(this).is(':checked'))
+        {
+            $('input.chcktblservice').not(this).prop('checked', false);
+            $('#Paymentmode').css('display', 'block');
+            var odid = $(this).val();
+            $.ajax({
+                url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
+                },
+                error: function (result) {
+                alert("failed");
+            }
+         });
+        }
+        else {
+            $('#Paymentmode').css('display', 'none');
+        }
+    })
 </script>
