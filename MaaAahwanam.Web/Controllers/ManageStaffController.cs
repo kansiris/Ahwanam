@@ -37,22 +37,11 @@ namespace MaaAahwanam.Web.Controllers
                 var getstafflist = mnguserservice.getstaff(VendorId);
                 ViewBag.getstafflist = getstafflist;
 
-                if (sid != null && sid != "")
-                {
-
-                    var data = mnguserservice.getstaffbyid(int.Parse(sid));
-                    userLogin.UserName = data.FirstOrDefault().emailid;
-                    var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
-                    ViewBag.password = userResponse.Password;
-                    ViewBag.details = data;
-
-                }
-                else
-                {
+                
 
                     ViewBag.password = null;
                     ViewBag.details = null;
-                }
+                
                 return View();
 
             }
@@ -93,7 +82,8 @@ namespace MaaAahwanam.Web.Controllers
                 if (kscadd.Contains("supplier_view")) Staffsccess.supplier = 1;
                 if (kscadd.Contains("supplier_add")) Staffsccess.supplier = 2;
                 if (kscadd.Contains("addstaff_view")) Staffsccess.addstaff = 1;
-                if (kscadd.Contains("addstaff_view")) Staffsccess.addstaff = 2;
+                if (kscadd.Contains("addstaff_add")) Staffsccess.addstaff = 2;
+                if (kscadd.Contains("active")) Staffsccess.Status = "1";
                 userLogin.Status = "Active";
                 var response = "";
                 userLogin.UserType = "VendorStaff";
@@ -104,18 +94,24 @@ namespace MaaAahwanam.Web.Controllers
                 if (data == 0)
                 { 
                     userLogin = newmanageuse.addloginstaff(userLogin);
+                    var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
+                    Staffsccess.UserLoginId = userResponse.UserLoginId;
                     Staffsccess = newmanageuse.Savestaff(Staffsccess);
                     msg = "Added New staff";
                 }
                 else
                 {
-                    msg = "Unique";
+                    msg = "Email already exits please use another email id ";
                 }
                
                    
             }
             else if (command == "Update")
             {
+                userLogin.Password = password;
+                userLogin.UserName = Staffsccess.emailid;
+                var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
+                userLoginDetailsService.changepassword(userLogin, (int)userResponse.UserLoginId);
                 if (kscadd.Contains("Orders_view")) Staffsccess.order = 1;
                 if (kscadd.Contains("Orders_add")) Staffsccess.order = 2;
                 if (kscadd.Contains("book_view")) Staffsccess.book = 1;
@@ -135,7 +131,9 @@ namespace MaaAahwanam.Web.Controllers
                 if (kscadd.Contains("supplier_view")) Staffsccess.supplier = 1;
                 if (kscadd.Contains("supplier_add")) Staffsccess.supplier = 2;
                 if (kscadd.Contains("addstaff_view")) Staffsccess.addstaff = 1;
-                if (kscadd.Contains("addstaff_view")) Staffsccess.addstaff = 2;
+                if (kscadd.Contains("addstaff_add")) Staffsccess.addstaff = 2;
+                if (kscadd.Contains("active")) Staffsccess.Status = "1";
+
                 Staffsccess = newmanageuse.updatestaff(Staffsccess, int.Parse(id));
                 msg = "Updated staff";
             }
@@ -143,12 +141,18 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetstaffDetails(string id)
+        public JsonResult GetstaffDetails(string sid)
         {
            
-            ViewBag.details1 = "Data1";
 
-            return RedirectToAction("Index", "ManageStaff");
+                var data = mnguserservice.getstaffbyid(int.Parse(sid)).FirstOrDefault();
+            
+                userLogin.UserName = data.emailid;
+                var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
+            //ViewBag.password = userResponse.Password;
+            //ViewBag.details = data;
+            var result = new { data = data, password = userResponse.Password };
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
     }
 }
