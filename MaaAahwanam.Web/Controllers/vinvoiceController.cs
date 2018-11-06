@@ -67,7 +67,7 @@ namespace MaaAahwanam.Web.Controllers
                             string amount1 = reports.Received_Amount;
 
                             amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
-
+                       
                         }
                         decimal paidamount;
                         if (amount == '0')
@@ -76,8 +76,11 @@ namespace MaaAahwanam.Web.Controllers
                             //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
 
                         }
-                        else { paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount;/*paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity)-amount;*/ }
-                        ViewBag.paidamount = paidamount;
+                        else
+                        {
+                            paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
+                            ViewBag.paidamount = paidamount;
+                        }
                     }
                     else
                     {
@@ -107,7 +110,9 @@ namespace MaaAahwanam.Web.Controllers
                             paidamount = orderdetails.FirstOrDefault().TotalPrice;
                             //paidamount = orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity;
                         }
-                        else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; /*paidamount = (orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity) - amount;*/ }
+                        else
+                        {
+                            paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; paidamount = (orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity) - amount; }
                         ViewBag.paidamount = paidamount;
                     }
                     //ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
