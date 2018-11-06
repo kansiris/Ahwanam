@@ -58,6 +58,12 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return Staffsccess;
         }
+        public UserLogin addloginstaff(UserLogin userLogin)
+        {
+            _dbContext.UserLogin.Add(userLogin);
+            _dbContext.SaveChanges();
+            return userLogin;
+        }
 
         public List<sp_userorddisplay_Result> userOrderList()
         {
