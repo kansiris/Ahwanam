@@ -91,6 +91,11 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.ManageUser.Where(v => v.vendorId == Vid).ToList();
         }
+        public List<StaffAccess> GetstaffList(long Vid)
+        {
+            return _dbContext.StaffAccess.Where(v => v.VendorMasterID == Vid).ToList();
+        }
+
         public int checkuseremail(string email, string id)
         {
             int UseremailCount = _dbContext.ManageUser.Where(e => e.email == email && e.vendorId == id).Count();
@@ -117,6 +122,12 @@ namespace MaaAahwanam.Repository.db
         {
             //var query = from vendor in _dbContext.ManageVendor where vendor.id == id select vendor;
             return _dbContext.ManageUser.Where(v => v.id == id).FirstOrDefault();
+
+        }
+        public List<StaffAccess> getstaffbyid(int id)
+        {
+            //var query = from vendor in _dbContext.ManageVendor where vendor.id == id select vendor;
+            return _dbContext.StaffAccess.Where(v => v.ID == id).ToList();
 
         }
 

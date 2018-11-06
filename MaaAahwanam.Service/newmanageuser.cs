@@ -53,6 +53,11 @@ namespace MaaAahwanam.Service
             Staffsccess = newusermanager.Savestaff(Staffsccess);
             return Staffsccess;
         }
+        public UserLogin addloginstaff(UserLogin userLogin)
+        {
+            userLogin = newusermanager.addloginstaff(userLogin);
+            return userLogin;
+        }
         public List<sp_userorddisplay_Result> userOrderList()
         {
             return newusermanager.userOrderList();

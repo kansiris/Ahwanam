@@ -323,7 +323,7 @@ namespace MaaAahwanam.Web.Controllers
     //        return Json(msg, JsonRequestBehavior.AllowGet);
     //}
     [HttpPost]
-    public JsonResult booknow(string uid, string loc, string eventtype, string guest, string date, string pid, string vid, string selectedp, string timeslot)
+    public JsonResult booknow(string uid, string loc, string eventtype, string guest, string date, string pid, string vid, string timeslot)
     {
         int userid = Convert.ToInt32(uid);
         int price;
@@ -402,7 +402,6 @@ namespace MaaAahwanam.Web.Controllers
                         data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                         data.timeslot = timeslot1[j].Split('~')[0];
                     }
-                    else { data.UpdatedDate = null; data.timeslot = null; }
                 }
 
                // data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
@@ -426,8 +425,9 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.BookedDate = Convert.ToDateTime(data.UpdatedDate);
                 ViewBag.orderdate = orderDetail.BookedDate;
                 orderDetail.EventType = etype1;
+                orderDetail.ServiceType = data.VendorType;
                 orderDetail.DealId = long.Parse(pkgs[i]);
-                newmanageuse.SaveOrderDetail(orderDetail);
+                orderDetail =   newmanageuse.SaveOrderDetail(orderDetail);
             }
             var userlogdetails = mnguserservice.getuserbyid(userid);
     string txtto = userlogdetails.email;
@@ -590,7 +590,6 @@ namespace MaaAahwanam.Web.Controllers
                             data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                             data.timeslot = timeslot1[j].Split('~')[0];
                         }
-                        else { data.UpdatedDate = null; data.timeslot = null; }
                     }
                     //data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
                     //data.timeslot = timeslot1[i].Split('~')[0];
@@ -897,7 +896,6 @@ namespace MaaAahwanam.Web.Controllers
                             data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                             data.timeslot = timeslot1[j].Split('~')[0];
                         }
-                        else { data.UpdatedDate = null; data.timeslot = null; }
                     }
                     package.Add(data);
                 }

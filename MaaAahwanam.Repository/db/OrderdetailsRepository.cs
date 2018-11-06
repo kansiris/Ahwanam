@@ -19,6 +19,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return orderDetail;
         }
+        public OrderDetail GetOrderDetailsbyOrderDetailId(long odid)
+        {
+            return _dbContext.OrderDetail.Where(o => o.OrderDetailId == odid).FirstOrDefault();
+        }
         public List<OrderDetail> GetOrderDetails(long oid)
         {
             return _dbContext.OrderDetail.Where(O => O.OrderId == oid).ToList();
@@ -66,5 +70,6 @@ namespace MaaAahwanam.Repository.db
             bookeddates = String.Join(",", bookeddates.Split(',').Distinct());
             return bookeddates;
         }
+
     }
 }
