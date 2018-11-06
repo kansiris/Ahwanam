@@ -150,7 +150,7 @@
                                                 <h3><strong>Order Details</strong></h3>
 
                                                 <div class="table-responsive">
-                                                    <table class="table table-condensed" style="width:100%;max-width:100%">
+                                                    <table class="table table-condensed" id="orderdetails" style="width:100%;max-width:100%">
                                                         <thead>
                                                             <tr>
                                                                  <td><strong>Select</strong></td>
@@ -827,18 +827,26 @@
             $('#Paymentmode').css('display', 'block');
             var odid = $(this).val();
             $("#OrderDetailId").val(odid);
-            $.ajax({
-                url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (result) {
-                    $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
+         //   $.ajax({
+         //       url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
+         //       type: 'POST',
+         //       contentType: 'application/json',
+         //       success: function (result) {
+         //           $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
 
-                },
-                error: function (result) {
-                alert("failed");
-            }
-         });
+         //       },
+         //       error: function (result) {
+         //       alert("failed");
+         //   }
+            //});
+
+            //$('#orderdetails').find("tr:eq(2)").find("td:eq(1)").html();
+            $("#orderdetails tr:not(:first)").each(function () {
+                var balnce = $(this).find('td:last-child').text();
+                $('#Current_Balance').val(balnce);
+             
+            });
+          
         }
         else {
             $('#Paymentmode').css('display', 'none');
