@@ -174,7 +174,7 @@
           }*/
 
     .col-sm, .col-sm-sm {
-        height: 140px;
+        height: 80px;
         border: 1px;
     }
 
@@ -325,10 +325,11 @@
 </style>
 <style>
     .fc-state-highlight {
-        background:blueviolet;
+        background: blueviolet;
     }
+
     .fc-view-container {
-        background:white;
+        background: white;
     }
 </style>
 
@@ -397,42 +398,32 @@
                                     <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
                                     <input type="hidden" value="@item1.price1" name="PackagePrice1" id="PackagePrice1">
                                     <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
-                                    <div class="row packss" style="width:850px;padding-left:18px;">
-                                        @*<input type="hidden" value="@item1.PackageID,@item1.PackagePrice,@item1.PackageName" name="package" id="package">*@
-                                        <div class="col-sm">
-                                            <div align="center">
-                                                <p class="box-text">
-                                                    <text class="pname">
-                                                        @if (item1.PackageName != null && item1.PackageName != "")
-                                                        {
-                                                            @item1.PackageName.Replace("_", " ")
-
-                                                        }
-                                                        else
-                                                        {
-                                                            @item1.PackageName
-                                                        }
-                                                    </text>
-                                                    <br />
-                                                    <br />
-                                                    <span>
-                                                        ₹
-                                                        @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                        {<b style="font-size:30px">@item1.PackagePrice</b>}
-                                                        else
-                                                        {
-                                                            <b style="font-size:30px">@item1.price1</b>
-                                                        }
-                                                        / Person
-                                                    </span>
-                                                    <text class="packageid" style="display:none">@item1.PackageID</text>
-                                                </p>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-2" style="background-color:#543791;color:white">
+                                            @if (item1.PackageName != null && item1.PackageName != "")
+                                            {
+                                                @item1.PackageName.Replace("_", " ")
+                                            }
+                                            else
+                                            {
+                                                @item1.PackageName
+                                            }
+                                            <br /><br />
+                                            <span>
+                                                ₹
+                                                @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                {<b style="font-size:18px">@item1.PackagePrice</b>}
+                                                else
+                                                {
+                                                    <b style="font-size:18px">@item1.price1</b>
+                                                }
+                                                / Person
+                                            </span>
+                                            <text class="packageid" style="display:none">@item1.PackageID</text>
                                         </div>
-                                        <div class="col-sm-sm" overflow="visible" style="padding-left:15px">
+                                        <div class="col-md-8" style="background-color:white;height: 100px;overflow-x:hidden;overflow-y:auto" overflow="visible">
                                             <span>What You Get</span>
                                             <br />
-
                                             @if (item1.menu != null && item1.menu != "")
                                             {
                                                 for (int i = 0; i < @item1.menu.Split(',').Length; i++)
@@ -444,21 +435,97 @@
                                             {
                                                 <a class="btn-pill">Menu Items Not Available</a>
                                             }
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="row"><input type="checkbox" /><label>BreakFast</label></div>
+                                            <div class="row"><input type="checkbox" /><label>Lunch</label></div>
+                                            <div class="row"><input type="checkbox" /><label>Dinner</label></div>
+                                            <div class="row">
+                                                <input type="checkbox" /><label>High Tea</label>
+                                                @*<button class="btnpkg" style="background-color:yellow">Add</button>*@
+                                                @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                {
+                                                    <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btnpkg">Add</button>
+                                                }
+                                                else
+                                                {
+                                                    <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btnpkg">Add</button>
+                                                }
+                                            </div>
+                                            @*<input type="radio" name="btnradio" class="btnpkgcheck" style="display:none" />*@
+                                            @*<div class="row" style="float:right"><button class="btnpkg" style="background-color:yellow;border-radius:50%;"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button></div>*@
+                                        </div>
+                                    </div>
+                                    <br />
+                                    @*<br />
+                                        <br />*@
+                                    @*<div class="row packss" style="width:850px;padding-left:18px;">
+                                                        <div class="col-sm">
+                                                            <div>
+                                                                <p class="box-text" style="padding:0">
+                                                                    <text class="pname">
+                                                                        @if (item1.PackageName != null && item1.PackageName != "")
+                                                                        {
+                                                                            @item1.PackageName.Replace("_", " ")
 
-                                        </div>
-                                        @*<img src="~/newdesignstyles/img/plus.png" />*@
-                                        <div class="col-sm-sm" style="max-width:15%">
-                                            <input type="radio" name="btnradio" class="btnpkgcheck" style="display:none" />
-                                            @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                            {
-                                                <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
-                                            }
-                                            else
-                                            {
-                                                <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
-                                            }
-                                        </div>
-                                    </div><br><br>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @item1.PackageName
+                                                                        }
+                                                                    </text>
+                                                                    <br />
+                                                                    <br />
+                                                                    <span>
+                                                                        ₹
+                                                                        @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                                        {<b style="font-size:18px">@item1.PackagePrice</b>}
+                                                                        else
+                                                                        {
+                                                                            <b style="font-size:18px">@item1.price1</b>
+                                                                        }
+                                                                        / Person
+                                                                    </span>
+                                                                    <text class="packageid" style="display:none">@item1.PackageID</text>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-sm" overflow="visible" style="padding-left:15px">
+                                                            <span>What You Get</span>
+                                                            <br />
+
+                                                            @if (item1.menu != null && item1.menu != "")
+                                                            {
+                                                                for (int i = 0; i < @item1.menu.Split(',').Length; i++)
+                                                                {
+                                                                    <a class="btn-pill">@item1.menu.Split(',')[i]</a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="btn-pill">Menu Items Not Available</a>
+                                                            }
+
+                                                        </div>
+                                                        <div class="col-sm-sm" style="max-width:15%">
+                                                            <input type="radio" name="btnradio" class="btnpkgcheck" style="display:none" />
+                                                            @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                            {
+                                                                <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
+                                                            }
+                                                        </div>
+                                                        <div class="btn-group-vertical">
+                                                            <input type="checkbox" />BreakFast
+                                                            <input type="checkbox" />Lunch
+                                                            <input type="checkbox" />Diner
+                                                            <input type="checkbox" />High Tea
+                                                        </div>
+                                                    </div>
+                                        <br><br>*@
                                 }
                             }
                         }
@@ -466,7 +533,6 @@
                         {
                             <span>No Packages Available</span>
                         }
-
                     </div>
 
                     <h3 class="uk-h3">HALL DETAILS</h3>
@@ -480,8 +546,8 @@
                                         <td>
                                             @if (item.name != null)
                                             {@item.name }
-                                        else
-                                        { <text>NA</text>}
+                                            else
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
@@ -489,8 +555,8 @@
                                         <td>
                                             @if (item.VenueType != null)
                                             {@item.VenueType }
-                                        else
-                                        { <text>NA</text>}
+                                            else
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
@@ -498,8 +564,8 @@
                                         <td>
                                             @if (item.Dimentions != null)
                                             {@item.Dimentions }
-                                        else
-                                        { <text>NA</text>}
+                                            else
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
@@ -507,8 +573,8 @@
                                         <td>
                                             @if (item.Maximumcapacity != null)
                                             {@item.Maximumcapacity }
-                                        else
-                                        { <text>NA</text>}
+                                            else
+                                            { <text>NA</text>}
                                         </td>
                                     </tr>
                                     <tr>
@@ -537,15 +603,15 @@
                                             {
                                                 next = ++i;
                                             }
-                                    <tr>
-                                        <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[servicescount].Split(',')[first]).png" /></td>
-                                        <td>@(ViewBag.amenities[servicescount].Split(',')[first].Replace('_', ' '))</td>
-                                        @if (next < count)
+                                            <tr>
+                                                <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[servicescount].Split(',')[first]).png" /></td>
+                                                <td>@(ViewBag.amenities[servicescount].Split(',')[first].Replace('_', ' '))</td>
+                                                @if (next < count)
                                                 {
-                                                <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[servicescount].Split(',')[next]).png" /></td>
-                                                <td>@(ViewBag.amenities[servicescount].Split(',')[next].Replace('_', ' '))</td>
+                                                    <td><img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[servicescount].Split(',')[next]).png" /></td>
+                                                    <td>@(ViewBag.amenities[servicescount].Split(',')[next].Replace('_', ' '))</td>
                                                 }
-                                    </tr>
+                                            </tr>
                                             first = next;
                                         }
                                         if (servicescount <= rcount)
@@ -555,11 +621,11 @@
                                     }
                                     else
                                     {
-                                    <tr>
-                                        <td colspan="4">
-                                            No Amenities
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                No Amenities
+                                            </td>
+                                        </tr>
                                     }
                                 </table>
                             </div>
@@ -591,278 +657,278 @@
                             {
                                 if (long.Parse(iks.VendorSubId) == item.Id)
                                 {
-                        <div class="policies">
+                                    <div class="policies">
 
-                            <div class="policies-col">
-                                <div class="decorators">
-                                    <h4 class="sub-title"><b>Decor</b></h4>
-                                    <ul class="tab-data highlights" style="padding-left: 0px;">
-                                        <li>
-                                            @if (iks.Outside_decorators_allowed == "Yes")
+                                        <div class="policies-col">
+                                            <div class="decorators">
+                                                <h4 class="sub-title"><b>Decor</b></h4>
+                                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                    <li>
+                                                        @if (iks.Outside_decorators_allowed == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                            Outside decorators allowed
-                                        </li>
+                                                        Outside decorators allowed
+                                                    </li>
 
-                                        <li>
+                                                    <li>
 
-                                            @if (iks.Decor_provided == "Yes")
+                                                        @if (iks.Decor_provided == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                            Decor provided by the venue
-                                        </li>
+                                                        Decor provided by the venue
+                                                    </li>
 
-                                        <li>
+                                                    <li>
 
-                                            @if (iks.Decorators_allowed_with_royalty == "Yes")
+                                                        @if (iks.Decorators_allowed_with_royalty == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                            Decorators allowed with royalty
+                                                        Decorators allowed with royalty
 
-                                        </li>
+                                                    </li>
 
-                                        @*<li>
-                                                <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                                Decoration starting costs Rs  @if (iks.Decoration_starting_costs == "undefined")
-                                                { }
-                                                else
-                                                {@iks.Decoration_starting_costs}
-                                            </li>*@
+                                                    @*<li>
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                            Decoration starting costs Rs  @if (iks.Decoration_starting_costs == "undefined")
+                                                            { }
+                                                            else
+                                                            {@iks.Decoration_starting_costs}
+                                                        </li>*@
 
-                                    </ul>
+                                                </ul>
 
-                                </div>
+                                            </div>
 
-                            </div>
+                                        </div>
 
 
-                            <div class="policies-col">
-                                <!-- Caterers -->
-                                <div class="caterers">
-                                    <h4 class="sub-title"><b>Food</b></h4>
-                                    <ul class="tab-data highlights" style="padding-left: 0px;">
-                                        <li>
-                                            @if (iks.Food_provided == "Yes")
+                                        <div class="policies-col">
+                                            <!-- Caterers -->
+                                            <div class="caterers">
+                                                <h4 class="sub-title"><b>Food</b></h4>
+                                                <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                    <li>
+                                                        @if (iks.Food_provided == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                            Food provided by the venue
-                                        </li>
-                                        <li>
-                                            @if (iks.Outside_food_or_caterer_allowed == "Yes")
+                                                        Food provided by the venue
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.Outside_food_or_caterer_allowed == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">} Outside food/caterer allowed at the venue
-                                        </li>
-                                        <li>
-                                            @if (iks.NonVeg_allowed == "Yes")
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.NonVeg_allowed == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         } Non-Veg allowed at the venue
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="policies-col alcohol">
-                                <h4 class="sub-title"><b>Alcohol</b></h4>
-                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                    <li>
-                                        @if (iks.Alcohol_allowed == "Yes")
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="policies-col alcohol">
+                                            <h4 class="sub-title"><b>Alcohol</b></h4>
+                                            <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                <li>
+                                                    @if (iks.Alcohol_allowed == "Yes")
                                                     {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     }Alcohol allowed at the venue
-                                    </li>
-                                    <li>
-                                        @if (iks.Outside_Alcohol_allowed == "Yes")
+                                                </li>
+                                                <li>
+                                                    @if (iks.Outside_Alcohol_allowed == "Yes")
                                                     {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     } Outside alcohol allowed at the venue
-                                    </li>
+                                                </li>
 
-                                </ul>
-                            </div>
-
-
-                            @*<div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
-                                    <h4 class="sub-title"><b>Taxes</b></h4>
-                                    <ul class="tab-data" style="padding-left: 0px;">
-                                        <li>
-                                            Taxes F&amp;B : <b>
-                                                Decoration starting costs Rs  @if (iks.Tax == "undefined")
-                                                { }
-                                                else
-                                                {@iks.Tax}%
-                                            </b>
-                                        </li>
-                                    </ul>
-                                </div>*@
+                                            </ul>
+                                        </div>
 
 
-                            <div class="policies-col parking" style="margin-top:41px;">
-                                <h4 class="sub-title"><b>Parking</b></h4>
-                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                    <li>
-                                        @if (iks.Valet_Parking == "Yes")
+                                        @*<div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
+                                                <h4 class="sub-title"><b>Taxes</b></h4>
+                                                <ul class="tab-data" style="padding-left: 0px;">
+                                                    <li>
+                                                        Taxes F&amp;B : <b>
+                                                            Decoration starting costs Rs  @if (iks.Tax == "undefined")
+                                                            { }
+                                                            else
+                                                            {@iks.Tax}%
+                                                        </b>
+                                                    </li>
+                                                </ul>
+                                            </div>*@
+
+
+                                        <div class="policies-col parking" style="margin-top:41px;">
+                                            <h4 class="sub-title"><b>Parking</b></h4>
+                                            <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                <li>
+                                                    @if (iks.Valet_Parking == "Yes")
                                                     {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     } Valet provided by venue
-                                    </li>
-                                    @*<li>
-                                            Parking space available for @if (iks.Parking_Space == "undefined")
-                                            { }
-                                            else
-                                            {@iks.Parking_Space} vehicles
-                                        </li>*@
-                                </ul>
-                            </div>
+                                                </li>
+                                                @*<li>
+                                                        Parking space available for @if (iks.Parking_Space == "undefined")
+                                                        { }
+                                                        else
+                                                        {@iks.Parking_Space} vehicles
+                                                    </li>*@
+                                            </ul>
+                                        </div>
 
 
-                            <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
-                                <h4 class="sub-title"><b>Cancellation</b></h4>
-                                <ul class="tab-data" style="padding-left: 0px;">
+                                        <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
+                                            <h4 class="sub-title"><b>Cancellation</b></h4>
+                                            <ul class="tab-data" style="padding-left: 0px;">
 
-                                    <li>
-                                        @if (iks.Cancellation == "Yes")
+                                                <li>
+                                                    @if (iks.Cancellation == "Yes")
                                                     {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     } Non cancellable
-                                    </li>
+                                                </li>
 
-                                </ul>
-                            </div>
+                                            </ul>
+                                        </div>
 
-                            @*<div class="policies-col advance" style="margin-top:37px;">
-                                    <h4 class="sub-title"><b>Advance</b></h4>
-                                    <ul class="tab-data" style="padding-left: 0px;">
-                                        <li>
-                                            <b>
-                                                @if (iks.Advance_Amount == "undefined")
-                                                { }
-                                                else
-                                                {@iks.Advance_Amount}  %
-                                            </b> at the time of booking
-                                        </li>
-                                    </ul>
-                                </div>*@
-                            <!-- </div> -->
+                                        @*<div class="policies-col advance" style="margin-top:37px;">
+                                                <h4 class="sub-title"><b>Advance</b></h4>
+                                                <ul class="tab-data" style="padding-left: 0px;">
+                                                    <li>
+                                                        <b>
+                                                            @if (iks.Advance_Amount == "undefined")
+                                                            { }
+                                                            else
+                                                            {@iks.Advance_Amount}  %
+                                                        </b> at the time of booking
+                                                    </li>
+                                                </ul>
+                                            </div>*@
+                                        <!-- </div> -->
 
-                            <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
-                                <h4 class="sub-title"><b>Changing Room</b></h4>
-                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                    <li>
-                                        @if (iks.Available_Rooms == "Yes")
+                                        <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
+                                            <h4 class="sub-title"><b>Changing Room</b></h4>
+                                            <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                <li>
+                                                    @if (iks.Available_Rooms == "Yes")
                                                     {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     }Changing Room A/C
-                                    </li>
-                                    @*<li>
-                                            No. of complimentary changing rooms: <strong>
-                                                @if (iks.Rooms_Count == "undefined")
-                                                { }
-                                                else
-                                                {@iks.Rooms_Count}
-                                            </strong>
-                                        </li>*@
-                                </ul>
-                            </div>
+                                                </li>
+                                                @*<li>
+                                                        No. of complimentary changing rooms: <strong>
+                                                            @if (iks.Rooms_Count == "undefined")
+                                                            { }
+                                                            else
+                                                            {@iks.Rooms_Count}
+                                                        </strong>
+                                                    </li>*@
+                                            </ul>
+                                        </div>
 
-                            <div class="policies-col highlights high-light">
-                                <h4 class="sub-title"><b>Other Policies</b></h4>
-                                <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
-                                    <li>
-                                        @if (iks.Music_Allowed_Late == "Yes")
+                                        <div class="policies-col highlights high-light">
+                                            <h4 class="sub-title"><b>Other Policies</b></h4>
+                                            <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
+                                                <li>
+                                                    @if (iks.Music_Allowed_Late == "Yes")
                                                     {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     }
-                                        Music allowed late
-                                    </li>
-                                    <li>
-                                        @if (iks.Halls_AC == "Yes")
+                                                    Music allowed late
+                                                </li>
+                                                <li>
+                                                    @if (iks.Halls_AC == "Yes")
                                                     {
-                                                    <im<img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <im<img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                             else
                                                             { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
                                                         Halls are air conditioned
-                                                </li>
-                                                <li>
-                                                    @if (iks.Ample_Parking == "Yes")
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.Ample_Parking == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                    Ample parking
-                                                </li>
-                                                <li>
-                                                    @if (iks.Baarat_Allowed == "Yes")
+                                                        Ample parking
+                                                    </li>
+                                                    <li>
+                                                        @if (iks.Baarat_Allowed == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                    Baarat allowed
-                                                </li>
-                                                <li style="margin-left: 193px;margin-top: -89px;">
+                                                        Baarat allowed
+                                                    </li>
+                                                    <li style="margin-left: 193px;margin-top: -89px;">
 
-                                                    @if (iks.Fire_Crackers_Allowed == "Yes")
+                                                        @if (iks.Fire_Crackers_Allowed == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                    Fire crackers allowed
-                                                </li>
-                                                <li style="margin-left: 193px;margin-top: 4px;">
-                                                    @if (iks.Hawan_Allowed == "Yes")
+                                                        Fire crackers allowed
+                                                    </li>
+                                                    <li style="margin-left: 193px;margin-top: 4px;">
+                                                        @if (iks.Hawan_Allowed == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                    Hawan allowed
-                                                </li>
-                                                <li style="margin-left: 193px;margin-top: 6px;">
-                                                    @if (iks.Overnight_wedding_Allowed == "Yes")
+                                                        Hawan allowed
+                                                    </li>
+                                                    <li style="margin-left: 193px;margin-top: 6px;">
+                                                        @if (iks.Overnight_wedding_Allowed == "Yes")
                                                         {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                    Overnight wedding allowed
-                                                </li>
-                                            </ul>
+                                                        Overnight wedding allowed
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                    }
                                 }
                             }
+                        }
                     </div>
 
 
@@ -876,19 +942,19 @@
                                 {
                                     if (item.Id == image.VendorId)
                                     {
-                                <li>
-                                    <figure style="background-color:white">
-                                        <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px;margin-left:10px">
-                                        <figcaption>
-                                            <div class="caption-content">
-                                                <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
-                                                    <i class="pe-7s-albums"></i>
-                                                    <p>@image.Imagedescription</p>
-                                                </a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </li>
+                                        <li>
+                                            <figure style="background-color:white">
+                                                <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px;margin-left:10px">
+                                                <figcaption>
+                                                    <div class="caption-content">
+                                                        <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
+                                                            <i class="pe-7s-albums"></i>
+                                                            <p>@image.Imagedescription</p>
+                                                        </a>
+                                                    </div>
+                                                </figcaption>
+                                            </figure>
+                                        </li>
                                     }
 
                                 }
@@ -911,11 +977,11 @@
                 <p id="address">
                     @if (@ViewBag.Productinfo.Description != "" && @ViewBag.Productinfo.Description != null)
                     {
-                    @ViewBag.Productinfo.Description
+                        @ViewBag.Productinfo.Description
                     }
                     else
                     {
-                    <text>No Description</text>
+                        <text>No Description</text>
                     }
 
                 </p>
@@ -991,13 +1057,13 @@
                                 </form>
                                 @if (user != null)
                                 {
-                                    <button type="button" class="btn_1" style="width:85%" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                                    @*<button type="button" class="btn_1" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
+                                <button type="button" class="btn_1" style="width:85%" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                @*<button type="button" class="btn_1" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
                                 }
                                 else
                                 {
-                                    <button type="submit" value="email" style="width:85%" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                                    @*<button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
+                                <button type="submit" value="email" style="width:85%" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                @*<button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
                                 }
 
                             </div>
@@ -1466,24 +1532,26 @@
         //    });
         //});
 
-        $('.btnpkg').on('click', function () {
-            var check = $(this).prev('input.btnpkgcheck');
-            var img = $(this).children('img');
-            check.change();
-            if (check.is(':checked')) {
-                check.removeAttr('checked');
-                img.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
-            }
-            else {
-                check.prop('checked', 'checked');
-                img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
-            }
-        });
+        //Assigning Src only for specific image
+        //$('.btnpkg').on('click', function () {
+        //    var check = $(this).prev('input.btnpkgcheck');
+        //    var img = $(this).children('img');
+        //    check.change();
+        //    if (check.is(':checked')) {
+        //        check.removeAttr('checked');
+        //        img.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
+        //    }
+        //    else {
+        //        check.prop('checked', 'checked');
+        //        img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
+        //    }
+        //});
 
-        $('.btnpkgcheck').on('change', function () {
-            var allimages = $('img.pkgimg');
-            allimages.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
-        });
+        // Changing All images SRC
+        //$('.btnpkgcheck').on('change', function () {
+        //    var allimages = $('img.pkgimg');
+        //    allimages.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
+        //});
 
         //$(document).ready(function() {
         //    $('.vendorcalendar').fullCalendar({
@@ -1505,6 +1573,17 @@
         //    });
         //});
 
+        $('.btnpkg').on('click', function () {
+            var check = $(this).text();
+            if (check == 'Add') {
+                $('.btnpkg').text('Add').css('background-color','yellow').css('color','black');
+                $(this).text('Added').css('background-color','#543791').css('color','white');
+            }
+            else {
+                $(this).css('background-color','yellow').css('color','black');
+                $(this).text('Add');
+            }
+        });
     </script>
 
 

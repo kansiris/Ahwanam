@@ -17,6 +17,7 @@ namespace MaaAahwanam.Models
         public string User_Id { get; set; }
         public string User_Type { get; set; }
         public DateTime Payment_Date { get; set; }
+        public string PaymentBy { get; set; }
         
         //Cheque
         public DateTime Cheque_Date { get; set; }
