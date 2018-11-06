@@ -60,28 +60,28 @@ namespace MaaAahwanam.Web.Controllers
                 //}
                 //else
                 //{
-                    ViewBag.latitude = "17.385044";
-                    ViewBag.longitude = "78.486671";
+                ViewBag.latitude = "17.385044";
+                ViewBag.longitude = "78.486671";
                 //}
-                
+
 
                 //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
-                ViewBag.data = data;
+                //ViewBag.data = data;
                 List<VendorVenue> vendor = venues;
                 List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
                 List<VendorVenue> amenities = new List<VendorVenue>();
                 List<string> famenities = new List<string>();
                 List<VendorImage> vimg = new List<VendorImage>();
                 List<Policy> policy = new List<Policy>();
-                    foreach (var item in venues)
+                foreach (var item in venues)
                 {
                     package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
                     amenities.Add(item);
                     vimg.AddRange(allimages.Where(m => m.VendorId == long.Parse(id)));
-                  var p1=  vendorMasterService.Getpolicy(id, item.Id.ToString());
-                    if(p1 != null)
-                    policy.Add(p1);
-                   
+                    var p1 = vendorMasterService.Getpolicy(id, item.Id.ToString());
+                    if (p1 != null)
+                        policy.Add(p1);
+
                 }
                 ViewBag.allimages = allimages;
                 ViewBag.particularVenue = vendor;
@@ -152,7 +152,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-        public JsonResult Availabledates( string pid,string type)
+        public JsonResult Availabledates(string pid, string type)
         {
             var msg = "";
             if (pid != "undefined")
@@ -199,9 +199,9 @@ namespace MaaAahwanam.Web.Controllers
 
             }
             return Json(msg);
-    }
+        }
 
-    public ActionResult addcnow(string pid, string guest, string dcval, string total, string pprice,string eventtype ,string bookdate)//(string totalprice, string id, string price,  string timeslot, )
+        public ActionResult addcnow(string pid, string guest, string dcval, string total, string pprice, string eventtype, string bookdate)//(string totalprice, string id, string price,  string timeslot, )
         {
             //try
             //{
