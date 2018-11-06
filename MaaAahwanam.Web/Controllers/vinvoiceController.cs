@@ -67,17 +67,26 @@ namespace MaaAahwanam.Web.Controllers
                             string amount1 = reports.Received_Amount;
 
                             amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
-
+                            decimal paidamount;
+                            if (amount == '0')
+                            {
+                                paidamount = orderdetails1.FirstOrDefault().TotalPrice;
+                            }
+                            else
+                            {
+                                paidamount = Convert.ToDecimal(reports.Current_Balance);
+                                ViewBag.paidamount = paidamount;
+                            }
                         }
-                        decimal paidamount;
-                        if (amount == '0')
-                        {
-                            paidamount = orderdetails1.FirstOrDefault().TotalPrice;
-                            //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
+                    //    decimal paidamount;
+                    //    if (amount == '0')
+                    //    {
+                    //        paidamount = orderdetails1.FirstOrDefault().TotalPrice;
+                    //        //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
 
-                        }
-                        else { paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount;/*paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity)-amount;*/ }
-                        ViewBag.paidamount = paidamount;
+                    //    }
+                    //    else { /*paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount;*//*paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity)-amount;*/ }
+                    //    ViewBag.paidamount = paidamount;
                     }
                     else
                     {
