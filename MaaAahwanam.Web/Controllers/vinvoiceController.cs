@@ -230,6 +230,7 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult GetoderdetailsbyOrderdetailId(string odid)
         {
             var data = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(odid));
+
             return Json(data);
         }
     }

@@ -45,7 +45,7 @@
                 <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
                 <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
                 <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
-                <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="@ViewBag.orderdetailid" />
+                <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
                 <div class="col-md-10">
 
                     <div id="print-content">
@@ -826,6 +826,7 @@
             $('input.chcktblservice').not(this).prop('checked', false);
             $('#Paymentmode').css('display', 'block');
             var odid = $(this).val();
+            $("#OrderDetailId").val(odid);
             $.ajax({
                 url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
                 type: 'POST',

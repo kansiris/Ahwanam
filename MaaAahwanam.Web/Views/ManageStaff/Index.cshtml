@@ -486,663 +486,7 @@
         </div>
 
 
-        @if (ViewBag.details != null)
-        {
-        <div class="row" id="saverecord1" style="display:none;margin-top:50px">
-
-            <div align="center"><h3 style="text-transform:uppercase">Add/Edit Staff</h3></div>
-            <input type="hidden" id="vendorId" name="vendorId" value="@ViewBag.masterid" />
-            <div class="col-12 col-sm-12 col-md-12" style="padding-top: 20px;">
-
-                @foreach (var item in ViewBag.details)
-                {
-
-                    <div class="row">
-                        <input type="hidden" id="id" name="id" value="" />
-                        <div class="col-12 col-sm-4 col-md-4">
-                            <div>
-                                <div class="group">
-                                    <input type="text" id="firstname" value="@item.fname" required>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>First Name</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4 col-md-4">
-                            <div>
-                                <div class="group">
-                                    <input type="text" id="lastname" value="@item.lname" required>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>Last Name</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4 col-md-4">
-                            <div>
-                                <div class="group">
-                                    <input type="text" id="email" value="@item.emailid" required>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>Email ID</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-sm-4 col-md-4">
-                            <div>
-                                <div class="group">
-                                    <input type="text" id="phoneno" value="@item.phoneno" required>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>Phone Number</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4 col-md-4">
-                            <div>
-                                <div class="group">
-                                    <input type="text" id="password" value="@ViewBag.password" required>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>Password</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4 col-md-4">
-                            <div>
-                                <div class="group">
-                                    <input type="text" id="designation" value="@item.designation" required>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label>Designation</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-sm-4 col-md-4">
-                            @if (@item.Status == "Active")
-                            {<div class="ui toggle checkbox"> <input type="checkbox" class="kscaddstaff" value="active" name="public" style="margin-top: -19px; margin-left:7px" checked> <label>Active</label> </div>
-                            }
-                            else
-                            {
-                                <div class="ui toggle checkbox"> <input type="checkbox" class="kscaddstaff" value="active" name="public" style="margin-top: -19px; margin-left:7px"> <label>Active</label> </div>
-                            }
-                        </div>
-                    </div>
-
-                    <div class="container-fluid">
-
-                        <div class="accordionks mt-2">
-                            <div class="row">
-                                <div class="col-md-4">
-
-                                    <span id="span-package-1">Service Name</span>
-                                </div>
-                                <div class="col-md-4">
-                                    <span id="span-package-1">View</span>
-                                </div>
-
-                                <div class="col-md-4">
-
-                                    <span id="span-package-1">add/Edit</span>
-
-
-                                </div>
-                                @*<div class="col-md-3">
-                                <span id="span-package-1">  Add New </span>
-                            </div>*@
-                            </div>
-                        </div>
-
-
-
-                        <div class="accordion1 mt-2" id="package">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Orders</span>
-                                </div>
-                                @if (@item.order == 1)
-                                {
-                                    <div class="col-md-4">
-
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="Orders_view" style="margin-top: 0px; margin-left:7px" checked> <label style="margin-top: 21px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle kscaddstaffdiv checkbox"> <input type="checkbox" name="public" class="kscaddstaff" value="Orders_add" style="margin-top: 0px; margin-left:7px"> <label style="margin-top: 21px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (@item.order == 2)
-                                {
-
-                                    <div class="col-md-4">
-
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="Orders_view" style="margin-top: 0px; margin-left:7px" checked> <label style="margin-top: 21px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle kscaddstaffdiv checkbox"> <input type="checkbox" name="public" class="kscaddstaff" value="Orders_add" style="margin-top: 0px; margin-left:7px" checked> <label style="margin-top: 21px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="Orders_view" style="margin-top: 0px; margin-left:7px"> <label style="margin-top: 21px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle kscaddstaffdiv checkbox"> <input type="checkbox" name="public" class="kscaddstaff" value="Orders_add" style="margin-top: 0px; margin-left:7px"> <label style="margin-top: 21px;">Add/Edit</label> </div>
-
-
-                                    </div>
-
-                                }
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Book Now</span>
-                                </div>
-                                @if (@item.book == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="book_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="book_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (@item.book == 2)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="book_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="book_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="book_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="book_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-
-                                }
-
-
-
-
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Quotations</span>
-                                </div>
-                                @if (@item.quote == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="quote_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="quote_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-
-                                }
-                                else if (@item.quote == 2)
-                                {
-
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="quote_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="quote_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="quote_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="quote_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Service</span>
-                                </div>
-                                @if (@item.service == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="service_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="service_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (@item.service == 2)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="service_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="service_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="service_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="service_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">RevenueModel</span>
-                                </div>
-                                @if (@item.revenuemodel == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="RevenueModel_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="RevenueModel_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (@item.revenuemodel == 2)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="RevenueModel_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="RevenueModel_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="RevenueModel_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="RevenueModel_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-
-
-                                }
-
-
-
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Invoice</span>
-                                </div>
-                                @if (@item.invoice == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="invoice_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="invoice_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-
-                                }
-                                else if (@item.invoice == 2)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="invoice_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="invoice_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="invoice_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="invoice_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-
-
-                                }
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Payment</span>
-                                </div>
-
-                                @if (@item.payment == 1)
-                                {
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="payment_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="payment_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (@item.payment == 2)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="payment_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="payment_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="payment_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="payment_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-
-                                }
-
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Customer</span>
-                                </div>
-                                @if (@item.customer == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="customer_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="customer_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (@item.customer == 2)
-                                { <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="customer_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="customer_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="customer_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="customer_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Supplier</span>
-                                </div>
-                                @if (@item.supplier == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="supplier_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="supplier_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (item.supplier == 2)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="supplier_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="supplier_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="supplier_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="supplier_add" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-
-
-
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span id="span-package-1">Addstaff</span>
-                                </div>
-                                @if (@item.addstaff == 1)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="addstaff_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="addstaff_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else if (item.addstaff == 2)
-                                {
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="addstaff_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="addstaff_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="addstaff_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">View</label> </div>
-
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="ui toggle checkbox kscaddstaffdiv"> <input type="checkbox" name="public" class="kscaddstaff" value="addstaff_view" style="margin-top: -7px; margin-left:7px"> <label style="margin-top: 12px;">Add/Edit</label> </div>
-
-
-                                    </div>
-                                }
-                                @*<div class="col-md-3">
-                                <div class="ui toggle checkbox"> <input type="checkbox" name="public" style="margin-top: -7px; margin-left:7px"><label style="margin-top: 12px;"></label> </div>
-
-                            </div>*@
-                            </div>
-
-                        </div>
-
-
-
-
-
-
-                    </div>
-                    <div class="container-fluid">
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <button id="SaveStaff" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
-                            </div>
-                            <div class="col-md-4">
-                                <button id="EditVendor" type="submit" name="command" value="Update" class="btn btn-success" style="display:none">Update</button>
-                            </div>
-                            <div class="col-md-4">
-                                <button id="CancelVendor" type="button" class="btn btn-danger">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-
-        }
+       
     </div>
 </div>
 
@@ -1152,9 +496,9 @@
 
         $(document).ready(function () {
             $('#allorders').DataTable({
-                responsive: true
+            
             });
-            //$('#addservices').css("display", "none");
+          
 
         });
         $('#btnadd').click(function () {
@@ -1189,7 +533,7 @@
                 var Businessname = $('#Businessname').val();
                 if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
             }
-            //var Businessname = $('#Businessname').val();
+          
             var firstname = $('#firstname').val();
             var fnamepattren = /^[a-zA-Z\s]+$/;
             var lastname = $('#lastname').val();
@@ -1200,12 +544,7 @@
             var phoneno = $('#phoneno').val();
             var phonenopattern = /^[0-9]{10}$/;
             var designation = $('#designation').val();
-            //var pincodepattern = /^(?! )(?!0000)[0-9]{6}$/;
-            //var cpattren = /^[a-zA-Z\s]+$/;
-            //var spattren = /^[a-zA-Z\s]+$/;
-            //var countrypattren = /^[a-zA-Z\s]+$/;
-            //--validation messages--//
-            //if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+          
             if (firstname == '') { alert('Enter Customer First Name'); $('#firstname').focus(); }
             else if (!fnamepattren.test(firstname)) { alert("Enter only alphabates"); $("#firstname").focus(); }
             else if (lastname == '') { alert('Enter Customer Last Name'); $('#lastname').focus(); }
@@ -1220,8 +559,7 @@
             else {
                 var StaffAccess = {
                     VendorMasterID: $('#vendorId').val(),
-                 //   fname: $("input[name='type']:checked").val(),
-                   // Businessname: $('#Businessname').val(),
+                
                     fname: firstname,
                     lname: lastname,
                     emailid: email,
@@ -1253,12 +591,7 @@
                 $(this).attr("checked", "checked");
                 $(this).closest('tr').find('#btnBook').removeAttr('disabled');
                 $('#saverecord').css('display', 'none');
-              //  $('#saverecord1').css('display', 'block');
-
-             //   $('#SaveUser').css('display', 'none');
-               // $('#EditUser').css('display', 'block');
-              //  var vpbook = window.localStorage.getItem("vpbook");
-                //$('#booknowss').css('display', 'none');
+             
               
                 var radataid = $(this).val();
                 $('#id').val(radataid);
@@ -1269,7 +602,9 @@
                     contentType: 'application/json',
                     success: function (result) {
                         alert('show');
-                      //  $('#saverecord1').html(result);
+                        $('#saverecord').css('display', 'block');
+
+                    //$('#saverecord1').html(result);
                         //if (result.type == "Corporate") {
                         //    $("input[name=type][value='Corporate']").prop('checked', true);
                         //}
@@ -1277,17 +612,16 @@
                         //    $("input[name=type][value='Individual']").prop('checked', true);
                         //}
                         //$("#usedid").val(result.id);
-                        //$("#Businessname").val(result.Businessname);
-                        //$("#firstname").val(result.firstname);
-                        //$("#lastname").val(result.lastname);
-                        //$("#email").val(result.email);
-                        //$("#phoneno").val(result.phoneno);
-                        //$("#adress1").val(result.adress1);
-                        //$("#adress2").val(result.adress2);
-                        //$("#city").val(result.city);
-                        //$("#state").val(result.state);
-                        //$("#country").val(result.country);
-                        //$("#pincode").val(result.pincode);
+                        $("#firstname").val(result.fname);
+                        $("#lastname").val(result.lname);
+                        $("#email").val(result.emailid);
+                        $("#phoneno").val(result.phoneno);
+                        $("#password").val(result.password);
+                        $("#designation").val(result.designation);
+                     //   $("#city").val(result.city);
+                       // $("#state").val(result.state);
+                       // $("#country").val(result.country);
+                       // $("#pincode").val(result.pincode);
                         //$("#Status").val(result.Status);
                         //if (result.Status == "Active") {
                         //    $("input[name=Status][value='Active']").prop('checked', true);

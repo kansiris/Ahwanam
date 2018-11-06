@@ -22,6 +22,7 @@ namespace MaaAahwanam.Web.Controllers
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         // GET: ManageStaff
+
         public ActionResult Index(string sid)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
