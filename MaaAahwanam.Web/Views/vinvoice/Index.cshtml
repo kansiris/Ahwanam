@@ -44,9 +44,8 @@
                 <input type="hidden" name="GridHtml" />
                 <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
                 <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
-                <input type="hidden" id="
-                       " name="paidamount" value="@ViewBag.paidamount" />
-                <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="@ViewBag.orderdetailid" />
+                <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
+                <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
                 <div class="col-md-10">
 
                     <div id="print-content">
@@ -151,7 +150,7 @@
                                                 <h3><strong>Order Details</strong></h3>
 
                                                 <div class="table-responsive">
-                                                    <table class="table table-condensed" style="width:100%;max-width:100%">
+                                                    <table class="table table-condensed" id="orderdetails" style="width:100%;max-width:100%">
                                                         <thead>
                                                             <tr>
                                                                  <td><strong>Select</strong></td>
@@ -827,18 +826,27 @@
             $('input.chcktblservice').not(this).prop('checked', false);
             $('#Paymentmode').css('display', 'block');
             var odid = $(this).val();
-            $.ajax({
-                url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (result) {
-                    $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
+            $("#OrderDetailId").val(odid);
+         //   $.ajax({
+         //       url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
+         //       type: 'POST',
+         //       contentType: 'application/json',
+         //       success: function (result) {
+         //           $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
 
-                },
-                error: function (result) {
-                alert("failed");
-            }
-         });
+         //       },
+         //       error: function (result) {
+         //       alert("failed");
+         //   }
+            //});
+
+            //$('#orderdetails').find("tr:eq(2)").find("td:eq(1)").html();
+            $("#orderdetails tr:not(:first)").each(function () {
+                var balnce = $(this).find('td:last-child').text();
+                $('#Current_Balance').val(balnce);
+             
+            });
+          
         }
         else {
             $('#Paymentmode').css('display', 'none');
