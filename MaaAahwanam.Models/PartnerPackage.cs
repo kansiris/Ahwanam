@@ -42,6 +42,12 @@ namespace MaaAahwanam.Models
         public string fsnormaldays { get; set; }
         public string fsholidays { get; set; }
         public string fspeakdays { get; set; }
+        //Ahwanam Prices
+        public string Achoicedays { get; set; }
+        public string Anormaldays { get; set; }
+        public string Aholidays { get; set; }
+        public string Apeakdays { get; set; }
+
         public string expiry { get; set; }
         public string Status { get; set; }
         public DateTime? UpdatedDate { get; set; }
