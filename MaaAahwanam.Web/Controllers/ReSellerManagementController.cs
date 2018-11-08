@@ -182,6 +182,7 @@ namespace MaaAahwanam.Web.Controllers
             ////var getpartner = partnerservice.getPartner(emailid);
             //return Json(Partnercontact, JsonRequestBehavior.AllowGet);
         }
-        
+
+       
     }
 }

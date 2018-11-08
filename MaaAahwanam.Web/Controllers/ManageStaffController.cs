@@ -154,5 +154,6 @@ namespace MaaAahwanam.Web.Controllers
             var result = new { data = data, password = userResponse.Password };
             return Json(result,JsonRequestBehavior.AllowGet);
         }
+
     }
 }
