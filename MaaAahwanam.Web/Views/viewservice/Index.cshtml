@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
-    var amenitycount = 0; var services = 0; var servicesdiv = 0;
     CustomPrincipal user = null;
     if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
     {
@@ -14,12 +13,12 @@
 }
 
 @section css{
-    <link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
+    @*<link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />*@
     <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/css/uikit.min.css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    @*<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">*@
 }
 <style>
     /*form {
@@ -106,24 +105,10 @@
         font-size: 14px;
     }
 
-    /*.vendorcalendar {
-              max-width: 700px;
-              margin-left: 15px;
-          }*/
     .buttonks {
         border-radius: 50%;
     }
-    /*.buttonks1 {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-    }*/
+
     .buttonks1 {
         background-color: yellow;
         border: none;
@@ -168,11 +153,6 @@
             max-width: 50px;
         }
 
-    /*a.btn-pill {
-              display: flex;
-        justify-content: space-between;
-          }*/
-
     .col-sm, .col-sm-sm {
         height: 80px;
         border: 1px;
@@ -214,9 +194,6 @@
         width: 140px;
     }
 
-
-
-
     .uk-margin {
         margin-top: 0px !important;
     }
@@ -224,105 +201,8 @@
     table, tr, td {
         border: none;
     }
-
-
-
-
-
-    .labl {
-        display: block;
-        width: 100%;
-    }
-
-        .labl > input { /* HIDE RADIO */
-            visibility: hidden; /* Makes input not-clickable */
-            position: absolute; /* Remove input from document flow */
-        }
-
-            .labl > input + div { /* DIV STYLES */
-                cursor: pointer;
-                border: 2px solid transparent;
-            }
-
-            .labl > input:checked + div { /* (RADIO CHECKED) DIV STYLES */
-                background-color: #ffd6bb;
-                border: 1px solid #ff6600;
-            }
-
-    /* Put your css in here */
-
-    .left {
-        float: left;
-        width: 10%;
-        height: 100px;
-        /*border: 1px solid black;*/
-    }
-
-    .internal {
-        width: 31.75%;
-        height: 100%;
-        border: 1px solid black;
-        display: inline-block;
-    }
-
-    .center {
-        float: left;
-        width: 78%;
-        height: 113px;
-        border: 1px solid black;
-        margin: 1px;
-        overflow: hidden;
-        /*will change this to hidden later to deny scolling to user*/
-        white-space: nowrap;
-    }
-
-    .right {
-        float: right;
-        width: 5%;
-        height: 100px;
-        /* border: 1px solid black;*/
-    }
-
-    .kscalender {
-        background-color: white;
-    }
-
-        .kscalender.selected {
-            border-color: grey;
-        }
 </style>
-<style>
 
-    div.datepicker {
-        float: left;
-    }
-
-    .ui-datepicker {
-        width: 20em;
-    }
-
-    .ui-widget-header {
-        background: white;
-    }
-    /*.ui-datepicker .weekend .ui-state-default {
-        background: #FEA;
-    }*/
-    .ui-datepicker-calendar td a[data-custom] {
-        position: relative;
-        padding-bottom: 10px;
-        /*background: white;*/
-    }
-
-        .ui-datepicker-calendar td a[data-custom]::after {
-            content: '$' attr(data-custom);
-            display: block;
-            font-size: small;
-        }
-
-    /*.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-        background: white;
-    }*/
-</style>
 <style>
     .fc-state-highlight {
         background: blueviolet;
@@ -347,7 +227,6 @@
                             {
                                 <li class="uk-active uk-transition-active" style="transform: translateX(0px); z-index: 0;">
                                     <img class="mw-100" src="~/vendorimages/@item.ImageName" alt="@item.ImageName" style="height: 100%; width: 100%;" />
-
                                 </li>
                             }
                         </ul>
@@ -356,9 +235,8 @@
                     </div>
                     <!--End step -->
                     <div class="uk-grid">
-                        <h2 class="uk-h2" style="font-size:20px;text-transform: uppercase;margin: 0px 10px -1px 0px;max-width: 55%;width:100%;font-weight:700">@ViewBag.Productinfo.BusinessName <span style="font-size:16px;font-weight:400;text-transform: capitalize"><br>@ViewBag.City,@ViewBag.State</span></h2>
+                        <h2 class="uk-h2" style="font-size:20px;text-transform: uppercase;margin: 0px 10px -1px 0px;max-width: 55%;width:100%;font-weight:700">@ViewBag.Productinfo.BusinessName <span style="font-size:16px;font-weight:400;text-transform: capitalize"><br>@ViewBag.Productinfo.City,@ViewBag.Productinfo.State</span></h2>
                         <img src="http://design.maa-aahwanam.com/panagea/images/heart.png" style="margin-left:200px;width: 10%;height: 50%;max-width: 45%;" />
-
                         <div style="padding-top:10px"><a href="#map">See Address Map</a>&emsp;&emsp; <a href="#address">View Description</a></div>
                     </div>
                     <div class="uk-grid-sub">
@@ -366,11 +244,11 @@
                         {
                             if (item.name != null && item.name != "")
                             {
-                                <a style="text-transform: uppercase;font-size:16px" class="tablink" href="#@(++services)"><b>@item.name</b></a>
+                                <a style="text-transform: uppercase;font-size:16px" class="tablink" href="/viewservice?id=@ViewBag.masterid&&vid=@item.Id"><b>@item.name</b></a>
                             }
                             else
                             {
-                                <a style="text-transform: uppercase;font-size:16px" class="tablink" href="#@(++services)"><b>@item.VenueType</b></a>
+                                <a style="text-transform: uppercase;font-size:16px" class="tablink" href="/viewservice?id=@ViewBag.masterid&&vid=@item.Id"><b>@item.VenueType</b></a>
                             }
                         }
                     </div>
@@ -378,16 +256,7 @@
                 <br><br>
                 @foreach (var item in ViewBag.particularVenue)
                 {
-                    <div class="container" id="@(++servicesdiv)">
-                        @if (item.name != null && item.name != "")
-                        {
-                            <h2 style="font-size:30px;font-weight:700;text-transform: uppercase">@item.name - @item.VenueType</h2>
-                        }
-                        else
-                        {
-                            <h2 style="font-size:30px;font-weight:700;text-transform: uppercase">@item.VenueType</h2>
-                        }
-
+                    <div class="container">
                         <h3 class="uk-h3" style="margin-left:4px">AVAILABLE FOOD PACKAGES</h3>
                         @if (ViewBag.availablepackages.Count != 0)
                         {
@@ -404,11 +273,11 @@
                                         <div class="col-md-2" style="background-color:#543791;color:white">
                                             @if (item1.PackageName != null && item1.PackageName != "")
                                             {
-                                                @item1.PackageName.Replace("_", " ")
+                                            @item1.PackageName.Replace("_", " ")
                                             }
                                             else
                                             {
-                                                @item1.PackageName
+                                            @item1.PackageName
                                             }
                                             <br /><br />
                                             <span>
@@ -417,7 +286,7 @@
                                                 {<b style="font-size:18px">@item1.PackagePrice</b>}
                                                 else
                                                 {
-                                                    <b style="font-size:18px">@item1.price1</b>
+                                                <b style="font-size:18px">@item1.price1</b>
                                                 }
                                                 / Person
                                             </span>
@@ -430,12 +299,12 @@
                                             {
                                                 for (int i = 0; i < @item1.menu.Split(',').Length; i++)
                                                 {
-                                                    <a class="btn-pill">@item1.menu.Split(',')[i]</a>
+                                            <a class="btn-pill">@item1.menu.Split(',')[i]</a>
                                                 }
                                             }
                                             else
                                             {
-                                                <a class="btn-pill">Menu Items Not Available</a>
+                                            <a class="btn-pill">Menu Items Not Available</a>
                                             }
                                         </div>
                                         <div class="col-md-2">
@@ -447,11 +316,11 @@
                                                 @*<button class="btnpkg" style="background-color:yellow">Add</button>*@
                                                 @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
                                                 {
-                                                    <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btnpkg">Add</button>
+                                                <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btnpkg">Add</button>
                                                 }
                                                 else
                                                 {
-                                                    <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btnpkg">Add</button>
+                                                <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btnpkg">Add</button>
                                                 }
                                             </div>
                                             @*<input type="radio" name="btnradio" class="btnpkgcheck" style="display:none" />*@
@@ -459,81 +328,12 @@
                                         </div>
                                     </div>
                                     <br />
-                                    @*<br />
-                                        <br />*@
-                                    @*<div class="row packss" style="width:850px;padding-left:18px;">
-                                                        <div class="col-sm">
-                                                            <div>
-                                                                <p class="box-text" style="padding:0">
-                                                                    <text class="pname">
-                                                                        @if (item1.PackageName != null && item1.PackageName != "")
-                                                                        {
-                                                                            @item1.PackageName.Replace("_", " ")
-
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            @item1.PackageName
-                                                                        }
-                                                                    </text>
-                                                                    <br />
-                                                                    <br />
-                                                                    <span>
-                                                                        ₹
-                                                                        @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                                        {<b style="font-size:18px">@item1.PackagePrice</b>}
-                                                                        else
-                                                                        {
-                                                                            <b style="font-size:18px">@item1.price1</b>
-                                                                        }
-                                                                        / Person
-                                                                    </span>
-                                                                    <text class="packageid" style="display:none">@item1.PackageID</text>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-sm" overflow="visible" style="padding-left:15px">
-                                                            <span>What You Get</span>
-                                                            <br />
-
-                                                            @if (item1.menu != null && item1.menu != "")
-                                                            {
-                                                                for (int i = 0; i < @item1.menu.Split(',').Length; i++)
-                                                                {
-                                                                    <a class="btn-pill">@item1.menu.Split(',')[i]</a>
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <a class="btn-pill">Menu Items Not Available</a>
-                                                            }
-
-                                                        </div>
-                                                        <div class="col-sm-sm" style="max-width:15%">
-                                                            <input type="radio" name="btnradio" class="btnpkgcheck" style="display:none" />
-                                                            @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                            {
-                                                                <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
-                                                            }
-                                                            else
-                                                            {
-                                                                <button style="margin-top:40px;float:right;margin-right:50px" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btn btn-warning btn-circle btnpkg"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button>
-                                                            }
-                                                        </div>
-                                                        <div class="btn-group-vertical">
-                                                            <input type="checkbox" />BreakFast
-                                                            <input type="checkbox" />Lunch
-                                                            <input type="checkbox" />Diner
-                                                            <input type="checkbox" />High Tea
-                                                        </div>
-                                                    </div>
-                                        <br><br>*@
                                 }
                             }
                         }
                         else
                         {
-                            <span>No Packages Available</span>
+                            <span> No Packages Available </span>
                         }
                     </div>
 
@@ -590,7 +390,6 @@
                             <h6>AMENITIES</h6>
                             <div class="row-2" overflow="visible">
                                 <table>
-
                                     @if (ViewBag.amenities[servicescount].Split(',').Length != 0 && ViewBag.amenities[servicescount] != "")
                                     {
                                         var rcount = ViewBag.amenities.Count;
@@ -631,309 +430,287 @@
                                     }
                                 </table>
                             </div>
-                            @*<div class="row-2" overflow="visible">
-                                    <br>
-                                    @if (ViewBag.amenities[amenitycount].Split(',').Length != 0)
-                                    {
-                                        for (int i = 0; i < ViewBag.amenities[amenitycount].Split(',').Length; i++)
-                                        {
-                                            <p class="caption">
-                                                <img src="~/newdesignstyles/VenueIcons/@(ViewBag.amenities[amenitycount].Split(',')[i]).png" title="@ViewBag.amenities[amenitycount].Split(',')[i]" />
-                                            </p>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <p>No Amenities</p>
-                                    }
-
-                                </div>*@
                         </div>
                     </div>
                     <br><br>
                     <div class="white-wrapper">
                         <h2 class="heading"><b>Policies</b></h2>
-                        @if (ViewBag.policy.Count != 0)
+                        @if (ViewBag.policy !=null)
                         {
                             foreach (var iks in ViewBag.policy)
                             {
-                                if (long.Parse(iks.VendorSubId) == item.Id)
-                                {
-                                    <div class="policies">
+                                <div class="policies">
 
-                                        <div class="policies-col">
-                                            <div class="decorators">
-                                                <h4 class="sub-title"><b>Decor</b></h4>
-                                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                                    <li>
-                                                        @if (iks.Outside_decorators_allowed == "Yes")
+                                    <div class="policies-col">
+                                        <div class="decorators">
+                                            <h4 class="sub-title"><b>Decor</b></h4>
+                                            <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                <li>
+                                                    @if (iks.Outside_decorators_allowed == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Outside decorators allowed
-                                                    </li>
+                                                    Outside decorators allowed
+                                                </li>
 
-                                                    <li>
+                                                <li>
 
-                                                        @if (iks.Decor_provided == "Yes")
+                                                    @if (iks.Decor_provided == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Decor provided by the venue
-                                                    </li>
+                                                    Decor provided by the venue
+                                                </li>
 
-                                                    <li>
+                                                <li>
 
-                                                        @if (iks.Decorators_allowed_with_royalty == "Yes")
+                                                    @if (iks.Decorators_allowed_with_royalty == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Decorators allowed with royalty
+                                                    Decorators allowed with royalty
 
-                                                    </li>
+                                                </li>
 
-                                                    @*<li>
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                                            Decoration starting costs Rs  @if (iks.Decoration_starting_costs == "undefined")
-                                                            { }
-                                                            else
-                                                            {@iks.Decoration_starting_costs}
-                                                        </li>*@
+                                                @*<li>
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
+                                                        Decoration starting costs Rs  @if (iks.Decoration_starting_costs == "undefined")
+                                                        { }
+                                                        else
+                                                        {@iks.Decoration_starting_costs}
+                                                    </li>*@
 
-                                                </ul>
-
-                                            </div>
+                                            </ul>
 
                                         </div>
 
+                                    </div>
 
-                                        <div class="policies-col">
-                                            <!-- Caterers -->
-                                            <div class="caterers">
-                                                <h4 class="sub-title"><b>Food</b></h4>
-                                                <ul class="tab-data highlights" style="padding-left: 0px;">
-                                                    <li>
-                                                        @if (iks.Food_provided == "Yes")
+
+                                    <div class="policies-col">
+                                        <!-- Caterers -->
+                                        <div class="caterers">
+                                            <h4 class="sub-title"><b>Food</b></h4>
+                                            <ul class="tab-data highlights" style="padding-left: 0px;">
+                                                <li>
+                                                    @if (iks.Food_provided == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Food provided by the venue
-                                                    </li>
-                                                    <li>
-                                                        @if (iks.Outside_food_or_caterer_allowed == "Yes")
+                                                    Food provided by the venue
+                                                </li>
+                                                <li>
+                                                    @if (iks.Outside_food_or_caterer_allowed == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">} Outside food/caterer allowed at the venue
-                                                    </li>
-                                                    <li>
-                                                        @if (iks.NonVeg_allowed == "Yes")
+                                                </li>
+                                                <li>
+                                                    @if (iks.NonVeg_allowed == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         } Non-Veg allowed at the venue
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <div class="policies-col alcohol">
-                                            <h4 class="sub-title"><b>Alcohol</b></h4>
-                                            <ul class="tab-data highlights" style="padding-left: 0px;">
-                                                <li>
-                                                    @if (iks.Alcohol_allowed == "Yes")
+                                    </div>
+                                    <div class="policies-col alcohol">
+                                        <h4 class="sub-title"><b>Alcohol</b></h4>
+                                        <ul class="tab-data highlights" style="padding-left: 0px;">
+                                            <li>
+                                                @if (iks.Alcohol_allowed == "Yes")
                                                     {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     }Alcohol allowed at the venue
-                                                </li>
-                                                <li>
-                                                    @if (iks.Outside_Alcohol_allowed == "Yes")
+                                            </li>
+                                            <li>
+                                                @if (iks.Outside_Alcohol_allowed == "Yes")
                                                     {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     } Outside alcohol allowed at the venue
-                                                </li>
+                                            </li>
 
-                                            </ul>
-                                        </div>
-
-
-                                        @*<div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
-                                                <h4 class="sub-title"><b>Taxes</b></h4>
-                                                <ul class="tab-data" style="padding-left: 0px;">
-                                                    <li>
-                                                        Taxes F&amp;B : <b>
-                                                            Decoration starting costs Rs  @if (iks.Tax == "undefined")
-                                                            { }
-                                                            else
-                                                            {@iks.Tax}%
-                                                        </b>
-                                                    </li>
-                                                </ul>
-                                            </div>*@
+                                        </ul>
+                                    </div>
 
 
-                                        <div class="policies-col parking" style="margin-top:41px;">
-                                            <h4 class="sub-title"><b>Parking</b></h4>
-                                            <ul class="tab-data highlights" style="padding-left: 0px;">
+                                    @*<div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
+                                            <h4 class="sub-title"><b>Taxes</b></h4>
+                                            <ul class="tab-data" style="padding-left: 0px;">
                                                 <li>
-                                                    @if (iks.Valet_Parking == "Yes")
+                                                    Taxes F&amp;B : <b>
+                                                        Decoration starting costs Rs  @if (iks.Tax == "undefined")
+                                                        { }
+                                                        else
+                                                        {@iks.Tax}%
+                                                    </b>
+                                                </li>
+                                            </ul>
+                                        </div>*@
+
+
+                                    <div class="policies-col parking" style="margin-top:41px;">
+                                        <h4 class="sub-title"><b>Parking</b></h4>
+                                        <ul class="tab-data highlights" style="padding-left: 0px;">
+                                            <li>
+                                                @if (iks.Valet_Parking == "Yes")
                                                     {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     } Valet provided by venue
-                                                </li>
-                                                @*<li>
-                                                        Parking space available for @if (iks.Parking_Space == "undefined")
-                                                        { }
-                                                        else
-                                                        {@iks.Parking_Space} vehicles
-                                                    </li>*@
-                                            </ul>
-                                        </div>
+                                            </li>
+                                            @*<li>
+                                                    Parking space available for @if (iks.Parking_Space == "undefined")
+                                                    { }
+                                                    else
+                                                    {@iks.Parking_Space} vehicles
+                                                </li>*@
+                                        </ul>
+                                    </div>
 
 
-                                        <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
-                                            <h4 class="sub-title"><b>Cancellation</b></h4>
-                                            <ul class="tab-data" style="padding-left: 0px;">
+                                    <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
+                                        <h4 class="sub-title"><b>Cancellation</b></h4>
+                                        <ul class="tab-data" style="padding-left: 0px;">
 
-                                                <li>
-                                                    @if (iks.Cancellation == "Yes")
+                                            <li>
+                                                @if (iks.Cancellation == "Yes")
                                                     {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     } Non cancellable
-                                                </li>
+                                            </li>
 
-                                            </ul>
-                                        </div>
+                                        </ul>
+                                    </div>
 
-                                        @*<div class="policies-col advance" style="margin-top:37px;">
-                                                <h4 class="sub-title"><b>Advance</b></h4>
-                                                <ul class="tab-data" style="padding-left: 0px;">
-                                                    <li>
-                                                        <b>
-                                                            @if (iks.Advance_Amount == "undefined")
-                                                            { }
-                                                            else
-                                                            {@iks.Advance_Amount}  %
-                                                        </b> at the time of booking
-                                                    </li>
-                                                </ul>
-                                            </div>*@
-                                        <!-- </div> -->
-
-                                        <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
-                                            <h4 class="sub-title"><b>Changing Room</b></h4>
-                                            <ul class="tab-data highlights" style="padding-left: 0px;">
+                                    @*<div class="policies-col advance" style="margin-top:37px;">
+                                            <h4 class="sub-title"><b>Advance</b></h4>
+                                            <ul class="tab-data" style="padding-left: 0px;">
                                                 <li>
-                                                    @if (iks.Available_Rooms == "Yes")
+                                                    <b>
+                                                        @if (iks.Advance_Amount == "undefined")
+                                                        { }
+                                                        else
+                                                        {@iks.Advance_Amount}  %
+                                                    </b> at the time of booking
+                                                </li>
+                                            </ul>
+                                        </div>*@
+                                    <!-- </div> -->
+
+                                    <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
+                                        <h4 class="sub-title"><b>Changing Room</b></h4>
+                                        <ul class="tab-data highlights" style="padding-left: 0px;">
+                                            <li>
+                                                @if (iks.Available_Rooms == "Yes")
                                                     {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     }Changing Room A/C
-                                                </li>
-                                                @*<li>
-                                                        No. of complimentary changing rooms: <strong>
-                                                            @if (iks.Rooms_Count == "undefined")
-                                                            { }
-                                                            else
-                                                            {@iks.Rooms_Count}
-                                                        </strong>
-                                                    </li>*@
-                                            </ul>
-                                        </div>
+                                            </li>
+                                            @*<li>
+                                                    No. of complimentary changing rooms: <strong>
+                                                        @if (iks.Rooms_Count == "undefined")
+                                                        { }
+                                                        else
+                                                        {@iks.Rooms_Count}
+                                                    </strong>
+                                                </li>*@
+                                        </ul>
+                                    </div>
 
-                                        <div class="policies-col highlights high-light">
-                                            <h4 class="sub-title"><b>Other Policies</b></h4>
-                                            <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
-                                                <li>
-                                                    @if (iks.Music_Allowed_Late == "Yes")
+                                    <div class="policies-col highlights high-light">
+                                        <h4 class="sub-title"><b>Other Policies</b></h4>
+                                        <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
+                                            <li>
+                                                @if (iks.Music_Allowed_Late == "Yes")
                                                     {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
                                                     { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                     }
-                                                    Music allowed late
-                                                </li>
-                                                <li>
-                                                    @if (iks.Halls_AC == "Yes")
+                                                Music allowed late
+                                            </li>
+                                            <li>
+                                                @if (iks.Halls_AC == "Yes")
                                                     {
-                                                        <im<img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                    <im<img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                             else
                                                             { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
                                                         Halls are air conditioned
-                                                    </li>
-                                                    <li>
-                                                        @if (iks.Ample_Parking == "Yes")
+                                                </li>
+                                                <li>
+                                                    @if (iks.Ample_Parking == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Ample parking
-                                                    </li>
-                                                    <li>
-                                                        @if (iks.Baarat_Allowed == "Yes")
+                                                    Ample parking
+                                                </li>
+                                                <li>
+                                                    @if (iks.Baarat_Allowed == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Baarat allowed
-                                                    </li>
-                                                    <li style="margin-left: 193px;margin-top: -89px;">
+                                                    Baarat allowed
+                                                </li>
+                                                <li style="margin-left: 193px;margin-top: -89px;">
 
-                                                        @if (iks.Fire_Crackers_Allowed == "Yes")
+                                                    @if (iks.Fire_Crackers_Allowed == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Fire crackers allowed
-                                                    </li>
-                                                    <li style="margin-left: 193px;margin-top: 4px;">
-                                                        @if (iks.Hawan_Allowed == "Yes")
+                                                    Fire crackers allowed
+                                                </li>
+                                                <li style="margin-left: 193px;margin-top: 4px;">
+                                                    @if (iks.Hawan_Allowed == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Hawan allowed
-                                                    </li>
-                                                    <li style="margin-left: 193px;margin-top: 6px;">
-                                                        @if (iks.Overnight_wedding_Allowed == "Yes")
+                                                    Hawan allowed
+                                                </li>
+                                                <li style="margin-left: 193px;margin-top: 6px;">
+                                                    @if (iks.Overnight_wedding_Allowed == "Yes")
                                                         {
-                                                            <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
-                                                        Overnight wedding allowed
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                                    Overnight wedding allowed
+                                                </li>
+                                            </ul>
                                         </div>
-                                }
+                                    </div>
                             }
                         }
                     </div>
-
-
                     <br />
                     <br />
                     <h3 class="uk-h3">GALLERY/VIDEOS</h3>
@@ -942,37 +719,24 @@
                             <ul class="magnific-gallery">
                                 @foreach (var image in ViewBag.allimages)
                                 {
-                                    if (item.Id == image.VendorId)
-                                    {
-                                        <li>
-                                            <figure style="background-color:white">
-                                                <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px;margin-left:10px">
-                                                <figcaption>
-                                                    <div class="caption-content">
-                                                        <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
-                                                            <i class="pe-7s-albums"></i>
-                                                            <p>@image.Imagedescription</p>
-                                                        </a>
-                                                    </div>
-                                                </figcaption>
-                                            </figure>
-                                        </li>
-                                    }
-
+                                    <li>
+                                        <figure style="background-color:white">
+                                            <img src="~/vendorimages/@image.ImageName" alt="@image.ImageName" style="height:150px;margin-left:10px">
+                                            <figcaption>
+                                                <div class="caption-content">
+                                                    <a href="~/vendorimages/@image.ImageName" title="Photo title" data-effect="mfp-zoom-in">
+                                                        <i class="pe-7s-albums"></i>
+                                                        <p>@image.Imagedescription</p>
+                                                    </a>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </li>
                                 }
                             </ul>
                         </div>
                         <!-- /grid gallery -->
                     </div>
-                    <!-- /container -->
-                    @*<h3 class="uk-h3">VENUE POLICIES</h3>
-                        <P>Read all the terms & conditions of the banquet hall.</P><br><br>
-
-                        <figure>
-                            <img src="http://design.maa-aahwanam.com/panagea/images/baloon.png">
-                            <h5 class="uk-h5">ALCOHOL IS NOT SUPPLIED</h5>
-                            <figurecaption> &emsp;&emsp;&emsp;&emsp;We don’t supply alcohol but outside alcohol is allowed</figurecaption>
-                        </figure>*@
                     <hr />
                 }
                 <h3 class="uk-h3">DESCRIPTION</h3>
@@ -985,7 +749,6 @@
                     {
                         <text>No Description</text>
                     }
-
                 </p>
                 <hr />
                 <h3 class="uk-h3">ADDRESS</h3>
@@ -1001,33 +764,8 @@
                     <div class="uk-container" style="margin-top:-25px;">
                         <input type="hidden" id="vendoravailabledates" value="" />
                         <div>
-                            @*<input type="button" id="datepickerks" value="Calendar" />*@
-                            @*<img align="right" src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png" id="datepicker" style="height:17px ;width:20px;margin-top:100px" />*@
-
-
-                            @*<div id="datepickerks"></div>*@
-
                             <div id="calendar"></div>
                             <input type="hidden" id="selecteddate" />
-
-
-                            @*<div class="row packesss" id="allrecords">
-                                    <div class="left">
-                                        <button class="buttonks buttonks1" id="left-button">
-                                            <<
-                                        </button>
-                                    </div>
-                                    <div class="center" id="content">
-                                        <input type="hidden" class="calenderselected" value="" name="calenderselected" id="calenderselected">
-                                        @{Html.RenderAction("calender", "viewservice"); }
-                                    </div>
-                                    <div class="right">
-                                        <button class="buttonks buttonks1" id="right-button">
-                                            >>
-                                        </button>
-                                    </div>
-                                </div>*@
-
                             <div>
                                 <form class="uk-form-stacked" style="margin-top:-10px">
                                     <br>
@@ -1059,13 +797,13 @@
                                 </form>
                                 @if (user != null)
                                 {
-                                <button type="button" class="btn_1" style="width:85%" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                                @*<button type="button" class="btn_1" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
+                                    <button type="button" class="btn_1" style="width:85%" value="booknow" onclick="booknow(this.value)">BOOK NOW&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                    @*<button type="button" class="btn_1" value="cart" onclick="booknow(this.value)">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
                                 }
                                 else
                                 {
-                                <button type="submit" value="email" style="width:85%" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
-                                @*<button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
+                                    <button type="submit" value="email" style="width:85%" name="command" class="btn_1" uk-toggle="target: #modal-example">Book Now&nbsp;&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/arrow1.png" /></button>
+                                    @*<button type="submit" value="email" name="command" class="btn_1" uk-toggle="target: #modal-example">CART&nbsp;<img src="http://design.maa-aahwanam.com/panagea/images/icons/cart2.png" /></button>*@
                                 }
 
                             </div>
@@ -1098,184 +836,100 @@
             var marker = new google.maps.Marker({position: uluru, map: map});
         }
     </script>
-    <script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
+    @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsjFiM-zkPLiIYHwvsY5HqWqeEuZshpY&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.10/js/uikit-icons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-    @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+
     <script>
-        //full calendar
-        $('#calendar').fullCalendar({
-            defaultDate: '2018-10-12',
-            events: [
-              {
-                  title: 'M:1000',
-                  start: '2018-10-01'
-              },
-              {
-                  title: 'E:1500',
-                  start: '2018-10-01'
-              },
-              {
-                  title: '500',
-                  start: '2018-02-07'
-              },
-              {
-                  id: 999,
-                  title: '400',
-                  start: '2018-10-09'
-              },
-              {
-                  id: 999,
-                  title: '700',
-                  start: '2018-10-16'
-              },
-              {
-                  title: '800',
-                  start: '2018-10-11'
-              },
-              {
-                  title: '900',
-                  start: '2018-10-12'
-              }
-            ],
-            dayClick: function (date, jsEvent, view) {
-                $(".fc-state-highlight").removeClass("fc-state-highlight");
-                $(this).addClass("fc-state-highlight");
-                $('#selecteddate').val(moment(date).format('DD/MM/YYYY'));
-            },
-            eventClick: function (calEvent, jsEvent, view) {
-                $(".fc-state-highlight").removeClass("fc-state-highlight");
-                $(this).addClass("fc-state-highlight");
-                $('#selecteddate').val(moment(calEvent.start).format('DD/MM/YYYY'));
-            }
+        var subid='@Request.QueryString["vid"]';
+        $(function(){
+            FetchEventAndRenderCalendar(subid);
         });
+        
+        function FetchEventAndRenderCalendar(subid) {
+            events = [];
+            var date = new Date(),
+                d = date.getDate(),
+                m = date.getMonth() + 1,
+                y = date.getFullYear()
+            $.ajax({
+                type: "GET",
+                url: '/viewservice/GetDates?id=' + @ViewBag.masterid + '&&vid=' + subid,
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        events.push({
+                            title: 'N/A',
+                            start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes')
+                        });
+                    })
+
+                    GenerateCalender(events);
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            })
+        }
+
+        function GenerateCalender(events) {
+            //full calendar
+            $('#calendar').fullCalendar({
+                defaultDate: new Date(),
+                //events: [
+                //  {
+                //      title: 'M:1000',
+                //      start: '2018-10-01'
+                //  },
+                //  {
+                //      title: 'E:1500',
+                //      start: '2018-10-01'
+                //  },
+                //  {
+                //      title: '500',
+                //      start: '2018-02-07'
+                //  },
+                //  {
+                //      id: 999,
+                //      title: '400',
+                //      start: '2018-10-09'
+                //  },
+                //  {
+                //      id: 999,
+                //      title: '700',
+                //      start: '2018-10-16'
+                //  },
+                //  {
+                //      title: '800',
+                //      start: '2018-10-11'
+                //  },
+                //  {
+                //      title: '900',
+                //      start: '2018-10-12'
+                //  }
+                //],
+                events:events,
+                dayClick: function (date, jsEvent, view) {
+                    $(".fc-state-highlight").removeClass("fc-state-highlight");
+                    $(this).addClass("fc-state-highlight");
+                    $('#selecteddate').val(moment(date).format('DD/MM/YYYY'));
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    $(".fc-state-highlight").removeClass("fc-state-highlight");
+                    $(this).addClass("fc-state-highlight");
+                    $('#selecteddate').val(moment(calEvent.start).format('DD/MM/YYYY'));
+                }
+            });
+        }
+
+
+        
 
     </script>
 
-
-
     <script>
-        //$(function () {
-        //    $("#datepickerks").datepicker(
-        //        {
-        //            beforeShow: addCustomInformation,
-        //            beforeShowDay: function (date) {
-        //                return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-        //            },
-        //            onChangeMonthYear: addCustomInformation,
-        //            onSelect: addCustomInformation
-        //        }
-        //    );
-        //    addCustomInformation();
-        //});
-
-        ////.ui - datepicker {
-        ////    top: 150px;
-        ////    margin - left: 1000px;
-        ////    width: 100 %;
-        ////}
-
-        //function addCustomInformation() {
-        //    setTimeout(function () {
-        //        //$(".ui-datepicker").css({
-        //        //    'top': '150px','margin-left': '1000px','width': '100%'
-        //        //});
-        //        $(".ui-datepicker-calendar td").filter(function () {
-        //            var date = $(this).text();
-        //            return /\d/.test(date);
-        //        }).find("a, span").html(function (i, html) {
-        //            return html + "<br><small>₹100</small>";
-        //        });
-        //    }, 0)
-        //}
-
-        //var date = new Date();
-        //var array = ["2018-10-01", "2018-10-02", "2018-10-06"]; //$('#vendoravailabledates').val();
-        ////   alert(array);
-        //$(function () {
-        //    $("#datepickerks").datepicker(
-        //        {
-        //            beforeShow: addCustomInformation,
-        //            beforeShowDay: function (date) {
-        //                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-        //                [array.indexOf(string) == -1]
-        //                return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-        //            },
-        //            //    function (date) {
-        //            //    return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-        //            //},
-        //            onChangeMonthYear: addCustomInformation
-        //            //onSelect: addCustomInformation
-        //        }
-        //    );
-        //    addCustomInformation();
-        //});
-        //calender
-        //var unavailableDates1 = "";
-        //function addCustomInformation() {
-        //    var price = '';
-        //    var price1 = $('#PackagePrice').val();
-        //    var  price2 = $('#PackagePrice1').val();
-        //    if (price1 == '' || price1 == 'undefined') { price = price2; }
-        //    if (price == 'undefined' || price == '') { price = 'N/A';}
-        //    var PackagePrice = price;
-        //    setTimeout(function () {
-        //        //     alert('ks');
-        //        $(".ui-datepicker-calendar td").filter(function () {
-        //            var date = $(this).text();
-        //            return /\d/.test(date);
-        //        }).find("a, span").html(function (i, html) {
-        //            return html + "<br><small>₹"+PackagePrice+"</small>";
-        //        });
-        //    }, 0)
-
-        //}
-
-    </script>
-    <script>
-        $(window).load(function () {
-
-
-            //$("#datepicker").daterangepicker().trigger("click");
-            $('#datepicker').datetimepicker({
-                dayOfWeekStart: 1,
-                lang: 'en',
-                timepicker: false,
-                format: 'd/m/Y',
-                minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-                maxDate: '+1970/03/02'//tomorrow is maximum date calendar
-            });
-            $("#datepicker").on("change", function () {
-                var selected = $(this).val();
-                var datesdiv = $('#content');
-                var data = "";
-                var package = $('#Packageselected').val().split(',')[0];
-                //alert(package);
-                $.ajax({
-                    url: '/viewservice/calender?calender=' + selected + '&&packageid=' + package,
-                    type: 'POST',
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                        // alert(result);
-                        // datesdiv.clear();
-                        // datesdiv.remove();
-                        //datesdiv.replaceWith(result);
-
-                        $('.center').html(result);
-                        //$('#content').load(result);
-                        //$('.center').append(result);
-                    }
-                });
-            });
-        });
-
-
         //map
         function openCity(cityName, elmnt, color) {
             var i, tabcontent, tablinks;
@@ -1293,50 +947,7 @@
         }
         // Get the element with id="defaultOpen" and click on it
         // document.getElementById("defaultOpen").click();
-
     </script>
-
-
-    <script>
-
-
-        // Add your javascript here
-
-        $('#right-button').click(function () {
-            event.preventDefault();
-            $('#content').animate({
-                scrollLeft: "+=105px"
-            }, "slow");
-        });
-
-        $('#left-button').click(function () {
-            event.preventDefault();
-            $('#content').animate({
-                scrollLeft: "-=105px"
-            }, "slow");
-        });
-
-        //var timeslot = '';
-        //$('.iCheck-helper').click(function () {
-        //    //if ($(this).is(':checked')) {
-        //    //    var ks = $(this).find('input[name=timeslot]').val();
-        //    //    alert(ks);
-        //    if ($('.iCheck').is(":checked")) {
-        //        var favorite = [];
-        //        $.each($("input[name='timeslot']:checked"), function () {
-        //            favorite.push($(this).val());
-        //            timeslot = favorite.join(", ");
-        //        })
-        //    }
-        //    else {
-        //        alert("Please select time slot");
-        //    }
-        //});
-    </script>
-
-
-
-
 
     <script>
         function ks(val) {
@@ -1387,7 +998,6 @@
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    // alert(result);
                     $("#vendoravailabledates").val(result);
                 }
             });
@@ -1395,38 +1005,28 @@
         };
         function booknow(val) {
             var timeslot = '';
-
-            var v = val;
-            //alert(v);
             var cpid = window.localStorage.getItem("cartid");
             var pid = $('#packageid').val();
             if (cpid == null || cpid == pid) { window.localStorage.setItem("cartid", pid) }
             var gu1 = window.localStorage.getItem("guests");
             var eventtype = window.localStorage.getItem("eventtype");
             var seldate =  $('#selecteddate').val();//$('input[name=radioname]:checked').val();
-
             var guest = '';
-            //alert(gu1);
-            if (gu1 == null) {
+            if (gu1 == null)
                 guest = $('.guests1').val();
-            } else { guest = gu1; }
-
+            else
+                guest = gu1;
             var cart = $('#Packageselected').val();
             var carts = cart.split(',');
             var cpprice = carts[2];
             var cpname = carts[1];
             var cpid = carts[0];
-
             var total = guest * cpprice;
-            //alert(total);
-
-            url1 = '/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + v + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype + '&&bookdate=' + seldate;
-            //alert(url1);
+            url1 = '/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + val + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype + '&&bookdate=' + seldate;
             $.ajax({
                 url: url1,
                 success: function (data) {
                     if (data == "Success") {
-                        //alertify.alert('Moved To Cart');
                         location.href = '/cart/Index';
                     }
                     else if (data == "failed") {
@@ -1442,142 +1042,12 @@
             });
         };
 
-        $(document).ready(function () {
-            var defcalender = window.localStorage.getItem("eventdate");
-            // var defcalender1 = new Date(defcalender);
-            ////alert(defcalender);
-            // var initial = defcalender.split(/\//);
-            //// alert(initial[1]);
-            // if (initial[1] > '12') {
-
-            //     cale = ([initial[1], initial[0], initial[2]].join('/')); //=> 'dd/mm/yyyy'
-            // }
-            // // or in this case you could use
-            //// var initial = 'dd/mm/yyyy'.split(/\//).reverse().join('/');
-
-            var package = $('#packageid').val();
-
-            $.ajax({
-                //alert(defcalender);
-
-                url: '/viewservice/calender?calender=' + defcalender + '&&packageid=' + package,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    $('.center').html(result);
-                }
-            });
-
-            var pid = $('#packageid').val();
-            var price = $('#PackagePrice').val();
-            if (price == '') { price = $('#PackagePrice1').val(); }
-            var PackagePrice = price;
-            // alert(typeof(price));
-            var PackageName = $('#PackageName').val();
-            var SelectedPackage = '';
-            if (PackageName != '' && price != '' && PackageName != undefined && price != undefined) { SelectedPackage = '' + PackageName + '(₹' + PackagePrice + '/per plate)'; }
-            else { SelectedPackage = 'N/A'; }
-            // alert(SelectedPackage);
-            var guest = window.localStorage.getItem("guests");
-            $('.price').val(SelectedPackage);
-            $('.guests1').val(guest);
-            var total = guest * PackagePrice;
-            //alert(total);
-            $(".total b").empty().append(total);
-            if (PackagePrice != '' && PackagePrice != undefined) { $(".packesss b").empty().append(PackagePrice); }
-            else { $(".packesss b").empty().append('N/A'); }
-            $('.Packageselected').val(pid + ',' + PackageName + ',' + PackagePrice);
-            var vendortype = "";
-            $.ajax({
-                url: '/viewservice/Availabledates?pid=' + pid + '&&type=' + vendortype,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    // alert(result);
-                    $("#vendoravailabledates").val(result);
-                }
-            });
-
-
-
-        })
-
-        function formatDate(date) {
-            //var hours = date.getHours();
-            //var minutes = date.getMinutes();
-            //var ampm = hours >= 12 ? 'pm' : 'am';
-            //hours = hours % 12;
-            //hours = hours ? hours : 12; // the hour '0' should be '12'
-            //minutes = minutes < 10 ? '0' + minutes : minutes;
-            ////var strTime = hours + ':' + minutes + ' ' + ampm;
-            //var strTime = (hours + 1) + ':' + minutes;
-            //var month = date.getMonth() + 1;
-            //month = month < 10 ? '0' + month : '' + month
-            // return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
-            var dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
-            // 01, 02, 03, ... 10, 11, 12
-            var MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1);
-            //return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + strTime;
-            //  return dd + "/" + MM + "/" + date.getFullYear() + " " + strTime;
-            return dd + "/" + MM + "/" + date.getFullYear();
-
-        }
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + "; " + expires;
         }
-
-        //$(function() {
-        //    $( ".vendorcalendar" ).datepicker({
-        //        singleDatePicker: true,
-        //        standalone: true
-        //    });
-        //});
-
-        //Assigning Src only for specific image
-        //$('.btnpkg').on('click', function () {
-        //    var check = $(this).prev('input.btnpkgcheck');
-        //    var img = $(this).children('img');
-        //    check.change();
-        //    if (check.is(':checked')) {
-        //        check.removeAttr('checked');
-        //        img.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
-        //    }
-        //    else {
-        //        check.prop('checked', 'checked');
-        //        img.removeAttr('src').attr('src', '/newdesignstyles/img/tick.png');
-        //    }
-        //});
-
-        // Changing All images SRC
-        //$('.btnpkgcheck').on('change', function () {
-        //    var allimages = $('img.pkgimg');
-        //    allimages.removeAttr('src').attr('src', '/newdesignstyles/img/plus.png');
-        //});
-
-        //$(document).ready(function() {
-        //    $('.vendorcalendar').fullCalendar({
-        //        header: {
-        //            left: 'prev,next today',
-        //            center: 'title',
-        //            right: 'month,basicWeek,basicDay'
-        //        },
-        //        defaultDate: '2018-03-12',
-        //        navLinks: true, // can click day/week names to navigate views
-        //        editable: true,
-        //        eventLimit: true, // allow "more" link when too many events
-        //        events: [
-        //          {
-        //              title: 'All Day Event',
-        //              start: '2018-03-01'
-        //          }
-        //        ]
-        //    });
-        //});
 
         $('.btnpkg').on('click', function () {
             var check = $(this).text();
@@ -1591,31 +1061,4 @@
             }
         });
     </script>
-
-
-
-    @*<script>
-            var unavailableDates = ["14-9-2018", "15-9-2018", "16-9-2018"];
-
-            function unavailable(date) {
-                dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-                //alert(dmy);
-                if ($.inArray(dmy, unavailableDates) == -1) {
-                    return [true, ""];
-                } else {
-                    return [false, "", "Unavailable"];
-                }
-            }
-
-
-
-
-                                //$("button").click(function () {
-                                //    var btnvalue = $(this).attr('src');
-                                //    $('html,body').animate({
-                                //        scrollTop: $("" + btnvalue + "").offset().top
-                                //    },
-                                //        'slow');
-                                //});
-        </script>*@
 }

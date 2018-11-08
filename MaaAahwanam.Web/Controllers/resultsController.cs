@@ -33,7 +33,6 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         public PartialViewResult Loadmore(string count, string type, string to_from)
-
         {
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');

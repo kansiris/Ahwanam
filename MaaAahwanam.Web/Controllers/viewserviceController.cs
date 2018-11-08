@@ -30,63 +30,27 @@ namespace MaaAahwanam.Web.Controllers
 
 
         // GET: viewservice
-        public ActionResult Index(string name, string type, string id)
+        public ActionResult Index(string name, string type, string id,string vid)
         {
+            type = (type == "Function" || type == "Banquet" || type == "Convention") ? type + " Hall" : type;
             type = (type == null) ? "Venue" : type;
-            type = (type == "Convention") ? "Convention Hall" : type;
-            type = (type == "Banquet") ? "Banquet Hall" : type;
-            type = (type == "Function") ? "Function Hall" : type;
 
             if (name != null)
-            {
-                var ks = resultsPageService.GetAllVendors(type).Where(m => m.BusinessName.ToLower().Contains(name.ToLower().TrimEnd())).FirstOrDefault();
-                id = ks.Id.ToString();
-            }
+                vid = resultsPageService.GetAllVendors(type).Where(m => m.BusinessName.ToLower().Contains(name.ToLower().TrimEnd())).FirstOrDefault().Id.ToString();
+            
             var venues = viewservicesss.GetVendorVenue(long.Parse(id)).ToList();
-            if (type == "Venue" || type == "Convention" || type == "Banquet" || type == "Function")
+            if (type == "Venue" || type == "Convention Hall" || type == "Banquet Hall" || type == "Function Hall")
             {
                 var data = viewservicesss.GetVendor(long.Parse(id));
                 var allimages = viewservicesss.GetVendorAllImages(long.Parse(id)).ToList();
                 ViewBag.image = (allimages.Count() != 0) ? allimages.FirstOrDefault().ImageName.Replace(" ", "") : null;
-                //ViewBag.allimages = allimages;
                 ViewBag.Productinfo = data;
-                ViewBag.location = data.Address;
-                ViewBag.City = data.City;
-                ViewBag.State = data.State;
-                //if (data.GeoLocation.Split(',').Count() > 1)
-                //{
-                //    ViewBag.latitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[0] : "17.385044";
-                //    ViewBag.longitude = (data.GeoLocation != null && data.GeoLocation != "") ? data.GeoLocation.Split(',')[1] : "78.486671";
-                //}
-                //else
-                //{
                 ViewBag.latitude = "17.385044";
                 ViewBag.longitude = "78.486671";
-                //}
-
-
-                //var data = productInfoService.getProductsInfo_Result(int.Parse(id), type, int.Parse(vid));
-                //ViewBag.data = data;
-                List<VendorVenue> vendor = venues;
-                List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
-                List<VendorVenue> amenities = new List<VendorVenue>();
-                List<string> famenities = new List<string>();
-                List<VendorImage> vimg = new List<VendorImage>();
-                List<Policy> policy = new List<Policy>();
-                foreach (var item in venues)
-                {
-                    package.AddRange(viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(item.Id.ToString())).ToList());
-                    amenities.Add(item);
-                    vimg.AddRange(allimages.Where(m => m.VendorId == long.Parse(id)));
-                    var p1 = vendorMasterService.Getpolicy(id, item.Id.ToString());
-                    if (p1 != null)
-                        policy.Add(p1);
-
-                }
-                ViewBag.allimages = allimages;
-                ViewBag.particularVenue = vendor;
-                ViewBag.availablepackages = package;
-                var allamenities = amenities.Select(m => new
+                ViewBag.allimages = allimages.Where(m => m.VendorId == long.Parse(id));
+                ViewBag.particularVenue = venues;
+                ViewBag.availablepackages = viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
+                var allamenities = venues.Where(m=>m.Id==long.Parse(vid)).Select(m => new
                 {
                     #region Venue amenities
                     m.AC,
@@ -133,7 +97,8 @@ namespace MaaAahwanam.Web.Controllers
                     m.Sufficient_Washroom
                     #endregion
                 }).ToList();
-                ViewBag.policy = policy;
+                ViewBag.policy = vendorMasterService.Getpolicy(id, vid);
+                List<string> famenities = new List<string>();
                 foreach (var item in allamenities)
                 {
                     string value = string.Join(",", item).Replace("{", "").Replace("}", "");
@@ -147,10 +112,16 @@ namespace MaaAahwanam.Web.Controllers
                     famenities.Add(value.TrimStart(','));
                 }
                 ViewBag.amenities = famenities;
+                ViewBag.masterid = id;
             }
             return View();
         }
 
+        public JsonResult GetDates(string id, string vid)
+        {
+            var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
         public JsonResult Availabledates(string pid, string type)
         {
@@ -161,7 +132,7 @@ namespace MaaAahwanam.Web.Controllers
                 type = (type == "Convention") ? "Convention Hall" : type;
                 type = (type == "Banquet") ? "Banquet Hall" : type;
                 type = (type == "Function") ? "Function Hall" : type;
-                var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault(); ;
+                var pkgs = vendorProductsService.getpartpkgs(pid).FirstOrDefault();
                 Int64 vid, vsid;
                 vid = pkgs.VendorId;
                 vsid = pkgs.VendorSubId;
