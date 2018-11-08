@@ -727,8 +727,7 @@
 
     });
 
-    $('#Received_Amount').on('input', function () {
-        var invamnt = $("#invoiced_amount").val();
+    $('#Received_Amount').on('change', function () {
         //var openamnt = $('#paidamount').val();
         //var openingamnt = $('#Opening_Balance').val();
         var openingamnt1 = $('#Current_Balance').val();
@@ -737,26 +736,18 @@
         //else
         if (rcvamnt == null || rcvamnt == "") {
             alert("Enter Some Amount");
-            $('#Current_Balance').val(openamnt);
-
-
+            //$('#Current_Balance').val(openamnt);
         }
         else if (parseFloat(rcvamnt) > parseFloat(openingamnt1)) {
             aelrt("Enter less than or Equal Of Balance Due Amount...");
             $('#Received_amount').val("");
         }
-        else  {
-            //var result = parseFloat(openamnt) - parseFloat(rcvamnt);
-            //var result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
-            //$('#Current_Balance').val(result);
-            $(".#Received_amount").each(function() {
-                var openingamnt = $('#Current_Balance').val();
-                var rcvamnt1 = Number($(this).val());
-                var result = parseFloat(openingamnt) - parseFloat(rcvamnt1);
-                $('#Current_Balance').val(result);
-            });
+        else {     
+            var result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
+            $('#Current_Balance').val(result);
+        }
+    });
 
-    }
     $("#SavePayment").click(function () {
         //var paymenttype = $('#Payment_Type').val();
         //var orderid =@Request.QueryString["Oid"];
@@ -870,18 +861,14 @@
             var totamnt = opnamnt.replace('Rs ', '');
             var tt = totamnt.replace(',', '');
             sum += parseFloat(tt);
-                alert(sum);
         });
         $(this).find('.sbaldue').each(function () {
             var cntbal = $(this).text();
             var baldue = cntbal.replace('Rs ', '');
             var tbaldue = baldue.replace(',', '');
-            alert(tbaldue);
             sum1 += parseFloat(tbaldue);
-            alert(sum1);
             if (tbaldue == '0') {
                 $('#Current_Balance').val(sum);
-                alert(sum);
             } else {
                 $('#Current_Balance').val(sum1);
             }
@@ -890,5 +877,5 @@
                     $('#Paymentmode').css('display', 'block');
         });
     });
-  });
+ 
 </script>
