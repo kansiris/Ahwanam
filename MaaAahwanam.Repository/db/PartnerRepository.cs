@@ -77,12 +77,41 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return partnerPackage;
         }
-        public PartnerPackage updatepartnerpackage(PartnerPackage partnerPackage, long partid, string date, long packageid)
+        public PartnerPackage updatepartnerpackage(PartnerPackage partnerPackage, long partid, long packageid)
         {
-            var partnerPackage1 = _dbContext.PartnerPackage.Where(m => m.PartnerID == partid && m.packageid == packageid.ToString()).FirstOrDefault();
-            partnerPackage.expiry = date;
-            _dbContext.Entry(partnerPackage1).CurrentValues.SetValues(partnerPackage);
-            _dbContext.SaveChanges();
+            //var partnerPackage1 = _dbContext.PartnerPackage.Where(m => m.PartnerID == partid && m.packageid == packageid.ToString()).FirstOrDefault();
+            //partnerPackage.ID = partnerPackage1.ID;
+            //_dbContext.Entry(partnerPackage1).CurrentValues.SetValues(partnerPackage);
+            //_dbContext.SaveChanges();
+            // Query the database for the row to be updated.
+            var query =
+                from ord in _dbContext.PartnerPackage
+                where ord.PartnerID == partid
+                select ord;
+            // Query the database for the row to be updated.
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (PartnerPackage ord in query)
+            { 
+                ord.Achoicedays = partnerPackage.Achoicedays;
+                ord.Anormaldays = partnerPackage.Anormaldays;
+                ord.Aholidays = partnerPackage.Aholidays;
+                ord.Apeakdays = partnerPackage.Apeakdays;
+                ord.Status = partnerPackage.Status;
+                ord.UpdatedDate = partnerPackage.UpdatedDate;
+                // Insert any additional changes to column values.
+            }
+            // Query the database for the row to be updated.
+
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
             return partnerPackage;
         }
     }

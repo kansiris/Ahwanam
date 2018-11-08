@@ -63,9 +63,9 @@ namespace MaaAahwanam.Service
             partnerPackage = partnerrepo.addPartnerPackage(partnerPackage);
             return partnerPackage;
         }
-        public PartnerPackage updatepartnerpackage(PartnerPackage partnerPackage ,long partid, string date, long packageid)
+        public PartnerPackage updatepartnerpackage(PartnerPackage partnerPackage ,long partid, long packageid)
         {
-            partnerPackage = partnerrepo.updatepartnerpackage(partnerPackage, partid, date, packageid);
+            partnerPackage = partnerrepo.updatepartnerpackage(partnerPackage, partid,packageid );
             return partnerPackage;
         }
     }
