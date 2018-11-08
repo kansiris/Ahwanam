@@ -427,7 +427,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Received Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
+                                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" value=""style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -727,7 +727,7 @@
 
     });
 
-    $('#Received_Amount').keyup(function () {
+    $('#Received_Amount').on('input', function () {
         var invamnt = $("#invoiced_amount").val();
         //var openamnt = $('#paidamount').val();
         //var openingamnt = $('#Opening_Balance').val();
@@ -745,14 +745,19 @@
             aelrt("Enter less than or Equal Of Balance Due Amount...");
             $('#Received_amount').val("");
         }
-        else {
+        else  {
             //var result = parseFloat(openamnt) - parseFloat(rcvamnt);
-            var result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
-            $('#Current_Balance').val(result);
-         
-        }
+            //var result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
+            //$('#Current_Balance').val(result);
+            $(".#Received_amount").each(function() {
+                var openingamnt = $('#Current_Balance').val();
+                var rcvamnt1 = Number($(this).val());
+                var result = parseFloat(openingamnt) - parseFloat(rcvamnt1);
+                $('#Current_Balance').val(result);
+            });
+       
 
-    });
+    }
     $("#SavePayment").click(function () {
         //var paymenttype = $('#Payment_Type').val();
         //var orderid =@Request.QueryString["Oid"];
@@ -762,6 +767,7 @@
             User_Id: $("#User_Id").val(),
             OrderDetailId: $("#OrderDetailId").val(),
             Payment_Type: $("input[name='Payment_Type']:checked").val(),
+            PaymentBy:$('#PaymentBy').val(),
             Cash_Date: $("#Cash_Date").val(),
             Cash_Card_Holdername: $("#Cash_Card_Holdername").val(),
             Cheque_Date: $("#Cheque_Date").val(),
@@ -859,7 +865,7 @@
     $(document).ready(function () {
         var sum = 0
         var sum1 =0
-    $("#orderdetails tr").click(function () {
+    $("#orderdetails tr").change(function () {
         $(this).find('.tsamnt').each(function () {
             var opnamnt = $(this).text();
             var totamnt = opnamnt.replace('Rs ', '');
