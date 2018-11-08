@@ -427,7 +427,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Received Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
+                                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" value=""style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -727,8 +727,7 @@
 
     });
 
-    $('#Received_Amount').keyup(function () {
-        var invamnt = $("#invoiced_amount").val();
+    $('#Received_Amount').on('change', function () {
         //var openamnt = $('#paidamount').val();
         //var openingamnt = $('#Opening_Balance').val();
         var openingamnt1 = $('#Current_Balance').val();
@@ -737,22 +736,18 @@
         //else
         if (rcvamnt == null || rcvamnt == "") {
             alert("Enter Some Amount");
-            $('#Current_Balance').val(openamnt);
-
-
+            //$('#Current_Balance').val(openamnt);
         }
         else if (parseFloat(rcvamnt) > parseFloat(openingamnt1)) {
             aelrt("Enter less than or Equal Of Balance Due Amount...");
             $('#Received_amount').val("");
         }
-        else {
-            //var result = parseFloat(openamnt) - parseFloat(rcvamnt);
+        else {     
             var result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
             $('#Current_Balance').val(result);
-         
         }
-
     });
+
     $("#SavePayment").click(function () {
         //var paymenttype = $('#Payment_Type').val();
         //var orderid =@Request.QueryString["Oid"];
@@ -762,6 +757,7 @@
             User_Id: $("#User_Id").val(),
             OrderDetailId: $("#OrderDetailId").val(),
             Payment_Type: $("input[name='Payment_Type']:checked").val(),
+            PaymentBy:$('#PaymentBy').val(),
             Cash_Date: $("#Cash_Date").val(),
             Cash_Card_Holdername: $("#Cash_Card_Holdername").val(),
             Cheque_Date: $("#Cheque_Date").val(),
@@ -858,25 +854,21 @@
     //})  
     $(document).ready(function () {
         var sum = 0
-        var sum1 =0
+        var sum1 = 0
     $("#orderdetails tr").click(function () {
         $(this).find('.tsamnt').each(function () {
             var opnamnt = $(this).text();
             var totamnt = opnamnt.replace('Rs ', '');
             var tt = totamnt.replace(',', '');
             sum += parseFloat(tt);
-                alert(sum);
         });
         $(this).find('.sbaldue').each(function () {
             var cntbal = $(this).text();
             var baldue = cntbal.replace('Rs ', '');
             var tbaldue = baldue.replace(',', '');
-            alert(tbaldue);
             sum1 += parseFloat(tbaldue);
-            alert(sum1);
             if (tbaldue == '0') {
                 $('#Current_Balance').val(sum);
-                alert(sum);
             } else {
                 $('#Current_Balance').val(sum1);
             }

@@ -77,10 +77,17 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
             }
 
-        public ActionResult revenumodelvendors()
+        [HttpPost]
+        public JsonResult PartnerPackage(PartnerPackage partnerPackage, string command, string partid)
         {
+            partnerPackage.UpdatedDate = DateTime.Now.Date;
+            long packageid = long.Parse(partnerPackage.packageid);
+            long partid1 = long.Parse(partid);
+
+            if (command == "Update") { partnerPackage = partnerservice.updatepartnerpackage(partnerPackage, partid1,packageid); }
+
            
-            return View();
-        }
+            return Json(partnerPackage, JsonRequestBehavior.AllowGet);
+           }
     }
 }

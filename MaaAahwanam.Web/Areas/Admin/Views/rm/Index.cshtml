@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Globalization
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/NmasterPage.cshtml";
@@ -27,14 +27,14 @@
         margin: 1px;
     }
 
-       
+
 
     .panel {
         padding: 0 18px;
         display: none;
         background-color: white;
         overflow: hidden;
-    }
+    }
 </style>
 
 
@@ -45,7 +45,7 @@
 
 
 
-                
+
                 <div style="overflow-x: auto;" class="content">
                     <table id="allorders" class="display" style="width:100%;">
                         <thead>
@@ -63,7 +63,9 @@
                                 foreach (var users in ViewBag.allresellers)
                                 {
                                     <tr>
-                                        <td><a href="/admin/rm?partid=@users.PartnerID">@users.PartnerID</a></td>
+                                        <td>
+                                            <a href="/admin/rm?partid=@users.PartnerID">@users.PartnerID</a>
+                                        </td>
                                         <td>@users.PartnerName</td>
                                         <td>@users.url</td>
                                         <td>@users.phoneno</td>
@@ -113,90 +115,96 @@
                                 {
                                     if (Convert.ToInt64(itemks.packageid) == item.PackageID)
                                     {
-                                        <div class="row accordion1">
+                                        <div class="row accordion1" id="package">
                                             <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
                                             <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
                                             <div class="col-md-1">
-                                               
-                                                    @foreach (var itemk1 in ViewBag.venues)
+
+                                                @foreach (var itemk1 in ViewBag.venues)
+                                                {
+                                                    if (itemk1.Id == item.VendorSubId)
                                                     {
-                                                        if (itemk1.Id == item.VendorSubId)
+                                                        if (itemk1.VenueType == "" || itemk1.VenueType == null)
                                                         {
-                                                            if (itemk1.VenueType == "" || itemk1.VenueType == null)
-                                                            {
-                                                                <span id = "span-package-1" > Venue </span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <span id = "span-package-1" >
-                                                                     @itemk1.name -@itemk1.VenueType
-                                                                </span>
-                                                            }
+                                                            <span id="span-package-1"> Venue </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span id="span-package-1">
+                                                                @itemk1.name -@itemk1.VenueType
+                                                            </span>
                                                         }
                                                     }
-                                                    @foreach (var itemk2 in ViewBag.catering)
+                                                }
+                                                @foreach (var itemk2 in ViewBag.catering)
+                                                {
+                                                    if (itemk2.Id == item.VendorSubId)
                                                     {
-                                                        if (itemk2.Id == item.VendorSubId)
-                                                        {
-                                                            <span id = "span-package-1" > @itemk2.CuisineType</span>
-                                                        }
+                                                        <span id="span-package-1"> @itemk2.CuisineType</span>
                                                     }
-                                                    @foreach (var itemk3 in ViewBag.photography)
+                                                }
+                                                @foreach (var itemk3 in ViewBag.photography)
+                                                {
+                                                    if (itemk3.Id == item.VendorSubId)
                                                     {
-                                                        if (itemk3.Id == item.VendorSubId)
-                                                        {
-                                                            <span id="span-package-1"> @itemk3.PhotographyType</span>
-                                                                                                                    }
-                                                                                                                }
-                                                            @foreach (var itemk4 in ViewBag.decorators)
-                                                            {
-                                                                if (itemk4.Id == item.VendorSubId)
-                                                                {
-                                                            <span id="span-package-1">@itemk4.DecorationType</span>
-                                                                                                                            }
+                                                        <span id="span-package-1"> @itemk3.PhotographyType</span>
+                                                    }
+                                                }
+                                                @foreach (var itemk4 in ViewBag.decorators)
+                                                {
+                                                    if (itemk4.Id == item.VendorSubId)
+                                                    {
+                                                        <span id="span-package-1">@itemk4.DecorationType</span>
+                                                    }
 
-                                                                                                                        }
-                                                            @foreach (var itemk5 in ViewBag.others)
-                                                            {
-                                                                if (itemk5.Id == item.VendorSubId)
-                                                                {
-                                                            <span id="span-package-1">@itemk5.type</span>
-                                                                                                                        }
-                                                                                                                    }
+                                                }
+                                                @foreach (var itemk5 in ViewBag.others)
+                                                {
+                                                    if (itemk5.Id == item.VendorSubId)
+                                                    {
+                                                        <span id="span-package-1">@itemk5.type</span>
+                                                    }
+                                                }
 
 
-                                             
+
 
 
                                             </div>
-                                            <div class="col-md-1"><span id="span-package-1">@item.PackageName</span></div>
+                                            <div class="col-md-1">
+                                                <span id="span-package-1">@item.PackageName</span>
+                                            </div>
                                             <div class="col-md-9">
                                                 <table class="table table-bordered">
 
                                                     <tbody>
                                                         <tr>
-                                                            <td> <span class="span-package2"> Sale price to partner</span></td>
-                                                            <td><label>@itemks.salenormaldays  </label></td>
-                                                            <td><label>@itemks.salepeakdays </label></td>
-                                                            <td><label>@itemks.saleholidays </label></td>
-                                                            <td><label>@itemks.salechoicedays </label></td>
+                                                            <td>
+                                                                <span class="span-package2"> Sale price to partner</span>
+                                                            </td>
+                                                            <td>@itemks.salenormaldays </td>
+                                                            <td>@itemks.salepeakdays</td>
+                                                            <td>@itemks.saleholidays</td>
+                                                            <td>@itemks.salechoicedays</td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width: 4%;margin-left: -33%;"> <span class="span-package2"> Sale price type</span></td>
+                                                            <td style="width: 4%;margin-left: -33%;">
+                                                                <span class="span-package2"> Sale price type</span>
+                                                            </td>
                                                             <td style="width: 1%;margin: 0;">
 
                                                                 @if (itemks.normaldayssaletype == "com")
                                                                 {
-                                                                    <label>commission %</label>
+                                                                    <label style="color: black;font-family: lato;">commission %</label>
 
                                                                 }
                                                                 @if (itemks.normaldayssaletype == "sfr")
                                                                 {
-                                                                    <label>Flat Rate ₹</label>
+                                                                    <label style="color: black;font-family: lato;">Flat Rate ₹</label>
                                                                 }
                                                                 @if (itemks.normaldayssaletype == "comsfr")
                                                                 {
-                                                                    <label>commission ₹</label>
+                                                                    <label style="color: black;font-family: lato;">commission ₹</label>
                                                                 }
 
 
@@ -206,14 +214,14 @@
 
                                                                 @if (itemks.peakdaysaletype == "com")
                                                                 {
-                                                                    <label>commission %</label> }
+                                                                <label style="color: black;font-family: lato;">commission %</label> }
                                                                 else if (itemks.peakdaysaletype == "sfr")
                                                                 {
-                                                                    <label>Flat Rate ₹</label>
+                                                                <label style="color: black;font-family: lato;">Flat Rate ₹</label>
                                                                 }
                                                                 else if (itemks.peakdaysaletype == "comsfr")
                                                                 {
-                                                                    <label>commission ₹</label>
+                                                                <label style="color: black;font-family: lato;">commission ₹</label>
                                                                 }
 
 
@@ -223,30 +231,30 @@
 
                                                                 @if (itemks.holidaysssaletype == "com")
                                                                 {
-                                                                    <label>commission %</label> }
+                                                                <label style="color: black;font-family: lato;">commission %</label> }
 
                                                                 else if (itemks.holidaysssaletype == "sfr")
                                                                 {
 
-                                                                    <label>Flat Rate ₹</label>
+                                                                <label style="color: black;font-family: lato;">Flat Rate ₹</label>
                                                                 }
                                                                 else if (itemks.holidaysssaletype == "comsfr")
                                                                 {
-                                                                    <label>commission ₹</label>
+                                                                <label style="color: black;font-family: lato;">commission ₹</label>
                                                                 }
                                                             </td>
                                                             <td style="width: 1%;margin: 0;">
                                                                 @if (itemks.choicedayssaletype == "com")
                                                                 {
-                                                                    <label>commission %</label>
+                                                                <label style="color: black;font-family: lato;">commission %</label>
                                                                 }
                                                                 else if (itemks.choicedayssaletype == "sfr")
                                                                 {
-                                                                    <label>Flat Rate ₹</label>
+                                                                <label style="color: black;font-family: lato;">Flat Rate ₹</label>
                                                                 }
                                                                 else if (itemks.choicedayssaletype == "comsfr")
                                                                 {
-                                                                    <label>commission ₹</label>}
+                                                                <label style="color: black;font-family: lato;">commission ₹</label>}
 
 
                                                             </td>
@@ -254,58 +262,71 @@
 
                                                         </tr>
                                                         <tr>
-                                                            <td style="width: 4%;"> <span class="span-package2">Margin</span></td>
-                                                            <td><label>@itemks.Mnormaldays </label></td>
-                                                            <td><label>@itemks.Mpeakdays </label></td>
-                                                            <td><label>@itemks.Mholidays </label></td>
-                                                            <td><label>@itemks.Mchoicedays </label></td>
+                                                            <td style="width: 4%;">
+                                                                <span class="span-package2">Margin</span>
+                                                            </td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.Mnormaldays)).Replace(".00", "")</td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.Mpeakdays)).Replace(".00", "") </td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.Mholidays)).Replace(".00", "") </td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.Mchoicedays)).Replace(".00", "")</td>
 
                                                         </tr>
                                                         <tr>
-                                                            <td style="width: 4%;margin-left: -33%;"> <span class="span-package2">Final Sale price</span></td>
-
-                                                            <td><label>@itemks.fsnormaldays </label></td>
-                                                            <td><label>@itemks.fspeakdays </label></td>
-                                                            <td><label>@itemks.fsholidays</label></td>
-                                                            <td><label>@itemks.fschoicedays </label></td>
+                                                            <td style="width: 4%;margin-left: -33%;">
+                                                                <span class="span-package2">Final Sale price</span>
+                                                            </td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.fsnormaldays)).Replace(".00", "") </td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.fspeakdays)).Replace(".00", "") </td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.fsholidays)).Replace(".00", "")</td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.fschoicedays)).Replace(".00", "") </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="width: 4%;">
                                                                 <span class="span-package2" style=" margin: 0;">Company Sale price as per Contract</span>
                                                             </td>
-                                                            <td><label>@itemks.spnormaldays </label></td>
-                                                            <td><label>@itemks.sppeakdays </label></td>
-                                                            <td><label>@itemks.spholidays </label></td>
-                                                            <td><label>@itemks.spchoicedays </label></td>
+                                                            <td>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.spnormaldays)).Replace(".00", "") </td>
+                                                            <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.sppeakdays)).Replace(".00", "") </td>
+                                                            <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.spholidays)).Replace(".00", "") </td>
+                                                            <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@itemks.spchoicedays)).Replace(".00", "") </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
                                                                 <span class="span-package2" style=" /* margin: 0; */">Current Selling price</span>
                                                             </td>
-
-                                                            <td><label>₹@item.normaldays</label></td>
-                                                            <td><label>₹@item.peakdays</label></td>
-                                                            <td><label>₹@item.holidays</label> </td>
-                                                            <td><label>₹@item.choicedays</label> </td>
+                                                            <td>₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.normaldays)).Replace(".00", "")</td>
+                                                            <td>₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.peakdays)).Replace(".00", "")</td>
+                                                            <td>₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.holidays)).Replace(".00", "") </td>
+                                                            <td>₹ @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.choicedays)).Replace(".00", "") </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="width: 4%;">
-                                                                <span class="span-package2" style=" margin: 0;">Ahwanm Sale price as per Contract</span>
+                                                                <span class="span-package2" style=" margin: 0;">Ahawanm Sale price as per Contract</span>
                                                             </td>
-                                                            <td><input type="number" name="ahanormal1" class="price" value="10000"></td>
-                                                            <td><input type="number" name="ahapeakday1" class="price" value="10000"></td>
-                                                            <td><input type="number" name="ahaholidays1" class="price" value="10000"></td>
-                                                            <td><input type="number" name="ahachoicedays1" class="price" value="10000"></td>
+                                                            <td>
+                                                                <input type="number" name="ahanormal1" class="price" placeholder="10000">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="ahapeakday1" class="price" placeholder="10000">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="ahaholidays1" class="price" placeholder="10000">
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="ahachoicedays1" class="price" placeholder="10000">
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <div class="col-md-1">
-                                                <p><label>@itemks.expiry </label></p>
-                                                <p>
-                                                    <center>
-                                                        <button class=" savepackage" style="background: #167ee6;color: #fff !important;" value="save" id="savepackage">Save</button>                                                    </center>
+                                                <p style="margin-left: -16px;">
+                                                    @itemks.expiry 
                                                 </p>
+                                               
+                                                    <center>
+                                                        <button class="savepackage" style="background: #167ee6;color: #fff !important;" value="Update" id="savepackage">Save</button>
+                                                    </center>
+                                              
                                             </div>
 
                                         </div>
@@ -318,175 +339,210 @@
                             {
                                 if (Convert.ToInt64(itemks1.PackageID) == item.PackageID)
                                 {
-                                        <div class="row accordion1">
+                                    <div class="row accordion1">
 
 
-                                            <div class="col-md-1">
-                                                <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
-                                                <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
+                                        <div class="col-md-1">
+                                            <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                            <input type="hidden" name="vendorsubid" id="vendorsubid" value="@item.VendorSubId">
 
-                                               
-                                                    @foreach (var itemk1 in ViewBag.venues)
-                                                    {
-                                                        if (itemk1.Id == item.VendorSubId)
-                                                        {
-                                                            if (itemk1.VenueType == "" || itemk1.VenueType == null)
-                                                            {
-                                                <span id="span-package-1">Venue</span>
-                                                }
-                                                else
+
+                                            @foreach (var itemk1 in ViewBag.venues)
+                                            {
+                                                if (itemk1.Id == item.VendorSubId)
                                                 {
-                                                <span id="span-package-1">@itemk1.name -@itemk1.VenueType</span>
+                                                    if (itemk1.VenueType == "" || itemk1.VenueType == null)
+                                                    {
+                                                        <span id="span-package-1">Venue</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span id="span-package-1">@itemk1.name -@itemk1.VenueType</span>
+                                                    }
                                                 }
                                             }
-                                        }
-                                                    @foreach (var itemk2 in ViewBag.catering)
-                                                    {
-                                                        if (itemk2.Id == item.VendorSubId)
-                                                        {
-                                                <span id="span-package-1">@itemk2.CuisineType</span>
-                                                                                                    }
-                                                                                                }
-                                                    @foreach (var itemk3 in ViewBag.photography)
-                                                    {
-                                                        if (itemk3.Id == item.VendorSubId)
-                                                        {
-                                                <span id="span-package-1">@itemk3.PhotographyType</span>
-                                                                                                        }
-                                                                                                    }
-                                                    @foreach (var itemk4 in ViewBag.decorators)
-                                                    {
-                                                        if (itemk4.Id == item.VendorSubId)
-                                                        {
-                                                <span id="span-package-1">@itemk4.DecorationType</span>
-                                                                                                    }
+                                            @foreach (var itemk2 in ViewBag.catering)
+                                            {
+                                                if (itemk2.Id == item.VendorSubId)
+                                                {
+                                                    <span id="span-package-1">@itemk2.CuisineType</span>
+                                                }
+                                            }
+                                            @foreach (var itemk3 in ViewBag.photography)
+                                            {
+                                                if (itemk3.Id == item.VendorSubId)
+                                                {
+                                                    <span id="span-package-1">@itemk3.PhotographyType</span>
+                                                }
+                                            }
+                                            @foreach (var itemk4 in ViewBag.decorators)
+                                            {
+                                                if (itemk4.Id == item.VendorSubId)
+                                                {
+                                                    <span id="span-package-1">@itemk4.DecorationType</span>
+                                                }
 
-                                                                                                }
-                                                    @foreach (var itemk5 in ViewBag.others)
-                                                    {
-                                                        if (itemk5.Id == item.VendorSubId)
-                                                        {
-                                                            <span id="span-package-1">@itemk5.type</span>
-}
-}
-
-
-                                            </div>
-                                            <div class="col-md-1">
-                                                <span id="span-package-1">@item.PackageName</span>
-                                            </div>
-
-                                            <div class="col-md-9 tableprices">
-                                                <table class="table table-bordered" id="prices-accordion">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td> <span class="span-package2"> Sale price to partner</span></td>
-                                                            <td><label></label></td>
-                                                            <td><label></label></td>
-                                                            <td><label></label></td>
-                                                            <td><label></label></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 4%;margin-left: -33%;"> <span class="span-package2"> Sale price type</span></td>
-                                                            <td style="width: 1%;margin: 0;">
-                                                                <label></label>
-                                                            </td>
-                                                            <td style="width: 1%;margin: 0;">
-                                                                <label></label>
-                                                            </td>
-                                                            <td style="width: 1%;margin: 0;">
-                                                                <label></label>
-                                                            </td>
-                                                            <td style="width: 1%;margin: 0;">
-                                                                <label></label>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 4%;"> <span class="span-package2">Margin</span></td>
-
-                                                            <td> <label></label> </td>
-                                                            <td>  <label></label>  </td>
-                                                            <td> <label></label> </td>
-                                                            <td> <label></label>  </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 4%;margin-left: -33%;"> <span class="span-package2">Final Sale price</span></td>
-
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td style="width: 4%;">
-                                                                <span class="span-package2" style=" margin: 0;">Company Sale price as per Contract</span>
-                                                            </td>
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-                                                            <td>
-                                                                <label></label>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="/* margin-left: -33%; */">
-                                                                <span class="span-package2" style=" /* margin: 0; */">Current Selling price</span>
-                                                            </td>
-                                                            <td><center>₹@item.normaldays</center></td>
-                                                            <td><center>₹@item.peakdays</center></td>
-                                                            <td><center>₹@item.holidays</center> </td>
-                                                            <td><center>₹@item.choicedays</center> </td>
+                                            }
+                                            @foreach (var itemk5 in ViewBag.others)
+                                            {
+                                                if (itemk5.Id == item.VendorSubId)
+                                                {
+                                                    <span id="span-package-1">@itemk5.type</span>
+                                                }
+                                            }
 
 
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 4%;">
-                                                                <span class="span-package2" style=" margin: 0;">Ahwanm Sale price as per Contract</span>
-                                                            </td>
-                                                            <td><input type="number" name="ahanormal1" class="price" value="10000"></td>
-                                                            <td><input type="number" name="ahapeakday1" class="price" value="10000"></td>
-                                                            <td><input type="number" name="ahaholidays1" class="price" value="10000"></td>
-                                                            <td><input type="number" name="ahachoicedays1" class="price" value="10000"></td>
-                                                        </tr>
-
-                                                    </tbody>
-                                                </table>
-
-                                            </div>
-                                            <div class="col-md-1 btnsave">
-                                                <p>  <label></label></p>
-                                                <p>
-                                                    <center style="padding-top:7%">
-                                                        <button class=" savepackage" style="background: #167ee6;color: #fff !important;" value="save" id="savepackage">Save</button>                                                    </center>
-                                                </p>
-                                            </div>
                                         </div>
-                                
+                                        <div class="col-md-1">
+                                            <span id="span-package-1">@item.PackageName</span>
+                                        </div>
+
+                                        <div class="col-md-9 tableprices">
+                                            <table class="table table-bordered" id="prices-accordion">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="span-package2"> Sale price to partner</span>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4%;margin-left: -33%;">
+                                                            <span class="span-package2"> Sale price type</span>
+                                                        </td>
+                                                        <td style="width: 1%;margin: 0;">
+                                                            <label></label>
+                                                        </td>
+                                                        <td style="width: 1%;margin: 0;">
+                                                            <label></label>
+                                                        </td>
+                                                        <td style="width: 1%;margin: 0;">
+                                                            <label></label>
+                                                        </td>
+                                                        <td style="width: 1%;margin: 0;">
+                                                            <label></label>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4%;">
+                                                            <span class="span-package2">Margin</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4%;margin-left: -33%;">
+                                                            <span class="span-package2">Final Sale price</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="width: 4%;">
+                                                            <span class="span-package2" style=" margin: 0;">Company Sale price as per Contract</span>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="/* margin-left: -33%; */">
+                                                            <span class="span-package2" style=" /* margin: 0; */">Current Selling price</span>
+                                                        </td>
+                                                        <td>₹@item.normaldays</td>
+                                                        <td>₹@item.peakdays</td>
+                                                        <td>₹@item.holidays </td>
+                                                        <td>₹@item.choicedays </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 4%;">
+                                                            <span class="span-package2" style=" margin: 0;">Ahawanm Sale price as per Contract</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="ahanormal1" class="price" placeholder="10000">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="ahapeakday1" class="price" placeholder="10000">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="ahaholidays1" class="price" placeholder="10000">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="ahachoicedays1" class="price" placeholder="10000">
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="col-md-1 btnsave">
+                                            <p>
+                                                <label></label>
+                                            </p>
+                                            <p>
+                                                @*<center style="padding-top:7%">
+                                                        <button class=" savepackage" style="background: #167ee6;color: #fff !important;" value="save" id="savepackage">Save</button>
+                                                    </center>*@
+                                            </p>
+                                        </div>
+                                    </div>
+
 
                                 }
                             }
-                        //}
-                    }
-                </div>
+                            //}
+                        }
+                    </div>
 
                 }
 
@@ -497,7 +553,8 @@
 </div>
 
 
-@section scripts{
+@section scripts
+{
 
     @*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
 
@@ -731,162 +788,39 @@
             if (partidks == '' || partidks == 'undefined') {
                 partid = partidks1;
             } else { partid = partidks; }
-            if (partid == '' || partid == 'undefined') { alert('Save partner details first to save partner packages'); }
             var packageid = $(this).parents("div#package").find('input#packageid').val();
-            var normal1 = $(this).parents("div#package").find($('input[name=normal1]')).val();
-            var peakday1 = $(this).parents("div#package").find($('input[name=peakday1]')).val();
-            var holidays1 = $(this).parents("div#package").find($('input[name=holidays1]')).val();
-            var choicedays1 = $(this).parents("div#package").find($('input[name=choicedays1]')).val();
-            var mnormal1 = $(this).parents("div#package").find($('input[name=mnormal1]')).val();
-            var mpeakday1 = $(this).parents("div#package").find($('input[name=mpeakday1]')).val();
-            var mholidays1 = $(this).parents("div#package").find($('input[name=mholidays1]')).val();
-            var mchoicedays1 = $(this).parents("div#package").find($('input[name=mchoicedays1]')).val();
-            var fsnormal1 = $(this).parents("div#package").find($('input[name=fsnormal1]')).val();
-            var fspeakday1 = $(this).parents("div#package").find($('input[name=fspeakday1]')).val();
-            var fsholidays1 = $(this).parents("div#package").find($('input[name=fsholidays1]')).val();
-            var fschoicedays1 = $(this).parents("div#package").find($('input[name=fschoicedays1]')).val();
-            var spnormal1 = $(this).parents("div#package").find($('input[name=ahanormal1]')).val();
-            var sppeakday1 = $(this).parents("div#package").find($('input[name=ahapeakday1]')).val();
-            var spholidays1 = $(this).parents("div#package").find($('input[name=ahaholidays1]')).val();
-            var spchoicedays1 = $(this).parents("div#package").find($('input[name=ahachoicedays1]')).val();
-            var table = $(this).parents('.btnsave').prev('.tableprices');
-            var rowindex = $(this).parent().index();
-            var ntype = table.find("tr:eq(1)").find("td").eq(1).find("select").val();
-            var ptype = table.find("tr:eq(1)").find("td").eq(2).find("select").val();
-            var htype = table.find("tr:eq(1)").find("td").eq(3).find("select").val();
-            var ctype = table.find("tr:eq(1)").find("td").eq(4).find("select").val();
-            var vsid = $(this).parents("div#package").find($('input[name=vendorsubid]')).val();
-            var date = $(this).parents("div#package").find($('input[name=date]')).val();
-
-            if (normal1 = "") {
-                alert("Select normaltype")
-            }
-            else if (peakday1 == "") { alert("Select peak type") } else if (holidays1 == "") { alert("Select holidays type") } else if (choicedays1 == "") { alert("Select choiceday type") } else if (mpeakday1 == "") { alert("enter peakdate value") }
-            else
-                if (mnormal1 == "") { alert("enter normal type") } else if (mholidays1 == "") { alert("enter holiday type") } else if (date == "") { alert("Select expirydate") }
-                else {
-                    var PartnerPackage = {
-                        PartnerID: partid,
-                        VendorId: vendorid,
-                        packageid: packageid,
-                        normaldayssaletype: ntype,
-                        salenormaldays: normal1,
-                        peakdaysaletype: ptype,
-                        holidaysssaletype: htype,
-                        salepeakdays: peakday1,
-                        saleholidays: holidays1,
-                        choicedayssaletype: ctype,
-                        salechoicedays: choicedays1,
-                        VendorSubId: vsid,
-                        expiry: date,
-                        spchoicedays: spchoicedays1,
-                        spnormaldays: spnormal1,
-                        spholidays: spholidays1,
-                        sppeakdays: sppeakday1,
-                        Mchoicedays: mchoicedays1,
-                        Mnormaldays: mnormal1,
-                        Mholidays: mholidays1,
-                        Mpeakdays: mpeakday1,
-                        fschoicedays: fschoicedays1,
-                        fsnormaldays: fsnormal1,
-                        fsholidays: fsholidays1,
-                        fspeakdays: fspeakday1,
-                    }
-                    $.ajax({
-                        url: '/ReSellerManagement/PartnerPackage?command=' + val + '&&partid=' + partid,
-                        type: 'POST',
-                        data: JSON.stringify({ PartnerPackage: PartnerPackage }),
-                        contentType: 'application/json',
-                        success: function (data) {
-                            if (data != null) {
-                                alert("save is successfully");
-                            }
-                            else { alert("save is failed"); }
-                        },
-                        error: function (data) {
-                            alert("save is failed");
-                        }
-                    })
-                }
-        });
-
-        $(document).on('change', '.chcktbl', function () {
-            //alert('ks');
-            if ($(this).is(':checked')) {
-                $('input.chcktbl').not(this).prop('checked', false);
-                $(this).attr("checked", "checked");
-                $(this).closest('tr').find('#btnBook').removeAttr('disabled');
-                $('#saverecord').css('display', 'none');
-
-
-                var partid = $(this).val();
-                $('#id').val(partid);
-                window.location.href = 'http://localhost:8566/admin/rm?partid=' + partid;
-
-
-            }
-        })
-
-        $('#contractdoc').change(function () {
-            var val = 'ks';
-            var partid;
-            var vid = $('#VendorId').val();
-            var partidks = $('#partid').val();
-            var partidks1 = $('#partid1').val();
-            if (partidks == '' || partidks == 'undefined') {
-                partid = partidks1;
-            } else { partid = partidks; }
+            var ahanormal1 = $(this).parents("div#package").find($('input[name=ahanormal1]')).val();
+            var ahapeakday1 = $(this).parents("div#package").find($('input[name=ahapeakday1]')).val();
+            var ahaholidays1 = $(this).parents("div#package").find($('input[name=ahaholidays1]')).val();
+            var ahachoicedays1 = $(this).parents("div#package").find($('input[name=ahachoicedays1]')).val();
             if (partid == '' || partid == 'undefined') { alert('Save partner details first to save partner packages'); }
-
-            var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
-            if ($.inArray(ext, ['PDF', 'pdf', 'doc', 'DOC']) == -1) {
-                alert('Invalid File Type');
-            }
+            else if (ahanormal1 == "") { alert("enter ahwanam normal prize") } else if (ahapeakday1 == "") { alert("enter ahwanam peak prize") } else if (ahaholidays1 == "") { alert("enter ahwanam holiday prize") } else if (ahachoicedays1 == "") { alert("enter ahwanam Choice prize") }
             else {
-                var data = new FormData();
-                var files = $("#contractdoc").get(0).files;
-                if (files.length > 0) {
-                    data.append("helpSectionImages", files[0]);
+                var PartnerPackage = {
+                    PartnerID: partid,
+                    VendorId: vendorid,
+                    packageid: packageid,
+                    Achoicedays: ahachoicedays1,
+                    Anormaldays: ahanormal1,
+                    Aholidays: ahaholidays1,
+                    Apeakdays: ahapeakday1,
                 }
                 $.ajax({
-                    url: '/ReSellerManagement/UploadContractdoc?command=' + val + '&&partid=' + partid + '&&vid=' + vid,
-                    type: "POST",
-                    processData: false,
-                    contentType: false,
-                    data: data,
-                    success: function (response) {
-                        alert(response);
-                        if (response != '') { alert('Document saved successfully'); } else { alert('Document saving failed'); }
+                    url: '/rm/PartnerPackage?command=' + val + '&&partid=' + partid,
+                    type: 'POST',
+                    data: JSON.stringify({ PartnerPackage: PartnerPackage }),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data != null) {
+                            alert("save is successfully");
+                        }
+                        else { alert("save is failed"); }
+                    },
+                    error: function (data) {
+                        alert("save is failed");
                     }
-                });
+                })
             }
-        });
-
-    </script>
-
-    <script>
-        $('.mprice').on('input', function () {
-            var table = $(this).parents('.tableprices');
-            var rowindex = $(this).parent().index();
-            var colindex = $(this).index();
-            var saleprice = table.find("tr:eq(0)").find("td").eq(rowindex).find("input").val();
-            var saleprice1 = table.find("tr:eq(3)").find("td").eq(rowindex).find("input").val();
-            var type = table.find("tr:eq(1)").find("td").eq(rowindex).find("select").val();
-            var fprice = '';
-            if (type == "com") {
-                var ksp = $(this).val();
-                if (ksp > 100) { alert('Percentage should not be greater than 100'); } else {
-
-                    fprice = saleprice - (saleprice * $(this).val() / 100);
-                }
-            } else if (type == "sfr") {
-                var ksp = $(this).val();
-                if (ksp > saleprice) { alert('Margin Amount should not be greater than Sale Price'); } else {
-
-                    fprice = saleprice - $(this).val();
-                }
-            } else if (type == "comsfr") { fprice = (saleprice - (saleprice * $(this).val() / 100)) - saleprice1; }
-            table.find("tr:eq(3)").find("td").eq(rowindex).find("input[type='number']").val(fprice);
-        });
+        })
     </script>
 }
