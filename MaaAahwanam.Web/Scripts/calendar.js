@@ -232,7 +232,7 @@ $('#btnSave').click(function () {
         EndDate: $('#enddate').val().trim(),
         Description: $('#title').val(),
         Color: $('#color').val(),
-        IsFullDay: $('#chkIsFullDay').val(),
+        IsFullDay: $('#title1').val(),//$('#chkIsFullDay').val(),
         Type: $('#type').val(),
         VendorId: $('#vid').val(),
         Servicetype: 'Venue',
