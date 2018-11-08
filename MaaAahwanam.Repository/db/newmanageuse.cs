@@ -129,7 +129,23 @@ namespace MaaAahwanam.Repository.db
             // you want to change.
             foreach (StaffAccess ord in query)
             {
+                ord.fname = Staffsccess.fname;
+                ord.lname = Staffsccess.lname;
+                ord.emailid = Staffsccess.emailid;
+                ord.phoneno = Staffsccess.phoneno;
+                ord.designation = Staffsccess.designation;
+                ord.order = Staffsccess.order;
+                ord.book = Staffsccess.book;
+                ord.quote = Staffsccess.quote;
+                ord.service = Staffsccess.service;
+                ord.revenuemodel = Staffsccess.revenuemodel;
+                ord.invoice = Staffsccess.invoice;
+                ord.payment = Staffsccess.payment;
+                ord.customer = Staffsccess.customer;
+                ord.supplier = Staffsccess.supplier;
+                ord.addstaff = Staffsccess.addstaff;
                 ord.Status = Staffsccess.Status;
+                ord.UpdatedDate = Staffsccess.UpdatedDate;
                 // Insert any additional changes to column values.
             }
             // Query the database for the row to be updated.

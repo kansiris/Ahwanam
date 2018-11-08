@@ -61,6 +61,16 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.PartnerPackage.Where(p => p.VendorId == vid).ToList();
 
         }
+        public List<PartnerPackage> getallPartnerPackage()
+        {
+            return _dbContext.PartnerPackage.ToList();
+
+        }
+        public List<Partner> GetallPartners()
+        {
+            return _dbContext.Partner.ToList();
+
+        }
         public PartnerPackage addPartnerPackage(PartnerPackage partnerPackage)
         {
             _dbContext.PartnerPackage.Add(partnerPackage);

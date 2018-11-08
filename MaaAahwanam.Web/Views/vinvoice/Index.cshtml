@@ -171,11 +171,8 @@
                                                                     <td class="text-center">@item.ServiceType</td>
                                                                     <td class="text-center">Rs @item.PerunitPrice</td>
                                                                     <td class="text-center">@item.Quantity</td>
-                                                                    <td class="text-right">
-                                                                        Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")
-                                                                    </td>
-
-                                                                    <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
+                                                                    <td class="tsamnt text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
+                                                                    <td class="sbaldue text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                 </tr>
                                                                 
                                                             }
@@ -414,7 +411,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Total Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control open_balance" id="Opening_Balance" name="Opening_Balance" value="@ViewBag.total" style="padding: 5px;" readonly>
+                                                        <input type="text" class="form-control" id="Opening_Balance" name="Opening_Balance" value="@ViewBag.total" style="padding: 5px;" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -732,8 +729,9 @@
 
     $('#Received_Amount').keyup(function () {
         var invamnt = $("#invoiced_amount").val();
-        var openamnt = $('#paidamount').val();
+        //var openamnt = $('#paidamount').val();
         //var openingamnt = $('#Opening_Balance').val();
+        var openingamnt1 = $('#Current_Balance').val();
         var rcvamnt = $('#Received_Amount').val();
         //if (rcvamnt > openamnt) { alert("Enter valid amount"); }
         //else
@@ -743,14 +741,15 @@
 
 
         }
-        else if (parseFloat(rcvamnt) > parseFloat(invamnt)) {
-            aelrt("Enter less than or Equal Of Invoiced Amount...");
+        else if (parseFloat(rcvamnt) > parseFloat(openingamnt1)) {
+            aelrt("Enter less than or Equal Of Balance Due Amount...");
             $('#Received_amount').val("");
         }
         else {
-            var result = parseFloat(openamnt) - parseFloat(rcvamnt);
-            //var result = parseFloat(openingamnt) - parseFloat(rcvamnt);
+            //var result = parseFloat(openamnt) - parseFloat(rcvamnt);
+            var result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
             $('#Current_Balance').val(result);
+         
         }
 
     });
@@ -820,36 +819,71 @@
     //}
 
 
-    $(document).on('change', '.chcktblservice', function () {
-        if($(this).is(':checked'))
-        {
-            $('input.chcktblservice').not(this).prop('checked', false);
-            $('#Paymentmode').css('display', 'block');
-            var odid = $(this).val();
-            $("#OrderDetailId").val(odid);
-         //   $.ajax({
-         //       url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
-         //       type: 'POST',
-         //       contentType: 'application/json',
-         //       success: function (result) {
-         //           $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
+    //$(document).on('click', ' .chcktblservice', function () {
+    ////$("#orderdetails tr .chcktblservice").click(function () {
+    //    if($(this).is(':checked'))
+    //    {
+    //        $('input.chcktblservice').not(this).prop('checked', false);
+    //        $('#Paymentmode').css('display', 'block');
+    //        var odid = $(this).val();
+    //        $("#OrderDetailId").val(odid);
+    //     //   $.ajax({
+    //     //       url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
+    //     //       type: 'POST',
+    //     //       contentType: 'application/json',
+    //     //       success: function (result) {
+    //     //           $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
 
-         //       },
-         //       error: function (result) {
-         //       alert("failed");
-         //   }
-            //});
+    //     //       },
+    //     //       error: function (result) {
+    //     //       alert("failed");
+    //     //   }
+    //        //});
 
-            //$('#orderdetails').find("tr:eq(2)").find("td:eq(1)").html();
-            $("#orderdetails tr:not(:first)").each(function () {
-                var balnce = $(this).find('td:last-child').text();
-                $('#Current_Balance').val(balnce);
-             
-            });
-          
-        }
-        else {
-            $('#Paymentmode').css('display', 'none');
-        }
-    })
+           
+    //        $("#orderdetails tr").click(function () {
+    //            var opnamnt = $(this).find('td:eq(5)').text();
+    //            var totamnt = opnamnt.replace('Rs ', '');
+    //            var balnce = $(this).find('td:eq(6)').text();
+    //            var baldue = balnce.replace('Rs ', '');
+    //            $('#Current_Balance').val(baldue);
+    //            $('#Opening_Balance').attr("value", totamnt);
+
+    //        });
+           
+    //    }
+    //    else {
+    //        $('#Paymentmode').css('display', 'none');
+    //    }
+    //})  
+    $(document).ready(function () {
+        var sum = 0
+        var sum1 =0
+    $("#orderdetails tr").click(function () {
+        $(this).find('.tsamnt').each(function () {
+            var opnamnt = $(this).text();
+            var totamnt = opnamnt.replace('Rs ', '');
+            var tt = totamnt.replace(',', '');
+            sum += parseFloat(tt);
+                alert(sum);
+        });
+        $(this).find('.sbaldue').each(function () {
+            var cntbal = $(this).text();
+            var baldue = cntbal.replace('Rs ', '');
+            var tbaldue = baldue.replace(',', '');
+            alert(tbaldue);
+            sum1 += parseFloat(tbaldue);
+            alert(sum1);
+            if (tbaldue == '0') {
+                $('#Current_Balance').val(sum);
+                alert(sum);
+            } else {
+                $('#Current_Balance').val(sum1);
+            }
+        });              
+                    $('#Opening_Balance').attr("value", sum);
+                    $('#Paymentmode').css('display', 'block');
+        });
+    });
+ 
 </script>
