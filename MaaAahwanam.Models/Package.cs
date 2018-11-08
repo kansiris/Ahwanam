@@ -42,5 +42,6 @@ namespace MaaAahwanam.Models
         public string menuitems { get; set; }
         public string menu { get; set; }
         public string extramenuitems { get; set; }
+        public string type { get; set; }
     }
 }

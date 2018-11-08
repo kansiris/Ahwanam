@@ -168,19 +168,20 @@ function openAddEditForm() {
             $('#startdate').val(moment(selectedEvent.start).format("DD/MM/YYYY"));
             $('#enddate').val(moment(selectedEvent.end).format("DD/MM/YYYY") != null ? moment(selectedEvent.end).format("DD/MM/YYYY") : '');
         }
-        if (selectedEvent.IsFullDay == "True") {
-            $('#divEndDate').hide();
-            $('#enddate').val('');
-        }
-        else {
-            $('#divEndDate').show();
-        }
+        //if (selectedEvent.IsFullDay == "True") {
+        //    $('#divEndDate').hide();
+        //    $('#enddate').val('');
+        //}
+        //else {
+        //    $('#divEndDate').show();
+        //}
         $('#description').val(selectedEvent.Description);
         $('#color').val(selectedEvent.Color);
         $('#type').val(selectedEvent.Type);
         if (selectedEvent.Type == 'Packages') {
             $('#pkgdays').css('display', 'block');
             $('#title').val(selectedEvent.Title);
+            $('#title1').val(selectedEvent.IsFullDay);
         }
         else {
             $('#pkgdays').css('display', 'none');
@@ -231,7 +232,7 @@ $('#btnSave').click(function () {
         EndDate: $('#enddate').val().trim(),
         Description: $('#title').val(),
         Color: $('#color').val(),
-        IsFullDay: false,//$('#chkIsFullDay').val(),
+        IsFullDay: $('#chkIsFullDay').val(),
         Type: $('#type').val(),
         VendorId: $('#vid').val(),
         Servicetype: 'Venue',
