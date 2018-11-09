@@ -142,40 +142,90 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(Payment payments)
 
         {
+            
             var orderdetails = newmanageuse.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
-            payments.User_Type = "VendorUser";
-            payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            var odis = payments.OrderDetailId.TrimStart(',').Split(',');
-            for(int i=0; i<odis.Length; i++)
+            if (orderdetails == null || orderdetails.Count == 0)
             {
-                if(float.Parse(payments.Received_Amount)>= 0)
+                var orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
+
+                payments.User_Type = "VendorUser";
+                payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                var odis = payments.OrderDetailId.Trim(',').Split(',');
+                for (int i = 0; i < odis.Length; i++)
                 {
-                    var orderdetaiid = payments.OrderDetailId.TrimStart(',').Split(',')[i];
+                    if (float.Parse(payments.Received_Amount) >= 0)
+                    {
+                        var orderdetailid = payments.OrderDetailId.Trim(',').Split(',')[i].Replace(" ", "");
+                        payments.OrderDetailId = orderdetailid;
+                        //var datarecord = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(orderdetailid));
+                        decimal dueamount;
+                        var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
+                        if (ksorder.SUM_AP == null)
+                        {
+                            dueamount = ksorder.TotalPrice;
+                            var amnt = decimal.Parse(payments.Received_Amount);
+                            if (dueamount > amnt)
+                            {
+                                var bll = dueamount - amnt;
+                                payments.Received_Amount = dueamount.ToString();
+                                payments.Opening_Balance = dueamount.ToString();
+                                payments.Current_Balance = bll.ToString();
+                            }
+                            else
+                            {
+                                var balance = amnt - dueamount;
+                                payments.Received_Amount = dueamount.ToString();
+                                payments.Opening_Balance = dueamount.ToString();
+                                if (balance > 0)
+                                {
+                                    payments.Current_Balance = "0";
+                                    //if (balance > dueamount)
+                                    //{
+                                    //    var bldue = balance - dueamount;
+                                    //}
+                                    //else
+                                    //{
+                                    //    var bldue1 = dueamount - balance;
+                                    //}
+
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                        dueamount = (decimal)ksorder.Due;
+                        }
+                    }
+                    else
+                    {
+                        var orderdetailid = payments.OrderDetailId.Trim(',').Split(',')[i].Replace(" ", "");
+                        var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
+                    }
+
+                    if (payments.Current_Balance == "0")
+                    {
+                        Order orders = new Order();
+                        OrderDetail orderdetils = new OrderDetail();
+                        orders.Status = "Payment completed";
+                        orderdetils.Status = "Payment completed";
+                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                        payments.Status = "Payment completed";
+                    }
+                    else
+                    {
+                        Order orders = new Order();
+                        OrderDetail orderdetils = new OrderDetail();
+                        orders.Status = "Payment pending";
+                        orderdetils.Status = "Payment pending";
+                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+
+                        payments.Status = "Payment pending";
+                    }
+                    payments = rcvpaymentservice.SavePayments(payments);
                 }
             }
-
-            if (payments.Current_Balance == "0")
-            {
-                Order orders = new Order();
-                OrderDetail orderdetils = new OrderDetail();
-                orders.Status = "Payment completed";
-                orderdetils.Status = "Payment completed";
-                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
-                payments.Status = "Payment completed";
-            }
-            else
-            {
-                Order orders = new Order();
-                OrderDetail orderdetils = new OrderDetail();
-                orders.Status = "Payment pending";
-                orderdetils.Status = "Payment pending";
-                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
-
-                payments.Status = "Payment pending";
-            }
-            payments = rcvpaymentservice.SavePayments(payments);
-           
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
 
